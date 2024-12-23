@@ -1,0 +1,99 @@
+\graphicspath{{./figures/}}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item ``fat'' pointers to add bounds-checking to C/C++
+        \begin{itemize}
+        \item huge performance/space overhead
+        \end{itemize}
+    \item problematic things C programmers do:
+        \begin{itemize}
+        \item string past the end of the struct
+        \item casting pointer to X to pointer to struct starting with X
+        \item offset pointers for 1-based indexing
+        \item \ldots
+        \end{itemize}
+    \item baggy bounds checking
+        \begin{itemize}
+        \item round sizes to power of two
+        \item checks on \textit{pointer arithmetic}
+        \end{itemize}
+    \item AddressSanitizer
+    \end{itemize}
+\end{frame}
+
+\section{AddressSanitizer}
+\input{../bounds/asan-v-baggy}
+
+\subsection{ASan's added check}
+\input{../bounds/asan-check}
+
+\subsection{stack layout}
+\input{../bounds/asan-stack-layout}
+
+\subsection{can't change object layout?}
+\input{../bounds/asan-within-object}
+
+\subsection{pro/con}
+\input{../bounds/asan-procon}
+
+\section{valgrind memcheck, briefly}
+\input{../bounds/memcheck}
+
+\section{exericse: which prevents}
+\input{../bounds/which-prevents}
+% FIXME: exercise
+    % which scheme will prevent XXX
+
+\section{testing for security}
+\input{../testing/general-testing}
+
+\section{fuzzing, generally}
+\input{../testing/fuzzing-intro}
+
+\subsection{``blackbox''}
+\input{../testing/fuzzing-blackbox}
+
+\subsection{what can we test}
+\input{../testing/fuzz-test-what-properties}
+
+\subsection{other applications}
+\input{../testing/other-apps}
+
+\subsection{some practical issues}
+\input{../testing/fuzzing-practical}
+
+\subsubsection{lots of bad tests?}
+\input{../testing/lots-of-bad-tests}
+
+\subsubsection{example: Yang et al}
+\input{../testing/example-csmith}
+
+\subsection{what makes good tests?} % FIXME: turn into exerccise?
+\input{../testing/brainstorm-what-tests}
+
+\section{metric: coverage}
+\input{../testing/max-coveragep}
+
+\section{symbolic execution}
+\input{../testing/symbolic-exec}
+
+\subsection{example}
+% FIXME: expand example more
+\input{../testing/symbolic-exec-example}
+
+\subsection{for bounds checking}
+\input{../testing/symbolic-exec-example-bounds}
+
+\subsection{with pointers}
+\input{../testing/symbolic-exec-example-ptr}
+
+
+
+\end{document}

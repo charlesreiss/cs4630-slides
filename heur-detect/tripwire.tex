@@ -1,0 +1,30 @@
+\begin{frame}{tripwire}
+    \begin{itemize}
+    \item open source tool from c. 2000
+        \begin{itemize}
+        \item also company around that tool, but I don't know about it
+        \end{itemize}
+    \item ``tool for monitoring and alerting on file \& directory changes''
+    \item targetted at servers with professional administrators
+    \vspace{.5cm}
+    \item setup: run tool, it records state of system/etc. files (e.g. hashes)
+    \item later: run tool, it tells you if anything changed
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{tripwire as antimalware software?}
+    \begin{itemize}
+    \item tripwire idea: detect any changes
+    \item notify user (administrator) about them
+    \vspace{.5cm}
+    \item what is user supposed to do with this info?
+    \vspace{.5cm}
+    \item what about normal software updates, etc.?
+    \item can malware hide in files that are supposed to change?
+        \begin{itemize}
+        \item ``data'' files with other programs, scripts?
+        \item \ldots
+        \end{itemize}
+    \item what if system compromised before setup?
+    \end{itemize}
+\end{frame}

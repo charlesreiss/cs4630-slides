@@ -1,0 +1,38 @@
+\begin{frame}{safety rules}
+    \begin{itemize}
+    \item one set of (very restrictive) rules:
+        \begin{itemize}
+        \item arrays are never accessed via pointers (only via array[X])
+        \item always check bounds before array access
+        \end{itemize}
+    \vspace{.5cm}
+    \item modify C compiler to enforce:
+        \begin{itemize}
+        \item disallow making pointers to an array
+        \item add bounds check assertion before every array use
+        \end{itemize}
+    \vspace{.5cm}
+    \item<2-> now: no buffer overflows?
+        \begin{itemize}
+        \item problem 1: way too restrictive
+        \item problem 2: still other memory problems
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{more practical safety rules?}
+    \begin{itemize}
+    \item rule for avoiding bounds errors in C
+        \begin{itemize}
+        \item always pass around array buffers with size
+        \item always check size
+        \end{itemize}
+    \item Java does this
+    \item but this is essentially a new language!
+        \begin{itemize}
+        \item can't use existing pointer code
+        \end{itemize}
+    \item and this is likely slow?
+    \end{itemize}
+\end{frame}
+

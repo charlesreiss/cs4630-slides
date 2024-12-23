@@ -1,0 +1,24 @@
+
+\begin{frame}[fragile,label=baggyBoundsTrick]{baggy bounds trick}
+\lstset{language=C,style=small}
+    \begin{itemize}
+        \item table of pointers to starting locations would be huge
+        \item add some restrictions:
+            \begin{itemize}
+            \item all object sizes are powers of two
+            \item all object starting addresses are a multiple of their size
+            \end{itemize}
+        \item then, table contains size info only:
+            \begin{itemize}
+            \item table contains $i$, size is $2^i$ bytes:
+            \end{itemize}
+    \end{itemize}
+\begin{lstlisting}
+char *GetStartOfObject(char *pointer) {
+    return pointer & ~(1 << TABLE[pointer / 16] - 1);
+    /* pointer bitwise-and 2^(table entry) - 1 */
+    /* clear lower (table entry) bits  of pointer */
+}
+\end{lstlisting}
+\end{frame}
+

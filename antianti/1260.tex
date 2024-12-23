@@ -1,0 +1,62 @@
+
+\begin{frame}[fragile,label=v1260]{example: 1260 (virus)}
+\lstset{
+    style=small,
+    language=myasm,
+    moredelim={**[is][\btHL<2-3|handout:0>]{@hi2@}{@endhi@}},
+    moredelim={**[is][\btHL<4-5|handout:0>]{@hi3@}{@endhi@}},
+}
+% FIXME: adapt Listing 7.5
+\begin{tabular}{ll}
+\begin{lstlisting}
+    @hi2@inc %si@endhi@
+    mov @hi3@$0x0e9b@endhi@, %ax
+    @hi2@clc@endhi@
+    mov $0x12a, %di
+    @hi2@nop@endhi@
+    mov $0x571, %cx
+decrypt:
+    xor %cx, (%di)
+    @hi2@sub %dx, %bx@endhi@
+    @hi2@sub %cx, %bx@endhi@
+    @hi2@sub %ax, %bx@endhi@
+    @hi2@nop@endhi@
+    @hi2@xor %cx, %dx@endhi@
+    xor %ax, (%di)
+    ...
+\end{lstlisting}
+&
+\begin{lstlisting}
+    mov @hi3@$0x0a43@endhi@, %ax
+    @hi2@nop@endhi@
+    mov $0x15a, %di
+    @hi2@sub %dx, %bx@endhi@
+    @hi2@sub %cx, %bx@endhi@
+    mov $0x571, %cx
+    @hi2@clc@endhi@
+decrypt:
+    xor %cx, (%di)
+    @hi2@xor %cx, %dx@endhi@
+    @hi2@sub %cx, %bx@endhi@
+    @hi2@nop@endhi@
+    @hi2@xor %cx, %bx@endhi@
+    xor %ax, (%di)
+    ...
+\end{lstlisting}
+\end{tabular}
+\imagecredit{adapted from Szor, Listing 7.5}
+\begin{tikzpicture}[overlay,remember picture]
+    \begin{visibleenv}<3>
+    \node[anchor=center,draw=red,ultra thick,fill=white] at (current page.center) {
+        do-nothing instructions
+    };
+    \end{visibleenv}
+
+    \begin{visibleenv}<5>
+    \node[anchor=center,draw=red,ultra thick,fill=white] at (current page.center) {
+        different decryption ``key''
+    };
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+

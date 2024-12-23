@@ -1,0 +1,148 @@
+\graphicspath{{./figures/}}
+\title{virus 2 / object formats}
+\date{}
+\usepackage{contour}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+{
+\setbeamercolor{background canvas}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{normal text}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{itemize/enumerate body}{fg=white}
+\setbeamercolor{itemize/enumerate subbody}{fg=white}
+\setbeamercolor{titlelike}{bg=blue!40!black,fg=blue!10!white}
+\begin{frame}<1|handout:1>[noframenumbering]{Changelog}
+    \begin{itemize}
+    \item 13 Feb 2021: add diagram showing operating of ELF LOAD program headers
+    \end{itemize}
+\end{frame}
+}
+
+
+
+
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item x86-64 encoding
+        \begin{itemize}
+        \item built up from 16-bit
+        \item (prefix) (opcode) (mod/reg/rm) (sib) \ldots
+        \item REX prefix for extra registers, 64- v 32-bit
+        \item absolute versus relative address encoding
+        \end{itemize}
+    \item Vienna as case study
+        \begin{itemize}
+        \item add jmp at beginning of .COM executable files
+        \item make backup copy of what replaced jmp
+        \item append code to end of executable
+        \item push + ret for jump back to avoid changing relative jump
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\input{../exec-encoding/myemph-lib}
+
+\section{Case study: Vienna}
+
+\input{../virus/vienna-infect-outline}
+
+\subsection{Vienna relocation code}
+% FIXME: need to explain why this is a problem
+\againframe<3>{viennaOutline}
+
+\subsubsection{Vienna's relocation code}
+\input{../virus/vienna-relocate}
+
+\subsubsection{alternate: PIC}
+\input{../virus/vienna-alt-relocate}
+
+\subsection{avoiding reinfection}
+\againframe<4>{viennaOutline}
+
+\input{../virus/vienna-reinfect}
+
+\section{reflection: how Vienna is ancient}
+\input{../virus/vienna-how-changed}
+
+% FIXME: introduce exec-format stuff, with interleave on
+    % entry-points
+    % how to add code
+
+\section{executable and linking format (ELF)}
+\input{../exec-encoding/elf-format}
+
+
+\subsection{ELF sections}
+\input{../exec-encoding/elf-sections}
+
+\subsection{program headers: example static ELF binary}
+\input{../exec-encoding/header-static}
+
+\subseciton{diagram: ELF loading}
+\input{../exec-encoding/elf-loading-diag}
+
+% FIXME: exercise: on elf
+\subsection{exercise}
+\input{../exec-encoding/elf-static-ex}
+
+\subsection{aside on virtual memory}
+\input{../exec-encoding/elf-actual-loading}
+
+\subsection{preview: dynamic linking/PIE}
+\input{../exec-encoding/preview-dyn}
+
+
+\section{viruses: where to put code}
+
+\input{../virus/where-code-intro}
+
+\subsection{replacing executables?}
+
+\againframe<2>{whereCode}
+
+\input{../virus/where-code-replace}
+
+
+\subsection{appending/compressing}
+
+% FIXME: good place for aside on modern executable formats
+
+\againframe<3>{whereCode}
+
+\input{../virus/where-append-compress}
+
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\subsection{Vienna intro}
+\input{../virus/vienna-intro}
+
+\subsection{aside: COM files}
+
+\input{../exec-encoding/com-files}
+
+\subsection{entry/exit}
+
+\input{../virus/entry-exit}
+
+
+\subsection{writing your own code?}
+
+\againframe<2>{viennaOutline}
+\subsubsection{aside: quines}
+
+\input{../virus/quine}
+
+
+\subsubsection{Vienna replication code}
+
+\input{../virus/vienna-replicate}
+
+
+
+\end{document}

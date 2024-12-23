@@ -1,0 +1,224 @@
+\usetikzlibrary{arrows.meta,shapes.multipart}
+
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+    frameOne/.style={fill=blue!15},
+    frameTwo/.style={fill=red!15},
+    markLine/.style={blue!50!black},
+    markLineB/.style={red!90!black},
+    hiLine/.style={red!90!black},
+}
+\begin{frame}{ROP case study}
+    \begin{itemize}
+    \item simple stack buffer overflow with write XOR execute
+    \item stack canaries disabled
+    \item ASLR disabled
+        \begin{itemize}
+        \item in practice --- rely on information disclosure bug
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=vuln]{vulnerable application}
+    \lstset{language=C,style=small}
+\begin{lstlisting}
+#include <stdio.h>
+
+int vulnerable() {
+    char buffer[100];
+    gets(buffer);
+}
+
+int main(void) {
+    vulnerable();
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=vulnFunc]{vulnerable function}
+    \lstset{language=myasm,style=small}
+\begin{lstlisting}
+0000000000400536 <vulnerable>:
+  400536:       48 83 ec 78        sub    $0x78,%rsp
+  40053a:       31 c0              xor    %eax,%eax
+  40053c:       48 8d 7c 24 0c     lea    0xc(%rsp),%rdi
+  400541:       e8 ca fe ff ff     callq  400410 <gets@plt>
+  400546:       48 83 c4 78        add    $0x78,%rsp
+  40054a:       c3                 retq   
+\end{lstlisting}
+    \begin{itemize}
+        \item<2> buffer at \texttt{0xC} + stack pointer
+        \item<2> return address at \texttt{0x78} + stack pointer
+            \begin{itemize}
+                \item = \texttt{0x6c} + buffer
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=memoryLayout]{memory layout}
+\lstset{
+    language={},
+    style=small,
+    moredelim={**[is][\color{blue!70!black}]{~in~}{~end~}},
+}
+\begin{itemize}
+    \item going to look for interesting code to run in libc.so
+        \begin{itemize}
+        \item implements gets, printf, etc.
+        \end{itemize}
+    \item loaded at address {\tt 0x2aaaaacd3000}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{our task}
+    \begin{itemize}
+    \item print out the message ``You have been exploited.''
+    \item ultimately calling {\tt puts}
+    \item which will be at address {\tt 0x2aaaaad42690}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{how about arc injection?}
+    \begin{itemize}
+    \item can we just change return address to puts's address?
+    \vspace{.5cm}
+    \item no: \%rdi (argument 1) has the wrong value
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[fragile,label=shellcode]{shellcode}
+\lstset{
+    language=myasm,
+    style=small,
+    moredelim={**[is][\color{blue!70!black}]{~in~}{~end~}},
+}
+\begin{lstlisting}
+        lea  string(%rip), %rdi
+        mov  $0x2aaaaad42690, %rax /* puts */
+        jmpq *(%rax)
+string: .ascii "You have been exploited.\0"
+\end{lstlisting}
+    \begin{itemize}
+        \item but --- can't insert code
+        \item surely this code doesn't exist in libc already
+        \item solution: find code for pieces
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=loadRDICode]{loading string into RDI}
+\lstset{
+    language=myasm,
+    style=small,
+    moredelim={**[is][\color{blue!70!black}]{~in~}{~end~}},
+}
+    \begin{itemize}
+        \item can we even load a pointer to the string into {\tt \%rdi}?
+        \item let's look carefully at code in {\tt libc.so}
+    \end{itemize}
+\begin{lstlisting}
+2aaaaadfdc95:       48 89 e7              mov    %rsp,%rdi
+2aaaaadfdc98:       ff d0                 callq  *%rax
+\end{lstlisting}
+    \begin{itemize}
+        \item just need to get address of {\tt puts} into {\tt \%rax} before this
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=loadRDI]{load RDI}
+\begin{tikzpicture}
+% FIXME:
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+}
+\begin{scope}[xscale=0.75]
+\draw[stackBox] (0, 2) rectangle (10, -3);
+\draw[thick,-Latex] (-.25,-1) -- (-.25, 1) node [midway, above, sloped] {increasing addresses};
+\node[at={(5, 2.1)},anchor=south] { highest address (stack started here)};
+\node[at={(5, -3.1)},anchor=north] { lowest address (stack grows here)};
+
+\draw[onStack] (0, -.25) rectangle (10, -1.25) node[midway,align=center,font=\small] (stackAddr)
+     {return address for {\tt vulnerable}: \\ \only<2->{address of ``gadget''}};
+\draw[onStack,fill=blue!20] (0, -1.25) rectangle (10, -2.25) node[midway,align=center,font=\small] {buffer (100 bytes)};
+
+    \begin{visibleenv}<2->
+\draw[onStack,fill=red!20,opacity=0.9] (0, -2.25) rectangle (10, -1.25) node[midway,align=center,font=\small,text=red!50!black] {unused junk};
+\draw[onStack,fill=green!20,opacity=0.9] (0, -.25) rectangle (10, 1.0) node[midway,align=center,font=\small,text=red!50!black] {string pointed to by RDI};
+
+\draw[-Latex,red,ultra thick,dashed] ([yshift=2.5mm]stackAddr.south east) -- ++(.25cm,0cm) |-
+    (12, -1.25) node[align=left,right,font=\small] { {\tt mov \%rsp, \%rdi} \\ {\tt call *\%rax} };
+\end{visibleenv}
+\end{scope}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=loadRAXCode]{loading puts addr. into RAX}
+\lstset{
+    language={},
+    style=smaller,
+    moredelim={**[is][\color{blue!70!black}]{~in~}{~end~}},
+    moredelim={**[is][\color{red}\bfseries]{~hi~}{~end~}},
+}
+\begin{lstlisting}
+2aaaaad06543:       e8 ~hi~58 c3~end~ fe ff          callq  2aaaaaaf48a0
+\end{lstlisting}
+\begin{itemize}
+    \item {\tt 58 c3} can be interpreted another way: 
+\begin{lstlisting}
+2aaaaad06544:       58          popq %rax
+2aaaaad06545:       c3          retq
+\end{lstlisting}
+    \item ``ret'' lets us \textbf{chain} this to execute \texttt{call} snippet next
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=loadChain]{ROP chain}
+\begin{tikzpicture}
+% FIXME:
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+    useLine/.style={very thick,blue,Latex-},
+    useLineRet/.style={red,very thick,-Latex,dashed},
+    gadgetBox/.style={blue,thick,text=black,draw,align=left,font=\small},
+}
+\begin{scope}[xscale=0.75]
+\draw[stackBox] (0, 3) rectangle (10, -3);
+\draw[thick,-Latex] (-.25,-1) -- (-.25, 1) node [midway, above, sloped] {increasing addresses};
+\draw[onStack,fill=green!20,opacity=0.9] (0, 3.00) rectangle (10, 1.75) node[midway,align=center,font=\small] (theString)
+     {string to print};
+\draw[onStack,red] (0, 1.75) rectangle (10, .75) node[midway,align=center,font=\small] (gadgetTwo)
+     {pointer to second gadget};
+\draw[onStack,fill=green!20] (0, .75) rectangle (10, -.25) node[midway,align=center,font=\small] (putsAddr)
+     {address of \texttt{puts} (popped from stack)};
+\draw[onStack,red] (0, -.25) rectangle (10, -1.25) node[midway,align=center,font=\small] (stackAddr)
+     {return address for {\tt vulnerable}: \\pointer to first gadget};
+\draw[onStack,fill=blue!20] (0, -1.25) rectangle (10, -2.25) node[midway,align=center,font=\small] {buffer (100 bytes)};
+\draw[onStack,fill=red!20,opacity=0.9] (0, -2.25) rectangle (10, -1.25) node[midway,align=center,font=\small,text=red!50!black] {unused junk};
+        \draw[-Latex,red,ultra thick,dashed] (stackAddr.east) -- ++(3cm,0cm) 
+        node[right,gadgetBox] (firstGad) { {\tt popq \%rax} \\ {\tt ret} };
+        \draw[-Latex,red,ultra thick,dashed] (gadgetTwo.east) -- ++(3cm,0cm)
+        node[right,gadgetBox] (secondGad) { {\tt mov \%rsp, \%rdi} \\ {\tt call *\%rax} };
+    \begin{visibleenv}<2->
+        \node[gadgetBox,dashed,below=1cm of firstGad] (realRet) {
+            \texttt{ret} (in vulnerable)
+        };
+        \draw[useLineRet] ([xshift=1ex]realRet.west) -- ([xshift=-1ex,yshift=2ex]stackAddr.south east);
+    \end{visibleenv}
+    \begin{visibleenv}<3->
+        \draw[useLine] ([yshift=.6em,xshift=1ex]firstGad.west) -- (putsAddr.east);
+    \end{visibleenv}
+    \begin{visibleenv}<4->
+        \draw[useLineRet] ([yshift=-.6em,xshift=1ex]firstGad.west) -- ([xshift=-1ex,yshift=2ex]gadgetTwo.south east);
+    \end{visibleenv}
+    \begin{visibleenv}<4->
+        \draw[useLine] ([yshift=.6em,xshift=1ex]secondGad.west) -- (theString.east);
+    \end{visibleenv}
+\end{scope}
+\end{tikzpicture}
+\end{frame}
+
+

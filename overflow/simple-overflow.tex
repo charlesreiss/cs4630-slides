@@ -1,0 +1,52 @@
+
+\begin{frame}[fragile,label=overwriteLocal1]{simpler overflow}
+\lstset{
+    language=C,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
+}
+\begin{lstlisting}
+struct QuizQuestion questions[NUM_QUESTIONS];
+int giveQuiz() {
+    int @hi2@score@endhi@ = 0;
+    char @hi2@buffer@endhi@[100];
+    for (int i = 0; i < NUM_QUESTIONS; ++i) {
+        gets(buffer);
+        if (checkAnswer(buffer, &questions[i])) {
+            score += 1;
+        }
+    }
+    return score;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[label=overwriteLocalStack2]{simpler overflow: stack}
+\begin{tikzpicture}
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+}
+\draw[stackBox] (0, 0) rectangle (10, -6);
+\draw[thick,-Latex] (10.25,-5) -- (10.25, -1) node [midway, below, sloped] {increasing addresses};
+\node[at={(5, 0.1)},anchor=south] { highest address (stack started here)};
+\node[at={(5, -6.1)},anchor=north] { lowest address (stack grows here)};
+
+\draw[onStack] (0, -.25) rectangle (10, -1.25) node[midway,align=center,font=\small] (stackAddr)
+     {return address for {\tt giveQuiz}};
+\draw[onStack,fill=green!20] (0, -1.25) rectangle (10, -1.75) node[midway,align=center,font=\small] {
+    score (4 bytes): \only<1>{\tt 00 00 00 00}
+    \only<2>{\color{red}\tt 61 61 61 00}
+};
+\draw[onStack,fill=blue!20] (0, -1.75) rectangle (10, -5.25) node[midway,align=center,font=\small] {buffer (100 bytes)};
+
+\draw[onStack] (0, -5.25) rectangle (10, -6) node[midway,align=center,font=\small] {return address for {\tt gets}};
+
+\begin{visibleenv}<2>
+\node[anchor=south west,font=\tt,red] at (0, -5.25) { aaaa\ldots };
+\node[anchor=north east,font=\tt,red] at (10, -1.75) { \ldots aaaa};
+\node[red] at (5, -3) {input: 103 {\tt a}'s ({\tt a} = {\tt 0x61})};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+

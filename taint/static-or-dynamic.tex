@@ -1,0 +1,16 @@
+\begin{frame}{static or dynamic}
+\begin{itemize}
+    \item taint tracking as static analysis (don't run program)
+        \begin{itemize}
+        \item track values as tainted/not tainted
+        \item look for \textit{possible} uses of tainted value
+        \item will be imprecise (like use-after-free analysis)
+        \end{itemize}
+    \item taint tracking as dynamic analysis
+        \begin{itemize}
+        \item modify program to add ``tainted'' field to every variable
+        \item make assignment copy that field
+        \item check tainted field before dangerous call
+        \end{itemize}
+    \end{itemize}
+\end{frame}

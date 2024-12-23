@@ -1,0 +1,37 @@
+
+\begin{frame}{escape hatch}
+    \begin{itemize}
+    \item Rust lets you avoid compiler's mechanisms
+    \item implement your own
+    \item \textbf{unsafe} keyword
+    \item how Vec is implemented
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=insideVec]{deep inside Vec}
+\begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
+pub struct Vec<T> {
+    buf: RawVec<T>, // interface to malloc
+    len: usize,
+}
+
+impl<T> Vec<T> {
+    ...
+    pub fn truncate(&mut self, len: usize) {
+        unsafe {
+            // drop any extra elements
+            while len < self.len {
+                // decrement len before the drop_in_place(), so a panic on Drop
+                // doesn't re-drop the just-failed value.
+                self.len -= 1;
+                let len = self.len;
+                ptr::drop_in_place(self.get_unchecked_mut(len));
+            }
+        }
+    }
+    ...
+}
+\end{minted}
+\end{frame}
+
+

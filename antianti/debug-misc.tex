@@ -1,0 +1,26 @@
+
+\begin{frame}[fragile,label=unstealthyDebuggers]{unstealthy debuggers}
+    \begin{itemize}
+    \item is a debugger installed?
+        \begin{itemize}
+        \item unlikely on Windows, maybe ignore those machines
+        \end{itemize}
+    \item is a debugger process running (don't check if it's tracing you)
+    \item \ldots
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{confusing debuggers}
+    \begin{itemize}
+    \item ``broken'' executable formats
+        \begin{itemize}
+        \item e.g., recall ELF: segments and sections
+        \item corrupt sections --- program still works
+        \item overlapping segments/sections --- program still works
+        \end{itemize}
+    \item use the stack pointer not for the stack
+        \begin{itemize}
+        \item stack trace?
+        \end{itemize}
+    \end{itemize}
+\end{frame}

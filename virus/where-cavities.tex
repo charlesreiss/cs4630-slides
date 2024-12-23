@@ -1,0 +1,102 @@
+\begin{frame}{unused code???}
+    \begin{itemize}
+    \item why would a program have unused code????
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=lsStudy1]{unused code case study: /bin/ls}
+    \begin{itemize}
+    \item unreachable no-ops!
+    \end{itemize}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont,commandchars=Q\{\}]
+...
+  403788:	e9 59 0c 00 00       	jmpq   4043e6 <__sprintf_chk@plt+0x1a06>
+  Qtextbf{40378d:	0f 1f 00             	nopl   (%rax)}
+  403790:	ba 05 00 00 00       	mov    $0x5,%edx
+...
+  403ab9:	eb 4d                	jmp    403b08 <__sprintf_chk@plt+0x1128>
+  Qtextbf{403abb:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)}
+  403ac0:	4d 8b 7f 08          	mov    0x8(%r15),%r15
+...
+  404a01:	c3                   	retq   
+  Qtextbf{404a02:	0f 1f 40 00          	nopl   0x0(%rax)}
+  Qtextbf{404a06:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)}
+  Qtextbf{404a0d:	00 00 00 }
+  404a10:	be 00 e6 61 00       	mov    $0x61e600,%esi
+...
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{why empty space?}
+\begin{itemize}
+\item Intel Optimization Reference Manual: \\
+``\textbf{Assembly/Compiler Coding Rule 12. (M impact, H generality)} \\All branch targets should be 16-byte aligned.''
+\begin{itemize}
+    \item better for instruction cache {\small (and TLB and related caches)}
+    \item better for instruction decode logic
+    \item function calls, jumps count as branches for this purpose
+\end{itemize}
+\end{frame}
+
+\begin{frame}{why weird nops}
+    \begin{itemize}
+    \item could fill with \myemph{anything} --- unreachable
+    \item some platforms: filled with crashing instructions
+    \vspace{.5cm}
+    \item why not in example? assembler just told to align instruction
+        \begin{itemize}
+        \item not told previous instruction was jump/ret/etc. \ldots
+        \item and assembler doesn't bother checking
+        \end{itemize}
+    \item probably better for CPU to fill with some instruction; Intel manual:
+        \begin{itemize}
+        \item ``Placing data immediately following an indirect branch
+              can cause performance problems. If the data consists of all zeros,
+              it looks like a long stream of ADDs to memory destinations, and this can cause
+              resource conflicts\ldots''
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}<1>[label=otherSpace]{other empty space}
+\begin{itemize}
+\item \myemph<2>{unused dynamic linking structure}
+\item \myemph<3>{unused space between segments}
+\item unused debugging/symbol table information?
+\item unused header space 
+    \begin{itemize}
+    \item file offsets of segments can be in middle of header
+    \item loader doesn't care what segments ``mean''
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\againframe<2>{otherSpace}
+
+\begin{frame}[label=spaceDyn,fragile]{dynamic linking cavity}
+\begin{itemize}
+\item {\tt .dynamic} section --- data structure used by dynamic linker:
+\item format: list of 8-byte type, 8-byte value
+    \begin{itemize}
+    \item terminated by type == 0 entry
+    \end{itemize}
+\end{itemize}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont,commandchars=Q\{\}]
+Contents of section .dynamic:
+ 600e28 01000000 00000000 01000000 00000000  ................
+    Qtextit{... several non-empty entries ...}
+ 600f88 f0ffff6f 00000000 56034000 00000000  ...o....V.@.....
+    Qtextit{VERSYM (required library version info at) 0x400356}
+ 600f98 Qtextit{00000000 00000000 00000000 00000000}  ................
+    Qtextit{NULL --- end of linker info}
+ 600fa8 Qtextbf{00000000 00000000 00000000 00000000}  ................
+    Qtextit{unused! (and below)}
+ 600fb8 Qtextbf{00000000 00000000 00000000 00000000}  ................
+ 600fc8 Qtextbf{00000000 00000000 00000000 00000000}  ................
+ 600fd8 Qtextbf{00000000 00000000 00000000 00000000}  ................
+ 600fe8 Qtextbf{00000000 00000000 00000000 00000000}  ................
+\end{Verbatim}
+\end{frame}
+
+
+

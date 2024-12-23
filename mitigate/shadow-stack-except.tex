@@ -1,0 +1,87 @@
+\usetikzlibrary{arrows.meta,patterns}
+
+\begin{frame}{automatic shadow stacks?}
+    \begin{itemize}
+    \item if we change how CALL/RET works\ldots
+    \item \ldots maybe we can add shadow stack support to existing programs?
+    \begin{itemize}
+        \item either with hardware support, or
+        \item in software with emulation techniques?
+        \end{itemize}
+    \vspace{.5cm}
+    \item well, there's a problem\ldots
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile,label=noAutomaticStack1]{the problem in C++}
+\begin{lstlisting}[language=C++,style=smaller]
+void Foo() {
+    try {
+        ... Bar() ...
+    } except (std::runtime_error &error) {
+        ...
+    }
+}
+
+void Bar() {
+    ... Quux() ...
+}
+void Quux() {
+    ...
+    throw std::runtime_error("...");
+    ...
+}
+\end{lstlisting}    
+\end{frame}
+
+\begin{frame}[fragile,label=noAutomaticStack2]{the problem in C}
+\begin{lstlisting}[language=C++,style=smaller]
+jmp_buf env;
+const char *error;
+void Foo() {
+    if (0 == setjmp(env)) {
+        Bar();
+    } else {
+        ...
+    }
+}
+
+void Bar() {
+    ... Quux() ...
+}
+void Quux() {
+    ...
+    error = "...";
+    longjmp(env, 1);
+    ...
+}
+\end{lstlisting}    
+\end{frame}
+
+\begin{frame}{dealing with non-local returns}
+\begin{itemize}
+\item exceptions and setjmp/longjmp deliberately skip return calls
+\item one solution: ``direct'' shadow stack
+\item fixed (possibly secret) offset from normal stack
+\item shadow stack only stores return addreses
+    \begin{itemize}
+    \item space in between return addresses left as nulls
+    \end{itemize}
+\end{itemize}
+\begin{tikzpicture}[overlay,remember picture]
+\coordinate (top) at ([xshift=-5cm,yshift=-2.5cm]current page.north east);
+\draw[very thick] (top) rectangle ++(4cm, -7cm);
+\draw[thick,pattern=north west lines] (top) ++(0cm, -1cm) rectangle ++(4cm, -2cm) node[yshift=-0.5cm,midway,fill=white] {shadow stack};
+\draw[thick,pattern=north west lines] (top) ++(0cm, -4cm) rectangle ++(4cm, -2cm) node[yshift=-0.5cm,midway,fill=white] {normal stack};
+\draw[thick,fill=blue!20] (top) ++(0cm, -1.4cm) rectangle  ++(4cm, -0.1cm) coordinate (after shadow ra);
+\draw[thick,fill=blue!20] (top) ++(0cm, -4.4cm) rectangle  ++(4cm, -0.1cm) coordinate (after ra);
+\draw[thick,fill=blue!20] (top) ++(0cm, -1.1cm) rectangle  ++(4cm, -0.1cm);
+\draw[thick,fill=blue!20] (top) ++(0cm, -4.1cm) rectangle  ++(4cm, -0.1cm);
+\draw[thick,fill=orange!20] (top) ++(0cm, -4.2cm) rectangle  ++(4cm, -0.2cm);
+\draw[thick,fill=orange!20] (top) ++(0cm, -4cm) rectangle  ++(4cm, -0.1cm);
+\node[anchor=north,font=\small,fill=white] at ([xshift=-2cm]after shadow ra) {shadow RA};
+\node[anchor=north,font=\small,fill=white] at ([xshift=-2cm]after ra) {return addr};
+\path[draw,very thick,-Latex] (after ra) -- ++(.25cm,0cm) |- (after shadow ra);
+\end{tikzpicture}
+\end{frame}

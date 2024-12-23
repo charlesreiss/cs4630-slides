@@ -1,0 +1,118 @@
+\begin{frame}{Linux system call filtering: detailed}
+    \begin{itemize}
+    \item Linux supports more fine-grained system call filtering
+    \item using BPF (Berkeley Packet Filter) programming language
+        \begin{itemize}
+        \item compiled in the kernel to assembly to check system calls
+        \end{itemize}
+    \vspace{.5cm}
+    \item can check system call argument values, but\ldots
+        \begin{itemize}
+        \item problems with pointer arguments
+        \item too many system calls
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=open]{Linux system call: open}
+\begin{lstlisting}[language=C,style=small]
+open("foo.txt", O_RDONLY);
+\end{lstlisting}
+\begin{itemize}
+\item parameters:
+    \begin{itemize}
+    \item system call number: 2 (``open'')
+    \item argument 1: 0x7fffe983 (address of string ``foo.txt'')
+    \item argument 2: 0 (value of ``\texttt{O\_RDONLY}'')
+    \end{itemize}
+\item very problematic to filter using BPF interface
+\vspace{.5cm}
+\item can deal with using `ptrace' --- Linux debugging interface
+    \begin{itemize}
+    \item BPF can trigger something like a debugger breakpoint
+    \item breakpoint wakes up monitor program (attached like debugger)
+    \item `monitor' program can perform system call on program's behalf
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{comment}
+\begin{frame}[fragile,label=openRuleP1]{lots of ways to open (1)}
+\begin{itemize}
+\item let's say we want to disallow:
+\end{itemize}
+\begin{lstlisting}[language=C,style=smaller]
+open("/dev/keyboard", O_RDONLY);
+\end{lstlisting}
+\begin{itemize}
+\item problem 1: some other ways of doing that?
+\begin{lstlisting}[language=C,style=smaller]
+chdir("/dev");
+open("keyboard, O_RDONLY);
+
+open("../../../../../../dev/keyboard", O_RDONLY);
+
+symlink("/dev", "/tmp/foo");
+open("/tmp/foo/keyboard", O_RDONLY);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=openRuleP2]{lots of ways to open (2)}
+\begin{itemize}
+\item let's say we want to disallow:
+\end{itemize}
+\begin{lstlisting}[language=C,style=smaller]
+open("/dev/keyboard", O_RDONLY);
+\end{lstlisting}
+\begin{itemize}
+\item problem 2: filter language doesn't allow reading pointers
+    \begin{itemize}
+    \item string is passed via pointer
+    \end{itemize}
+\item problem 3: string can be changed from another core
+    \begin{itemize}
+    \item between when filter runs and when syscall runs
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=openRuleP3]{lots of ways to open (3)}
+\begin{itemize}
+\item let's say we want to disallow:
+\end{itemize}
+\begin{lstlisting}[language=C,style=smaller]
+open("/dev/keyboard", O_RDONLY);
+\end{lstlisting}
+\begin{itemize}
+\item problem 4: several other syscalls (that might be used innocently)
+    \begin{itemize}
+    \item openat, open\_by\_handle\_at
+    \item would need to write additional filter rules
+    \item \ldots or break programs that aren't trying to violate rule
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=howManySystemCalls]{Linux system calls}
+\begin{itemize}
+\item x86-64 linux: \myemph{313 system calls}
+\item opening a file:
+    \begin{itemize}
+    \item open (number 2)
+    \item openat (number 257)
+    \item open\_by\_handle\_at (number 304)
+    \end{itemize}
+\item coordinating between threads (for using multiple cores):
+    \begin{itemize}
+    \item rt\_sigaction (number 13)
+    \item rt\_sigprocmask (number 14)
+    \item rt\_sigreturn (number 15)
+    \item tkill (number 200)
+    \item futex (number 202)
+    \item set\_robust\_list (number 273)
+    \item get\_robust\_list (number 274)
+    \item more?
+    \end{itemize}
+\end{itemize}
+\end{frame}
+\end{comment}

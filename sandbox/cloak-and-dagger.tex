@@ -1,0 +1,29 @@
+\begin{frame}{Cloak and Dagger}
+\includegraphics[width=\textwidth]{../sandbox/cloak-and-dagger}
+\end{frame}
+
+\begin{frame}{cloak and dagger permissions}
+    \begin{itemize}
+    \item the two permissions:
+        \begin{itemize}
+        \item SYSTEM\_ALERT\_WINDOW: \\
+            draw windows on top of screen \\
+            (at time: enabled by default)
+        \item BIND\_ACCESSIBILITY\_SERVICE: \\
+            ``Observe your actions'' \\
+            ``Retrieve window content''
+        \end{itemize}
+    \item can hide window content while user interacts with it
+    \item \ldots and stealthy get user to do more things
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{also, a clickjacking attack}
+    \begin{itemize}
+    \item at the time, could draw overlay window over permissions dialog
+    \item \ldots convince user to press where ``OK'' button is
+    \item countermeasure: permissions dialog would detect this, ignore clicks
+    \vspace{.5cm}
+    \item problem: wouldn't detect if overlay didn't cover enough of button
+    \end{itemize}
+\end{frame}

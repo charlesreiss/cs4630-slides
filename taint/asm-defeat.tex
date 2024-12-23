@@ -1,0 +1,13 @@
+\begin{frame}[fragile,label=defeatAsmCheck]{defeating ASM-based checking}
+\begin{itemize}
+\item if a malware author wanted to defeat this taint checking,
+what ideas seem promising for confusing the analysis?
+\begin{itemize}
+\item A. timing arithmetic operations to see if the machine is unusually slow
+\item B. computing the hash of the malware's machine code and comparing it to a known value
+\item C. changing \lstinline|x = y| to \\
+    \lstinline|switch (x) { case 1: y = 1; break; case 2: ...}|
+\item D. changing \lstinline|x = y| to \lstinline|x = z + y; x = x - z;|
+\end{itemize}
+\end{itemize}
+\end{frame}

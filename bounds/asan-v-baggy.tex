@@ -1,0 +1,20 @@
+
+\begin{frame}{AddressSanitizer}
+    \begin{itemize}
+    \item like baggy bounds:
+        \begin{itemize}
+        \item big lookup table
+        \item lookup table set by memory allocations
+        \item compiler modification: change stack allocations
+        \end{itemize}
+    \item unlike baggy bounds:
+        \begin{itemize}
+        \item check reads/writes (instead of pointer computations)
+        \item only detect errors that read/write \myemph{between objects}
+        \item object sizes not padded to power of two
+        \item table has info for every single byte (more precise)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+

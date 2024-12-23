@@ -1,0 +1,71 @@
+
+\begin{frame}[fragile,label=formatStringIntro]{format string exploits}
+\lstset{language=C}
+\begin{lstlisting}
+printf("The command you entered ");
+printf(command);
+printf("was not recognized.\n");
+\end{lstlisting}
+    \begin{itemize}
+        \item<2> what if \texttt{command} is {\tt \%s}?
+    \end{itemize}
+\end{frame}
+
+% FIXME: demo based on this looking at registers in GDB
+
+\begin{frame}[fragile,label=viewingTheStack]{viewing the stack}
+\lstset{
+    language={},
+    style=smaller,
+    moredelim={**[is][\color{blue!70!black}]{~in~}{~end~}},
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+    moredelim={**[is][\btHL<4|handout:0>]{~4~}{~end~}},
+    moredelim={**[is][\btHL<5|handout:0>]{~5~}{~end~}},
+}
+\vspace{-.25cm}
+\begin{lstlisting}
+$ ~in~cat test-format.c~end~
+#include <stdio.h>
+
+int main(void) {
+    char buffer[100];
+    while(fgets(buffer, sizeof buffer, stdin)) {
+        printf(buffer);
+    }
+}
+$ ~in~./test-format.exe~end~
+~in~%016lx %016lx %016lx %016lx %016lx %016lx %016lx %016lx~end~
+~3~00007fb54d0c6790~end~ ~4~786c363130252078~end~ ~4~0000000000ac6048~end~ ~4~3631302520786c36~end~
+~4~3631302500000000~end~ ~5~6c3631302520786c~end~ 786c363130252078 ~2~20786c36313025~end~20
+\end{lstlisting}
+\begin{tikzpicture}[overlay,remember picture]
+    \tikzset{every node/.style={draw,thick,fill=white}}
+    \begin{visibleenv}<2>
+        \node at (current page.center) {
+            {\tt 25 30 31 36 6c 78 20} is ASCII for {\tt \%016lx\textvisiblespace}
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<3>
+        \node at (current page.center) {
+            second argument to {\tt printf}: \%rsi
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<4>
+        \node at (current page.center) {
+            third through fifth argument to {\tt printf}: \%rdx, \%rcx, \%r8, \%r9
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<4>
+        \node at (current page.center) {
+            third through fifth argument to {\tt printf}: \%rdx, \%rcx, \%r8, \%r9
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<5>
+        \node at (current page.center) {
+            16 bytes of stack after return address
+        };
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+

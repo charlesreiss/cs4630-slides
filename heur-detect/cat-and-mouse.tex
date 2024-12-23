@@ -1,0 +1,25 @@
+\usetikzlibrary{shapes.misc}
+
+{ % all template changes are local to this group.
+    \setbeamertemplate{navigation symbols}{}
+    \contourlength{.2mm}
+    \begin{frame}[plain]
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[at=(current page.center)] (image) {
+                \includegraphics[height=\paperheight]{../heur-detect/1600x1200-Tom-Jerry-Chase}
+            };
+            %\draw[help lines] (0, 0) grid (12, -8);
+            \begin{scope}[shift={([yshift=-0.75cm,xshift=1cm]image.north west)}]
+            \node[cross out,draw,line width=1mm,black,at={(9,-6)},anchor=center,minimum width=6cm,minimum height=1.25cm] {};
+            \node[at={(3,-8.25)},anchor=center,font=\Huge\bfseries,
+                red!90!black,align=left] {\contour{black}{Anti-\hspace{-.4ex}Virus}};
+            \node[at={(6.5,-8.25)},anchor=center,font=\large\bfseries,
+                red!90!black,align=left,rotate=30] {\contour{black}{and}};
+            \node[at={(8.5,-8.25)},anchor=center,font=\Huge\bfseries,
+                red!90!black,align=left] {\contour{black}{Virus}};
+            \end{scope}
+        \end{tikzpicture}
+     \end{frame}
+}
+
+

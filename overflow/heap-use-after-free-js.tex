@@ -1,0 +1,19 @@
+
+\begin{frame}{use-after-free easy cases}
+\begin{itemize}
+    \item common problem for JavaScript implementations
+    \item use-after-free'd object often some complex C++ object
+        \begin{itemize}
+            \item example: representation of video stream
+        \end{itemize}
+    \item exploits can \myemph{choose type of object that replaces}
+        \begin{itemize}
+            \item allocate that kind of object in JS
+        \end{itemize}
+    \item can often arrange to read/write vtable pointer
+        \begin{itemize}
+            \item depends on layout of thing created
+            \item easy examples: string, array of floating point numbers
+        \end{itemize}
+\end{itemize}
+\end{frame}

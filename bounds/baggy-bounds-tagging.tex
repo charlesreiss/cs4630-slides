@@ -1,0 +1,13 @@
+
+\begin{frame}{alternate approach: pointer tagging}
+    \begin{itemize}
+        \item some bits of \myemph{address} are size 
+        \begin{itemize}
+        \item replaces table entry/lookup
+        \end{itemize}
+    \item change code to allocate objects this way
+    \item works well on 64-bit --- plenty of addresses to use
+    \end{itemize}
+    \includegraphics[width=0.8\textwidth]{../bounds/baggy-bounds-tagging}
+\end{frame}
+

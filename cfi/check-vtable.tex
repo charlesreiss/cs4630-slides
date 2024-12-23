@@ -1,0 +1,60 @@
+\begin{frame}[fragile,label=checkVTable1]{checking a VTable call}
+\begin{tikzpicture}
+\node[draw,very thick,align=left] (base c code) {
+\begin{lstlisting}[language=C++,style=smaller]
+class A { public:
+  virtual void bar() { ... }
+};
+class B : public A { public:
+  void bar() { ... }
+};
+void example(A *obj) {
+  obj->bar();
+}
+\end{lstlisting}
+};
+\node[draw,very thick,anchor=north west,align=left] (base asm code) at ([yshift=-.25cm] base c code.south west) {
+\begin{lstlisting}[language=myasm,style=smaller]
+example:
+  // rax <- vtable address
+  movq (%rdi), %rax
+  // rdx <- first vtable entry
+  movq (%rax), %rax
+  // call using vtable entry
+  call *%rax
+  ...
+\end{lstlisting}
+};
+\begin{visibleenv}<2>
+\node[draw=red,very thick,anchor=north west,align=left,font=\fontsize{12}{13}\selectfont] (warning) at ([xshift= .5cm]base asm code.north east) {
+example uses VTable to call method \\
+target for memory corruption attacks \\
+just like return addresses \\
+so, apply same strategy
+};
+\end{visibleenv}
+\begin{visibleenv}<3->
+\node[draw=red,very thick,anchor=north west,align=left] (new asm code) at ([xshift= .5cm]base asm code.north east) {
+\begin{lstlisting}[language=myasm,style=smaller]
+example:
+  movq (%rdi), %rax
+  movq (%rax), %rax
+  cmpq $0xe0c5df0b, 2(%rax)
+  jne CRASH
+  call *%rax
+  ...
+\end{lstlisting}
+};
+\node[draw=red,very thick,anchor=south west,align=left] (new method code) at ([yshift=.5cm]new asm code.north west) {
+\begin{lstlisting}[language=myasm,style=smaller]
+A::bar():
+  label $0xe0c5df0b
+  ...
+B::bar():
+  label $0xe0c5df0b
+  ...
+\end{lstlisting}
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}

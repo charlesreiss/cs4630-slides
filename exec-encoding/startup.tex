@@ -1,0 +1,21 @@
+
+\begin{frame}{simple executable startup}
+    \begin{itemize}
+    \item copy segments into memory
+    \item jump to start address
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{executable startup code}
+    \begin{itemize}
+    \item Linux: executables don't start at {\tt main}
+    \item why not?
+        \begin{itemize}
+        \item need to initialize {\tt printf}, {\tt cout}, {\tt malloc}, etc. data structures
+        \item {\tt main} needs to return somewhere
+        \end{itemize}
+    \item compiler links in startup code
+    \end{itemize}
+\end{frame}
+
+

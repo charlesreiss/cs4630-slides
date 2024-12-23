@@ -1,0 +1,42 @@
+\begin{frame}{restricted characters in pointers?}
+    \begin{itemize}
+    \item recall: put pointer to buffer in stack pointer
+    \item example buffer pointer: \texttt{0x7fffffffde2c}
+    \item as bytes (little endian, loweset address first): \\
+         \texttt{2C DE FF FF FF 7F 00 00}
+    \vspace{.5cm}
+    \item what if \texttt{00} bytes aren't allowed in input?
+        \begin{itemize}
+        \item no problem: prior value of return address probably has 0s already
+        \end{itemize}
+    \item what if \texttt{2C} or \texttt{DE} not allowed in input?
+        \begin{itemize}
+        \item can probably find other location on stack writen by overflow
+        \item NB: could place code after overwritten return address
+        \end{itemize}
+    \item \myemph<2>{what if \texttt{7F} or \texttt{FF} not allowed in input?}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=altShellcode]{alternate places for shellcode?}
+\begin{lstlisting}
+...
+char current_student[1000];
+...
+int GetAndCompareAnswer(char *question,
+                        char *expected_answer) {
+    char answer[1000];
+    // "1.2 seconds"
+    scanf("%[a-zA-Z0-9. ]", answer);
+    return CompareStrings(answer, expected_answer);
+}
+\end{lstlisting}
+\begin{itemize}
+\item suppose \texttt{current\_student} at \texttt{0x404580}
+\item then \texttt{current\_student[180]} at \texttt{0x404640}
+    \begin{itemize}
+    \item bytes 40 (ASCII space) 46 (ASCII \texttt{.} (period)) 40 (ASCII space)
+    \item (and hope return address already has zeroes)
+    \end{itemize}
+\end{itemize}
+\end{frame}

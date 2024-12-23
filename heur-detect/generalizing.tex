@@ -1,0 +1,39 @@
+
+
+\begin{frame}{avoiding sensitivity: virus patterns}
+    \begin{itemize}
+    \item recall: things viruses \myemph{can't easily change!}
+    \item example: 
+        \begin{itemize}
+        \item inserted jumps to virus codes
+        \item code in weird parts of executable file
+        \item code that modifies executables
+        \item \ldots
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{generic generalizing}
+    \begin{itemize}
+    \item take static parts of virus
+    \item look for \myemph{distance to match}
+    \item e.g. {\tt foobarbaz} is 2 from {\tt fooxaxbaz}
+    \item slower than regular-expression-like scanners
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{pattern cost}
+    \begin{itemize}
+    \item constructed by hand?
+        \begin{itemize}
+        \item question: how could we automate?
+        \end{itemize}
+    \item false positives?
+        \begin{itemize}
+        \item push + ret really unused?
+        \item jmp at beginning?
+        \item what about data bytes?
+        \item \ldots
+        \end{itemize}
+    \end{itemize}
+\end{frame}

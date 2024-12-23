@@ -1,0 +1,95 @@
+\graphicspath{{./figures/}}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item bootstrapping ROP
+        \begin{itemize}
+        \item look for gadget that sets RSP
+        \item use to point to ROP chain
+        \end{itemize}
+    \item jump-oriented programming
+        \begin{itemize}
+        \item looking for ``dispatcher gadget'' (incr pointer + jump using it)
+        \item form loop returning back to dispatcher gadget
+        \end{itemize}
+    \item ASLR
+        \begin{itemize}
+        \item how much randomness; limits with 32-bit systems
+        \item keeping executables/libraries together?
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{scheduling note}
+    \begin{itemize}
+    \item no class Monday
+    \item week's quiz due Wednesday
+    \item ROP assignment will be ready by Friday (probably by tomorrow morning)
+    \end{itemize}
+\end{frame}
+
+\input{../mitigate/aslr-entropy-together}
+
+\subsection{alternate approach: Windows}
+\input{../mitigate/aslr-windows-pic}
+
+\subsection{making ASLR: removing hard-coded addresses}
+\input{../mitigate/aslr-pic}
+
+\subsubsection{without absolute}
+\input{../mitigate/aslr-without-abs-ex}
+
+\subsection{changes with position-independent code}
+\input{../mitigate/pic-cost-code}
+
+\subsection{PIE}
+\input{../mitigate/aslr-pie}
+
+\subsection{position-independent cost}
+\input{../mitigate/pic-switch-example}
+
+\subsubsection{measurements}
+\input{../mitigate/pic-cost-measure}
+
+% FIXME: go into example from sudo
+\section{sudo exploit example}
+\input{../overflow/sudo-ex}
+
+
+\section{heap smashing}
+\input{../overflow/heap-smash-intro}
+
+\subsection{heap bookkeeping}
+\input{../overflow/heap-bookkeeping}
+
+\subsection{bookkeeping to pointer subterfuge}
+\input{../overflow/heap-pointer-subter}
+
+% FIXME: exercise, using linked-list heap exploit to write something
+\subsection{exericse}
+\input{../overflow/heap-subter-exer}
+
+\section{alternate malloc designs?}
+\input{../overflow/alt-malloc}
+
+\section{use-after-free}
+\input{../overflow/heap-use-after-free}
+
+\subsection{pattern}
+\input{../overflow/heap-use-after-free-pattern}
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+\subsection{exercise: using a leak}
+\input{../mitigate/aslr-using-leak-exer}
+
+\subsection{exercise: using function pointer overwrite}
+\input{../rop/use-fptr-overwrite-exer}
+
+\end{document}

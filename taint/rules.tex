@@ -1,0 +1,16 @@
+\begin{frame}{taint tracking rules (for injection)}
+    \begin{itemize}
+        \item sources are \textit{tainted}
+        \item \myemph{transitive} values computed using tainted values are tainted
+            \begin{itemize}
+            \item except for \myemph{explicit} ``sanitization'' operations
+            \end{itemize}
+        \item what about control flow? (multiple options)
+        \item error if tainted values are passed to ``sensitive'' operations
+            \begin{itemize}
+            \item shell command
+            \item SQL command
+            \item \ldots
+            \end{itemize}
+    \end{itemize}
+\end{frame}

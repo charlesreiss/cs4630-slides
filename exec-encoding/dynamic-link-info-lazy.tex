@@ -1,0 +1,64 @@
+
+\begin{frame}[fragile,label=dynamicPutsLazy]{lazy binding}
+\begin{Verbatim}[commandchars=Q\{\},fontsize=\fontsize{8}{9}\selectfont]
+0000000000401040 <puts@plt>:
+  401040:       f3 0f 1e fa             endbr64 
+  401044:       f2 ff 25 cd 2f 00 00    bnd jmpq *0x2fcd(%rip)  # 404018
+...
+Contents of section .got.plt:
+ 404000 203e4000 00000000 00000000 00000000   >@.............
+ 404010 00000000 00000000 Qtextbf{30104000 00000000}  ........0.@.....
+\end{Verbatim}
+\begin{itemize}
+\item initial contents of {\tt 0x404018} = {\tt 0x401030} (in .got.plt)
+    \begin{itemize}
+    \item not part of standard library????
+    \end{itemize}
+\item<2-> code found at 0x401030 is routine to invoke dynamic linker code:
+\end{itemize}
+\begin{visibleenv}<2->
+\begin{Verbatim}[commandchars=Q\{\},fontsize=\fontsize{8}{9}\selectfont]
+  401020:       ff 35 e2 2f 00 00       pushq  0x2fe2(%rip)        # 404008 <_GLOBAL_OFFSET_TABLE_+0x8>
+  401026:       f2 ff 25 e3 2f 00 00    bnd jmpq *0x2fe3(%rip)        # 404010 <_GLOBAL_OFFSET_TABLE_+0x10>
+  40102d:       0f 1f 00                nopl   (%rax)
+  401030:       f3 0f 1e fa             endbr64 
+  401034:       68 00 00 00 00          pushq  $0x0
+  401039:       f2 e9 e1 ff ff ff       bnd jmpq 401020 <.plt>
+\end{Verbatim}
+\end{visibleenv}
+\end{frame}
+
+\begin{frame}{lazy binding}
+\begin{itemize}
+\item with lazy binding turned on (not always done)
+\vspace{.5cm}
+\item GOT loaded with address of linker routine hard-coded in executable
+\item first call to puts:
+    \begin{itemize}
+    \item invoke dynamic linker routine pointed to by GOT
+    \item linker routine fills in puts address in {\tt 0x404018}
+    \item then jumps to puts
+    \end{itemize}
+\item second (and later) call to puts
+    \begin{itemize}
+    \item 0x404018 contains real address of puts, no indirection
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{lazy binding pro/con}
+\begin{itemize}
+    \item advantages:
+    \begin{itemize}
+        \item faster program loading
+        \item no overhead for unused code (often a lot of stuff)
+    \end{itemize}
+    \item disadvantages:
+    \begin{itemize}
+        \item can move errors (missing functions, etc.) to runtime
+        \item possibly more total overhead
+        \item means global offset table needs to be writable?
+    \end{itemize}
+\end{itemize}
+\end{frame}
+

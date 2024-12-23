@@ -1,0 +1,67 @@
+
+\begin{frame}{quines}
+\begin{itemize}
+    \item exercise: write a C program that outputs its source code
+        \begin{itemize}
+        \item (pseudo-code only okay)
+        \end{itemize}
+    \item possible in any {\small (Turing-complete)} programming language
+    \item called a ``quine''
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=quineClever]{clever quine solution}
+\lstset{language=C,style=small,
+    moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
+    moredelim={**[is][\btHL<3|handout:0>]{@hi3@}{@endhi@}},
+    showstringspaces=false,
+}
+\begin{lstlisting}
+#include <stdio.h>
+char*x="int main(){
+       `\btHL<2>{printf(p,10,34,x,34,10,34,p,34,10,x,10);}`
+       }";
+@hi3@char*p@endhi@="#include <stdio.h>%c
+    char*x=%c%s%c;%cchar*p=%c%s%c;
+    %c%s%c";
+int main(){
+    @hi2@printf(p,10,34,x,34,10,34,p,34,10,x,10);@endhi@
+}
+\end{lstlisting}
+\begin{itemize}
+\item some line wrapping for readability --- shouldn't be in actual quine
+\end{itemize}
+\begin{tikzpicture}[overlay,remember picture]
+    \begin{visibleenv}<2|handout:0>
+        \node[fill=white,draw,thick,align=left] at (current page.center) {
+            {\tt printf} to fill template: \\
+            {\tt 10} = newline; {\tt 34} = double-quote; \\
+            {\tt x}, {\tt p} = template/constant strings
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<3|handout:0>
+        \node[fill=white,draw,thick,align=left] at ([yshift=1cm]current page.center) {
+            template filled by printf
+        };
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=quineDumb]{dumb quine solution}
+\begin{lstlisting}[language=C,style=small]
+#include <stdio.h>
+int main(void) {
+    char buffer[1024];
+    FILE *f = fopen("quine.c", "r");
+    size_t bytes = fread(buffer, 1,
+                         sizeof(buffer), f);
+    fwrite(buffer, 1, bytes, stdout);
+    return 0;
+}
+\end{lstlisting}
+\begin{itemize}
+\item a lot more straightforward!
+\item but ``cheating''
+\end{itemize}
+\end{frame}
+

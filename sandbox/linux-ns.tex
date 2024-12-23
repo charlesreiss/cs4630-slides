@@ -1,0 +1,139 @@
+\begin{frame}{Linux namespaces (1)}
+    \begin{itemize}
+    \item Linux: alternate sandboxing features
+    \item ``namespaces'' for other resources
+    \item chroot: each process has own idea of root directory
+        \begin{itemize}
+        \item change to OS: look up root directory in process, not global variable
+        \end{itemize}
+    \item can apply this to other resources:
+        \begin{itemize}
+        \item what filesystems (disks) are available
+        \item what network devices are available
+        \item what user identifier numbers are
+        \item \ldots
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Linux namespaces (2)}
+    \begin{itemize}
+    \item user namespace:
+    \vspace{.5cm}
+    \item can run programs with new view of users:
+    \vspace{.5cm}
+    \item inside namespace: running as root
+    \item outside namespace: root translated to innocent user ID
+    \item allows running programs that expect different users
+        \begin{itemize}
+        \item \ldots without changes, but without giving special permissions
+        \end{itemize}
+    \vspace{.5cm}
+    \item mechanism: reassign user ID numbers in kernel
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=LinuxCloneUnshare]{aside: Linux clone(), unshare() syscalls}
+\begin{itemize}
+\item Linux clone system call: start new process (or thread)
+\item flags to specify environment of new process
+\item these flags can include ``make a new namespace of a type''
+\end{itemize}
+\begin{lstlisting}[style=smaller,language=C++]
+int id = clone(start_function, ..., CLONE_NEWUSER | other-flags);
+\end{lstlisting}
+\begin{itemize}
+\item above option: new user namespace for new process
+\vspace{.5cm}
+\item alternative: for changing current process's namespace:
+\end{itemize}
+\begin{lstlisting}[style=smaller,language=C++]
+unshare(CLONE_NEWUSER);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{user namespaces API}
+\begin{itemize}
+\item Linux: users identified by numerical \textit{user IDs} (UIDs)
+\vspace{.5cm}
+\item with user namespaces:
+\item control file \texttt{/proc/PROCESS-ID/UID\_MAP} contains lines like:
+    \begin{itemize}
+    \item \texttt{0 1000 2} --- UID 0--1 maps to UID 1000--1001
+    \item \texttt{1000 2000 100} --- UID 1000-1100 maps to UID 2000--2100
+    \end{itemize}
+\item can write to that file to reconfigure (if enough permissions)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Linux namesapces (3)}
+    \begin{itemize}
+    \item mount namespaces:
+        \begin{itemize}
+        \item Unix: mounting disk = making the contents of the disk available as directories+files
+        \end{itemize}
+    \vspace{.5cm}
+    \item different idea of what filesystems are available
+    \item can be setup with \textit{bind mounts} to ``real FS''
+        \begin{itemize}
+        \item but otherwise: no access to directories outside mount namespace
+        \item normally requires root --- but special case with user namespaces
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=mountNSCmdLine]{mount namespaces API}
+from command line:
+\begin{lstlisting}[language={},style=smaller]
+    # runs shell (/bin/sh) in new mount namesapce
+shell1$ unshare --mount /bin/sh
+
+    # setup directories in /tmp/workdir and make them aliases of things on normal FS 
+    # these aliases will only exist for processes in mount namespace
+shell2$ mkdir -p /tmp/workdir/bin
+shell2$ mkdir -p /tmp/workdir/lib
+shell2$ mkdir -p /tmp/workdir/usr
+shell2$ mkdir -p /tmp/workdir/current
+shell2$ mount -o bind,ro /bin /tmp/workdir/bin
+shell2$ mount -o bind,ro /lib /tmp/workdir/lib
+shell2$ mount -o bind,ro /usr /tmp/workdir/usr
+shell2$ mount -o bind /home/someuser /tmp/workdir/current
+
+    # start new shell with the root directory being /tmp/workdir
+shell2$ chroot /tmp/workdir /bin/sh
+shell3$ cd /
+shell3$ /bin/ls
+bin     current     lib     usr
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Linux namespaces (3)}
+    \begin{itemize}
+    \item user namespace and mount namespace together:
+    \vspace{.5cm}
+    \item run program in new user namespace
+    \item map regular root (in namespace) to regular user
+        \begin{itemize}
+        \item ``opts out'' of programs like sudo
+        \end{itemize}
+    \item move to new mount namespace
+    \item setup bind mounts + chroot
+        \begin{itemize}
+        \item special case: allowed because root in user namespce
+        \item can't get ``real'' root (administrator) privileges ever
+        \end{itemize}
+    \item run program with subset of available files
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Linux namespaces (4)}
+    \begin{itemize}
+    \item other resources with namespaces
+        \begin{itemize}
+        \item network --- common usage: virtual network device for set processes
+        \item hostname (``UTS'')
+        \item process identifiers
+        \item control groups (resource limits for memory, CPU usage, disk I/O, etc.)
+        \end{itemize}
+    \end{itemize}
+\end{frame}

@@ -1,0 +1,83 @@
+\begin{frame}<1>[fragile,label=escapeHatchSupport1]{Rust escape hatch support}
+    \begin{itemize}
+        \item escape hatch: make new reference-like types
+        \item<2> Rc: \verb|Rc<T>| acts like \verb|&T|
+        \item callbacks on ownership ending (normally deallocation)
+        \item<2> Rc: deallocating \verb|Rc<T>| decrements shared count
+        \item choice of what happens on move/copy
+        \item<2> Rc: transferring Rc makes new copy, increments shared count
+    \end{itemize}
+\end{frame}
+ 
+\begin{frame}[fragile,label=refCounting]{alternative rule: reference counting}
+    \begin{itemize}
+    \item keep track of number of references
+    \item delete when count goes to zero
+        \begin{itemize}
+        \item Rust automatically calls destructor --- no programmer effort
+        \end{itemize}
+    \item Rust implement with Rc type (``counted reference'')
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=refCountingEx]{Ref Counting Example}
+\begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
+struct Grade {
+    score: i32, studentName: String, assignmentName: String,
+}
+struct Student {
+    name: String,
+    grades: Vec<Rc<Grade>>,
+}
+struct Assignment {
+    name: String
+    grades: Vec<Rc<Grade>>
+}
+
+fn add_grade(student: &mut Student, assignment: &mut Assignment, score: i32) {
+    let grade = Rc::new(Grade {
+        score: i32,
+        studentName: student.name,
+        assignmentName: assignment.name,
+    })
+    student.grades.push(grade.clone())
+    assignment.grades.push(grade.clone())
+}
+\end{minted}
+\end{frame}
+
+\againframe<2>{escapeHatchSupport1}
+
+\begin{frame}[fragile,label=rcImplA]{Rc implementationed (annotated) (1)}
+\begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+impl<T: ?Sized> Clone for Rc<T> {
+    ... 
+    fn clone(&self) -> Rc<T> {
+        self.inc_strong(); // <-- incremenet reference count
+        Rc { ptr: self.ptr }
+    }
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=rcImplB]{Rc implementation (annotated) (2)}
+\begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+unsafe impl<#[may_dangle] T: ?Sized> Drop for Rc<T> {
+    ...
+    fn drop(&mut self) { // <-- compilers calls on deallocation
+        unsafe {
+           let ptr = *self.ptr;
+
+           self.dec_strong(); // <-- decrement reference cont
+           if self.strong() == 0 { // if ref count is 0
+                // destroy the contained object
+                ptr::drop_in_place(&mut (*ptr).value);
+                ...
+            }
+        }
+    }
+    ...
+}
+\end{minted}
+\end{frame}
+

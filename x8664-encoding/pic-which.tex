@@ -1,0 +1,14 @@
+\begin{frame}{position-independence: which to use?}
+\begin{itemize}
+\item suppose we're inserting ``evil'' code \\
+at changing addresses in executable's memory
+\item which of the following do we want absolute encoding for? \\
+(i.e. which would absolute encoding be easier than relative)
+    \begin{itemize}
+    \item A. address of a jump from evil code to function at fixed loc in executable
+    \item B. address of a jump in a loop in the ``evil'' code
+    \item C. address of a string in the ``evil'' code
+    \item D. address of a string in the executable
+    \end{itemize}
+\end{itemize}
+\end{frame}

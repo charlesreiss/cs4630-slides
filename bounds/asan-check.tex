@@ -1,0 +1,24 @@
+
+\begin{frame}[fragile,label=asanVBounds]{adding bounds-checking example}
+\lstset{
+    language=C++,
+    style=small,
+    moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+}
+\begin{lstlisting}
+void vulnerable(long value, int offset) {
+    long array[10] = {1,2,3,4,5,6,7,8,9,10};
+    // generated code: (added by AddressSanitizer)
+    ~2~if (!lookup_table[&array[offset]] == VALID) FAIL();~end~
+    array[offset] = value;
+    do_something_with(array);
+}
+\end{lstlisting}
+    \begin{itemize}
+        \item AddressSanitizer: crashes only if \lstinline|array[offset]| isn't part of any object
+            \begin{itemize}
+            \item but no extra space --- single-byte precision
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+

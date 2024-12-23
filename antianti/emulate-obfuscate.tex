@@ -1,0 +1,108 @@
+\begin{frame}{emulation based obfuscation}
+    \begin{itemize}
+    \item so far: always producing machine code and running it
+    \item analyzing machine code with virtual machine, debugger, etc.
+    \vspace{.5cm}
+    \item alternate idea: invent a new instruction set
+    \item convert program to that instruction set
+    \item include interpreter for that instruction set
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=VirtIntro]{example: Tigress Virtualize transform (1)}
+input:
+\begin{lstlisting}[style=smaller]
+int example(int x) {
+    if (x > 10) {
+        printf("Yes!\n");
+    }   
+}
+\end{lstlisting}
+\begin{itemize}
+\item Tigress generates instruction set for stack-based machine
+    \begin{itemize}
+    \item uses little stack instad of registers for most instructions
+    \item same design used by, e.g., Java VM
+    \end{itemize}
+\item instructions can pop+push from stack for temporaries
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=VirtISA]{example: Tigress Virtualize transform (2)}
+\begin{itemize}
+\item instruction set for example
+\begin{itemize}
+\item call OPERAND=funcId with arguments LOCALS[1]
+\item pop t1, pop t2, push t1>t2
+\item push OPERAND
+\item push table[OPERAND]
+    \begin{itemize}
+    \item different variants for int, string, \ldots
+    \end{itemize}
+\item pop t1, LOCALS[OPERAND] = t1
+\item pop t1, if (t1) goto OPERAND
+\item return
+\end{itemize}
+\item customized for this function
+\item each instruction has opcode, variable length (if operands)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=VirtISA2]{example: Tigress Virtualize transform (3)}
+\begin{lstlisting}[style=script]
+int example(int x) {
+    if (x > 10) {
+        printf("Yes!\n");
+    }   
+}
+\end{lstlisting}
+\begin{itemize}
+\item each line below one ``instruction''
+    \begin{itemize}
+    \item (actually encoded as part of array of bytes)
+    \end{itemize}
+\begin{itemize}
+\item push OPERAND=10
+\item push table[OPERAND=\ldots] (argument \texttt{x})
+\item pop t1 pop t2 push t1>t2
+\item pop t1, if (t1) goto OPERAND=OUT
+\item push table[OPERAND=\ldots] (string \texttt{"Yes!"})
+\item pop t1, LOCALS[OPERAND=1] = t1
+\item call OPERAND=\ldots (printf) with arguments LOCAL1
+\item OUT: \ldots
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=VirtISAEx]{example: Tigress emulator}
+\begin{lstlisting}
+  _1_example_$sp[0] = _1_example_$stack[0];
+  _1_example_$pc[0] = _1_example_$array[0];
+  while (1) {
+    switch (*(_1_example_$pc[0])) {
+    ...
+    }
+  }
+\end{lstlisting}
+\begin{itemize}
+\item pc variable representing emulated stack
+    \begin{itemize}
+    \item switch statement based on opcode
+    \end{itemize}
+\item sp variable representing emulated stack
+\end{itemize}
+\end{frame}
+
+\begin{frame}{effectiveness of this transformation?}
+    \begin{itemize}
+    \item huge performance impact
+    \item can do analysis on new instruction set
+        \begin{itemize}
+        \item how much more difficult than working with original machine code?
+        \end{itemize}
+    \item instruction traces still helpful
+        \begin{itemize}
+        \item about as easy to get record of everything done
+        \end{itemize}
+    \end{itemize}
+\end{frame}

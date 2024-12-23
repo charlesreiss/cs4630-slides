@@ -1,0 +1,13 @@
+\begin{frame}[fragile,label=symExecExer]{exercise}
+\begin{lstlisting}
+void example(unsigned x, unsigned y) {
+    if (x > y) return;
+    x = x + y;
+    assert(x + y + 1 > y);
+}
+\end{lstlisting}
+\begin{itemize}
+\item 1: to see if the assertion is meant, the equation we should solve (if initial values of x, y, are X, Y)?
+\item 2: what is an input that fails the assertion? (hint: integer overflow)
+\end{itemize}
+\end{frame}

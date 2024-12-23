@@ -1,0 +1,100 @@
+\graphicspath{{./figures/}}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+\begin{frame}{last time}
+    \begin{itemize}
+    \item arc injection
+        \begin{itemize}
+        \item don't write shellcode; use existing program/library code
+        \item surprise: often useful code already present
+        \end{itemize}
+    \item pointer subterfuge
+        \begin{itemize}
+        \item overwrite \textit{data} pointer
+        \item program uses that data pointer to write something else
+        \item way to get an arbitrary memory write
+        \end{itemize}
+    \item overflows on the heap
+    \item memory protection: paging
+        \begin{itemize}
+        \item OS-managed table: for each (typically 4K) page, read/write + real address
+        \end{itemize}
+    \item guard pages: deliberately non-read/writeable pages
+        \begin{itemize}
+        \item can place between objects to stop (contiguous) buffer overflows
+        \item problem: can only do in whole page chunks
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{next assignment}
+    \begin{itemize}
+    \item on pointer subterfuge
+    \vspace{.5cm}
+    \item was a format string exploit\ldots
+    \item and I'd hope format string exploits have gone away\ldots
+        \begin{itemize}
+        \item but there was a bug in the original version of the \%n checking\ldots
+        \item where it could be bypassed due to an integer overflow
+        \item and another uncommon printf feature
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\section{memory protection}
+\subsection{generally}
+\input{../mitigate/mem-protect}
+
+\subsection{page-level permissions}
+\input{../mitigate/page-protect}
+
+\subsection{guard pages / replacing stack canaries?}
+\input{../mitigate/guard-pages}
+
+\subsection{exercise: guard page overhead}
+\input{../mitigate/guard-page-overhead}
+
+\subsection{read-only pages}
+\input{../mitigate/ro-pages}
+
+\subsection{non-executable pages}
+\input{../mitigate/write-xor-exec}
+
+\subsubsection{unfortunate history of HW/SW support}
+\input{../mitigate/wx-hw-support}
+
+\subsubsection{if you can't write machine code}
+\input{../mitigate/wx-incomplete}
+
+\section{ROP}
+\input{../rop/name}
+
+\subsection{case study: F5 exploit}
+\input{../rop/f5-exploit}
+
+\subsection{case study: calling puts}
+\input{../rop/case-study}
+
+\subsection{ROP: exercise 0}
+\input{../rop/make-chain-ex0}
+
+\subsection{ROP: exercise 1}
+\input{../rop/make-chain-ex1}
+
+\subsection{finding gadgets (take 1)}
+\input{../rop/find-gadgets}
+
+\subsection{finding gadgets, generally}
+\input{../rop/finding-gadgets-general}
+
+% FIXME: demo
+
+\subsection{reusable sequence}
+\input{../rop/generic-sequence}
+
+
+\end{document}

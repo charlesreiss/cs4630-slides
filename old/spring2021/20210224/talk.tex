@@ -1,0 +1,143 @@
+\graphicspath{{./figures/}}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item dynamic linking
+        \begin{itemize}
+        \item global offset table
+        \item stubs
+        \item lazy binding
+        \end{itemize}
+    \item viruses calling standard library
+    \item integrity checking files
+        \begin{itemize}
+        \item tripwire: did it change?
+        \item application signing
+        \item limitations
+            \begin{itemize}
+            \item malware in scripts
+            \item malicious software in ``data'' files
+            \item downloaded software people want to run
+            \end{itemize}
+        \end{itemize}
+    \item searching for patterns
+        \begin{itemize}
+        \item regular expression matching
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\usetikzlibrary{arrows.meta,calc,fit,matrix,positioning,shapes.callouts}
+
+\subsection{flex state machines}
+\input{../heur-detect/flex-state-machine}
+
+
+    % FIXME: more complex state machine
+
+\input{../heur-detect/why-state-machine}
+
+\subsection{backtracking problems?}
+\input{../heur-detect/flex-opt-btp}
+
+\input{../heur-detect/flex-state-machine-complex}
+
+\subsection{flex: Vienna example}
+\input{../heur-detect/vienna-patterns-flex}
+
+\subsection{why the flexibility?}
+\input{../heur-detect/pattern-flexibility}
+% FIXME: exercise
+\subsection{exercise: what's easy/hard for patterns}
+\input{../heur-detect/hard-for-patternsp}
+
+\section{making scanners more efficient}
+\input{../heur-detect/making-efficient}
+
+\subsection{fixed strings}
+\againframe<2>{effScanners}
+\input{../heur-detect/fixed-strings}
+
+\subsection{selective scanning}
+\againframe<3>{effScanners}
+\input{../heur-detect/selective-scanning}
+
+\section{example: ClamAV}
+    % FIXME: show example patterns and more
+\input{../heur-detect/example-clam-av}
+
+\section{new malware detection?}
+\input{../heur-detect/new-malwarep}
+
+\section{heuristics based on executable/library regularity}
+\input{../heur-detect/exec-lib-regularity}
+
+\section{behavior based detection}
+\input{../heur-detect/behavior}
+
+\subsection{instrumenting programs}
+\input{../heur-detect/hooking}
+
+\section{AI heuristic case study: DREBIN}
+\input{../heur-detect/case-study-android}
+
+\subsection{machine learning and adversaries}
+\input{../heur-detect/ml-problems}
+
+\section{anti-anti-virus}
+\input{../antianti/intro}
+
+\input{../antianti/intro-terms}
+
+\section{other obfuscation}
+\subsection{why obfuscation, generally}
+\input{../antianti/other-obfuscate}
+
+\section{Tigress and its transformations}
+\input{../antianti/tigress-xforms-example}
+
+\section{obfuscation utility?}
+\input{../antianti/obfus-not-good-ex}
+
+\section{packers}
+\subsection{hashed data}
+\input{../antianti/hashed-data}
+
+\subsection{encrypted data}
+\input{../antianti/encrypted-data}
+
+\subsection{encrypted data and signatures}
+\input{../antianti/encrypted-and-sigs}
+
+\subsection{encrypted code}
+\input{../antianti/encrypted-code}
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\section{regular expressions}
+\input{../heur-detect/regular-expressions}
+
+\subsection{flex example}
+\input{../heur-detect/flex-example}
+
+\subsection{flex state machines}
+\input{../heur-detect/flex-state-machine}
+\input{../heur-detect/flex-states}
+
+\subsection{heuristics to find packers}
+\input{../antianti/packer-detect}
+
+
+\subsection{rootkits and chkrootkit}
+\input{../antianti/chkrootkit}
+
+\subsection{aside: disinfection}
+\input{../heur-detect/aside-disinfect} % FIXME: clamav example?
+\end{document}

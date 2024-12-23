@@ -1,0 +1,22 @@
+
+\begin{frame}{tricky parts in symbolic execution}
+    \begin{itemize}
+    \item dealing with pointers?
+        \begin{itemize}
+        \item one method: one path for each valid value of pointer
+        \end{itemize}
+    \item solving equations?
+        \begin{itemize}
+        \item NP-hard (boolean satisfiablity) --- not practical in general
+        \item ``good enough'' for small enough programs/inputs
+        \item \ldots after lots of tricks
+        \end{itemize}
+    \item how many paths?
+        \begin{itemize}
+        \item $<100\%$ coverage in practice
+        \item small input sizes (limited number of variables)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+

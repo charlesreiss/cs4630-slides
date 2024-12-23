@@ -1,0 +1,13 @@
+
+\begin{frame}{address space layout randomization (ASLR)}
+    \begin{itemize}
+    \item assume: addresses don't leak
+    \item choose \myemph{random} addresses each time
+        \begin{itemize}
+        \item for \myemph{everything}, not just the stack
+        \end{itemize}
+    \item \myemph{enough possibilities} that attacker won't ``get lucky''
+    \item should prevent exploits --- can't write GOT/shellcode location
+    \end{itemize}
+\end{frame}
+

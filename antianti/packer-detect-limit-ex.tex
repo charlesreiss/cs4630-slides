@@ -1,0 +1,17 @@
+\begin{frame}{exercise: generic detection limits?}
+    \begin{itemize}
+    \item consider strategy of running executable in virtual machine, \\
+          waiting until it jumps to code it wrote out \\
+          then matching patterns against code it's about to run
+    \item which of these would cause problems with this technique?
+    \item which are easiest/hardest to workaround?
+    \vspace{.5cm}
+    \begin{itemize}
+    \item A. code decrypter and malicious code run at program exit, not startup
+    \item B. code decrypter and malicious code run when user clicks button in program, not at startup
+    \item C. code decrypter allocates random address to write decrypted code to
+    \item D. code decrypter exits (without running malicious code) if processor seems too slow
+    \item E. code decrypter decrypts another code decrypter
+    \end{itemize}
+    \end{itemize}
+\end{frame}

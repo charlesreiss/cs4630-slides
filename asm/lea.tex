@@ -1,0 +1,26 @@
+
+% FIXME: move this?
+\begin{frame}[fragile,label=LEA]{On LEA}
+    \begin{itemize}
+    \item LEA = Load Effective Address
+    \item uses the syntax of a memory access, but\ldots{}
+    \item just computes the address and uses it:
+    \item {}\lstinline|leaq 4(%rax), %rax| same as \lstinline|addq $4, %rax|
+        \begin{itemize}
+        \item almost --- doesn't set condition codes
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=LEATricks]{LEA tricks}
+    \begin{itemize}
+    \item {}\lstinline|leaq (%rax,%rax,4), %rax| multiplies {\tt \%rax} by 5
+        \begin{itemize}
+        \item {\tt address-of(memory[rax + rax * 4])}
+        \end{itemize}
+    \item {}\lstinline|leal (%rbx,%rcx), %eax| adds rbx + rcx into eax
+        \begin{itemize}
+        \item ignores top 64-bits
+        \end{itemize}
+    \end{itemize}
+\end{frame}

@@ -1,0 +1,18 @@
+
+
+\begin{frame}[fragile,label=funcPtrQ]{function pointers?}
+\lstset{language=C,style=small}
+\begin{lstlisting}
+int (*compare)(char *, char *);
+
+if (sortCaseSensitive) {
+    compare = compareStringsExactly;
+} else {
+    compare = compareStringsInsensitive;
+}
+...
+if ((*compare)(string1, string2) == CMP_LESS) {
+    ...
+}
+\end{lstlisting}
+\end{frame}

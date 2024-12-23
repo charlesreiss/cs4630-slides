@@ -1,0 +1,67 @@
+\usetikzlibrary{arrows.meta}
+\begin{frame}[fragile,label=structSubter]{other subterfuge cases (1)}
+\begin{lstlisting}[language=C,style=small]
+struct Command {
+  CommandType type;
+  int values[MAX_VALUES];
+  int *active_value;
+  ...
+};
+\end{lstlisting}
+\begin{tikzpicture}[overlay,remember picture]
+% FIXME:
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+}
+\coordinate (my anchor) at ([xshift=-9cm,yshift=-2cm]current page.north east);
+\begin{scope}[shift={(my anchor)},xscale=0.8]
+\draw[stackBox] (0, 0) rectangle (10, -6);
+\draw[thick,-Latex] (10.25,-5) -- (10.25, -1) node [midway, below, sloped] {increasing addresses};
+\node[at={(5, 0.1)},anchor=south] { highest address };
+\node[at={(5, -6.1)},anchor=north] { lowest address };
+
+\draw[onStack] (0, -.25) rectangle (10, -2.25) node[midway,align=center,font=\small] (stackAddr)
+     {more struct fields};
+\draw[onStack,fill=green!20] (0, -2.25) rectangle (10, -2.75) node[midway,align=center,font=\small] (ptr) {active\_value};
+\draw[onStack,fill=blue!20] (0, -2.75) rectangle (10, -5.25) node[midway,align=center,font=\small] {values};
+\draw[onStack,fill=yellow!20] (0, -5.25) rectangle (10, -5.75) node[midway,align=center,font=\small] {type};
+\end{scope}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=globalSubter]{other subterfuge cases (2)}
+\begin{lstlisting}[language=C,style=small]
+Command *current_command;
+char input_buffer[4096];
+
+void run_next_command() {
+  if (!current_command) {
+    current_command =
+        getNext();
+  }
+  current_command-> ...
+  ...
+}
+\end{lstlisting}
+\begin{tikzpicture}[overlay,remember picture]
+% FIXME:
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+}
+\coordinate (my anchor) at ([xshift=-9cm,yshift=-2cm]current page.north east);
+\begin{scope}[shift={(my anchor)},xscale=0.8]
+\draw[stackBox] (0, 0) rectangle (10, -6);
+\draw[thick,-Latex] (10.25,-5) -- (10.25, -1) node [midway, below, sloped] {increasing addresses};
+\node[at={(5, 0.1)},anchor=south] { highest address };
+\node[at={(5, -6.1)},anchor=north] { lowest address };
+
+\draw[onStack] (0, -.25) rectangle (10, -2.25) node[midway,align=center,font=\small] (stackAddr)
+     {more globals};
+\draw[onStack,fill=green!20] (0, -2.25) rectangle (10, -2.75) node[midway,align=center,font=\small] (ptr) {current\_command};
+\draw[onStack,fill=blue!20] (0, -2.75) rectangle (10, -5.25) node[midway,align=center,font=\small] {input\_buffer};
+\draw[onStack] (0, -5.25) rectangle (10, -5.75) node[midway,align=center,font=\small] {more globals};
+\end{scope}
+\end{tikzpicture}
+\end{frame}

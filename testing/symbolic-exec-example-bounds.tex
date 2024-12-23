@@ -1,0 +1,18 @@
+\begin{frame}[fragile,label=symToBounds]{using for bounds checking}
+\lstset{language=C,style=smaller}
+\begin{lstlisting}
+void foo() {
+    char array[100];
+    ...
+    /* check inserted automatically: */
+        assert(i >= 0 && i < 100);
+    array[i] = ...;
+    ...
+}
+\end{lstlisting}
+\begin{itemize}
+\item using symbolic execution to find memory bugs?
+\item add assertions for bounds checks
+\item need to track array sizes to do symbolic execution anyways
+\end{itemize}
+\end{frame}

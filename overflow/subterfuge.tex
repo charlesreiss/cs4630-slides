@@ -1,0 +1,23 @@
+\usetikzlibrary{calc}
+\begin{frame}[fragile,label=pointerSub]{pointer subterfuge}
+\lstset{
+    language=C,
+    style=small,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    morekeywords={size_t},
+}
+\begin{lstlisting}
+void f2b(void *arg, size_t len) {
+    char buffer[100];
+    long val = ...; /* assume on stack */
+    long *ptr = ...; /* assume on stack */
+    memcpy(buff, arg, len); /* overwrite ptr? */
+    ~2~*ptr = val~end~; /* arbitrary memory write! */
+}
+\end{lstlisting}
+\imagecredit{adapted from Pincus and Baker, Figure 2}
+% FIXME: stack picture
+\end{frame}
+
+
+

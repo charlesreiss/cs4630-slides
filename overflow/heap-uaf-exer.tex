@@ -1,0 +1,40 @@
+\begin{frame}[fragile,label=uafExericse]{exercise}
+\begin{tikzpicture}
+\node[draw,very thick,label={north:vuln. code}] (a) {
+\begin{lstlisting}[language=C++,style=script]
+std::istream *in =
+    new std::ifstream("in.txt");
+...
+delete in;
+...
+char *other_buffer =
+    new char[strlen(INPUT) + 1];
+strcpy(other_buffer, INPUT);
+...
+char c = in->get();
+\end{lstlisting}
+};
+\node[draw,very thick,label={north:ifstream internals},anchor=north west] (b) at (a.north east) {
+\begin{lstlisting}[language=C++,style=script]
+class istream {
+    ...
+    int get() { ... buf->uflow(); ... }
+    streambuf *buf;
+    ~istream() { delete buf; }
+};
+class streambuf {
+    ...
+protected:
+    virtual type_for_char uflow() = 0;
+        /* called to get next char*/
+};
+class _File_streambuf : public streambuf { ... }
+\end{lstlisting}
+};
+\end{tikzpicture}
+\begin{itemize}
+\item attacker goal: change what uflow() call does
+\item Q1: {\small assuming same size $\rightarrow$ likely to get same address}, what size for attacker to choose for \texttt{INPUT}?
+\item Q2: where in INPUT to place pointer to code to run?
+\end{itemize}
+\end{frame}

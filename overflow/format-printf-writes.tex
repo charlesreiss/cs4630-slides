@@ -1,0 +1,13 @@
+
+\begin{frame}{printf manpage}
+    \begin{itemize}
+        \item For {\tt \%n}:
+        \begin{itemize}
+            \item The  number  of  characters  written so far is \myemph{stored into the integer pointed to by the
+                corresponding argument}.  That argument shall be an {\tt int *}, or variant whose size  matches
+              the  (optionally)  supplied  integer  length  modifier. 
+        \end{itemize}
+    \item<2> {\tt \%hn} --- expect {\tt short *} instead of {\tt int *}
+    \end{itemize}
+\end{frame}
+

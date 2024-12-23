@@ -1,0 +1,114 @@
+
+\begin{frame}[fragile,label=viennaSigs]{exercise: signatures for Vienna}
+\lstset{
+        style=smaller,
+        language=myasm,
+        moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+        moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+        moredelim={**[is][\btHL<3-4|handout:0>]{~34~}{~end~}},
+        moredelim={**[is][\btHL<4|handout:0>]{~4~}{~end~}},
+        }
+\begin{tabular}{lll}
+\begin{lstlisting}
+~2~jmp 0x0700~end~
+mov $0x9e4e, %si
+...
+/* app code */
+...
+~3~push %cx~end~
+mov $0x8f9, %si
+...
+mov $0x0100, %di
+mov $3, %cx
+rep movsb
+...
+\end{lstlisting}
+&
+\begin{lstlisting}
+...
+add $0x2f9, %cx
+mov %si, %di
+sub $0x1f7, %di
+mov %cx, (%di)
+...
+mov $0x288, %cx
+mov $0x40 %ah
+mov $si, $dx
+sub $0x1f9, %dx
+int 0x21
+...
+\end{lstlisting}
+&
+\begin{lstlisting}
+pop %cx
+xor %ax, %ax
+xor %bx, %bx
+~4~xor %dx, %dx~end~
+~4~mov $0x0100, %di~end~
+~4~push %di~end~
+~4~xor %di, %di~end~
+~34~ret~end~
+/* virus data */
+\end{lstlisting}
+\\
+\end{tabular}
+\end{frame}
+
+\begin{frame}{simple signature (1)}
+    \begin{itemize}
+    \item all the code Vienna copies
+    \item \ldots{} except changed {\tt mov} to {\tt \%si}
+    \vspace{.5cm}
+    \item virus doesn't change it to relocate
+    \item includes infection code --- definitely malicious
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{signature generality}
+    \begin{itemize}
+    \item the Vienna virus was copied a bunch of times
+    \item small changes, ``payloads'' added
+        \begin{itemize}
+        \item print messages, do different malicious things, \ldots
+        \end{itemize}
+    \item this signature will not detect any variants
+    \item can we do better?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{simple signature (2)}
+    \begin{itemize}
+    \item Vienna start code
+        \begin{itemize}
+        \item weird jump at beginning??
+        \end{itemize}
+    \item problem: maybe real applications do this?
+    \item problem: easy to move jump
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{simple signature (3)}
+    \begin{itemize}
+    \item Vienna infection code
+        \begin{itemize}
+        \item scans directory, finds files
+        \end{itemize}
+    \item likely to stay the same in variants?
+    \item<2> problem: virus writers \myemph{react to antivirus}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{simple signature (4)}
+    \begin{itemize}
+    \item Vienna finish code
+        \begin{itemize}
+        \item push + ret 
+        \end{itemize}
+    \item very unusual pattern
+    \item probably(?) not in ``real'' programs
+    \item real effort to change to something else?
+    \item<2> problem: virus writers \myemph{react to antivirus}
+    \end{itemize}
+\end{frame}
+
+

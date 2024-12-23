@@ -1,0 +1,94 @@
+
+\begin{frame}[fragile,label=virusToShellNew1]{virus code to shell-code (1)}
+\lstset{
+    language=myasm,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+}
+\begin{tikzpicture}
+\node (code) {
+\begin{lstlisting}
+    /* Linux system call (OS request):
+       write(1, string, length)
+     */
+    leaq string(%rip), %rsi
+    movl $1, %eax
+    movl $37, %edi
+    /* "request to OS" instruction */
+    syscall
+    ~2~ret~end~
+string: 
+    .asciz "You have been infected with a virus!\n"
+\end{lstlisting}
+};
+\coordinate (codeExplain) at ([xshift=-3cm]code.north east);
+\begin{visibleenv}<2>
+\node[anchor=north west,red,ultra thick,align=left,draw=red,fill=white] at (codeExplain) {
+    problem: after syscall --- crash!
+};
+\end{visibleenv}
+
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=virusToShellNew2]{virus code to shell-code (2)}
+\lstset{
+    language=myasm,
+    style=smaller,
+    basicstyle=\tt\fontsize{9}{10}\selectfont,
+    keywordstyle=\tt\fontsize{9}{10}\selectfont\keywordstyle,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+}
+\begin{tikzpicture}
+\node (code) {
+\begin{lstlisting}
+    /* Linux system call (OS request):
+       write(1, string, length)
+     */
+    leaq string(%rip), %rsi
+    movl $1, %eax
+    movl $37, %edi
+    syscall
+    /* Linux system call:
+       exit_group(0)
+     */
+    ~2~movl $231, %eax~end~
+    ~2~xor %edi, %edi~end~
+    ~2~syscall~end~
+string: 
+    .asciz "You have been infected with a virus!\n"
+\end{lstlisting}
+};
+\begin{visibleenv}<3->
+\node[anchor=north west,align=left] (bits) at ([xshift=-2cm]code.north east) {
+\begin{lstlisting}[
+    language=,
+    moredelim={**[is][]{*}{*}},
+]
+* *
+* * 
+* * 
+48 8d 35 15 00 00 00
+b8 01 00 00 00
+bf 25 00 00 00
+0f 05
+* *
+* *
+* *
+b8 e7 00 00 00
+31 ff
+0f 05
+\end{lstlisting}
+};
+\end{visibleenv}
+\coordinate (codeExplain) at ([xshift=-3cm]code.north east);
+\begin{visibleenv}<2>
+\node[anchor=north west,draw=red,ultra thick,fill=white] at (codeExplain) {
+    tell OS to exit
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+

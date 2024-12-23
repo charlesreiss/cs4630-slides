@@ -1,0 +1,21 @@
+\begin{frame}[fragile,label=question]{question}
+\lstset{style=small,language=myasm,deletekeywords=bl}
+\begin{lstlisting}
+.data
+string:
+    .asciz "abcdefgh"
+.text
+    movq $string, %rax
+    movq string, %rdx
+    movb (%rax), %bl
+    leal 1(%rbx), %ebx
+    movb %bl, (%rax)
+    movq %rdx, 4(%rax)
+\end{lstlisting}
+{\small What is the final value of string?}
+\begin{tabular}{ll}
+a. \texttt{"abcdabcd"} & d. \texttt{"abcdefgh"} \\
+b. \texttt{"bbcdefgh"} & e. something else / not enough info \\
+c. \texttt{"bbcdabcd"} & ~ \\
+\end{tabular}
+\end{frame}

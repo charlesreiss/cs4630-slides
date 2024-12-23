@@ -1,0 +1,27 @@
+
+\begin{frame}{completeness problem}
+    \begin{itemize}
+        \item let's say we're testing an HTML parser
+        \item what code is \textbf{usually} going to when we flip random bits?
+            \begin{itemize} 
+                \item (or remove/add random bytes)
+            \end{itemize}
+        \vspace{.5cm}
+        \item<2> how often are we going to generate tags not in starting document?
+        \item<2> how often are we going to generate new almost-valid documents?
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile,label=HTMLchanges]{HTML with changes}
+\begin{lstlisting}[
+    language={},style=small,
+    moredelim={**[is][\btHL<1>]{~error~}{~end~}},
+]
+<html><head><title>A</title></head><body>B</body></html>
+<html~error~*~end~<head><title>A</title></head><body>B</body></html>
+<html><~error~i~end~ead><title>~error~C~end~</title></head><body>B</body></html>
+\end{lstlisting}
+\end{frame}
+
+

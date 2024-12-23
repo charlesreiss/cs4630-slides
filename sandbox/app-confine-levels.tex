@@ -1,0 +1,12 @@
+\begin{frame}{exercise: app confinement options}
+    \begin{itemize}
+    \item sandboxed applications want to access display server
+    \item which option seems best for security/performance?
+    \begin{itemize}
+    \item A. proxy for protocol display server supports natively that filters display calls
+    \item B. custom protocol that sends bitmaps + receives inputs, plus copy of display server runs with application
+    \item C. divide application into UI and non-UI part, sandbox just the non-UI part
+    \item D. have application take over screen when running, give its own display server
+    \end{itemize}
+    \end{itemize}
+\end{frame}

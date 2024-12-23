@@ -1,0 +1,40 @@
+\providecommand{\myemphTwo}[1]{\myemph<2>{#1}}
+\providecommand{\myemphTwoB}[1]{\myemph<2>{\textbf<2>{#1}}}
+\providecommand{\myemphThree}[1]{\myemph<3>{#1}}
+\providecommand{\myemphFour}[1]{\myemph<4>{#1}}
+\providecommand{\myemphFive}[1]{\myemph<5>{#1}}
+\providecommand{\myemphSix}[1]{\myemph<6>{#1}}
+\providecommand{\myemphSeven}[1]{\myemph<7>{#1}}
+
+\begin{frame}[fragile,label=elfExOver1]{position-independent ELF example}
+    \begin{itemize}
+    \item compiled+linked ``Hello, World'' with {\tt gcc -static-pie}
+    \item PIE = position-independent executable
+    \end{itemize}
+\begin{Verbatim}[commandchars=\\\{\},fontsize=\small]
+a.out:     file format elf64-x86-64
+a.out
+architecture: i386:x86-64, flags 0x00000150:
+HAS_SYMS, \myemphTwo{DYNAMIC}, D_PAGED
+start address 0x0000000000009f90
+
+Program Header:
+...
+
+\myemphTwo{Dynamic Section:}
+...
+
+Sections:
+...
+\end{Verbatim}
+\begin{tikzpicture}[overlay,remember picture]
+\coordinate (loc) at ([yshift=1cm]current page.south);
+\tikzset{
+    note/.style={draw,very thick,anchor=south,at=(loc)},
+}
+\node[note] {
+    DYNAMIC instead of EXEC_P \\
+    reuses dynamic linking mechanism
+};
+\end{tikzpicture}
+\end{frame}

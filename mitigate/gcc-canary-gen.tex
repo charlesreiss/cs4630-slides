@@ -1,0 +1,24 @@
+
+\begin{frame}{good choices of canary}
+\begin{itemize}
+\item \myemph{random} --- guessing should not be practical
+    \begin{itemize}
+    \item not always --- sometimes static or only $2^{15}$ possible
+    \end{itemize}
+\item GNU libc: canary contains:
+\vspace{.5cm}
+    \item leading {\tt \textbackslash 0} (string terminator)
+        \begin{itemize}
+        \item {\tt printf \%s} won't print it
+        \item copying a C-style string won't write it
+        \end{itemize}
+    \item a newline
+        \begin{itemize}
+        \item read line functions can't input it
+        \end{itemize}
+    \item {\tt \textbackslash xFF}
+        \begin{itemize}
+        \item hard to input?
+        \end{itemize}
+\end{itemize}
+\end{frame}

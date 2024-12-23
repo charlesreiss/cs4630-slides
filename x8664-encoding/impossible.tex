@@ -1,0 +1,34 @@
+
+\begin{frame}[fragile,label=x8664impos]{x86-64 impossibilities}
+\lstset{
+    language=myasm,
+    style=small,
+    moredelim={**[is][\sout<all:1>]{~sout~}{~endsout~}},
+}
+    \begin{itemize}
+    \item \myemph{illegal}: \lstinline|~sout~movq 0x12345678ab(%rax), %rax~endsout~|
+        \begin{itemize}
+        \item maximum 32-bit displacement
+        \item \lstinline|movq 0x12345678ab, %rax| okay
+            \begin{itemize}
+            \item extra {\tt mov} opcode for {\tt \%rax} only
+            \end{itemize}
+        \end{itemize}
+    \item \myemph{illegal}: \lstinline|~sout~movq $0x12345678ab, %rbx~endsout~|
+        \begin{itemize}
+        \item maximum 32-bit constant
+        \item \lstinline|movq $0x12345678ab, %rax| okay
+        \end{itemize}
+    \item \myemph{illegal}: \lstinline|~sout~pushl %eax~endsout~|
+        \begin{itemize}
+        \item no 32-bit push/pop in 64-bit mode
+        \item but 16-bit allowed (operand size prefix byte {\tt 66})
+        \end{itemize}
+    \item \myemph{illegal}: \lstinline|~sout~movq (%rax, %rsp), %rax~endsout~|
+        \begin{itemize}
+        \item cannot use \lstinline|%rsp| as index register
+        \item \lstinline|movq (%rsp, %rax), %rax| okay
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

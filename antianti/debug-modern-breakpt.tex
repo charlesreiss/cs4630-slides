@@ -1,0 +1,22 @@
+
+\begin{frame}{modern debuggers}
+    \begin{itemize}
+    \item {\tt int 3} is the oldest x86 debugging mechanism
+    \item modern x86: 4 ``breakpoint'' registers (\myemph{DR0--DR3})
+        \begin{itemize}
+        \item contain address of program instructions
+        \item need more than 4? sorry
+            \begin{itemize}
+            \item probably fall back to int 3 technique
+            \end{itemize}
+        \end{itemize}
+    \item processor triggers exception when address reached
+        \begin{itemize}
+        \item 4 extra registers + comparators in CPU?
+        \end{itemize}
+    \item flag to invoke debugger if debugging registers used
+        \begin{itemize}
+        \item enables nested debugging
+        \end{itemize}
+    \end{itemize}
+\end{frame}

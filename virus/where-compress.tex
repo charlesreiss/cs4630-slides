@@ -1,0 +1,18 @@
+
+\begin{frame}{compressing viruses}
+    \begin{itemize}
+    \item file too big? how about \myemph{compression}
+    \end{itemize}
+    \begin{tikzpicture}
+    \draw[thick] (0, 0) rectangle (4, -6) node[midway,align=center] {original\\executable};
+    \draw[line width=2mm,-Latex,black!60] (4.1, -3) -- (6.9, -3);
+    \begin{scope}[xshift=7cm]
+    \draw[fill=red!20,thick] (0, 0) rectangle (4, -1) node[midway] {virus code};
+    \draw[fill=red!20,thick] (0, -1) rectangle (4, -2) node[midway] {decompressor};
+    \draw[pattern=north west lines,pattern color=black!70,thick] (0, -2) rectangle (4, -5)
+        node[midway,fill=white,align=center] {compressed \\ executable};
+    \draw[fill=black!60,thick] (0, -5) rectangle (4, -6)
+        node[midway,white] {unused space};
+    \end{scope}
+    \end{tikzpicture}
+\end{frame}

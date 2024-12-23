@@ -1,0 +1,35 @@
+
+\begin{frame}[fragile,label=afl]{american fuzzy lop}
+    \begin{itemize}
+        \item one example of a fuzzer that uses this strategy
+            \begin{itemize}
+            \item ``whitebox fuzzing''
+            \end{itemize}
+        \vspace{.5cm}
+        \item assembler wrapper to record computed/conditional jumps:
+\begin{lstlisting}
+CoverageArray[Hash(JumpSource, JumpDest)]++;
+\end{lstlisting}
+        \item use values from coverage array to distinguish cases
+        \item outputs only \myemph{unique} test cases
+        \item goal: test case for every possible jump source/dest
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{american fuzzy lop heuristics}
+    \begin{itemize}
+    \item american fuzzy lop does some deterministic testing
+        \begin{itemize}
+        \item try flipping every bit, every 2 bits, etc. of base input
+        \item overwrite bytes with 0xFF, 0x00, etc.
+        \item etc.
+        \end{itemize}
+    \item has many strategies for producing new inputs
+        \begin{itemize}
+        \item bit-flipping
+        \item duplicating important-looking keywords
+        \item combining existing inputs
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

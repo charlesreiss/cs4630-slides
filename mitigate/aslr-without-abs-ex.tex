@@ -1,0 +1,41 @@
+\begin{frame}[fragile,label=ex]{exercise: avoiding absolute addresses}
+\lstset{
+    language=myasm,
+    style=smaller,
+    escapeinside=~~,
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1, 0) {
+\begin{lstlisting}
+foo:
+	movl	$3, %eax
+	cmpq	$5, %rdi
+	ja	defaultCase
+	jmp	*lookupTable(,%rdi,8)
+returnOne:
+        movl    $1, %eax
+        ret
+returnTwo:
+        movl    $2, %eax
+defaultCase:
+        ret
+\end{lstlisting}
+};
+\node[anchor=north west] (code2) at (-.5, 0) {
+\begin{lstlisting}
+lookupTable:
+    .quad returnOne
+    .quad returnTwo
+    .quad returnOne
+    .quad returnTwo
+    .quad returnOne
+    .quad returnOne
+\end{lstlisting}
+};
+\end{tikzpicture}
+\begin{itemize}
+    \item exercise: rewrite this without absolute addresses
+    \item but fast
+\end{itemize}
+\end{frame}
+

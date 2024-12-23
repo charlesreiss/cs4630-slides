@@ -1,0 +1,100 @@
+\usetikzlibrary{calc}
+
+\begin{frame}[fragile,label=vienna]{Vienna: infection}
+\lstset{
+    language=myasm,
+    style=smaller
+}
+\begin{tikzpicture}
+\tikzset{programBox/.style={draw,thick},every label/.style={inner sep=1mm,outer sep=0mm}}
+\node[programBox,minimum height=3cm,label={north:uninfected},anchor=north west] (uninfect) at (0,0) {
+\begin{lstlisting}
+0x0100:
+    mov $0x4f28, %cx
+    /* b9 28 4f */
+0x0103:
+    mov $0x9e4e, %si
+    /* be 4e 9e */
+    mov %si, %di
+    push %ds
+    /* more normal
+       program
+       code */
+....
+0x0700: /* end */
+
+\end{lstlisting}
+};
+\node[programBox,anchor=north west,label={north:infected}] at ([xshift=1cm]uninfect.north east) {
+\begin{lstlisting}
+0x0100: jmp 0x0700
+0x0103: mov $0x9e4e, %si
+...
+0x0700:
+    push %cx
+    ... // %si <- 0x903
+    mov $0x100, %di
+    mov $3, %cx
+    rep movsb
+    ...
+    mov $0x0100, %di
+    push %di
+    xor %di, %di
+    ret
+...
+0x0903:
+    .bytes 0xb9 0x28 0x4f
+...
+\end{lstlisting}
+};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=viennaFixup]{Vienna: ``fixup''}
+\lstset{
+    language=myasm,
+    style=small,
+    moredelim={**[is][\btHL<2>]{~hi2~}{~endhi2~}},
+    moredelim={**[is][\btHL<3>]{~hi3~}{~endhi3~}},
+}
+\begin{lstlisting}
+0x0700:
+    push %cx // initial value of %cx matters??
+    mov ~hi3~$0x8fd~endhi3~, %si // %si <- beginning of data
+    mov %si, %dx // save %si
+        // movsb uses %si, so
+        // can't use another register
+    add $0xa, %si // offset of saved code in data
+    mov $0x100, %di // target address
+    mov $3, %cx // bytes changed
+    /* copy %cx bytes from (%si) to (%di) */
+    rep movsb 
+    ...
+...
+// saved copy of original application code
+0x903: ~hi2~.byte 0xb9 .byte 0x28 .byte 0x4f~endhi2~
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=viennaReturn]{Vienna: return}
+\lstset{language=myasm,style=small}
+\begin{lstlisting}
+0x08e7:
+    pop %cx // restore initial value of %cx, %sp
+    xor %ax, %ax // %ax <- 0
+    xor %bx, %bx
+    xor %dx, %dx
+    xor %si, %si
+    // push 0x0100
+    mov $0x0100, %di
+    push %di 
+    xor %di, %di // %di <- 0
+    // pop 0x0100 from stack
+    // jmp to 0x0100
+    ret 
+\end{lstlisting}
+\begin{itemize}
+\item<1> question: why not just jmp 0x0100 ?
+\end{itemize}
+\end{frame}
+

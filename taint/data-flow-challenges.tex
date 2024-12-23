@@ -1,0 +1,88 @@
+\begin{frame}[fragile,label=dFlowChallenges1]{static info flow challenges (1)}
+\begin{tikzpicture}
+\node (left) {
+\begin{lstlisting}[language=Python,style=smaller]
+# Python example
+def stash(a):
+    global y
+    y = a
+x = [0,1,2,3]
+stash(x)
+x[2] = input()
+print(y[2])
+\end{lstlisting}
+};
+\node[anchor=north west] at ([xshift=3cm]left.north east) {
+\begin{lstlisting}[language=C++,style=smaller]
+// C example
+int *y;
+void stash(int *a) {
+    y = a;
+}
+int main() {
+    int x[3];
+    stash(x);
+    y[2] = GetInput();
+    printf("%d\n",x[2]);
+}
+\end{lstlisting}
+};
+\end{tikzpicture}
+\begin{itemize}
+\item same points-to problem with static analysis
+\item need to realize that x[2] and y[2] are the same!
+    \begin{itemize}
+    \item even if assignment to/usage of y is more cleverly hidden
+    \end{itemize}
+\item can fix this with dynamic approach: monitor running program
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=dFlowChallenges2]{static info flow challenges (2)}
+\begin{tikzpicture}
+\node (left) {
+\begin{lstlisting}[language=Python,style=smaller]
+def retrieve(flag):
+    global the_default
+    if flag:
+        value = input()
+    else:
+        value = the_default
+    value = process(value)
+    if not flag:
+        print("base on default: ",value)
+    return value
+retrieve(True)
+retrieve(False)
+\end{lstlisting}
+};
+\end{tikzpicture}
+\begin{itemize}
+\item input can't make it to print here
+\item \ldots but need \textit{path-sensitive} analysis to tell
+\item can fix this we dynamic approach: monitor running program
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=dFlowChallenges3]{static info flow challenges (3)}
+\begin{tikzpicture}
+\node (left) {
+\begin{lstlisting}[language=Python,style=smaller]
+x = int(input())
+if x == 0:
+    print(0)
+elif x == 1:
+    print(1)
+elif ...
+\end{lstlisting}
+};
+\end{tikzpicture}
+\begin{itemize}
+\item does input make it to output?
+\item should we try to detect this?
+    \begin{itemize}
+    \item probably depends on intended use of analysis
+    \end{itemize}
+\item harder to fix this issue
+\end{itemize}
+\end{frame}

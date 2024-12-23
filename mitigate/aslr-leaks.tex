@@ -1,0 +1,65 @@
+
+\begin{frame}[fragile,label=betweenSegments1]{dependencies between segments (1)}
+\begin{lstlisting}[language={},style=smaller]
+$ objdump -x foo.exe
+...
+LOAD off    0x0000000000000000 vaddr 0x0000000000000000 paddr 0x0000000000000000 align 2**12
+     filesz 0x0000000000000620 memsz 0x0000000000000620 flags r--
+LOAD off    0x0000000000001000 vaddr 0x0000000000001000 paddr 0x0000000000001000 align 2**12
+     filesz 0x0000000000000205 memsz 0x0000000000000205 flags r-x
+LOAD off    0x0000000000002000 vaddr 0x0000000000002000 paddr 0x0000000000002000 align 2**12
+     filesz 0x0000000000000150 memsz 0x0000000000000150 flags r--
+LOAD off    0x0000000000002db8 vaddr 0x0000000000003db8 paddr 0x0000000000003db8 align 2**12
+     filesz 0x000000000000025c memsz 0x0000000000000260 flags rw-
+\end{lstlisting}
+\begin{itemize}
+\item 4 seperately loaded segments: can we choose random addresses for each?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=betweenSegments2]{dependencies between segments (2)}
+\begin{lstlisting}[language={},style=smaller,moredelim={**[is][\btHL<1->]{~2~}{~end~}}]
+0000000000001050 <__printf_chk@plt>:
+    1050:       f3 0f 1e fa             endbr64 
+    1054:       f2 ff 25 75 2f 00 00    bnd jmpq *~2~0x2f75(%rip)        # 3fd0~end~ <__printf_chk@GLIBC_2.3.4>
+    105b:       0f 1f 44 00 00          nopl   0x0(%rax,%rax,1)
+\end{lstlisting}
+\begin{itemize}
+\item dependency from 2nd LOAD (0x1000-0x1205) to 4th LOAD (0x3db8-0x4018)
+\item uses relative addressing rather than linker filling in address
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=betweenSegments3]{dependencies between segments (3)}
+\begin{lstlisting}[language={},style=smaller,moredelim={**[is][\btHL<1->]{~2~}{~end~}}]
+0000000000001060 <main>:
+    1060:       f3 0f 1e fa             endbr64 
+    1064:       50                      push   %rax
+    1065:       8b 15 a5 2f 00 00       mov    0x2fa5(%rip),%edx        # 4010 <global>
+    106b:       48 8d 35 92 0f 00 00    lea    ~2~0xf92(%rip)~end~,%rsi        # 2004 <_IO_stdin_used+0x4>
+    1072:       31 c0                   xor    %eax,%eax
+    1074:       bf 01 00 00 00          mov    $0x1,%edi
+    1079:       e8 d2 ff ff ff          callq  1050 <__printf_chk@plt>
+\end{lstlisting}
+\begin{itemize}
+\item dependency from 2nd LOAD (0x1000-0x1205) to 3rd LOAD (0x2000-0x2150)
+\item uses relative addressing rather than linker filling in address
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=whyRipRelative]{why is this done?}
+\begin{itemize}
+\item Linux made a choice: \\
+no editing code when loading programs, libraries\
+\vspace{.5cm}
+\item allows same code to be loaded in multiple processes
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=noGuessing]{danger of leaking pointers}
+    \begin{itemize}
+        \item any stack pointer? know everything on the stack!
+        \item any pointer within executable? know everything in the executable!
+        \item any pointer to a particular library? know everything in library!
+    \end{itemize}
+\end{frame}

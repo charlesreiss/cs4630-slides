@@ -1,0 +1,44 @@
+\begin{frame}<1>[fragile,label=bbOverheadExer1]{exercise: overhead of baggy bounds (1)}
+\begin{itemize}
+\item suppose program allocates:
+    \begin{itemize}
+    \item 1000 100 byte objects
+    \item 1 10000 byte object
+    \end{itemize}
+\item using baggy bounds, estimate:
+    \begin{itemize}
+    \item space required for padding
+        \begin{itemize}
+        \item<2-> $(128-100)\cdot 1000 + (16384 - 10000)) = 34384$
+        \end{itemize}
+    \item space required for table
+        \begin{itemize}
+        \item<2-> $(128\cdot 1000 + 16384) \div 16 = 9024$
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\iftoggle{heldback}{}{\againframe<2>{bbOverheadExer1}}
+
+\begin{frame}[fragile,label=bbOverheadExer2]{exercise: overhead of baggy bounds (2)}
+\begin{lstlisting}[language=C,style=smaller]
+char *strcat(char *d, char *s) {
+    int i;
+    for (i = 0; s[i] != '\0'; i += 1) {
+        d[i] = s[i]; 
+    }
+    d[i] = '\0';
+    return d;
+}
+\end{lstlisting}
+\begin{itemize}
+\item estimate:
+\begin{itemize}
+\item number of bounds checks needed
+\item very rough number of instructions run w/o bounds check
+\end{itemize}
+\item thought question: \\
+with bounds checking, what's fastest possible code?
+\end{itemize}
+\end{frame}

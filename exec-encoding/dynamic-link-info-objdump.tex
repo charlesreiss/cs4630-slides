@@ -1,0 +1,34 @@
+\begin{frame}{dynamic linking information}
+\begin{itemize}
+\item symbol table in libraries: list of functions/variables to find
+    \begin{itemize}
+    \item with their locations in the library
+    \end{itemize}
+\item relocation records in programs: list of functions/variables
+    \begin{itemize}
+    \item with locations (probably in lookup table) to fill in
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile,label=dynamicPuts]{dynamically linked puts (non-lazy)}
+\begin{Verbatim}[commandchars=Q\{\},fontsize=\fontsize{9}{10}\selectfont]
+DYNAMIC RELOCATION RECORDS
+OFFSET           TYPE              VALUE 
+...
+0000000000404018 R_X86_64_JUMP_SLOT  puts@GLIBC_2.2.5
+...
+
+Text:
+0000000000401040 <puts@plt>:
+  401040:       f3 0f 1e fa             endbr64 
+  401044:       f2 ff 25 cd 2f 00 00    bnd jmpq *0x2fcd(%rip) # 404018
+\end{Verbatim}
+\begin{itemize}
+    \item stub reads pointer from 0x404018, jump to location
+    \item {\tt 0x404018} part of `global offset table' (GOT)
+    \item relocation table entry indicates where puts pointer goes
+\end{itemize}
+\end{frame}
+

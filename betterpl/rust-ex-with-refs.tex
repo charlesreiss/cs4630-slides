@@ -1,0 +1,44 @@
+
+\usetikzlibrary{positioning,shapes.callouts}
+\begin{frame}[fragile,label=rustTimesTwo]{Rust example}
+\vspace{-.25cm}
+    \begin{minted}[fontsize=\fontsize{10}{11}\selectfont,escapeinside=||]{Rust}
+use std::io;
+
+fn main() {
+    println!("Enter a number: ");
+
+    let mut|\tikzmark{mut}| input = String::new();
+    // could have also written:
+    //   let mut input: String = String::new();
+    
+    io::stdin().read_line(&mut|\tikzmark{ref}| input);
+
+    // parse number or fail with an error message
+    let number: u32|\tikzmark{int}| = input.trim().parse()
+        .expect("That was not a number!");
+    println!("Twice that number is: {}", number * 2);
+}
+\end{minted}
+    \begin{tikzpicture}[overlay,remember picture]
+        \coordinate (box) at (current page.center);
+        \begin{visibleenv}<2>
+            \node[my callout=mut,anchor=center,align=left] at ([yshift=2cm]box) {
+                ``input'' is a mutable variable \\
+                type is automatically inferred as String
+            };
+        \end{visibleenv}
+        \begin{visibleenv}<3>
+            \node[my callout=ref,anchor=center,align=left] at ([yshift=1cm]box) {
+                pass mutable reference to input
+            };
+        \end{visibleenv}
+        \begin{visibleenv}<4>
+            \node[my callout=int,anchor=center,align=left] at (box) {
+                number is an immutable unsigned 32-bit integer
+            };
+        \end{visibleenv}
+    \end{tikzpicture}
+\end{frame}
+
+

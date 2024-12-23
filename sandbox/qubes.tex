@@ -1,0 +1,21 @@
+
+\begin{frame}{another sandboxing OS: Qubes}
+    \begin{itemize}
+    \item Qubes: heavily sandboxed OS
+    \item runs \myemph{seperate VMs} instead of filtering syscalls
+    \item UI that clearly shows what VM each window is from
+    \vspace{.5cm}
+    \item advantage: easier to gaurentee isolation
+        \begin{itemize}
+        \item many, many more bugs in system call filtering than VMs
+        \end{itemize}
+    \item disadvantage: harder to share between VMs
+    \item disadvantage: much more runtime overhead
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Qubes screenshot}
+    \includegraphics[width=\textwidth]{../sandbox/qubes-desktop1}
+\end{frame}
+
+

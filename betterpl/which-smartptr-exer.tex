@@ -1,0 +1,12 @@
+\begin{frame}{exercise: which smart pointer?}
+    \begin{itemize}
+    \item Rc, Arc (reference counting, w/ or w/o threading support
+    \item RefCell (borrowing, check at runtime)
+    \item Weak (reference counting, but don't contribute to count --- works with Rc)
+    \item Mutex (with multicore, one-at-a-time by waiting)
+    \vspace{.5cm}
+    \item say I have flight reservation system with Flight objects that have
+        references to Ticket objects and vice-versa, \\
+        and Customer objects that have references to Ticket objects and vice-versa?
+    \end{itemize}
+\end{frame}

@@ -1,0 +1,27 @@
+
+\begin{frame}[fragile,label=stealth]{stealth}
+\lstset{language=C,style=small}
+\begin{lstlisting}
+/* in virus: */
+int OpenFile(const char *filename, ...) {
+    if (strcmp(filename, "infected.exe") == 0) {
+        return RealOpenFile("clean.exe", ...);
+    } else {
+        return RealOpenFile(filename, ...);
+    }
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{other stealth ideas}
+    \begin{itemize}
+    \item override ``get file modification time'' (infected files)
+    \item override ``get files in directory'' (infected files)
+    \item override ``read file'' (infected files)
+        \begin{itemize}
+        \item but not ``execute file''
+        \end{itemize}
+    \item override ``get running processes'' 
+    \end{itemize}
+\end{frame}
+

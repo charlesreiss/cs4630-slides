@@ -1,0 +1,24 @@
+
+\begin{frame}{PIE}
+    \begin{itemize}
+    \item position-independent executables (PIE)
+        \begin{itemize}
+        \item no hardcoded addresses
+        \end{itemize}
+    \item alternative: \myemph{edit code (not global offset table) at load time}
+        \begin{itemize}
+        \item Windows solution
+        \end{itemize}
+    \item GCC: \texttt{-pie -fPIE}
+        \begin{itemize}
+        \item \texttt{-pie} is linking option
+        \item \texttt{-fPIE} is compilation option
+        \item related option: \texttt{-fPIC} (position independent code)
+            \begin{itemize}
+            \item used to compile runtime-loaded libraries
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+

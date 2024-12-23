@@ -1,0 +1,27 @@
+\begin{frame}[fragile,label=subterExer]{subterfuge exercise}
+\begin{lstlisting}[language=C++,style=script]
+struct Student {
+    char email[128];
+    struct Assignment *assignments[16];
+    ...
+};
+struct Assignment {
+    char submission_file[128];
+    char regrade_request[1024];
+    ...
+};
+void SetEmail(Student *s, char *new_email) { strcpy(s->email, new_email); }
+void AddRegradeRequest(Student *s, int index, char *request) {
+    strcpy(s->assignments[index]->regrade_request, request);
+}
+void vulnerable(char *STRING1, char *STRING2) {
+    SetEmail(s, STRING1); AddRegradeRequest(s, 0, STRING2);
+}
+\end{lstlisting}
+\begin{itemize}
+\item exercise: to set \texttt{0x1020304050} to \texttt{0xAABBCCDD}, what should STRING1, STRING2 be?
+    \begin{itemize}
+    \item (assume 64-bit pointers, no padding in structs, little-endian)
+    \end{itemize}
+\end{itemize}
+\end{frame}

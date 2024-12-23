@@ -1,0 +1,112 @@
+\graphicspath{{./figures/}}
+\title{}
+\date{}
+\usepackage{pgfpages}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{last time (1)}
+    \begin{itemize}
+    \item CHALLENGE logistics
+    \item the system call interface is big:
+        \begin{itemize}
+        \item hard to enumerate needed system calls
+        \item easy to miss features (e.g. runc bug) that need to be restricted
+        \end{itemize}
+    \item isolating programs that used shared services (e.g. windowing service)
+        \begin{itemize}
+        \item proxy? another system-call like interface?
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{last time (2)}
+    \begin{itemize}
+    \item mandatory access control, example: SELinux
+        \begin{itemize}
+        \item ``type'' labels for objects (files, etc.)
+        \item explicit list of allowed operations
+        \item enforcement in OS
+        \end{itemize}
+    \item separate views of system resources for sandboxes
+        \begin{itemize}
+        \item chroot: program views subset of filesystem
+        \item mount namespace: independent view of available disks
+            \begin{itemize}
+            \item ``bind mounts'' to expose directory `outside' as virtual disk
+            \end{itemize}
+        \item pid, network, etc. namespaces --- container $\approx$ lightweight VM sharing OS
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\subsubsection{runC bug}
+\input{../sandbox/runc-bug}
+
+\subsection{SELinux sandbox escape}
+\input{../sandbox/selinux-escape}
+\section{the Android sandbox}
+\input{../sandbox/android-sandbox}
+
+% FIXME: Android sandbox
+
+\subsection{OSX sandboxing}
+\input{../sandbox/osx-sandbox}
+\subsection{Qubes}
+\input{../sandbox/qubes}
+
+\section{Which sandboxing?}
+\input{../sandbox/which-sandbox-exer}
+
+\section{sandboxing without OS support}
+\input{../sandbox/no-os-support}
+
+\subsection{Wasm}
+\input{../sandbox/wasm}
+
+
+\section{sandboxing API: RLBox}
+\input{../sandbox/rlbox}
+
+\section{application permissions}
+\input{../sandbox/app-perms}
+
+\subsection{UI problems}
+\input{../sandbox/app-perm-problems}
+
+\subsection{do request right permissions?}
+\againframe<2>{appPermUI}
+\input{../sandbox/app-perm-right}
+
+\subsection{do users understand permissions?}
+\againframe<3>{appPermUI}
+\input{../sandbox/app-perm-users}
+
+\subsection{how to ask for permission?}
+\input{../sandbox/app-perm-how}
+
+\subsection{permissions abuse: Cloak and Dagger}
+\input{../sandbox/cloak-and-dagger}
+
+\subsection{permissions abuse: information leak}
+\input{../sandbox/info-leak-reardon}
+
+% FIXME: sandboxing and UIs
+
+
+% FIXME: https://www.usenix.org/system/files/sec19-reardon.pdf
+% FIXME: SFI and/or WAsm
+
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\iftoggle{heldback}{}{
+\subsection{narayan slides}
+%\includepdf[pages=13-24]{../sandbox/sec20_slides_narayan.pdf}
+}
+
+\end{document}

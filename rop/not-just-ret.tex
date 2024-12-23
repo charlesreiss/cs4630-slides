@@ -1,0 +1,26 @@
+
+\begin{frame}{ROP without a stack overflow (1)}
+    \begin{itemize}
+    \item we can use ROP ideas for non-stack exploits
+    \vspace{.5cm}
+    \item look for gadget(s) that set {\tt \%rsp}
+    \item \ldots based on function argument registers/etc.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{ROP without stack overflow (2)}
+    \begin{itemize}
+    \item example sequence:
+        \begin{itemize}
+            \item gadget 1: \texttt{push \%rdi; jmp *(\%rdx)}
+            \item gadget 2: \texttt{pop \%rsp; ret}
+        \end{itemize}
+    \item set:
+        \begin{itemize}
+        \item overwritten function pointer = pointer to gadget 1
+        \item arg 1: {\tt \%rdi} = desired stack pointer (pointer to next gadgets)
+        \item arg 3: {\tt \%rdx} = pointer to gadget 2
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

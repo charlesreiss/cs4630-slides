@@ -1,0 +1,48 @@
+
+\begin{frame}[fragile,label=kernelFTbl]{function pointer tables: Linux kernel (1)}
+\lstset{
+    language=C,style=small,
+    moredelim={**[is][\btHL<1|handout:0>]{~1~}{~end~}},
+}
+\begin{lstlisting}
+struct file {
+    union {
+        struct llist_node       fu_llist;
+        struct rcu_head         fu_rcuhead;
+    } f_u;
+    struct path             f_path;
+    struct inode            *f_inode;       /* cached value */
+    ~1~const struct file_operations    *f_op;~end~
+
+    /*
+     * Protects f_ep_links, f_flags.
+     * Must not be taken from IRQ context.
+     */
+    spinlock_t              f_lock;
+    atomic_long_t           f_count;
+    ...
+};
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=kernelFTbl2]{function pointer tables: Linux kernel (2)}
+\lstset{
+    language=C,style=small,
+    moredelim={**[is][\btHL<1|handout:0>]{~1~}{~end~}},
+}
+\begin{lstlisting}
+struct file_operations {
+    struct module *owner;
+    loff_t (*llseek) (struct file *, loff_t, int);
+    ssize_t (*read) (struct file *, char __user *,
+                     size_t, loff_t *);
+    ssize_t (*write) (struct file *, const char __user *,
+                      size_t, loff_t *);
+    ssize_t (*read_iter) (struct kiocb *, struct iov_iter *);
+    ssize_t (*write_iter) (struct kiocb *, struct iov_iter *);
+    int (*iterate) (struct file *, struct dir_context *);
+    ...
+};
+\end{lstlisting}
+\end{frame}
+

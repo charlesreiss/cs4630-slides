@@ -1,0 +1,31 @@
+\usetikzlibrary{arrows.meta}
+
+\begin{frame}[fragile,label=dynamicPutsOverview]{adding linker stubs}
+\begin{tikzpicture}
+\node[draw,font=\small,label={[draw,fill=white]north:program.s}] (asm) {
+\begin{lstlisting}
+main:
+   ...
+   call puts
+   ...
+\end{lstlisting}
+};
+\node[align=left,draw,font=\small,label={[draw,fill=white]north:program.exe},anchor=north west] (exe) at ([xshift=2cm]asm.north east) {
+\begin{lstlisting}
+GLOBAL_LOOKUP_TABLE:
+    ... // placeholders
+
+puts@plt:
+    jmp *GLOBAL_LOOKUP_TABLE[index]
+    ...
+...
+main:
+    ...
+    call puts@plt
+    ...
+\end{lstlisting}
+\\+ something that says where {\tt puts} in the lookup table
+};
+\draw[-Latex, ultra thick, black!50] (asm.east) -- (asm.west -| exe.west);
+\end{tikzpicture}
+\end{frame}

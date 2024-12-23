@@ -1,0 +1,20 @@
+
+\begin{frame}{fuzzing challenges}
+    \begin{itemize}
+    \item isolation:
+        \begin{itemize}
+        \item need to \myemph{detect crashes}/etc. reliably
+        \item want \myemph{reproducible test cases}
+        \item need to distinguish \myemph{hangs} from ``machine is randomly slow''
+        \end{itemize}
+    \item speed:
+        \begin{itemize}
+            \item need to run \myemph{many millions of tests}
+        \item application startup times are a problem
+        \end{itemize}
+    \item \textbf<2>{\myemph<2>{completeness:}}
+        \begin{itemize}
+            \item might have to get \textit{really} lucky to make interesting input
+        \end{itemize}
+    \end{itemize}
+\end{frame}

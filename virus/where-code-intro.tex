@@ -1,0 +1,33 @@
+
+\begin{frame}{where to put code}
+    \begin{itemize}
+    \item viruses insert code in other programs
+    \item Vienna's choice: end of executables
+    \item search for \texttt{.COM} executables on system
+    \vspace{.5cm}
+    \item considerations for other options:
+    \item spreading: identifying useful files to infect
+        \begin{itemize}
+        \item will be copied elsewhere?
+        \item will be run?
+        \end{itemize}
+    \item stealth: avoiding detection
+        \begin{itemize}
+        \item Vienna: file size changes --- easy to find?
+        \item Vienna: weird modification time --- easy to find?
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}<1>[label=whereCode]{where to put code: options}
+    \begin{itemize}
+    \item one \textit{or more} of:
+    \item \myemph<2>{replacing executable code}
+    \item \myemph<3>{after executable code (Vienna)}
+    \item \myemph<4>{in unused executable code}
+    \item \myemph<5>{inside OS code}
+    \item \myemph<6>{in memory}
+    \item \myemph<7>{replace existing code}
+    \end{itemize}
+\end{frame}
+

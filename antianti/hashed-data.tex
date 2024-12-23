@@ -1,0 +1,40 @@
+\begin{frame}[fragile,label=virusLibCall]{recall: library calls in viruses}
+    \begin{itemize}
+    \item viruses making library calls
+        \begin{itemize}
+        \item can't use normal dynamic linker stuff
+        \end{itemize}
+    \item common solution: search by name:
+    \end{itemize}
+\begin{lstlisting}[language=C++,style=smaller]
+char *names[] = GetFunctionNamesFrom("kernel32.dll");
+for (int i = 0; i < numFunctions; ++i) {
+    if (strcmp(names[i], "GetFileAttributesA") == 0) {
+        return functions[i];
+    }
+}
+\end{lstlisting}
+    \begin{itemize}
+    \item problem: legit application code won't do this
+    \item easy to look for string `GetFileAttributesA'
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=recallHideAPI]{searching for hashes}
+\lstset{language=C,style=small}
+\begin{lstlisting}
+char *functionNames[] = GetFunctionsFromStandardLibrary();
+/* 0xd7c9e758 = hash("GetFileAttributesA") */
+unsigned hashOfString = 0xd7c9e758; 
+for (int i = 0; i < num_functions; ++i) {
+    unsigned functionHash = 0; 
+    for (int j = 0; j < strlen(functionNames[i]); ++j) {
+        functionHash = (functionHash * 7 +
+                        functionNames[i][j]);
+    }
+    if (functionHash == hashOfString) {
+        return functions[i];
+    }
+}
+\end{lstlisting}
+\end{frame}

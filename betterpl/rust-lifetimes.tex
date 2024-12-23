@@ -1,0 +1,94 @@
+
+\begin{frame}{lifetimes}
+    \begin{itemize}
+    \item every reference in Rust has a \myemph{lifetime}
+    \item intuitively: how long reference is usable
+    \item Rust compiler infers and checks lifetimes
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{lifetime rules}
+    \begin{itemize}
+    \item object is borrowed for duration of reference lifetime
+        \begin{itemize}
+        \item can't modify object during lifetime
+        \item can't let object go out of scope during lifetime
+        \end{itemize}
+    \item lifetime of function args must include whole function call
+    \item references returned from function must have lifetimes
+        \begin{itemize}
+        \item based on arguments or static (valid for entire program)
+        \end{itemize}
+    \item references stored in structs must have lifetime longer than struct
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=lifetimeHard]{lifetime inference}
+\begin{minted}[fontsize=\small]{Rust}
+fn get_first(values: &Vec<String>) -> &String {
+    return &values[0];
+}
+\end{minted}
+\begin{itemize}
+    \item compiler infers lifetime of return value is same as input
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=lifetimeHard2]{lifetime hard cases}
+\begin{minted}[fontsize=\small]{Rust}
+// ERROR:
+fn get_first_matching(prefix: &str, values: &Vec<String>)
+                            -> &String {
+    for item in values {
+        if item.starts_with(prefix) {
+            return item
+        }
+    }
+    panic!()
+}
+\end{minted}
+\begin{itemize}
+    \item this is a compile-error, because of the return value
+    \item compiler need to be told lifetime of return value
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=lifetimeAnnot]{lifetime annotations}
+    \begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+fn get_first_matching<'a, 'b>(prefix: &'a str, values: &'b Vec<String>)
+                            -> &'b String {
+    for item in values {
+        if item.starts_with(prefix) {
+            return item
+        }
+    }
+    panic!()
+}
+\end{minted}
+\begin{itemize}
+    \item prefix has lifetime $a$
+    \item values and returned string have lifetime $b$
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=lifetimeAnnot2]{lifetime annotations}
+    \begin{minted}[fontsize=\fontsize{10}{11}]{Rust}
+fn get_first_matching<'a, 'b>(prefix: &'a str, values: &'b Vec<String>)
+                            -> &'b String {
+    for item in values {
+        if item.starts_with(prefix) {
+            return item
+        }
+    }
+    panic!()
+}
+
+fn get_first(values: &Vec<String>) -> &String {
+    let prefix: String = compute_prefix();
+    return get_first_matching(&prefix, values)
+    // prefix deallocated here
+}
+\end{minted}
+\end{frame}
+
+

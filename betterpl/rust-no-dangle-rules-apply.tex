@@ -1,0 +1,67 @@
+\begin{frame}[fragile,label=noDangleApply1Exer]{applying rules (1)}
+\begin{itemize}
+\item single owner, someone can borrow temporarily
+\item only modify if exactly one user
+\end{itemize}
+\begin{tikzpicture}
+\node (left) {
+\begin{lstlisting}[language={},style=script]
+let mut x = 42;    // (1)
+let p = &mut x;    // (2)
+*p = 10;           // (3)
+println!("{}", x); // (4)
+\end{lstlisting}
+};
+\node[anchor=north west] (right) at (left.north east) {
+\begin{lstlisting}[language=C++,style=script]
+int x = 42;        // (1)
+int *p = &x;       // (2)
+*p = 10;           // (3)
+printf("%d\n", x); // (4)
+\end{lstlisting};
+};
+\end{tikzpicture}
+\begin{itemize}
+\item Exercise 1/2/3/4: The owner of x on line 1/2/3/4 is:
+    \begin{itemize}
+    \item A. (original owner) the variable x
+    \item B. (borrowed) the pointer/reference p
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=noDangleApply2Exer]{applying rules (2)}
+\begin{itemize}
+\item single owner, someone can borrow temporarily
+\item only modify if exactly one user
+\end{itemize}
+\begin{tikzpicture}
+\node (left) {
+\begin{lstlisting}[language={},style=script]
+let mut x = 42;    // (1)
+let p = &mut x;    // (2)
+*p = 10;           // (3)
+println!("{}", x); // (4)
+*p = 11;           // (5)
+\end{lstlisting}
+};
+\node[anchor=north west] (right) at (left.north east){
+\begin{lstlisting}[language=C++,style=script]
+int x = 42;        // (1)
+int *p = &x;       // (2)
+*p = 10;           // (3)
+printf("%d\n", x); // (4)
+*p = 11;           // (5)
+\end{lstlisting};
+};
+\end{tikzpicture}
+\begin{itemize}
+\item Rust rufuses to compile left-side: x being used while borrowed by p
+\item Which changes would avoid this problem?
+    \begin{itemize}
+    \item A. use \texttt{*p} in the println!
+    \item B. make \texttt{p} mutable, reassign \lstinline|p = &mut x| after line (4)
+    \item C. take a non-mutable reference to x instead of a mutable one
+    \end{itemize}
+\end{itemize}
+\end{frame}

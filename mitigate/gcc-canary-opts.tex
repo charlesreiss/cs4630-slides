@@ -1,0 +1,20 @@
+
+\begin{frame}{stack canaries implementation}
+    \begin{itemize}
+    \item ``StackGuard'' --- 1998 paper proposing strategy
+    \item GCC: command-line options
+        \begin{itemize}
+        \item {\tt -fstack-protector} 
+        \item {\tt -fstack-protector-strong} 
+        \item {\tt -fstack-protector-all}
+        \item one of these often default
+        \item three differ in how many functions are `protected'
+        \end{itemize}
+    \item Microsoft C/C++ compiler: {\tt /GS}
+        \begin{itemize}
+        \item on by default
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+

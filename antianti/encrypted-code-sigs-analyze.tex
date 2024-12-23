@@ -1,0 +1,26 @@
+\begin{frame}{encrypted viruses: no signature?}
+    \begin{itemize}
+    \item {\tt decrypt} is a pretty good signature
+    \item still need to a way to disguise that code
+    \vspace{.5cm}
+    \item how about analysis? how does one analyze this?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{encrypted virus: getting the code?}
+    \begin{itemize}
+    \item ``encrypted'' body 
+    \item just running objdump not enough\ldots
+    \item instead --- run debugger, set \myemph{breakpoint} after ``decryption''
+    \item \myemph{dump decrypted memory} afterwords
+    \vspace{.5cm}
+    \item observation: can even automate this:
+        \begin{itemize}
+        \item run program in emulator
+        \item have emulator look for jump to previously written code
+        \item (or jump after certain point, etc.)
+        \item example implementation: unipacker (\texttt{https://github.com/unipacker/unipacker})
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

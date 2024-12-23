@@ -1,0 +1,225 @@
+\graphicspath{{./figures/}}
+\title{greybox fuzzing / static analysis / taint tracking}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+{
+\setbeamercolor{background canvas}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{normal text}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{itemize/enumerate body}{fg=white}
+\setbeamercolor{itemize/enumerate subbody}{fg=white}
+\setbeamercolor{titlelike}{bg=blue!40!black,fg=blue!10!white}
+\begin{frame}<1|handout:1>[noframenumbering]{Changelog}
+    \begin{itemize}
+    \item 12 April 2021: change direction of assertion on symbolic execution equation exercise
+    \item 12 April 2021: completeness/soundness: correct description
+    \item 12 April 2021: points-to diagram: correct arrows to C (not via B) and  fixup its ID= values
+    \end{itemize}
+\end{frame}
+}
+
+
+\begin{frame}{last time (1)}
+    \begin{itemize}
+    \item AddressSanitizer, Valgrind Memcheck
+        \begin{itemize}
+        \item red zones between objects
+        \item lookup table ``is location valid''
+        \item instrument memory reads/writes (not pointer arith)
+        \end{itemize}
+    \item random testing
+        \begin{itemize}
+        \item way to find memory errors, etc.
+        \item mutating good inputs
+        \item custom generators for formatted input? (e.g. HTML, C code)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{last time (2)}
+    \begin{itemize}
+    \item symbolic execution
+        \begin{itemize}
+        \item make program values into algebriac variables
+        \item solve equations to find if paths are possible
+        \item systematic way to generate thorough test cases
+        \item performance problems: slow equation solving, too many paths
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\section{symbolic execution}
+\subsection{exercise}
+\input{../testing/symbolic-exec-exer}
+
+\subsection{solving equations??}
+\input{../testing/solving-equation-p} % FIXME: screenshot of Z3
+    % FIXME: explanation of SMT solver performance
+
+\subsection{summary: tricky problems with symbolic execution}
+\input{../testing/symbolic-exec-tricky-sum}
+
+\subsection{real symbolic execution}
+     % FIXME: example from KLEE, SYMCC papers of what they did
+        % of their performance
+\input{../testing/symbolic-exec-real}
+
+\section{coverage-guided fuzzing}
+\input{../testing/coverage-fuzzing}
+
+\subsection{examples}
+\input{../testing/coverage-fuzzing-example}
+
+\subsection{exercise}
+\input{../testing/coverage-fuzzing-exer}
+
+\subsection{AFL as running example}
+\input{../testing/afl}
+
+\subsection{automatic test case simplification}
+\input{../testing/autosimplify}
+
+\subsection{AFL: test template support}
+\input{../testing/afl-test-templates}
+
+\section{Static Analysis, briefly}
+
+\subsection{fuzzing as symbolic execution compromise}
+\input{../static/symb-v-static}
+
+\subsection{example: model for use-after-free}
+\input{../static/use-after-free-simple-model}
+    % FIXME: move loop discussion later
+
+\subsection{exercise: aliasing and model}
+\input{../static/use-after-free-model-exer}
+
+\subsection{points-to analysis}
+\input{../static/points-to} % FIXME: move earlier?
+
+\subsection{complicating points-to analysis}
+\input{../static/points-to-complex}
+
+\subsection{example: model for use-after-free, with loop}
+\input{../static/use-after-free-simple-model-loop}
+
+\subsection{example: model for array bounds}
+\input{../static/bounds-modelp}
+
+\subsection{analysis for common insecure patterns}
+\input{../static/clang-static-patterns}
+
+\subsection{static analysis limits?}
+\input{../static/static-limits}
+
+\subsection{summary / actual tools}
+\input{../static/actual-tools}
+
+\section{information flow}
+\input{../taint/info-flow-intro}
+
+\subsection{data flow graph}
+\input{../taint/info-flow-graph}
+
+\subsection{control flow versus information flow} 
+\input{../taint/info-flow-graph-controlp}
+
+\subsection{challenges for data flow}
+\input{../taint/data-flow-challenges}
+
+\subsection{sources and sinks}
+\input{../taint/sources-and-sinks}
+
+\section{taint tracking}
+\input{../taint/intro}
+
+\subsection{implementations}
+\input{../taint/implementations}
+
+\subsection{taint tracking in perl}
+\input{../taint/in-perl}
+
+\subsection{taint tracking asm}
+\input{../taint/asm}
+
+\subsection{exercise: defeating} 
+\input{../taint/asm-defeat}
+
+\subsection{obfuscation to defeat taint-tracking}
+\input{../taint/anti-tigress}
+
+\subsection{taint for finding mobile leaks}
+\input{../taint/taintdroid}
+
+\section{Rust}
+
+% FIXME
+
+\subsection{general philosophy}
+\input{../betterpl/rust-general}
+
+\subsection{general syntax}
+\input{../betterpl/rust-syntax-basic}
+
+\subsection{references}
+\subsubsection{basic example}
+\input{../betterpl/rust-refs}
+
+\subsubsection{in context}
+\input{../betterpl/rust-ex-with-refs}
+
+% FIXME: exercise: output with references
+
+\subsection{basic ownership}
+\input{../betterpl/rust-ownership}
+
+\section{Rust: stopping dangling pointers}
+\input{../betterpl/rust-no-dangle-rules}
+
+% FIXME: exercise: which are compile errors?
+
+\subsection{borrowing}
+\input{../betterpl/rust-borrowing}
+
+\subsection{lifetimes}
+\againframe<2>{dangleRules}
+\input{../betterpl/rust-lifetimes}
+
+\subsection{one writer}
+\againframe<3>{dangleRules}
+\input{../betterpl/rust-one-writer}
+
+\subsection{concurrency}
+\input{../betterpl/rust-concurrency}
+
+\section{Rust: escape hatches and supporting dynamic allocation}
+\input{../betterpl/dynamic-alloc-basic}
+    % FIXME: Rust 
+
+\subsection{escape hatches implementing Vec}
+\input{../betterpl/rust-escape-inside-vec}
+
+\subsection{implementing new sharing schemes}
+\input{../betterpl/rust-impl-rc}
+
+\subsection{other Rust smart pointers}
+\input{../betterpl/other-rust-smartptr}
+
+\section{zero-overhead}
+\input{../betterpl/zero-overhead-p}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\subsection{Rust linked list}
+\input{../betterpl/rust-ll}
+
+
+\subsection{other taint tracking uses}
+\input{../taint/other-uses}
+
+\end{document}

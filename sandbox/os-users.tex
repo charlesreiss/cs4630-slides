@@ -1,0 +1,41 @@
+
+\begin{frame}<1>[fragile,label=multiOS]{multi-user OSs}
+\lstset{
+    language={},style=small,
+    moredelim={**[is][\color{red!70!black}]{~in~}{~end~}},
+}
+\begin{lstlisting}
+cr4bd@labunix01:~$ ~in~cp myprogram.exe /bin/ls~end~
+cp: cannot create regular file ‘/bin/ls’: Permission denied
+\end{lstlisting}
+    \begin{itemize}
+        \item programs have \myemph{limited privileges}
+        \item<2-> OS tracks ``user'' of running every program
+        \item<2-> result: malware I installed shouldn't be able to effect other users
+        \item<2-> idea 1: reuse this support for web browsers
+            \begin{itemize}
+            \item webpage should run as ``different user''
+            \item malware should only affect web browser?
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=permEnforce]{permission enforcement}
+    \begin{minted}[fontsize=\small]{C}
+struct Process {
+    int user_id;
+    ...
+};
+int handle_open_system_call(char *filename, ...) {
+    Process* currentProcess = GetCurrentProcess();
+    File* file = GetFileByFilename(filename);
+    if (!file->UserCanAccess(currentProcess->user_id)) {
+        return ERROR_PERMISSION_DENIED;
+    }
+    ...
+}
+\end{minted}
+\end{frame}
+
+\againframe<2>{multiOS}
+

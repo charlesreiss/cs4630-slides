@@ -1,0 +1,48 @@
+
+\begin{frame}[fragile,label=addressing1]{addressing modes (1)}
+    \begin{itemize}
+        \item {\tt \$constant}
+        \item {\tt displacement(\%base, \%index, scale)}
+            \begin{itemize}
+            \item {\tt displacement} (absolute)
+            \item {\tt displacement(\%base)}
+            \item {\tt displacement(,\%index, scale)}
+            \end{itemize}
+        \item (= $\text{displacement} + \text{base} + \text{index} \times \text{scale}$)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=addressing2]{addressing modes (2)}
+    \begin{itemize}
+        \item {\tt displacement(\%rip)} (64-bit only)
+\begin{lstlisting}
+thing: .quad 42
+...
+movq thing(%rip), %rax
+\end{lstlisting}
+        \begin{itemize}
+        \item encoded as offset from \myemph{address of next instruction}
+        \item (normally: label encoded as 32 or 64-bit address)
+        \item helps \myemph{relocatable code}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=addressing3]{addressing modes (3)}
+    \begin{itemize}
+        \item {\tt jmp *\%rax} (or {\tt call})
+        \begin{itemize}
+        \item Intel syntax: {\tt jmp RAX}
+        \item what you'd expect to be {\tt jmp (\%rax)}
+        \end{itemize}
+        \item {\tt jmp *(\%rax)}
+        \begin{itemize}
+        \item read value from memory at RAX
+        \item PC becomes location in that value
+        \item Intel syntax: {\tt jmp [RAX]}
+        \end{itemize}
+        \item {\tt jmp *(\%rax,\%rbx,8)}
+    \end{itemize}
+\end{frame}
+
+

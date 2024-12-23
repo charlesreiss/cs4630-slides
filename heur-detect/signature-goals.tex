@@ -1,0 +1,18 @@
+
+\begin{frame}{making things hard for the mouse}
+    \begin{itemize}
+    \item don't want \myemph{trivial changes} to break detection
+    \item want to detect \myemph{strategies}
+        \begin{itemize}
+        \item e.g. require changing relocation logic
+        \item \ldots not just reordering instructions, adding nops
+        \end{itemize}
+    \item need to detect signatures in real time
+        \begin{itemize}
+        \item don't want interrupt user (much)
+        \end{itemize}
+    \item want to avoid false positive
+    \item goals: compact, fast to check, reliable, \myemph{general?}
+    \end{itemize}
+\end{frame}
+

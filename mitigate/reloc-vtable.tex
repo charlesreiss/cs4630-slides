@@ -1,0 +1,49 @@
+\begin{frame}[fragile,label=relocVTable]{extra relocations}
+\begin{lstlisting}[language=C++,style=smaller]
+struct Foo {
+    virtual const char *bar() { return "Foo::bar"; }
+};
+
+int main() {
+    Foo *f = new Foo;
+    f->bar();
+}
+\end{lstlisting}
+\begin{itemize}
+\item needed: VTable for Foo
+\item contains function pointers --- but function addresses change
+\item how is that setup? extra work on program loading
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=relocVTable2]{position-independent versus not}
+\begin{lstlisting}[language=C++,style=script]
+$ objdump -R example2
+
+example2:     file format elf64-x86-64
+
+DYNAMIC RELOCATION RECORDS
+OFFSET           TYPE              VALUE 
+0000000000003da8 R_X86_64_RELATIVE  *ABS*+0x0000000000001160
+0000000000003db0 R_X86_64_RELATIVE  *ABS*+0x0000000000001120
+0000000000004008 R_X86_64_RELATIVE  *ABS*+0x0000000000004008
+0000000000003fd8 R_X86_64_GLOB_DAT  __cxa_finalize@GLIBC_2.2.5
+0000000000003fe0 R_X86_64_GLOB_DAT  _ITM_deregisterTMCloneTable
+0000000000003fe8 R_X86_64_GLOB_DAT  __libc_start_main@GLIBC_2.2.5
+0000000000003ff0 R_X86_64_GLOB_DAT  __gmon_start__
+0000000000003ff8 R_X86_64_GLOB_DAT  _ITM_registerTMCloneTable
+0000000000003fd0 R_X86_64_JUMP_SLOT  _Znwm@GLIBCXX_3.4
+\end{lstlisting}
+\hrule
+\begin{lstlisting}[language=C++,style=script]
+$ objdump -R example2-nopie
+
+example2-nopie:     file format elf64-x86-64
+
+DYNAMIC RELOCATION RECORDS
+OFFSET           TYPE              VALUE 
+0000000000403ff0 R_X86_64_GLOB_DAT  __libc_start_main@GLIBC_2.2.5
+0000000000403ff8 R_X86_64_GLOB_DAT  __gmon_start__
+0000000000404018 R_X86_64_JUMP_SLOT  _Znwm@GLIBCXX_3.4
+\end{lstlisting}
+\end{frame}

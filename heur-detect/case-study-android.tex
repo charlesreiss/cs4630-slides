@@ -1,0 +1,41 @@
+
+\begin{frame}{heuristics example: DREBIN paper}
+    \begin{itemize}
+    \item {\small from 2014 research paper on Android malware: Arp et al, ``DREBIN: Effective and Explainable Detection of Android Malware in Your Pocket''}
+    \item primary contribution of paper: big dataset of malware
+    \item but tried to detect malware, too\ldots
+    \item features from applications (\myemph{without running}):
+        \begin{itemize}
+        \item hardware requirements
+        \item requested permissions
+        \item whether it runs in background, with pushed notifications, etc.
+        \item what API calls it uses
+        \item network addresses
+        \end{itemize}
+    \item detect \myemph{dynamic code generation} explicitly
+    \item statistics (i.e. machine learning) to determine score
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{heuristics example: DREBIN paper}
+    \begin{itemize}
+    \item advantage: Android uses Dalvik bytecode (Java-like)
+        \begin{itemize}
+        \item high-level ``machine code''
+        \item much easier/more useful to analyze
+        \end{itemize}
+    \item accuracy?
+        \begin{itemize}
+        \item tested on 131k apps, $94$\% of malware, $1$\% false positives
+        \item versus best commercial: $96$\%, $<0.3$\% false positives
+            \begin{itemize}
+            \item (probably has explicit patterns for many known malware samples)
+            \end{itemize}
+        \end{itemize}
+    \item \ldots but
+        \begin{itemize}
+        \item statistics: training set needs to be typical of malware
+        \item cat-and-mouse: what would attackers do in response?
+        \end{itemize}
+    \end{itemize}
+\end{frame}

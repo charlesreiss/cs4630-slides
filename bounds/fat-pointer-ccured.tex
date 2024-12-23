@@ -1,0 +1,18 @@
+\begin{frame}{example: CCured}
+\begin{itemize}
+\item Necula et al, ``CCured:  Type-Safe Retrofitting of Legacy Code'' (2002)
+\vspace{.5cm}
+\item extension to C to add fat pointers
+\item actually three different types of pointers:   
+    \begin{itemize}
+    \item SAFE: point to single object (not array) or NULL
+    \item SEQUENCE: pointer to array with known bounds (like ``fat'' pointers)
+    \item DYNAMIC: extra to handles type-casting
+    \end{itemize}
+\item \textit{needs source changes} to annotate some pointer usage
+    \begin{itemize}
+    \item especially to allow library function calls
+    \end{itemize}
+\item 1-\textbf{2.5x} time overhead
+\end{itemize}
+\end{frame}

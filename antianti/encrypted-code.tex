@@ -1,0 +1,19 @@
+
+\begin{frame}[fragile,label=encrypted]{encrypted(?) viruses}
+\lstset{language=C,style=small}
+\begin{lstlisting}
+char encrypted[] = "\x12\x45...";
+char key[] = "...";
+virusEntryPoint() {
+    decrypt(encrypted, key);
+    goto encrypted;
+}
+decrypt(char *buffer, char *key) {...}
+\end{lstlisting}
+\begin{itemize}
+    \item choose a new key each time!
+    \item not good encryption --- \myemph{key is there}
+    \item sometimes mixed with \myemph{compression}
+\end{itemize}
+\end{frame}
+

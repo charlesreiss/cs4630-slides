@@ -1,0 +1,63 @@
+
+
+\begin{frame}{vulnerabilities}
+    \begin{itemize}
+    \item for viruses, worms
+    \item for trojans + PUP that do more than is supposed to do be allowed
+        \begin{itemize}
+        \item e.g. getting location information without ``permission''
+        \end{itemize}
+    \vspace{.5cm}
+    \item software \myemph{vulnerability}
+    \vspace{.5cm}
+    \item unintended program behavior \\ that can be used by an adversary
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{vulnerability example}
+    \begin{itemize}
+    \item website able to install software without prompting
+    \item \myemph{not intended} behavior of web browser
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{software vulnerability classes (1)}
+    \begin{itemize}
+    \item \myemph{memory safety} bugs
+        \begin{itemize}
+        \item problems with pointers
+        \item big topic in this course
+        \end{itemize}
+    \item ``injection'' bugs --- \myemph{type confusion}
+        \begin{itemize}
+        \item commands/SQL within name, label, etc.
+        \end{itemize}
+    \item integer overflow/underflow
+    \item \ldots
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{software vulnerability classes (2)}
+    \begin{itemize}
+    \item not checking inputs/permissions
+        \begin{itemize}
+        \item \url{http://webserver.com/../../../../file-I-shouldn't-get.txt}
+        \end{itemize}
+    \item almost any 's ``undefined behavior'' in C/C++
+    \item synchronization bugs: time-to-check to time-of-use
+    \item \ldots{} more?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{vulnerability versus exploit}
+    \begin{itemize}
+    \item exploit --- something that uses a vulnerability to do something
+    \item proof-of-concept --- something = demonstration the exploit is there
+        \begin{itemize}
+        \item example: open a calculator program
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+

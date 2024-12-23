@@ -1,0 +1,14 @@
+
+\begin{frame}{attacking antivirus (1)}
+    \begin{itemize}
+    \item one common virus idea: interfere directly with antivirus
+    \vspace{.5cm}
+    \item just modify antivirus software databases, etc.
+    \item preserve file checksums
+        \begin{itemize}
+        \item so some AV software thinks file is unchanged
+        \item (doesn't work with cryptographic hashes, but\ldots)
+        \end{itemize}
+    \item \myemph<2>{register own handlers to filter antivirus/sysadmin calls}
+    \end{itemize}
+\end{frame}

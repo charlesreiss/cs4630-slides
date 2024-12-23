@@ -1,0 +1,17 @@
+\begin{frame}<1>[label=dangleRules]{rules to stop dangling pointers (2)}
+    \begin{itemize}
+    \item objects have an single \textbf{owner}
+    \item owner can give away ownership permanently
+        \begin{itemize}
+        \item object is ``moved''
+        \end{itemize}
+    \item \myemph<1>{owner can let someone borrow object \myemph<2>{\textbf{temporarily}}}
+        \begin{itemize}
+        \item must know when object is given back
+        \end{itemize}
+    \item only \myemph<3>{\textbf{modify}} object when exactly one user
+        \begin{itemize}
+        \item owner or exclusive borrower
+        \end{itemize}
+    \end{itemize}
+\end{frame}

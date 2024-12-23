@@ -1,0 +1,106 @@
+
+{
+\providecommand{\myemphTwo}[1]{\myemph<2>{#1}}%
+\providecommand{\myemphThree}[1]{\myemph<3>{#1}}%
+\providecommand{\myemphFour}[1]{\myemph<{#1}}%
+\providecommand{\antiEmphThree}[1]{{\color<3>{blue}#1}}%
+\providecommand{\antiEmphFour}[1]{{\color<4>{blue}#1}}%
+\begin{frame}[fragile,label=hardCodedAsm]{hard-coded addresses? (64-bit)}
+\lstset{language=C,style=small}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1, 0) {
+\begin{lstlisting}
+int foo(long n) {
+    switch (n) {
+    case 0: 
+    case 2:
+    case 4:
+    case 5:
+        return 1;
+    case 1:
+    case 3:
+        return 2;
+    default:
+        return 3;
+    }
+}
+\end{lstlisting}
+};
+\draw[thick] (-.75, 0) -- (-.75,-7);
+\node[anchor=north west,align=left] (disasm) at (-.5, 0) {
+\lstset{
+    language=myasm,
+    style=smaller,
+    escapeinside=~~,
+}
+\begin{lstlisting}
+foo:
+	movl	$3, %eax
+	cmpq	$5, %rdi
+	ja	defaultCase
+	jmp	*lookupTable(,%rdi,8)
+        /* code for defaultCase, returnOne, returnTwo */
+        ...
+	.section	.rodata
+lookupTable: /* read-only pointers: */
+	.quad	returnOne
+	.quad	returnTwo
+	.quad	returnOne
+	.quad	returnTwo
+	.quad	returnOne
+	.quad	returnOne
+\end{lstlisting}
+};
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}[fragile,label=hardCodedDisasm]{hard-coded addresses? (64-bit)}
+\lstset{language=C,style=small}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1, 0) {
+\begin{lstlisting}
+int foo(long n) {
+    switch (n) {
+    case 0: 
+    case 2:
+    case 4:
+    case 5:
+        return 1;
+    case 1:
+    case 3:
+        return 2;
+    default:
+        return 3;
+    }
+}
+\end{lstlisting}
+};
+\draw[thick] (-.75, 0) -- (-.75,-7);
+\node[anchor=north west,align=left] (disasm) at (-.5, 0) {
+\lstset{
+    language=myasm,
+    style=smaller,
+    escapeinside=~~,
+}
+\begin{lstlisting}
+~\textit{400570 <foo>}~:
+b8 03 00 00 00    mov    $0x3,%eax
+48 83 ff 05       cmp    $0x5,%rdi
+        /* jump to defaultCase: */
+77 ~\antiEmphThree{12}~            ja     ~\antiEmphThree{0x40058d}~
+        /* lookup table jump: */
+ff 24 fd
+~\myemphTwo{18 06 40 00}~      jmpq   *~\myemphTwo{0x400618}(,\%rdi,8)~
+...
+ /* lookupTable @ 0x400618 */
+~\textit{@ 400618:} \myemphTwo{0x400588}~ /* returnOne */
+~\textit{@ 400620:} \myemphTwo{0x400582}~ /* returnTwo */
+~\textit{@ 400628:} \myemphTwo{0x400588}~
+~\textit{@ 400630:} \myemphTwo{0x400582}~
+\end{lstlisting}
+};
+\end{tikzpicture}
+\end{frame}
+
+}

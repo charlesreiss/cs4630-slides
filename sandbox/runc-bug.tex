@@ -1,0 +1,87 @@
+\begin{frame}{runc bug}
+    \begin{itemize}
+    \item 2019 bug in Docker, other container implementations (CVE-2019-5736)
+        \begin{itemize}
+        \item blog post for vulnerability finders: \\\scriptsize \url{https://blog.dragonsector.pl/2019/02/cve-2019-5736-escape-from-docker-and.html}
+        \end{itemize}
+    \vspace{.5cm}
+    \item bug setup:
+        \begin{itemize}
+        \item user starts malicious container X
+        \item user tells docker to start a new command in malicious container X
+        \item \myemph<2>{malicious container X hijacks the ``new command'' starting program}
+        \item hijacked program used to access stuff outside container
+        \end{itemize}
+    \item part of problem: Docker and others weren't using user namespaces at the time
+        \begin{itemize}
+        \item compatability problems
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{setup: /proc/PID}
+    \begin{itemize}
+    \item Linux provides /proc directory to access info about programs
+    \item used for implementing process list utils, debugging
+        \begin{itemize}
+        \item needed to make a functional container
+        \end{itemize}
+    \item subdirectory for each process in current container
+        \begin{itemize}
+        \item process ID PID has /proc/PID subdirectory
+        \item /proc/self is alias for current process's subdirectory
+        \end{itemize}
+    \vspace{.5cm}
+    \item included is /proc/PID/exe file --- alias for executable file
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{running a command in existing container}
+    \begin{itemize}
+    \item to run command X in existing container:
+    \vspace{.5cm}
+    \item step 1: switch current process to that container
+    \item<2-> \myemph{code in container can access /proc here?}
+    \item<2-> \myemph{including overwriting /proc/self/exe!}
+        \begin{itemize}
+        \item which is a program run as root!
+        \end{itemize}
+    \vspace{.25cm}
+    \item step 2: execute command X
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{partial fix}
+    \begin{itemize}
+    \item can disable access to /proc/PID/exe (and related things)
+    \item system call: \texttt{prctl(PR\_SET\_DUMPABLE, 0)}
+    \item but\ldots the run-in-container tool did this for a while
+    \vspace{.5cm}
+    \item<2-> problem: this gets reset on executing a new program
+    \item<2-> and attacker could make the new program be /proc/PID/exe
+        \begin{itemize}
+        \item one mechanism: symbolic links (file aliases)
+        \end{itemize}
+    \item<2-> but change dynamic linking setup to run attacker code
+    \item<2-> \ldots which accesses /proc/self/exe
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{full fix}
+    \begin{itemize}
+    \item make single-use copy of start-in-container tool each time command run
+        \begin{itemize}
+        \item in-memory file
+        \end{itemize}
+    \item \ldots so modifying it doesn't change anything
+        \begin{itemize}
+        \item (but it's also protected from modification)
+        \end{itemize}
+    \vspace{.5cm}
+    \item other solutions:
+        \begin{itemize}
+        \item make executable non-writable (e.g. SELinux, don't run container as root)
+        \end{itemize}
+    \end{itemize}
+\end{frame}

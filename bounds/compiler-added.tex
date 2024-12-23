@@ -1,0 +1,84 @@
+
+\begin{frame}[fragile,label=fortifyMemCpyIntro]{adding bounds checking}
+\lstset{language=C,style=small}
+\begin{lstlisting}
+char buffer[42];
+memcpy(buffer, attacker_controlled, len);
+\end{lstlisting}
+    \begin{itemize}
+        \item couldn't compiler add check for \texttt{len}
+        \item modern Linux: it does
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=boundsChecking]{added bounds checking}
+\lstset{language=C,style=small}
+\begin{lstlisting}
+char buffer[42];
+memcpy(buffer, attacker_controlled, len);
+\end{lstlisting}
+\lstset{language=myasm,style=small}
+\begin{lstlisting}
+    subq   $72, %rsp
+    leaq   4(%rsp), %rdi
+    movslq len, %rdx
+    movq   attacker_controlled, %rsi
+    movl   $42, %ecx
+    call   __memcpy_chk
+\end{lstlisting}
+    \begin{itemize}
+        \item length \texttt{42} passed to \texttt{\_\_memcpy\_chk}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\_FORTIFY\_SOURCE}
+    \begin{itemize}
+        \item Linux C standard library + GCC features
+        \item adds automatic checking to a bunch of string/array functions
+        \item also printf (disable \texttt{\%n} unless format string is a constant)
+        \vspace{.5cm}
+        \item often enabled by default
+        \item GCC options:
+            \begin{itemize}
+                \item \texttt{-D\_FORTIFY\_SOURCE=1} --- enable (backwards-compatible only)
+                \item \texttt{-D\_FORTIFY\_SOURCE=2} --- enable (full)
+                \item \texttt{-U\_FORTIFY\_SOURCE} --- disable
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=fortifySrcExample]{bounds checking will happen...}
+will add checks (gcc 9.3 \textbf{-O2})
+\begin{lstlisting}[language=C,style=smaller]
+void example1() {
+    char dest1[1024]; memcpy(dest1, ...); ...
+}
+char dest2[1024];
+void example2() {
+    memcpy(dest2, ...); ...
+}
+void example3() {
+    char *p = &dest2[4]; memcpy(p, ...); ...
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=fortifySrcExmaple2]{bounds checking won't happen...}
+will not add check (gcc 9.3 \textbf{-O2})
+\begin{lstlisting}[language=C,style=smaller]
+char dest2[1024];
+void example4() {
+    char *p = &dest2[mystery()]; memcpy(p, ...); ...
+}
+\end{lstlisting}
+adds check for size 1024 (max possible size):
+\begin{lstlisting}[language=C,style=smaller]
+char dest2[1024];
+void example5() {
+    char dest3[128];
+    char *p = dest2;
+    if (mystery()) p = dest3;
+    memcpy(p, ...); ...
+}
+\end{lstlisting}
+\end{frame}

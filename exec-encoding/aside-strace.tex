@@ -1,0 +1,74 @@
+\begin{frame}{interlude: strace}
+\begin{itemize}
+\item {\tt strace} --- system call tracer
+    \begin{itemize}
+    \item on Linux, some other Unices
+    \item OS X approx. equivalent: {\tt dtruss}
+    \item Windows approx. equivalent: Process Monitor
+    \end{itemize}
+\item indicates what system calls (operating system services) used by a program
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=staticStrace]{statically linked hello.exe}
+\begin{itemize}
+\item \small{\tt gcc -static -o hello-static.exe hello.s}
+\item \small{\tt strace ./hello-static.exe}:
+\end{itemize}
+\begin{Verbatim}[commandchars=@\{\},fontsize=\fontsize{8}{9}\selectfont]
+execve("./hello-static.exe", ["./hello-static.exe"], [/* 46 vars */]) = 0
+@myemphTwo{uname({sysname="Linux", nodename="reiss-lenovo", ...}) = 0}
+@myemphTwo{brk(NULL)                               = 0x20a5000}
+@myemphThree{brk(0x20a61c0)                          = 0x20a61c0}
+@myemphTwo{arch_prctl(ARCH_SET_FS, 0x20a5880)      = 0}
+@myemphTwo{readlink("/proc/self/exe", "/home/cr4bd/spring2017/cs4630/sl"..., 4096) = 62}
+@myemphThree{brk(0x20c71c0)                          = 0x20c71c0}
+@myemphThree{brk(0x20c8000)                          = 0x20c8000}
+@myemphTwo{access("/etc/ld.so.nohwcap", F_OK)}      = -1 ENOENT (No such file or directory)
+@myemphFour{fstat(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 1), ...}) = 0}
+@myemphFour{write(1, "Hello, World!\n", 14)         = 14}
+@myemphFive{exit_group(14)}                          = ?
++++ exited with 14 +++
+\end{Verbatim}
+\begin{tikzpicture}[overlay,remember picture]
+    \tikzset{
+        overBoxGeneric/.style={
+            anchor=center,
+            align=center,
+            draw,
+            rectangle,
+            fill=white,
+            draw=red!70!black,very thick},
+        overBox/.style={
+            overBoxGeneric,
+            at=(boxLoc),
+        },
+        overBoxB/.style={
+            overBoxGeneric,
+            at=(boxLocB),
+        },
+    }
+    \coordinate (boxLoc) at ([yshift=-3.5cm]current page.center);
+    \begin{visibleenv}<2>
+        \node[overBox] {
+            standard library startup
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<3>
+        \node[overBox] {
+            memory allocation
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<4>
+        \node[overBox] {
+            implementation of puts
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<5>
+        \node[overBox] {
+            standard library shutdown
+        };
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+

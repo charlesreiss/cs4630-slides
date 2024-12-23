@@ -1,0 +1,52 @@
+
+\begin{frame}{mutation engines}
+    \begin{itemize}
+    \item tools for writing polymorphic viruses
+    \item best: \myemph{no} constant bytes, \myemph{no} ``no-op'' instructions
+    \item tedious work to build state-machine-based detector
+        \begin{itemize}
+        \item ((almost) a regular expression to match it)
+        \item apparently done manually
+        \item automatable?
+        \end{itemize}
+    \item (but probably can\ldots)
+    \item pattern: used until reliably detected
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=fancyMut]{fancier mutation}
+\begin{lstlisting}[style=script]
+Mutate(original_machine_code, new_machine_code) {
+    for (instruction in original_code) {
+        new_machine_code += ChooseNewCodeFor(instruction)
+    }
+    FixupJumpsIn(new_machine_code);
+}
+\end{lstlisting}
+    \begin{itemize}
+    \item can do mutation on \myemph{generic machine code}
+    \vspace{.5cm}
+    \item ``just'' need full disassembler
+    \item identify both \myemph{instruction lengths} and \myemph{addresses}
+    \item hope machine code not written to rely on machine code sizes, etc.
+    \item hope to identify \myemph{tables of function pointers}, etc.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{fancier mutation}
+    \begin{itemize}
+    \item also an infection technique
+        \begin{itemize}
+        \item no ``cavity'' needed --- create one
+        \end{itemize}
+    \item obviously tricky to implement
+        \begin{itemize}
+        \item need to fix all executable headers
+        \item what if you misparse assembly?
+        \item what if you miss a function pointer?
+        \end{itemize}
+    \item example: Simile virus
+    \end{itemize}
+\end{frame}
+
+

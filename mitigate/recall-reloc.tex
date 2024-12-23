@@ -1,0 +1,35 @@
+\begin{frame}[fragile,label=reloc]{recall: relocation}
+\lstset{
+    language=myasm,
+    style=small,
+    moredelim={**[is][\btHL<1>]{~1~}{~end~}},
+    moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+}
+\begin{lstlisting}
+.data
+string: .asciz "Hello, World!"
+.text
+main:
+    movq $~1~string~end~, %rdi /* NOT PC/RIP-relative mov */
+\end{lstlisting}
+    generates: (\texttt{objdump --disassemble --reloc})
+\lstset{
+    language={},
+    style=small,
+    moredelim={**[is][\btHL<1>]{~1~}{~end~}},
+    moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+}
+\begin{lstlisting}
+   0:   48 c7 c7 00 00 00 00    mov    $0x0,%rdi
+                        ~1~3: R_X86_64_32S .data~end~
+\end{lstlisting}
+    \begin{itemize}
+        \item \myemph{relocation record} says how to fix \texttt{0x0} in \texttt{mov}
+            \begin{itemize}
+                \item 3: location in machine code
+                \item \texttt{R\_X86\_64\_32S}: 32-bit signed integer
+                \item \texttt{.data}: address to insert
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+

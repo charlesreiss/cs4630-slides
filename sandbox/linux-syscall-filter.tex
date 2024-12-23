@@ -1,0 +1,14 @@
+\newmintinline{C}{}
+\begin{frame}{Linux system call filtering API}
+    \begin{itemize}
+    \item privilege seperation support: system call filtering
+    \item simple API: \Cinline|seccomp(SECCOMP_SET_MODE_STRICT, 0, 0)|
+        \vspace{.5cm}
+            \item ``The only system calls the calling thread is permitted to make are \texttt{read},
+                \texttt{write}, \texttt{\_exit}, and \texttt{sigreturn}. Other system calls [kill
+                the program].''
+            \item read/write only work on \myemph{already open files}
+    \vspace{.5cm}
+    \item later: what if we want to be finer-grained?
+    \end{itemize}
+\end{frame}

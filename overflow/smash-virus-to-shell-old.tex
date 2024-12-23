@@ -1,0 +1,119 @@
+
+\begin{frame}[fragile,label=virusToShell1]{virus code to shell-code (1)}
+\lstset{
+    language=myasm,
+    style=small,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+}
+\begin{tikzpicture}
+\node (code) {
+\begin{lstlisting}
+    ~2~leaq~end~ string(%rip), %rdi
+    ~3~pushq $0x4004e0~end~ /* address of puts */
+    retq
+string: 
+    .asciz "You have been infected with a virus!"
+\end{lstlisting}
+};
+\node[anchor=north west,align=left,font=\tt] (bits) at (code.south west) {
+{\myemph{\textbf{48}} {\color{blue!70!black}8d} {\color{green!70!black}3d} {\color{violet}06 00 00 00}} (\myemph{leaq}) \\
+{{\color{blue!70!black}68} {\color{violet}e0 04 40 00}} (pushq) \\
+{\color{blue!70!black}c3} (retq) \\
+};
+\coordinate (codeExplain) at (bits.north east);
+
+\node[right=0cm of code,draw=red,ultra thick,align=left,font=\small,anchor=north west] at (codeExplain) {
+    {\color{red!90!black} REX prefix for 64-bit} \\
+    {\color{blue!70!black} opcode for lea} \\
+    {\color{green!70!black} ModRM byte}: 32-bit displacement; {\tt \%rdi} \\
+    {\color{violet}32-bit \myemph{offset from instruction}} 
+};
+\begin{visibleenv}<2>
+\node[anchor=north east,red,ultra thick,align=left,fill=white,draw=red] at (code.north east) {
+    leaq not leal \\ stack address > {\tt 0xFFFF FFFF}
+};
+\end{visibleenv}
+\begin{visibleenv}<3>
+\node[anchor=north east,red,ultra thick,align=left,fill=white,draw=red] at (code.north east) {
+    problem: what if we don't know \\
+    where puts is?
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=virusToShell2]{virus code to shell-code (2)}
+\lstset{
+    language=myasm,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+}
+\begin{tikzpicture}
+\node (code) {
+\begin{lstlisting}
+    /* Linux system call (OS request):
+       write(1, string, length)
+     */
+    leaq string(%rip), %rsi
+    movl $1, %eax
+    movl $37, %edi
+    /* "request to OS" instruction */
+    syscall
+string: 
+    .asciz "You have been infected with a virus!\n"
+\end{lstlisting}
+};
+\node[anchor=north west,align=left,font=\tt] (bits) at (code.south west) {
+{\color{orange!70!black}48} {\color{blue!70!black}8d} {\color{green!70!black}35} {\color{violet}0c 00 00 00} (leaq) \\
+{{\color{blue!70!black}b8} {\color{violet}01 00 00 00}} (movq \%eax) \\
+{\color{blue!70!black}bf} {\color{violet}25 00 00 00} (movq \%edi) \\
+{\color{blue!70!black}0f 05} (syscall) \\
+};
+\coordinate (codeExplain) at (bits.north east);
+\begin{visibleenv}<2>
+\node[anchor=north west,red,ultra thick,align=left,draw=red,fill=white] at (codeExplain) {
+    problem: after syscall --- crash!
+};
+\end{visibleenv}
+
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=virusToShell3]{virus code to shell-code (3)}
+\lstset{
+    language=myasm,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+}
+\begin{tikzpicture}
+\node (code) {
+\begin{lstlisting}
+    /* Linux system call (OS request):
+       write(1, string, length)
+     */
+    leaq string(%rip), %rsi
+    movl $1, %eax
+    movl $37, %edi
+    syscall
+    /* Linux system call:
+       exit_group(0)
+     */
+    ~2~movl $231, %eax~end~
+    ~2~xor %edi, %edi~end~
+    ~2~syscall~end~
+string: 
+    .asciz "You have been infected with a virus!\n"
+\end{lstlisting}
+};
+\coordinate (codeExplain) at ([xshift=-3cm]code.north east);
+\begin{visibleenv}<2>
+\node[anchor=north west,draw=red,ultra thick,fill=white] at ([yshift=2cm]codeExplain) {
+    tell OS to exit
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+

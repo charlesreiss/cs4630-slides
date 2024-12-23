@@ -1,0 +1,55 @@
+\begin{frame}{thread-local storage}
+    \begin{itemize}
+    \item Linux, Windows use \%fs, \%gs for thread-local storage
+    \vspace{.5cm}
+    \item variables that have different values in each thread
+    \item e.g. for program using multiple cores \\ 
+          to track different values for each core
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=tlsExample1]{TLS example (read) (C)}
+\begin{lstlisting}[language=C]
+#include <threads.h>
+thread_local int thread_local_value = 0;
+int get_thread_local() {
+    return thread_local_value;
+}
+\end{lstlisting}
+\hrule
+\begin{Verbatim}[fontsize=\small]
+0000000000001149 <get_thread_local>:
+    1149:       f3 0f 1e fa             
+                    endbr64 
+    114d:       64 8b 04 25 fc ff ff ff
+                    mov    %fs:0xfffffffffffffffc,%eax
+    1155:       c3  
+                    retq   
+\end{Verbatim}
+\hrule
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont]
+TLS off    0x0000000000002df0 vaddr 0x0000000000003df0 paddr 0x0000000000003df0 align 2**2
+    filesz 0x0000000000000000 memsz 0x0000000000000004 flags r--
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile,label=tlsExample2]{TLS example (write) (C)}
+\begin{lstlisting}[language=C]
+#include <threads.h>
+thread_local int thread_local_value = 0;
+void set_thread_local(int new_value) {
+    thread_local_value = new_value;
+}
+\end{lstlisting}
+\hrule
+\begin{Verbatim}[fontsize=\fontsize{10}{11}\selectfont]
+0000000000001156 <set_thread_local>:
+    1156:       f3 0f 1e fa 
+                    endbr64 
+    115a:       64 89 3c 25 fc ff ff ff
+                    mov    %edi,%fs:0xfffffffffffffffc
+    1162:       c3
+                    retq
+\end{Verbatim}
+\end{frame}
+

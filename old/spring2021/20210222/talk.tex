@@ -1,0 +1,145 @@
+\graphicspath{{./figures/}}
+\title{virus 3 / anti-virus 1}
+\date{}
+\usepackage{contour}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\usetikzlibrary{arrows.meta,positioning} % FIXME
+
+\begin{frame}{last time}
+    \begin{itemize}
+        \item cavities to place code in
+        \item appending code with `real' executable formats
+        \item replacing returns, calls, etc.
+        \vspace{.5cm}
+        \item dynamic linking
+            \begin{itemize}
+            \item extra indirection for library funtions
+            \item information about what to load in headers
+            \item ELF interpreter --- dynamic linker in other file
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\input{../exec-encoding/myemph-lib}
+
+\section{dynamic linking}
+
+\subsection{stubs}
+\input{../exec-encoding/dynamic-link-stubs}
+
+\subsection{dynamic linking indirection, lazy binding}
+\subsubsection{picture}
+\input{../exec-encoding/dynamic-link-pic}
+
+\againframe<2>{dynamicPutsPic}
+
+\subsubsection{in objdump}
+\input{../exec-encoding/dynamic-link-info-objdump}
+
+\subsection{lazy binding}
+\againframe<4>{dynamicPutsPic}
+\againframe<3>{dynamicPutsPic}
+\input{../exec-encoding/dynamic-link-info-lazy}
+
+\subsection{position-independent executables}
+\input{../exec-encoding/pic-exec}
+
+\section{infecting shared libraries via symbol table}
+\input{../virus/invoke-dynamic} % FIXME: 20.04 example?
+
+\section{malware and calling shared library}
+\input{../virus/virus-call-stdlib}
+
+\section{preview: exploits and dynamic linking}
+\input{../exec-encoding/exploits-and-dl}
+
+\section{virus summary?}
+\input{../virus/summary}
+
+\section{discussion question}
+\input{../virus/invoke-detect-ex}
+
+\section{why don't viruses\ldots}
+\input{../heur-detect/intro-from-virus}
+
+\section{the cat and mouse game}
+\input{../heur-detect/cat-and-mouse}
+
+\section{antimalware goals}
+\input{../heur-detect/goals}
+
+\section{simple detection: tripwire} 
+    % FIXME: tripwire
+\input{../heur-detect/tripwire}
+
+\section{application whitelisting: AppLocker}
+\input{../heur-detect/applocker-whitelist}
+
+\section{secure boot}
+\input{../virus/secure-boot}
+
+\section{signature-based detection, generally}
+% FIXME: key idea: in files
+
+\input{../heur-detect/signature}
+
+\subsection{detecting Vienna exercise?}
+\input{../heur-detect/vienna-detect-ex}
+
+\subsection{case study: Vienna}
+\input{../heur-detect/vienna-sig}
+
+\subsection{difficult goals for signatures}
+\input{../heur-detect/signature-goals}
+
+\subsection{Vienna: general pattern?}
+     % FIXME: more examples of general things Vienna does
+\input{../heur-detect/vienna-general-patternp}
+
+\section{regular expressions}
+\input{../heur-detect/regular-expressions}
+
+\subsection{flex example}
+\input{../heur-detect/flex-example}
+
+\subsection{flex state machines}
+\input{../heur-detect/flex-state-machine}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+
+
+\subsection{aside: evading signature}
+\input{../heur-detect/evading-sig}
+
+
+\subsection{dynamic linking intro}
+\input{../exec-encoding/dl-intro}
+
+\subsection{aside: strace, statically linked strace}
+\input{../exec-encoding/aside-strace}
+
+\subsection{example: strace hello.exe dynamic}
+\input{../exec-encoding/strace-dynamic}
+
+\subsection{where's the linker}
+\input{../exec-encoding/wheres-the-linker}
+
+\subsection{knowing what to load?}
+\input{../exec-encoding/needed}
+
+\subsection{infecting dynamic libraries (detail)}
+\input{../virus/infect-dynamic-detail}
+
+\section{detecting invocation technique ease?}
+\input{../virus/invoke-detect-ex}
+
+
+
+\end{document}

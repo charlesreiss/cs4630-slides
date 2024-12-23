@@ -1,0 +1,22 @@
+
+\begin{frame}<1-3>[label=arbWrite]{arbitrary memory write}
+    \begin{itemize}
+    \item bunch of scenarios that lead to \myemph{single arbitrary memory write}
+        \begin{itemize}
+        \item format exploits are one, but we'll find more!!
+        \end{itemize}
+    \item typical result: arbitrary code execution
+    \item how?
+    \vspace{.5cm}
+    \item<2-> \myemph<3>{overwrite existing machine code (insert jump?)}
+        \begin{itemize}
+        \item problem: usually not writable
+        \end{itemize}
+    \item<2-> \myemph<4>{overwrite return address directly}
+        \begin{itemize}
+        \item observation: don't care about stack canaries --- skip them
+        \end{itemize}
+    \item<2-> \myemph<5>{overwrite other function pointer?}
+    \item<2-> \myemph<6>{overwrite another data pointer --- copy more?}
+    \end{itemize}
+\end{frame}

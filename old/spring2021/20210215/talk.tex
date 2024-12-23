@@ -1,0 +1,135 @@
+\graphicspath{{./figures/}}
+\title{virus 2}
+\date{}
+\usepackage{contour}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../exec-encoding/myemph-lib}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item Vienna virus code fixups
+        \begin{itemize}
+        \item relocation: change `data' address in appended code
+        \item relocation: produce jump at beginning
+        \item fixup: replace jump at beginning with normal program
+        \end{itemize}
+    \item real binary formats: example of ELF
+        \begin{itemize}
+        \item multiple segments loaded
+        \item header information
+        \end{itemize}
+    \item virus code placement strategies
+        \begin{itemize}
+        \item replacing executables, temporary files
+        \item appending
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{scheduling note}
+    \begin{itemize}
+    \item no lecture Wednesday (break day)
+    \item quiz due next week released by tomorrow
+    \item RE assignment still due Friday
+    \end{itemize}
+\end{frame}
+
+
+\section{viruses: where's the code?}
+
+\input{../virus/where-code-intro}
+
+\subsection{appending/compressing}
+
+\againframe<3>{whereCode}
+
+\input{../virus/where-append}
+
+\subsubsection{in ELF}
+\input{../virus/where-append-elf}
+
+% FIXME: work through how this work would work on ELF
+\subsubsection{and compress}
+\input{../virus/where-compress}
+
+\subsection{cavities}
+
+\againframe<4>{whereCode}
+
+\input{../virus/cavity-types}
+
+\subsubsection{gaps between segments/sections}
+\input{../virus/cavity-segments}
+
+\subsubsection{instruction alignment}
+\input{../virus/cavity-instr-alignment}
+
+\subsubsection{unused header stuff}
+\input{../virus/unused-header}
+
+\subsubsection{exercise: cavity finding ease}
+\input{../virus/cavity-finding-ex}
+
+\subsubsection{chaining cavaties (CIH case study)}
+\input{../virus/where-cavaties-chain}
+
+\section{discussion: detecting cavity hiding}
+\input{../virus/disc-cavity-hiding}
+
+\subsection{boot sector and BIOS/UEFI}
+\againframe<5>{whereCode}
+\input{../virus/where-boot-sector}
+
+\subsection{memory residence}
+\againframe<6>{whereCode}
+\input{../virus/residence} % FIXME: should have more extensive discussion of this somewhere
+
+\subsection{replacing existing code}
+\againframe<7>{whereCode}
+
+\subsection{(if time) exercise: easiest to find?}
+\input{../virus/where-code-find}
+
+\section{virus: getting code invoked}
+\input{../virus/invoke-options}
+
+\subsection{changing start location}
+\input{../virus/invoke-start}
+
+\subsection{overwrite existing code}
+\input{../virus/invoke-overwrite-existing}
+
+\section{dynamic linking}
+    % FIXME: shorten linking intro
+\input{../exec-encoding/dl-intro}
+
+\subsection{aside: strace, statically linked strace}
+\input{../exec-encoding/aside-strace}
+
+\subsection{example: strace hello.exe dynamic}
+\input{../exec-encoding/strace-dynamic}
+
+\subsection{where's the linker}
+\input{../exec-encoding/wheres-the-linker}
+
+\subsection{knowing what to load?}
+\input{../exec-encoding/needed}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\subsection{needed info encoding}
+\input{../exec-encoding/needed-decode}
+
+\subsection{ELF LOAD}
+\input{../exec-encoding/elf-loading-diag}
+
+\subsection{static symbol/relocation tables}
+\input{../exec-encoding/static-symreloc}
+
+\end{document}

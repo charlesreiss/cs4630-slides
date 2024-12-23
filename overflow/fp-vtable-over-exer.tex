@@ -1,0 +1,44 @@
+\usetikzlibrary{arrows.meta,matrix}
+\begin{frame}[fragile,label=vtExer]{exercise}
+\vspace{-.25cm}
+\begin{tikzpicture}
+    \tikzset{
+        vt/.style={fill=blue!30},
+    }
+    \matrix[tight matrix,nodes={text width=3.8cm,text depth=.1ex,font=\small\tt},
+            label={north:objArray},anchor=north west] (vulnClass)  at (0, 0) {
+        |[vt]| vtable pointer \\
+        |[minimum height=1cm]| buffer\\
+        |[vt]| vtable pointer \\
+        |[minimum height=1cm]| \ldots \\
+    };
+    \matrix[tight matrix,nodes={text width=3.8cm,text depth=.1ex,font=\small\tt},anchor=north west] (isVT) at (0, -3) {
+        \tt slot for foo\\
+        \tt slot for bar\\
+    };
+    \draw[thick,-Latex] (vulnClass-1-1.east) -- ++(.45cm,0cm) |- (isVT-1-1.east);
+    \draw[thick,-Latex] (vulnClass-3-1.east) -- ++(.35cm,0cm) |- (isVT-1-1.east);
+    \node[anchor=north west] at (5, 0) {
+\begin{lstlisting}[language=C++,style=smaller]
+class VulnerableClass {
+public:
+    char buffer[100];
+    virtual void foo();
+    virtual void bar();
+};
+VulnerableClass objArray[10];
+\end{lstlisting}
+};
+\end{tikzpicture}
+\begin{itemize}
+\item if we can overflow \texttt{objArray[0].buffer} to change array[1]'s vtable pointer and know array[1].foo() will be called; finish the plan:
+\end{itemize}
+\small \begin{tabular}{ll}
+buffer[0]: \rule{2cm}{.1mm} \hspace{1cm} & A. shellcode \\
+buffer[50]: \rule{2cm}{.1mm} \hspace{1cm} & B. address of buffer[0]\\
+array[1]'s vtable pointer: \rule{2cm}{.1mm} \hspace{1cm} & C. address of buffer[50] \\
+~ & D. address of original vtable \\
+~ & E. address of objArray[0]'s vtable \\
+~ & E. address of objArray[1]'s vtable pointer \\
+\end{tabular}
+\end{frame}

@@ -1,0 +1,19 @@
+
+\begin{frame}{the I/O problem}
+    \begin{itemize}
+    \item scanning still requires reading the whole file
+    \item can we do better?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{selective scanning}
+    \begin{itemize}
+    \item check entry point and end only
+        \begin{itemize}
+        \item a lot less I/O, maybe
+        \end{itemize}
+    \item check known offsets from entry point
+    \item heuristic: is entry point close to end of file?
+    \end{itemize}
+\end{frame}
+

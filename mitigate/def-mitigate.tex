@@ -1,0 +1,34 @@
+\usetikzlibrary{positioning,shapes.callouts}
+\begin{frame}{exploit mitigations}
+    \begin{itemize}
+    \item idea: turn vulnerablity to something less bad
+    \item e.g. crash instead of machine code execution
+    \vspace{.5cm}
+    \item many of these targetted at buffer overflows
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{mitigation agenda}
+    \begin{itemize}
+        \item we will look briefly at one mitigation --- stack canaries
+        \item then look at exploits that don't care about it
+        \item then look at more flexible mitigations
+        \item then look at more flexible exploits
+    \end{itemize}
+\end{frame}
+
+\begin{frame}<1>[label=mitigationPrios]{mitigation priorities}
+    \begin{itemize}
+    \item \myemph<2>{effective?}\tikzmark{effective} does it actually stop the attacker?
+    \item fast? how much does it hurt performance?
+    \item generic? does it require a recompile? rewriting software?
+    \end{itemize}
+
+    \begin{tikzpicture}[overlay,remember picture]
+        \begin{visibleenv}<2>
+        \node[my callout=effective,anchor=center,align=center] at (current page.center) {
+            recurring theme: stop stack smashing, \\ but not other buffer overflows
+        };
+        \end{visibleenv}
+    \end{tikzpicture}
+\end{frame}

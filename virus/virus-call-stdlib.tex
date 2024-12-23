@@ -1,0 +1,21 @@
+\begin{frame}{virus library calls}
+    \begin{itemize}
+    \item common for viruses to want to call standard library
+    \vspace{.5cm}
+    \item in applications:
+        \begin{itemize}
+        \item just call the stub
+        \end{itemize}
+    \item problem: stubs located at different parts of different applications
+        \begin{itemize}
+        \item virus code won't work in every one
+        \end{itemize}
+    \item some possible solutions:
+        \begin{itemize}
+        \item hard-code common loaded addresses (hope nothing changes)
+        \item rewrite standard library function yourself
+        \item scan linker data structures to find
+        \item write out new library/executable and run it
+        \end{itemize}
+    \end{itemize}
+\end{frame}

@@ -1,0 +1,20 @@
+\begin{frame}{complicating points-to analysis}
+    \begin{itemize}
+    \item would like to analyze program function-at-a-time, but\ldots
+        \begin{itemize}
+        \item functions can change values shared by other functions
+        \end{itemize}
+    \item what about computed array indices?
+    \item what about pointers to pointers?
+    \item \ldots
+    \vspace{.5cm}
+    \item high false-positive solution:
+        \begin{itemize}
+        \item when incomplete info: assume value points to anything of right type
+        \end{itemize}
+    \item high false-negative solution:
+        \begin{itemize}
+        \item when incomplete info: assume value points to nothing
+        \end{itemize}
+    \end{itemize}
+\end{frame}

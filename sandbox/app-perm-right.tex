@@ -1,0 +1,34 @@
+\begin{frame}{right permissions?}
+    \begin{itemize}
+    \item Felt, Chin, Hanna, Song and Wagner, ``Android Permissions Demystified'' (CCS 2011)
+    \item used static analysis to compare requested permissions to what applications did
+        \begin{itemize}
+        \item at the time: permissions requested at installation
+        \end{itemize}
+    \item sample of 900 applications
+    \item estimate approx 200 over-privileged
+        \begin{itemize}
+        \item (estimate because using false positive rate from manual checking)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{why extra permissions?}
+    \begin{itemize}
+    \item selected from Felt et al's analysis:
+    \item developers confused similar permissions
+        \begin{itemize}
+        \item \texttt{ACCESS\_NETWORK\_STATE} versus \texttt{ACCESS\_WIFI\_STATE}
+        \end{itemize}
+    \item developers thought permissions were needed for delegated tasks
+        \begin{itemize}
+        \item \texttt{CALL\_PHONE} not needed to invoke phone app
+        \item \texttt{INSTALL\_APPLICATION} not needed to open app store install dialog
+        \end{itemize}
+    \item developers thought permissions needed for all methods of class
+        \begin{itemize}
+        \item \texttt{WRITE\_SETTINGS} when using (no-permission) read-settings operations
+        \end{itemize}
+    \item copy-and-paste
+    \end{itemize}
+\end{frame}

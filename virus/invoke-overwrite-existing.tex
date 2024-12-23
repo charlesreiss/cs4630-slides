@@ -1,0 +1,88 @@
+\begin{frame}<1>[fragile,label=runAnyways]{run anyways?}
+    \begin{itemize}
+    \item add code at start of program (Vienna)
+        \begin{itemize}
+        \item \myemph<2>{plus restore replaced code after running malware code}
+        \end{itemize}
+    \item return with padding after it:
+\begin{Verbatim}[fontsize=\fontsize{10}{11}\selectfont,commandchars=Q\{\}]
+  404a01:       c3                      Qtextbf{retq}
+  404a02:       0f 1f 40 00             nopl   0x0(%rax)
+                Qtextit{replace with}
+  404a01:       e9 XX XX XX XX          Qtextbf{jmpq    YYYYYYY}
+\end{Verbatim}
+        \begin{itemize}
+        \item plus return after running malware code
+        \end{itemize}
+    \item any random place in program?
+        \begin{itemize}
+        \item just not in the \myemph{middle of instruction}
+        \item and \myemph<2>{replace orignal code after running malware code}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=findValidChallenge]{challenge: valid locations}
+    \begin{itemize}
+    \item x86: probably don't want a full instruction parser
+    \item x86: might be non-instruction stuff mixed in with code:
+\begin{lstlisting}[language=myasm,style=smaller]
+do_some_floating_point_stuff:
+            movss float_one(%rip), %xmm0
+            ...
+            retq
+float_one: .float 1
+\end{lstlisting}
+    \begin{itemize}
+        \item floating point value one ({\tt 00 00 80 3f}) is not valid machine code
+        \item disassembler might lose track of instruction boundaries
+    \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=findValidFindFunc]{finding function calls}
+    \begin{itemize}
+    \item one idea: replace calls
+    \item normal x86 call FOO: {\tt E8 \textit{(32-bit value: PC - address of foo)}}
+    \item could look for E8 in code --- \myemph{lots of false positives}
+        \begin{itemize}
+        \item probably even if one excludes out-of-range addresses
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=findValidFindFunc2]{really finding function calls}
+\lstset{language=myasm,style=small}
+    \begin{itemize}
+    \item e.g. some popular compilers started x86-32 functions with
+\begin{lstlisting}
+foo:
+    push %ebp       // push old frame pointer
+    // 0x55
+    mov %esp, %ebp  // set frame pointer to stack pointer
+    // 0x89 0xec
+\end{lstlisting}
+    \item use to identify when {\tt e8} refers to real function
+    \begin{itemize}
+    \item (full version: also have some other function start patterns)
+    \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\againframe<2>{runAnyways}
+
+\begin{frame}{restoring replaced code?}
+    \begin{itemize}
+    \item Vienna: just write to memory addres
+    \vspace{.5cm}
+    \item modern OS: segfault/general protection fault
+        \begin{itemize}
+        \item code loaded read-only
+        \end{itemize}
+    \item easy solution: make library call to make it writable
+        \begin{itemize}
+        \item Linux: \texttt{mprotect}
+        \item functionality exists to, e.g., allow compiling code at runtime
+        \end{itemize}
+    \end{itemize}
+\end{frame}

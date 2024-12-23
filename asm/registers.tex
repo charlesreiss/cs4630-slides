@@ -1,0 +1,32 @@
+\usetikzlibrary{calc}
+
+\begin{frame}{recall: x86-64 general purpose registers}
+\includegraphics[width=\textwidth]{../asm/x86-gprs}
+\imagecredit{Immae via Wikipedia}
+\end{frame}
+
+\begin{frame}[fragile,label=overlap]{overlapping registers (1)}
+\begin{itemize}
+\item setting 32-bit registers sets \myemph{whole} 64-bit register
+\item extra bits are always zeroes
+\end{itemize}
+\begin{lstlisting}[style=small]
+movq $0x123456789abcdef, %rax
+xor %eax, %eax
+// %rax is 0, not 0x1234567800000000
+movl $-1, %ebx
+// %rbx is 0xFFFFFFFF, not -1 (0xFFFFF...FFF)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=overlap2]{overlapping registers (2)}
+\begin{itemize}
+\item setting \myemph{8/16-bit registers} doesn't change rest of 64-bit register:
+\end{itemize}
+\begin{lstlisting}[style=small]
+movq $0x12345789abcdef, %rax
+movw $0xaaaa, %ax
+// %rax is 0x123456789abaaaa
+\end{lstlisting}
+\end{frame}
+

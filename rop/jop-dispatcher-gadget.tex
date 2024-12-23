@@ -1,0 +1,57 @@
+\usetikzlibrary{arrows.meta,matrix}
+\begin{frame}[fragile,label=jopdispatch1]{programming JOP}
+\begin{tikzpicture}
+\node[draw,label={north:``dispatcher'' gadget}]  (code) {
+\begin{lstlisting}[language=myasm]
+add $8, %rcx
+jmp *(%rcx)
+\end{lstlisting}
+};
+\begin{visibleenv}<2->
+\matrix[tight matrix,anchor=north west,nodes={font=\small,text width=4cm}] (gadget list) at ([xshift=1cm]code.north east) {
+    pointer to gadget1 \\
+    pointer to gadget2 \\
+    pointer to gadget3 \\
+    \ldots \\
+};
+\path[draw,very thick,Latex-] (gadget list-1-1.east) -- ++(1cm,0cm) node[right] {initial \%rcx};
+\path[draw,very thick,Latex-] ([yshift=-.5cm]code.north west) -- ++(-1cm,0cm) node[left] {\%rdx};
+\path[draw,very thick,Latex-] ([yshift=-.5cm]code.north west) -- ++(-.5cm, -.5cm) node[draw,very thick,fill=yellow!20,below left] (ptr) {};
+\path[draw,very thick,Latex-] (ptr.south) -- ++(0cm, -.5cm) node[below] {\%rdi};
+\path[draw,thick,dotted,-Latex] ([xshift=-.1cm]gadget list-1-1.north west) -- ++(0cm, -1cm);
+\end{visibleenv}
+\begin{visibleenv}<3->
+\node[draw,label={north:template for other gadgets}] (code 2) at ([xshift=1cm,yshift=-3cm]code.south east) {
+\begin{lstlisting}[language=myasm]
+...
+jmp *%rdx
+\end{lstlisting}
+---\textit{ OR }---
+\begin{lstlisting}[language=myasm]
+...
+jmp *(%rdi)
+\end{lstlisting}
+};
+\end{visibleenv}
+\end{tikzpicture}
+\begin{itemize}
+\item<4-> setup: find a way to set \%rdx, \%rdi, \%rcx appropriately
+\item<5-> note: can choose different registers, dispatcher design
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=jopdispatch2]{dispatcher gadgets?}
+\begin{lstlisting}[language={},style=smaller]
+/* from libc on my desktop: */
+adc esi, edi ; jmp qword ptr [rsi + 0xf]
+add al, ch ; jmp qword ptr [rax - 0xe]
+
+/* from firefox on my desktop: */
+add eax, ebp ; jmp qword ptr [rax]
+add edi, -8 ; mov rax, qword ptr [rdi] ; jmp qword ptr [rax + 0x68]
+sub esi, dword ptr [rsi] ; jmp qword ptr [rsi - 0x7d]
+\end{lstlisting}
+\begin{itemize}
+\item adc (add with carry) --- Intel syntax: destination first
+\end{itemize}
+\end{frame}

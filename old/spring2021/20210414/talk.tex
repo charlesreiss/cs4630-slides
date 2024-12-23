@@ -1,0 +1,126 @@
+\graphicspath{{./figures/}}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item coverage-guided fuzzing
+        \begin{itemize}
+        \item random tests based on set of base tests
+        \item new path taken: add test to set of base tests
+        \end{itemize}
+    \item complete (finds any problem) v sound (problems found really problems)
+    \item static analysis
+        \begin{itemize}
+        \item \textit{abstract interpretation}: summary values e.g. allocated/freed
+        \item approximations to avoid analyzing complex if statements, etc.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\subsection{example: model for use-after-free, with loop}
+    % FIXME: hilite: repeated states allow compression
+\input{../static/use-after-free-simple-model-loop}
+
+\subsection{example: model for array bounds}
+\input{../static/bounds-modelp}
+
+\subsection{analysis for common insecure patterns}
+\input{../static/clang-static-patterns}
+
+\begin{frame}{preview: information flow}
+    \begin{itemize}
+    \item really common pattern we want to find: \\
+        data from somewhere gets to dangerous place
+        \begin{itemize}
+        \item pointer to stack escapes function
+        \item input makes it to SQL query, file name
+        \end{itemize}
+    \item we'll talk about it specially next
+    \end{itemize}
+\end{frame}
+
+\subsection{summary / actual tools}
+\input{../static/actual-tools}
+
+\section{information flow}
+\input{../taint/info-flow-intro}
+
+\subsection{data flow graph}
+\input{../taint/info-flow-graph}
+
+\subsection{control flow versus information flow} 
+\input{../taint/info-flow-graph-controlp}
+
+\subsection{sources and sinks}
+\input{../taint/sources-and-sinks}
+
+\subsection{challenges for data flow}
+\input{../taint/data-flow-challenges}
+
+\section{taint tracking}
+\input{../taint/intro}
+
+\subsection{implementations}
+\input{../taint/implementations}
+
+\subsection{taint tracking in perl}
+\input{../taint/in-perl}
+
+\subsection{taint tracking asm}
+\input{../taint/asm}
+
+\subsection{exercise: defeating} 
+\input{../taint/asm-defeat}
+
+\subsection{obfuscation to defeat taint-tracking}
+\input{../taint/anti-tigress}
+
+\subsection{taint for finding mobile leaks}
+\input{../taint/taintdroid}
+
+
+\section{next few topics}
+\begin{frame}{logistics note}
+    \begin{itemize}
+    \item next few planned topics:
+    \vspace{.5cm}
+    \item (next) systems programming languages with memory safety (Rust as example)
+    \item (after) sandboxing / privilege separation
+        \begin{itemize}
+        \item running code without trusting it as much
+        \end{itemize}
+    \item hardware support for memory safety + CFI (memory safety mitigation)
+    \item concurrency bugs / time of check to time of use
+    \vspace{.5cm}
+    \item could make adjustments if there are topics people especially want
+    \end{itemize}
+\end{frame}
+
+\section{Rust}
+
+\subsection{aside: why do people like C/C++?}
+\input{../betterpl/why-ccpp}
+% FIXME
+
+\subsection{safety + escape hatch}
+\input{../betterpl/safe-plus-escape-hatch}
+
+\input{../betterpl/java-escape-hatch}
+
+\subsection{general philosophy}
+\input{../betterpl/rust-general}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\subsection{static analysis limits?}
+\input{../static/static-limits}
+
+
+\end{document}

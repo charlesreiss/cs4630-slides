@@ -1,0 +1,92 @@
+- title: "for heap smashing, does it matter if it's free"
+  questions:
+  - text: "does it matter if space after a is already free or not?"
+    single: true
+    options:
+    - "probably not, because we can change the next/prev pointers for a, not the space after"
+    - "probably not, because the attack can mark the space as free"
+    - "probably, because the next/free pointers won't be used unless it is free"
+    - "probably, because if it's not then trying to overwrite the memory is very likely to cause a segfault"
+- title: "where should attacker put for heap smashing..."
+  questions:
+  - text: "where should attacker put 0x10000..."
+    single: true
+    options:
+    - "at the beginning of attacker_controlled"
+    - "8 bytes after the beginning of attacker_controlled"
+    - "16 bytes after the beginning of attacker_controlled"
+    - "64 bytes after the beginning of attacker_controlled"
+    - "72 bytes after beginning of attacker_controlled"
+    - "80 bytes after beginning of attacker_controlled"
+    - "88 bytes after beginning of attacker_controlled"
+    - "96 bytes after beginning of attacker_controlled"
+    - "none of these"
+  - text: "where should attacker put 0x20000..."
+    single: true
+    options:
+    - "at the beginning of attacker_controlled"
+    - "8 bytes after the beginning of attacker_controlled"
+    - "16 bytes after the beginning of attacker_controlled"
+    - "64 bytes after the beginning of attacker_controlled"
+    - "72 bytes after beginning of attacker_controlled"
+    - "80 bytes after beginning of attacker_controlled"
+    - "88 bytes after beginning of attacker_controlled"
+    - "96 bytes after beginning of attacker_controlled"
+    - "none of these"
+  - text: "where should attacker put 0x30000..."
+    single: true
+    options:
+    - "at the beginning of attacker_controlled"
+    - "8 bytes after the beginning of attacker_controlled"
+    - "16 bytes after the beginning of attacker_controlled"
+    - "64 bytes after the beginning of attacker_controlled"
+    - "72 bytes after beginning of attacker_controlled"
+    - "80 bytes after beginning of attacker_controlled"
+    - "88 bytes after beginning of attacker_controlled"
+    - "96 bytes after beginning of attacker_controlled"
+    - "none of these"
+- title: "use after free exercise" 
+  questions:
+  - text: "what is a best size for INPUT?"
+    single: true
+    options:
+    - "around the size of a _File_streambuf"
+    - "around the size of a streambuf"
+    - "around the size of a ifstream"
+    - "around the size of a istream"
+    - "around size of _File_streambuf's vtable"
+    - "around size of streambuf's vtable"
+  - text: "where to place pointer to code they want run?"
+    single: true
+    options:
+    - "near beginning of INPUT"
+    - "a few bytes (based on the layout of streambuf's vtable) after an address they place near the beginning of the buffer"
+    - "at the end of the INPUT"
+    - "a few bytes (based on the layout of streambuf's vtable) after an address they place near the end of the buffer"
+    - "something else"
+- title: "double-free exercise" 
+  questions:
+  - text: "address to write goes in"
+    single: true
+    options:
+    - "input 1"
+    - "input 2"
+    - "input 3"
+    - "something else?"
+  - text: "value to write goes in"
+    single: true
+    options:
+    - "input 1"
+    - "input 2"
+    - "input 3"
+    - "something else?"
+- title: "shadow stacks stop..."
+  questions:
+  - text: "which of these do shadow stack stop?"
+    multiple: true
+    options:
+    - "A. using format string exploit to point stack return address to the `system' function"
+    - "B. using format string exploit to point VTable to the `system' function"
+    - "C. using an unchecked string copy that goes over the end of a stack buffer into the return address and pointing the return address to the `system' function"
+    - "D. using a buffer overflow that overwrites a saved stack pointer value to cause return to use a different address"
+    - "E. using pointer subterfuge to overwrite the GOT entry for `printf' to point to the `system' function"

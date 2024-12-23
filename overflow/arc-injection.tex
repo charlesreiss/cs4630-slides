@@ -1,0 +1,87 @@
+\usetikzlibrary{arrows.meta}
+
+\begin{frame}[fragile,label=returnToSomewhere]{return-to-somewhere}
+\begin{tikzpicture}
+% FIXME:
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+}
+\begin{scope}[xscale=0.75]
+\draw[stackBox] (0, 0) rectangle (10, -6);
+\draw[thick,-Latex] (10.25,-5) -- (10.25, -1) node [midway, below, sloped] {increasing addresses};
+\node[at={(5, 0.1)},anchor=south] { highest address (stack started here)};
+\node[at={(5, -6.1)},anchor=north] { lowest address (stack grows here)};
+
+\draw[onStack] (0, -.25) rectangle (10, -1.25) node[midway,align=center,font=\small] (stackAddr)
+     {return address for {\tt vulnerable}: \\ address of {\tt do\_useful\_stuff}};
+\draw[onStack,fill=black!20] (0, -1.25) rectangle (10, -2.25) node[midway,align=center,font=\small] {unused space (20 bytes)};
+\draw[onStack,fill=blue!20] (0, -2.25) rectangle (10, -5.25) node[midway,align=center,font=\small] {buffer (100 bytes)};
+
+\draw[onStack] (0, -5.25) rectangle (10, -6) node[midway,align=center,font=\small] {return address for {\tt scanf}};
+
+\draw[onStack,fill=red!20,opacity=0.9] (0, -5.25) rectangle (10, -1.25) node[midway,align=center,font=\small,text=red!50!black] {unused junk};
+
+\draw[-Latex,red,ultra thick,dashed] ([yshift=2.5mm]stackAddr.south east) -- ++(.25cm,0cm) |-
+    (11, -4.25) node[align=left,right,font=\small] { {\tt do\_useful\_stuff} \\ (already in program) };
+
+\begin{visibleenv}<2>
+\fill[white,opacity=0.5, overlay] (-1,-2) rectangle (18, -8);
+\end{visibleenv}
+\end{scope}
+\end{tikzpicture}
+\begin{tikzpicture}[overlay,remember picture]
+\begin{visibleenv}<2>
+\node[fill=white,draw,ultra thick,align=center,anchor=center] at (current page.center) {
+    code is \myemph{already in program}??? \\
+    how often does this happen??? \\
+    \ldots turns out ``\myemph{usually}'' --- more later in semester
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=systemFunc]{example: system()}
+\begin{lstlisting}[language={}]
+NAME
+       system - execute a shell command
+
+SYNOPSIS
+       #include <stdlib.h>
+
+       int system(const char *command);
+\end{lstlisting}
+\begin{itemize}
+\item part of C standard library
+\item in any program that dynamically links to libc
+\item challenge: need to hope argument register (rdi) set usefully
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=locateSystem]{locating system() Linux}
+\begin{lstlisting}[language={},style=script,
+moredelim={**[is][\btHL<1>]{~1~}{~end~}},
+]
+$ ldd /bin/ls
+        linux-vdso.so.1 (0x00002aaaaaade000)
+        libselinux.so.1 => /lib/x86_64-linux-gnu/libselinux.so.1 (0x00002aaaaab3a000)
+        libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (~1~0x00002aaaaab65000~end~)
+        libpcre2-8.so.0 => /usr/lib/x86_64-linux-gnu/libpcre2-8.so.0 (0x00002aaaaad57000)
+        libdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x00002aaaaade7000)
+        /lib64/ld-linux-x86-64.so.2 (0x00002aaaaaaab000)
+        libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00002aaaaaded000)
+$ objdump --dynamic-syms /lib/x86_64-linux-gnu/libc.so.6 | grep system
+0000000000156a80 g    DF .text  0000000000000067  GLIBC_2.2.5 svcerr_systemerr
+0000000000055410 g    DF .text  000000000000002d  GLIBC_PRIVATE __libc_system
+~1~0000000000055410~end~  w   DF .text  000000000000002d  GLIBC_2.2.5 system
+\end{lstlisting}
+\begin{itemize}
+\item if address randomization disabled: \\
+address should be 0x00002aaaaab650 + 0x55410
+\vspace{.5cm}
+\item \texttt{ldd} --- ``what libraries does this load and where?''
+    \begin{itemize}
+    \item similar tools for other OSes
+    \end{itemize}
+\end{itemize}
+\end{frame}

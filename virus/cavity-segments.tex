@@ -1,0 +1,19 @@
+\begin{frame}[fragile,label=segGaps]{gaps between segments}
+\begin{Verbatim}[commandchars=\\\{\}]
+LOAD off    0x0000000000000000 ...
+     filesz 0x00000000000036a8 ...
+LOAD off    0x000000000000\myemph{4000} ...
+     filesz 0x0000000000013581 ...
+\end{Verbatim}
+\begin{itemize}
+\item first LOAD loads \texttt{0x0-0x36a8}
+\item second LOAD loads \texttt{0x4000-0x17358}
+    \begin{itemize}
+    \item starts at \myemph{multiple of \texttt{0x1000}} b/c that's what OS can handle
+    \end{itemize}
+\item \texttt{0x4000-0x36a8} bytes of file not used
+    \begin{itemize}
+    \item<2-> (and loaded on Linux, because Linux rounds up filesz)
+    \end{itemize}
+\end{itemize}
+\end{frame}

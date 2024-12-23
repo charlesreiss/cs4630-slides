@@ -1,0 +1,122 @@
+\begin{frame}{sudo exploit}
+\begin{itemize}
+\item this writeup: summary from \url{https://www.openwall.com/lists/oss-security/2021/01/26/3}
+\item from group at Qualys
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=sudoBug]{sudo bug}
+\begin{itemize}
+\item the bug:
+\end{itemize}
+\begin{lstlisting}[language=C++,style=smaller]
+for (size = 0, av = NewArgv + 1; *av; av++)
+     size += strlen(*av) + 1;
+if (size == 0 || (user_args = malloc(size)) == NULL) { ... }
+...
+for (to = user_args, av = NewArgv + 1; (from = *av); av++) {
+while (*from) {
+  if (from[0] == '\\' && !isspace((unsigned char)from[1]))
+    from++;
+  *to++ = *from++;
+...
+\end{lstlisting}
+\begin{itemize}
+\item can skip \texttt{\textbackslash 0} if prefixed with backslash
+\item but \texttt{strlen} used to allocate buffer
+\item disagreement about copied string length
+\item heap overflow!
+\end{itemize}
+\end{frame}
+
+\begin{frame}{brute-forcing?}
+\begin{itemize}
+\item method: tried to lots of buffer overflows, get crashes
+\item looked at them by hand, found interesting ones\ldots
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=oneCrash]{one crash}
+% FIXME: picture showing adjacent struct
+\begin{lstlisting}[language={},style=script]
+0x000056291a25d502 in process_hooks_getenv (name=name@...ry=0x7f4a6d7dc046 "SYSTEMD_BYPASS_USERDB", value=value@...ry=0x7ffc595cc240) at ../../src/hooks.c:108
+
+=> 0x56291a25d502 <process_hooks_getenv+82>:    callq  *0x8(%rbx)
+
+108         rc = hook->u.getenv_fn(name, &val, hook->closure);
+\end{lstlisting}
+\begin{itemize}
+\item they overwrote a function pointer on the heap!
+\item next inquiry: where did that usually point?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=sudoersSoCode]{sudoers.so}
+\begin{lstlisting}[language={},style=smaller]
+    *** interesting standard library function: ***
+0000000000008a00 <execv@plt>:
+    8a00:      endbr64 
+    8a04:      bnd jmpq *0x55565(%rip)        # 5df70 <execv@GLIBC_2.2.5>
+    8a0b:      nopl   0x0(%rax,%rax,1)
+...
+    *** usual value of function pointer: ***
+000000000000ea00 <sudoers_hook_getenv>:
+    ea00:      endbr64 
+    ea04:      xor    %eax,%eax
+    ea06:      cmpb   $0x0,0x51d36(%rip)        # 60743 <sudoers_policy@@Base+0x2003>
+    ea0d:      jne    eaf8 <freeaddrinfo@plt+0x60a8>
+    ea13:      cmpq   $0x0,0x51d45(%rip)        # 60760 <sudoers_policy@@Base+0x2020>
+\end{lstlisting}
+\begin{itemize}
+\item<2-> observations (that hold true even with ASLR):
+    \begin{itemize}
+    \item addr(\texttt{execv@plt}) - addr(\texttt{sudoers\_hook\_getenv}) = \texttt{-0x6000}
+    \item last 12 bits of execv@plt always \texttt{a00} (page alignment)
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{changing pointer (part one)}
+\begin{itemize}
+\item suppose hook\_getenv pointer is \texttt{0xabcdef8a00}
+    \begin{itemize}
+    \item as bytes: \texttt{\myemph{00 8a} ef cd ab 00 00 00}
+    \end{itemize}
+\item then execv@plt pointer is \texttt{0xabcdef3a00}
+    \begin{itemize}
+    \item as bytes: \texttt{\myemph{00 3a} ef cd ab 00 00 00}
+    \end{itemize}
+\vspace{.5cm}
+\item only need to change the last two bytes
+\item also: same change would work if pointer had different high bits
+\item<2-> only four bits of random data from ASLR!
+\end{itemize}
+\end{frame}
+
+\begin{frame}{changing pointer (part two)}
+\begin{itemize}
+\item solution: guess hook\_getenv pointer at  \texttt{0x} (unknown) \texttt{8a00}
+\item overwrite last two bytes with \texttt{00 3a}
+\vspace{.5cm}
+\item if right: will execute your program
+\item if wrong: will crash
+\vspace{.5cm}
+\item<2-> what if crashes? try again! 
+    \begin{itemize}
+    \item would work about once every 16 tries\ldots
+    \item but actual exploit needed to write a 00 byte at the end (strcpy)
+    \item so worked `only' about once every 4096 tries
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{into exploit}
+\begin{itemize}
+\item make \texttt{SYSTEMD\_BYPASS\_USERDB} program in current directory
+\item run sudo, triggering buffer overflow to change \\ \texttt{\small sudoers\_hook\_getenv("SYSTEMD\_BYPASS\_USERDB", ...)} \\  into \\
+      \texttt{\small execv(SYSTEMD\_BYPASS\_USERDB, ...)} 
+    \begin{itemize}
+    \item (well, try to change --- it won't always work)
+    \end{itemize}
+\end{itemize}
+\end{frame}

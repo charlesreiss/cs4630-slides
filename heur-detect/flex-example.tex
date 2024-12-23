@@ -1,0 +1,201 @@
+\usetikzlibrary{fit}
+
+\begin{frame}{flex}
+    \begin{itemize}
+    \item flex is a regular expression matching tool
+    \item intended for writing \myemph{parsers}
+    \item generates \myemph{C code}
+    \item parser function called {\tt yylex}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile,label=flexEx]{flex example}
+\lstset{style=small,language={}}
+\begin{tikzpicture}
+\begin{scope}
+\tikzset{every node/.style={font=\small,align=left,anchor=north west,inner sep=0mm}}
+\node (vars) {
+\begin{lstlisting}
+        int num_bytes = 0, num_lines = 0;
+        int num_foos = 0;
+\end{lstlisting}
+};
+\node (patMacros) at (vars.south west) {
+~
+};
+\node (sepA) at (patMacros.south west) {
+\begin{lstlisting}
+%%
+\end{lstlisting}
+};
+\node (pats) at (sepA.south west) {
+\begin{lstlisting}
+foo     { 
+          num_bytes += 3;
+          num_foos += 1;
+        }
+.       { num_bytes += 1; }
+\n      { num_lines += 1; num_bytes += 1; }
+\end{lstlisting}
+};
+\node (sepB) at (pats.south west) {
+\begin{lstlisting}
+%%
+\end{lstlisting}
+};
+\node (mainCode) at (sepB.south west) {
+\begin{lstlisting}
+int main(void) {
+    yylex();
+    printf("%d bytes, %d lines, %d foos\n",
+           num_bytes, num_lines, num_foos);
+}
+\end{lstlisting}
+};
+\end{scope}
+
+\tikzset{
+    hi/.style={rounded corners,fill=green,opacity=0.3},
+    remark/.style={draw,red,very thick,at={([xshift=-3cm]pats.east)},fill=white,align=left},
+    remark2/.style={draw,red,very thick,at={([xshift=-3cm,yshift=2cm]pats.east)},fill=white,align=left},
+}
+
+\begin{visibleenv}<2>
+    \node[hi,fit=(sepA)] {};
+    \node[hi,fit=(sepB)] {};
+    \node[remark] {three sections};
+\end{visibleenv}
+
+\begin{visibleenv}<3>
+    \node[hi,fit=(vars)] {};
+    \node[remark] {first --- declarations for later \\
+                   C code in output file};
+\end{visibleenv}
+
+\begin{visibleenv}<4>
+    \node[hi,fit=(pats)] {};
+    \node[remark2] {patterns, code to run on match \\
+                   as parser: return ``token'' here};
+\end{visibleenv}
+
+\begin{visibleenv}<5>
+    \node[hi,fit=(mainCode)] {};
+    \node[remark] {extra code to include};
+\end{visibleenv}
+
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=flexMatched]{flex: matched text}
+\lstset{
+        style=small,
+        language={},
+        moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+        }
+\begin{tikzpicture}
+\begin{scope}
+\tikzset{every node/.style={font=\small,align=left,anchor=north west,inner sep=0mm}}
+\node (vars) {
+\begin{lstlisting}
+\end{lstlisting}
+};
+\node (patMacros) at (vars.south west) {
+~
+};
+\node (sepA) at (patMacros.south west) {
+\begin{lstlisting}
+%%
+\end{lstlisting}
+};
+\node (pats) at (sepA.south west) {
+\begin{lstlisting}
+[aA][a-z]* {
+               printf("found a-word '%s'\n",
+                      ~2~yytext~end~);
+           }
+(.|\n)     {} /* default rule: would output text */
+\end{lstlisting}
+};
+\node (sepB) at (pats.south west) {
+\begin{lstlisting}
+%%
+\end{lstlisting}
+};
+\node (mainCode) at (sepB.south west) {
+\begin{lstlisting}
+int main(void) {
+    yylex();
+}
+\end{lstlisting}
+};
+\end{scope}
+\tikzset{
+    hi/.style={rounded corners,fill=green,opacity=0.3},
+    remark/.style={draw,red,very thick,at={([xshift=-4cm,yshift=2cm]pats.east)},fill=white,align=left},
+}
+\begin{visibleenv}<2>
+    \node[remark] {yytext --- text of matched thing};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}[fragile,label=flexDef]{flex: definitions}
+\lstset{
+        style=small,
+        language={},
+        moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
+        }
+\begin{tikzpicture}
+\begin{scope}
+\tikzset{every node/.style={font=\small,align=left,anchor=north west,inner sep=0mm}}
+\node (vars) {
+\begin{lstlisting}
+\end{lstlisting}
+};
+\node (patMacros) at (vars.south west) {
+\begin{lstlisting}
+A        [aA]
+LOWERS   [a-z]
+ANY      (.|\n)
+\end{lstlisting}
+};
+\node (sepA) at (patMacros.south west) {
+\begin{lstlisting}
+%%
+\end{lstlisting}
+};
+\node (pats) at (sepA.south west) {
+\begin{lstlisting}
+{A}{LOWERS}* {
+                printf("found a-word '%s'\n",
+                       yytext);
+             }
+{ANY}        {} /* default rule would
+                   output text */
+\end{lstlisting}
+};
+\node (sepB) at (pats.south west) {
+\begin{lstlisting}
+%%
+\end{lstlisting}
+};
+\node (mainCode) at (sepB.south west) {
+\begin{lstlisting}
+int main(void) {
+    yylex();
+}
+\end{lstlisting}
+};
+\end{scope}
+\tikzset{
+    hi/.style={rounded corners,fill=green,opacity=0.3},
+    remark/.style={draw,red,very thick,at={([xshift=-4cm,yshift=2cm]pats.east)},fill=white,align=left},
+}
+\begin{visibleenv}<2>
+    \node[hi,fit=(patMacros)] {};
+    \node[remark] {definitions of common patterns \\ included later};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}

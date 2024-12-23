@@ -1,0 +1,22 @@
+
+\begin{frame}{attacking function pointer tables}
+% FIXME: picture
+\begin{itemize}
+\item option 1: overwrite table entry directly  
+    \begin{itemize}
+    \item required/easy for Global Offset Table --- fixed location
+    \item usually not possible for VTables --- read-only memory
+    \end{itemize}
+\item option 2: create table in buffer (big list of pointers to shellcode), point to buffer
+    \begin{itemize}
+    \item useful when table pointer next to buffer
+    \item (e.g. C++ object on stack next to buffer)
+    \end{itemize}
+\item option 3: find suitable pointer elsewhere
+    \begin{itemize}
+    \item e.g. point to wrong part of vtable to run different function
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+

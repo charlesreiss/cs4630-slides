@@ -1,0 +1,51 @@
+- title: "stack layout [scores]"
+  questions:
+  - text: "how many bytes after buffer[0] is the first byte of scores[0]"
+    single: true
+    options:
+    - "<16 and <=16"
+    - ">16 and <=20"
+    - ">20 and <=24"
+    - ">24 and <=28"
+    - ">28 and <=32"
+    - ">32 and <=36"
+    - ">36"
+- title: "overwrite results [scores]"
+  questions:
+  - text: "value of scores[0] after overwriting with 50 '1's?"
+    single: true
+    options:
+    - "0x00000001"
+    - "0x0000000b (11 decimal)"
+    - "0x00000011"
+    - "0x00000031 (0x31 = ASCII for '1')"
+    - "0x01010101"
+    - "0x11111111"
+    - "0x31313131"
+    - "something else"
+- title: "return address on stack (smashing example)"
+  questions:
+  - text: "distance from buffer[0] to scanf's return address"
+    single: true
+    options:
+    - "16 bytes before"
+    - "8 bytes before"
+    - "just before"
+    - "100 bytes after"
+    - "120 bytes after"
+    - "128 bytes after"
+    - "132 bytes after"
+    - "none of the above, but after"
+    - "none of the above, but before"
+  - text: "distance from buffer[0] to vulnerable's return address"
+    single: true
+    options:
+    - "16 bytes before"
+    - "8 bytes before"
+    - "just before"
+    - "100 bytes after"
+    - "120 bytes after"
+    - "128 bytes after"
+    - "132 bytes after"
+    - "none of the above, but after"
+    - "none of the above, but before"

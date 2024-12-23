@@ -1,0 +1,20 @@
+\begin{frame}[fragile,label=makerop0]{making an ROP chain (0)}
+    \begin{itemize}
+    \item goal: run ``\texttt{example(0)}''
+    \item known info:
+    \end{itemize}
+\small \tt
+\begin{tabular}{ll}
+\normalfont address & \normalfont instructions \\
+0x100000 & (example function) \\
+0x100100 & pop \%rdi, ret \\
+0x100200 & xor \%eax, \%eax, ret \\
+0x100300 & xor \%edi, \%edi, ret \\
+\end{tabular}
+\begin{itemize}
+\item exercise: what can be written at return address + after to do this?
+    \begin{itemize}
+    \item just putting 0x100000: runs example function with wrong argument
+    \end{itemize}
+\end{itemize}
+\end{frame}

@@ -1,0 +1,77 @@
+\usetikzlibrary{arrows.meta}
+
+\begin{frame}{analysis building blocks}
+    \begin{itemize}
+    \item needed to track that \texttt{p} and \texttt{q} could point to same thing
+    \vspace{.5cm}
+    \item common prerequisite for all sorts of program analysis
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{overly simple algorithm for points-to analysis}
+\begin{itemize}
+\item for each pointer/reference track which objects it can refer to
+\item if multiple paths: take union of all possible
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=simplePointsTo]{simple points-to analysis}
+\begin{lstlisting}[language=C++,style=smaller]
+void example(int a) {
+    int *p;
+    int *q;
+    q = malloc(...); // ID=1
+    p = malloc(...); // ID=2
+    // (A)
+    if (a > 0) {
+        p = q;
+        // (B)
+    }
+    // (C)
+    ...
+}
+\end{lstlisting}
+\begin{tikzpicture}[overlay, remember picture]
+    \tikzset{flow/.style={draw,thick,font=\fontsize{9}{10}\selectfont,anchor=north west,align=left},
+    flowLine/.style={thick,-Latex}}
+    \coordinate (base) at ([xshift=-9cm,yshift=-2cm]current page.north east);
+    \begin{scope}[shift={(base)}]
+        \begin{scope}
+            \node[flow] (A) at (0, 0) { A: \myemph<2>{p (v1)}: \{ID=1\}; \myemph<2>{q (v1)}: \{ID=2\} };
+            \node[flow] (B) at (1, -1) { B: \myemph<2>{p (v2)}: \{ID=2\}; \myemph<2>{q (v1)}: \{ID=2\} };
+            \begin{visibleenv}<4->
+            \node[flow] (C) at (0, -4) { C: \myemph<2>{p (v3)}: \myemph<3>{\{ID=1,ID=2\}}: \myemph<2>{q (v1)}: \{ID=2\} };
+            \draw[flowLine] ([xshift=.5cm]A.south west) |- (B.west);
+            \draw[flowLine] ([xshift=.5cm]B.south west) -- ([xshift=1.5cm]C.north west);
+            \draw[flowLine] ([xshift=.5cm]A.south west) -- ([xshift=.5cm]C.north west);
+            \end{visibleenv}
+            \begin{visibleenv}<1-3>
+            \node[flow] (C1) at (2, -2) { C via B: p (v2): \{ID=2\}: q (v1): \{ID=2\} };
+            \node[flow] (C2) at (2, -3) { C not via B: p (v2): \{ID=1\}: q (v1): \{ID=2\} };
+            \draw[flowLine] ([xshift=.5cm]A.south west) |- (B.west);
+            \draw[flowLine] ([xshift=.5cm]B.south west) |- (C1.west);
+            \draw[flowLine] ([xshift=.5cm]A.south west) |- (C2.west);
+            \end{visibleenv}
+        \end{scope}
+        \begin{visibleenv}<2>
+        \node[draw=red,very thick,align=left,font=\small] at (0, -6) {
+            likely first step: mark different versions of p, q \\
+            and track them as separate variables \\
+            this way: can avoid storing set of values for q for every block of code \\
+            (instead just point to q (v1) set)
+        };
+        \end{visibleenv}
+        \begin{visibleenv}<4>
+        \node[draw=red,very thick,align=left,font=\small] at (0, -6) {
+            alternate idea: avoid path explosion by merging possible sets
+        };
+        \end{visibleenv}
+        \begin{visibleenv}<3>
+        \node[draw=red,very thick,align=left,font=\small] at (0, -6) {
+            one idea: keep track of each path separately \\
+            (but limit to how much one can do this)
+        };
+        \end{visibleenv}
+    \end{scope}
+\end{tikzpicture}
+\end{frame}

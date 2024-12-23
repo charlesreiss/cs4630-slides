@@ -1,0 +1,30 @@
+
+\begin{frame}{modern bootloaders --- secure boot}
+    \begin{itemize}
+    \item ``Secure Boot'' is a common feature of modern bootloaders
+    \item idea: UEFI/BIOS code checks bootloader code, fails if not okay
+        \begin{itemize}
+        \item requires user intervention to use not-okay code
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Secure Boot and keys}
+    \begin{itemize}
+    \item Secure Boot relies on cryptographic signatures
+        \begin{itemize}
+        \item idea: accept only ``legitimate'' bootloaders
+        \item legitimate: known authority vouched for them
+        \end{itemize}
+    \item user control of their own systems?
+        \begin{itemize}
+        \item in theory: can add own keys
+        \end{itemize}
+    \item what about changing OS instead of bootloader?
+        \begin{itemize}
+        \item need smart bootloader
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+

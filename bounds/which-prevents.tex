@@ -1,0 +1,18 @@
+\begin{frame}{which scheme prevents\ldots?}
+\begin{itemize}
+\item which schemes detect or prevent from being harmful\ldots?
+    \begin{itemize}
+    \item 1. call to assembly code that goes beyond buffer?
+    \item 2. allowing attacker to insert 150 bytes in 100 byte buffer on heap?
+    \item 3. allowing attacker to insert 120 bytes in 100 byte buffer on stack?
+    \item 4. attecker exploiting code that does array[attacker\_index] to overwrite something outside heap array?
+    \end{itemize}
+\item of:
+    \begin{itemize}
+    \item A. ``fat pointers'' approach
+    \item B. Baggy Bounds checking
+    \item C. AddressSanitizer
+    \item D. Valgrind Memcheck
+    \end{itemize}
+\end{itemize}
+\end{frame}

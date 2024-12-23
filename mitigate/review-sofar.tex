@@ -1,0 +1,50 @@
+\begin{frame}{mitigations so far}
+    \begin{itemize}
+    \item stopping attacker from writing working code
+        \begin{itemize}
+        \item write XOR execute
+        \item removing ``gadgets''
+        \item address space layout randomization
+        \end{itemize}
+    \item validating/protecting code pointers
+        \begin{itemize}
+        \item stack canaries
+        \item full RELRO (protect linker stub pointers, pointers within VTable)
+        \item missing: doing this for other code pointers?
+        \item address space layout randomization
+        \end{itemize}
+    \item preventing out-of-bounds accesses
+        \begin{itemize}
+        \item guard pages
+        \end{itemize}
+    \end{itemize}
+\end{frame} 
+
+\begin{frame}{mitigation practicality concerns}
+    \begin{itemize}
+    \item backwards compatibility
+        \begin{itemize}
+        \item (high) works with unmodified libraries+programs
+        \item sometimes works with unmodified libraries+program
+            \begin{itemize}
+            \item as long as they don't do something `weird'
+            \end{itemize}
+        \item requires recompile of module to be protected
+        \item changes calling conventions: recompile module + things linked with it
+        \item (low) requires changing source code
+        \end{itemize}
+    \item hardware support required
+    \item extra space required
+    \item extra time required
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{other mitigation ideas?}
+    \begin{itemize}
+    \item some big categories we haven't seen:
+    \vspace{.5cm}
+    \item protecting code pointers w/o vulnerability to information leaks
+    \item validating/protecting non-return address code pointers
+    \item preventing out-of-bounds accesses
+    \end{itemize}
+\end{frame}

@@ -1,0 +1,65 @@
+\usetikzlibrary{arrows.meta,patterns}
+
+\begin{frame}{is there enough empty space?}
+\begin{itemize}
+    \item cavities look awfully small
+    \item really small viruses?
+    \item solution: chain cavities tgoether
+\end{itemize}
+\end{frame}
+
+\begin{frame}{case study: CIH (1)}
+    \begin{tikzpicture}
+    \draw[thick] (0, 0) rectangle (4, -6) node[midway,align=center] {original\\executable};
+    \draw[line width=2mm,-Latex,black!60] (4.1, -3) -- (6.9, -3);
+    \begin{scope}[xshift=7cm]
+    \draw[fill=red!20,thick] (0, 0) rectangle (4, -0.5) node[midway] {virus startup code};
+    \draw[fill=red!20,thick] (0, -0.5) rectangle (4, -1) node[midway] {virus code locs};
+    \draw[thick] (0, -1) rectangle (4, -6);
+    \draw[fill=red!20,thick] (0, -3) rectangle (4, -3.5)
+        node[midway] {virus code part 1};
+    \draw[fill=red!20,thick] (0, -4) rectangle (4, -4.5)
+        node[midway] {virus code part 2};
+    \draw[fill=red!20,thick] (0, -5) rectangle (4, -5.5)
+        node[midway] {virus code part 3};
+    \draw[dashed,thin,-Latex] (4, -0.75) -- (4.5, -0.75) |- (4, -3.25);
+    \draw[dashed,thin,-Latex] (4, -0.75) -- (4.5, -0.75) |- (4, -4.25);
+    \draw[dashed,thin,-Latex] (4, -0.75) -- (4.5, -0.75) |- (4, -5.25);
+    \end{scope}
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{case study: CIH (2)}
+    \begin{tikzpicture}
+    \draw[fill=red!20,thick] (0, 0) rectangle (4, -0.5) node[midway] {virus startup code};
+    \draw[fill=red!20,thick] (0, -0.5) rectangle (4, -1) node[midway] {virus code locs};
+    \draw[thick] (0, -1) rectangle (4, -6);
+    \draw[fill=red!20,thick] (0, -3) rectangle (4, -3.5)
+        node[midway] {virus code part 1};
+    \draw[fill=red!20,thick] (0, -4) rectangle (4, -4.5)
+        node[midway] {virus code part 2};
+    \draw[fill=red!20,thick] (0, -5) rectangle (4, -5.5)
+        node[midway] {virus code part 3};
+    \begin{scope}[xshift=7cm]
+        \node[align=center,anchor=south] at (2, 1) { in memory: };
+        \draw[fill=red!20,thick] (0, -3) rectangle (4, -3.5)
+            node[midway] {virus code part 1};
+        \draw[fill=red!20,thick] (0, -3.5) rectangle (4, -4)
+            node[midway] {virus code part 2};
+        \draw[fill=red!20,thick] (0, -4) rectangle (4, -4.5)
+            node[midway] {virus code part 3};
+    \end{scope}
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{CIH cavities}
+    \begin{itemize}
+    \item gaps between sections
+        \begin{itemize}
+        \item common Windows linker aligned sections
+        \item (align = start on address multiple of $N$, e.g. $4096$)
+        \end{itemize}
+    \item reassembling code avoids worrying about splitting instructions
+    \end{itemize}
+\end{frame}
+

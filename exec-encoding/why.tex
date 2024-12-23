@@ -1,0 +1,17 @@
+\begin{frame}{executable encoding: security issues}
+    \begin{itemize}
+    \item malware wants to modify executables
+        \begin{itemize}
+        \item hide in `normal' programs (viruses)
+        \item evade program analysis tools by doing weird things
+        \end{itemize}
+    \item memory vulnerabilities require understanding memory layout
+        \begin{itemize}
+        \item going from ``write memory address X'' to ``run arbitrary code''
+        \item where are pointers to functions (we could change?)
+        \item where is code (vulnerabilities might want to execute)
+        \item where is data (vulnerabilities might want to read/change)
+        \end{itemize}
+    \item ways we can load+layout programs that are harder to exploit?
+    \end{itemize}
+\end{frame}

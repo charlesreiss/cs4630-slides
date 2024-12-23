@@ -1,0 +1,121 @@
+\usetikzlibrary{arrows.meta,patterns}
+
+\begin{frame}[fragile,label=appendElfA]{appending to ELF file (v1)}
+\begin{onlyenv}<1>
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont,commandchars=\\\{\}]
+Program Header:
+...
+\colorbox{blue!40!black}{ }LOAD off    0x00000 vaddr 0x10000 paddr 0x10000 align 2**12
+       filesz 0x005f8 memsz 0x005f8 flags r--
+\colorbox{yellow!40!black}{ }LOAD off    0x01000 vaddr 0x11000 paddr 0x11000 align 2**12
+       filesz 0x00ef5 memsz 0x00ef5 flags r-x
+\colorbox{green!40!black}{ }LOAD off    0x02000 vaddr 0x12000 paddr 0x12000 align 2**12
+       filesz 0x00858 memsz 0x00858 flags r--
+\colorbox{orange!40!black}{ }LOAD off    0x02db8 vaddr 0x13db8 paddr 0x13db8 align 2**12
+       filesz 0x00258 memsz 0x00360 flags rw-
+\end{Verbatim}
+\end{onlyenv}
+\begin{onlyenv}<2>
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont,commandchars=\\\{\}]
+Program Header:
+...
+\colorbox{blue!40!black}{ }LOAD off    0x00000 vaddr 0x10000 paddr 0x10000 align 2**12
+       filesz 0x005f8 memsz 0x005f8 flags r--
+\colorbox{yellow!40!black}{ }LOAD off    0x01000 vaddr 0x11000 paddr 0x11000 align 2**12
+       filesz 0x00ef5 memsz 0x00ef5 flags r-x
+\colorbox{green!40!black}{ }LOAD off    0x02000 vaddr 0x12000 paddr 0x12000 align 2**12
+       filesz 0x00858 memsz 0x00858 flags r--
+\colorbox{red}{ }LOAD off    0x02db8 vaddr 0x13db8 paddr 0x13db8 align 2**12
+       filesz \sout{0x00258}\myemph{0x00860} memsz 0x00860 flags rw-
+\end{Verbatim}
+\end{onlyenv}
+\begin{onlyenv}<3>
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont,commandchars=\\\{\}]
+Program Header:
+...
+\colorbox{blue!40!black}{ }LOAD off    0x00000 vaddr 0x10000 paddr 0x10000 align 2**12
+       filesz 0x005f8 memsz 0x005f8 flags r--
+\colorbox{yellow!40!black}{ }LOAD off    0x01000 vaddr 0x11000 paddr 0x11000 align 2**12
+       filesz 0x00ef5 memsz 0x00ef5 flags r-x
+\colorbox{green!40!black}{ }LOAD off    0x02000 vaddr 0x12000 paddr 0x12000 align 2**12
+       filesz 0x00858 memsz 0x00858 flags r--
+\colorbox{red}{ }LOAD off    0x02db8 vaddr 0x13db8 paddr 0x13db8 align 2**12
+       filesz \sout{0x00860}\myemph{0x01058} memsz \sout{0x00860}\myemph{0x01058} flags \sout{rw-}\myemph{rwx}
+\end{Verbatim}
+\end{onlyenv}
+\begin{tikzpicture}
+\draw[thick,fill=blue!40!black] (0, 0) rectangle ++(3, -.4);
+\draw[thick,fill=yellow!40!black] (0, -1) rectangle ++(3, -.9);
+\draw[thick,fill=green!40!black] (0, -2) rectangle ++(3, -0.5);
+\draw[thick,fill=orange!40!black] (0, -2.9) rectangle ++(3, -.2);
+\draw[very thick] (0, 0) rectangle (3, -3.1);
+\draw[thick,-Latex] (3.1, 0) -- (3.1, -2.5);
+\begin{visibleenv}<2->
+    \draw[thick,pattern=north west lines] (0, -3.1) rectangle ++(3, -.5);
+    \node[font=\small,anchor=west] at (3.1, -3.4) {more zeroes};
+\end{visibleenv}
+\begin{visibleenv}<3->
+    \draw[thick,pattern=north west lines,fill=red!40!black] (0, -3.6) rectangle ++(3, -.5);
+    \node[font=\small,anchor=west] at (3.1, -3.8) {virus code};
+\end{visibleenv}
+\begin{visibleenv}<2>
+    \draw[very thick,red] (0, -2.9) rectangle ++(3,-.7);
+\end{visibleenv}
+\begin{visibleenv}<3>
+    \draw[very thick,red] (0, -2.9) rectangle ++(3,-1.2);
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=appendElfB]{appending to ELF file (v2)}
+\begin{onlyenv}<1>
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont,commandchars=\\\{\}]
+Program Header:
+...
+\colorbox{blue!40!black}{ }LOAD off    0x00000 vaddr 0x10000 paddr 0x10000 align 2**12
+       filesz 0x005f8 memsz 0x005f8 flags r--
+\colorbox{yellow!40!black}{ }LOAD off    0x01000 vaddr 0x11000 paddr 0x11000 align 2**12
+       filesz 0x00ef5 memsz 0x00ef5 flags r-x
+\colorbox{green!40!black}{ }LOAD off    0x02000 vaddr 0x12000 paddr 0x12000 align 2**12
+       filesz 0x00858 memsz 0x00858 flags r--
+\colorbox{orange!40!black}{ }LOAD off    0x02db8 vaddr 0x13db8 paddr 0x13db8 align 2**12
+       filesz 0x00258 memsz 0x00360 flags rw-
+.
+.
+\end{Verbatim}
+\end{onlyenv}
+\begin{onlyenv}<2>
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont,commandchars=\\\{\}]
+Program Header:
+...
+\colorbox{blue!40!black}{ }LOAD off    0x00000 vaddr 0x10000 paddr 0x10000 align 2**12
+       filesz 0x005f8 memsz 0x005f8 flags r--
+\colorbox{yellow!40!black}{ }LOAD off    0x01000 vaddr 0x11000 paddr 0x11000 align 2**12
+       filesz 0x00ef5 memsz 0x00ef5 flags r-x
+\colorbox{green!40!black}{ }LOAD off    0x02000 vaddr 0x12000 paddr 0x12000 align 2**12
+       filesz 0x00858 memsz 0x00858 flags r--
+\colorbox{orange!40!black}{ }LOAD off    0x02db8 vaddr 0x13db8 paddr 0x13db8 align 2**12
+       filesz 0x00258 memsz 0x00360 flags rw-
+\colorbox{red}{ }\myemph{LOAD off    0x04000 vaddr 0x20000 paddr 0x20000 align 2**12}
+       \myemph{filesz 0x00400 memsz 0x00400 flags rwx}
+\end{Verbatim}
+\end{onlyenv}
+
+\begin{tikzpicture}
+\draw[thick,fill=blue!40!black] (0, 0) rectangle ++(3, -.4);
+\draw[thick,fill=yellow!40!black] (0, -1) rectangle ++(3, -.9);
+\draw[thick,fill=green!40!black] (0, -2) rectangle ++(3, -0.5);
+\draw[thick,fill=orange!40!black] (0, -2.9) rectangle ++(3, -.2);
+\begin{visibleenv}<1>
+\draw[very thick] (0, 0) rectangle (3, -3.1);
+\end{visibleenv}
+\begin{visibleenv}<2>
+\draw[very thick] (0, 0) rectangle (3, -4.25);
+\end{visibleenv}
+\draw[thick,-Latex] (3.1, 0) -- (3.1, -2.5);
+\begin{visibleenv}<2->
+    \draw[thick,pattern=north west lines,fill=red] (0, -4) rectangle ++(3, -.25);
+    \node[font=\small,anchor=west] at (3.1, -4.1) {virus code};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}

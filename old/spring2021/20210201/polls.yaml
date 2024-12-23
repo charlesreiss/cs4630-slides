@@ -1,0 +1,41 @@
+- title: "what should anti-malware do for..."
+  questions:
+  - text: "what should anti-malware software do for pre-installed browser extension that displays coupon codes but sends domain name of all websites to third-party to do so?"
+    single: true
+    options:
+    - "remove it, no prompting"
+    - "prompt to remove it, default to yes"
+    - "prompt to remove it, default to no"
+    - "don't flag it"
+    - "something else (discuss?)"
+  - text: "what should anti-malware software do for remote administration software that shows a subtle icon in the corner of the screen when used to monitor the machine?"
+    single: true
+    options:
+    - "remove it, no prompting"
+    - "prompt to remove it, default to yes"
+    - "prompt to remove it, default to no"
+    - "don't flag it"
+    - "something else (discuss?)"
+- title: "final value of string?"
+  questions:
+  - text: "What is the final value of string?" 
+    single: true
+    options:
+    - "abcdabcd"
+    - "bbcdefgh"
+    - "bbcdabcd"
+    - "abcdefgh (no change)"
+    - "something else / not enough info"
+
+- title: "encoding?"
+  questions:
+  - text: "encoding of btsl $7, 4(%rax)? (as sequence of hex bytes)"
+    single: true
+    options:
+    - "0f ba 40 04 07"
+    - "0f ba 68 04 07"
+    - "0f ba 68 07 04"
+    - "0f ba 85 07 04"
+    - "0f ba a8 07 04"
+    - "0f ba a1 04 07"
+    - "none of these"

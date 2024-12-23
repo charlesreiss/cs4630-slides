@@ -1,0 +1,50 @@
+
+\begin{frame}{exploring assembly}
+\begin{itemize}
+\item compiling little C programs looking at the assembly is nice:
+\item {\tt gcc -S \myemph<2>{\textbf<2>{-O}}}
+    \begin{itemize}
+    \item extra stuff like {\tt .cfi} directives (for try/catch)
+    \end{itemize}
+\vspace{.5cm}
+\item or disassemble:
+\item {\tt gcc \myemph<2>{\textbf<2>{-O}} -c file.c} (or make an executable)
+\item {\tt objdump -dr file.o} (or on an executable) 
+    \begin{itemize}
+    \item d: disassemble
+    \item r: show (non-dynamic) relocations
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=noOpt]{assembly without optimizations}
+\begin{itemize}
+\item compilers do \myemph{really silly things} without optimizations:
+\begin{lstlisting}[language=C, style=smaller]
+int sum(int x, int y) { return x + y; }
+\end{lstlisting}
+\vspace{-.125cm}
+\begin{lstlisting}[language=myasm,style=smaller]
+sum:
+    pushq   %rbp
+    movq    %rsp, %rbp
+    movl    %edi, -4(%rbp)
+    movl    %esi, -8(%rbp)
+    movl    -4(%rbp), %edx
+    movl    -8(%rbp), %eax
+    addl    %edx, %eax
+    popq    %rbp
+    ret
+\end{lstlisting}
+\vspace{-.3cm}
+\item instead of {\tt gcc -O} version:
+\vspace{-.1cm}
+\begin{lstlisting}[language=myasm,style=smaller]
+sum:
+    leal (%rdi,%rsi), %eax
+    ret
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+

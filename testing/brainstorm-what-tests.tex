@@ -1,0 +1,23 @@
+
+\begin{frame}[fragile,label=testExample]{thinking about testing}
+    \lstset{language=C,style=smaller}
+\begin{lstlisting}
+void expand(char *arg) {
+    if (arg[0] == '[') {
+        if (arg[2] != '-' || arg[4] != ']') {
+            putchar('[');
+            expand(&arg[1]);
+        } else {
+            for (int i = arg[1]; i <= arg[3]; ++i) {
+                putchar(i);
+            }
+            expand(&arg[5]);
+        }
+    } else if (arg[0] != '\0') {
+        putchar(arg[0]);
+        expand(&arg[1]);
+    }
+}
+\end{lstlisting}
+\end{frame}
+

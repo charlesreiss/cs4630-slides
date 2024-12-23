@@ -1,0 +1,17 @@
+
+\begin{frame}{finding stack location}
+\begin{itemize}
+\item run program in a debugger (e.g., GDB)
+\item set breakpoint at relevant location 
+    \begin{itemize}
+    \item {\tt b functionName}
+    \item {\tt b *0x12345678} (by address)
+    \end{itemize}
+\item output \%rsp
+    \begin{itemize}
+    \item {\tt p \$rsp}
+    \item {\tt info registers}
+    \end{itemize}
+\end{itemize}
+\end{frame}
+

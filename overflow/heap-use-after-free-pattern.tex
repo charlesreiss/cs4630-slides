@@ -1,0 +1,14 @@
+
+\begin{frame}{exploiting use after-free}
+\begin{itemize}
+\item trigger many ``bogus'' frees; then
+\item allocate many things of same size with ``right'' pattern  
+    \begin{itemize}
+    \item pointers to shellcode?
+    \item pointers to pointers to {\tt system()}?
+    \item objects with something useful in VTable entry?
+    \end{itemize}
+\item trigger use-after-free thing
+\end{itemize}
+\end{frame}
+

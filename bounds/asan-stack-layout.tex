@@ -1,0 +1,48 @@
+\usetikzlibrary{arrows.meta,matrix,patterns}
+\tikzset{
+    stackBox/.style={very thick},
+    allocBox/.style={dashed,very thick,fill=blue!20},
+    onStack/.style={thick},
+    frameOne/.style={fill=blue!15},
+    frameTwo/.style={fill=red!15},
+    markLine/.style={blue!50!black},
+    markLineB/.style={red!90!black},
+    hiLine/.style={red!90!black},
+}
+\begin{frame}[fragile,label=asanStackLayout]{AddressSanitizer stack layout}
+    \begin{tikzpicture}
+        \begin{scope}[x=1.7cm]
+    \draw[stackBox] (0, 0) rectangle (5, -6);
+            \draw[onStack] (0, 0) rectangle (5, -.5)
+        node[midway] (arrayLoc) { return address (for \texttt{vulernable()}) };
+    \begin{visibleenv}<2>
+        \node[anchor=west] at (5.25, -.25) { $\approx$ \tt array[0x13]};
+        \node[anchor=west] at (5.25, -3.75) { $\approx$ \tt array[0xa]};
+    \end{visibleenv}
+    \draw[onStack] (0, -.5) rectangle (5, -1)
+        node[midway] { saved \tt\%rbp };
+    \draw[onStack] (0, -1) rectangle (5, -1.5)
+        node[midway] { saved \tt\%r13 };
+    \draw[onStack] (0, -1.5) rectangle (5, -2)
+        node[midway] { saved \tt\%r12 };
+    \draw[onStack] (0, -2) rectangle (5, -2.5)
+        node[midway] { saved \tt\%rbx };
+    \draw[onStack,pattern=north west lines,pattern color=red] (0, -2.5) rectangle (5, -4)
+        node[midway,fill=white] { ``red zone'' };
+    \draw[onStack] (0, -4) rectangle (5, -6)
+        node[midway,fill=white] { \tt array };
+            \draw[onStack,dashed] (0, -4) rectangle (5, -4.5) node[midway] {\tt array[9]};
+            \begin{visibleenv}<3>
+            \matrix[tight matrix,
+                nodes={text width=3cm,font=\small\tt},anchor=north west,label={north:lookup table}] (tbl) at (6, -2) {
+                valid \\ valid  \\ valid \\ valid \\ valid \\ invalid \\ invalid \\
+                invalid \\ invalid \\ valid \\ valid \\ \ldots \\
+            };
+                \draw[thick,-Latex] (5, -.25) -- (tbl-1-1.west);
+                \draw[thick,-Latex] (5, -.75) -- (tbl-2-1.west);
+            \end{visibleenv}
+    \draw[thick,-Latex] (5.15, -6) --++ (0, 2);
+        \end{scope}
+    \end{tikzpicture}
+\end{frame}
+

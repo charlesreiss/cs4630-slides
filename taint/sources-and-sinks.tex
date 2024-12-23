@@ -1,0 +1,17 @@
+\begin{frame}{sources and sinks}
+    \begin{itemize}
+    \item needed choose \textit{sources} (so far: function arguments) \\
+          and \textit{sinks} (so far: print, return)
+    \item choice depends on application
+    \item SQL injection: 
+        \begin{itemize}
+        \item sources: input from network
+        \item sinks: SQL query functions
+        \end{itemize}
+    \item private info leak:
+        \begin{itemize}
+        \item sources: private data: phone number, message history, email, \ldots
+        \item sinks: network output
+        \end{itemize}
+    \end{itemize}
+\end{frame}

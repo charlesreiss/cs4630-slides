@@ -1,0 +1,58 @@
+
+\begin{frame}[fragile,label=straceDynamic]{dynamically linked hello.exe}
+\begin{itemize}
+\item \small{\tt gcc -o hello.exe hello.s}
+\item \small{\tt strace ./hello.exe}:
+\end{itemize}
+\begin{Verbatim}[commandchars=@\{\},fontsize=\fontsize{8}{9}\selectfont]
+execve("./hello.exe", ["./hello.exe"], [/* 46 vars */]) = 0
+@textit{...}
+@myemphThree{mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)} = 0x7fdfeeb39000
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=137808, ...}) = 0
+@textit{...}
+open("@myemphTwoB{/lib/x86_64-linux-gnu/libc.so.6}", O_RDONLY|O_CLOEXEC) = 3
+@myemphFour{read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0P\t\2\0\0\0\0\0"..., 832) = 832}
+fstat(3, {st_mode=S_IFREG|0755, st_size=1864888, ...}) = 0
+@myemphFive{mmap(NULL, 3967392, PROT_READ|PROT_EXEC, ..., 3, 0) = 0x7fdfee54d000}
+mprotect(0x7fdfee70c000, 2097152, PROT_NONE) = 0
+@myemphFive{mmap(0x7fdfee90c000, 24576, PROT_READ|PROT_WRITE, ..., 3, 0x1bf000) = 0x7fdfee90c000}
+@myemphSix{mmap(0x7fdfee912000, 14752, PROT_READ|PROT_WRITE, ..., -1, 0) = 0x7fdfee912000}
+close(3)                                = 0
+@textit{...}
+write(1, "Hello, World!\n", 14)         = 14
+exit_group(14)                          = ?
++++ exited with 14 +++
+\end{Verbatim}
+\begin{tikzpicture}[overlay,remember picture]
+    \tikzset{overBox/.style={at=(boxLoc),anchor=center,align=center,draw,rectangle,fill=white,draw=red!70!black,very thick}}
+    \coordinate (boxLoc) at ([yshift=-2cm]current page.center);
+    \begin{visibleenv}<2>
+        \node[overBox] {
+            the standard C library (includes {\texttt{puts}})
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<3>
+        \node[overBox] {
+            memory allocation (different method)
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<4>
+        \node[overBox] {
+            read standard C library header
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<5>
+        \node[overBox] {
+            load standard C library ({\tt 3} = opened file)
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<6>
+        \node[overBox] {
+            allocate zero-initialized data segment for C library
+        };
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+

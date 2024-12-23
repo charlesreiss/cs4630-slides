@@ -1,0 +1,13 @@
+
+\begin{frame}<1>[label=prefixes]{instruction prefixes}
+    \begin{itemize}
+    \item REX (64-bit and/or extra register bits)
+    \item VEX (SSE/AVX instructions; other new instrs.)
+    \item operand/address-size change (64/32 to 16 or vice-versa)
+    \item {\tt LOCK} --- synchronization between processors
+    \item \myemph<2>{{\tt REPNE/REPNZ/REP/REPE/REPZ} --- turns instruction into loop}
+    \item segment overrides
+    \end{itemize}
+\end{frame}
+
+

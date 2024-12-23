@@ -1,0 +1,70 @@
+\begin{frame}{SELinux}
+    \begin{itemize}
+    \item \textbf{S}ecurity \textbf{E}nhanced Linux
+    \item ``Mandatory Access Control'' system for the Linux
+        \begin{itemize}
+        \item mandatory: can be configured to require enumeration of files programs can access
+        \item (versus normally: specify what files programs can't access)
+        \end{itemize}
+    \item not necessairily run in mandatory control mode
+    \vspace{.5cm}
+    \item programs run in particular ``domain''
+    \item objects (files, port numbers, other programs, etc.) can be assigned labels
+    \item rules about what labels programs are allowed to access
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=selinuxLabels1]{viewing/assigning labels (1)}
+\begin{Verbatim}
+$ ls -Z /var/log/lastlog
+-rw-r--r--. root root system_u:object_r:lastlog_t:s0   /var/log/lastlog
+\end{Verbatim}
+\begin{itemize}
+\item above: default Red Hat Linux/CentOS configuration
+\item system user
+\item object role
+\item lastlog type
+\end{itemize}
+\begin{Verbatim}
+$ chcon --type=newtype_t some_file
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile,label=selinuxLabels2]{assigning labels (2)}
+\begin{itemize}
+\item labels via: ``file context mapping''
+\end{itemize}
+\begin{Verbatim}
+$ semanage fcontext --add --type web_files_t '/var/www/html(/.*)?'
+$ restorecon -R -v /var/www/html
+\end{Verbatim}
+\begin{itemize}
+\item pattern matching rules set \textit{default} labels
+\item restorecon --- switch to default labels, applying rules
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=selinuxRules1]{assigning rules}
+\begin{itemize}
+\item subset of default rules for Apache httpd (webserver):
+\end{itemize}
+\begin{Verbatim}[fontsize=\small]
+define(`read_files_pattern',`
+  allow $1 $2:dir search_dir_perms;
+  allow $1 $3:file read_file_perms;
+')
+...
+define(`read_lnk_files_pattern',`
+  allow $1 $2:dir search_dir_perms;
+  allow $1 $3:lnk_file read_lnk_file_perms;
+')
+...
+allow httpd_t httpd_config_t:dir list_dir_perms;
+read_files_pattern(httpd_t, httpd_config_t, httpd_config_t)
+read_lnk_files_pattern(httpd_t, httpd_config_t, httpd_config_t)
+\end{Verbatim}
+\begin{itemize}
+\item httpd\_t: `type' for webserver process
+\end{itemize}
+\end{frame}
+

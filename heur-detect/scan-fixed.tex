@@ -1,0 +1,62 @@
+
+\begin{frame}[fragile,label=fixedScan]{scanning for fixed strings}
+\begin{tikzpicture}
+\tikzset{
+    hideOnAdvance/.style={alt=<3>{opacity=0.2}{}},
+    hideOnAdvance4/.style={alt={<3,4>{opacity=0.2}{}}},
+    myline/.style={line width=0.7mm,-Latex,blue},
+    hiString/.style={draw,blue,ultra thick,inner sep=.5mm},
+}
+\matrix[tight matrix,
+    nodes={text width=.5cm,font=\tt\small}
+] (string) {
+    12 \& 34 \& 56 \& 78 \& 9A \& BC \& DE \& F0 \& 23 \& 45 \& 67 \& 89 \& AB \& CD \& EF \& 03 \& 45 \& 67 \& \ldots \\
+};
+\node[hideOnAdvance,hiString,fit=(string-1-2) (string-1-17)] (region) {};
+
+\matrix[tight matrix,at={([yshift=-1cm,xshift=-.5cm]string.south east)},anchor=north east,
+    nodes={text depth=.35mm},
+    column 1/.style={nodes={font=\ttfamily\scriptsize,text width=6cm,
+        alt=<4>{opacity=0.4}{}}},
+    column 2/.style={nodes={font=\small\itshape,text width=2.2cm}},
+    row 1/.style={nodes={font=\normalfont\small\bfseries}}] (patTable) {
+    16-byte ``anchor'' \& malware \\
+    204D616C6963696F7573205468696E6720 \& Virus A \\
+    34567890ABCDEF023456789ABCDEFG0345 \& Virus B \\
+    6120766972757320737472696E679090F2 \& Virus C \\
+    \ldots                             \& \ldots \\
+};
+\draw[myline,hideOnAdvance] ([xshift=-4cm]region.south) |- (patTable-3-1.west);
+\begin{visibleenv}<3->
+\node[draw,minimum height=1cm,below=1.5cm of patTable,font=\itshape] (fulPat){
+    (full pattern for Virus B)
+};
+\draw[myline,hideOnAdvance] (patTable-3-2.east) -- ++(.5cm,0cm) |- (fulPat.east);
+\end{visibleenv}
+\begin{visibleenv}<4>
+\node[hiString,fit=(string-1-3) (string-1-18)] (regionB) {};
+\end{visibleenv}
+\begin{visibleenv}<5>
+\node[draw,red,line width=.5mm,cross out,fit=(patTable-1-1) (patTable-4-1) (patTable.south west),
+    inner sep=0mm] (theCross) {};
+\begin{pgfonlayer}{fg}
+\begin{visibleenv}<2->
+\matrix[tight matrix,anchor=center,row sep=-.1mm,
+    nodes={text depth=.35mm,fill=white,draw,thick},
+    column 1/.style={nodes={font=\ttfamily\scriptsize,text width=3cm}},
+    row 1/.style={nodes={font=\normalfont\small\bfseries}},
+] (hashTable) at (theCross.center)
+{
+    4-byte hash \\
+    FC923131 \\
+    34598873 \\
+    994254A3 \\
+    \ldots \\
+};
+\draw[myline,red] ([xshift=-4cm]region.south) -- ++(0cm,-1cm) node[draw,fill=white] {hash function} |- (hashTable-3-1.west);
+\end{visibleenv}
+\end{pgfonlayer}
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+

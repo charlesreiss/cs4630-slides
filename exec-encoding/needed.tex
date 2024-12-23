@@ -1,0 +1,29 @@
+\begin{frame}[fragile,label=dynLinkNeeded1]{dynamic linking: what to load? (1)}
+\begin{itemize}
+\item excerpt from {\tt objdump -sx hello.exe}:
+\end{itemize}
+\begin{Verbatim}[commandchars=@\{\},fontsize=\fontsize{9}{10}\selectfont]
+Program Header:
+@textit{...}
+ @myemph{DYNAMIC} off    0x0000000000002e20 vaddr 0x0000000000403e20 paddr 0x0000000000403e20 align 2**3
+         filesz 0x00000000000001d0 memsz 0x00000000000001d0 flags rw-
+@textit{...}
+Dynamic Section:
+  @myemph{NEEDED               libc.so.6}
+  INIT                 0x0000000000401000
+  ...
+  STRTAB               0x0000000000400420
+  ...
+\end{Verbatim}
+\begin{itemize}
+\item program header: identifies where dynamic linking info is
+\item dynamic linking info: array of key-value pairs
+    \begin{itemize}
+    \item needed libraries
+    \item constructor locations (`INIT')
+    \item string table location
+    \item \ldots
+    \end{itemize}
+\end{itemize}
+\end{frame}
+

@@ -1,0 +1,29 @@
+\usetikzlibrary{shapes.callouts}
+
+\begin{frame}<1>[fragile,label=whyChoices]{virus choices?}
+\begin{itemize}
+\item why don't viruses always append/replace\tikzmark{append}?
+\item why don't viruses always change start location\tikzmark{start}?
+\item why did I bother talking about all these strategies?
+\end{itemize}
+\begin{tikzpicture}[overlay,remember picture]
+\coordinate (calloutLoc) at ([yshift=-2cm]current page.center);
+\begin{visibleenv}<2>
+    \node[my callout=append] at (calloutLoc) {
+        head/tail scanning? 
+    };
+\end{visibleenv}
+\begin{visibleenv}<3>
+    \node[my callout=start]  at (calloutLoc){
+        check for suspicious starting location?
+    };
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{more on virus strategies}
+    \begin{itemize}
+    \item after we talk about anti-virus strategies some
+    \end{itemize}
+\end{frame}
+

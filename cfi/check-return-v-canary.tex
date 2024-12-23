@@ -1,0 +1,50 @@
+\begin{frame}{looks like canaries? (1)}
+    \begin{itemize}
+    \item what attacks does this stop that canaries don't?
+    \vspace{.5cm}
+    \item<2-> ID does not need to be secret!
+        \begin{itemize}
+        \item<2-> assuming non-executable writeable memory, no!
+        \item<2-> attacker can't write new places for return to go
+        \end{itemize}
+    \item<3-> avoids ``stack pivoting'' attacks
+        \begin{itemize}
+        \item attacker can't make stack pointer point to wrong part of stack\ldots
+        \item and expect it to return differently
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=cfiLikeCanariesP2]{looks like canaries? (2)}
+    \begin{itemize}
+    \item what attacks does this NOT stop that canaries don't?
+    \item example: SortList can be called from \texttt{Innocent}, \\ then return from \texttt{Dangerous}
+        \begin{itemize}
+        \item assumption: attacker can overwrite return address at right time (running on another core? problem with sortFunc1?)
+        \end{itemize}
+    \end{itemize}
+\begin{tikzpicture}
+\node[draw,very thick,align=left] (a) {
+\begin{lstlisting}[language=C++,style=smaller]
+void Innocent() {
+  ...
+  SortList(someList1,
+           sortFunc1);
+  Use(someList1);
+  ...
+}
+\end{lstlisting}
+};
+\node[draw,very thick,align=left,anchor=north west] at ([xshift=1cm]a.north east) (b) {
+\begin{lstlisting}[language=C++,style=smaller]
+void Dangerous() {
+  ...
+  SortList(someList2,
+           sortFunc2);
+  UseDangerously(someList2);
+  ...
+}
+\end{lstlisting}
+};
+\end{tikzpicture}
+\end{frame}

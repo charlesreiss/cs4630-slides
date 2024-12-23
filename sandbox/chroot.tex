@@ -1,0 +1,68 @@
+\begin{frame}{Unix filesystems and mounting}
+    \begin{itemize}
+    \item my Linux desktop has two disks:
+        \begin{itemize}
+        \item \texttt{/} --- an SSD
+        \item \texttt{/mnt/extradisk} --- a hard drive
+        \end{itemize}
+    \item hard drive appears as \textit{subdirectory} of SSD
+    \item subdirectory called a \textit{mount point}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=perProcessRoot]{per-process root}
+    \begin{itemize}
+    \item on Unix: each process tracks its own root directory (/)
+    \item can be changed with chroot() system call
+        \begin{itemize}
+        \item command-line tool to access: \texttt{chroot}
+        \end{itemize}
+    \vspace{.5cm}
+    \item usage: can isolate program from other files on system
+        \begin{itemize}
+        \item example: limit what public file server can access?
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=lsChrootExample]{chroot ls}
+\begin{lstlisting}[language={},style=smaller]
+# mkdir /tmp/example
+# cp /bin/ls /tmp/example/ls
+# chroot /tmp/example /ls
+chroot: failed to run command ‘/ls’: No such file or directory
+# cp -r /lib64 /tmp/example/lib64
+# mkdir -p /tmp/example/lib
+# cp -r /lib/x86_64-linux-gnu /tmp/example/lib/x86_64-linux-gnu
+# chroot /tmp/example /ls
+/ls: error while loading shared libraries: libpcre2-8.so.0: cannot open shared object file: No such file or directory
+# cp /usr/lib/x86_64-linux-gnu/libpcre2-8* /tmp/example/lib/x86_64-linux-gnu
+# chroot /tmp/example /ls /
+lib  lib64  ls
+# chroot /tmp/example /ls /..
+lib  lib64  ls
+# 
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{chroot escapes}
+    \begin{itemize}
+    \item chroot prevents accessing files outside the new \texttt{/}
+    \item but root (system adminstrator) user in chroot can access disks, etc.
+    \vspace{.5cm}
+    \item typical usage: combine chroot with extra user
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{chroot impracticality}
+    \begin{itemize}
+    \item some things make chroot impractical in general:
+    \vspace{.5cm}
+    \item seems like one needs extra copies of most of the system
+    \item hard to communicate between separate roots
+    \item requires administrator permissions to configure
+        \begin{itemize}
+        \item dangerous to let normal users configure b/c they could confuse priviliged (set-user-ID) programs like \texttt{sudo}
+        \end{itemize}
+    \end{itemize}
+\end{frame}

@@ -1,0 +1,96 @@
+
+\begin{frame}{regular expressions}
+    \begin{itemize}
+    \item one method of representing patterns like this: \\
+          regular expressions (regexes)
+    \item restricted language allows very fast implementations
+        \begin{itemize}
+        \item especially when there's a long list of patterns to look for
+        \end{itemize}
+    \item homework assignment next week
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{regular expressions: implementations}
+    \begin{itemize}
+    \item multiple implementations of regular expressions
+    \item we will target: flex, a parser generator
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=simplePat]{simple patterns}
+    \begin{itemize}
+    \item alphanumeric characters \myemph{match themselves}
+    \item {\tt foo}:
+        \begin{itemize}
+        \item matches exactly {\tt foo} only
+        \item does not match {\tt Foo}
+        \item does not match \verb*|foo |
+        \item does not match {\tt foobar}
+        \end{itemize}
+    \item backslash might be needed for others
+    \item \verb|C\+\+|
+        \begin{itemize}
+        \item matches exactly {\tt C++} only
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=meta1]{metachars (1)}
+    \begin{itemize}
+    \item special ways to match characters
+    \vspace{.5cm}
+    \item \verb|\n|, \verb|\t|, \verb|\x3C|, \ldots --- work like in C
+    \item \verb|[b-fi]| --- {\tt b} or {\tt c} or {\tt d} or {\tt e} or {\tt f} or {\tt i}
+    \item \verb|[^b-fi]| --- any character but {\tt b} or {\tt c} or \ldots
+    \item {\tt .} --- any character except newline
+    \item \verb!(.|\n)! --- any character
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=meta2]{metachars (2)}
+    \begin{itemize}
+    \item \verb|a*| --- zero or more as:
+        \begin{itemize}
+        \item (empty string), {\tt a}, {\tt aa}, {\tt aaa}, \ldots
+        \end{itemize}
+    \item \verb|a{3,5}| --- three to five as:
+        \begin{itemize}
+        \item {\tt aaa}, {\tt aaaa}, {\tt aaaaa}
+        \end{itemize}
+    \item \verb!(abc){3,5}! --- three to five abcs: (``grouping'')
+        \begin{itemize}
+        \item {\tt abcabcabc}, {\tt abcabcabcabc}, {\tt abcabcabcabcabc}
+        \end{itemize}
+    \item {\tt ab|cd}
+        \begin{itemize}
+        \item {\tt ab}, {\tt cd}
+        \end{itemize}
+    \item \verb!(ab|cd){2}! --- two ab-or-cds:
+        \begin{itemize} 
+        \item {\tt abab}, {\tt abcd}, {\tt cdab}, {\tt cdcd}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=meta3]{metachars (3)}
+    \begin{itemize}
+    \item \verb|\xAB| --- the byte {\tt 0xAB}
+    \item \verb|\x00| --- the byte {\tt 0x00}
+        \begin{itemize}
+        \item flex is designed for text, handles binary fine
+        \end{itemize}
+    \item \verb|\n| --- newline (and other C string escapes)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=example1]{example regular expressions}
+    \begin{itemize}
+    \item match words ending with {\tt ing}: \\
+        \verb|[a-zA-Z]*ing|
+    \item match C {\tt /* ... */} comments: \\
+        \verb!/\*([^*]|\*[^/])*\*/!
+    \end{itemize}
+\end{frame}
+
+

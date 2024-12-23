@@ -1,0 +1,16 @@
+\begin{frame}{Intel CET shadow stacks}
+    \begin{itemize}
+    \item future Intel processor extension adds shadow stacks
+        \begin{itemize}
+        \item ``Control-flow Enforcement Technology''
+        \end{itemize}
+    \vspace{.5cm}
+    \item new shadow stack pointer
+    \item CALL/RET: push/pop from BOTH stacks
+    \item shadow stack pages are marked as read-only in page table
+        \begin{itemize}
+        \item cannot be written through normal instructions
+        \item extra bit identifying as shadow stack (not ``normal'' read-only page)
+        \end{itemize}
+    \end{itemize}
+\end{frame}

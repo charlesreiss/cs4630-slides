@@ -1,0 +1,14 @@
+\begin{frame}[fragile,label=withinObj]{problem: within object}
+\begin{lstlisting}
+struct foo {
+    char buffer[1024];
+    int *pointer;
+};
+struct foo array_of_foos[1024];
+...
+char *p = &array_of_foos[4].buffer[4]
+\end{lstlisting}
+\begin{itemize}
+\item exercise: what are the bounds for p?
+\end{itemize}
+\end{frame}

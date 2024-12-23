@@ -1,0 +1,33 @@
+\begin{frame}{sandboxing without OS support}
+    \begin{itemize}
+    \item so far: relying on OS features for sandboxing
+    \item good reasons:
+        \begin{itemize}
+        \item primarily want to filter system calls
+        \item hardware-assisted, strong protection
+        \end{itemize}
+    \vspace{.5cm}
+    \item but problems with relying on OS:
+        \begin{itemize}
+        \item sending information in/out of sandbox relatively slow
+        \item requires heavily OS-specific code
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{sandboxing without OS ideas}
+    \begin{itemize}
+    \item `dynamic' language virtual machine, like Java VM, .Net CLR
+        \begin{itemize}
+        \item hard to use with code intended to compile to native machine code
+        \end{itemize}
+    \vspace{.5cm}
+    \item virtual machine targetted for C/C++-like code, like WebAssembly
+    \vspace{.5cm}
+    \item assembly-to-assembly conversion
+        \begin{itemize}
+        \item example: Wahbe, Lucco, Anderson, and Graham, ``Efficient Software-Based Fault Isolation'' (1993)
+        \item example: Ford and Cox, ``Vx32: Lightweight User-level Sandboxing on the x86'' (2008)
+        \end{itemize}
+    \end{itemize}
+\end{frame}

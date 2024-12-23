@@ -1,0 +1,107 @@
+\usetikzlibrary{arrows.meta,patterns}
+\begin{frame}[fragile,label=ntpStudyIntro]{case study (simplified)}
+    \begin{itemize}
+    \item bug in NTPd (Network Time Protocol Daemon)
+    \item via Stephen R\"ottger, ``Finding and exploiting ntpd vulnerabilities''
+        \begin{itemize}
+        \item \url{https://googleprojectzero.blogspot.com/2015/01/finding-and-exploiting-ntpd.html}
+        \end{itemize}
+    \end{itemize}
+\lstset{
+    language=C,
+    style=small,
+    moredelim={**[is][\btHL<1|handout:0>]{~1~}{~end~}},
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+}
+\begin{lstlisting}
+static void
+ctl_putdata(
+  const char *dp,
+  unsigned int dlen,
+  int bin   /* set to 1 when data is binary */
+  ) {
+    ...
+    ~1~memmove((char *)datapt, dp, (unsigned)dlen);~end~
+    datapt += dlen;
+    datalinelen += dlen;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}<1>[fragile,label=target]{the target}
+\lstset{
+    language=C,
+    style=small,
+    moredelim={**[is][\btHL<1|handout:0>]{~1~}{~end~}},
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+}
+\begin{lstlisting}
+    memmove((char *)~1~datapt~end~, dp, (unsigned)dlen);
+\end{lstlisting}
+\begin{tikzpicture}
+\tikzset{box/.style={thick}}
+\draw[box,fill=blue!20] (0, 0) rectangle (10, -0.5) node[midway] (datapt) {datapt (global variable)};
+\draw[box,fill=green!20] (0, -0.5) rectangle (10, -1.5) node[midway] {(other global variables)};
+\draw[box,fill=red!20] (0, -1.5) rectangle (10, -2.5) node[midway] (buffer) {buffer (global array)};
+\begin{visibleenv}<1-2>
+    \draw[very thick,violet!70!black,-Latex] (datapt.west) -- ++(-.5cm,0cm) -| (0.5, -1.75);
+\end{visibleenv}
+\begin{visibleenv}<2->
+    \draw[box,fill=orange!20] (11, -1) rectangle (15, -1.5) node[midway] (strlen) {strlen GOT entry};
+\end{visibleenv}
+\begin{visibleenv}<3->
+    \fill[pattern=north west lines,pattern color=red,opacity=0.4] (0, -2.5) rectangle (10, 0);
+    \draw[-Latex,very thick,dashed,red] (datapt) -| ([xshift=-0.5cm]strlen.west) -- (strlen.west);
+\end{visibleenv}
+\begin{visibleenv}<4->
+    \draw[box,fill=violet!20] (11, -3) rectangle (15, -3.5) node[midway] (system) {{\tt system()} stub};
+    \fill[pattern=north west lines,pattern color=red,opacity=0.4] (11, -1) rectangle (15, -1.5);
+    \draw[-Latex,very thick,dashed,red] (strlen.south) -- (system.north);
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=moreContext]{more context}
+\lstset{
+    language=C,
+    moredelim={**[is][\btHL<1|handout:0>]{~1~}{~end~}},
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+}
+\begin{lstlisting}
+    memmove((char *)~1~datapt~end~, dp, (unsigned)dlen);
+    ...
+    ...
+    strlen(some_user_supplied_string)
+    /* calls strlen@plt
+       looks up global offset table entry! */
+\end{lstlisting}
+\end{frame}
+
+\againframe<2>{target}
+
+\begin{frame}{overall exploit}
+    \begin{itemize}
+    \item overwrite {\tt datapt} to point to strlen GOT entry
+    \item overwrite value of strlen GOT entry
+    \item example target: {\tt system} function
+            \begin{itemize}
+                \item executes command-line command specified by argument
+            \end{itemize}
+    \item supply string to provide argument to ``{\tt strlen}''
+    \end{itemize}
+\end{frame}
+
+\againframe<3->{target}
+
+\begin{frame}{overall exploit: reality}
+    \begin{itemize}
+    \item real exploit was more complicated
+    \item needed to defeat more mitigations
+    \item needed to deal with not being able to write {\tt \textbackslash 0}
+    \item actually tricky to send things that trigger buffer write
+        \begin{itemize}
+        \item (meant to be local-only)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

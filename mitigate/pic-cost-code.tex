@@ -1,0 +1,120 @@
+
+
+\newcommand{\myemphTwo}[1]{\myemph<2>{#1}}%
+\newcommand{\myemphThree}[1]{\myemph<3>{#1}}%
+\newcommand{\myemphFour}[1]{\myemph<{#1}}%
+\newcommand{\antiEmphThree}[1]{{\color<3>{blue}#1}}%
+\newcommand{\antiEmphFour}[1]{{\color<4>{blue}#1}}%
+\begin{frame}[fragile,label=PIEjtasm]{PIE jump-table}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1, 0) {
+\lstset{
+    language=myasm,
+    style=smaller,
+    escapeinside=~~,
+}
+\begin{lstlisting}
+foo:
+  movl	 $3, %eax
+  cmpq	 $5, %rdi
+  ja	 retDefault
+  leaq	 ~\myemphTwo{jumpTable(\%rip)},~%rax
+  movslq ~\myemphTwo{(\%rax,\%rdi,4)},~%rdx
+  addq	 %rdx, %rax
+  ~\myemphTwo{\bfseries jmp}~   ~\myemphTwo{*\%rax}~
+returnTwo:
+  movl  $2, %eax
+  ret
+returnOne:
+  movl  $1, %eax
+defaultCase:
+  ret
+\end{lstlisting}
+};
+\node[anchor=north west] (code2) at ([xshift=2cm]code.north east) {
+\lstset{
+    language={},
+    style=smaller,
+    escapeinside=~~,
+}
+\begin{lstlisting}
+  .section	.rodata
+jumpTable:
+  .long	returnOne-jumpTable
+  .long	returnTwo-jumpTable
+  .long	returnOne-jumpTable
+  .long	returnTwo-jumpTable
+  .long	returnOne-jumpTable
+  .long	returnOne-jumpTable
+\end{lstlisting}
+};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=PIEjt]{PIE jump-table}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1, 0) {
+\lstset{
+    language=myasm,
+    style=smaller,
+    escapeinside=~~,
+}
+\begin{lstlisting}
+~\myemphTwo{00000000000007ab}~ <foo>:
+b8 03 00 00 00       	mov    $0x3,%eax
+48 83 ff 05             cmp    $0x5,%rdi
+77 1b                	ja     7d0 <foo+0x25>
+48 8d 05 ab 00 00 00 	lea    ~\myemphThree{0xab(\%rip),}~%rax        # 868
+48 63 14 b8          	movslq ~\myemphThree{(\%rax,\%rdi,4),}~%rdx
+48 01 d0             	add    %rdx,%rax
+ff e0                	jmpq   *%rax
+b8 02 00 00 00       	mov    $0x2,%eax
+c3                   	retq   
+b8 01 00 00 00       	mov    $0x1,%eax
+c3                	retq
+...
+~\textit{\myemphThree{@ 868}}:~ -156 /* offset */
+~\textit{\myemphThree{@ 870}}:~ -162
+...
+\end{lstlisting}
+};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{added cost}
+\begin{itemize}
+    \item replace \texttt{jmp *jumpTable(,\%rdi,8)}
+    \vspace{.5cm}
+    \item with:
+        \item \texttt{lea} (get table address --- with relative offset)
+        \item \texttt{movslq} (do table lookup of offset)
+        \item \texttt{add} (add to base)
+        \item \texttt{jmp} (to computed base)
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile,label=x86Worse]{32-bit x86 is worse}
+    \begin{itemize}
+    \item no relative addressing for {\tt mov}, {\tt lea}, \ldots
+    \item even changes ``stubs'' for printf:
+    \end{itemize}
+\lstset{
+    language=myasm,
+    style=smaller,
+    escapeinside=~~,
+}
+\begin{lstlisting}
+// BEFORE: (fixed addresses)
+08048310 <__printf_chk@plt>:
+ 8048310: ff 25 ~\myemphTwo{10 a0 04 08}~  jmp    *0x804a010
+    /* 0x804a010 == global offset table entry */
+
+// AFTER: (position-independent)
+00000490 <__printf_chk@plt>:
+ 490:	ff a3 10 00 00 00    jmp    *0x10~\myemphThree{(\%ebx)}~
+    /* %ebx --- address of global offset table */
+    /* needs to be set by caller */
+\end{lstlisting}
+\end{frame}
+

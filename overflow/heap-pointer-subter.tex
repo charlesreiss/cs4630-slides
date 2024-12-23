@@ -1,0 +1,92 @@
+\usetikzlibrary{arrows.meta,decorations.pathreplacing,patterns}
+
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+}
+\begin{frame}[fragile,label=vulnHeapSmash]{vulnerable code}
+\lstset{
+    style=small,
+    language=C,
+    moredelim={**[is][\btHL<4|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<2-3|handout:0>]{~3~}{~end~}},
+    moredelim={**[is][\btHL<6-|handout:0>]{~6~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\begin{lstlisting}
+char *buffer = malloc(100);
+... 
+~2~strcpy(buffer, attacker_supplied);~end~
+... 
+~3~free(buffer);~end~
+~6~free(other_thing);~end~
+...
+\end{lstlisting}
+};
+
+\tikzset{xscale=0.9}
+\begin{scope}[overlay]
+    \draw[stackBox,fill=black!20] (0, 1) rectangle (3, -7);
+
+    \begin{pgfonlayer}{fg}
+    \draw[very thick, orange, rounded corners] (0, 1) rectangle (3, -1.5);
+    \draw[very thick, orange, rounded corners] (0, -1.5) rectangle (3, -3.5);
+    \draw[very thick, orange, rounded corners] (0, -3.5) rectangle (3, -6.5);
+    \draw[very thick,-Latex] (3.1, -6.5) -- ++(0, 3) node[sloped,right] {incr. addrs};
+    \end{pgfonlayer}
+
+    \draw[onStack] (0, 1) rectangle (3, 0) node[midway,font=\small] {free space};
+    \draw[onStack,fill=white] (0, -0.0) rectangle (3, -0.5) node[midway,font=\small] (freeANext) {next};
+    \draw[onStack,fill=white] (0, -0.5) rectangle (3, -1.0) node[midway,font=\small] (freeAPrev) {prev};
+    \draw[onStack,fill=white] (0, -1.0) rectangle (3, -1.5) node[midway,font=\small] (freeASize) {size/free};
+
+    \draw[onStack,fill=blue!20] (0, -1.7) rectangle (3, -3.0) node[midway,font=\small,align=center] (freeBAlloc) {alloc'd object};
+    \begin{visibleenv}<4->
+    \fill[pattern color=red,pattern=north west lines] (0, -0.0) rectangle (3, -3.0);
+    \end{visibleenv}
+    \draw[onStack,fill=white] (0, -3.0) rectangle (3, -3.5) node[midway,font=\small] (freeBSize) {size/free};
+
+    \draw[onStack] (0, -3.5) rectangle (3, -5.0) node[midway,font=\small] {free space};
+    \draw[onStack,fill=white] (0, -5.0) rectangle (3, -5.5) node[midway,font=\small] (freeCNext) {next};
+    \draw[onStack,fill=white] (0, -5.5) rectangle (3, -6.0) node[midway,font=\small] (freeCPrev) {prev};
+    \draw[onStack,fill=white] (0, -6.0) rectangle (3, -6.5) node[midway,font=\small] (freeCSize) {size/free};
+    
+    \draw[-Latex,blue,thick] (freeAPrev) -- ++(1.75cm,0cm) -- ++ (0cm, -1cm) -- ++ (4cm,0cm); %|- (freeCSize);
+    \draw[-Latex,blue,thick] (freeCNext) -- ++(2.00cm,0cm) -- ++ (0cm, 1cm) -- ++ (4cm,0cm); % |- (freeASize);
+    \draw[-Latex,blue,thick,opacity=0.5] (freeCPrev) -- ++(1.25cm,0cm) -- ++(0cm,-2cm);
+    \draw[-Latex,blue,thick,opacity=0.5] (freeANext) -- ++(1.75cm,0cm) -- ++(0cm,2cm);
+
+    \begin{visibleenv}<4->
+        \begin{scope}[xshift=-5cm,yshift=-3cm]
+        \tikzset{gotBox/.style={thick,fill=orange!30}}
+        \draw[gotBox,alt=<6>{fill=red!10}] (0, -1) rectangle (4, -1.5) node[midway,font=\small] (freeEntry) {GOT entry: free};
+        \draw[gotBox] (0, -1.5) rectangle (4, -2) node[midway,font=\small] {GOT entry: malloc };
+        \draw[gotBox] (0, -2) rectangle (4, -2.5) node[midway,font=\small] (printfEntry) {GOT entry: printf };
+        \draw[gotBox] (0, -2.5) rectangle (4, -3.0) node[midway,font=\small] (gotFopen) {GOT entry: fopen };
+        \end{scope}
+        \draw[-Latex,red,ultra thick,dashed] (freeAPrev) -- ++(-2cm,0cm) |- ([yshift=-.25cm]printfEntry.east);
+        \draw[-Latex,red,ultra thick,dashed] (freeANext) -- ++(-2.5cm,0cm) -- ++(0cm,-2.5cm) -- ++(-.5cm,0cm) node [black,solid,draw,left,align=left,fill=white] (scode) {shellcode/etc.};
+    \end{visibleenv}
+    \begin{visibleenv}<3>
+        \draw[ultra thick,decorate,decoration={brace}] (3.15, 1) -- ++ (0, -2.5) node[midway,right,font=\small,align=left] {to be removed \\ from linked list};
+    \end{visibleenv}
+    \begin{visibleenv}<2>
+        \draw[ultra thick,decorate,decoration={brace}] (3.15, 1) -- ++ (0, -5.5) node[midway,right,font=\small,align=left] {free() tries \\ to merge these};
+    \end{visibleenv}
+    \begin{visibleenv}<5->
+        \begin{scope}[xshift=-5cm,yshift=-3cm]
+        \draw[blue,opacity=0.8] (-3, -2) rectangle (0, -2.5) node[midway,font=\small] {prev->size/free};
+        \draw[blue,opacity=0.8] (-3, -1.5) rectangle (0, -2) node[midway,font=\small] {prev->prev};
+        \draw[blue,opacity=0.8] (-3, -1) rectangle (0, -1.5) node[midway,font=\small] {prev->next};
+        \end{scope}
+        \draw[-Latex,blue,ultra thick,dotted] (freeEntry.north) -- ++(0cm,.1cm) -| (scode.south);
+        \node[draw,very thick] at ([xshift=0cm,yshift=-1.5cm]gotFopen.south west) {
+            \lstinline|block_after->prev->next = block_after->next|
+        };
+    \end{visibleenv}
+\end{scope}
+\end{tikzpicture}
+\end{frame}
+
+

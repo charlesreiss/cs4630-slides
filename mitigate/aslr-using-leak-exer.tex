@@ -1,0 +1,45 @@
+\begin{frame}[fragile,label=useLeak1]{exericse: using a leak (1)}
+\begin{lstlisting}[language=C++,style=small]
+class Foo {
+    virtual const char *bar() { ... }
+};
+...
+Foo *f = new Foo;
+printf("%s\n", f);
+\end{lstlisting}
+\begin{itemize}
+\item Part 1: What address is most likely leaked by the above?
+    \begin{itemize}
+    \item A. the location of the Foo object allocated on the heap
+    \item B. the location of the first entry in Foo's VTable"
+    \item C. the location of the first instruction of Foo::Foo() (Foo's compiler-generated constructor)"
+    \item D. the location of the stack pointer
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile,label=useLeak2]{exercise: using a leak (2)}
+\begin{lstlisting}[language=C++,style=script]
+class Foo {
+    virtual const char *bar() { ... }
+};
+...
+Foo *f = new Foo;
+char *p = new char[1024];
+printf("%s\n", f);
+\end{lstlisting}
+\begin{itemize}
+\item if leaked value was 0x822003 and in a debugger (with \textbf{different randomization}):
+    \begin{itemize}
+    \item stack pointer was 0x7ffff000
+    \item Foo::bar's address was 0x400000
+    \item f's address was 0x900000
+    \item f's Vtable's address was 0x403000
+    \item a ``gadget'' address from the main executable was 0x401034
+    \item a ``gadget'' address from the C library was 0x2aaaa40034
+    \item p's address was 0x901000
+    \end{itemize}
+\item which of the above can I compute based on the leak?
+\end{itemize}
+\end{frame}

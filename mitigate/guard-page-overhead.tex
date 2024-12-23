@@ -1,0 +1,17 @@
+\begin{frame}{exercise: guard page overhead}
+    \begin{itemize}
+    \item suppose heap allocations are:
+        \begin{itemize}
+        \item $100\,000$ objects of 100 bytes
+        \item $1\,000$ objects of 1000 bytes
+        \item $100$ objects of approx. 10000 bytes
+        \end{itemize}
+    \item total allocation of approx 12 000 KB
+    \item assuming 4KB pages, estimate space overhead of using guard pages:
+        \begin{itemize}
+        \item for objects larger than 4096 bytes (1 page)
+        \item for objects larger than 200 bytes
+        \item for all objects
+        \end{itemize}
+    \end{itemize}
+\end{frame}

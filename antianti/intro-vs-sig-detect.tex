@@ -1,0 +1,40 @@
+
+\begin{frame}[label=playMouse,fragile]{playing mouse}
+    \begin{itemize}
+    \item techniques so far:
+        \begin{itemize}
+        \item \myemph<2>{scan for pattern of constant\tikzmark{constant} part of virus}
+        \item \myemph<3>{scan for strings, approx. \tikzmark{fixed}16-bytes long}
+        \item \myemph<4>{scan \tikzmark{topBottom}top and bottom}
+        \end{itemize}
+    \item virus-writer hat: how can you defeat these?
+    \end{itemize}
+    \begin{tikzpicture}[overlay,remember picture]
+        %FIXME
+        \coordinate (overlayLoc) at ([yshift=-2cm]current page.center);
+        \begin{visibleenv}<2>
+        \node [my callout=constant,align=left,anchor=center] at (overlayLoc) { change some trivial part of virus --- \\  e.g. add nops somewhere };
+        \end{visibleenv}
+        \begin{visibleenv}<3>
+        \node [my callout=fixed,align=left,anchor=center] at (overlayLoc) { insert nops everywhere; \\ split any big strings };
+        \end{visibleenv}
+        \begin{visibleenv}<4>
+        \node [my callout=topBottom,align=left,anchor=center] at (overlayLoc) { insert jump in middle \\ keep code out of end of file };
+        \end{visibleenv}
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{playing mouse: preview}
+    \begin{itemize}
+    \item later: metamorphic/polymorphic viruses
+        \begin{itemize}
+        \item signature resistent
+        \item change every time
+        \end{itemize}
+    \item anti-analysis techniques
+        \begin{itemize}
+        \item make reverse engineering harder
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

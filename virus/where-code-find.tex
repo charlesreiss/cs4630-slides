@@ -1,0 +1,48 @@
+\begin{frame}{virus: easiest code to find?}
+    \begin{itemize}
+    \item what should be easiest/hardest to identify \\
+        without many false positives?
+    \vspace{.5cm}
+        \item A. replaced executable
+        \item B. appended to executable w/o compression
+        \item C. replaced cavities
+        \item D. replaced bootloader
+        \item E. new automatically started system program
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{virus: easiest code to find pro/con}
+    \begin{itemize}
+    \item A. replaced executable
+        \begin{itemize}
+        \item + executable size size change
+        \item + could detect write+launch executable
+        \item - programs running programs is common (e.g. start browser)
+        \item - confused with software updater
+        \end{itemize}
+    \item B. appended to executable w/o compression
+        \begin{itemize}
+        \item + executable size change
+        \item + unusual segment/section layout
+        \item - confused with unusual compilers
+        \end{itemize}
+    \item C. replaced cavities
+        \begin{itemize}
+        \item + code outside of segments/sections if virus not careful
+        \item + machine code patterns not seen by compilers
+        \item - need to search entire exe file
+        \item - confused with unusual compilers?
+        \end{itemize}
+    \item D. replaced bootloader
+        \begin{itemize}
+        \item + can check versus normal for OS
+        \item - need to handle new OS versions, etc.
+        \end{itemize}
+    \item E. new automatically started system program
+        \begin{itemize}
+        \item + can check versus normal list for OS
+        \item - need to handle new OS versions
+        \item - lots of legitimate programs may run at startup
+        \end{itemize}
+    \end{itemize}
+\end{frame}

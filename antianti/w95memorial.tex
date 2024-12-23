@@ -1,0 +1,68 @@
+
+\begin{frame}[fragile,label=W95Memorial]{example: W95/Memorial}
+\lstset{
+    style=small,
+    language=myasm,
+    moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
+    moredelim={**[is][\btHL<3|handout:0>]{@hi3@}{@endhi@}},
+}
+\begin{tabular}{ll}
+\begin{lstlisting}
+  @hi2@mov $0x405000, %ebp@endhi@
+  @hi2@mov $0x550, %ecx@endhi@
+  lea 0x2e(%ebp), %esi
+  add 0x29(%ebp), %ecx
+  mov 0x2d(%ebp), %al
+
+decrypt:
+  nop
+  nop
+  xor %al, (%esi)
+  inc %esi
+  nop
+  inc %al
+  @hi3@dec %ecx@endhi@
+  @hi3@jnz decrypt@endhi@
+  ...
+\end{lstlisting}
+&
+\begin{lstlisting}
+  @hi2@mov $0x550, %ecx@endhi@
+  @hi2@mov $0x13bc000, %ebp@endhi@
+  lea 0x2e(%ebp), %esi
+  add 0x29(%ebp), %ecx
+  mov 0x2d(%ebp), %al
+
+decrypt:
+  nop
+  nop
+  xor %al, (%esi)
+  inc %esi
+  nop
+  inc %al
+  @hi3@loop decrypt@endhi@
+  ...
+  ...
+\end{lstlisting}
+\end{tabular}
+    \imagecredit{Szor, Listsings 7.3 and 7.4}
+\begin{tikzpicture}[overlay,remember picture]
+    \begin{visibleenv}<2>
+    \node[anchor=center,draw=red,ultra thick,fill=white] at (current page.center) {
+        change instruction order; location of decryption key/etc.
+    };
+    \end{visibleenv}
+    \begin{visibleenv}<3>
+    \node[anchor=center,draw=red,ultra thick,fill=white] at (current page.center) {
+        variable choices of loop instructions
+    };
+    \end{visibleenv}
+    \begin{visibleenv}<4>
+    \node[anchor=center,draw=red,ultra thick,fill=white] at (current page.center) {
+        Szor: ``96 different decryptor patterns''
+    };
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+

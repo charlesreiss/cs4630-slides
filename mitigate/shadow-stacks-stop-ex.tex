@@ -1,0 +1,13 @@
+\begin{frame}{what do shadow stacks stop?}
+    \begin{itemize}
+    \item combined with a information leak that can dump arbitrary bytes of memory, \\
+       which of these exploits would shadow stacks stop\ldots
+    \begin{itemize}
+    \item A. using format string exploit to point stack return address to the `system' function
+    \item B. using format string exploit to point VTable to the `system' function
+    \item C. using an unchecked string copy that goes over the end of a stack buffer into the return address and pointing the return address to the `system' function
+    \item D. using a buffer overflow that overwrites a saved stack pointer value to cause return to use a different address
+    \item E. using pointer subterfuge to overwrite the GOT entry for `printf' to point to the `system' function
+    \end{itemize}
+    \end{itemize}
+\end{frame}

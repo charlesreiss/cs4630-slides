@@ -1,0 +1,49 @@
+\begin{frame}[fragile,label=unfortunateCProg1]{unfortunate things C programmers do (1)}
+from FreeBSD's bootpd (server for machines that boot from the network):
+\begin{lstlisting}[language=C,style=smaller]
+struct shared_string {
+    unsigned int linkcount;
+    char         string[1]; /* Dynamically extended */
+};
+...
+s = (struct shared_string *) smalloc(
+        sizeof(struct shared_string) + length
+    );
+...
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=unfortunateCProg2]{unfortunate things C programmers do (2)}
+from perl's source code:
+\begin{lstlisting}[language=C,style=small]
+sv_setuv(my_pool_sv, PTR2UV(my_poolp));
+...
+/* later, in another function: */
+my_pool_t *my_poolp = INT2PTR(my_pool_t*, SvUV(my_pool_sv));
+\end{lstlisting}
+\begin{itemize}
+\item PTR2UV: pointer to Unsigned int Value
+\item INT2PTR: integer to pointer value
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=unfortunateCProg3]{unfortunate things C programmers do (3)}
+\begin{lstlisting}[language=C,style=small]
+struct SuperClass;
+struct SubClass {
+    struct SuperClass super;
+    ...
+}
+
+struct SubClass sub;
+struct SuperClass *super = &sub.super;
+some_function(super);
+...
+some_function(struct SuperClass *super) {
+    ...
+    struct SubClass *sub = (struct SubClass *)super;
+    ...
+}
+\end{lstlisting}
+\end{frame}
+

@@ -1,0 +1,51 @@
+
+\begin{frame}{simple privilege separation}
+    \begin{itemize}
+    \item simple example: want to show videos
+    \item video decoding library is tens of thousands of lines of code
+        \begin{itemize}
+        \item often buggy, includes hard-to-check hand-written assembly
+        \end{itemize}
+    \item what does video decoding library do?
+        \begin{itemize}
+        \item read video file as input
+        \item output images as output
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{simple privilege seperation}
+    \begin{itemize}
+    \item setup: create new user
+    \item start video decoder as new user
+    \item communicate via ``pipes''
+        \begin{itemize}
+        \item like terminal to be used by program
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=privSepOutline]{simple privilege seperation}
+    \vspace{-.5cm}
+\begin{minted}[fontsize=\fontsize{10}{10}]{C}
+/* dangerous video decoder to isolate */
+int main() {
+    /* switch to right user */
+    SetUserTo("user-without-privileges"));
+    while (fread(videoData, sizeof(videoData), 1, stdin) > 0) {
+        doDangerousVideoDecoding(videoData, imageData);
+        fwrite(imageData, sizeof(imageData), 1, stdout);
+    }
+}
+
+/* code that uses it */
+    FILE *fh = RunProgramAndGetFileHandle("./video-decoder");
+    for (;;) {
+        fwrite(getNextVideoData(), SIZE, 1, fh);
+        fread(image, sizeof(image), 1, fh);
+        displayImage(image);
+    }
+\end{minted}
+\end{frame}
+
+

@@ -1,0 +1,53 @@
+
+\begin{frame}<1>[label=attackPat]{attacking emulation patience}
+    \begin{itemize}
+    \item looking for unpacked virus in VM
+    \item \ldots or other malicious activity
+    \item when are you done looking?
+    \vspace{.5cm}
+    \item<2-> malware solution: \myemph<2>{take too long}
+        \begin{itemize}
+        \item not hard if emulator uses ``slow'' implementation
+        \end{itemize}
+    \item<3-> malware solution: \myemph<3>{don't infect consistently}
+    \item<4-> malware solution: \myemph<4>{use more memory, etc.}
+    \end{itemize}
+\end{frame}
+
+\againframe<2>{attackPat}
+
+\againframe<3>{attackPat}
+
+\begin{frame}[fragile,label=prob]{probability}
+\lstset{language=C,style=smaller}
+    \begin{tikzpicture}
+    \node[draw,align=center] (malware) {
+\begin{lstlisting}
+if (randomNumber() == 4) {
+    unpackAndRunEvilCode();
+}
+\end{lstlisting}
+    };
+    \node[draw,align=left,above right=1cm of malware] (avCase1) {
+        antivirus emulator: \\
+        \lstinline|randomNumber() == 3| \\
+        \textbf{\color{green!60!black}looks clean!}
+    }; 
+    \node[draw,align=left,right=1cm of malware]  (avCase2) {
+        real execution \#1: \\
+        \lstinline|randomNumber() == 2| \\
+        \textbf{\color{green!60!black}no infection!}
+    }; 
+    \node[draw,align=left,below right=1cm of malware] (avCase3) {
+        real execution \#$N$: \\
+        \lstinline|randomNumber() == 4| \\
+        \textbf{\myemph{infect!}}
+    }; 
+    \draw[ultra thick,dashed,-Latex] (malware) -- (avCase1.west);
+    \draw[ultra thick,dashed,-Latex] (malware) -- (avCase2.west);
+    \draw[ultra thick,dashed,-Latex] (malware) -- (avCase3.west);
+    \end{tikzpicture}
+\end{frame}
+
+\againframe<4>{attackPat}
+

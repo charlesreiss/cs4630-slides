@@ -1,0 +1,122 @@
+\usetikzlibrary{calc}
+
+\begin{frame}{floating point operations}
+    \begin{itemize}
+    \item x86 has two ways to do floating point
+    \item method one --- legacy: x87 floating point instructions
+        \begin{itemize}
+        \item still common in 32-bit x86
+        \end{itemize}
+    \item method two --- SSE instructions
+        \begin{itemize}
+        \item work more like what you expect
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=x87Stack]{x87 floating point stack}
+    \begin{itemize}
+    \item x87: 8 floating point registers
+        \begin{itemize}
+        \item {\tt \%st(0)} through {\tt \%st(7)}
+        \end{itemize}
+    \item arranged as a \myemph{stack of registers}
+    \item example: \lstinline|fld 0(%rbx)| 
+        \begin{tabular}{l@{: }ll}
+        ~ & before & after \\
+        {\tt st(0)} & 5.0 & (value from memory at {\tt \%rbx}) \\
+        {\tt st(1)} & 6.0 & 5.0 \\
+        {\tt st(1)} & 7.0 & 6.0 \\
+        \ldots      & \ldots & \ldots \\
+        {\tt st(6)} & 10.0 & 9.0 \\
+        {\tt st(7)} & 11.0 & 10.0 \\
+        \end{tabular}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{x87}
+    \begin{itemize}
+    \item not going to talk about x87 more in this course
+    \item essentially obsolete with 64-bit x86
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=sseRegs]{SSE registers}
+    \begin{itemize}
+    \item SSE and SSE2 extensions brought \myemph{vector instructions}
+    \end{itemize}
+\lstset{
+    language=myasm,
+    style=small,
+    moredelim={**[is][\btHL<2|handout:0>]{&2}{&}},
+    moredelim={**[is][\btHL<3|handout:0>]{&3}{&}},
+    moredelim={**[is][\btHL<4|handout:0>]{&4}{&}},
+    morekeywords={.float,movps,addps},
+}
+\begin{lstlisting}
+&2numbers: .float 1 .float 2 .float 3. float 4&
+ones:    .float 1 .float 3 .float 5 .float 7
+result:  .float 0 .float 0 .float 0 .float 0
+...
+&3movps& numbers, %xmm0
+movps ones, %xmm1
+&4addps& %xmm1, %xmm0
+movps %xmm0, result
+/* result contains: 1+1=2,2+3=5,3+5=8,4+7=11 */
+\end{lstlisting}
+\begin{tikzpicture}[overlay,remember picture]
+    \coordinate (overlayPlace) at ([xshift=1cm,yshift=.5cm]current page.center);
+    \tikzset{overThing/.style={
+        draw=red,very thick,rectangle,at=(overlayPlace),
+        anchor=west,align=left
+    }}
+    \begin{visibleenv}<2|handout:0>
+        \node [overThing] {array of 4 floats};
+    \end{visibleenv}
+    \begin{visibleenv}<3|handout:0>
+        \node [overThing] {move packed single \\ (single-precision float)};
+    \end{visibleenv}
+    \begin{visibleenv}<4|handout:0>
+        \node [overThing] {add packed single \\ (single-precision float)};
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{XMM registers}
+\begin{itemize}
+\item {\tt \%xmm0} through {\tt \%xmm15} {\small ({\tt \%xmm8} on 32-bit)}
+\item each holds 128-bits ---
+    \begin{itemize}
+    \item 32-bit floating point values ({\tt addps}, etc.)
+    \item 64-bit floating point values ({\tt addpd}, etc.) 
+    \item 64/32/16/8-bit integers ({\tt paddq/d/w/b}, etc.)
+    \item \myemph<2>{a 32-bit floating point value}, 96 unused bits ({\tt addss}, {\tt movss}, etc.)
+    \item \myemph<2>{a 64-bit floating point value}, 64 unused bits ({\tt addsd}, {\tt movsd}, etc.)
+    \end{itemize}
+\vspace{.5cm}
+\item more recently: {\tt \%ymm0} through {\tt \%ymm15} (256-bit, ``AVX'')
+    \begin{itemize}
+    \item overlap with {\tt\%xmm{\it X}} registers
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=fpExample]{FP example}
+\lstset{language=myasm,morekeywords={movss,mulss,subq}}
+\begin{lstlisting}
+multiplyEachElementOfArray:
+/* %rsi = array, %rdi length,
+   %xmm0 multiplier */
+loop:   test %rdi, %rdi
+        je done
+        movss (%rsi), %xmm1
+        mulss %xmm0, %xmm1
+        movss %xmm1, (%rsi)
+        subq $1, %rdi
+        addq $4, %rsi
+        jmp loop
+done:   ret
+\end{lstlisting}
+\end{frame}
+
+

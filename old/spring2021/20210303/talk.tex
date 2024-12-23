@@ -1,0 +1,134 @@
+\graphicspath{{./figures/}}
+\title{antiantivirus / buffer overflows}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+{
+\setbeamercolor{background canvas}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{normal text}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{itemize/enumerate body}{fg=white}
+\setbeamercolor{itemize/enumerate subbody}{fg=white}
+\setbeamercolor{titlelike}{bg=blue!40!black,fg=blue!10!white}
+\begin{frame}<1|handout:1>[noframenumbering]{Changelog}
+    \begin{itemize}
+    \item 4 Mar 2021: add stack layout exercise answers; metamorphic section on last time slides
+    \end{itemize}
+\end{frame}
+}
+
+
+\begin{frame}{last time (1)}
+    \begin{itemize}
+    \item ``encrypted''/packed code pattern 
+        \begin{itemize}
+        \item ``decrypter'' unpacks code + jumps to it
+        \end{itemize}
+    \item oligomorphic malware
+        \begin{itemize}
+        \item hide decrypter from pattern matching with multiple variants
+        \item generally: template with few blanks
+        \end{itemize}
+    \item polymorphic malware
+        \begin{itemize}
+        \item generate/mutate decrypter in more generic way
+        \item ``decrypted'' code still unchanged
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{last time (2)}
+    \begin{itemize}
+    \item handling packers in antimalware software
+        \begin{itemize}
+        \item generic algorithm: run in emulator/VM, then
+        \item examine memory for unpacked code at appropriate time and/or
+        \item record list of instructions executed
+        \end{itemize}
+    \item metamorphic malware
+        \begin{itemize}
+        \item apply ``mutation engine'' to change entire machine code
+        \item avoids leaving signatures in memory after ``decrypter'' runs
+        \end{itemize}
+    \item antivirtualization/emulation
+        \begin{itemize}
+        \item query machine devices
+        \item unimplemented instructions, features
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{logistical note}
+    \begin{itemize}
+    \item LOCATION in LEX: offset in file, please
+    \end{itemize}
+\end{frame}
+
+\usetikzlibrary{arrows.meta,positioning}
+
+\section{anti-debugging}
+\input{../antianti/antidebug-intro}
+
+\subsection{breaking breakpoints}
+\againframe<2>{debuggerThings}
+
+\input{../antianti/antidebug-breakpt-int3}
+
+\subsubsection{aside: modern breakpoints}
+\input{../antianti/debug-modern-breakpt}
+
+\subsection{breaking single-stepping (short)}
+\againframe<3>{debuggerThings}
+\input{../antianti/antidebug-ss}
+
+\section{emulation-based obfuscation}
+\input{../antianti/emulate-obfuscate}
+
+\section{retroviruses / direct antiantivirus}
+\input{../antianti/retro}
+
+\subsection{hiding}
+\input{../antianti/stealth}
+
+\subsection{chkrootkit}
+\input{../antianti/chkrootkit}
+
+\begin{frame}{}
+\end{frame}
+
+\section{review: vulnerability classes}
+\input{../intro/vuln-classes}
+
+\section{buffer overflows, generally}
+\input{../overflow/generally}
+
+\section{simple overflow}
+% FIXME: what if gets()
+\input{../overflow/simple-overflow}
+
+\section{stack smashing, high-level}
+\input{../overflow/smash-context}
+
+% FIXME: exercise: simple overflow offset
+\subsection{exercise}
+\input{../overflow/simple-overflow-exer}
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+
+\subsection{misc debugger detection and confusion}
+\input{../antianti/debug-misc}
+
+\subsection{old virus to shellcode slides}
+\input{../overflow/smash-recall-virus-old} % FIXME: modify to match TRICKY
+
+\input{../overflow/smash-virus-to-shell-old} % FIXME: modify to match TRICKY (need less here)
+
+\subsection{breaking single stepping}
+\againframe<3>{debuggerThings}
+\input{../antianti/antidebug-singlestep}
+
+\end{document}

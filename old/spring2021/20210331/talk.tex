@@ -1,0 +1,68 @@
+\graphicspath{{./figures/}}
+\title{heap vulnerabilities 2 / bounds checking}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item ASLR details
+        \begin{itemize}
+        \item libraries/executables stay together
+        \item cost of position-independent code, esp. on 32-bit x86 (little relative addressing)
+        \item Window's choice to editing code for relocations
+        \end{itemize}
+    \item sudo exploit --- defeating ASLR by only changing low bits of pointer
+    \item ``heap smashing''
+        \begin{itemize}
+        \item pointer subterfuge using pointers used internally by malloc/free
+        \end{itemize}
+    \item use-after-free vulnerabilties (started)
+    \end{itemize}
+\end{frame}
+
+\section{use-after-free}
+\input{../overflow/heap-use-after-free}
+
+\subsection{pattern}
+\input{../overflow/heap-use-after-free-pattern}
+
+\subsection{exercise}
+\input{../overflow/heap-uaf-exer}
+
+\subsection{example}
+\input{../overflow/heap-use-after-free-chrome}
+
+\subsection{JS and similar interfaces v use-after-free}
+\input{../overflow/heap-use-after-free-js}
+
+\section{double-free}
+\input{../overflow/double-free}
+
+% FIXME: exercise, double-free usage?
+\subsection{exercise}
+\input{../overflow/double-free-exer}
+
+\section{logistical aside}
+\begin{frame}{logistical aside}
+    \begin{itemize}
+    \item originally was planning to cover more techniques like stack canaries
+    \item instead: we'll do later
+    \item will start with more principled approaches first
+    \end{itemize}
+\end{frame}
+
+\section{adding bounds checking}
+\input{../bounds/intro}
+
+\subsection{compiler-added?}
+\input{../bounds/compiler-added}
+
+\subsection{and library functions}
+        % FIXME: exercise: what should call have been
+            % needs answers
+\input{../bounds/bounds-lib-functions}
+
+\end{document}

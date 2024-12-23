@@ -1,0 +1,173 @@
+\graphicspath{{./figures/}}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+
+{
+\setbeamercolor{background canvas}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{normal text}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{itemize/enumerate body}{fg=white}
+\setbeamercolor{itemize/enumerate subbody}{fg=white}
+\setbeamercolor{titlelike}{bg=blue!40!black,fg=blue!10!white}
+\begin{frame}<1|handout:1>[noframenumbering]{Changelog}
+    \begin{itemize}
+    \item 3 May 2021: adjust phrasing about in-edges on `control flow graph' slide
+    \item 3 May 2021: CFI prevents exercise: add explanation + E. none of these options
+    \item 3 May 2021: Android shadow stacks: adjust font size of references
+    \item 3 May 2021: clang CFI example: correct shown mask to have 5 entries
+    \item 4 May 2021: CFI prevents exercise: add more explanations
+    \end{itemize}
+\end{frame}
+}
+
+
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item sandboxing integration with UI
+        \begin{itemize}
+        \item file selection outside sandbox as way to specify accessible files
+        \item Qubes --- marking of `which sandbox' via borders in UI
+        \end{itemize}
+    \item sandboxing without OS support
+        \begin{itemize}
+        \item compiling C/C++ code for language VMs
+        \item key insight: keep bounds in sandbox, not in array in sandbox
+        \end{itemize}
+    \item interfaces for sandboxing?
+    \item application permissions
+        \begin{itemize}
+        \item avoiding wasting user attention
+        \item communicating what permissions do (or not)
+        \item evading permissions via missed interfaces
+        \item evading permissions via cooperation with other apps
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{a correction}
+    \begin{itemize}
+    \item explained Cloak+Dagger incorrectly
+    \vspace{.5cm}
+    \item one issue: system alert + accessiblity permission = complete control
+        \begin{itemize}
+        \item hide app + interact on user's behalf
+        \end{itemize}
+    \item another issue: use system alert permission to hide all part of ``allow'' button
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{note on CHALLENGE}
+    \begin{itemize}
+    \item assignment released
+    \item schedule showed wrong due time briefly -- 9PM on 12 May (not midnight)
+    \end{itemize}
+\end{frame}
+
+
+% FIXME: Intel bounds checking extension
+    % FIXME: reorder shadow stack stuffs
+
+\section{summary of mitigations / more ideas?}
+\input{../mitigate/review-sofar}
+
+\section{alternate mitigation: shadow stacks}
+\input{../mitigate/shadow-stack}
+
+\subsection{Intel's hardware support?}
+\input{../mitigate/shadow-stack-cet}
+
+\subsection{can we prevent writes now?}
+\input{../mitigate/prevent-writes-now}
+
+\subsection{exceptions, setjmp, etc.}
+\input{../mitigate/shadow-stack-except}
+
+\subsection{exercise: shadow stacks stop}
+\input{../mitigate/shadow-stacks-stop-ex}
+
+\section{simple control flow integrity}
+
+\subsection{idea: checking returns?}
+
+\input{../cfi/simple-check-return}
+
+    % FIXME: verify that it's after a call instruction
+        
+        % FIXME: same idea, but mark the return sites explicitly
+    % FIXME: verify that it's after a call isntruction for the right function
+        % FIXME: same idea, but mark the return sites explicitly
+
+\subsubsection{versus canaries?}
+\input{../cfi/check-return-v-canary}
+
+\subsection{checking VTable calls?}
+    % FIXME: applying idea to calls to VTable-based function call
+\input{../cfi/check-vtable}
+
+\subsection{checking VTable call returns?}
+    % FIXME
+\input{../cfi/check-vtable-return}
+
+\subsection{checking indirect function calls}
+    % FIXME: trivial idea: was there a pointer?
+        % well, that's not very nice\ldots
+\input{../cfi/checking-indirect}
+
+
+\section{CFI overhead}
+\input{../cfi/overhead}
+
+\section{what does CFI actually prevent}
+\againframe<2>{cfiLikeCanariesP2}
+
+\section{more general control flow integrity}
+
+\subsection{concept: control flow graph}
+\input{../cfi/control-flow-graph} % FIXME: needs explanation of how labels assigned
+
+\subsection{and function pointers}
+\input{../cfi/cfg-fptrs}
+
+\subsection{finding function pointer values?}
+\input{../cfi/cfg-algo}
+
+
+% FIXME:
+\subsection{imprecision: unions, etc.}
+\input{../cfi/cfg-unions}
+
+\section{Clang's CFI implementation}
+\input{../cfi/clang-cfi}
+
+\section{Clang's CFI prevents?}
+\input{../cfi/prevent-exer}
+     % FIXME:
+        % example code:
+            % reaching X if arbitrary memory write
+            % reaching Y
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\subsection{extra details on ID'ing function pointer values}
+\input{../cfi/cfg-algo-extra}
+
+\subsection{problems with dynamically loaded code}
+\input{../cfi/dynamic-p}
+
+\section{Intel's `CFI'}
+\input{../cfi/intel-cfi}
+
+\section{authenticated pointers}
+
+\input{../cfi/arm-enc-ptrs}
+% FIXME
+% FIXME: diagram
+
+\end{document}

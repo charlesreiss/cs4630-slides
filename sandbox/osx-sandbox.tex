@@ -1,0 +1,20 @@
+
+\begin{frame}{OS X sandboxing}
+    \begin{itemize}
+    \item OS X (tries to) implement system call filtering
+    \item main challenge: what about files?
+        \begin{itemize}
+        \item user can open a file anywhere --- we expect that to work
+        \end{itemize}
+    \item<2> OS X solution: OS service displays file-open dialog
+        \begin{itemize}
+        \item OS knows user really choose a file
+        \end{itemize}
+    \item<2> application can ask to remember file was chosen previously
+    \item<2> not chosen/remembered --- can't access
+        \begin{itemize}
+        \item requires changes to how applications open files
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

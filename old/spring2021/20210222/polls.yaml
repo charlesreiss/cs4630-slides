@@ -1,0 +1,67 @@
+- title: "easiest/most difficult virus code places to id"
+  questions:
+  - text: "easiest to identify most of the time [without false positives]?"
+    single: true
+    options:
+    - "A. replaced executable"
+    - "B. appended to executable w/o compresion"
+    - "C. replaced cavities"
+    - "D. replaced bootloader"
+    - "E. new automatically started system program"
+  - text: "most difficult to identify most of the time [without false positives]?"
+    single: true
+    options:
+    - "A. replaced executable"
+    - "B. appended to executable w/o compression"
+    - "C. replaced cavities"
+    - "D. replaced bootloader"
+    - "E. new automatically started system program"
+- title: "easiest/most difficult virus invoke places to id"
+  questions:
+  - text: "easiest to identify most of the time [without false positives]?"
+    single: true
+    options:
+    - "A. replaced start location"
+    - "B. replaced dynamic linker stub"
+    - "C. replaced dynamic library symbol location"
+    - "D. replaced function call"
+    - "E. replaced function return"
+    - "F. replaced bootloader"
+    - "G. new automatically started system program"
+  - text: "most difficult to identify most of the time [without false positives]?"
+    single: true
+    options:
+    - "A. replaced start location"
+    - "B. replaced dynamic linker stub"
+    - "C. replaced dynamic library symbol location"
+    - "D. replaced function call"
+    - "E. replaced function return"
+    - "F. replaced bootloader"
+    - "G. new automatically started system program"
+- title: "Vienna signature?"
+  questions:
+  - text: "best 'signature' for minimizing false positives?"
+    single: true
+    options:
+    - "A. machine code found in example infected file at the end of the executable"
+    - "B. machine code found in example infected file at the end of the executable, ignoring parts that change on reinfection"
+    - "C. portion of virus's machine code that copies itself to a new file anywhere in the executable"
+    - "D. whether another executable file in same directory changes if we run the executable in a VM"
+    - "E. for a jump at beginning of the executable to something near the end"
+  - text: "best 'signature' for maximizing true positives?"
+    single: true
+    options:
+    - "A. machine code found in example infected file at the end of the executable"
+    - "B. machine code found in example infected file at the end of the executable, ignoring parts that change on reinfection"
+    - "C. portion of virus's machine code that copies itself to a new file anywhere in the executable"
+    - "D. whether another executable file in same directory changes if we run the executable in a VM"
+    - "E. for a jump at beginning of the executable to something near the end"
+  - text: "best 'signature' for maximizing performance?"
+    single: true
+    options:
+    - "A. machine code found in example infected file at the end of the executable"
+    - "B. machine code found in example infected file at the end of the executable, ignoring parts that change on reinfection"
+    - "C. portion of virus's machine code that copies itself to a new file anywhere in the executable"
+    - "D. whether another executable file in same directory changes if we run the executable in a VM"
+    - "E. for a jump at beginning of the executable to something near the end"
+

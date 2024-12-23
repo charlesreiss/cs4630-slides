@@ -1,0 +1,19 @@
+
+\begin{frame}<1>[label=trickySS]{stack smashing: the tricky parts}
+    \begin{itemize}
+    \item \myemph<2>{construct machine code that works in any executable}
+        \begin{itemize}
+        \item same tricks as writing relocatable virus code
+        \end{itemize}
+    \item \myemph<3>{construct machine code that's valid input}
+        \begin{itemize}
+        \item machine code usually flexible enough
+        \end{itemize}
+    \item \myemph<4>{finding location of return address}
+        \begin{itemize}
+        \item fixed offset from buffer
+        \end{itemize}
+    \item \myemph<5>{finding location of inserted machine code}
+    \end{itemize}
+\end{frame}
+

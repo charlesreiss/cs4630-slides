@@ -1,0 +1,19 @@
+
+\begin{frame}[fragile,label=altVirusReloc]{alternative relocation}
+    \begin{itemize}
+    \item could avoid having pointer to update:
+    \end{itemize}
+\begin{Verbatim}[fontsize=\fontsize{10}{11}\selectfont,commandchars=Q\{\}]
+0000000000000000 <next-0x3>:
+   0:   e8 Qtextbf{00 00}                call   3 <next>
+    Qtextit{target addresses encoded relatively}
+    Qtextit{pushes return address (next) onto stack}
+0000000000000003 <next>:
+   3:   59                      pop    %cx
+    Qtextit{cx containts address of the pop instruction}
+\end{Verbatim}
+    \begin{itemize}
+    \item why didn't Vienna do this?
+    \end{itemize}
+\end{frame}
+

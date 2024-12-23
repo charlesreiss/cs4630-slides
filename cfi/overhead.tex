@@ -1,0 +1,21 @@
+\begin{frame}{CFI overhead}
+\begin{itemize}
+\item Abadi et al's 2004 paper:
+    \begin{itemize}
+    \item used label-based approach
+    \item 0-45\% time overhead on SPECcpu2000 benchmarks
+    \item best: compression program
+    \item worst: chess engine
+    \end{itemize}
+\item Tice et al's 2014 paper (clang-style impl, sometimes in GCC, sometimes in Clang)
+    \begin{itemize}
+    \item could seperately enable different parts
+    \item in tests on SPECcpu 2006 benchmarks:
+    \item 0--10\% slowdown for VTable dereference checks 
+        \begin{itemize}
+        \item but 20\% without tuning
+        \end{itemize}
+    \item 0-6\% for other indirect call checking
+    \end{itemize}
+\end{itemize}
+\end{frame}

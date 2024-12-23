@@ -1,0 +1,16 @@
+\begin{frame}{filtering system calls?}
+    \begin{itemize}
+    \item example: video player VLC playing a local file on my laptop
+    \item uses \myemph{73 unique kinds of system calls}
+    \item opens many files that \myemph{are not the video file}
+        \begin{itemize}
+        \item libraries
+        \item fonts
+        \item configuration files
+        \item translations of messages
+        \end{itemize}
+    \vspace{.5cm}
+    \item can I limit the files my video player can read?
+    \item how do I come up with a useful filter?
+    \end{itemize}
+\end{frame}

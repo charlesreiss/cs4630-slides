@@ -1,0 +1,22 @@
+\begin{frame}{testing for non-memory flaws?}
+    \begin{itemize}
+    \item fuzzing for cross-site scripting bugs?
+        \begin{itemize}
+        \item run on web application
+        \item assert that HTML is well-formed?
+        \end{itemize}
+    \item fuzzing for SQL injection?
+        \begin{itemize}
+        \item assert that no malformed SQL gets executed?
+        \end{itemize}
+    \item operating system?
+        \begin{itemize}
+        \item input = requests (system calls) to make to the OS
+        \end{itemize}
+    \vspace{.5cm}
+    \item (less likely) fuzzing for permissions issues?
+        \begin{itemize}
+        \item assert that admin. data doesn't change?
+        \end{itemize}
+    \end{itemize}
+\end{frame}

@@ -1,0 +1,19 @@
+\begin{frame}<1>[fragile,label=stackSmashingLuckyP]{but don't you have to get lucky?}
+    \begin{itemize}
+    \item simple overflow seemed like very unusual, specific scenario
+        \begin{itemize}
+        \item needed important value right next to buffer
+        \item needed to be able to set to useful value
+        \end{itemize}
+    \item stack smashing showed it wasn't:
+        \begin{itemize}
+        \item always had important pointer (return address)
+        \item always had useful value to set it to (pointer to buffer)
+        \end{itemize}
+    \vspace{.5cm}
+    \item variation 1: \myemph<3>{other generally useful pointers?}
+    \item variation 2: \myemph<2>{other generally useful new values?}
+    \end{itemize}
+\end{frame}
+
+

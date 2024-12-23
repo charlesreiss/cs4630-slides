@@ -1,0 +1,54 @@
+\providecommand{\myemphTwo}[1]{\myemph<2>{#1}}
+\providecommand{\myemphTwoB}[1]{\myemph<2>{\textbf<2>{#1}}}
+\providecommand{\myemphThree}[1]{\myemph<3>{#1}}
+\providecommand{\myemphFour}[1]{\myemph<4>{#1}}
+\providecommand{\myemphFive}[1]{\myemph<5>{#1}}
+\providecommand{\myemphSix}[1]{\myemph<6>{#1}}
+\providecommand{\myemphSeven}[1]{\myemph<7>{#1}}
+
+\begin{frame}{position-independent executables}
+    \begin{itemize}
+    \item so far: executables loaded to fixed (virtual) address
+    \vspace{.5cm}
+    \item turns out to be undesirable for easily guessable addresses
+    \item solution: position independent executables
+        \begin{itemize}
+        \item can be loaded at any address at runtime
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=elfExOver1]{position-independent ELF example}
+    \begin{itemize}
+    \item compiled+linked ``Hello, World'' with {\tt gcc -static-pie}
+    \item PIE = position-independent executable
+    \end{itemize}
+\begin{Verbatim}[commandchars=\\\{\},fontsize=\small]
+a.out:     file format elf64-x86-64
+a.out
+architecture: i386:x86-64, flags 0x00000150:
+HAS_SYMS, \myemphTwo{DYNAMIC}, D_PAGED
+
+start address 0x0000000000001080
+
+Program Header:
+...
+    LOAD off    0x0000000000000000 vaddr \myemphThree{0x0000000000000000} paddr 0x0000000000000000 align 2**12
+         filesz 0x00000000000005f8 memsz 0x00000000000005f8 flags r--
+    LOAD off    0x0000000000001000 vaddr 0x0000000000001000 paddr 0x0000000000001000 align 2**12
+         filesz 0x00000000000001f5 memsz 0x00000000000001f5 flags r-x
+...
+\end{Verbatim}
+\begin{tikzpicture}[overlay,remember picture]
+\coordinate (loc) at ([yshift=1cm]current page.south);
+\tikzset{
+    note/.style={draw,very thick,anchor=south,at=(loc)},
+}
+\begin{visibleenv}<2>
+\node[note] {
+    DYNAMIC instead of EXEC_P \\
+    similar encoding to shared libraries
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}

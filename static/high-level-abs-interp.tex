@@ -1,0 +1,12 @@
+\begin{frame}{high-level abstract interpretation}
+    \begin{itemize}
+    \item going to show a very high-level view of abstract interpretation
+    \vspace{.5cm}
+    \item idea: summarize some values of interest in the program:
+        \begin{itemize}
+        \item example: pointer to allocated object or pointer to freed object or unknown pointer or both
+        \end{itemize}
+    \item step through program seeing what values change
+    \item for loops, etc.: keep going until values stop changing
+    \end{itemize}
+\end{frame}

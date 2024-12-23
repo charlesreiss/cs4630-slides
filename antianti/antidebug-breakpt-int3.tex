@@ -1,0 +1,94 @@
+
+\begin{frame}[fragile,label=implBreak]{implementing breakpoints}
+\lstset{language=myasm,style=small}
+\begin{itemize}
+    \item idea: change
+\begin{lstlisting}
+movq %rax, %rdx
+addq %rbx, %rdx // BREAKPOINT HERE
+subq 0(%rsp), %r8
+...
+\end{lstlisting}
+into
+\begin{lstlisting}
+movq %rax, %rdx
+jmp debugger_code 
+subq 0(%rsp), %r8
+...
+\end{lstlisting}
+    \item<2> problem: {\tt jmp} might be bigger than {\tt addq}?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=implBreak2]{int 3}
+    \begin{itemize}
+    \item x86 breakpoint instruction: {\tt \textbf{int} 3}
+    \item \myemph{one byte} instruction encoding: {\tt CC}
+    \item debugger \myemph{modifies code to insert breakpoint}
+        \begin{itemize}
+        \item has copy of original somewhere
+        \end{itemize}
+    \item invokes handler setup by OS
+        \begin{itemize}
+        \item debugger can ask OS to be run by handler
+        \item or changes pointer to handler directly on old OSes
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{int 3 handler}
+    \begin{itemize}
+    \item kind of exception handler
+        \begin{itemize}
+        \item exception handler = way for CPU to run OS code \\
+        (despite no actual normal jmp/etc. to OS code)
+        \end{itemize}
+    \item x86 CPU saves registers, PC for debugger
+    \item x86 CPU has easy to way to resume debugged code from handler
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=int3Check]{detecting int 3 directly (1)}
+\lstset{language=myasm,style=small}
+\begin{itemize}
+    \item checksum running code
+\end{itemize}
+\begin{lstlisting}
+mycode:                     
+    ...
+        /* RBX = current sum; RAX = pointer to code */
+    movq $0, %rbx           // Intel: mov RBX, 0
+    movq $mycode, %rax      // Intel: mov RAX, OFFSET MYCODE
+loop:           
+    addq (%rax), %rbx       // Intel: add RBX, [RAX]
+    addq $8, %rax           // Intel: add 8, RAX
+        /* current sum += *code_ptr;  code_ptr += ... */
+    cmpq $endcode, %rax
+    jl loop
+    cmpq %rbx, $EXPECTED_VALUE 
+    jne debugger_found   // if sum wrong, panic
+    ...
+endcode:
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=int3OSAPI]{detecting int 3 directly (2)}
+\lstset{language=C,style=small}
+\begin{itemize}
+    \item query the ``handler'' for int 3
+        \begin{itemize}
+        \item old OSs only; today: cannot set directly
+        \end{itemize}
+    \item modern OSs: ask if there's a debugger attached
+    \item \ldots or try to attach as debugger yourself
+        \begin{itemize}
+        \item doesn't work --- debugger present, probably
+        \item does work --- broke any debugger?
+        \end{itemize}
+\end{itemize}
+\begin{lstlisting}
+ // Windows API function!
+if (IsDebuggerPresent()) { ... }
+\end{lstlisting}
+\end{frame}
+

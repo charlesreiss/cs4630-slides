@@ -1,0 +1,76 @@
+- title: "return address on stack (smashing example)"
+  questions:
+  - text: "distance from buffer[0] to scanf's return address"
+    single: true
+    options:
+    - "16 bytes before"
+    - "8 bytes before"
+    - "just before"
+    - "100 bytes after"
+    - "120 bytes after"
+    - "128 bytes after"
+    - "132 bytes after"
+    - "none of the above, but after"
+    - "none of the above, but before"
+  - text: "distance from buffer[0] to vulnerable's return address"
+    single: true
+    options:
+    - "16 bytes before"
+    - "8 bytes before"
+    - "just before"
+    - "100 bytes after"
+    - "120 bytes after"
+    - "128 bytes after"
+    - "132 bytes after"
+    - "none of the above, but after"
+    - "none of the above, but before"
+- title: "address of first (from getInitials)? [break in getInit]"
+  questions:
+  - text: "if shell code at beginning of 'first', what is its address going to be?"
+    single: true
+    options:
+    - "0x7fffffffdcf0 (0x7fffffffdd98 - 0xa0 - 0x8)"
+    - "0x7fffffffdcf8 (0x7fffffffdd98 - 0xa0)"
+    - "0x7fffffffdd00 (0x7fffffffdd98 - 0xa0 + 0x8)"
+    - "0x7fffffffdd40 (0x7fffffffdd98 - 0xa0 - 0x8 + 0x50)"
+    - "0x7fffffffdd48 (0x7fffffffdd98 - 0xa0 + 0x50)"
+    - "0x7fffffffdd50 (0x7fffffffdd98 - 0xa0 + 0x8 + 0x50)"
+    - "0x7fffffffdd98"
+    - "0x7fffffffdca0 (0x7fffffffdd98 + 0x8)"
+    - "0x7fffffffdde0 (0x7fffffffdd98 + 0xa0 - 0x50 - 0x8)"
+    - "0x7fffffffdde8 (0x7fffffffdd98 + 0xa0 - 0x50)"
+    - "0x7fffffffddf0 (0x7fffffffdd98 + 0xa0 - 0x50 + 0x8)"
+    - "0x7fffffffde40 (0x7fffffffdd98 + 0xa0 + 0x8)"
+    - "something else"
+- title: "address of first (from getInitials)? [break in scanf]"
+  questions:
+  - text: "if shell code at beginning of 'first', what is its address going to be?"
+    single: true
+    options:
+    - "0x7fffffffdbe0 (0x7fffffffdc88 - 0xa0 - 0x8)"
+    - "0x7fffffffdbe8 (0x7fffffffdc88 - 0xa0)"
+    - "0x7fffffffdbf0 (0x7fffffffdc88 - 0xa0 + 0x8)"
+    - "0x7fffffffdc30 (0x7fffffffdc88 - 0xa0 - 0x8 + 0x50)"
+    - "0x7fffffffdc38 (0x7fffffffdc88 - 0xa0 + 0x50)"
+    - "0x7fffffffdc40 (0x7fffffffdc88 - 0xa0 + 0x8 + 0x50)"
+    - "0x7fffffffdc88"
+    - "0x7fffffffdcd8 (0x7fffffffdc88 + 0xa0 - 0x50)"
+    - "0x7fffffffdc90 (0x7fffffffdc88 + 0x8)"
+    - "0x7fffffffdcd0 (0x7fffffffdc88 + 0xa0 - 0x50 - 0x8)"
+    - "0x7fffffffdd30 (0x7fffffffdc88 + 0xa0 + 0x8)"
+    - "0x7fffffffdee0 (0x7fffffffdc88 + 0xa0 - 0x50 + 0x8)"
+    - "something else"
+- title: "noncontig overflow?"
+  questions:
+  - text: "set scores to what addresses?"
+    single: true
+    options:
+    - "#8 to 0x9, #9 to 0x12345678"
+    - "#9 to 0x9, #8 to 0x12345678"
+    - "#8 to 0x23456789, #9 to 0x1"
+    - "#9 to 0x23456789, #8 to 0x1"
+    - "#8 to 0x89, #9 to 0x56"
+    - "#9 to 0x89, #8 to 0x56"
+    - "#8 to 0x89, #9 to 0x56, #10 to 0x34, #11 to 0x12"
+    - "#11 to 0x89, #10 to 0x56, #9 to 0x34, #8 to 0x12"
+    - "something else"

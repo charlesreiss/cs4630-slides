@@ -1,0 +1,45 @@
+
+\begin{frame}[fragile,label=ViennaPat1]{Vienna patterns (1)}
+\lstset{
+        style=small,
+        language={},
+        moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
+        escapechar=`,
+        }
+\begin{itemize}
+\item simple Vienna patterns:
+\end{itemize}
+\begin{lstlisting}
+/* bytes of fixed part of Vienna sample */
+\xFC\x89\xD6\x83\xC6\x81\xc7\x00\x01\x83`\textit{(etc)}` {
+        printf("found Vienna code\n");
+    }
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile,label=ViennaPat2]{Vienna patterns (2)}
+\lstset{
+        style=small,
+        language={},
+        moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
+        escapechar=`,
+        }
+\begin{itemize}
+\item simple Vienna patterns:
+\end{itemize}
+\begin{lstlisting}
+/* Vienna sample with wildcards for
+   changing bytes: */
+/* push %CX; mov ???, %dx; cld; ... */
+\x51\xBA@hi2@(.|\n)(.|\n)@endhi@\xFC\x89`\textit{(etc)}` {
+        printf("found Vienna code w/placeholder\n");
+    }
+/* mov $0x100, %di; push %di; xor %di, %di; ret */
+\xBF\x00\x01\x57\x31\xFF\xC3 {
+        printf("found Vienna return code\n");
+    }
+\end{lstlisting}
+\end{frame}
+
+

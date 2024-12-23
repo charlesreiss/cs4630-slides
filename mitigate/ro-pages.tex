@@ -1,0 +1,32 @@
+\begin{frame}{recall: function pointer targets}
+    \begin{itemize}
+    \item wanted to overwrite special pointer:
+    \vspace{.5cm}
+    \item return addresses on stack
+    \item function pointers on in local variables
+    \item tables of function pointers used for inheritence
+    \item global offset table
+    \vspace{.5cm}
+    \item last two: need to change infrequently
+    \item idea: make read-only
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{RELRO}
+    \begin{itemize}
+        \item \textbf{REL}ocation \textbf{R}ead-\textbf{O}nly
+        \item Linux option: make dynamic linker structures read-only after startup
+        \item partial RELRO: everything but GOT pointers to library functions
+            \begin{itemize}
+            \item notably includes C++ virtual function tables
+            \end{itemize}
+        \item full RELRO: everything including those pointers
+            \begin{itemize}
+            \item requires disabling ``lazy'' linking
+            \item (could do without disabling --- but slower (how much?) startup)
+            \end{itemize}
+        \item appears as ELF program header entry
+    \end{itemize}
+\end{frame}
+
+

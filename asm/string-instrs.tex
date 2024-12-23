@@ -1,0 +1,48 @@
+
+\begin{frame}[fragile,label=string1]{string instructions (1)}
+\begin{lstlisting}[style=small]
+memcpy: // copy %rdx bytes from (%rsi) to (%rdi)
+        cmpq %rdx, %rdx
+        je done
+        movsb
+        subq $1, %rdx
+        jmp memcpy
+done:   ret
+\end{lstlisting}
+\begin{itemize}
+\item {\tt movsb} (move data from string to string, byte)
+\item mov one byte from {\tt (\%rsi)} to {\tt (\%rdi)}
+\item increment \%rsi and \%rdi (*)
+\item \myemph{cannot} specify other registers
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=string2]{string instructions (2)}
+\begin{lstlisting}[style=small]
+memcpy: // copy %rdx bytes from (%rsi) to (%rdi)
+    rep movsb
+    ret
+\end{lstlisting}
+\begin{itemize}
+\item {\tt rep} prefix byte
+\vspace{.5cm}
+\item repeat instruction until {\tt \%rdx} is 0
+\item decrement {\tt \%rdx} each time
+\item \myemph{cannot} specify other registers
+\item \myemph{cannot} use {\tt rep} with all instructions
+\end{itemize}
+\end{frame}
+
+\begin{frame}{string instructions (3)}
+\begin{itemize}
+\item {\tt lodsb}, {\tt stosb} --- load/store into string
+\item {\tt movsw}, {\tt movsd} --- word/dword versions
+\item string comparison instructions
+\vspace{.5cm}
+\item {\tt rep movsb} is still recommended on modern Intel
+    \begin{itemize}
+    \item special-cased in processor?
+    \end{itemize}
+\end{itemize}
+\end{frame}
+

@@ -1,0 +1,52 @@
+- title: "some ideas for handling Cascade decrypter"
+  questions:
+  - text: "most practical strategy?"
+    single: true
+    options:
+    - "A. matching patterns of decrypted malware code in memory while executables are running"
+    - "B. marking executables with too much random-looking data in them"
+    - "C. matching the decrypter in a normal signature scan"
+    - "D. trying every possible `key' for decryption on every executable and matching decrypted malware code against it"
+    - "E. detecting sequence of file operations Cascade makes instead of its code"
+  - text: "least practical strategy?"
+    single: true
+    options:
+    - "A. matching patterns of decrypted malware code in memory while executables are running"
+    - "B. marking executables with too much random-looking data in them"
+    - "C. matching the decrypter in a normal signature scan"
+    - "D. trying every possible `key' for decryption on every executable and matching decrypted malware code against it"
+    - "E. detecting sequence of file operations Cascade makes instead of its code"
+  - text: "second most practical strategy?"
+    single: true
+    options:
+    - "A. matching patterns of decrypted malware code in memory while executables are running"
+    - "B. marking executables with too much random-looking data in them"
+    - "C. matching the decrypter in a normal signature scan"
+    - "D. trying every possible `key' for decryption on every executable and matching decrypted malware code against it"
+    - "E. detecting sequence of file operations Cascade makes instead of its code"
+- title: "problems for code decrypter handling?"
+  questions:
+  - text: "which are likely to cause problems?"
+    multiple: true
+    options:
+    - "A. code decrypter and malicious code run at program exit, not startup"
+    - "B. code decrypter and malicious code run when user clicks button in program, not at startup"
+    - "C. code decrypter allocates random address to write decrypted code to"
+    - "D. code decrypter exits (without running malicious code) if processor seems too slow"
+    - "E. code decrypter decrypts another code decrypter"
+  - text: "which problem is easiest to workaround?"
+    single: true
+    options:
+    - "A. code decrypter and malicious code run at program exit, not startup"
+    - "B. code decrypter and malicious code run when user clicks button in program, not at startup"
+    - "C. code decrypter allocates random address to write decrypted code to"
+    - "D. code decrypter exits (without running malicious code) if processor seems too slow"
+    - "E. code decrypter decrypts another code decrypter"
+  - text: "which problem is hardest to workaround?"
+    single: true
+    options:
+    - "A. code decrypter and malicious code run at program exit, not startup"
+    - "B. code decrypter and malicious code run when user clicks button in program, not at startup"
+    - "C. code decrypter allocates random address to write decrypted code to"
+    - "D. code decrypter exits (without running malicious code) if processor seems too slow"
+    - "E. code decrypter decrypts another code decrypter"

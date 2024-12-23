@@ -1,0 +1,53 @@
+
+\begin{frame}[fragile,label=implSingleStep]{implementing single-stepping (1)}
+\lstset{language=myasm,style=small}
+    \begin{itemize}
+    \item set a breakpoint on the following instruction?
+\begin{lstlisting}
+movq %rax, %rdx
+addq %rbx, %rdx // <-- STOPPED HERE
+subq 0(%rsp), %r8 // <-- SINGLE STEP TO HERE
+subq 8(%rsp), %r8
+...
+\end{lstlisting}
+transformed to
+\begin{lstlisting}
+movq %rax, %rdx
+addq %rbx, %rdx // <-- STOPPED HERE
+int 3 // <-- SINGLE STEP TO HERE
+subq 8(%rsp), %
+...
+\end{lstlisting}
+then {\tt jmp} to {\tt addq}
+    \item<2> but what about
+\begin{lstlisting}
+jmpq *0x1234(%rax,%rbx,8) // <-- STOPPED HERE
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=implSingleStepB]{implementing single-stepping (2)}
+\lstset{language=myasm,style=small}
+    \begin{itemize}
+    \item typically \myemph{hardware support} for single stepping
+    \item x86:{\tt int 1} handler (second entry in table)
+    \item x86: {\tt TF} flag: execute handler after every instruction
+    \item \ldots except during handler (whew!)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=defeatSingleStep]{Defeating single-stepping}
+    \begin{itemize}
+    \item try to install your own {\tt int 1} handler
+        \begin{itemize}
+        \item (if OS allows)
+        \end{itemize}
+    \item try to clear TF?
+        \begin{itemize}
+        \item would take effect on \myemph{following} instruction
+        \item \ldots if debugger doesn't reset it
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+

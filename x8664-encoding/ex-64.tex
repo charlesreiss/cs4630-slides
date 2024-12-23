@@ -1,0 +1,43 @@
+\begin{frame}{64-bit REX exercise (1)}
+    \begin{itemize}
+    \item \texttt{add \%eax, \%ecx} (Intel: {\tt ADD ecx, eax})
+        \begin{itemize}
+        \item {\tt 01} (opcode) {\tt c1} (MOD: 11 / REG: 000 (eax) / R\/M: 001 (ecx))
+        \end{itemize}
+    \item exercise 2a: \texttt{add \%eax, \%r10d} (Intel: {\tt ADD r9d, eax}) = ???
+        \begin{itemize}
+        \item REX prefix + {\tt 01} + MOD-REG-R/M byte
+        \end{itemize}
+    \vspace{.5cm}
+    \item REX prefix:
+        \begin{itemize}
+        \item {\tt 0100}
+        \item w (is 64-bit values?)
+        \item r (extra bit for Reg field)
+        \item s (extra bit for SIB index reg)
+        \item b (extra bit for R/M or SIB base field)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{64-bit REX exercise (2)}
+    \begin{itemize}
+    \item \texttt{add \%eax, \%ecx} (Intel: {\tt ADD ecx, eax})
+        \begin{itemize}
+        \item {\tt 01} (opcode) {\tt c1} (MOD: 11 / REG: 000 (eax) / R\/M: 001 (ecx))
+        \end{itemize}
+    \item exercise 2b: \texttt{add \%rax, \%rcx} (Intel: {\tt ADD rcx, rax}) = ???
+        \begin{itemize}
+        \item REX prefix + {\tt 01} + MOD-REG-R/M byte
+        \end{itemize}
+    \vspace{.5cm}
+    \item REX prefix:
+        \begin{itemize}
+        \item {\tt 0100}
+        \item w (is 64-bit values?)
+        \item r (extra bit for Reg field)
+        \item s (extra bit for SIB index reg)
+        \item b (extra bit for R/M or SIB base field)
+        \end{itemize}
+    \end{itemize}
+\end{frame}

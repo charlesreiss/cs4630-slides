@@ -1,0 +1,32 @@
+- title: "final value of string?"
+  questions:
+  - text: "What is the final value of string?" 
+    single: true
+    options:
+    - "abcdabcd"
+    - "bbcdefgh"
+    - "bbcdabcd"
+    - "abcdefgh (no change)"
+    - "something else / not enough info"
+
+- title: "encoding?"
+  questions:
+  - text: "encoding of btsl $7, 4(%rax)? (as sequence of hex bytes)"
+    single: true
+    options:
+    - "0f ba 40 04 07"
+    - "0f ba 68 04 07"
+    - "0f ba 68 07 04"
+    - "0f ba 85 07 04"
+    - "0f ba a8 07 04"
+    - "0f ba a1 04 07"
+    - "none of these"
+- title: "position independence?"
+  questions:
+  - text: "which of these to use absolute encoding for?"
+    multiple: true
+    options:
+    - "A. address of a jump from evil code to function at fixed loc in executable"
+    - "B. address of a jump in a loop in the “evil” code"
+    - "C. address of a string in the “evil” code"
+    - "D. address of a string in the executable"

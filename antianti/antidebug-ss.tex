@@ -1,0 +1,15 @@
+\begin{frame}{anti-single-step}
+    \begin{itemize}
+    \item x86: single-stepping implemented with processor flag
+        \begin{itemize}
+        \item causes OS to run after every instruction
+        \end{itemize}
+    \item can read flag normally with common debugger configurations
+        \begin{itemize}
+        \item more modern systems may support hiding better
+        \end{itemize}
+    \vspace{.5cm}
+    \item could also check timing
+    \item could also try to replace OS's single-step handler
+    \end{itemize}
+\end{frame}

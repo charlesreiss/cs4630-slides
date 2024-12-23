@@ -1,0 +1,53 @@
+\begin{frame}{common bug patterns}
+    \begin{itemize}
+    \item effectively detecting things like ``arrays are in bounds'' \\
+        or ``values aren't used after being freed'' \\
+        is not very reliable for large programs
+    \item (but analysis tools true and are getting better)
+    \vspace{.5cm}
+    \item but static analysis tools shine for \myemph{common bug patterns}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=suspectPatterns]{patterns clang's analyzer knows}
+\begin{lstlisting}[language=C,style=smaller]
+struct foo *p = malloc(sizeof(struct foo*)); // meant struct foo?
+long *p = malloc(16 * sizeof(int)); // meant sizeof(long)?
+\end{lstlisting}
+\hrule
+\begin{lstlisting}[language=C,style=smaller]
+strncat(foo, bar, sizeof(foo));
+\end{lstlisting}
+\hrule
+\begin{lstlisting}[language=C,style=smaller]
+int *global;
+int *foo() {
+    int x;
+    int *p = &x;
+    ...
+    global = p; // putting pointer to stack in global
+    return p;    // returning pointer to stack
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=suspectPatterns]{more suspect patterns }
+    \begin{itemize}
+    \item SpotBugs: Java static analysis tool
+    \end{itemize}
+\begin{lstlisting}[language=Java,style=smaller]
+// pattern: connecting to database with empty password:
+connection = DriverManager.getConnection(
+    "jdbc:hsqldb:hsql://db.example.com/xdb" /* database ID */, 
+    "sa" /* username */, "" /* password */);
+
+// pattern: Sql.hasResult()'s second argument isn't a constant
+Sql.hasResult(c, "SELECT 1 FROM myTable WHERE code='"+code+"'");
+
+// pattern: new FileReader's argument comes from request
+HttpRequest request = ...;
+String path = request.getParameter("path");
+BufferedReader r = new BufferedReader(
+    new FileReader("data/" + path));
+\end{lstlisting}
+\end{frame}

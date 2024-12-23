@@ -1,0 +1,55 @@
+
+\begin{frame}[fragile,label=rustBorrowing1]{borrowing}
+    \begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+fn mysum(vector: &Vec<u32>) -> u32 {
+    let mut total: u32 = 0
+    for value in vector {
+        total += value
+    }
+    return total
+}
+
+fn foo() {
+    let vector: Vec<u32> = vec![1, 2, 3];
+    let sum = mysum(&vector);
+    // automates (vector, sum) = mysum(vector) idea
+    
+    println!("Sum is {}", sum);
+    println!("vector[0] is {}" , vector[0]);
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=dangling1]{dangling pointers?}
+\begin{lstlisting}[language=C,style=small]
+int *dangling_pointer() {
+    int array[3] = {1,2,3};
+    return &array[0]; // not an error
+}
+\end{lstlisting}
+\hrulefill
+    \begin{minted}[fontsize=\small]{Rust}
+fn dangling_pointer() -> &mut i32 {
+    let array = vec![1,2,3];
+    return &mut array[0]; // ERROR
+}
+\end{minted}
+\begin{tikzpicture}[overlay,remember picture]
+    \begin{visibleenv}<2>
+    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\begin{lstlisting}[language={},style=smaller]
+error[E0106]: missing lifetime specifier
+  --> src/main.rs:19:25
+   |
+19 | fn dangling_pointer() -> &mut i32 {
+   |                          ^ expected lifetime parameter
+   |
+   = help: this function's return type contains a borrowed value,
+           but there is no value for it to be borrowed from
+\end{lstlisting}
+};
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+

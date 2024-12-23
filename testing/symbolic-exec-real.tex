@@ -1,0 +1,40 @@
+
+
+\begin{frame}{real symbolic execution}
+    \begin{itemize}
+    \item not yet used much outside of research
+    \item old technique (1970s), but recent resurgence 
+        \begin{itemize}
+        \item equation solving (`SAT solvers'/`SMT solvers') is now much better
+        \end{itemize}
+    \vspace{.5cm}
+\item example usable tools: KLEE, symcc (test case generating)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{KLEE optimizations}
+\begin{itemize}
+\item lots of optimizations to make search time pratical
+\vspace{.5cm}
+\item prioritize paths that produce good tests
+    \begin{itemize}
+    \item try to execute \textit{new code}
+    \item try to find new paths new root of tree
+    \end{itemize}
+\item reuse equation solving results:
+    \begin{itemize}
+    \item remove irrelevant variables from equation solving queries
+        \begin{itemize}
+        \item e.g. if (x == 10) doesn't need variables unrelated to x's value
+        \end{itemize}
+    \item cache of prior queries with ``no solution''
+    \end{itemize}
+\vspace{.5cm}
+\item results from 1 hour of compute time (from 2008 paper):
+    \begin{itemize}
+    \item avg. 91\% coverage on Linux coreutils (basic command line tools)
+    \item versus developer tests: 68\% covergae
+    \item (where coverage = \% lines of code run $\not=$ \% possible paths run)
+    \end{itemize}
+\end{itemize}
+\end{frame}

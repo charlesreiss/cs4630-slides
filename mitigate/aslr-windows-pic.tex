@@ -1,0 +1,26 @@
+
+\begin{frame}{relocating: Windows}
+    \begin{itemize}
+        \item Windows will \myemph{edit code} to relocate
+            \begin{itemize}
+            \item not everything uses a GOT-like lookup table
+            \end{itemize}
+        \item typically one fixed location per program/library \textbf{per boot}
+            \begin{itemize}
+                \item same address used across all instances of program/library
+                \item still allows sharing memory
+            \end{itemize}
+        \item fixup once per program/library per boot
+            \begin{itemize}
+                \item before ASLR: code could be pre-relocated
+            \end{itemize}
+        \item Windows + Visual Studio had `full' ASLR by default since 2010
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Windows ASLR limitation}
+    \begin{itemize}
+        \item same address in all programs --- not very useful against local exploits
+    \end{itemize}
+\end{frame}
+

@@ -1,0 +1,12 @@
+\begin{frame}{safety rules + escape hatch}
+    \begin{itemize}
+    \item idea: can avoid out-of-bounds, etc. with safety rules
+    \item \ldots but safety rules don't allow us to do some things fast
+    \vspace{.5cm}
+    \item so: have ``escape hatch'' to avoid safety checks in those cases
+    \item hope: code that uses escape hatch can be tightly checked
+        \begin{itemize}
+        \item good target for expensive program analysis
+        \end{itemize}
+    \end{itemize}
+\end{frame}

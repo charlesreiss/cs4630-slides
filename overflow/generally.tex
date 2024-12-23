@@ -1,0 +1,49 @@
+
+\begin{frame}{typical buffer overflow pattern}
+    \begin{itemize}
+    \item cause program to write past the end of a buffer
+    \item that somehow causes different code to run
+    \item (usually code the attacker wrote)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{why buffer overflows?}
+    \begin{itemize}
+    \item for a long time, most common vulnerability
+    \item common results in arbitrary code execution
+    \vspace{.5cm}
+    \item related to other memory-management vulnerabilities
+        \begin{itemize}
+        \item which usually also result in arbitrary code execution
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{network worms and overflows}
+    \begin{itemize}
+    \item worms that connect to vulnerable servers:
+    \vspace{.5cm}
+    \item Morris worm included some buffer overflow exploits
+        \begin{itemize}
+        \item Morris worm: first self-replicating malware
+        \item in mail servers, user info servers
+        \end{itemize}
+    \item 2001: Code Red worm that spread to web servers (running Microsoft IIS)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{overflows without servers}
+    \begin{itemize}
+    \item bugs dealing with corrupt files:
+    \vspace{.5cm}
+    \item Adobe Flash (web browser plugin)
+    \item PDF readers
+    \item web browser JavaScript engines
+    \item image viewers
+    \item movie viewers 
+    \item decompression programs
+    \item \ldots
+    \end{itemize}
+\end{frame}
+
+

@@ -1,0 +1,19 @@
+\begin{frame}[fragile,label=picVNot]{position dependence}
+\begin{itemize}
+\item two ways of encoding addresses in x86-64 assembly:
+    \begin{itemize}
+    \item address in little endian (typically 32-bits --- limit on executable size)
+    \item difference between address and \%rip (next instruction address)
+    \end{itemize}
+\end{itemize}
+\hrule
+{\tt
+\begin{tabular}{l|l}
+movb label, \%al & 8a 04 25 {\normalfont\it label's addr (32 bit)} \\
+jmp *label & ff 24 25 {\normalfont\it label's addr (32 bit)} \\
+movb label(\%rip), \%al & 8a 05 {\normalfont\it \%rip - label's addr (32 bit)} \\
+jmp label & e9 {\normalfont\it \%rip - label's addr (32 bit)} \\
+\end{tabular}
+}
+how to know which? --- check manual
+\end{frame}

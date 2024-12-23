@@ -1,0 +1,24 @@
+\begin{frame}{rootkits}
+    \begin{itemize}
+    \item rootkit --- priviliged malware that hides itself
+    \item same ideas as these anti-anti-virus techniques
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{chkrootkit}
+    \begin{itemize}
+    \item \texttt{chkrootkit} --- Unix program that looks for rootkit signs
+    \vspace{.5cm}
+    \item tell-tale strings in system programs
+        \begin{itemize}
+        \item e.g. file, process, network connection listing programs changed
+        \end{itemize}
+    \item disagreement between process list, other ways of detecting processes
+    \item disagreement between file lists, other ways of counting files
+    \item overwritten entries in system login records
+    \item known suspicious filenames
+        \begin{itemize}
+        \item hidden exes in temporary, data directories, etc.
+        \end{itemize}
+    \end{itemize}
+\end{frame}

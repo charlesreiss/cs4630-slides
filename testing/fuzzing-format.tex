@@ -1,0 +1,42 @@
+
+\begin{frame}[fragile,label=formatKnow]{fuzzing from format knowledge (1)}
+    \begin{itemize}
+        \item make a random document generator
+            \begin{itemize}
+                \item before: small number of manually chosen examples (often 1)
+            \end{itemize}
+    \end{itemize}
+    \begin{lstlisting}[language=Java, style=small]
+String RandomHTML() {
+    if (random() > 0.2) {
+        String tag = GetRandomTag();
+        if (random() > 0.2) {
+            return "<" + tag + ">" + RandomHTML() +
+                  "</" + tag + ">";
+        } else {
+            return "<" + tag + ">";
+        }
+    } else
+        return RandomText();
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=formatKnow2]{fuzzing from format knowledge (2)}
+    \begin{itemize}
+        \item other fuzzing strategies
+        \vspace{.5cm}
+    \item identify interesting \myemph{fields} to fuzz
+            \begin{itemize}
+                \item description of grammar/protocol/etc.
+                \item test different values seperately
+            \end{itemize}
+        \item (default to) filling in sizes, checksums, type information
+            \begin{itemize}
+                \item avoid most inputs getting rejected from being malformed
+                \item test specific parts of a larger program
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+

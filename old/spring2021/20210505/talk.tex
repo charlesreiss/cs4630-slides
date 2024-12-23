@@ -1,0 +1,62 @@
+\graphicspath{{./figures/}}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{last time (1)}
+    \begin{itemize}
+    \item shadow stacks: separate return address stack
+        \begin{itemize}
+        \item hope: keep address secret or otherwise protect stack
+        \item AArch64/Android implementation: separate register
+        \item Intel's idea for HW support (not commonly deployed)
+        \end{itemize}
+    \item control flow integrity (CFI)
+        \begin{itemize}
+        \item control flow graph --- possible jumps from code to code
+            \begin{itemize}
+            \item not 100\% possiblities
+            \end{itemize}
+        \item assign labels on control flow graph
+        \item check `labels' on jumps
+            \begin{itemize}
+            \item or Clang's implementation: bitmask (more flexible)
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{last time (2)}
+    \begin{itemize}
+    \item CFI limitations
+        \begin{itemize}
+        \item can still jump to wrong place --- but code has to be there
+        \item returns particularly dangerous: e.g. return from Sort in safe() to Sort in danger()
+        \item only prevents attacks if control flow graph precise enough
+        \item works poorly with dynamic linking: relies on analyzing calls via libraries
+        \end{itemize}
+    \item Clang's implementation
+        \begin{itemize}
+        \item trick of putting all function pointers in one memory range
+        \item checks on indirect function calls, VTable-based calls only
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\input{../cfi/prevent-exer}
+
+\begin{frame}{}
+\end{frame}
+
+\begin{frame}{}
+\end{frame}
+
+\begin{frame}{}
+\end{frame}
+
+\begin{frame}{}
+\end{frame}
+\end{document}

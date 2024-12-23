@@ -1,0 +1,122 @@
+\section{self-replicating malware, generally}
+
+\input{../virus/self-repl-mal}
+
+% FIXME: aside on non-self-replicating malware issues coming up
+    % stealth
+    % detection
+
+\section{virus: hide in existing programs}
+
+\subsection{motivation}
+\input{../virus/hide-existing}
+
+\subsection{early prevalance/motivations}
+\input{../virus/early-prevalence}
+
+% FIXME: later prevalence
+
+\section{case study: Vienna}
+\input{../virus/vienna-intro}
+
+\subsection{aside: COM files}
+
+\input{../exec-encoding/com-files}
+
+\subsection{entry/exit}
+
+\input{../virus/entry-exit}
+
+\subsection{infection outline}
+
+\input{../virus/vienna-infect-outline}
+
+\subsection{writing your own code?}
+
+\againframe<2>{viennaOutline}
+\subsubsection{aside: quines}
+
+\input{../virus/quine}
+
+\subsubsection{Vienna replication code}
+
+\input{../virus/vienna-replicate}
+
+\subsection{Vienan relocation code}
+% FIXME: need to explain why this is a problem
+\againframe<3>{viennaOutline}
+
+\subsubsection{Vienna's relocation code}
+\input{../virus/vienna-relocate}
+
+\subsubsection{alternate: PIC}
+\input{../virus/vienna-alt-relocate}
+
+\subsection{avoiding reinfection}
+\againframe<4>{viennaOutline}
+
+% FIXME: reflection on Vienna detection/portability
+    % preview of future topics
+        % looking for virus patterns that won't appear in executables
+
+% FIXME: copy intro
+
+\section{viruses: where to put code}
+
+\input{../virus/where-code-intro}
+
+\subsection{replacing executables?}
+
+\againframe<2>{whereCode}
+
+\input{../virus/where-code-replace}
+
+\subsection{appending/compressing}
+
+% FIXME: good place for aside on modern executable formats
+
+\againframe<3>{whereCode}
+
+\input{../virus/where-append-compress}
+
+\subsection{cavaties}
+
+\againframe<4>{whereCode}
+
+\input{../virus/where-cavities}
+
+\subsubsection{chaining cavaties (CIH case study)}
+
+\input{../virus/where-cavaties-chain}
+
+\subsection{boot sector}
+
+\againframe<5>{whereCode}
+
+\input{../virus/where-boot-sector} % FIXME: split out UEFI/Secure Boot section
+
+\subsection{memory residence}
+
+\input{../virus/residence} % FIXME: should have more extensive discussion of this somewhere
+
+\section{virus: getting code invoked}
+
+\input{../virus/invoke-options}
+
+\subsection{changing start location}
+
+\input{../virus/invoke-start}
+
+\subsection{overwrite existing code}
+
+\input{../virus/invoke-overwrite-existing}
+
+\subsection{using dynamic linking features}
+
+\input{../virus/invoke-dynamic} % FIXME: 20.04 example?
+
+% FIXME: discussion about hiding worm-like programs?
+
+\section{virus summary?}
+
+\input{../virus/summary}

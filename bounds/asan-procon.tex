@@ -1,0 +1,18 @@
+
+\begin{frame}{AddressSanitizer versus Baggy Bounds}
+    \begin{itemize}
+    \item pros vs baggy bounds:
+        \begin{itemize}
+        \item you can actually use it (comes with GCC/Clang)
+        \item byte-level precision --- no ``padding'' on objects
+        \item detects use-after-free a lot of the time
+        \end{itemize}
+    \item cons vs baggy bounds:
+        \begin{itemize}
+        \item doesn't prevent out-of-bounds ``targetted'' accesses
+        \item requires extra space between objects
+        \item usually slower
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

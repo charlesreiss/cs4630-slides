@@ -1,0 +1,42 @@
+
+\input{../exec-encoding/myemph-lib}
+
+\begin{frame}{ELF loading: pages}
+\begin{itemize}
+    \item Linux, most other OSes manage memory/files in \textit{pages}
+        \begin{itemize}
+        \item hardware feature: virtual memory
+        \item on x86-64: typically 4096 bytes
+        \end{itemize}
+    \item changes how LOADs work:
+        \begin{itemize}
+        \item offset must be rounded to multiple of page size
+        \item size loaded rounded up to whole number of pages
+        \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=ElfLoadPg]{ELF loading: pages example}
+program header:
+\begin{Verbatim}[fontsize=\small,commandchars=\\\{\}]
+LOAD off    0x0000000 vaddr 0x00400000 paddr 0x00400000 align 2**12
+     filesz 0x0000\myemphTwo{518} memsz 0x00000518 flags r--
+LOAD off    0x0001000 vaddr 0x00401000 paddr 0x00401000 align 2**12
+     filesz 0x00\myemphThree{9352d} memsz 0x0009352d flags r-x
+LOAD off    0x0095000 vaddr 0x00495000 paddr 0x00495000 align 2**12
+     filesz 0x00\myemphThree{265e5} memsz 0x000265e5 flags r--
+LOAD off    0x00bc0c0 vaddr 0x004bd0c0 paddr 0x004bd0c0 align 2**12
+     filesz 0x000\myemphFour{6170} memsz 0x000078c0 flags rw-
+\end{Verbatim}
+\hrule
+actually loaded (via Linux \texttt{/proc/PID/maps}):
+\begin{Verbatim}[fontsize=\small,commandchars=\\\{\}]
+memory address       size        r/w? file offset
+~~~~~~~~~~~~~~~~~ (~~~~~~~~)     ~~~~ ~~~~~~~~ 
+00400000-00401000 (  \myemphTwo{0x1000})     r--p 00000000
+00401000-00495000 ( \myemphThree{0x94000})     r-xp 00001000
+00495000-004bc000 ( \myemphThree{0x27000})     r--p 00095000
+004bd000-004c0000 (  \myemphFour{0x3000})     r--p 000bc000
+004c0000-004c4000 (  \myemphFour{0x4000})     rw-p 000bf000
+\end{Verbatim}
+\end{frame}

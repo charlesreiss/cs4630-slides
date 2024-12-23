@@ -1,0 +1,34 @@
+\begin{frame}[fragile,label=practic]{static analysis practicality}
+    \begin{itemize}
+    \item good at finding some kinds of bugs
+        \begin{itemize}
+        \item array out-of-bounds probably not one --- complicated tracking needed
+        \end{itemize}
+    \item excellent for ``bug patterns'' like:
+\begin{lstlisting}
+struct Foo* foo;
+...
+foo = malloc(sizeof(struct Bar));
+\end{lstlisting}
+    \item false positive rates are often 20+\% or more
+    \item some tools assume lots of annotations
+    \item not limited to C-like languages
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{static analysis tools}
+    \begin{itemize}
+    \item Coverity, Fortify --- commerical static analysis tools
+    \item Splint --- unmaintained?
+        \begin{itemize}
+            \item written by David Evans and his research group in the late 90s/early 00s
+        \end{itemize}
+    \item FindBugs (Java)
+    \item clang-analyzer --- part of Clang compiler
+    \item Microsoft's Static Driver Verifier  --- required for Windows drivers:
+        \begin{itemize}
+            \item mostly checks correct usage of Windows APIs
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

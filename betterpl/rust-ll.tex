@@ -1,0 +1,54 @@
+\begin{frame}[fragile,label=rLL]{Rust linked list}
+    \begin{itemize}
+    \item not actually a good idea
+    \item use \verb|Box<...>| to represent object on the heap
+    \item no null, use \verb|Option<Box<...>>| to represent pointer.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=rustLL]{Rust linked list (not recommended)}
+\begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
+struct LinkedListNode {
+    value: u32,
+    next: Option<Box<LinkedListNode>>,
+}
+
+fn allocate_list() -> LinkedListNode {
+    return LinkedListNode {
+        value: 1,
+        next: Some(Box::new(LinkedListNode {
+            value: 2,
+            next: Some(Box::new(LinkedListNode {
+                value: 3,
+                next: None
+            }))
+        }))
+    }
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=rustLLNoBox1]{why the box? (1)}
+\begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+struct LinkedListNode { // ERROR
+    value: u32,
+    next: Option<LinkedListNode>,
+}
+
+// error[E0072]: recursive type `LinkedListNode` has infinite size
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=rustLLNoBox2]{why the box? (2)}
+\begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+struct LinkedListNode { // ERROR
+    value: u32,
+    next: Option<&LinkedListNode>,
+}
+// error[E0106]: missing lifetime specifier
+//  --> src/main.rs:48:18
+//    |
+// 48 |     next: Option<&LinkedListNode>,
+//    |                  ^ expected lifetime parameter
+\end{minted}
+\end{frame}

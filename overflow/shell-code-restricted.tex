@@ -1,0 +1,146 @@
+\usetikzlibrary{positioning}
+
+\begin{frame}{some logistical issues}
+    \begin{itemize}
+    \item Sure, 1000 {\tt a}'s can be read by {\tt scanf} with {\tt \%s}, but machine code?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{scanf accepted characters}
+    \begin{itemize}
+    \item {\tt \%s} --- ``Matches a sequence of non-white-space characters''
+    \item can't use:
+        \begin{itemize}
+        \item {\tt\textvisiblespace}
+        \item {\tt\textbackslash t}
+        \item {\tt\textbackslash v} (``vertical tab'')
+        \item {\tt\textbackslash r} (``carriage return'')
+        \item {\tt\textbackslash n}
+        \end{itemize}
+    \item not actually that much of a restriction
+    \item what about {\tt \textbackslash 0} --- we used a lot of those
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=virusWhyZeroes]{why did we have zeroes?}
+\begin{itemize}
+\item previous machine code:
+\end{itemize}
+{\tt 48 8d 35 {\color{red!70!black}15 00 00 00}}  (lea {\color{red!70!black}string}(\%rip), \%rsi) \\
+{\tt b8 {\color{red!70!black}01 00 00 00}} (mov \${\color{red!70!black}1}, \%eax) \\
+{\tt bf {\color{red!70!black}25 00 00 00}} (mov \${\color{red!70!black}37}, \%edi) \\
+{\tt 0f 05} (syscall) \\
+{\tt b8 {\color{red!70!black}e7 00 00 00}} (mov \${\color{red!70!black}231}, \%eax) \\ 
+{\tt 31 ff} (xor \%edi, \%edi) \\
+{\tt 0f 05} (syscall)
+\begin{itemize}
+\item problem: happened to be encoding of constants
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=virusNoZeroes]{shell code without 0s}
+\lstset{
+    language=myasm,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+}
+\begin{tikzpicture}
+\node (code) {
+\begin{lstlisting}
+shellcode:
+    ~2~jmp afterString~end~
+string:
+    .ascii "You have been..."
+afterString:
+    ~3~leaq string(%rip), %rsi~end~
+    xor %eax, %eax
+    xor %edi, %edi
+    ~2~movb $1, %al~end~
+    ~2~movb $37, %dl~end~
+    syscall
+    ~2~movb $231, %al~end~
+    xor %edi, %edi
+    syscall
+\end{lstlisting}
+};
+\begin{visibleenv}<2>
+\node[draw=red,ultra thick,right=.5cm of code,align=left]{
+    one-byte constants/offsets \\
+    so no leading zero bytes \\
+    {\tt jmp afterString} is {\tt eb 25} \\
+    \hspace{.5cm} (jump forward {\tt 0x25} bytes) \\
+    {\tt movb \$1, \%al} is {\tt b0 01}
+};
+\end{visibleenv}
+\begin{visibleenv}<3>
+\node[draw=red,ultra thick,right=.5cm of code,align=left]{
+    four-byte offset, but negative \\
+    {\tt d4 ff ff ff} (-44)
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=virusNoZeroesFull]{shell code without 0s}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont]
+0000000000000000 <shellcode>:
+   0:   eb 25                   jmp    27 <afterString>
+
+0000000000000002 <string>:
+    ...
+
+0000000000000027 <afterString>:
+  27:   48 8d 35 d4 ff ff ff    lea    -0x2c(%rip),%rsi        # 2 <string>
+  2e:   31 c0                   xor    %eax,%eax
+  30:   31 ff                   xor    %edi,%edi
+  32:   b0 01                   mov    $0x1,%al
+  34:   b2 25                   mov    $0x25,%dl
+  36:   0f 05                   syscall 
+  38:   b0 e7                   mov    $0xe7,%al
+  3a:   31 ff                   xor    %edi,%edi
+  3c:   0f 05                   syscall 
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{what about other funny characters?}
+    \begin{itemize}
+    \item suppose we can't use ASCII newlines in machine code
+    \item what if we need to move 0xA (= newline character) into a register
+    \vspace{.5cm}
+    \item cannot do \texttt{movb \$10, \%al} --- contains 0x0a byte
+    \item can do: \texttt{xor \%eax, \%eax; inc \%eax; inc \%eax, ...}
+    \vspace{.5cm}
+    \item similar patterns for lots of operations
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{x86 flexibility}
+    \begin{itemize}
+    \item x86 opcodes that are normal ASCII chars are pretty flexibile
+    \item {\tt 0}--{\tt 5}
+        \begin{itemize}
+        \item various forms of {\tt xor}
+        \end{itemize}
+    \item {\tt @}, {\tt A}--{\tt Z}, {\tt [}, {\tt \textbackslash}, {\tt ]}, {\tt \textasciicircum}, {\tt \_}
+        \begin{itemize}
+        \item {\tt inc}, {\tt dec}, {\tt push}, {\tt pop} with first eight 32-bit registers
+        \end{itemize}
+    \item {\tt h} --- push one-byte constant
+    \item {\tt p}--{\tt z} --- conditional jumps to 1-byte offset
+    \vspace{.5cm}
+    \item<2> note: can \myemph{write machine code, jump to it}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{actual limitation}
+    \begin{itemize}
+    \item overwriting with address? 
+        \begin{itemize}
+        \item probably can't make sure that's all normal ASCII chars
+        \end{itemize}
+    \item (but could leave most significant bits of existing address unchanged)
+    \end{itemize}
+\end{frame}
+
+

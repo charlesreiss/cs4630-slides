@@ -1,0 +1,18 @@
+\begin{frame}[fragile,label=whereIsJumpEx]{where is the jump?}
+\begin{Verbatim}
+0xA0000: lea 0x1234(%rip), %rax  # 0xA123b
+    (Intel syntax: LEA RAX, [RIP + 0x1234])
+0xA0007: add %rbx, %rax
+    (Intel syntax: ADD RAX, RBX)
+0xA000A: jmp *(%rax)
+    (Intel syntax: JMP [RAX])
+...
+0xA123B: 0x30000 (64-bit value)
+....
+0xB123B: 0x40000 (64-bit-value)
+...
+0xB124B: 0x50000 (64-bit value)
+\end{Verbatim}
+If \%rax initially contains 0x40, then the instruction
+executed after the jump is at address \rule{1cm}{1pt}.
+\end{frame}

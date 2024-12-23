@@ -1,0 +1,40 @@
+
+\begin{frame}[fragile,label=findMemError]{paths for memory errors}
+\begin{lstlisting}
+void foo(int a, int b) {
+  char buffer[10];
+  if (a <= 10) {
+    // added bounds-checking:
+    assert(inBounds(buffer+a+b));
+    buffer[a + b] = b;
+  }
+}
+\end{lstlisting}
+    \begin{tikzpicture}[overlay, remember picture]
+        \tikzset{
+            every node/.style={font=\scriptsize},
+            condition/.style={draw=red,thick,ellipse},
+            state/.style={draw=blue,thick,rectangle,align=center},
+        }
+        \begin{scope}[tree layout,grow=down]
+            \node[state,desired at={([xshift=-3.5cm,yshift=-2.5cm]current page.north east)}] (top) {a: $\alpha$, b: $\beta$, buffer: unset}
+                child { node[condition] { a <= 10 }
+                    child { node[state] {$\alpha\le 10$\\a: $\alpha$, b: $\beta$} edge from parent node {true}
+                        child { node[condition] { in-bounds? } 
+                            child { node[state] {$\alpha\not=0\text{; }0\le\beta+\alpha\le9$ \\ a: $\alpha$, b: $\beta$, buffer[$\alpha+\beta$]: $\beta$} edge from parent node {true}
+                            }
+                            child { node[state,ultra thick,fill=red!20] {$\alpha\le 10\text{; }\beta+\alpha > 10 \text{ or } < 0$ \\ a: $\alpha$, b: $\beta$} edge from parent node {false}
+                            }
+                        }
+                    }
+                    child { node[state] {$\alpha>10$\\a: $\alpha$, b: $\beta$} edge from parent node {false}
+                    }
+                }
+                ;
+        \end{scope}
+    \end{tikzpicture}
+    \begin{itemize}
+        \item add bounds checking assertions --- try to solve to satisfy
+    \end{itemize}
+\end{frame}
+

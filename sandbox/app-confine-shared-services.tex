@@ -1,0 +1,21 @@
+\begin{frame}{shared services?}
+    \begin{itemize}
+    \item often programs do operations by talking to ``server'' program
+        \begin{itemize}
+        \item example: GUI management on Linux (X11 or Wayland), OS X (WindowServer)
+        \item example: mixing sound from multiple applications
+        \item \ldots
+        \end{itemize}
+    \item whole extra set of calls to sanitize
+        \begin{itemize}
+        \item when to allow ``get keyboard input'' for GUI
+        \item when to allow ``get microphone input'' for sound manager
+        \item making sure one isn't manipulating wrong program's windows?
+        \end{itemize}
+    \item also, server programs might have security problems
+        \begin{itemize}
+        \item common ``sandbox escape''
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

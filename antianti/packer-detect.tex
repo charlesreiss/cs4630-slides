@@ -1,0 +1,77 @@
+
+\begin{frame}<1>[label=findingPackers]{handling packers}
+    \begin{itemize}
+    \item easiest way to decrypt self-decrypting code --- run it!
+    \item solution: \myemph<1>{virtual machine/emulator/debugger} in antivirus software
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{handling packers with debugger/emulator/VM}
+    \begin{itemize}
+    \item run program in debugger/emulator/VM for a while
+        \begin{itemize}
+        \item one heuristic: until it jumps to written data
+        \end{itemize}
+    \item example implementation: unipacker (\texttt{https://github.com/unipacker/unipacker})
+    \vspace{.5cm}
+    \item then scan memory for decrypted machine code
+    \item or obtain trace of instructions run
+    \vspace{.5cm}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{unneeded steps}
+    \begin{itemize}
+    \item understanding the ``encryption'' algorithm
+        \begin{itemize}
+        \item more complex encryption algorithm won't help
+        \end{itemize}
+    \item extracting the key and encrypted data
+        \begin{itemize}
+        \item making key less obvious won't help
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile,label=instrTraces1]{using instruction traces (1)}
+\begin{itemize}
+\item instruction traces are huge\ldots
+\end{itemize}
+\begin{lstlisting}
+0x10: add %rax, %rbx
+0x12: mov 0x140(%rbx), %rsi
+0x14: mov %rsi, 0x150(%rbx)
+0x16: jle 0x10
+0x10: add %rax, %rbx        /* duplicate of before */
+0x12: mov 0x140(%rbx), %rsi
+0x14: mov %rsi, 0x150(%rbx)
+0x16: jle 0x10
+0x18: mov $10, %rcx
+...
+\end{lstlisting}
+\begin{itemize}
+\item but can simplify: e.g. remove duplicates (loops)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=instrTraces2]{using instruction traces (2)}
+\begin{itemize}
+\item elegant way to analyze `tricky' techniques
+\item self-modifying code:
+\end{itemize}
+\begin{lstlisting}
+    0x10: add %rax, %rbx
+    0x12: mov 0x140, %rax
+    0x14: mov %rsp, 0x0C
+        /* modifies code we will execute */
+    0x16: jle 0x10
+    0x10: sub %rcx, %rdx
+    0x12: ...
+\end{lstlisting}
+\begin{itemize}
+\item multiple layers of `decrypters'/code generation
+\item \ldots
+\end{itemize}
+\end{frame}
+

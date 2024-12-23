@@ -1,0 +1,20 @@
+
+\begin{frame}{floating point calling convention}
+    \begin{itemize}
+    \item use {\tt \%xmm} registers in order
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=variadic]{note: variadic functions}
+    \begin{itemize}
+    \item variable number of arguments
+        \begin{itemize}
+        \item {\tt printf}, {\tt scanf}, \ldots
+        \item see {\tt man stdarg}
+        \end{itemize}
+    \vspace{.5cm}
+    \item same as usual 
+    \item \ldots but \lstinline|%rax| contains number of {\tt \%xmm} used
+    \end{itemize}
+\end{frame}
+

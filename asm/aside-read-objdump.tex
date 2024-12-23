@@ -1,0 +1,58 @@
+\newcommand{\varMark}[2]{\myemph<#1>{#2}}
+\newcommand{\varOnly}[2]{\only<#1>{#2}}
+
+\begin{frame}[fragile,label=disassemblyRead]{reading objdump disassembly}
+\begin{itemize}
+\item often, we'll want to work from binaries to assembly
+\item tool we'll use on Linux: \texttt{objdump}
+\item example from \textit{objdump --disassemble} of hello-wolrd program:
+\end{itemize}
+\begin{Verbatim}[fontsize=\fontsize{10}{11},commandchars=\\\{\}]
+\varMark{2}{0000000000001060 <main>}:
+    \varMark{3}{1060}:  \varMark{4}{f3 0f 1e fa}           endbr64 
+    \varMark{3}{1064}:  \varMark{4}{50}                    push   %rax
+    \varMark{3}{1065}:  \varMark{4}{48 8d 3d 98 0f 00 00}  lea    \varMark{6}{0xf98(%rip)},%rdi \varMark{6}{# 2004 <_IO_stdin_used+0x4>}
+            \varOnly{6}{\myemph{# 2004 <_IO_stdin_used+0x4>}}
+    \varMark{3}{106c}:  \varMark{4}{e8 df ff ff ff}        \varMark{5}{callq  1050 <puts@plt>}
+    \varMark{3}{1071}:  \varMark{4}{31 c0}                 xor    %eax,%eax
+    \varMark{3}{1073}:  \varMark{4}{5a}                    pop    %rdx
+    \varMark{3}{1074}:  \varMark{4}{c3}                    retq   
+\end{Verbatim}
+\begin{tikzpicture}[overlay,remember picture]
+\tikzset{
+    note/.style={
+        draw=red,very thick,fill=white,at={([yshift=-1cm]current page.north)},anchor=north,
+        align=left
+    }
+}
+\begin{visibleenv}<2>
+    \node[note] {symbol main at address 0x1060};
+\end{visibleenv}
+\begin{visibleenv}<3>
+    \node[note] {
+        first column: instruction addresses in hexadecimal \\
+        (if executable/library has fixed address, \\
+        actual addresses they'll be loaded to)
+    };
+\end{visibleenv}
+\begin{visibleenv}<4>
+    \node[note] {
+        machine code as list of byte values in hexadecimal
+    };
+\end{visibleenv}
+\begin{visibleenv}<5>
+    \node[note] {
+        \verb|callq 1050 <puts@plt>| \\
+        call to address 0x1050 \\
+        and \texttt{puts@plt} is at that address
+    };
+\end{visibleenv}
+\begin{visibleenv}<6>
+    \node[note] {
+        \verb|lea 0xf98(%rip),%rdi # 2004 <_IO_stdin_used+0x4>| \\
+        \verb|0xf98(%rip)| computes address 0x2004 \\
+        which is \texttt{0x4} bytes after \verb|_IO_stdin_used|
+    };
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}

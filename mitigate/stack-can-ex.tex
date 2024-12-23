@@ -1,0 +1,61 @@
+\usetikzlibrary{decorations.pathreplacing,decorations.pathmorphing}
+
+\begin{frame}<1>[fragile,label=reCanary]{compiler generated code}
+\lstset{
+    language=myasm,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+}
+\vspace{-.25cm}
+\begin{lstlisting}
+    pushq %rbx
+    sub $0x20,%rsp
+/* copy value from thread-local storage */
+    mov $0x28,%ebx
+    mov %fs:(%rbx),%rax
+/* onto the stack */
+    mov %rax,0x18(%rsp)
+/* clear register holding value */
+    ~2~xor %eax, %eax~end~
+    ...
+    ...
+/* copy value back from stack */
+    mov 0x18(%rsp),%rax
+/* xor to compare */
+    ~2~xor %fs:(%rbx),%rax~end~
+/* if result non-zero, do not return */
+    jne call_stack_chk_fail
+    ret
+call_stack_chk_fail:
+    call __stack_chk_fail
+\end{lstlisting}
+\begin{tikzpicture}[overlay,remember picture]
+\begin{pgfonlayer}{fg}
+    \coordinate (stack tl) at ([xshift=-4cm,yshift=-1cm]current page.north east);
+    \coordinate (stack tr) at ([xshift=-.5cm,yshift=-1cm]current page.north east);
+    \draw[very thick] (stack tl) -- ++(0, -6) coordinate (stack bl);
+    \draw[very thick] (stack tr) -- ++(0, -6) coordinate (stack br);
+    \draw[very thick,decorate,decoration={zigzag}] (stack tl) -- (stack tr);
+    \draw[very thick,decorate,decoration={zigzag}] (stack bl) -- (stack br);
+\end{pgfonlayer}
+\path[draw,thick,fill=yellow!20] (stack tl) ++(0cm, -1cm) coordinate (ra tl) rectangle ++(3.5, -.5) coordinate (ra br)
+    node [midway] {return address};
+\coordinate (ra bl) at (ra tl |- ra br);
+\path[draw,thick,fill=red!20] (ra bl) rectangle ++(3.5, -.5) coordinate (can br)
+    node [midway] {stack canary};
+\coordinate (can bl) at (ra tl |- can br);
+\path[draw,thick,fill=green!20,align=center,font=\small] (can bl) rectangle ++(3.5, -2) 
+    node [midway] {function's \\ arrays \\ and other \\ temporaries};
+\begin{pgfonlayer}{fg}
+    \begin{visibleenv}<2>
+    \node[fill=white,draw=red,very thick,anchor=east,align=center] at ([xshift=-1cm]current page.east) {
+        trying to avoid info disclosure: \\
+        get canary value out of \%rax \\
+        as soon as possible
+    };
+    \end{visibleenv}
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{frame}
+

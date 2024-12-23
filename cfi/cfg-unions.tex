@@ -1,0 +1,48 @@
+\usetikzlibrary{arrows.meta}
+
+\begin{frame}{labels aren't enough?}
+\begin{tikzpicture}
+\begin{scope}
+\tikzset{
+    every node/.style={align=left,draw,very thick,font=\tt\fontsize{11}{12}\selectfont},
+}
+\node (foo) at (0, 0){
+    foo: \\
+    ... \\
+    check for label ??? \\
+    call *p 
+};
+
+\node (bar) at (1, -5) {
+    bar: \\
+    ... \\
+    check for label ??? \\
+    call *p
+};
+
+\node (A) at (6, -2) { A: \\ label ??? };
+\node (B) at (6, -3) { B: \\ label ??? };
+\node (C) at (6, -4) { C: \\ label ??? };
+
+\begin{scope}[-Latex,thick]
+\draw (foo.south east) -- (A.west);
+\draw (foo.south east) -- (C.west);
+\draw (bar.south east) -- (B.west);
+\draw (bar.south east) -- (C.west);
+\end{scope}
+\end{scope}
+\begin{visibleenv}<2->
+\node[align=left,draw=red,ultra thick,anchor=north west] at (8, 0) {
+two possible fixes: \\
+~ \\
+make checks scan \\
+for multiple labels \\
+(more overhead) \\
+~ \\
+allow foo to call B \\
+and bar to call A \\
+(easier to attack)
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}

@@ -1,0 +1,17 @@
+
+\begin{frame}{taint tracking generally}
+    \begin{itemize}
+    \item taint tracking for other security issues is a big research area
+    \item often by implementing taint tracking for assembly
+        \begin{itemize}
+        \item much, much higher overhead than implementing for Perl or Ruby
+        \end{itemize}
+            \only<2->{\hrulefill}
+   \item<2->example: detect private information leaks
+        \begin{itemize}
+        \item taint personal information
+        \item error if tainted info goes to network
+        \end{itemize}
+    \item<2-> example: check if \myemph{return addresses} are tainted before using
+    \end{itemize}
+\end{frame}

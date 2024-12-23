@@ -1,0 +1,140 @@
+
+\begin{frame}[fragile,label=coverageSame]{coverage-guided example}
+    \lstset{language=C,style=script}
+    \begin{tikzpicture}
+        \node[anchor=north east] at (0, 0) {
+\begin{lstlisting}
+void foo(int a, int b) {
+    if (a != 0) {
+        // W
+        b -= 2;
+        a += b;
+    } else {
+        // X
+    }
+    if (b < 5) {
+        // Y
+        b += 4;
+        if (a + b > 50) {
+            // Q
+            ...
+        }
+    } else {
+        // Z
+    }
+}
+\end{lstlisting}
+};
+        \tikzset{
+            caseBox/.style={draw,thick,align=left,font=\small},
+            variantBox/.style={draw,thick,dashed,align=left,font=\fontsize{10}{11}\selectfont},
+        }
+        \node[caseBox,anchor=north west] (baseA) at (1, 0) {
+            initial test case A: \\ a = 0x17, b = 0x08; covers: WZ
+        };
+        \begin{visibleenv}<2>
+            \node[anchor=north west,font=\small] at (1, -1.25) {
+                generate random tests based on  A
+            };
+            \node[variantBox,anchor=north west] (subA) at (1, -2) {
+                a = 0x37, b = 0x08; covers: WZ \\
+                a = 0x15, b = 0x08; covers: WZ \\
+                a = 0x17, b = 0x0c; covers: WZ \\
+                a = 0x13, b = 0x08; covers: WZ \\
+                a = 0x17, b = 0x08; covers: WZ \\
+                \ldots \\
+                a = 0x17, b = 0x00; covers: \myemph<2>{WY} 
+            };
+        \end{visibleenv}
+        \begin{visibleenv}<3-4>
+            \node[caseBox,draw=red,anchor=north west] (baseB) at (1, -1.2) {
+                \myemph<3>{found } test case B: \\ a = 0x17, b = 0x00; covers: WY
+            };
+        \end{visibleenv}
+        \begin{visibleenv}<4>
+            \node[anchor=north west,font=\small] at (1, -2.5) {
+                generate random tests based on A, B
+            };
+            \node[variantBox,anchor=north west] (subA) at (1, -3.5) {
+                a = 0x37, b = 0x08; covers: WZ \\
+                a = 0x04, b = 0x00; covers: WY \\
+                a = 0x17, b = 0x01; covers: WZ \\
+                a = 0x16, b = 0x00; covers: WY \\
+                \ldots \\
+                a = 0x97, b = 0x00; covers: \myemph<4>{WYQ} \\
+                \ldots \\
+                a = 0x00, b = 0x08; covers: \myemph<4>{XY} \\
+            };
+        \end{visibleenv}
+
+    \end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}[fragile,label=coverageExBig]{coverage-guided example}
+    \lstset{language=C,style=smaller}
+    \begin{tikzpicture}
+        \node[anchor=north east] at (0, 0) {
+\begin{lstlisting}
+void foo(unsigned a,
+         unsigned b,
+         unsigned c) {
+    if (a != 0) {
+        b -= c; // W
+    }
+    if (b < 5) {
+        if (a > c) {
+            a += b; // X
+        }
+        b += 4; // Y
+    } else {
+        a += 1; // Z
+    }
+    assert(a + b != 7); 
+}
+\end{lstlisting}
+};
+        \tikzset{
+            caseBox/.style={draw,thick,align=left,font=\small},
+            variantBox/.style={draw,thick,dashed,align=left,font=\fontsize{10}{11}\selectfont},
+        }
+        \node[caseBox,anchor=north west] (baseA) at (1, 0) {
+            initial test case A: \\ a = 0x17, b = 0x08, c = 0x00; covers: WZ
+        };
+        \begin{visibleenv}<2>
+            \node[anchor=north west,font=\small] at (1, -1.25) {
+                generate random tests based on  A
+            };
+            \node[variantBox,anchor=north west] (subA) at (1, -2) {
+                a = 0x37, b = 0x08, c = 0x00; covers: WZ \\
+                a = 0x15, b = 0x08, c = 0x02; covers: WZ \\
+                a = 0x17, b = 0x0c, c = 0x00; covers: WZ \\
+                a = 0x13, b = 0x08, c = 0x40; covers: WZ \\
+                a = 0x17, b = 0x08, c = 0x10; covers: WZ \\
+                \ldots \\
+                a = 0x17, b = 0x00, c = 0x01; covers: \myemph<2>{WXY} 
+            };
+        \end{visibleenv}
+        \begin{visibleenv}<3-4>
+            \node[caseBox,draw=red,anchor=north west] (baseB) at (1, -1.2) {
+                \myemph<3>{found } test case B: \\ a = 0x17, b = 0x00, c = 0x01; covers: WXY
+            };
+        \end{visibleenv}
+        \begin{visibleenv}<4>
+            \node[anchor=north west,font=\small] at (1, -2.5) {
+                generate random tests based on A, B
+            };
+            \node[variantBox,anchor=north west] (subA) at (1, -3.5) {
+                a = 0x37, b = 0x08, c = 0x00; covers: WZ \\
+                a = 0x17, b = 0x00, c = 0x03; covers: WXY \\
+                a = 0x17, b = 0x0c, c = 0x00; covers: WZ \\
+                a = 0x37, b = 0x00, c = 0x03; covers: WXY \\
+                a = 0x17, b = 0x08, c = 0x10; covers: WZ \\
+                \ldots \\
+                a = 0x17, b = 0x00, c = 0x81; covers: \myemph<4>{WY}
+            };
+        \end{visibleenv}
+
+    \end{tikzpicture}
+\end{frame}
+

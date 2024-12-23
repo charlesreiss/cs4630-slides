@@ -1,0 +1,85 @@
+\usetikzlibrary{arrows.meta,decorations.pathmorphing,decorations.pathreplacing,patterns}
+
+\begin{frame}[fragile,label=setRetAddrDiag]{setting return address (diagram)}
+\begin{tikzpicture}
+\tikzset{
+    stack edge/.style={draw,very thick},
+    stack region/.style={},
+    stack region label/.style={font=\small},
+    mark line/.style={draw,thick,Latex-},
+    stack region hilite/.style={draw,decorate,decoration={brace},very thick},
+    measure region/.style={draw,ultra thick,Latex-Latex},
+}
+\path [stack edge] (0, -7) -- (0, 0) -- (6, 0) -- (6, -7);
+\path [stack edge,decorate,decoration=zigzag] (0, -7) -- (6, -7);
+\path [mark line,alt=<2>{red,ultra thick}] (6, 0) coordinate (init stack mark) -- ++(1, 0) node[right] (init stack label) {initial stack pointer};
+\begin{visibleenv}<2>
+    \node[anchor=north west,text=red,align=left] at ([yshift=.25cm,xshift=1cm]init stack label.south west) {
+        assumption for now: \\
+        fixed initial location
+    };
+\end{visibleenv}
+\begin{pgfonlayer}{bg}
+    \path [fill=blue!30] (0, 0) rectangle ++(6, -1) node [midway,stack region label] {main's stuff};
+    \path [fill=violet!30] (0, -1) rectangle ++(6, -1);
+    \path [fill=orange!30] (0, -2) rectangle ++(6, -1);
+    \path [fill=green!30] (0, -3) rectangle ++(6, -1);
+    \node[stack region label,rotate=40] at (3, -2.5) {other functions};
+    \path [fill=red!30] (0, -4) rectangle ++(6, -.5) coordinate (before vulnerable mark);
+        \node[anchor=west,stack region label] at (0, -4.25) {vulnerable return addr};
+    \path [fill=yellow!30] (0, -4.5) rectangle ++(6, -1);
+        \node[anchor=west,stack region label] at (0, -5) {vulnerable buffer};
+    \path [fill=magenta!30] (0, -5.5) rectangle ++(6, -0.5) coordinate (after vulnerable mark);
+        \node[anchor=west,stack region label] at (0, -5.75) {other vars in vulnerable func};
+    \path [fill=violet!30] (0, -5.9) rectangle ++(6, -0.5) node[midway,stack region label] {scanf's stuff};
+    \begin{visibleenv}<3->
+        \path[pattern=north west lines,pattern color=red,opacity=0.5]
+            (0, -3.5) rectangle (6, -5.5);
+    \end{visibleenv}
+    \begin{visibleenv}<3>
+        \path[red,stack region hilite] (6.25, -3.5) -- (6.25, -5.5)
+            node[midway,right] {written by attack (including overflow)};
+    \end{visibleenv}
+\end{pgfonlayer}
+    \begin{visibleenv}<4->
+        \path[mark line,alt=<4>{red}] (6, -5.4) coordinate (shellcode mark)-- ++(1, 0) node[right,align=left,yshift=-.35cm] {location of shellcode \\ \small (if at start of attack input)};
+    \end{visibleenv}
+    \begin{visibleenv}<5>
+        \path[measure region,red] ([xshift=.25cm]init stack mark) -- ([xshift=.25cm]shellcode mark)
+            node[midway,right,align=left] {
+                compute this distance? \\
+                could carefully read assembly of relevant functions
+            };
+    \end{visibleenv}
+    \begin{visibleenv}<6-7>
+        \path[measure region,alt=<6>{red}] ([xshift=.25cm]before vulnerable mark) -- ([xshift=.25cm]shellcode mark)
+            node[midway,right,align=left,font=\small,alt=<7>{opacity=0}] {
+                compute this distance? \\
+                read \texttt{vulernable's} assembly
+            };
+        \path[mark line] (before vulnerable mark) -- ++(1,0)
+            node[right,alt=<7>{red}] {
+                stack pointer from start of vulnerable
+            };
+    \end{visibleenv}
+    \begin{visibleenv}<7>
+        \node[anchor=north west,draw=red,very thick,font=\small] at (6.5, -.5){
+\begin{lstlisting}[language={},basicstyle=\fontsize{9}{10}\selectfont]
+(gdb) b vulnerable
+Breakpoint 1 at 0x1169
+(gdb) run
+...
+Breakpoint 1, vulnerable ()
+(gdb) info registers
+...
+rsp            0x7fffffffddc8      0x7fffffffddc8
+...
+\end{lstlisting}
+        };
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+% FIXME: slides showing 
+    % breakpoint set in main, breakpoint set in vulnerable, etc.
+    % FIXME: exercise: breakpoint set in vulnerable, shellcode at start of buffer, what address?

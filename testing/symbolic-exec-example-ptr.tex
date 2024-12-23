@@ -1,0 +1,77 @@
+\usetikzlibrary{calc,shapes}
+\usetikzlibrary{graphdrawing}
+\usetikzlibrary{graphs}
+\usegdlibrary{trees}
+\begin{frame}[fragile,label=choosePath2]{example 3}
+\lstset{language=C,style=smaller}
+\begin{lstlisting}
+unsigned a, b;
+void foo(unsigned c) {
+    int *p;
+    if (a > 100) {
+        p = &a;
+    } else {
+        p = &b;
+    }
+    *p += c;
+    assert(a + b == c);
+}
+\end{lstlisting}
+\begin{tikzpicture}[overlay,remember picture]
+    \tikzset{
+            every node/.style={font=\scriptsize},
+            condition/.style={draw=red,thick,ellipse},
+            question/.style={fill=red!20,draw=black,thick,align=left},
+            dashedQuestion/.style={fill=red!20,draw=black,dashed,thick,align=left},
+            state/.style={draw=blue,thick,rectangle,align=center},
+            invisible/.style={opacity=0,text opacity=0},
+        }
+        \begin{scope}[tree layout,grow=down]
+            \node[state,desired at={([xshift=-5cm,yshift=-1cm]current page.north east)}] (top) {a: $\alpha$, b: $\beta$, c: $\delta$, *p: (error); \\ $\alpha\ge 0$, $\beta \ge 0$\, $\delta \ge 0$ }
+                child { node[condition,] { a > 100 }
+                    child { node[state] {
+                            $\alpha > 100$; $\alpha\ge 0$, $\beta \ge 0$\, $\delta \ge 0$
+                            \\ *p: same as a, a: $\alpha$, b: $\beta$} edge from parent[] node {true}
+                        child { node[condition,] { *p += c } edge from parent[]
+                            child {
+                                node[state,] {
+                                    $\delta > 100$; $\alpha\ge 0$, $\beta \ge 0$\, $\delta \ge 0$
+                                    \\ *p: same as a, a: $\alpha+\delta$, b: $\beta$
+                                } edge from parent[] node {}
+                                child {
+                                    node[question,] {
+                                        $\alpha > 100$;
+                                        $\alpha+\delta+\beta=\delta$ \\
+                                        \hrulefill \\
+                                        \text{cannot} happen
+                                    } edge from parent[]
+                                }
+                            }
+                        }
+                    }
+                    child { node[state,] {
+                            $\alpha \le 100$; $\alpha\ge 0$, $\beta \ge 0$\, $\delta \ge 0$ 
+                            \\ *p: same as b, a: $\alpha+\delta$, b: $\beta$
+                        } edge from parent[] node {false}
+                        child { node[condition,] { *p += c } 
+                            edge from parent[]
+                            child { node[state,] {
+                                    $\alpha \le 100$; $\alpha\ge 0$, $\beta \ge 0$\, $\delta \ge 0$
+                                    \\ *p: same as a, a: $\alpha$, b: $\beta+\delta$
+                                } edge from parent[] node {}
+                                child { node[,question] {
+                                    $\alpha \le 100$; $\alpha\ge 0$, $\beta \ge 0$\, $\delta \ge 0$; \\
+                                    $\alpha+\delta+\beta=\delta$ \\
+                                    \hrulefill \\
+                                    (\alpha,\beta)=0 \\
+                                    \delta{} is anything less than 100
+                                    } edge from parent[] }
+                            }
+                        }
+                    }
+                }
+                ;
+        \end{scope}
+\end{tikzpicture}
+\end{frame}
+

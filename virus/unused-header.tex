@@ -1,0 +1,36 @@
+\begin{frame}{unused header space}
+    \begin{itemize}
+    \item often executable metadata has empty space
+    \vspace{.5cm}
+    \item debugging info and info not strictly needed to run program
+    \item \myemph<2>{linker allocated space for $N$ fields, used less}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[label=spaceDyn,fragile]{dynamic linking cavity}
+\begin{itemize}
+\item Linux example from my desktop
+\item {\tt .dynamic} section --- data structure used by dynamic linker:
+\item format: list of 8-byte type, 8-byte value
+    \begin{itemize}
+    \item terminated by type == 0 entry
+    \end{itemize}
+\end{itemize}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont,commandchars=Q\{\}]
+Contents of section .dynamic:
+ 600e28 01000000 00000000 01000000 00000000  ................
+    Qtextit{... several non-empty entries ...}
+ 600f88 f0ffff6f 00000000 56034000 00000000  ...o....V.@.....
+    Qtextit{VERSYM (required library version info at) 0x400356}
+ 600f98 Qtextit{00000000 00000000 00000000 00000000}  ................
+    Qtextit{NULL --- end of linker info}
+ 600fa8 Qtextbf{00000000 00000000 00000000 00000000}  ................
+    Qtextit{unused! (and below)}
+ 600fb8 Qtextbf{00000000 00000000 00000000 00000000}  ................
+ 600fc8 Qtextbf{00000000 00000000 00000000 00000000}  ................
+ 600fd8 Qtextbf{00000000 00000000 00000000 00000000}  ................
+ 600fe8 Qtextbf{00000000 00000000 00000000 00000000}  ................
+\end{Verbatim}
+\end{frame}
+
+

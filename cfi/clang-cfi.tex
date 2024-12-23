@@ -1,0 +1,76 @@
+\begin{frame}{clang's CFI implementation}
+\begin{itemize}
+\item \url{https://clang.llvm.org/docs/ControlFlowIntegrity.html}
+    \begin{itemize}
+    \item \scriptsize also \url{https://www.usenix.org/conference/usenixsecurity14/technical-sessions/presentation/tice}
+    \end{itemize}
+\item only checks calls via VTables or function pointers
+\item stable implementation requires libraries compiled with support
+\item label information is placed in separate data structure
+    \begin{itemize}
+    \item \myemph<2>{looked up using function} or VTable addresses
+    \end{itemize}
+\item trick: keep functions in one region of memory
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=indirectDiag]{clang idea for CFI indirect calls}
+\begin{tikzpicture}
+\node[draw, very thick, align=left] (dispatcher) {
+\begin{lstlisting}[language=myasm,style=smaller]
+start_funcs_with_two_string_args:
+.align 8
+compare_alpha:
+  jmp real_compare_alpha
+.align 8
+run_command_with_arg:
+  jmp real_run_command_with_arg
+.align 8
+print_two_strings:
+  jmp real_print_two_strings
+.align 8
+move_file:
+  jmp real_move_file
+.align 8
+compare_reverse_alpha:
+  jmp real_compare_reverse_alpha
+end_funcs_with_two_sting_args:
+\end{lstlisting}
+};
+\begin{visibleenv}<1>
+\node[align=left,draw=red,very thick,anchor=north west] at ([xshift=1cm]dispatcher.north east) {
+functions of same type \\
+placed together \\
+~ \\
+every func's address \\
+is multiple of 8
+};
+\end{visibleenv}
+\begin{visibleenv}<2>
+\node[align=left,draw=red,very thick,anchor=north west] at ([xshift=0.5cm]dispatcher.north east) {
+check pseudocode: \\
+round fptr to multiple of 8 \\
+\textbf{if} fptr < start or fptr > end: \\
+\hspace{1cm} CRASH \\
+allowed $\leftarrow$ [1,0,0,0,1] \\
+\hspace{0.5cm} \textit{`mask' for compare funcs} \\
+offset $\leftarrow$ fptr - start \\
+\textbf{if} bit (offset/8) of allowed \\
+\hspace{2.5cm}is not set: \\
+\hspace{1cm} CRASH
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{clang idea for VTables}
+\begin{itemize}
+\item check VTable element address instead of function address
+\item otherwise
+    \begin{itemize}
+    \item place all VTables for related classes together
+    \item check start/end address for VTables
+    \item bit mask indicating which VTable entries are okay for call
+    \end{itemize}
+\end{itemize}
+\end{frame}

@@ -1,0 +1,43 @@
+\begin{frame}[fragile,label=checkVTableRet1]{checking a VTable return}
+\begin{tikzpicture}
+\node[very thick,anchor=north west,align=left] (base asm code) {
+\begin{lstlisting}[
+    language=myasm,style=smaller,
+    moredelim={**[is][\btHL<1->]{~1~}{~end~}},
+]
+example:
+  movq (%rdi), %rax
+  movq (%rax), %rax
+  cmpq $0xe0c5df0b, 2(%rax)
+  jne CRASH
+  call *%rax
+  ~1~label $0x64a0cfe3~end~
+  ret
+\end{lstlisting}
+};
+\node[very thick,anchor=north east,align=left] (base method code) at ([xshift=.5cm]base asm code.north west) {
+\begin{lstlisting}[language=myasm,style=smaller,
+    moredelim={**[is][\btHL<1->]{~1~}{~end~}},
+]
+A::bar():
+  label $0xe0c5df0b
+  ...
+  ~1~pop %rdx~end~ // RDX <- return address
+  ~1~cmp $0x64a0cfe3, 2(%rdx)~end~
+  jne CRASH
+  jmp *%rdx
+B::bar():
+  label $0xe0c5df0b
+  ...
+  ~1~pop %rdx~end~ // RDX <- return address
+  ~1~cmp $0x64a0cfe3, 2(%rdx)~end~
+  jne CRASH
+  jmp *%rdx
+\end{lstlisting}
+};
+\node[draw=red,very thick,anchor=north west,align=left] at ([yshift=-.5cm]base method code.south west) {
+if we want to use this label-checking on the return \\
+need to choose the same label for A::bar and B::bar return, too
+};
+\end{tikzpicture}
+\end{frame}

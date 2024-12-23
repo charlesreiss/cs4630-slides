@@ -1,0 +1,20 @@
+
+\begin{frame}{research example (2009)}
+    \includegraphics[width=\textwidth]{../bounds/baggy-bounds-title}
+\end{frame}
+
+\begin{frame}[fragile,label=lookupTable]{baggy bounds checking idea}
+    \begin{itemize}
+        \item giant lookup table --- one entry for every 16 bytes of memory
+        \item table indicates start of object allocated here
+        \item check pointer arithmetic:
+    \end{itemize}
+\begin{lstlisting}
+char p = str[i];
+/* becomes: */
+CHECK(START_OF[str / 16] == START_OF[&str[i] / 16]);
+char p = str[i];
+\end{lstlisting}
+\end{frame}
+
+

@@ -1,0 +1,52 @@
+- title: "noncontig overflow?"
+  questions:
+  - text: "set scores to what addresses?"
+    single: true
+    options:
+    - "#8 to 0x9, #9 to 0x12345678"
+    - "#9 to 0x9, #8 to 0x12345678"
+    - "#8 to 0x23456789, #9 to 0x1"
+    - "#9 to 0x23456789, #8 to 0x1"
+    - "#8 to 0x89, #9 to 0x56"
+    - "#9 to 0x89, #8 to 0x56"
+    - "#8 to 0x89, #9 to 0x56, #10 to 0x34, #11 to 0x12"
+    - "#11 to 0x89, #10 to 0x56, #9 to 0x34, #8 to 0x12"
+    - "something else"
+- title: "useful for stack pointer?"
+  questions:
+  - text: "If using uninitialized p as a pointer to a struct point, what 'accidental' value is most useful for figuring out the address of the stack pointer?"
+    single: true
+    options:
+    - "A. p is an invalid pointer and accessing it will crash the program"
+    - "B. p points to space on the stack that is currently unallocated, but last contained an input buffer"
+    - "C. p points to a struct allocated on the heap"
+    - "D. p points to space on the stack that currently holds a return address"
+- title: "vtable overwrite"
+  questions:
+  - text: "buffer[0]"
+    single: true
+    options:
+    - "A. shellcode"
+    - "B. address of buffer[0]"
+    - "C. address of buffer[50]"
+    - "D. address of original vtable"
+    - "E. address of objArray[0]'s vtable"
+    - "F. address of objArray[1]'s vtable pointer"
+  - text: "buffer[50]"
+    single: true
+    options:
+    - "A. shellcode"
+    - "B. address of buffer[0]"
+    - "C. address of buffer[50]"
+    - "D. address of original vtable"
+    - "E. address of objArray[0]'s vtable"
+    - "F. address of objArray[1]'s vtable pointer"
+  - text: "(overwritten by overflow) array[1]'s vtable pointer"
+    single: true
+    options:
+    - "A. shellcode"
+    - "B. address of buffer[0]"
+    - "C. address of buffer[50]"
+    - "D. address of original vtable"
+    - "E. address of objArray[0]'s vtable"
+    - "F. address of objArray[1]'s vtable pointer"

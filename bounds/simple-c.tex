@@ -1,0 +1,30 @@
+\begin{frame}{bounds-checking C}
+    \begin{itemize}
+    \item there have been many proposals to add bounds-checking to C
+    \item including implementations
+    \item brainstorm: \myemph{why hasn't this happened?}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=addBounds]{easy bounds-checking}
+    \lstset{language=C,style=smaller}
+\begin{lstlisting}
+void vulnerable() {
+    char buffer[100];
+    int c;
+    int i = 0;
+    while ((c = getchar()) != EOF && c != '\n') {
+        buffer[i] = c;
+    }
+}
+void vulnerable_checked() {
+    char buffer[100];
+    int c;
+    int i = 0;
+    while ((c = getchar()) != EOF && c != '\n') {
+        FAIL_IF(i >= 100 || i < 0);
+        buffer[i] = c;
+    }
+}
+\end{lstlisting}
+\end{frame}

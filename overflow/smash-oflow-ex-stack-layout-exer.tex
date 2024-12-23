@@ -1,0 +1,19 @@
+\begin{frame}[fragile,label=smashExStackLayoutExer]{exercise: stack layout}
+\lstset{language=myasm,style=small}
+\begin{lstlisting}
+vulnerable:
+ subq	$120, %rsp  /* allocate 120 bytes on stack */
+ movq	%rsp, %rsi  /* scanf arg 1 = rsp = buffer */
+ movl	$.LC0, %edi /* scanf arg 2 = "%s" */
+ xorl    %eax, %eax  /* eax = 0 (see calling convention) */
+ call	__isoc99_scanf  /* call to scanf() */
+ movq	%rsp, %rdi  /* arg 1 = buffer = rsp */
+ call	do_something_with /* do_something(buffer)
+ addq	$120, %rsp  /* deallocate 120 bytes from stack */
+ ret
+\end{lstlisting}
+\begin{itemize}
+\item when scanf is running, distance from buffer[0] to scanf's return address?
+\item when scanf is running, distance from buffer[0] to vulnerable's return address?
+\end{itemize}
+\end{frame}

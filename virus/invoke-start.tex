@@ -1,0 +1,16 @@
+
+\begin{frame}[fragile,label=invokeStarting]{starting locations}
+\begin{Verbatim}[fontsize=\fontsize{10}{11}\selectfont,commandchars=Q\{\}]
+/bin/ls:     file format elf64-x86-64
+/bin/ls
+architecture: i386:x86-64, flags 0x00000112:
+EXEC_P, HAS_SYMS, D_PAGED
+start address Qmyemph{0x00000000004049a0}
+\end{Verbatim}
+    \begin{itemize}
+    \item modern executable formats have `starting address' field
+    \item just change it, insert jump to old address after virus code
+    \end{itemize}
+\end{frame}
+
+

@@ -1,0 +1,22 @@
+
+\begin{frame}{linking}
+    \begin{tikzpicture}
+    \node[draw,font=\tt,very thick] (theCall) {callq printf};
+    \node[draw,font=\tt,below=5cm of theCall,very thick] (theCallResolved) {callq 0x458F0};
+    \draw[very thick,-Latex] (theCall) -- (theCallResolved);
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{static v. dynamic linking}
+    \begin{itemize}
+    \item static linking --- linking \myemph{to create executable}
+    \item dynamic linking --- linking \myemph{when executable is run}
+    \vspace{.5cm}
+    \item<2> conceptually: no difference in how they work
+    \item<2> reality --- very different mechanisms
+        \begin{itemize}
+        \item extra indirection to avoid modifying much code at runtime
+        \item change \textit{lookup table} instead of code for library locations
+        \end{itemize}
+    \end{itemize}
+\end{frame}

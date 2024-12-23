@@ -1,0 +1,13 @@
+
+\begin{frame}<1>[label=makeAttack]{constructing the attack}
+\begin{itemize}
+\item \myemph<2>{write ``shellcode'' --- machine code to execute}
+    \begin{itemize}
+    \item often called ``shellcode'' because often intended to get login shell
+    \item (when in a remote application)
+    \end{itemize}
+\item \myemph<3>{identify memory address of shellcode in buffer}
+\item \myemph<4>{insert overwritten return address value}
+\end{itemize}
+\end{frame}
+

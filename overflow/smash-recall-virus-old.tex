@@ -1,0 +1,42 @@
+
+\begin{frame}[fragile,label=virusCodeRecall]{recall: virus code}
+\lstset{
+    language=myasm,
+    style=small,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+}
+\begin{tikzpicture}
+\node (code) {
+\begin{lstlisting}
+    ~2~leal string(%rip), %edi~end~
+    ~3~pushq $0x4004e0~end~ /* address of puts */
+    retq
+string: 
+    .asciz "You have been infected with a virus!"
+\end{lstlisting}
+};
+\node[anchor=north west,align=left,font=\tt] (bits) at (code.south west) {
+\only<2->{{\color{blue!70!black}8d} {\color{green!70!black}3d} {\color{violet}06 00 00 00} (leal)} \\
+\only<3->{{\color{blue!70!black}68} {\color{violet}e0 04 40 00} (pushq)} \\
+\only<4->{{\color{blue!70!black}c3} (retq)} 
+
+};
+\coordinate (codeExplain) at (bits.north east);
+\begin{visibleenv}<2>
+\node[right=0cm of code,draw=red,ultra thick,align=left,font=\small,anchor=north west] at (codeExplain) {
+    {\color{blue!70!black} opcode for lea} \\
+    {\color{green!70!black} ModRM byte}: \\
+    \hspace{.5cm}32-bit displacement; {\tt \%rdi} \\
+    {\color{violet}32-bit offset from instruction} 
+};
+\end{visibleenv}
+\begin{visibleenv}<3>
+\node[right=0cm of code,draw=red,ultra thick,align=left,font=\small,anchor=north west] at (codeExplain) {
+    {\color{blue!70!black} opcode for push 32-bit constant} \\
+    {\color{violet}32-bit \myemph{constant} (extended to 64-bits)}
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+

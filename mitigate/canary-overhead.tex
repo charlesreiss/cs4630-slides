@@ -1,0 +1,21 @@
+
+\begin{frame}{stack canary overheads}
+    \begin{itemize}
+    \item less than 1\% runtime if added to ``risky'' functions
+        \begin{itemize}
+        \item functions with character arrays, etc.
+        \end{itemize}
+    \item large overhead if added to all functions
+        \begin{itemize}
+        \item StackGuard paper: 5--20\%?
+        \end{itemize}
+    \item similar space overheads
+    \vspace{.5cm}
+    \item (for typical applications)
+        \begin{itemize}
+        \item could be much worse: tons of `risky' function calls
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+

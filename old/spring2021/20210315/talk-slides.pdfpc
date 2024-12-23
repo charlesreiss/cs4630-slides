@@ -1,0 +1,6 @@
+[notes]
+### 2
+dynamic linking
+quiz explain: ASLR
+### 10
+problem: might not use vtable

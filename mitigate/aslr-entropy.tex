@@ -1,0 +1,145 @@
+\usetikzlibrary{calc,positioning,patterns,shapes.callouts}
+
+\begin{frame}{Linux stack randomization (x86-64)}
+\begin{itemize}
+    \item 1. choose random number between \texttt{0} and \tikzmark{range}\myemph<2>{\texttt{0x3F FFFF}}
+    \item 2. stack starts at \texttt{0x7FFF FFFF FFFF} - \textit{random number} $\times$ \texttt{0x1000}
+        \begin{itemize}
+        \item randomization disabled? \textit{random number} $= 0$
+        \end{itemize}
+\end{itemize}
+\begin{tikzpicture}[overlay,remember picture]
+\node[my callout=range] at ([yshift=-1cm]current page.center) {
+    16 GB range!
+};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}<1>[fragile,label=aslr64]{program memory (x86-64 Linux; ASLR)}
+\begin{tikzpicture}[remember picture]
+\tikzset{
+    mylabel/.style={font=\ttfamily,align=center,append after command={([xshift=.1cm]\tikzlastnode.west) edge[ultra thick] ++(-.2cm,0cm)}},
+    mybox/.style={draw,rectangle,minimum width=7cm,fill=white},
+    myhigh/.style={draw,rectangle,line width=1mm, draw=blue!80!black,opacity=.3},
+}
+\node[mybox,minimum height=.5cm,inner ysep=0mm,pattern=north west lines,pattern color=black!50!white] (kernel) {Used by OS};
+\begin{pgfonlayer}{bg}
+    \node[right=1mm of kernel.north east,mylabel] (topLabel) {0xFFFF FFFF FFFF FFFF};
+    \node[right=1mm of kernel.south east,mylabel] {0xFFFF 8000 0000 0000};
+\end{pgfonlayer}
+\node[mybox, minimum height=.5cm, below=.45cm of kernel] (stack) {Stack};
+\begin{pgfonlayer}{bg}
+    \node[right=1mm of stack.north east,mylabel] {\myemph<1>{$\pm$ 0x004 0000 0000}};
+\end{pgfonlayer}
+\node[mybox, minimum height=.5cm, below=0.5cm of stack] (heapB) {Dynamic/Non-fixed exe/Libraries (mmap)};
+\begin{pgfonlayer}{bg}
+    \node[right=1mm of heapB.north east,mylabel] (heapBLabel) {\myemph<1>{$\pm$ 0x100 0000 0000}};
+    \node[below=0mm of heapBLabel,font=\small,inner sep=0mm] {(filled from top with ASLR)};
+\end{pgfonlayer}
+%\begin{pgfonlayer}{bg}
+%    \node[right=1mm of heapB.south east,mylabel] (heapBLabel) {0x0000 2baa aaaa b000 \\ $\pm$ 0x100 0000 0000\*};
+%\end{pgfonlayer}
+\node[mybox, minimum height=.5cm, below=0.5cm of heapB] (heap) {Heap (brk/sbrk)};
+\begin{pgfonlayer}{bg}
+\node[right=1mm of heap.south east,mylabel] (heapBLabel) {\myemph<1>{$\pm$ 0x200 0000}};
+\end{pgfonlayer}
+\node[mybox, minimum height=.5cm, below=0.2mm of heap] (data) {Writable data if fixed exe addresses};
+\begin{pgfonlayer}{bg}
+\node[right=1mm of data.south east,mylabel] (bottomLabel) {\myemph<2-3>{0x0000 0000 0060 0000}*};
+\node[below=0mm of bottomLabel,font=\small,inner sep=0mm] {(constants + 2MB alignment)};
+\end{pgfonlayer}
+\node[mybox, minimum height=.5cm, below=0.6cm of data] (sdata) {Code + Constants if fixed exe addresses};
+\begin{pgfonlayer}{bg}
+\node[right=1mm of sdata.south east,mylabel] (sbottomLabel) {\myemph<2-3>{0x0000 0000 0040 0000}};
+\end{pgfonlayer}
+\coordinate (memBottom) at ($(sdata.south east) + (0mm, -2mm)$);
+\begin{pgfonlayer}{bg}
+\draw[pattern=north west lines, pattern color=black!40!white] (kernel.north west) rectangle (memBottom);
+\end{pgfonlayer}
+
+\begin{visibleenv}<3>
+    \begin{scope}[overlay]
+    \node[draw=red,ultra thick,fill=white,anchor=center,
+          inner sep=.5cm,font=\Large] at (current page.center) {
+        why are these addresses fixed?
+    }; 
+    \end{scope}
+\end{visibleenv}
+
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{program memory (x86-32 Linux; ASLR)}
+\begin{tikzpicture}
+\tikzset{
+    mylabel/.style={font=\ttfamily,align=center,append after command={([xshift=.1cm]\tikzlastnode.west) edge[ultra thick] ++(-.2cm,0cm)}},
+    mybox/.style={draw,rectangle,minimum width=7cm,fill=white},
+    myhigh/.style={draw,rectangle,line width=1mm, draw=blue!80!black,opacity=.3},
+}
+\node[mybox,minimum height=.5cm,inner ysep=0mm,pattern=north west lines,pattern color=black!50!white] (kernel) {Used by OS};
+\begin{pgfonlayer}{bg}
+    \node[right=1mm of kernel.north east,mylabel] (topLabel) {0xFFFF FFFF};
+    \node[right=1mm of kernel.south east,mylabel] {0xC000 0000};
+\end{pgfonlayer}
+\node[mybox, minimum height=.5cm, below=.5cm of kernel] (stack) {Stack};
+\begin{pgfonlayer}{bg}
+    \node[right=1mm of stack.north east,mylabel] {\myemph{$\pm$ 0x080 0000} (default)};
+\end{pgfonlayer}
+\node[mybox, minimum height=.5cm, below=0.5cm of stack] (heapB) {Dynamic/Libraries (mmap)};
+\begin{pgfonlayer}{bg}
+    \node[right=1mm of heapB.north east,mylabel] (heapBLabel) {\myemph{$\pm$ 0x008 0000} (default)};
+\end{pgfonlayer}
+%\begin{pgfonlayer}{bg}
+%    \node[right=1mm of heapB.south east,mylabel] (heapBLabel) {0x0000 2baa aaaa b000 \\ $\pm$ 0x100 0000 0000\*};
+%\end{pgfonlayer}
+\node[mybox, minimum height=.5cm, below=0.5cm of heapB] (heap) {Heap (brk/sbrk)};
+\begin{pgfonlayer}{bg}
+\node[right=1mm of heap.south east,mylabel] (heapBLabel) {\myemph{$\pm$ 0x200 0000}};
+\end{pgfonlayer}
+\node[mybox, minimum height=.5cm, below=0.2mm of heap] (data) {Writable data};
+\begin{pgfonlayer}{bg}
+%\node[right=1mm of data.south east,mylabel] (bottomLabel) {0x0804 0000};
+\end{pgfonlayer}
+\node[mybox, minimum height=.5cm, below=0.6cm of data] (sdata) {Code + Constants if fixed exe addresses};
+\begin{pgfonlayer}{bg}
+\node[right=1mm of sdata.south east,mylabel] (bottomLabel) {0x0804 8000};
+\end{pgfonlayer}
+\coordinate (memBottom) at ($(sdata.south east) + (0mm, -2mm)$);
+\begin{pgfonlayer}{bg}
+\draw[pattern=north west lines, pattern color=black!40!white] (kernel.north west) rectangle (memBottom);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{how much guessing?}
+    \begin{itemize}
+    \item gaps change by multiples of page (4K)
+        \begin{itemize}
+        \item lower 12 bits are \myemph{fixed}
+        \end{itemize}
+    \item 64-bit: \myemph{huge} ranges --- need millions of guesses
+        \begin{itemize}
+        \item about \myemph{30 randomized bits} in addresses
+        \end{itemize}
+    \item 32-bit: \myemph{smaller} ranges --- hundreds of guesses
+        \begin{itemize}
+        \item only about \myemph{8 randomized bits} in addresses
+        \item why? only 4 GB to work with!
+        \item can be configured higher --- but larger gaps
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{why do we get multiple guesses?}
+    \begin{itemize}
+    \item why do we get multiple guesses?
+    \vspace{.5cm}
+    \item wrong guess might not crash
+    \item wrong guess might not crash whole application
+        \begin{itemize}
+        \item e.g. server that uses multiple processes
+        \end{itemize}
+    \item local programs we can repeatedly run
+    \item servers that are automatically restarted
+    \end{itemize}
+\end{frame}

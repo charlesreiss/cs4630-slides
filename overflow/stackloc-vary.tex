@@ -1,0 +1,31 @@
+
+\begin{frame}[fragile,label=stackLoc3a]{stack location? (take 2a)}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont]
+$ ./stackloc.exe 
+0x7fffffffde2c
+$ gdb ./stackloc.exe
+...
+(gdb) run
+Starting program: .../stackloc.exe 
+0x7fffffffdd9c
+[Inferior 1 (process 833005) exited normally]
+\end{Verbatim}
+\end{frame}
+
+
+\begin{frame}[fragile,label=stackLoc3b]{stack location? (take 2b)}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont]
+$ ./stackloc.exe 
+0x7fffffffde2c
+$ ./stackloc.exe 
+0x7fffffffde2c
+$ ./stackloc.exe test
+0x7fffffffde1c
+$ ./stackloc.exe test
+0x7fffffffde1c
+$ $(pwd)/stackloc.exe
+0x7fffffffdd8c
+$ $(pwd)/stackloc.exe
+0x7fffffffdd8c
+\end{Verbatim}
+\end{frame}

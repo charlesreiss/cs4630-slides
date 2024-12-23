@@ -1,0 +1,15 @@
+\begin{frame}{static analysis}
+    \begin{itemize}
+    \item need to avoid exploring way too many paths
+        \begin{itemize}
+        \item clang-analyzer: only a procedure at a time
+        \item other analyzers: some way of pruning paths
+        \end{itemize}
+    \item need to avoid false positives
+        \begin{itemize}
+        \item probably can't always assume every if can be true/false
+        \item one idea: apply symbolic-execution like techniques to prune
+        \item clang-analyzer: limited by being procedure-at-a-time
+        \end{itemize}
+    \end{itemize}
+\end{frame}

@@ -1,0 +1,83 @@
+- title: "baggy bounds within object"
+  questions:
+  - text: "what are the bounds for p?"
+    single: true
+    options:
+    - "at least from array_of_foos[4].buffer[0] to array_of_foos[4].buffer[1023]"
+    - "at least from array_of_foos[4].buffer[0] to array_of_foos[4].pointer"
+    - "at least from array_of_foos[0].buffer[0] to array_of_foos[1023].pointer"
+    - "something else"
+- title: "shadow stacks stop..."
+  questions:
+  - text: "which of these do shadow stack stop?"
+    multiple: true
+    options:
+    - "A. using format string exploit to point stack return address to the `system' function"
+    - "B. using format string exploit to point VTable to the `system' function"
+    - "C. using an unchecked string copy that goes over the end of a stack buffer into the return address and pointing the return address to the `system' function"
+    - "D. using a buffer overflow that overwrites a saved stack pointer value to cause return to use a different address"
+    - "E. using pointer subterfuge to overwrite the GOT entry for `printf' to point to the `system' function"
+- title: "which prevents/detects [bounds]"
+  questions:
+  - text: "1. prevents call to assembly code that goes beyond buffer?"
+    multiple: true
+    options:
+    - "A. fat pointers approach"
+    - "B. Baggy Bounds checking"
+    - "C. AddressSanitizer"
+    - "D. Valgrind Memcheck"
+  - text: "2a. detects allowing attacker to insert 150 bytes in 100 byte buffer on heap?"
+    multiple: true
+    options:
+    - "A. fat pointers approach"
+    - "B. Baggy Bounds checking"
+    - "C. AddressSanitizer"
+    - "D. Valgrind Memcheck"
+  - text: "2b. prevents allowing attacker to insert 150 bytes in 100 byte buffer on heap?"
+    multiple: true
+    options:
+    - "A. fat pointers approach"
+    - "B. Baggy Bounds checking"
+    - "C. AddressSanitizer"
+    - "D. Valgrind Memcheck"
+  - text: "3a. detects attacker to insert 120 bytes in 100 byte buffer on stack?"
+    multiple: true
+    options:
+    - "A. fat pointers approach"
+    - "B. Baggy Bounds checking"
+    - "C. AddressSanitizer"
+    - "D. Valgrind Memcheck"
+  - text: "3b. prevents attacker to insert 120 bytes in 100 byte buffer on stack?"
+    multiple: true
+    options:
+    - "A. fat pointers approach"
+    - "B. Baggy Bounds checking"
+    - "C. AddressSanitizer"
+    - "D. Valgrind Memcheck"
+  - text: "4. prevents attecker exploiting code that does array[attacker\_index] to overwrite something outside heap array?"
+    multiple: true
+    options:
+    - "A. fat pointers approach"
+    - "B. Baggy Bounds checking"
+    - "C. AddressSanitizer"
+    - "D. Valgrind Memcheck"
+- title: "equation to solve?"
+  questions:
+  - text: "equation set to solve (given x initially X, y intiially) for assertion to be false?"
+    single: true
+    options:
+    - "X + Y + 1 >= Y"
+    - "X > Y and X - Y + Y + 1 >= Y"
+    - "X <= Y and X - Y + Y + 1 >=  Y"
+    - "X - Y > Y and X + Y + 1 >= Y"
+    - "something else"
+- title: "counter example"
+  questions:
+  - text: "X, Y (initial value) trigger assertion to be false"
+    single: true
+    options:
+    - "X = 0, Y = anyting"
+    - "X = UINT_MAX, Y = anything"
+    - "X = anything, Y = UINT_MAX"
+    - "something else"
+

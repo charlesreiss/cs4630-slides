@@ -1,0 +1,20 @@
+\begin{frame}[fragile,label=checkIndirectSortIntro]{calls through function pointers}
+\begin{lstlisting}[language=C++,style=small]
+typedef int (*CompareFnType)(const char*, const char*)
+void SortFunction(const char **items, CompareFnType compare) {
+    ...
+    (*compare)(a, b);
+    ...
+}
+\end{lstlisting}
+\begin{itemize}
+\item here: call through explicitly passed function pointer
+\item want to do the same thing we did for VTable calls
+    \begin{itemize}
+    \item all the compare functions have the same label
+    \item all the returns form compare functions have the same label
+    \end{itemize}
+\vspace{.5cm}
+\item yes, \myemph<2->{if we can somehow label all the compare functions}
+\end{itemize}
+\end{frame}

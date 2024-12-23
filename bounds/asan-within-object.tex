@@ -1,0 +1,52 @@
+\usetikzlibrary{arrows.meta,patterns,shapes.misc}
+\tikzset{
+    stackBox/.style={very thick},
+    allocBox/.style={dashed,very thick,fill=blue!20},
+    on stack/.style={thick},
+    frameOne/.style={fill=blue!15},
+    frameTwo/.style={fill=red!15},
+    markLine/.style={blue!50!black},
+    markLineB/.style={red!90!black},
+    hiLine/.style={red!90!black},
+}
+
+\begin{frame}[fragile,label=changeObjLayout]{changing object layout?}
+\begin{lstlisting}
+struct string_list {
+    char data[100];
+    struct string_list *prev;
+    struct string_list *next;
+};
+\end{lstlisting}
+\begin{tikzpicture}[overlay,remember picture]
+\node[anchor=south] at (2.5, 0) {actual layout};
+\begin{scope}[shift={(0,0)}]
+\draw[on stack] (0, 0) rectangle ++(5, -.5)
+    node[midway] {prev};
+\draw[on stack] (0, -.5) rectangle ++(5, -.5)
+    node[midway] {next};
+\draw[on stack] (0, -1) rectangle ++(5, -2)
+    node[midway] {data};
+\draw[thick,-Latex] (5.25, -3) --++ (0, 1);
+\end{scope}
+\node[anchor=south] at (9.5, 0) {layout wanted for error-finding};
+\begin{scope}[shift={(7,0)}]
+\draw[on stack] (0, 0) rectangle ++(5, -.5)
+    node[midway] {prev};
+\draw[on stack] (0, -.5) rectangle ++(5, -.5)
+    node[midway] {next};
+\draw[on stack,pattern=north west lines, pattern color=red] (0, -1) rectangle ++(5, -1)
+    node[midway] {``red zone''};
+\draw[on stack] (0, -2) rectangle ++(5, -2)
+    node[midway] {data};
+\draw[thick,-Latex] (5.25, -4) --++ (0, 1);
+\end{scope}
+\begin{visibleenv}<2->
+\node[ultra thick,draw,red,cross out,minimum width=5cm,minimum height=4cm] at (9.5, -2) {};
+\node[rotate=15,draw,thick,fill=red!10,font=\small,align=center] at (9.5, -3) {
+    would break calls to libraries \\
+    (unless library also rebuilt)
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}

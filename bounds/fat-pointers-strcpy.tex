@@ -1,0 +1,24 @@
+\begin{frame}[fragile,label=wrappedPtrStrcpy]{adding bounds checking --- strcpy}
+\lstset{
+    language=C,
+    style=small
+}
+\begin{lstlisting}
+MyPtr strcpy(MyPtr dest, const MyPtr src) {
+    int i;
+    do {
+        CHECK(src.pointer + i <= src.maximum);
+        CHECK(src.pointer + i >= src.minimum);
+        CHECK(dest.pointer + i <= dest.maximum);
+        CHECK(dest.pointer + i >= dest.minimum);
+        dest.pointer[i] = src.pointer[i];
+        i += 1;
+        CHECK(src.pointer + i <= src.maximum);
+        CHECK(src.pointer + i >= src.minimum);
+    } while (src.pointer[i] != '\0');
+    return dest;
+}
+\end{lstlisting}
+\end{frame}
+
+

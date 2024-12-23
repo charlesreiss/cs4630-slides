@@ -1,0 +1,46 @@
+
+\begin{frame}{finding gadgets}
+    \begin{itemize}
+        \item find code segments of exectuable/library
+        \item look for opcodes of arbitrary jumps:
+            \begin{itemize}
+            \item \texttt{ret}
+            \item \texttt{jmp *register}
+            \item \texttt{jmp *(register)}
+            \item \texttt{call *register}
+            \item \texttt{call *(register)}
+        \end{itemize}
+        \item disassemble starting a few bytes before
+            \begin{itemize}
+            \item invalid instruction? jump before ret? etc. --- discard
+            \end{itemize}
+        \item sort list
+        \vspace{.5cm}
+    \item \myemph{automatable}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=ROPgadgetEx1]{ROPgadget}
+    \begin{itemize}
+    \item ROPgadget: tool that does this
+    \end{itemize}
+\begin{lstlisting}[language={},style=small]
+$ ROPgadget.py --binary /bin/ls
+....
+0x000000000000f09d : xor r8d, r8d ; cmp rcx, rsi ; jb 0xf0b9 ; jmp 0xf0e6
+0x0000000000012a22 : xor r8d, r8d ; jmp 0x11fee
+0x0000000000013d86 : xor r8d, r8d ; jmp 0x137a8
+0x000000000001421a : xor r8d, r8d ; jmp 0x141b0
+0x0000000000006aa1 : xor r8d, r8d ; jmp 0x69d5
+0x00000000000099f0 : xor r8d, r8d ; jmp 0x931d
+0x000000000000e6d0 : xor r8d, r8d ; mov rax, r8 ; ret
+0x00000000000127a7 : xor r8d, r8d ; xor esi, esi ; jmp 0x11fee
+0x000000000000e640 : xor r8d, r8d ; xor esi, esi ; jmp 0xe66a
+0x000000000001435d : xor r9d, r9d ; jmp 0x141b0
+0x0000000000008a03 : xor r9d, r9d ; xor r12d, r12d ; jmp 0x873c
+0x0000000000014217 : xor r9d, r9d ; xor r8d, r8d ; jmp 0x141b0
+
+Unique gadgets found: 6472
+\end{lstlisting}
+\end{frame}
+

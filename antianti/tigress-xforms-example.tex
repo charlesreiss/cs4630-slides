@@ -1,0 +1,110 @@
+\begin{frame}{Tigress as example of obfuscation}
+    \begin{itemize}
+    \item Tigress --- researcher developer obfuscation tool
+    \item \texttt{https://tigress.wtf}
+    \item includes many \textit{transformations} typical of real-world obfuscation
+        \begin{itemize}
+        \item we'll talk about the ideas behind many of them
+        \end{itemize}
+    \vspace{.5cm}
+    \item future assignment: modify code obfuscated with Tigress
+    \end{itemize}
+\end{frame}
+\begin{frame}{example Tigress transformations}
+    \begin{itemize}
+    \item we'll look at some simple ones Tigress provides
+    \item I'm showing you the pattern, \\ not the actual code Tigress generates
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=TigressMerge]{Tigress: provided transform: Merge}
+\begin{lstlisting}[language=C++,style=smaller]
+void foo(int a) { code for foo }
+void bar(int a) { code for bar }
+
+... foo(x) + bar(y) ...
+\end{lstlisting}
+\hrule
+\begin{lstlisting}
+void foo_bar(int s, int a) {
+    if (s == 0) {
+        code for foo
+    } else {
+        code for bar
+    }
+}
+
+... foo_bar(0, x) + foo_bar(1, y) ...
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=TigressSplit]{Tigress: provided transform: Split}
+\begin{lstlisting}[language=C++,style=smaller]
+void foo(int a, int b) {
+    int x = ...;
+    code for foo part 1
+    code for foo part 2
+}
+\end{lstlisting}
+\hrule
+\begin{lstlisting}[language=C++,style=smaller]
+void foo1(int *a, int *b, int *x) {
+    code for foo part 1
+}
+void foo2(int *a, int *b, int *x) {
+    code for foo part 2
+}
+void foo(int a, int b) {
+    int x;
+    foo1(&a,&b,&x); foo2(&a,&b,&x);
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=TigressFlatten]{Tigress: example transform: Flatten}
+\begin{lstlisting}[language=C++,style=smaller]
+void foo() {
+    A;
+    if (X) {
+        B;
+    } else {
+        C;
+    }
+    D;
+}
+\end{lstlisting}
+\hrule
+\begin{lstlisting}[language=C++,style=smaller]
+void foo() {
+    int s = 0;
+    for (;;) {
+        switch(s) {
+        case 0: A; s = X ? 1 : 2; break;
+        case 1: B; s = 3; break;
+        case 2: C; s = 3; break;
+        case 3: D; return;
+        }
+    }
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{transformations so far?}
+    \begin{itemize}
+    \item all can be combined!
+    \item annoying for analysis
+    \item hard to do without unobfuscated code
+        \begin{itemize}
+        \item can't easily be redone/changed by self-replicating malware
+        \end{itemize}
+    \item probably more distinctive than original code for signatures
+        \begin{itemize}
+        \item (just match the transformed version since it won't change often)
+        \end{itemize}
+    \vspace{.5cm}
+    \item next topic: transformations to avoid signatures
+        \begin{itemize}
+        \item (Tigress supports those, but not our primary examples)
+        \end{itemize}
+    \end{itemize}
+\end{frame}

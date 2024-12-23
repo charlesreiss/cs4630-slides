@@ -1,0 +1,14 @@
+\begin{frame}{which sandboxing?}
+    \begin{itemize}
+    \item which whole-application sandboxing technique seems better for 
+        \begin{itemize}
+        \item security, performance, usability, handling unchanged applications
+        \end{itemize}
+    \item (full answer: could mix techniques + probably depends on details of app)
+    \vspace{.5cm}
+    \item A. chroot + system call filtering
+    \item B. chroot + mount and user namespaces
+    \item C. virtual machine dedicated to application
+    \item D. SELinux-like mandatory access control
+    \end{itemize}
+\end{frame}

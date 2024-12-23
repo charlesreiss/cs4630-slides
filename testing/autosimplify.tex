@@ -1,0 +1,19 @@
+
+\begin{frame}[fragile,label=covMin]{automatically simplifying test cases}
+    \begin{itemize}
+        \item same idea as fuzzing
+        \item but look for \myemph{same result/coverage}
+        \item systematic simplifications:
+            \begin{itemize}
+                \item try removing every character (one-by-one)
+                \item try decrementing every byte
+                \item \ldots
+            \end{itemize}
+        \item keep simplifications that don't change result
+        \item AFL uses some of this strategy to help get better `base' tests
+            \begin{itemize}
+            \item also has tool to do this on a found test
+            \item prefers simpler `base' tests
+            \end{itemize}
+    \end{itemize}
+\end{frame}

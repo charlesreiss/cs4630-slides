@@ -1,0 +1,32 @@
+
+\providecommand{\myemphA}[1]{\myemph<1>{#1}}
+\providecommand{\myemphB}[1]{\myemph<2>{#1}}
+\providecommand{\myemphAB}[1]{\myemph<1-2>{#1}}
+\providecommand{\myemphC}[1]{\myemph<3>{#1}}
+\begin{frame}[fragile,label=dynLinkNeeded2]{dynamic linking: what to load? (2)}
+\begin{itemize}
+\item excerpt from {\tt objdump -sx hello.exe}:
+\end{itemize}
+\begin{Verbatim}[commandchars=@\{\},fontsize=\fontsize{9}{10}\selectfont]
+Program Header:
+@textit{...}
+ DYNAMIC off    0x0000000000002e20 vaddr @myemph{0x0000000000403e20} paddr 0x0000000000403e20 align 2**3
+         filesz 0x00000000000001d0 memsz 0x00000000000001d0 flags rw-
+@textit{...}
+Dynamic Section:
+  @myemphAB{NEEDED               libc.so.6}
+  @myemphC{INIT                 0x0000000000401000}
+  ...
+  @myemphB{STRTAB}               0x0000000000400420
+  ...
+@textit{...}
+ @myemphAB{403e20} @myemphA{01000000 00000000} @myemphB{01000000 00000000}  ................
+ 403e30 @myemphC{0c000000 00000000 00104000 00000000}  ..........@.....
+\end{Verbatim}
+\hrule
+type \myemphA{0x1 = ``DT\_NEEDED''} (from ELF manual)\\
+value \myemphB{0x1 = string table entry 1} \\
+\hrule
+type \myemphC{0xC = ``DT\_INIT''} \\
+value \myemphC{0x401000} \\
+\end{frame}

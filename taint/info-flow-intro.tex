@@ -1,0 +1,17 @@
+\begin{frame}{information flow}
+    \begin{itemize}
+    \item so far: static analysis concerned with control flow
+    \item often, we're really worried about how \textit{data} moves
+    \vspace{.5cm}
+    \item many applications:
+        \begin{itemize}
+        \item does an array index depend on user input?
+        \item does an SQL query depend on user input?
+        \item does data sent over network depend on phone number?
+        \end{itemize}
+    \item \ldots
+    \vspace{.5cm}
+    \item can do this \textit{statically} (potential dependencies) \\
+         or \textit{dynamically} (actual dependencies as program runs)
+    \end{itemize}
+\end{frame}

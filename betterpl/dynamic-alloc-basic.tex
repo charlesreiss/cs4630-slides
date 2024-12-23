@@ -1,0 +1,14 @@
+\begin{frame}{what about dynamic allocation?}
+    \begin{itemize}
+    \item saw Rust's Vec class --- equivalent to C++ vector/Java ArrayList
+    \item idea: Vec wraps a heap allocation of an array
+    \item owner of Vec ``owns'' heap allocation
+        \begin{itemize}
+        \item delete when no owner
+        \end{itemize}
+    \item also Box class --- wraps heap allocation of a single value
+        \begin{itemize}
+        \item basically same as Vec except one element
+        \end{itemize}
+    \end{itemize}
+\end{frame}

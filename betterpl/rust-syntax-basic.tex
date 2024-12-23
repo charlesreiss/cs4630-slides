@@ -1,0 +1,56 @@
+\usetikzlibrary{positioning,shapes.callouts}
+\begin{frame}[fragile,label=rustHelloWorld1]{simple Rust syntax (1)}
+\begin{minted}{Rust}
+fn main() {
+    println!("Hello, World!\n");
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=rustHelloWorld2]{simple Rust syntax (2)}
+\begin{minted}[fontsize=\fontsize{10}{11}]{Rust}
+fn timesTwo(number: i32) -> i32 {
+    return number * 2;
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=rustHelloWorld3]{simple Rust syntax (3)}
+    \begin{minted}[fontsize=\fontsize{10}{11}]{Rust}
+struct Student {
+    name: String,
+    id: i32,
+}
+
+fn get_example_student() -> Student {
+    return Student {
+        name: String::from("Example Fakelastname"),
+        id: 42,
+    };
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=rustHelloWorld4]{simple Rust syntax (4)}
+    \begin{minted}[fontsize=\fontsize{10}{11}\selectfont,escapeinside=||]{Rust}
+fn factorial(number: i32) -> i32 {
+    let mut|\tikzmark{mut}| result = 1;
+    let mut index = 1;
+    while index <= number {
+        result *= index;
+        index = index + 1;
+    }
+    return result;
+}
+\end{minted}
+    \begin{tikzpicture}[overlay,remember picture]
+        \coordinate (box) at (current page.center);
+        \begin{visibleenv}<2>
+            \node[my callout=mut,anchor=center,align=left] at ([yshift=2cm]box) {
+                ``result'' is a mutable variable \\
+                type automatically inferred as i32 (32-bit int)
+            };
+        \end{visibleenv}
+    \end{tikzpicture}
+\end{frame}
+

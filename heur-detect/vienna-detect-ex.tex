@@ -1,0 +1,14 @@
+\begin{frame}{what signature for Vienna?}
+    \begin{itemize}
+    \item Suppose we wanted to detect Vienna in execs.
+    \item What is best to look for in an exectuable\ldots \\
+        in terms of performance? false positives? true positives?
+        \begin{itemize}
+        \item A. machine code found in example infected file at the end of the executable 
+        \item B. machine code found in example infected file at the end of the executable, ignoring parts that change on reinfection
+        \item C. portion of virus's machine code that copies itself to a new file anywhere in the executable
+        \item D. whether another executable file in same directory changes if we run the executable in a VM
+        \item E. for a jump at beginning of the executable to something near the end
+        \end{itemize}
+    \end{itemize}
+\end{frame}

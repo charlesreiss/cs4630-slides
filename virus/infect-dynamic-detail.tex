@@ -1,0 +1,75 @@
+
+\begin{frame}[fragile,label=stubReplace]{stubs}
+\begin{Verbatim}[commandchars=Q\{\},fontsize=\fontsize{8}{9}\selectfont]
+0000000000001050 <puts@plt>:
+    1050:       f3 0f 1e fa             endbr64 
+    1054:       f2 ff 25 75 2f 00 00    bnd jmpq *0x2f75(%rip)        # 3fd0 <puts@GLIBC_2.2.5>
+    Qtextbf{ replace with: }
+0000000000001050 <puts@plt>:
+    1050:       f3 0f 1e fa             endbr64 
+    1054:       ff 25 XX XX XX XX       jmp VIRUS CODE
+    105a:       90                      nop
+\end{Verbatim}
+\begin{itemize}
+    \item in known location (particular section of executable)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=stubsReplacePtr]{stubs again}
+\begin{Verbatim}[commandchars=Q\{\},fontsize=\fontsize{8}{9}\selectfont]
+0000000000001050 <puts@plt>:
+    1050:       f3 0f 1e fa             endbr64 
+    1054:       f2 ff 25 75 2f 00 00    bnd jmpq *0x2f75(%rip)        # 3fd0 <puts@GLIBC_2.2.5>
+\end{Verbatim}
+\begin{itemize}
+\item don't edit stub --- edit initial value at {\tt 0x3fd0}
+    \begin{itemize}
+    \item stored in data section of executable
+    \end{itemize}
+\item originally: pointer to lazy linking code
+\vspace{.5cm}
+\item malware code can jump to original lazy linking code after
+\vspace{.5cm}
+\item preview of future topics: also can be changed by exploits
+    \begin{itemize}
+    \item commonly involved in memory-error exploits (buffer overflow, etc.)
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=relocReplace]{relocations?}
+on executable:
+\begin{Verbatim}[commandchars=Q\{\},fontsize=\fontsize{8}{9}\selectfont]
+hello.exe:     file format elf64-x86-64
+
+DYNAMIC RELOCATION RECORDS
+OFFSET           TYPE              VALUE 
+...
+0000000000003fd0 R_X86_64_JUMP_SLOT  Qtextit{puts@GLIBC_2.2.5}
+    Qtextbf{replace with:}
+0000000000003fd0 R_X86_64_JUMP_SLOT  Qtextit{*ABS*+virus_code_address}
+...
+\end{Verbatim}
+\begin{itemize}
+\item relocation record: where to put library code addresses
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile,label=symReplace]{symbols?}
+on library:
+\begin{Verbatim}[commandchars=Q\{\},fontsize=\fontsize{8}{9}\selectfont]
+/lib/x86_64-linux-gnu/libc.so.6:     file format elf64-x86-64
+
+DYNAMIC SYMBOL TABLE:
+...
+00000000000875a0  w   DF .text  Qtextit{00000000000001dc}  GLIBC_2.2.5 puts
+    Qtextbf{replace with:}
+00000000000875a0  w   DF .text  Qtextit{(virus code off)}  GLIBC_2.2.5 puts
+\end{Verbatim}
+\begin{itemize}
+\item symbol table entry: where library code is
+\end{itemize}
+\end{frame}
+
+

@@ -1,0 +1,16 @@
+
+\begin{frame}{stack canary summary}
+    \begin{itemize}
+    \item stack canary --- simplest of many \myemph{mitigations}
+    \item key idea: detect corruption of return address
+    \item assumption: if return address changed, so is adjacent token
+    \item assumption: attacker can't learn true value of token
+        \begin{itemize}
+        \item often possible with memory bug
+        \end{itemize}
+    \vspace{.5cm}
+    \item later: workarounds to break these assumptions
+    \end{itemize}
+\end{frame}
+
+

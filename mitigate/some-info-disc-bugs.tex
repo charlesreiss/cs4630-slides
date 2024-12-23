@@ -1,0 +1,109 @@
+\begin{frame}[fragile,label=infoDisc1a]{information disclosure (1a)}
+\lstset{
+    language=C++,
+    style=small
+}
+\begin{lstlisting}
+string command;
+void vulnerable() {
+    int value;
+    for (;;) {
+        cin >> command;
+        if (command == "set") {
+            cin >> value;
+        } else if (command == "get") {
+            cout << value << endl;
+        } else if ...
+    }
+}
+\end{lstlisting}
+\begin{itemize}
+\item ``get'' command: can read \myemph{uninitialized value}
+\item example: when I compiled this, \texttt{value} was stored on the stack
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=infoDisc1b]{information disclosure (1b)}
+\lstset{
+    language=C++,
+    style=small
+}
+\begin{lstlisting}
+void vulnerable() {
+    int value;
+    ...
+        } else if (command == "get") {
+            cout << value << endl;
+        }
+    ...
+}
+
+void leak() {
+    int secrets[] = { 
+        12345678, 23456789, 34567890,
+        45678901, 56789012, 67890123,
+    };  
+    cout << (void*) secrets << endl;
+    do_something_with(secrets);
+}
+
+int main() {leak(); vulnerable();}
+\end{lstlisting}
+\begin{tikzpicture}[overlay,remember picture]
+\node[draw,very thick,anchor=north east,align=left] at ([xshift=-.25cm,yshift=-.25cm]current page.north east) {
+running this program \\
+(input in bold): \\
+\tt \textbf{get} \\
+\tt 67890123
+};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=infoDisc2]{information disclosure (2)}
+\lstset{
+    language=C,
+    style=small
+}
+\begin{lstlisting}
+void process() {
+    char buffer[8] = "\0\0\0\0\0\0\0\0";
+    char c = ' ';
+    for (int i = 0; c != '\n' && i < 8; ++i) {
+        c = getchar();
+        buffer[i] = c;
+    }
+    printf("You input %s\n", buffer);
+}
+\end{lstlisting}
+\begin{itemize}
+\item input \verb|aaaaaaaa|
+\item output \verb|You input aaaaaaaa|{\it (whatever was on stack)}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=infoDisc3]{information disclosure (3)}
+\lstset{
+    language=C,
+    style=small,
+}
+\begin{lstlisting}
+struct foo {
+    char buffer[8];
+    long *numbers;
+};
+
+void process(struct foo* thing) {
+    ...
+    scanf("%s", thing->buffer);
+    ...
+    printf("first number: %ld\n", thing->numbers[0]);
+}
+\end{lstlisting}
+\begin{itemize}
+\item input: {\tt aaaaaaaa}\textit{(address of canary)}
+    \begin{itemize}
+    \item address on stack \textit{or} where canary is read from in thread-local storage
+    \end{itemize}
+\end{itemize}
+\end{frame}
+

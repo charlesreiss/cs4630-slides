@@ -1,0 +1,20 @@
+- title: "What do shadow stacks stop?"
+  questions:
+  - text: "Which do shadow stacks stop?"
+    multiple: true
+    options:
+    - "A. using format string exploit to point stack return address to the ‘system’ function"
+    - "B. using format string exploit to point VTable to the ‘system’ function"
+    - "C. using an unchecked string copy that goes over the end of a stack buffer into the return address and pointing the return address to the ‘system’ function"
+    - "D. using a buffer overflow that overwrites a saved stack pointer value to cause return to use a different address"
+    - "E. using pointer subterfuge to overwrite the GOT entry for ‘printf’ to point to the ‘system’ function"
+    - "none of these"
+- title: "Calling danger"
+  questions:
+  - text: "with clang's CFI, which can end up calling danger() if an attacker can first write to arbitrary memory locations?"
+    multiple: true
+    options:
+    - "A. (*ptr)(1);"
+    - "B. (*ptr)(0);"
+    - "C. Foo *q = attacker_controlled(); q->f()"
+    - "D. Quux *q = attacker_controlled(); q->f()"

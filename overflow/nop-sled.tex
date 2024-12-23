@@ -1,0 +1,37 @@
+
+\begin{frame}[fragile,label=guessEasier]{making guessing easier (1)}
+\lstset{language=myasm,style=smaller}
+\begin{tikzpicture}
+\node[label={[font=\small]north:normal shellcode}] (normal) {
+\begin{lstlisting}
+xor %eax, %eax
+leaq command(%rip), %rbx
+/* setup "exec" system call */
+...
+...
+mov $11, %al
+syscall
+
+command: .ascii "/bin/sh"
+\end{lstlisting}
+};
+
+\node[anchor=north west,label={[font=\small]north:easier to ``guess'' shellcode}] at (normal.north east) {
+\begin{lstlisting}
+nop /* one-byte nop */
+nop
+nop
+nop
+nop
+nop
+nop
+xor %eax, %eax
+lea command(%rip), %rbx
+...
+...
+command: .ascii "/bin/sh"
+\end{lstlisting}
+};
+\end{tikzpicture}
+\end{frame}
+

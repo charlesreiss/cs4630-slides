@@ -1,0 +1,37 @@
+\begin{frame}{CSmith}
+    \begin{itemize}
+    \item Yang et al wrote a random C program generator
+        \begin{itemize}
+        \item ``Finding and Understanding Ubgs in C compilers'' (PLDI 2011)
+        \end{itemize}
+    \vspace{.5cm}
+    \item carefully avoided code with unspecified effects
+        \begin{itemize}
+        \item most of the work was about doing this
+        \end{itemize}
+    \item don't need to know what program does: comparing two compilers
+        \begin{itemize}
+        \item or one compiler with different settings
+        \end{itemize}
+    \vspace{.5cm}
+    \item random selection of types, operators, etc.
+    \item \ldots instead of just random bytes
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{CReduce}
+    \begin{itemize}
+    \item Regher et al (including Yang)'s follow-up work
+        \begin{itemize}
+        \item ``Test-Case Reduction for C Compiler Bugs'' (PLDI 2012)
+        \end{itemize}
+    \item take a C program that triggers bug\ldots
+    \item try removing things to make it smaller
+    \item needed: automated way of checking ``is bug still there''
+    \vspace{.5cm}
+    \item same idea applies to security bugs
+        \begin{itemize}
+        \item remove as much as possible and get it to still segfault
+        \end{itemize}
+    \end{itemize}
+\end{frame}

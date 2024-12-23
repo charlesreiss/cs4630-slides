@@ -1,0 +1,21 @@
+\begin{frame}{other things languages can enforce?}
+    \begin{itemize}
+    \item saw: enforcing no use-after-free
+    \item lots of coding conventions we might try to enforce:
+    \vspace{.5cm}
+    \item code's runtime does not depend on secret data
+        \begin{itemize}
+        \item secret data has different type
+        \item variable time operations prohibited with secret data
+        \end{itemize}
+    \item sensitive data not passed to wrong place
+        \begin{itemize}
+        \item sensitive data has different type
+        \item assignment to wrong places is a type error
+        \end{itemize}
+    \item code has bounded runtime
+        \begin{itemize}
+        \item langauge prohibits not unbounded loops, recursion, etc.
+        \end{itemize}
+    \end{itemize}
+\end{frame}

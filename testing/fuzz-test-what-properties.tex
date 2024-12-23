@@ -1,0 +1,19 @@
+\begin{frame}{what can fuzzing find}
+    \begin{itemize}
+        \item easiest to find crashes
+            \begin{itemize}
+            \item intuition: segfault could be security problem
+            \end{itemize}
+        \item otherwise: how do we know if test cases are useful?
+        \vspace{.5cm}
+        \item need some way to know if test result is correct
+        \item example: fuzz-testing of C compilers versus other C compilers
+            \begin{itemize}
+            \item Yang et al, ``Finding and Understanding Bugs in C compilers'', 2011
+            \item 79 GCC, 209 Clang bugs
+            \item about one third ``wrong generated code''
+            \item but using smarter fuzzing strategy (we'll talk about it later)
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+

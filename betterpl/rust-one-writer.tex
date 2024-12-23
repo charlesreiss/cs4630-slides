@@ -1,0 +1,23 @@
+
+\begin{frame}[fragile,label=restrictMod]{restricting modification}
+    \begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+fn modifyVector(vector: &mut Vec<u32>) { ... }
+fn foo() {
+    let vector: Vec<u32> = vec![1, 2, 3];
+    for value in &vector {
+        if value == 2 {
+            modifyVector(&mut vector) // ERROR
+        }
+    }
+}
+    \end{minted}
+\begin{itemize}
+    \item trying to give away mutable reference
+    \item \ldots while the for loop has a reference
+    \vspace{.5cm}
+    \item would be okay if giving away non-mutable reference
+    \item why compiler distinguishes mutable/non-mutable references
+\end{itemize}
+\end{frame}
+
+

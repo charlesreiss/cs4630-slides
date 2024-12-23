@@ -1,0 +1,19 @@
+\frametitle{exercise: scheme for finding alignment space}
+example unused space:
+\begin{Verbatim}][fontsize=\fontsize{9}{10}\selectfont,commandchars=Q\{\}]
+  404a01:	c3                   	retq
+  Qtextbf{404a02:	0f 1f 40 00          	nopl   0x0(%rax)}
+  Qtextbf{404a06:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)}
+  Qtextbf{404a0d:	00 00 00 }
+\end{Verbatim}
+\begin{itemize}
+\item suppose a virus scanned the executable for this pattern of bytes (c3 0f 1f \ldots) \\ to find a cavity
+\item for compiler generated code, which are likely causes of false positive?
+    \begin{itemize}
+    \item A. \texttt{c3} might be part of non-ret instruction
+    \item B. \texttt{ret} might return to byte immediately after (0x404a02 in example)
+    \item C. some other instruction might jump to one of the bytes after
+    \item D. the entire sequence could be part of the program's data \\
+             (if the virus didn't check that it was in the text section)
+    \end{itemize}
+\end{itemize}

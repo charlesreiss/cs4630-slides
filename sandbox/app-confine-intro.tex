@@ -1,0 +1,15 @@
+\begin{frame}{application confinement}
+    \begin{itemize}
+    \item confining whole browsers was hard
+        \begin{itemize}
+            \item we trust them to do a lot of things --- e.g. write arbitrary files
+        \end{itemize}
+    \item but maybe we can do this for simpler applications?
+    \item idea 1: applications send system calls to OS 
+        \begin{itemize}
+        \item \myemph{limit syscalls} like we limited browser kernel commands
+        \item constructing command language ``in reverse''
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

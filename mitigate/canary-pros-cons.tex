@@ -1,0 +1,12 @@
+
+\begin{frame}{stack canaries pro/con}
+    \begin{itemize}
+        \item pro: no change to calling convention
+        \item pro: recompile only --- no extra work
+        \item con: can't protect existing executable/library files (without recompile)
+        \item con: \myemph<2>{doesn't protect against many ways of exploiting buffer overflows}
+        \item con: \myemph<3>{vulnerable to information leaks}
+    \end{itemize}
+\end{frame}
+
+

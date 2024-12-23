@@ -1,0 +1,47 @@
+\begin{frame}{OpenSSH privilege seperation}
+    \begin{itemize}
+    \item OpenSSH uses privilege seperation for its SSH server
+    \item what runs on the lab machines when you log into them
+    \vspace{.5cm}
+    \item separate network processing code from authentication code
+    \item seperate process per connection --- users don't share
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{OpenSSH privsep protocol}
+    \begin{itemize}
+    \item sandboxed process tells ``monitor'' to:
+        \vspace{.25cm}
+    \item perform \myemph{cryptographic operations}
+        \begin{itemize}
+        \item long-term keys never in sandboxed process
+        \item commands to ask for cryptographic messages they need
+        \end{itemize}
+    \item ask to switch to user --- if given user password, etc.
+        \begin{itemize}
+            \item \myemph{monitor process verifies} login information
+        \end{itemize}
+    \item after authentication: new process running as logged-in user 
+        \begin{itemize}
+            \item (normally) no issues with special privileges
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{privilege seperation overall}
+    \begin{itemize}
+    \item large application changes
+        \begin{itemize}
+        \item OpenSSH: 3k lines of code for communication/etc. added
+        \item OpenSSH: 2\% of existing code (950 of 44k lines) changed
+        \item (but most changes simple)
+        \end{itemize}
+    \item lots of application knowledge
+        \begin{itemize}
+        \item what is a meaningful separation of `privileged' and `unprivileged'?
+        \end{itemize}
+    \item better application design anyways?
+    \end{itemize}
+\end{frame}
+

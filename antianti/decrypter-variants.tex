@@ -1,0 +1,20 @@
+
+\begin{frame}[fragile,label=decrypter]{decrypter}
+    \begin{itemize}
+    \item more variations:
+        \begin{itemize}
+        \item nested decrypters, different orders, etc.
+        \end{itemize}
+    \item still problem: \myemph{decrypter code is signature}
+    \item \ldots but \myemph<2>{harder to distinguish\tikzmark{distinguish} different malware}
+    \end{itemize}
+
+    \begin{tikzpicture}[overlay,remember picture]
+        \begin{visibleenv}<2>
+        \node[my callout=distinguish,anchor=center] at ([yshift=-2cm]current page.center) {
+            ``disinfection'' --- want to precisely identify malware
+        };
+        \end{visibleenv}
+    \end{tikzpicture}
+\end{frame}
+

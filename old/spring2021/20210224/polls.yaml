@@ -1,0 +1,32 @@
+- title: "easiest/most difficult pattern change"
+  questions:
+  - text: "easiest to modify pattern for?"
+    single: true
+    options:
+    - "A. inserting random number of nops every 8 non-nop instructions of virus code"
+    - "B. replacing code at random offset in executable instead of appending"
+    - "C. registers used for temporaries in virus code chosen at random each time the virus copies itself"
+    - "D. instead of appending all the virus code, virus code now split between cavities with loader appended to exe"
+  - text: "most difficult to modify pattern for?"
+    single: true
+    options:
+    - "A. inserting random number of nops every 8 non-nop instructions of virus code"
+    - "B. replacing code at random offset in executable instead of appending"
+    - "C. registers used for temporaries in virus code chosen at random each time the virus copies itself"
+    - "D. instead of appending all the virus code, virus code now split between cavities with loader appended to exe"
+- title: "easiest/most difficult to tell in obfuscated?"
+  questions:
+  - text: "least hampered by obfuscation?"
+    single: true
+    options:
+    - "A. determining what remote servers some malware contacts"
+    - "B. determining a password the malware requires to access extra functionality"
+    - "C. accessing extra functionality in the malware protected by a password"
+    - "D. determining whether the malware will behave differently based on the time"
+  - text: "most hampered by obfuscation?"
+    single: true
+    options:
+    - "A. determining what remote servers some malware contacts"
+    - "B. determining a password the malware requires to access extra functionality"
+    - "C. accessing extra functionality in the malware protected by a password"
+    - "D. determining whether the malware will behave differently based on the time"

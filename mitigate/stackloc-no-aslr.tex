@@ -1,0 +1,21 @@
+
+\begin{frame}[fragile,label=stackLoc2]{disabling ASLR}
+\vspace{-.5cm}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont]
+$ cat stackloc.c
+#include <stdio.h>
+int main(void) {
+    int x;
+    printf("%p\n", &x);
+}
+$ setarch x86_64 -vRL bash
+Switching on ADDR_NO_RANDOMIZE.
+Switching on ADDR_COMPAT_LAYOUT.
+$ ./stackloc.exe 
+0x7fffffffde2c
+$ ./stackloc.exe 
+0x7fffffffde2c
+$ ./stackloc.exe 
+0x7fffffffde2c
+\end{Verbatim}
+\end{frame}

@@ -1,0 +1,94 @@
+\graphicspath{{./figures/}}
+\title{x86-64 encoding / viruses}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item x86-64 registers
+        \begin{itemize}
+        \item overlapping registers
+        \item write 32-bit $\rightarrow$ overwrite top of 64-bit
+        \item pseudo-register {\tt \%rip}: address of end of instruction
+        \item \%xmm/\%ymm registers; x87 floating point stack
+        \end{itemize}
+    \item AT\&T syntax:
+        \begin{itemize}
+        \item destination last, \$ for constants (otherwise memory)
+        \item \(B,I,S\) $\rightarrow$ $B + I \cdot S$
+        \end{itemize}
+    \item Linux x86-64 calling convention
+    \item lea (load effective address) --- copy address to result
+    \item segmentation: {\tt \%fs:0x10}: access 0x10 + base address for FS 
+        \begin{itemize}
+        \item set by OS, used for thread-local storage
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{quiz reliability aside}
+    \begin{itemize}
+    \item appears the quiz site sometimes didn't give \\
+        feedback when submitting logged-out of NetBadge
+        \begin{itemize}
+        \item I don't understand how (200 GET response when there should be NetBadge prompt?)
+        \end{itemize}
+    \item problem should not recur (quiz submission w/o NetBadge)
+    \vspace{.5cm}
+    \item let me know if this affected your quiz score
+    \end{itemize}
+\end{frame}
+
+\input{../x8664-encoding/body}
+
+\section{self-replicating malware, generally}
+
+\input{../virus/self-repl-mal}
+
+% FIXME: aside on non-self-replicating malware issues coming up
+    % stealth
+    % detection
+
+\section{virus: hide in existing programs}
+
+\subsection{motivation}
+\input{../virus/hide-existing}
+
+\subsection{early prevalance/motivations}
+\input{../virus/early-prevalence}
+
+\section{case study: Vienna}
+% FIXME: before introduction to executable formats?
+
+\input{../virus/vienna-intro}
+
+\subsection{aside: COM files}
+
+\input{../exec-encoding/com-files}
+
+\subsection{entry/exit}
+
+\input{../virus/entry-exit}
+
+\subsection{infection outline}
+
+\input{../virus/vienna-infect-outline}
+
+\subsection{writing your own code?}
+
+\againframe<2>{viennaOutline}
+\subsubsection{aside: quines}
+
+\input{../virus/quine}
+
+
+\subsubsection{Vienna replication code}
+
+\input{../virus/vienna-replicate}
+
+% FIXME: work through cavaties in loaded stuff not used on ELF 
+
+\end{document}

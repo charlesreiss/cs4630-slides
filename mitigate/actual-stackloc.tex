@@ -1,0 +1,18 @@
+
+\begin{frame}[fragile,label=stackLoc1]{stack location?}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont]
+$ cat stackloc.c
+#include <stdio.h>
+int main(void) {
+    int x;
+    printf("%p\n", &x);
+}
+$ ./stackloc.exe
+0x7ffe8859d964
+$ ./stackloc.exe
+0x7ffd4e26ac04
+$ ./stackloc.exe
+0x7ffc190af0c4
+\end{Verbatim}
+\end{frame}
+

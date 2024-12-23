@@ -1,0 +1,38 @@
+int *getValue();
+int getAnotherValue();
+void doSomething();
+void getAnother(char* p);
+int example() {
+    int *p1 = getValue();
+    int *p2 = getValue();
+    int *p3 = getValue();
+    int *p4 = getValue();
+    int *p5 = getValue();
+    int *p6 = getValue();
+    int *p7 = getValue();
+    int *p8 = getValue();
+    int *p9 = getValue();
+    char x[10];
+    getAnother(x);
+    *p1++ = 4;
+    *p2++ = 8;
+    *p3++ = 10;
+    *p4++ = 12;
+    doSomething(p1);
+    *p5++ = 14;
+    *p6++ = 16;
+    *p7++ = 18;
+    *p8++ = 20;
+    *p9++ = 22;
+    int buf[4];
+    doSomething(buf);
+    *p1 = getAnotherValue();
+    *p2 = getAnotherValue();
+    *p3 = getAnotherValue();
+    *p4 = getAnotherValue();
+    *p5 = getAnotherValue();
+    *p6 = getAnotherValue();
+    *p7 = getAnotherValue();
+    *p8 = getAnotherValue();
+    *p9 = getAnotherValue();
+}

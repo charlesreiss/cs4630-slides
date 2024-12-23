@@ -1,0 +1,43 @@
+\begin{frame}{RLBox}
+    \begin{itemize}
+    \item saw interfaces for using sandboxes from user perspective?
+    \item what about for privilege separation?
+        \begin{itemize}
+        \item recall: like Chrome separate renderer process idea
+        \item need to navigate OS sandboxing API + create interface for sandboxed part?
+        \end{itemize}
+    \vspace{.5cm}
+    \item some reusable tools have appeared for this (but no clear winner)
+    \item one example: RLBox (published in Usenix Security 2020)
+        \begin{itemize}
+        \item Shravan Narayan and Craig Disselkoen, UC San Diego; Tal Garfinkel, Stanford University; Nathan Froyd and Eric Rahm, Mozilla; Sorin Lerner, UC San Diego; Hovav Shacham, UT Austin; Deian Stefan, UC San Diego
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=rlboxusage]{RLBox usage}
+\begin{itemize}
+\item part of example from author's presentation:
+    \begin{itemize}
+    \item goal: invoke JPEG parser in sandbox
+    \end{itemize}
+\end{itemize}
+\begin{lstlisting}[language=C++,style=script]
+autosandbox = rlbox::create_sandbox<wasm>();
+tainted<jpeg_decompress_struct*> p_jpeg_img = sandbox.malloc_in_sandbox<jpeg_decompress_struct>();
+tainted<jpeg_source_mgr*> p_jpeg_input_source_mgr = sandbox.malloc_in_sandbox<jpeg_source_mgr>();
+sandbox.invoke(jpeg_create_decompress, p_jpeg_img);
+p_jpeg_img->src = p_jpeg_input_source_mgr;
+p_jpeg_img->src->fill_input_buffer = ...;
+sandbox.invoke(jpeg_read_header,p_jpeg_img/*...*/);
+\end{lstlisting}
+\begin{itemize}
+\item tool handles running `jpeg\_create\_decompress', `jpeg\_read\_header' in sandbox
+\item values shared with sandbox marked as ``tainted''
+    \begin{itemize}
+    \item C++ (template) class
+    \end{itemize}
+\item this example: using WebAssembly-based sandbox
+\item used in firefox
+\end{itemize}
+\end{frame}

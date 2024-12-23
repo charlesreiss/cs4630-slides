@@ -1,0 +1,27 @@
+\begin{frame}{Vienna: on detection}
+    \begin{itemize}
+    \item special metadata mark could be looked for
+    \item distinctive pattern, in well known place
+        \begin{itemize}
+        \item future assignment: pattern matching to find known malware
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Vienna: non-portability}
+    \begin{itemize}
+    \item \myemph<2>{relies on very simple executable formats}
+        \begin{itemize}
+        \item modern (read: anything after DOS) executable formats more complex/featureful
+        \end{itemize}
+    \item \myemph<2>{relies on self-modifying code}
+        \begin{itemize}
+        \item often requires extra steps on modern systems
+        \end{itemize}
+    \item uses metadata on filesystem
+        \begin{itemize}
+        \item quirk of DOS filesystem timestamp format
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

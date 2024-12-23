@@ -1,0 +1,20 @@
+
+    % most/least suitable to pattern matching
+        % Vienna inserting random number of nops every 8 instructions of virus code
+        % Vienna, but replacing code at a random offset in the executable
+        % virus code, but with registers for temporaries used chosen at random
+        % virus code, but most of the code split into cavities and a "loader" that reforms it placed at a fixed location
+
+\begin{frame}{hard for patterns?}
+    \begin{itemize}
+    \item malware makes modificates to evade pattern matching
+    \item exercise: suppose we have a pattern for a Vienna-like virus, and a new version makes the following
+        change. Which of the following is going to be easiest/hardest to change the pattern for?
+        \begin{itemize}
+        \item A. inserting random number of nops every 8 non-nop instructions of virus code
+        \item B. replacing code at random offset in executable instead of appending
+        \item C. registers used for temporaries in virus code chosen at random each time the virus copies itself
+        \item D. instead of appending all the virus code, virus code now split between cavities with "loader" appended (the "loader" reforms code from the cavities and jumps to them)
+        \end{itemize}
+    \end{itemize}
+\end{frame}

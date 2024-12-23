@@ -1,0 +1,71 @@
+
+\begin{frame}[fragile,label=virusReloc2]{Vienna relocation}
+\lstset{
+    style=small,
+    language=myasm,
+    moredelim={**[is][\btHL<1|handout:0>]{@hi1@}{@endhi@}},
+    moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
+    moredelim={**[is][\btHL<3|handout:0>]{@hi3@}{@endhi@}},
+}
+\begin{lstlisting}
+// set virus data address:
+0x700: @hi1@mov $0x8f9, %si@endhi@
+       // machine code: be f9 08
+       // be: opcode
+       // f9 08: immediate
+...
+// %ax contains file length (of file to infect)
+mov %ax, %cx
+...
+@hi3@add $0x2f9, %cx@endhi@
+mov %si, %di   
+sub $0x1f7, %di // %di <- 0x701
+@hi2@mov %cx, (%di)@endhi@  // update mov instruction
+...
+\end{lstlisting}
+\begin{tikzpicture}[overlay,remember picture]
+\begin{visibleenv}<1>
+\node[align=left,draw,very thick,fill=white] at (current page.center) {
+    Vienna design: need to access global variables, etc. \\
+    solution: base pointer for virus data \\
+    problem: location changes depending on where virus is
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=virusReloc3]{Vienna relocation}
+\begin{itemize}
+\item edit actual code for {\tt mov}
+\item why doesn't this disrupt virus execution?
+    \begin{itemize}\item<2> already ran that instruction\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=virusReloc4]{Vienna relocation}
+\lstset{
+    style=smaller,
+    language=myasm,
+    moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
+    moredelim={**[is][\btHL<3|handout:0>]{@hi3@}{@endhi@}},
+}
+\begin{lstlisting}
+0x700: mov $0x8f9, %si
+...
+// %ax contains file length
+//     (of file to infect)
+mov %ax, %cx
+sub $3, %ax
+// update template jmp instruction
+mov %ax, @hi2@0xe(%si)@endhi@ // 0xe + %si = 0x907
+...
+mov $40, %ah
+mov $3, %cx
+mov %si, %dx  
+add $0xD, @hi3@%dx@endhi@ // dx <- 0x906
+int 0x21 // system call: write 3 bytes from 0x906
+...
+0x906: @hi2@e9 fd 05@endhi@ // jmp PC+FD 05
+\end{lstlisting}
+\end{frame}
+

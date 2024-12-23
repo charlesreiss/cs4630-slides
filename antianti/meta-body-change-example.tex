@@ -1,0 +1,36 @@
+
+\begin{frame}[fragile,label=regSwap]{example: changing bodies}
+\lstset{language=myasm,style=smaller}
+\begin{tabular}{ll}
+\begin{lstlisting}
+pop %edx
+mov $0x4h, %edi
+mov %ebp, %esi
+mov $0xC, %eax
+add $0x88, %edx
+mov (%edx), %ebx
+mov %ebx, 0x1118(%esi,%eax,4)
+\end{lstlisting}
+&
+\begin{lstlisting}
+pop %eax
+mov $0x4h, %ebx
+mov %ebp, %esi
+mov $0xC, %edi
+add $0x88, %eax
+mov (%eax), %esi
+mov %esi, 0x1118(%esi,%eax,4)
+\end{lstlisting}
+\end{tabular}
+\begin{itemize}
+\item code above: after decryption
+\item \myemph{every instruction} changes
+\item still has good signatures
+    \begin{itemize}
+    \item with \myemph{alternatives} for each possible register selection
+    \end{itemize}
+\item but harder to write/slower to match
+\end{itemize}
+\end{frame}
+
+

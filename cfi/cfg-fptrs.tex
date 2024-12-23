@@ -1,0 +1,98 @@
+
+\usetikzlibrary{arrows.meta}
+
+\begin{frame}[fragile,label=tracking]{library-crossing CFGs}
+\begin{tikzpicture}
+\node[draw,very thick,label={north:main.c}] (mainc) {
+\begin{lstlisting}[language=C++,style=script]
+#include <png.h>
+void ReadImageFromNetwork(
+    png_structp libpng_handle,
+    unsigned char *bytes,
+    size_t size
+) { ...  }
+
+int main() {
+    /* init libpng */
+    png_structp libpng_handle = ...;
+    /* tell libpng how to read image data */
+    png_set_read_fn(
+        libpng_handle, ...,
+        ReadImageFromNetwork
+    )
+    ...
+    /* extract "header" 
+       information from image */
+    png_get_IHDR(libpng_handle, ...)
+    ...
+}
+\end{lstlisting}
+};
+\coordinate (base) at ([xshift=.5cm]mainc.north east);
+\begin{scope}[shift=(base)]
+    \tikzset{
+        every node/.style={draw,align=left,font=\fontsize{10}{11}\tt\selectfont},
+    }
+    \node[draw,align=left,text width=1.25cm,anchor=north west] (main1) at (0,0) {
+        main: \\
+        ... \\
+    };
+    \node[draw,align=left] (set read) at (4, -1.5) {
+        png\_set\_read\_fn: \\
+        ... \\
+        ...
+    };
+
+    \node[draw,align=left,text width=1.25cm,anchor=north west] (main2) at (0,-3) {
+        ... \\
+    };
+    \draw[-Latex,very thick] (main1) -- (set read);
+    \draw[-Latex,very thick] (set read) -- (main2);
+    \node[draw,align=left] (ihdr) at (4, -4) {
+        png\_get\_IHDR: \\
+        ... \\
+    };
+    \node[draw,align=left] (readFromNet) at (5, -6) {
+        ReadImage\\FromNetwork: \\
+        ... 
+    };
+    \draw[-Latex,very thick] (main2) -- (ihdr);
+    \draw[-Latex,very thick] (ihdr) -- (readFromNet);
+
+    \begin{pgfonlayer}{bg}
+    \draw[ultra thick,black!50,dotted,fill=blue!10] (-0.25,0.25) -- (1.9,0.25) -- (1.9,-5.2) -- (6.75,-5.2) --
+        (6.75, -7) -- (-0.25,-7) -- cycle;
+    \draw[ultra thick,black!50,dotted,fill=yellow!10] (2,-.5) -- (6.5,-.5) -- (6.5, -5) -- (2, -5) -- cycle;
+    \end{pgfonlayer}
+\end{scope}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=imprecise]{CFGs will be imprecise}
+\begin{lstlisting}[language=C++,style=smaller]
+FunctionPtr p = functionA;
+Example() {
+  while (true) {
+    ...
+    if (SomethingComplicated()) {
+      (*p)();
+    } else if (SomethngElseComplicated()) {
+      foo();
+    }
+    ...
+  }
+}
+foo() {
+  ...
+  if (AnotherComplexThing()) {
+    p = functionB;
+  }
+}
+\end{lstlisting}
+\begin{itemize}
+\item can Example() call functionB()? probably not practical to tell
+    \begin{itemize}
+    \item need to make conservative `yes' guess
+    \end{itemize}
+\end{itemize}
+\end{frame}

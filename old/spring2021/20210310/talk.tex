@@ -1,0 +1,157 @@
+\graphicspath{{./figures/}}
+\title{buffer overflows  mitigations / other overflows 1}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+{
+\setbeamercolor{background canvas}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{normal text}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{itemize/enumerate body}{fg=white}
+\setbeamercolor{itemize/enumerate subbody}{fg=white}
+\setbeamercolor{titlelike}{bg=blue!40!black,fg=blue!10!white}
+\begin{frame}<1|handout:1>[noframenumbering]{Changelog}
+    \begin{itemize}
+    \item 10 March 2021 (after lecture): add option to info disclosure exercise; add item to slide on vtable attacking options
+    \item 10 March 2021 (after lecture): correct format string exploit slides to show format string split correctly, correct missing \% before last `hn' on split example
+    \end{itemize}
+\end{frame}
+}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item return to stack idea
+    \item writing `shellcode'
+    \item finding and variance of stack locations
+    \item ``nop sled'' --- long strings of nops to aid guessing
+    \item dealing with restricted characters
+    \end{itemize}
+\end{frame}
+
+
+\section{integer overflow}
+\input{../overflow/int-over-check-idea}
+
+\input{../overflow/int-over-ex1}
+
+\input{../overflow/int-over-ex2}
+% FIXME: -fsanitize=undefined
+
+% FIXME: exercise: what to overflow
+
+\section{mitigations, generally}
+\input{../mitigate/def-mitigate}
+
+\section{mitigating stack smashing}
+\input{../mitigate/how-mit-ss}
+
+\section{stack canaries}
+\subsection{in code}
+\input{../mitigate/stack-can-ex}
+
+\subsection{general operation}
+\input{../mitigate/stack-can-pic}
+
+\subsection{requirements and how they can fail to be met}
+\input{../mitigate/stack-can-hopes} % FIXME: repeat slide with highlites
+
+\subsection{how glibc generates canaries}
+\input{../mitigate/gcc-canary-gen}
+
+\subsection{GCC and canaries}
+\input{../mitigate/gcc-canary-opts}
+
+\subsection{canary costs}
+\input{../mitigate/canary-overhead}
+
+\subsection{overall pros/cons}
+\input{../mitigate/canary-pros-cons}
+
+\subsection{stack canary summary}
+\input{../mitigate/canary-summary}
+
+\subsection{noncontiguous overwrites}
+\againframe<2>{stackCanHopes}
+\input{../mitigate/stack-overwrite-noncontig}
+
+%FIXME: polls entry for exercise
+\input{../mitigate/stack-overwrite-noncontig-exer}
+
+
+\subsection{information disclosure}
+\againframe<3>{stackCanHopes}
+\subsubsection{examples}
+\input{../mitigate/some-info-disc-bugs}
+
+\subsubsection{exercise}
+\input{../mitigate/info-disc-stack-addr-exer}
+
+\subsubsection{avoiding?}
+\againframe<2>{reCanary}
+
+% FIXME: exercise: using info disclosure bug?
+
+
+
+\section{format string exploit}
+
+\subsection{format strings and the stack}
+\input{../overflow/format-view-stack}
+
+\subsection{printf writes!}
+\input{../overflow/format-printf-writes}
+
+\subsection{vulnerable code}
+\input{../overflow/format-exploit-example}
+
+\subsection{exploit with RA}
+\input{../overflow/format-exploit-ra}
+
+\subsection{splitting the write}
+\input{../overflow/format-exploit-ra-parts}
+
+\subsection{format exploit defense: FORTIFY\_SOURCE}
+\input{../overflow/format-exploit-fortify}
+
+\section{beyond stack smashing}
+\input{../overflow/beyond-stack-smash}
+
+\section{turning writes into code execution}
+\input{../overflow/arb-write}
+
+\subsection{arbitrary memory write: return address}
+\againframe<4>{arbWrite}
+
+\subsection{arbitrary memory write: other function pointers (intro)}
+\againframe<5>{arbWrite}
+\input{../overflow/fp-example}
+
+\section{function pointers types}
+\input{../overflow/fp-common}
+
+\subsection{in dynamic linking}
+\againframe<2>{funcPtrCommon}
+\input{../overflow/fp-dynamic-link}
+
+\subsection{in C for OO}
+\againframe<3>{funcPtrCommon}
+\input{../overflow/fp-c-oo}
+
+\subsection{C++ inheritence}
+\againframe<4>{funcPtrCommon}
+\input{../overflow/fp-cpp}
+
+\subsection{options for attacking function pointer tables}
+\input{../overflow/fp-table-attack}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+\subsection{format string exploit with GOT}
+\input{../overflow/format-exploit-got}
+
+\section{review: tricky parts of stack smashing}
+\input{../overflow/stack-smash-tricky}
+\end{document}

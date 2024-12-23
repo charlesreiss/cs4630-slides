@@ -1,0 +1,18 @@
+
+\begin{frame}{other policies Rust supports}
+    \begin{itemize}
+        \item \myemph<2>{RefCell} --- borrowing, but check at runtime, not compile-time
+            \begin{itemize}
+            \item detect at runtime if used while already used
+            \item internally: destructor call when returned object goes out of scope
+            \end{itemize}
+        \item Weak --- reference-counting, but don't contribute to count
+            \begin{itemize}
+            \item detect at runtime if used with count = 0
+            \end{itemize}
+        \item Mutex --- with multicore, enforce one user at a time by waiting
+        \item \ldots
+    \end{itemize}
+\end{frame}
+
+

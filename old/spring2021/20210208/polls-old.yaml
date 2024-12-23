@@ -1,0 +1,29 @@
+- title: "64-bit ex 2a"
+  questions:
+  - text: "encoding of add %eax, %r10d?"
+    single: true
+    options:
+    - "40 (REX.no flags) 01 c1 (mod: 11; reg: 000; r/m: 001)"
+    - "48 (REX.w) 01 c1 (mod: 11; reg: 000; r/m: 001)"
+    - "48 (REX.w) 01 c2 (mod: 11; reg: 000; r/m: 010)"
+    - "41 (REX.b) 01 c1 (mod: 11; reg: 000; r/m: 001)"
+    - "41 (REX.b) 01 c2 (mod: 11; reg: 000; r/m: 010)"
+    - "44 (REX.r) 01 c1 (mod: 11; reg: 000; r/m: 001)"
+    - "44 (REX.r) 01 c2 (mod: 11; reg: 000; r/m: 010)"
+    - "44 (REX.r) 01 c8 (mod: 11; reg: 001; r/m: 000)"
+    - "44 (REX.r) 01 c9 (mod: 11; reg: 001; r/m: 001)"
+    - "45 (REX.wb) 01 c1 (mod: 11; reg: 000; r/m: 001)"
+    - "45 (REX.wb) 01 c2 (mod: 11; reg: 000; r/m: 010)"
+    - "something else?"
+- title: "64-bit ex 2a"
+  questions:
+  - text: "encoding of add %rax, %rcx?"
+    single: true
+    options:
+    - "40 (REX.no flags) 01 c1 (mod: 11; reg: 000; r/m: 001)"
+    - "48 (REX.w) 01 c1 (mod: 11; reg: 000; r/m: 001)"
+    - "41 (REX.b) 01 c1 (mod: 11; reg: 000; r/m: 001)"
+    - "44 (REX.r) 01 c1 (mod: 11; reg: 000; r/m: 001)"
+    - "44 (REX.r) 01 d0 (mod: 11; reg: 000; r/m: 000)"
+    - "45 (REX.wb) 01 c1 (mod: 11; reg: 000; r/m: 001)"
+    - "something else?"

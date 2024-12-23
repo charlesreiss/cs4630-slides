@@ -1,0 +1,92 @@
+
+\begin{frame}[fragile,label=nonChecking]{non-checking library functions}
+\lstset{language=C,style=small}
+    \begin{itemize}
+    \item some C library functions make bounds checking hard: 
+\begin{lstlisting}
+strcpy(dest, source);
+strcat(dest, source);
+sprintf(dest, format, ...);
+\end{lstlisting}
+    \item bounds-checking versions (\myemph{added to library later}):
+\begin{lstlisting}
+/* might not add \0 (!) */
+strncpy(dest, source, size);
+strncat(dest, source, size);
+snprintf(dest, size, format, ...);
+\end{lstlisting}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=poorBoundsChecking]{poor bounds-checking APIs}
+\begin{lstlisting}[language=C,style=smaller]
+char dest[100];
+/* THIS CODE IS BROKEN */
+strncpy(dest, source1, sizeof dest);
+strncat(dest, source2, sizeof dest);
+printf("result was %s\n", dest)
+\end{lstlisting}
+\begin{itemize}
+\item the above can access memory of out of bounds
+\item \ldots in a bunch of ways
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=strncpyManual]{Linux's strncpy manual}
+\begin{lstlisting}[language=C,style=smaller]
+strncpy(dest, source1, sizeof dest);
+\end{lstlisting}
+\begin{itemize}
+\item ``Warning: If there is no
+       null byte among the first n bytes of src, the string placed in dest will not be null-terminated.''
+\end{itemize}
+\begin{itemize}
+\item exercise: what should the call have been?
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile,label=strncatManual]{Linux's strncat manual}
+\begin{lstlisting}[language=C,style=smaller]
+strncat(dest, source2, sizeof dest);
+\end{lstlisting}
+\begin{itemize}
+\item ``If src contains n or more bytes, strncat() writes n+1 bytes to  dest  (n
+from  src  plus the terminating null byte).  Therefore, the size of dest
+must be at least strlen(dest)+n+1.''
+\end{itemize}
+\begin{itemize}
+\item exercise: what should the call have been?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=betterStrX]{better versions?}
+\begin{itemize}
+\item FreeBSD (and Linux via libbsd): strlcpy, strlcat
+\item ``Unlike [strncat and strncpy], strlcpy() and strlcat() take the full size of the buffer
+        and gaurenteeto NUL-terminate the result...''
+\end{itemize}
+\begin{lstlisting}[language=C++,style=smaller]
+strlcpy(dest, source1, sizeof dest);
+strlcat(dest, source2, sizeof dest);
+\end{lstlisting}
+\vspace{.5cm}
+\begin{itemize}
+\item Windows: \texttt{strcpy\_s}, \texttt{strcat\_s} (same idea, differentname)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=cppBounds]{C++ bounds checking}
+\lstset{language=C,style=small}
+\begin{lstlisting}
+#include <vector>
+...
+std::vector<int> data;
+data.resize(50);
+// undefined behavior:
+data[60] = 0;
+// throws std::out_of_range exception
+data.at(60) = 0;
+\end{lstlisting}
+\end{frame}
+

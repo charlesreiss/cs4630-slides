@@ -1,0 +1,50 @@
+\begin{frame}{data races}
+    \begin{itemize}
+    \item Rusts rules around modification built assuming concurrency
+    \item OSes and other ``systems programming'' applications use multiple cores/threads
+    \item particular problem: value being used from multiple threads at same time
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=raceUAF]{data races from use-after-free}
+\begin{itemize}
+\item given x: Rc<Foo> variable calling x.clone() on two cores
+    \begin{itemize}
+    \item some variable shared between two cores
+    \item reference counting will prevent use-after-free, right?
+    \end{itemize}
+\end{itemize}
+\begin{Verbatim}
+x.clone on core A           x.clone on core B
+-------------------------------------------
+x.inc_strong():
+  temp <- self.count
+                            x.inc_strong():
+                              temp <- self.count
+                              self.count <- temp + 1
+  self.count <- temp + 1
+\end{Verbatim}
+\begin{itemize}
+\item problem: reference count one too low!
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Rust solution?}
+\begin{itemize}
+\item one option: require Rc implementation to handle mutiple cores
+    \begin{itemize}
+    \item problem: not zero overhead
+    \end{itemize}
+\item Rust solution: different types for multithreaded/multicore code
+\item two ``traits'' to mark custom types:
+    \begin{itemize}
+    \item Sync: can be used from multiple cores/threads at once
+    \item Send: can be moves from one thread to another
+    \end{itemize}
+\item two implementations of referenc counting
+    \begin{itemize}
+    \item Rc: not suitable for multicore, not marked Sync/Send
+    \item Arc: is suitable for multicore, slower than Rc probably
+    \end{itemize}
+\end{itemize}
+\end{frame}

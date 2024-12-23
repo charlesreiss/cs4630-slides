@@ -1,0 +1,24 @@
+
+\begin{frame}[fragile,label=cascade]{example: Cascade decrypter}
+\lstset{
+    style=small,
+    language=myasm,
+    moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
+    moredelim={**[is][\btHL<3|handout:0>]{@hi3@}{@endhi@}},
+}
+\begin{lstlisting}
+    lea encrypted_code, %si
+decrypt:
+    mov $0x682, @hi3@%sp@endhi@ // length of body
+    @hi2@xor %si, (%si)@endhi@
+    @hi2@xor %sp, (%si)@endhi@
+    inc %si
+    dec @hi3@%sp@endhi@
+    jnz decrypt
+encrypted_code:
+    ...
+\end{lstlisting}
+\imagecredit{Szor Listing 7.1}
+\end{frame}
+
+

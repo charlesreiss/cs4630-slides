@@ -1,0 +1,49 @@
+
+\begin{frame}[fragile,label=bbFuzz]{`blackbox' fuzzing}
+\lstset{
+    language=C++,
+    style=small,
+    moredelim={**[is][\btHL<2>]{~flip~}{~end~}},
+    moredelim={**[is][\btHL<3>]{~parse~}{~end~}},
+}
+\begin{lstlisting}
+void fuzzTestImageParser(std::vector<byte> &originalImage) {
+  for (int i = 0; i < NUM_TRIES; ++i) {
+    std::vector<byte> testImage;
+    testImage = originalImage;
+    int numberOfChanges = rand() % MAX_CHANGES;
+    for (int j = 0; j < numberOfChanges; ++j) {
+      /* flip some random bits */
+      ~flip~testImage[rand() % testImage.size()] ^= rand() % 256;~end~
+    }
+    int result = ~parse~TryToParseImage(testImage);~end~
+    if (~parse~result == CRASH~end~) ...
+  }
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{blackbox fuzzing pros}
+    \begin{itemize}
+        \item works with \myemph{unmodified software}
+        \begin{itemize}
+            \item even with embedded assembly, etc.
+        \end{itemize}
+    \item works with many kinds of input
+        \begin{itemize}
+            \item \myemph{don't need to understand input format}
+        \end{itemize}
+    \item easy to \myemph{parallelize}
+        \vspace{.5cm}
+    \item has actually found lots of bugs
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{`blackbox'?}
+    \begin{itemize}
+    \item the program is a ``black box'' --- can't look inside
+    \item we only run it, see if it works
+    \item for memory errors --- works $\approx$ doesn't crash
+    \end{itemize}
+\end{frame}
+

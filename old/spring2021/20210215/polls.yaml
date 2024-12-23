@@ -1,0 +1,61 @@
+- title: "cavity exercise? (difficulty)"
+  questions:
+  - text: "which is least difficult to find with code?"
+    single: true
+    options:
+    - "A. gaps between segments"
+    - "B. space added for alignment between instructions"
+    - "C. unused space in headers"
+  - text: "which is most difficult to find with code?" 
+    single: true
+    options:
+    - "A. gaps between segments"
+    - "B. space added for alignment between instructions"
+    - "C. unused space in headers"
+- title: "cavity exericse? (alignment false pos)"
+  questions:
+  - text: "likely false positives when finding alignment by looking for bytes?"
+    multiple: true
+    options:
+    - "A. C3 might be part of non-ret instruction"
+    - "B. ret might return to byte immediately after (0x404a02 in example)"
+    - "C. some other instruction might jump to one of the bytes after"
+    - "D. the entire sequence could be part of the program's data (if the virus didn't check that it was in the text section)"
+- title: "easiest/most difficult virus code places to id"
+  questions:
+  - text: "easiest to identify most of the time [without false positives]?"
+    single: true
+    options:
+    - "A. replaced executable"
+    - "B. appended to executable w/o compresion"
+    - "C. replaced cavities"
+    - "D. replaced bootloader"
+    - "E. new automatically started system program"
+  - text: "most difficult to identify most of the time [without false positives]?"
+    single: true
+    options:
+    - "A. replaced executable"
+    - "B. appended to executable w/o compression"
+    - "C. replaced cavities"
+    - "D. replaced bootloader"
+    - "E. new automatically started system program"
+- title: "easiest/most difficult virus invoke places to id"
+  questions:
+  - text: "easiest to identify most of the time [without false positives]?"
+    single: true
+    options:
+    - "A. replaced start location"
+    - "B. replaced dynamic linker stub"
+    - "C. replaced dynamic library symbol location"
+    - "D. replaced relocation record"
+    - "E. replaced bootloader"
+    - "F. new automatically started system program"
+  - text: "most difficult to identify most of the time [without false positives]?"
+    single: true
+    options:
+    - "A. replaced start location"
+    - "B. replaced dynamic linker stub"
+    - "C. replaced dynamic library symbol location"
+    - "D. replaced relocation record"
+    - "E. replaced bootloader"
+    - "F. new automatically started system program"

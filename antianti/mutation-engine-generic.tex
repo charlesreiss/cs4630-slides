@@ -1,0 +1,12 @@
+
+\begin{frame}[fragile,label=mutationEngine]{`mutation engine'}
+\begin{lstlisting}[language=C++,style=small]
+CopyDecrypter(original_code, new_code) {
+    for (each instruction in original_code) {
+        new_code += RandomNumberOfNops();
+        new_code += PossiblyChooseVariant(instruction)
+    }
+}
+\end{lstlisting}
+\end{frame}
+

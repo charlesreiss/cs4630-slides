@@ -1,0 +1,130 @@
+\begin{frame}{rules to stop dangling pointers (1)}
+    \begin{itemize}
+    \item objects have an single \myemph{owner}
+    \item owner is the only one allowed to modify an object
+    \item owner can give away ownership
+    \item simplest version: only owner can access object
+    \item never have multiple references to object --- always move/copy
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=rustOwnership1]{Rust objects and ownership (1)}
+    \begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
+fn mysum(vector: Vec<u32>) -> u32 {
+    let mut total: u32 = 0
+    for value in &vector {
+        total += value
+    }
+    return total
+}
+
+fn foo() {
+    let vector: Vec<u32> = vec![1, 2, 3];
+    let sum = mysum(vector);
+    // **moves** vector into mysum()
+         // philosophy: no implicit expensive copies
+    
+    println!("Sum is {}", sum);
+    // ERROR
+    println!("vector[0] is {}" , vector[0]);
+}
+\end{minted}
+    \begin{tikzpicture}[overlay,remember picture]
+        \begin{visibleenv}<2>
+            \node[anchor=center,font=\small,draw=black,ultra thick,fill=white] at (current page.center){
+            \begin{lstlisting}[language={},style=script]
+   Compiling lecture-demo v0.1.0 (file:///home/cr4bd/spring2017/cs4630/...
+error[E0382]: use of moved value: `vector`
+  --> src/main.rs:16:34
+   |
+13 |     let sum = mysum(vector);
+   |                     ------ value moved here
+...
+16 |     println!("vector[0] is {}" , vector[0]);
+   |                                  ^^^^^^ value used here after move
+\end{lstlisting}
+        };
+        \end{visibleenv}
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=rustOwnership2]{Rust objects and ownership (2)}
+    \begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
+fn mysum(vector: Vec<u32>) -> u32 {
+    let mut total: u32 = 0
+    for value in &vector {
+        total += value
+    }
+    return total
+}
+
+fn foo() {
+    let vector: Vec<u32> = vec![1, 2, 3];
+    let sum = mysum(vector.clone());
+    // give away a copy of vector instead
+        // mysum will dispose, since it owns it
+    
+    println!("Sum is {}", sum);
+    println!("vector[0] is {}" , newVector[0]);
+}
+\end{minted}
+    \begin{tikzpicture}[overlay,remember picture]
+        \begin{visibleenv}<2>
+            \node[anchor=center,font=\small,draw=black,ultra thick,fill=white,align=center] at (current page.center){
+            mysum borrows a copy
+        };
+        \end{visibleenv}
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{moving?}
+    \begin{itemize}
+    \item moving a Vec --- really copying a pointer to an array and its size
+    \item cloning a Vec --- making a copy of the array itself, too
+    \vspace{.5cm}
+    \item Rust defaults to moving non-trivial types
+    \item some trivial types (u32, etc.) are copied by default
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=rustOwnership3]{Rust objects and ownership (3)}
+    \begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
+fn mysum(vector: Vec<u32>) -> (u32, Vec<u32>) {
+    let mut total: u32 = 0
+    for value in &vector {
+        total += value
+    }
+    return (total, vector)
+}
+
+fn foo() {
+    let vector: Vec<u32> = vec![1, 2, 3];
+    let (sum, newVector) = mysum(vector);
+    // give away vector, get it back
+    
+    println!("Sum is {}", sum);
+    println!("vector[0] is {}" , newVector[0]);
+}
+\end{minted}
+    \begin{tikzpicture}[overlay,remember picture]
+        \begin{visibleenv}<2>
+        \node[anchor=center,font=\small,draw=black,ultra thick,align=center,fill=white] 
+            at (current page.center) {
+        mysum ``borrows'' vector, then gives it back \\
+        uses pointers
+        };
+        \end{visibleenv}
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{ownership rules}
+    \begin{itemize}
+    \item exactly one owner at a time
+    \item giving away ownership means you \myemph{can't use object}
+        \begin{itemize}
+        \item<2> common idiom --- temporarily give away object
+        \end{itemize}
+    \item either give object new owner or deallocate
+    \end{itemize}
+\end{frame}
+

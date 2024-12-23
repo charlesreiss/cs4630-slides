@@ -1,0 +1,141 @@
+\usetikzlibrary{arrows.meta,chains}
+
+\begin{frame}<1-2>[label=bootProc]{boot process}
+    \begin{tikzpicture}
+        \begin{scope}[start chain=going below,every node/.style={draw,align=center,join,on chain,thick,minimum width=3.5cm},
+                      every join/.style={-Latex,thick}]
+        \node[draw=none] (fixedLoc) { processor reset };
+        \node[alt=<3>{draw=red,very thick}{}] (bios) {BIOS/EFI \\ \small (chip on motherboard)};
+        \node[alt=<2>{draw=red,very thick}{}] (bootloader) {bootloader};
+        \node[alt=<4>{draw=red,very thick}{}] (os) {operating system};
+        \end{scope}
+        \node[left=.5cm of bios,font=\small] (biosLabel) {very CPU/motherboard-specific code};
+        \draw[-Latex,thick] (biosLabel) -- (bios);
+        \node[left=.5cm of bootloader,font=\small,align=right] (bootloaderLabel) {fixed location on disk \\ code that understands files};
+        \draw[-Latex,thick] (bootloaderLabel) -- (bootloader);
+        \node[left=.5cm of os,font=\small] (osLabel) {files in a filesystem};
+        \draw[-Latex,thick] (osLabel) -- (os);
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{bootloaders in the DOS era}
+    \begin{itemize}
+    \item used to be common to boot from floppies
+    \item \myemph{default to booting from floppy} if present
+        \begin{itemize}
+        \item even if hard drive to boot from
+        \end{itemize}
+    \item applications distributed as bootable floppies
+    \item so bootloaders on all devices were a target for viruses
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{historic bootloader layout}
+    \begin{itemize}
+    \item bootloader in \myemph{first sector} (512 bytes) of device
+    \item (along with partition information)
+    \item code in BIOS to copy bootloader into RAM, start running
+    \item bootloader responsible for disk I/O etc.
+        \begin{itemize}
+        \item some library-like functionality in BIOS for I/O
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{bootloader viruses}
+    \newcommand{\tearBox}{
+        \draw[very thick] (0, -6) -- (0, 0) -- (4, 0) -- (4, -6);
+        \draw[thick] (0, -6) -- (1.2, -5.5) -- (2., -6.6) -- (2.6, -5.8) -- (3.5, -6.6) -- (4, -6);
+    }
+    \begin{itemize}
+    \item example: Stoned
+    \end{itemize}
+    \begin{tikzpicture}
+        \draw[fill=green!20] (0, 0) rectangle (4, -.2);
+        \draw[fill=yellow!20] (0, -.2) rectangle (4, -0.5) node[midway,font=\tiny] { partition table };
+        \draw[fill=green!20] (0, -.5) rectangle (4, -1.0) node[midway,font=\small] { bootloader };
+        \tearBox
+        \begin{scope}[xshift=7cm]
+        \draw[fill=red!20] (0, 0) rectangle (4, -.2);
+        \draw[fill=yellow!20] (0, -.2) rectangle (4, -0.5) node[midway,font=\tiny] { partition table };
+        \draw[fill=red!20] (0, -.5) rectangle (4, -1.0) node[midway,font=\small] { virus code };
+        \begin{scope}[yshift=-4cm]
+        \draw[fill=green!20] (0, 0) rectangle (4, -.2);
+        \draw[fill=green!20] (0, -.5) rectangle (4, -1.0) node[midway,font=\small] { saved bootloader };
+        \draw[dashed,fill=yellow!20] (0, -.2) rectangle (4, -0.5) node[midway,font=\tiny] { partition table (unused) };
+        \end{scope}
+        \tearBox 
+        \end{scope}
+        \draw[line width=1mm,black!50, -Latex] (4.2, -3) -- (6.8, -3);
+
+        \begin{pgfonlayer}{bg}
+            \begin{visibleenv}<2>
+                \path[fill=blue!30] (0, -4) rectangle (4, -5) node[midway] { data here??? };
+            \end{visibleenv}
+        \end{pgfonlayer}
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{data here???}
+    \begin{itemize}
+        \item might be data there --- risk
+        \item some unused space after partition table/boot loader common
+            \begin{itemize}
+            \item (allegedly)
+            \end{itemize}
+        \item also be filesystem metadata not used on smaller floppies/disks
+        \vspace{.5cm}
+        \item but could be wrong --- oops
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{modern bootloaders --- UEFI}
+    \begin{itemize}
+    \item BIOS-based boot is going away (slowly)
+    \item new thing: UEFI (Universal Extensible Firmware Interface)
+    \item like BIOS:
+        \begin{itemize}
+        \item library functionality for bootloaders
+        \item loads initial code from disk/DVD/etc.
+        \end{itemize}
+    \item unlike BIOS:
+        \begin{itemize}
+        \item much more understanding of file systems
+        \item much more modern set of library calls
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\againframe<3>{bootProc}
+
+\begin{frame}{BIOS/UEFI implants}
+    \begin{itemize}
+    \item infrequent
+    \item BIOS/UEFI code is \myemph{very non-portable}
+    \item BIOS/UEFI update may require physical access
+    \item BIOS/UEFI code may require cryptographic signatures
+    \item \ldots but \myemph{very hard to remove} --- ``persist'' other malware
+    \item reports of BIOS/UEFI-infecting ``implants''
+        \begin{itemize}
+        \item sold by Hacking Team (Milan-based malware company) 
+        \item listed in leaked NSA Tailored Access Group catalog
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\againframe<4>{bootProc}
+
+\begin{frame}{system files}
+    \begin{itemize}
+    \item simpliest strategy: stuff that runs when you start your computer
+    \item add a new startup program, run in the background
+        \begin{itemize}
+        \item easy to blend in
+        \end{itemize}
+    \vspace{.5cm}
+    \item alternatively, infect one of many system programs automatically run
+    \end{itemize}
+
+    % FIXME: example from CodeRed or similar?
+\end{frame}
+

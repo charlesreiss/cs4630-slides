@@ -1,0 +1,17 @@
+
+\begin{frame}{Rust philosophy}
+    \begin{itemize}
+    \item default rules that only allow `safe' things
+        \begin{itemize}
+        \item no dangling pointers
+        \item no out-of-bounds accesses
+        \end{itemize}
+    \item escape hatch to use ``raw'' pointers or unchecked libraries
+    \item escape hatch can be used to write useful libraries
+        \begin{itemize}
+            \item e.g. Vector/ArrayList equivalent
+            \item \myemph{expose interface that is safe}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

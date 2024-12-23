@@ -1,0 +1,28 @@
+\begin{frame}{a thought on permissions}
+    \begin{itemize}
+    \item if we can set memory non-writeable
+    \item how about non-executable?
+    \vspace{.5cm}
+    \item we never want to execute things on the stack anyways, right?
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile,label=wxorx]{write XOR execute}
+    \begin{itemize}
+    \item many names:
+    \begin{itemize}
+        \item \verb|W^X| (write XOR execute)
+        \item DEP (Data Execution Prevention)
+        \item NX bit (No-eXecute) (hardware support)
+        \item XD bit (eXecute Disable) (hardware support)
+    \end{itemize}
+    \item mark writeable memory as executable
+    \item how will users insert their machine code?
+        \begin{itemize}
+        \item can only code in application + libraries
+        \item a problem, right?
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

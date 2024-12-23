@@ -1,0 +1,20 @@
+
+\begin{frame}{symbolic execution}
+    \begin{itemize}
+    \item have an emulator/virtual machine
+    \item but represent input values as \myemph{symbolic variables}
+        \begin{itemize}
+            \item like in algebra
+        \end{itemize}
+    \item choose a path through the program, track \myemph{constraints}
+        \begin{itemize}
+        \item what values did input need to have to get here?
+        \end{itemize}
+    \item then solve constraints based on variables to create real test case
+        \begin{itemize}
+        \item no solution? impossible path
+        \item find solution? test case
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

@@ -1,0 +1,75 @@
+
+\begin{frame}{real signatures: ClamAV}
+\begin{itemize}
+\item ClamAV: open source (mostly email) scanning software
+\item signature types:
+    \begin{itemize}
+    \item hash of file
+    \item hash of contents of segment of executable
+        \begin{itemize}
+        \item built-in executable, archive file parser
+        \end{itemize}
+    \item fixed string
+    \item basic regular expressions
+        \begin{itemize}
+        \item wildcards, character classes, alternatives
+        \end{itemize}
+    \item more complete regular expressions
+        \begin{itemize}
+        \item including features that need more than state machines
+        \end{itemize}
+    \item meta-signatures: match if other signatures match
+    \item icon image fuzzy-matching
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=exampleSigsHash]{example ClamAV signatures (1)}
+    \begin{itemize}
+    \item hashes
+    \end{itemize}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}]
+4b3858c8b35e964a5eb0e291ff69ced6:78454:Xls.Exploit.Agent-4323916-1:73
+7873be8fc5e052caa70fdb8f76205892:293376:Win.Trojan.Sality-93158:73
+f358d77926045cba19131717a7b15dec:293376:Win.Trojan.Sality-93159:73
+48d4c5294357e664bac1a07fce82ea22:450024:Win.Trojan.Sality-93160:73
+e4b8442638b3948ab0291447affa6790:293376:Win.Trojan.Sality-93161:73
+df36dc207b689a73ab9cf45a06fb71b0:232448:Win.Trojan.Sality-93162:73
+baaeeabc7f4be3199af3d82d10c6b39f:293376:Win.Trojan.Sality-93163:73
+...
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile,label=exampleSigsRE]{example ClamAV signatures (2)}
+    \begin{itemize}
+    \item simple regular expressions (with hex, different syntax than flex)\ldots
+    \end{itemize}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}]
+Win.Trojan.Vienna-1:0:*:5051e8??00{1-255}5b83eb??fc8d37bf0001b90300f3a48bf3558bec83ec7cb430cd21
+Win.Trojan.Vienna-2:0:*:be000356c3*50be????8bd6fcb90500bf0001f3a48bfab430cd21
+Win.Trojan.Vienna-3:0:*:50ba????8bf283c60090bf0001b90300fcf3a48bfab430cd213c02                     
+Win.Trojan.Vienna-4:0:*:b440b900048bd681eac102cd21721f3d
+Win.Trojan.Vienna-5:0:*:b904048bd681ea130352515350b4
+...
+Win.Trojan.Vienna-129:0:*:51b89b03cd213d01017503e9????ba6d03fc8bf283c60a90b90300bf0001f3a4
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile,label=exampleSigsLog]{example ClamAV signatures (3)}
+    \begin{itemize}
+    \item `logical' signatures: mutliple regexes together:
+    \end{itemize}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}]
+Andr.Trojan.Pjapps-58;Engine:51-255,
+    Container:CL_TYPE_ZIP,Target:0; 
+    (6&0&1&(2|3)&(4|5));  // expected patterns of below
+    3a39303333; // pattern 0
+    696d6569;   // pattern 1
+    616e64726f69642e6c6f67; // pattern 2
+    77696e646f772e6c6f67;   // pattern 3
+    4e6f6b69614e373631302d31; // pattern 4
+    336c676f6167646d66656a656b67666f733974313563686f6a6d; // pattern 5
+    0:646578 // pattern 6: "0:" means must be found at beginning of file
+\end{Verbatim}
+\end{frame}
+

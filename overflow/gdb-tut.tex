@@ -1,0 +1,93 @@
+
+\begin{frame}{on using GDB}
+    \begin{itemize}
+    \item cheat sheet on website in OVER assignment
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{gdb demo}
+\end{frame}
+
+\begin{frame}[fragile,label=trigSeg]{trigger segfault}
+\begin{Verbatim}[fontsize=\fontsize{10}{11}\selectfont]
+gdb ./a.out
+...
+(gdb) run <big-input.txt
+Starting program: /path/to/a.out 
+Program received signal SIGSEGV, Segmentation fault.
+0x000000000040053b in vulnerable ()
+(gdb) disass
+Dump of assembler code for function vulnerable:
+   0x0000000000400526 <+0>:     sub    $0x18,%rsp
+   0x000000000040052a <+4>:     mov    %rsp,%rdi
+   0x000000000040052d <+7>:     mov    $0x0,%eax
+   0x0000000000400532 <+12>:    callq  0x400410 <gets@plt>
+   0x0000000000400537 <+17>:    add    $0x18,%rsp
+=> 0x000000000040053b <+21>:    retq   
+End of assembler dump.
+(gdb) p $rsp 
+$1 = (void *) 0x7fffffffdff8
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile,label=trigSegStripped]{trigger segfault --- stripped}
+\begin{Verbatim}[fontsize=\fontsize{10}{11}\selectfont]
+gdb ./a.out
+...
+(gdb) run <big-input.txt
+Starting program: /path/to/a.out 
+Program received signal SIGSEGV, Segmentation fault.
+0x000000000040053b in ?? ()
+(gdb) disassemble
+No function contains program counter for selected frame.
+(gdb) x/i $rip
+=> 0x40053b:    retq   
+(gdb)
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{stripping}
+\begin{itemize}
+\item you can remove debugging information from executables
+\item Linux command: \texttt{strip}
+\item GCC option \texttt{-s}
+\item \texttt{disassemble} can't tell where function starts
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=badDisass]{disassembly attempts}
+\begin{Verbatim}[fontsize=\fontsize{10}{11}\selectfont]
+gdb ./a.out
+...
+(gdb) run <big-input.txt
+Starting program: /path/to/a.out 
+Program received signal SIGSEGV, Segmentation fault.
+0x000000000040053b in ?? ()
+(gdb) disassemble $rip-5,$rip+1
+Dump of assembler code from 0x400536 to 0x40053c:
+   0x0000000000400536:  decl   -0x7d(%rax)
+   0x0000000000400539:  (bad)  
+   0x000000000040053a:  sbb    %al,%bl
+End of assembler dump.
+(gdb) disassemble $rip-4,$rip+1
+Dump of assembler code from 0x400537 to 0x40053c:
+   0x0000000000400537:  add    $0x18,%rsp
+=> 0x000000000040053b:  retq   
+End of assembler dump.
+(gdb)
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile,label=otherAss]{other notable debugger commands}
+\begin{itemize}
+\item \texttt{b *0x12345} --- set breakpoint at address
+    \begin{itemize}
+    \item can set breakpoint on machine code on stack
+    \end{itemize}
+\item watchpoints --- like breakpoints but trigger on change to/read from value
+    \begin{itemize}
+    \item ``when is return address overwritten''
+    \end{itemize}
+\end{itemize}
+\end{frame}
+

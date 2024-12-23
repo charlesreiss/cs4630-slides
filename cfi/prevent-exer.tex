@@ -1,0 +1,29 @@
+\begin{frame}[fragile,label=cfiPrevents]{CFI prevents?}
+\begin{lstlisting}[language=C++,style=script]
+class Foo { public:
+    virtual void f() { }
+};
+class Bar : public Foo { public:
+    virtual void f() { g(1); }
+};
+class Quux : public Foo { public:
+    virtual void f() { }
+};
+void g(int x) {
+    if (x == 0) { danger(); }
+}
+int h(int x) { return 0; }
+int (*ptr)(int) = &h;
+\end{lstlisting}
+\begin{itemize}
+\item with clang's CFI, which likely can end up calling \texttt{danger()}
+      if an attacker can first write to arbitrary memory locations?
+    \begin{itemize}
+    \item A. \lstinline|(*ptr)(1);| 
+    \item B. \lstinline|(*ptr)(0);| \only<2->{\myemph{if compiler thinks ptr set to g ever, yes; otherwise, no}}
+    \item C. \lstinline|Foo *q = attacker_controlled(); q->f()| \only<2->{\myemph{can only call real f() methods; could call Bar::f() but how to change g's arg?}}
+    \item D. \lstinline|Quux *q = attacker_controlled(); q->f()| \only<2->{\myemph{can only call real f() methods of Quux and subclasses, so can't even call Bar::f()}}
+    \item E. none of these
+    \end{itemize}
+\end{itemize}
+\end{frame}

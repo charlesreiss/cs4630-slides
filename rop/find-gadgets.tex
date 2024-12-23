@@ -1,0 +1,20 @@
+
+\begin{frame}{how did I find that?}
+    \begin{itemize}
+        \item no, I am not really good at looking at \texttt{objdump} output
+        \item tools scan binaries for \textit{gadgets}
+        \item one you'll use in upcoming homework
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{gadgets generally}
+    \begin{itemize}
+        \item bits of machine code that do work, then return or jump
+        \item ``chain'' together, by having them jump to each other
+        \item most common: find gadget ending with \texttt{ret}
+            \begin{itemize}
+            \item pops address of next gadget offs tack
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+

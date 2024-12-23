@@ -1,0 +1,42 @@
+\begin{frame}{recall: ASLR}
+    \begin{itemize}
+    \item easlier mentioned ASLR (address space layout randomization)
+    \item for stack: choose secret starting address for stack
+    \vspace{.5cm}
+    \item info disclosure bugs are a big problem for this!
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=infoDiscEx]{exercise}
+\begin{tikzpicture}
+\node (first) {
+\begin{lstlisting}[language=C,style=smaller]
+struct point {
+    int x, y, z;
+};
+\end{lstlisting};
+};
+\node[anchor=north west] at (first.north east) {
+\begin{lstlisting}[language=C,style=smaller]
+struct point *p;
+...
+    if (command == "get") { 
+        /* 'p' could be uninitialized */
+        printf("%d,%d,%d\n", p->x, p->y, p->z);
+    } ...
+...
+\end{lstlisting}
+};
+\end{tikzpicture}
+\vspace{-.25cm}
+\begin{itemize}
+\item Which initial value for \texttt{p} (``left over'' from prior use of register, etc.) would be most useful for figuring out the address of the stack pointer?
+\begin{itemize}
+\item A. \texttt{p} is an invalid pointer and accessing it will crash the program
+\item B. \texttt{p} points to space on the stack that is currently unallocated, but last contained an input buffer
+\item C. \texttt{p} points to a struct allocated on the heap
+\item D. \texttt{p} points to space on the stack that currently holds a return address
+\item E. \texttt{p} points to space on the stack that is currently unallocated, but last contained a pointer to the last used byte of an input buffer on the stack
+\end{itemize}
+\end{itemize}
+\end{frame}

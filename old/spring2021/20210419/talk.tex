@@ -1,0 +1,109 @@
+\graphicspath{{./figures/}}
+\title{rust / sandboxing 1}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item static analysis possibilities
+        \begin{itemize}
+        \item very practical analyses: finding common mistake patterns
+        \item more ambitious/inaccurate: safety properties like no UAF/out-of-bounds
+        \end{itemize}
+    \item information flow analysis / static or dynamic
+        \begin{itemize}
+        \item does data move from source to sink
+        \item e.g. does private info (keypresses, phone numbers, etc.) leak?
+        \item e.g. can attacker control SQL statement, shell command?
+        \item e.g. where does malware's network input end up on filesystem?
+        \end{itemize}
+    \item toward better programming languages
+        \begin{itemize}
+        \item what about C/C++ makes people use it
+        \item idea of escape hatches for limits of safe languages
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\section{logistics note}
+\begin{frame}{logistics note}
+    \begin{itemize}
+    \item FUZZ deadline
+    \item quiz
+    \end{itemize}
+\end{frame}
+
+\subsection{general syntax}
+\input{../betterpl/rust-syntax-basic}
+
+\subsection{references}
+\subsubsection{basic example}
+\input{../betterpl/rust-refs}
+
+\subsubsection{in context}
+\input{../betterpl/rust-ex-with-refs}
+
+\subsection{basic ownership}
+\input{../betterpl/rust-ownership}
+
+\subsection{exercise}
+\input{../betterpl/rust-ownership-exer}
+
+\section{Rust: stopping dangling pointers}
+\input{../betterpl/rust-no-dangle-rules}
+
+\subsection{borrowing}
+\input{../betterpl/rust-borrowing}
+
+\subsection{exercise}
+\input{../betterpl/rust-no-dangle-rules-apply}
+
+\subsection{lifetimes}
+
+\subsubsection{motivation}
+\input{../betterpl/why-lifetimes}
+
+\subsubsection{lifetime tracking}
+\againframe<2>{dangleRules}
+\input{../betterpl/rust-lifetimes}
+
+\subsection{one writer}
+\againframe<3>{dangleRules}
+\input{../betterpl/rust-one-writer}
+
+\section{Rust: escape hatches and supporting dynamic allocation}
+\input{../betterpl/dynamic-alloc-basic}
+
+\subsection{escape hatches implementing Vec}
+\input{../betterpl/rust-escape-inside-vec}
+
+\subsection{implementing new sharing schemes}
+\input{../betterpl/rust-impl-rc}
+
+\subsection{concurrency}
+\input{../betterpl/rust-concurrency}
+
+% FIXME: example of concurrency based exploit in Linux
+
+\subsection{other Rust smart pointers}
+\input{../betterpl/other-rust-smartptr}
+
+\section{zero-overhead}
+\input{../betterpl/zero-overhead-p}
+
+\section{aside: other language enforcement?}
+\input{../betterpl/other-things-lang-enforce}
+
+\subsection{example: constant time languages}
+\input{../betterpl/fact}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+\subsubsection{example Linux concurrency UAF}
+\input{../betterpl/linux-conc-uaf}
+
+\end{document}

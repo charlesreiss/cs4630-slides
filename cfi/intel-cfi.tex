@@ -1,0 +1,15 @@
+\begin{frame}{Intel hardware CFI support}
+    \begin{itemize}
+    \item Intel adds `endbr64' instruction
+    \item special NOP instruction that acts as a label
+    \item means: only one label for everything
+        \begin{itemize}
+        \item prevents gadgets from existing
+        \end{itemize}
+    \vspace{.5cm}
+    \item ``Control Flow Enforcement'': if enabled \\
+        computed jump to non-endbr64 triggers segfault-like error
+    \vspace{.5cm}
+    \item ARM has similar feature called Branch Target Identification
+    \end{itemize}
+\end{frame}

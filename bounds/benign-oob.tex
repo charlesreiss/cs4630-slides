@@ -1,0 +1,13 @@
+
+\begin{frame}[fragile,label=bbNit]{benign out-of-bounds}
+\lstset{language=C,style=small}
+    \begin{itemize}
+        \item baggy bounds also has support for benign bounds violations:
+\begin{lstlisting}
+int rawArray[100];
+int *array = &rawArray[-1];
+// now pretend array's first index is 1
+\end{lstlisting}
+        \item yes, this is done in real C programs
+    \end{itemize}
+\end{frame}

@@ -1,0 +1,19 @@
+\begin{frame}[fragile,label=covFuzzExercise]{exercise: coverage guidance good for?}
+\begin{lstlisting}[language=C,style=smaller]
+void example1(int a, int b) {
+    if (a < 4 && b < 4 && a == b) {
+        assert(a + b != 6);
+    }
+}
+void example2(int a, int b) {
+    assert(a != 10325);
+}
+void example3(int a, int b) {
+    assert(a != 10325 && b != 10543);
+}
+\end{lstlisting}
+\begin{itemize}
+\item exercise: for which of these functions would coverage guided fuzzing be most/least better
+than random testing for making the assertion fail?
+\end{itemize}
+\end{frame}

@@ -1,0 +1,28 @@
+\begin{frame}[fragile,label=doubleFreeExer]{double-free exercise}
+\begin{lstlisting}[language=C++,style=script]
+free(...) {
+    freed->next = first_free
+    first_free = freed;
+}
+malloc(...) {
+    if (can use first free) {
+        void *to_return = first_free;
+        first_free = first_free->next;
+        return to_return;
+    }
+}
+vulnerable() {
+    char *p = malloc(100);
+    free(p);
+    free(p);
+    char *q = malloc(100);
+    char *r = malloc(100);
+    strlcpy(q, attacker_input1, 100);
+    char *s = malloc(100);
+    strlcpy(r, attacker_input2, 100);
+    strlcpy(s, attacker_input3, 100);
+}
+\end{lstlisting}
+Exericse: which input should contain address to overwrite? \\
+which input should contain value to put in that address?
+\end{frame}

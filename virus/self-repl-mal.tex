@@ -1,0 +1,46 @@
+\usetikzlibrary{calc}
+
+\begin{frame}{self-replicating malware}
+    \begin{itemize}
+    \item attacker's problem: \\getting malware to \myemph{run where they want}
+    \item some options:
+    \vspace{.5cm}
+    \item connect to machine and install it there
+    \item send to someone
+    \item convince someone else to send it to someone
+    \end{itemize}
+    \begin{tikzpicture}[overlay,remember picture]
+        \begin{visibleenv}<2>
+        \node[draw,red!80!black,thick] at ([yshift=1cm]current page.south) {
+            \large all automatable!
+        };
+        \end{visibleenv}
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}<1>{recall: kinds of malware}
+    \begin{itemize}
+    \item viruses --- infects \myemph{other programs}
+    \item \myemph<3>{worms} --- own malicious programs
+    \item \myemph<4>{trojans} --- useful (looking) program that also is malicious
+    \item \myemph<2>{rootkit} --- silent control of system
+    \end{itemize}
+    \begin{tikzpicture}[overlay,remember picture]
+        \begin{visibleenv}<2>
+        \node[draw,red!80!black,thick] at ([yshift=1cm]current page.south) {
+            only useful after compromising
+        };
+        \end{visibleenv}
+        \begin{visibleenv}<3>
+        \node[draw,red!80!black,thick,align=left] at ([yshift=1cm]current page.south) {
+            needs to way to be run in the first place
+        };
+        \end{visibleenv}
+        \begin{visibleenv}<3>
+        \node[draw,red!80!black,thick] at ([yshift=1cm]current page.south) {
+            targeted ``social engineering''
+        };
+        \end{visibleenv}
+    \end{tikzpicture}
+\end{frame}
+

@@ -1,0 +1,27 @@
+\begin{frame}[fragile,label=fptrValues]{finding possible function pointer values?}
+\begin{itemize}
+\item given call using function pointers \\
+how do we find the \textbf{legitimate} possible values?
+\item one high-level idea:
+\end{itemize}
+\begin{lstlisting}[language={},style=smaller,
+    moredelim={**[is][\btHL<2-|handout:0>]{~2~}{~end~}},
+]
+for each fptr constant X:
+    PossibleValues[X] = {X}
+for each fptr ~2~variable X~end~:
+    PossibleValues[X] = empty set
+until PossibleValues stops changing:
+    for each fptr assignment LHS=RHS:
+        for ~2~each fptr variable/constant Y~end~
+                ~2~that RHS could evaluate to~end~:
+            PossibleValues[LHS] = Union(
+                PossibleValues[LHS],
+                PossibleValues[Y]
+            )
+\end{lstlisting}
+\begin{itemize}
+\item \ldots but not so easy to ID function pointer vars/assignments?
+\end{itemize}
+\end{frame}
+

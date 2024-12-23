@@ -1,0 +1,63 @@
+\usetikzlibrary{arrows.meta,matrix,fit}
+\begin{frame}[fragile,label=heapSubterExercise]{heap overflow exercise}
+\begin{lstlisting}[language=C++,style=script]
+void operator delete(void *p) {
+    ...
+    block_after->prev->next = block_after->next;
+    ...
+}
+...
+class MyBuffer : public GenericMyBuffer {
+public:
+    virtual void store(const char *p) override {
+        strcpy(buffer, p);
+    }
+private:
+    char buffer[64];
+};
+...
+    GenericMyBuffer *a = new MyBuffer;
+    ...
+    a->store(attacker_controlled);
+    ...
+    delete a;
+    ...
+\end{lstlisting}
+\begin{tikzpicture}[overlay,remember picture]
+\coordinate (place) at ([yshift=-1.5cm,xshift=-1cm]current page.north east);
+\matrix[tight matrix,nodes={text width=3cm,font=\fontsize{9}{10}\selectfont,thick},thick,anchor=north east,label={north:heap object layout}]  (diag) at (place) {
+    |[draw=none,align=center,font=\it]| when free \& |[draw=none,align=center]| when used \\
+    |[fill=yellow!10]| size+free (8 B) \& |[fill=yellow!10,alias=arrowSide]| size+free (8 B) \\
+    |[fill=blue!10]| next pointer (8 B) \& |[fill=violet!10]| vtable pointer (8 B) \\
+    |[fill=blue!10]| prev pointer (8 B) \& |[alias=bufPt1]| ~ \\
+    |[alias=unusedPt1]| ~                  \& |[alias=bufPt2]| ~ \\
+    |[alias=unusedPt2]| ~                  \& |[alias=bufPt3]| ~ \\
+    |[alias=unusedPt3]| ~                  \& |[fill=green!10]| unused space (16 B) \\
+    |[alias=unusedPt4]| \& (next size+free)   \\
+     (next size+free) \\
+};
+\draw[very thick,-Latex] ([xshift=.25cm]arrowSide.north east) -- ++(0cm, -1cm);
+\node[inner sep=0mm,fill=violet!10,fit=(bufPt1) (bufPt2) (bufPt3),font=\small,draw,thick] {buffer (64B)};
+\node[inner sep=0mm,fill=green!10,fit=(unusedPt1) (unusedPt2) (unusedPt3) (unusedPt4),font=\small,draw,thick] {unused space \\ (?? B)};
+\begin{visibleenv}<1>
+\node[anchor=north west,align=left,draw,very thick,font=\fontsize{12}{13}\selectfont] at ([xshift=-1cm]diag.south west) {
+    exercise 1: \\
+    to attack this buffer overflow \\
+    by overwriting the heap data structures \\
+    does it matter if space after \texttt{a} \\
+    is already free or not?
+};
+\end{visibleenv}
+\begin{visibleenv}<2>
+\node[anchor=north west,align=left,draw,very thick,font=\fontsize{12}{13}\selectfont] at ([xshift=-1cm]diag.south west) {
+    exercise 2:
+    if \texttt{a} at address 0x10000, \\ 
+    and attacker wants to overwrite \\
+    value at address 0x20000 with 0x30000, \\
+    where should attacker put 0x20000, 0x30000\\
+    in \texttt{attacker\_controlled}? \\
+
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}

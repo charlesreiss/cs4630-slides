@@ -1,0 +1,32 @@
+
+
+\begin{frame}[fragile,label=wrappedPointers]{adding bounds-checking --- fat pointers}
+\lstset{
+    language=C,
+    style=small
+}
+\begin{lstlisting}
+struct MyPtr {
+    char *pointer; /* "raw" pointer value */
+    char *minimum; /* first byte of buffer pointed to */
+    char *maximum; /* last byte of buffer pointed to */
+};
+\end{lstlisting}
+\begin{visibleenv}<2->
+\hrule
+\begin{lstlisting}
+char buffer[100];
+char *p = &buffer[10];
+\end{lstlisting}
+becomes
+\begin{lstlisting}
+char buffer[100];
+MyPtr p = {
+    .pointer = &buffer[10],
+    .minimum = &buffer[0],
+    .maximum = &buffer[99]
+};
+\end{lstlisting}
+\end{visibleenv}
+\end{frame}
+

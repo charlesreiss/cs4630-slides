@@ -1,0 +1,146 @@
+- title: "ROP exercise 0"
+  questions:
+  - text: "What should be written to the stack?"
+    multiple: true
+    options:
+    - "0x100000 (return address), then 0x100100"
+    - "0x100000, then 0x100200"
+    - "0x100000, then 0x100300"
+    - "0x100100, then 0x100000"
+    - "0x100200, then 0x100000"
+    - "0x100300, then 0x100000"
+    - "0x100000, then 0x0, then 0x100300"
+    - "0x100100, then 0x0, then 0x100000"
+    - "0x100200, then 0x0, then 0x100000"
+    - "0x100300, then 0x0, then 0x100000"
+- title: "ROP exercise 1"
+  questions:
+  - text: "What should be written to the stack?"
+    single: true
+    options:
+    - '0x100300, then 0x100100, then 0x100100, then 0x100000, then "/bin/sh\0", then 0x2000000'
+    - '0x100100, then 0x100300, then "/bin/sh\0", then 0x200000, then 0x100100, then 0x100000'
+    - '0x100100, then "/bin/sh\0", then 0x100300, then 0x200000, then 0x100100, then 0x100000'
+    - '0x100300, then "/bin/sh\0", then 0x100100, then 0x200000, then 0x100100, then 0x100000'
+    - 'none of these'
+- title: "using fptr overwrite (1)"
+  questions:
+  - text: "then the beginning of the input should contain..."
+    multiple: true
+    options:
+    - "A. the shellcode to run"
+    - "B. an ROP chain to run"
+    - "C. the address of the shellcode (or existing function) to run written out in decimal"
+    - "D. the address of the ROP chain to run written out in decimal"
+    - "E. the address of a RET instruction written out in decimal"
+- title: "using fptr overwrite (2)"
+  questions:
+  - text: "then..."
+    multiple: true
+    options:
+    - "A. the beginning of the buffer should contain the shellcode to run"
+    - "B. the beginning of the buffer should contain an ROP chain to run"
+    - "C. the buffer should contain the addres of the shellcode (or existing function) to run written out in decimal at the beginning"
+    - "D. the buffer should contain the addres of the ROP chain to run written out in decimal at the beginning"
+    - "E. the buffer should contain the address of a RET instruction written out in decimal at the beginning"
+- title: "using a leak (1)"
+  questions:
+  - text: "what address is most likely leaked by the above?"
+    single: true
+    options:
+    - "A. the location of the Foo object allocated on the heap"
+    - "B. the location of the first entry in Foo's VTable"
+    - "C. the location of the first instruction of Foo::Foo() (Foo's compiler-generated constructor)"
+    - "D. the location of the stack pointer"
+    - "E. something else"
+- title: "using a leak (2)"
+  questions:
+  - text: "what information can we probably compute?"
+    multiple: true
+    options:
+    - "stack pointer"
+    - "Foo::bar's address"
+    - "gadget from executable's address"
+    - "gadget from C library's address"
+    - "p's address"
+    - "f's VTable's address"
+- title: "for heap smashing, does it matter if it's free"
+  questions:
+  - text: "does it matter if space after a is already free or not?"
+    single: true
+    options:
+    - "probably not, because we can change the next/prev pointers for a, not the space after"
+    - "probably not, because the attack can mark the space as free"
+    - "probably, because the next/free pointers won't be used unless it is free"
+    - "probably, because if it's not then trying to overwrite the memory is very likely to cause a segfault"
+- title: "where should attacker put for heap smashing..."
+  questions:
+  - text: "where should attacker put 0x10000..."
+    single: true
+    options:
+    - "at the beginning of attacker_controlled"
+    - "8 bytes after the beginning of attacker_controlled"
+    - "16 bytes after the beginning of attacker_controlled"
+    - "64 bytes after the beginning of attacker_controlled"
+    - "72 bytes after beginning of attacker_controlled"
+    - "80 bytes after beginning of attacker_controlled"
+    - "88 bytes after beginning of attacker_controlled"
+    - "96 bytes after beginning of attacker_controlled"
+    - "none of these"
+  - text: "where should attacker put 0x20000..."
+    single: true
+    options:
+    - "at the beginning of attacker_controlled"
+    - "8 bytes after the beginning of attacker_controlled"
+    - "16 bytes after the beginning of attacker_controlled"
+    - "64 bytes after the beginning of attacker_controlled"
+    - "72 bytes after beginning of attacker_controlled"
+    - "80 bytes after beginning of attacker_controlled"
+    - "88 bytes after beginning of attacker_controlled"
+    - "96 bytes after beginning of attacker_controlled"
+    - "none of these"
+  - text: "where should attacker put 0x30000..."
+    single: true
+    options:
+    - "at the beginning of attacker_controlled"
+    - "8 bytes after the beginning of attacker_controlled"
+    - "16 bytes after the beginning of attacker_controlled"
+    - "64 bytes after the beginning of attacker_controlled"
+    - "72 bytes after beginning of attacker_controlled"
+    - "80 bytes after beginning of attacker_controlled"
+    - "88 bytes after beginning of attacker_controlled"
+    - "96 bytes after beginning of attacker_controlled"
+    - "none of these"
+- title: "use after free exercise" 
+  questions:
+  - text: "what is a best size for INPUT?"
+    single: true
+    options:
+    - "around the size of a _File_streambuf"
+    - "around the size of a streambuf"
+    - "around the size of a ifstream"
+    - "around the size of a istream"
+    - "around size of _File_streambuf's vtable"
+    - "around size of streambuf's vtable"
+  - text: "where to place pointer to code they want run?"
+    single: true
+    options:
+    - "near beginning of INPUT"
+    - "a few bytes (based on the layout of streambuf's vtable) after an address they place near the beginning of the buffer"
+    - "at the end of the INPUT"
+    - "a few bytes (based on the layout of streambuf's vtable) after an address they place near the end of the buffer"
+    - "something else"
+  - text: "where should attacker put pointer to code they want run?"
+    single: true
+    options:
+    - "
+- title: "shadow stacks stop..."
+  questions:
+  - text: "which of these do shadow stack stop?"
+    multiple: true
+    options:
+    - "A. using format string exploit to point stack return address to the `system' function"
+    - "B. using format string exploit to point VTable to the `system' function"
+    - "C. using an unchecked string copy that goes over the end of a stack buffer into the return address and pointing the return address to the `system' function"
+    - "D. using a buffer overflow that overwrites a saved stack pointer value to cause return to use a different address"
+    - "E. using pointer subterfuge to overwrite the GOT entry for `printf' to point to the `system' function"

@@ -1,0 +1,18 @@
+
+\begin{frame}[fragile,label=dynStub]{dynamic linking stubs}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont]
+0000000000401090 <__printf_chk@plt>:
+  401090:       ff 25 b2 2f 00 00       jmpq   *0x2fb2(%rip)        # 404048 <__printf_chk@GLIBC_2.3.4>
+  401096:       68 06 00 00 00          pushq  $0x6
+  40109b:       e9 80 ff ff ff          jmpq   401020 <.plt>
+
+\end{Verbatim}
+\begin{itemize}
+\item reads from \texttt{0x404048} --- entry of global offset table
+\item entry \myemph{always} at address \texttt{0x404048}
+    \begin{itemize}
+    \item if lazy binding --- normally updated first time printf called
+    \end{itemize}
+\end{itemize}
+\end{frame}
+

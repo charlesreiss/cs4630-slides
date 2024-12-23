@@ -1,0 +1,46 @@
+
+\begin{frame}{stopping packers}
+    \begin{itemize}
+    \item it's \myemph<2>{unusual} to jump to code you wrote
+    \item modern OSs: memory is executable or writable --- not both
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{diversion: DEP/{\tt W\textasciicircum X}}
+    \begin{itemize}
+    \item memory executable or writeable --- but not both
+    \item exists for \myemph{exploits} (later in course), not packers
+    \item requires hardware support to be fast (\myemph{early 2000s+})
+    \item various names for this feature:
+        \begin{itemize}
+        \item Data Execution Prevention (DEP) (Windows)
+        \item {\tt W\textasciicircum X} (``write XOR execute'')
+        \item NX/XD/XN bit  (underlying hardware support)
+            \begin{itemize}
+            \item (No Execute/eXecute Disable/eXecute Never)
+            \end{itemize}
+        \end{itemize}
+    \item \myemph{special system call} to switch modes
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{unusual, but\ldots}
+    \begin{itemize}
+    \item binary translation
+        \begin{itemize}
+        \item convert machine code to new machine code at runtime
+        \end{itemize}
+    \item Java virtual machine, JavaScript implementations
+        \begin{itemize}
+        \item ``just-in-time'' compilers
+        \end{itemize}
+    \item dynamic linkers
+        \begin{itemize}
+        \item load new code from a file --- same as writing code?
+        \end{itemize}
+    \item those packed commercial programs
+    \vspace{.5cm}
+    \item programs need to \myemph{explicitly} ask for write+exec
+    \end{itemize}
+\end{frame}
+

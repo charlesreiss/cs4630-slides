@@ -1,0 +1,20 @@
+\begin{frame}{Linux sandboxing programs, generally}
+    \begin{itemize}
+    \item docker, lxc, lxd, containerd
+        \begin{itemize}
+        \item use namespaces to create ``container'' with own copy of OS libraries, services
+        \item but containers share OS `kernel' and potentially files with host unlike VM
+        \item (might also have options to use other ways of getting this functionality --- VM's, etc.)
+        \end{itemize}
+    \item bubblewrap, firejail
+        \begin{itemize}
+        \item use Linux namespace tools + ``bind mounts'' to give programs only subset of files, etc.
+        \item firejail has option of running a ``proxy'' windowing system server
+        \end{itemize}
+    \item SELinux's sandbox
+        \begin{itemize}
+        \item uses Security Enhanced Linux's mandatory access controls instead of Linux namespaces
+        \item includes option for ``proxy'' for windoing system server
+        \end{itemize}
+    \end{itemize}
+\end{frame}

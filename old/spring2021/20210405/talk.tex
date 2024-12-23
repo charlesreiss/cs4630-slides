@@ -1,0 +1,102 @@
+\graphicspath{{./figures/}}
+\title{bounds checking (2) / testing (1)}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item use-after-free vulnerabilities
+        \begin{itemize}
+        \item after free: old pointer still ``works'' if new thing allocated there
+        \item attacker can get control of memory of object they didn't use
+        \item info leak (read from object you shouldn't)
+        \item code execution (replace VTable/function pointer/etc.)
+        \end{itemize}
+    \item FORTIFY\_SOURCE: gcc/clang/etc.'s sometimes bounds checking
+        \begin{itemize}
+        \item special \texttt{chk} version of library functions
+        \item works when compilers can find bounds easily
+        \item compiler can't find bounds: no fallback
+        \end{itemize}
+    \item unfortunate design of strncpy, strncat
+    \end{itemize}
+\end{frame}
+
+\usetikzlibrary{arrows.meta,calc,patterns}
+% fIXME: overflow
+\section{bounds checking...}
+\subsection{and library functions}
+        % FIXME: exercise: what should call have been
+            % needs answers
+\input{../bounds/bounds-lib-functions}
+
+\subsection{language support?}
+
+\input{../bounds/bounds-lang-support-intro}
+
+\subsection{simple case for bounds checking in C}
+\input{../bounds/simple-c}
+
+\subsection{the problematic case}
+\input{../bounds/harder}
+
+\subsection{fat pointer idea}
+% FIXME: smoother transition
+    % FIXME: exercise about problematic cases
+\input{../bounds/fat-pointers}
+
+\subsubsection{strcpy example}
+\input{../bounds/fat-pointers-strcpy}
+
+\subsubsection{overhead?}
+\input{../bounds/fat-pointers-overheadp}
+
+\subsection{unfortunate things C programmers do}
+\input{../bounds/bad-things-c-prog}
+
+\subsection{fat pointers in reality?}
+\input{../bounds/fat-pointer-ccured}
+
+\section{baggy bounds checking}
+\input{../bounds/baggy-bounds-intro}
+
+\subsection{trick for good performance}
+\input{../bounds/baggy-bounds-trick}
+
+\subsection{the lookup table}
+\input{../bounds/baggy-bounds-table}
+
+\subsection{checks using table}
+\input{../bounds/baggy-bounds-checks}
+
+\subsection{exercise: overhead estimating?}
+\input{../bounds/baggy-bounds-overhead-exer}
+
+\subsection{alternative: pointer tagging}
+\input{../bounds/baggy-bounds-tagging}
+
+\subsection{performance?}
+\input{../bounds/baggy-bounds-perf}
+
+\subsection{problem: pointers within objects}
+% FIXME
+\input{../bounds/within-object}
+
+\subsection{corner cases}
+\input{../bounds/bad-things-fortran-index}
+
+\section{AddressSanitizer}
+\input{../bounds/asan-v-baggy}
+
+\subsection{ASan's added check}
+\input{../bounds/asan-check}
+
+\subsection{stack layout}
+\input{../bounds/asan-stack-layout}
+
+
+
+\end{document}

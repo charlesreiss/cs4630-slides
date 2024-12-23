@@ -1,0 +1,49 @@
+
+\begin{frame}{AT\&T versus Intel syntax}
+    \begin{itemize}
+    \item AT\&T syntax: \\ {\tt movq \$42, 100(\%rbx,\%rcx,4)}
+    \item Intel syntax: \\ {\tt mov QWORD PTR [rbx+rcx*4+100], 42}
+    \item effect (pseudo-C): \\ {\tt memory[rbx + rcx * 4 + 100] <- 42}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=att1]{AT\&T syntax (1)}
+\begin{lstlisting}
+movq $42, 100(%rbx,%rcx,4)
+\end{lstlisting}
+    \begin{itemize}
+    \item destination \myemph{last}
+    \item constants start with {\tt \$}
+    \item registers start with {\tt \%}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=att2]{AT\&T syntax (2)}
+\begin{lstlisting}
+movq $42, 100(%rbx,%rcx,4)
+\end{lstlisting}
+    \begin{itemize}
+    \item operand length: {\tt q}
+        \begin{itemize}
+        \item {\tt l} = 4; {\tt w} = 2; {\tt b} = 1
+        \item 
+        \end{itemize}
+    \item {\tt 100(\%rbx,\%rcx,4)}: \\ {\tt memory[100 + rbx + rcx * 4]}
+    \item {\tt sub \%rax, \%rbx}: {\tt rbx $\leftarrow$ rbx - rax}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Intel syntax}
+    \begin{itemize}
+    \item destination \myemph{first}
+    \item {\tt [...]} indicates location in memory
+    \item {\tt QWORD PTR [...]} for 8 bytes in memory
+        \begin{itemize}
+        \item DWORD for 4
+        \item WORD for 2
+        \item BYTE for 1
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+

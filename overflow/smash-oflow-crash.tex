@@ -1,0 +1,19 @@
+
+\begin{frame}[fragile,label=theCrash]{the crash}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont,commandchars=\\\[\]]
+   0x0000000000400548 <+0>:     sub    $0x78,%rsp
+   0x000000000040054c <+4>:     mov    %rsp,%rsi
+   0x000000000040054f <+7>:     mov    $0x400604,%edi
+   0x0000000000400554 <+12>:    mov    $0x0,%eax
+   0x0000000000400559 <+17>:    callq  0x400430 <__isoc99_scanf@plt>
+   0x000000000040055e <+22>:    add    $0x78,%rsp
+=> 0x0000000000400562 <+26>:    retq   
+\end{Verbatim}
+\begin{itemize}
+\item {\tt retq} tried to jump to {\tt 0x61616161 61616161}
+\item \ldots but there was nothing there
+\item<2-> what if it wasn't invalid?
+\end{itemize}
+\end{frame}
+
+

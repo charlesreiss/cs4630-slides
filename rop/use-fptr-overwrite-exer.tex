@@ -1,0 +1,128 @@
+\begin{frame}[fragile,label=useFPtrOverwrite1]{using function pointer overwrite (1)}
+\begin{lstlisting}[language=C,style=script]
+struct Example {
+    char input[1000];
+    void (*process_function)(Example *, long, char *);
+};
+void vulnerable(struct Example *e) {
+    long index;
+    char name[1000];
+    gets(e->input); /* can overwrite process_function */
+    scanf("%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
+    (e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);
+}
+\end{lstlisting}
+\begin{itemize}
+\item if we overwrite process\_function's address with the address of the gadget
+    \texttt{mov \%rsi, \%rsp; ret}, then the beginning of the input
+    should contain\ldots \\
+    \begin{itemize}
+    \item A. the shellcode to run
+    \item B. an ROP chain to run
+    \item C. the address of shellcode (or existing function) in decimal
+    \item D. the address of the ROP chain to run written out in decimal
+    \item E. the address of a RET instruction written out in decimal
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\iftoggle{heldback}{\excludecomment{soln}}{\includecomment{soln}}
+\begin{soln}
+\begin{frame}[fragile,label=useFPtrOverwrite1Explain]{explanation}
+\begin{lstlisting}[language=C++,style=script]
+gets(e->input); /* can overwrite process_function */
+scanf("%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
+(e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);
+\end{lstlisting}
+\texttt{"1234,FOO......."} + addr of \texttt{mov \%rsi, \%rsp, ret}
+\begin{itemize}
+\item arguments setup registers for gadget:
+\begin{itemize}
+    \item \%rdi (irrelevant) is "1234,FOO..." (copy in e)
+    \item \%rsi is 1234 (from scanf)
+    \item \%rdx (irrelevant) is "FOO..." (pointer to name)
+\end{itemize}
+\item mov in gadget: \%rsi (1234) becomes \%rsp
+\item ret in gadget: read pointer at 1234, set \%rsp to 1234 + 8
+    \begin{itemize}
+    \item jump to next gadget (whose address should be stored at 1234)
+    \item if that gadget returns, will read new return address from 1238
+    \end{itemize}
+\end{itemize}
+\end{frame}
+\end{soln}
+
+\begin{frame}[fragile,label=useFPtrOverwrite2]{using function pointer overwrite (2)}
+\begin{lstlisting}[language=C,style=script]
+struct Example {
+    char input[1000];
+    void (*process_function)(Example *, long, char *);
+};
+void vulnerable(struct Example *e) {
+    long index;
+    char name[1000];
+    gets(e->input); /* can overwrite process_function */
+    scanf("%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
+    (e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);
+}
+\end{lstlisting}
+\begin{itemize}
+\item if we overwrite process\_function's address with the address of the gadget
+    \texttt{push \%rdx; jmp *(\%rdi)}, then the beginning of the input should contain\ldots \\
+    \begin{itemize}
+    \item A. the shellcode to run
+    \item B. an ROP chain to run
+    \item C. the address of shellcode (or existing function) 
+    \item D. the address of the ROP chain 
+    \item E. the address of a RET instruction
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{soln}
+\begin{frame}[fragile,label=useFPtrOverwrite1Explain]{explanation (one option)}
+\begin{lstlisting}[language=C++,style=script]
+gets(e->input); /* can overwrite process_function */
+scanf("%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
+(e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);
+\end{lstlisting}
+\texttt{"FOOBARBAZ......."} + addr of \texttt{push \%rdx; jmp *(\%rdi)}
+\begin{itemize}
+\item arguments setup registers for gadget:
+\begin{itemize}
+    \item \%rdi is "FOOBARBAZ...." (copy in e)
+    \item \%rsi (irrelevant) is uninitialized? (scanf failed)
+    \item \%rdx (irrelevant) is uninitialized? (scanf failed)
+\end{itemize}
+\item push in gadget: top of stack becomes copy of uninit. value 
+\item jmp in gadget
+    \begin{itemize}
+    \item interpret ``FOOBARBA'' as 8-byte address
+    \item jump to that address
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=useFPtrOverwrite2Explain]{explanation (unlikely alternative?)}
+\begin{lstlisting}[language=C++,style=script]
+gets(e->input); /* can overwrite process_function */
+scanf("%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
+(e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);
+\end{lstlisting}
+\texttt{"1234567890,FOO......."} + addr of \texttt{push \%rdx; jmp *(\%rdi)}
+\begin{itemize}
+\item arguments setup registers for gadget:
+\begin{itemize}
+    \item \%rdi is address of string "12345678,FOO..." (copy in e)
+    \item \%rsi is 12345678
+    \item \%rdx is address of string "FOO..." (copy in name)
+\end{itemize}
+\item push in gadget: top of stack becomes address of "FOO..."
+\item jmp in gadget
+    \begin{itemize}
+    \item interpret \textit{ASCII encoding of ``12345678''} (???) as 8-byte address
+    \item jump to that address
+    \end{itemize}
+\end{itemize}
+\end{frame}
+\end{soln}

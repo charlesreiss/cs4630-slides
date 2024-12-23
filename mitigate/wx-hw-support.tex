@@ -1,0 +1,25 @@
+
+\begin{frame}{hardware support for write XOR execute}
+    \begin{itemize}
+    \item everywhere today
+    \item not historically common
+    \item early x86: execute implied by read
+    \item NX support added with x86-64 and around 2000 for x86-32
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{deliberate use of writeable code}
+    \begin{itemize}
+    \item ``just-in-time'' (JIT) compilers
+        \begin{itemize}
+        \item fast virtual machine/language implementations
+        \end{itemize}
+    \item some weird GCC features
+    \item older ``signals'' on Linux
+        \begin{itemize}
+        \item OS wrote machine code on stack for program to run
+        \end{itemize}
+    \item couldn't even disable executable stacks without breaking applications
+    \end{itemize}
+\end{frame}
+

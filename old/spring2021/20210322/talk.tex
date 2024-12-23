@@ -1,0 +1,133 @@
+\graphicspath{{./figures/}}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+{
+\setbeamercolor{background canvas}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{normal text}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{itemize/enumerate body}{fg=white}
+\setbeamercolor{itemize/enumerate subbody}{fg=white}
+\setbeamercolor{titlelike}{bg=blue!40!black,fg=blue!10!white}
+\begin{frame}<1|handout:1>[noframenumbering]{Changelog}
+    \begin{itemize}
+    \item 22 March 2021 (after lecture): ROP without stack overflow: adjust call gadget into jmp gadget so it is functional
+    \item 22 March 2021 (after lecture): add ``if exe addreses fixed'' to ASLR diagrams showing typical locations of executable code loading
+    \item 22 March 2021 (after lecture): add diagram illustrating executable staying together before explanation with objdump snippets
+    \item 22 March 2021 (after lecture): dependencies between segments (2): correct formatting issue
+    \item 22 March 2021 (after lecture): using leak exericses: add explanation slides
+    \item 22 March 2021 (after lecture): using leak exericse (2): remove ``in decimal'' from options
+    \end{itemize}
+\end{frame}
+}
+
+
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item memory protection
+        \begin{itemize}
+        \item read-only function pointers
+        \item write XOR execute
+        \end{itemize}
+    \item ``gadgets'' in existing code
+    \item return-oriented programming
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{some notes on OBFUSCATE}
+    \begin{itemize}
+    \item this was an assignment where I most unsure of difficulty callibration
+    \vspace{.5cm}
+    \item one correct, but unintended solution: 
+        \begin{itemize}
+        \item the password check used memcmp
+        \item not much else used memcmp
+        \item could replace memcmp call entirely
+        \item probably should've reimplemented that
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=TTT3]{my TTT3 soln}
+\begin{lstlisting}[language=C++,style=smaller]
+case 104: 
+(PC[0]) ++; /* renamed via find-replace */
+/* debug output: */
+printf("branch @ PC = %ld\n", PC[0] - CODE[0]);
+if (PC[0] - CODE[0] == 2063) { /* found by examining debug output */
+    if (!(l___4915[0] + 0)->f___11) {
+      PC[0] += *((int *)PC[0]);
+    } else {
+      PC[0] += 4;
+    }
+} else {
+    if ((l___4915[0] + 0)->f___11) {
+      PC[0] += *((int *)PC[0]);
+    } else {
+      PC[0] += 4;
+    }
+}    
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}{on OVER correction}
+\end{frame}
+
+\section{ROP con't}
+
+\subsection{example: VTable overwrite}
+\input{../rop/not-just-ret}
+\input{../rop/vtable-overwrite}
+
+\subsection{definition: JOP}
+\input{../rop/jop}
+\input{../rop/jop-dispatcher-gadget}
+
+\subsection{exercise: using function pointer overwrite}
+\input{../rop/use-fptr-overwrite-exer}
+
+\subsection{just get rid of rets?}
+\input{../rop/get-rid-of-ret}
+
+\section{ASLR}
+\subsection{what it is}
+\input{../mitigate/aslr}
+
+\subsection{how much entropy}
+\input{../mitigate/aslr-entropy}
+
+\subsection{kept together: danger of leaks}
+\input{../mitigate/aslr-leaks}
+
+
+\subsection{exercise: using a leak}
+\input{../mitigate/aslr-using-leak-exer}
+\input{../mitigate/aslr-entropy-together}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+
+\input{../mitigate/recall-reloc}
+
+
+% FIXME: weird machines
+
+\subsection{weird machines}
+\input{../rop/weird-machines}
+
+\subsection{finding gadgets, generally}
+\input{../rop/finding-gadgets-general}
+
+% FIXME: demo
+
+\subsection{reusable sequence}
+\input{../rop/generic-sequence}
+
+\end{document}

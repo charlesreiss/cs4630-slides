@@ -1,0 +1,35 @@
+
+\begin{frame}[fragile,label=javaEscapeHatch]{Java: unofficial escape hatch}
+    \begin{itemize}
+    \item Oracle JDK and OpenJDK come with a class called \texttt{com.sun.Unsafe}
+    \item Example methods:
+    \end{itemize}
+\begin{lstlisting}
+public long allocateMemory(long size);
+                        // returns pointer value
+public void freeMemory(long address);
+public long getLong(long address);
+public void putLong(long address, long x);
+\end{lstlisting}
+    \begin{itemize}
+    \item can be used to, e.g.,  write ``fast'' IntArray class
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{so, if Java has escape hatch\ldots}
+    \begin{itemize}
+    \item why do people not want to write \\ their performance-sensitive programs in Java?
+    \vspace{.5cm}
+    \item hard to integrate code that uses escape hatch with normal Java code
+    \item hard to efficiently avoid dangling pointers when using escape hatch
+        \begin{itemize}
+        \item Is it safe to freeMemory from my FastIntArray class?
+        \end{itemize}
+    \item slow to pass garbage collected references to/from C/assembly code
+    \item hard to avoid using garbage collector
+        \begin{itemize}
+        \item garbage collector performance can be variable
+        \end{itemize}
+    \end{itemize}
+\end{frame}

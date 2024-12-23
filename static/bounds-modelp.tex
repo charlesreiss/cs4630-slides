@@ -1,0 +1,104 @@
+\usetikzlibrary{arrows.meta}
+\begin{frame}{checking for array bounds}
+    \begin{itemize}
+    \item can \textit{try} to apply same technique to array bounds
+    \item but much more complicated/more likely to have false positives/negatives
+    \vspace{.5cm}
+    \item for each array or pointer track:  
+        \begin{itemize}
+        \item minimum number of elements before/after what it points to
+        \end{itemize}
+    \item for each integer track: 
+        \begin{itemize}
+        \item minimum bound
+        \item maximum bound
+        \end{itemize}
+    \item similar analysis looking at paths?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=bounds1]{checking array bounds (1)}
+    \lstset{
+        language=C,style=script,
+        moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+    }
+\begin{tikzpicture}
+\node[anchor=north east] at (-.2, 0) {
+\begin{lstlisting}
+int array[100];
+void someFunction(int foo) {
+    // A
+    if (foo > 100) {
+        return;
+    }
+    // B
+    array[foo] += 1;
+}
+\end{lstlisting}
+};
+
+    \tikzset{
+        flow/.style={draw,thick,font=\fontsize{9}{10}\selectfont,anchor=north west},
+        flowLine/.style={thick,-Latex},
+    }
+    \begin{scope}[y=1.2cm]
+        \node[flow] (A) at (0, 0) { A: foo: $[-\inf, +\inf]$; array: indices [0, 99] };
+        \node[flow] (B) at (0, -1) { B: foo: $[-\inf, +100]$; array: indices [0, 99] };
+        \draw[flowLine] (A) -- (B);
+    
+    \begin{visibleenv}<2->
+        \node[draw=red,very thick,fill=white,align=center] at (0, -4) {
+            give warning about \texttt{foo == 100}? probably bug! \\
+            give warning about \texttt{foo < 0}? maybe??
+        };
+    \end{visibleenv}
+    \end{scope}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=bounds2]{checking array bounds (2)}
+    \lstset{
+        language=C,style=script,
+        moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+    }
+\begin{tikzpicture}
+\node[anchor=north east] at (-.2, 0) {
+\begin{lstlisting}
+int array[100];
+void someFunction(int foo, bool bar) {
+    int *p = array;
+    // A
+    p += 50;
+    // B
+    if (foo >= 50 || foo < 0) abort();
+    // C
+    if (bar) {
+        foo = -foo;
+    }
+    // D
+    p[foo] = 1;
+}
+\end{lstlisting}
+};
+
+    \tikzset{flow/.style={draw,thick,font=\fontsize{9}{10}\selectfont,anchor=north west},
+    flowLine/.style={thick,-Latex}}
+    \begin{scope}[y=1.2cm]
+        \node[flow] (A) at (0, 0) { A: p: indices [0, 99]; foo: $[-\inf, +\inf]$ };
+        \node[flow] (B) at (0, -1) { B: p: indices [-50, 49]; foo: $[-\inf, +\inf]$ };
+        \node[flow] (C) at (0, -2) { C: p: indices [-50, 49]; foo: [0, 50] };
+        \node[flow] (D1) at (-4, -3) { D (bar true): p: indices: [-50, 49]; foo: [-50, 0] } ;
+        \node[flow,alt=<2>{draw=red}] (D2) at (1, -4) { D (bar false): p: indices: [-50, 49]; foo: [0, 50] };
+        \draw[flowLine] (A) -- (B);
+        \draw[flowLine] (B) -- (C);
+        \draw[flowLine] (C) -- (D1);
+        \draw[flowLine] (C) -- (D2);
+    
+    \begin{visibleenv}<2->
+        \node[draw=red,very thick,fill=white,align=center] at (0, -6) {
+            warn about possible out-of-bounds? 
+        };
+    \end{visibleenv}
+    \end{scope}
+\end{tikzpicture}
+\end{frame}

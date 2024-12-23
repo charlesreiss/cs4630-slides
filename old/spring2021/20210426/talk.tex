@@ -1,0 +1,128 @@
+\graphicspath{{./figures/}}
+\usepackage{pdfpages}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+{
+\setbeamercolor{background canvas}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{normal text}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{itemize/enumerate body}{fg=white}
+\setbeamercolor{itemize/enumerate subbody}{fg=white}
+\setbeamercolor{titlelike}{bg=blue!40!black,fg=blue!10!white}
+\begin{frame}<1|handout:1>[noframenumbering]{Changelog}
+    \begin{itemize}
+    \item 26 April 2021: chroot ls: add first missing chroot command; consistently use /tmp/example
+    \item 26 April 2021: mount namespaces API: add mount commands that would be needed to actually run ls
+    \item 26 April 2021: Linux namespaces (3): mention that a chroot will happen in addition to mounting things; be more explicit about how user namespaces change things, opting out of sudo, effectively
+    \end{itemize}
+\end{frame}
+}
+
+
+
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item Rust options for ``smart pointer'' types
+    \item other language enforcement ideas: e.g. constant-time
+    \vspace{.5cm}
+    \item what programs are allowed to do vs. what programs need
+        \begin{itemize}
+        \item goal: ``least privilege''
+        \end{itemize}
+    \item privilege separation as application design
+        \begin{itemize}
+        \item examples: Chrome, OpenSSH
+        \end{itemize}
+    \item mechanism: system call filtering
+    \item problem: more precise system call filtering?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{challenge/final logistics}
+    \begin{itemize}
+    \item CHALLENGE assignment plan:
+        \begin{itemize}
+        \item 9\% of final grade (= approx. 2 homeworks)
+        \item 7 ``make this program output X'' problems
+        \item solve any 5 for full credit
+        \item expect to release no later than 30 April
+        \item due 12 May 2021 @ 9pm
+        \end{itemize}
+    \item FINAL quiz
+        \begin{itemize}
+        \item 6\% of final grade
+        \item focused on material that can't be covered by CHALLENGE
+        \item intending something that won't take longer than 90 minutes 
+            \begin{itemize}
+            \item (it varies how good I am meeting that target)
+            \end{itemize}
+        \item released 12 May 2021 @ 9pm
+        \item due 13 May 2021 @ 9pm
+        \item (our official final period: 2-5pm 13 May)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{challenge assistance policy}
+    \begin{itemize}
+    \item Please do not discuss or expect TAs (or me) to answer questions about what strategy you should apply to particular challenges. You are responsible for figuring this out yourself.
+    \item You may, however, ask TAs or share general information about how to identify whether an exploit technique is applicable to a particular program or about how to apply an exploit technique to other executables.
+    \vspace{.5cm}
+    \item We will supply reference solutions to homework assignments.
+    \end{itemize}
+\end{frame}
+
+\section{more fine-grained filtering?}
+\input{../sandbox/linux-syscall-filter-delta}
+
+% FIXME: without seccomp, ptrace-based filtering
+
+\subsection{applied to VLC?}
+\input{../sandbox/app-confine-vlc-example}
+
+\subsection{shared services?}
+\input{../sandbox/app-confine-shared-services}
+
+\subsection{pro/con shared services}
+\input{../sandbox/app-confine-levels}
+
+\subsection{SELinux}
+\input{../sandbox/selinux}
+
+\subsection{versus capability-type approach}
+\input{../sandbox/v-cap-approach}
+
+\subsection{chroot}
+\input{../sandbox/chroot}
+
+\subsubsection{exercise}
+\input{../sandbox/chroot-exer}
+
+\subsection{Linux namespaces}
+\input{../sandbox/linux-ns}
+
+% FIXME: Chrome sandboxing failing:
+    % https://theori.io/research/escaping-chrome-sandbox/
+        % Binder (Chrome internal IPC library)
+    % % https://googleprojectzero.blogspot.com/2020/04/you-wont-believe-what-this-one-line.html
+    % https://bugs.chromium.org/p/project-zero/issues/detail?id=1991
+    % https://bugs.chromium.org/p/project-zero/issues/detail?id=1985
+
+% FIXME: SELinux sandbox escape:
+    % https://www.openwall.com/lists/oss-security/2016/09/25/1
+
+\subsection{Linux programs that attempt confinement}
+\input{../sandbox/example-linux}
+
+\subsection{containers}
+\input{../sandbox/containers}
+
+
+\subsubsection{runC bug}
+\input{../sandbox/runc-bug}
+\end{document}

@@ -1,0 +1,120 @@
+\graphicspath{{./figures/}}
+\title{sandboxing}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\newcommand{\amp}{\textampersand}
+
+\begin{frame}{last time (1)}
+    \begin{itemize}
+    \item Rust general syntax:
+        \begin{itemize}
+        \item \texttt{let name : type}
+        \item references declared with \texttt{\& Type}, created with \texttt{\& value}, deref'd with *ref
+        \item \texttt{let mut name} for mutuable variable
+        \item \texttt{\& mut X} for mutable reference to X
+        \item \texttt{fn name(arg: argtype) -> rettype \{ code \}}
+        \end{itemize}
+    \item ownership/borrowing rule Rust enforces
+        \begin{itemize}
+        \item version 1: one owner and only they can access, can move to new owner
+        \item version 2: one owner, can move to new owner or be temporarily borrowed by one ref
+        \item version 3: can be borrowed read-only by multiple refs
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{last time (2)}
+    \begin{itemize}
+    \item escape hatches in rust:
+        \begin{itemize}
+        \item code explicitly marked \texttt{unsafe}
+        \item implement other rules: example: reference counting
+        \end{itemize}
+    \item concurrency
+        \begin{itemize}
+        \item problem: use-after-free bugs caused by concurrency issues
+        \item Rust solution: explicitly mark types as multicore/thread safe
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{logistics note}
+\end{frame}
+
+\subsection{concurrency}
+\input{../betterpl/rust-concurrency}
+
+% FIXME: example of concurrency based exploit in Linux
+
+\subsubsection{example Linux concurrency UAF}
+\input{../betterpl/linux-conc-uaf}
+
+\subsection{other Rust smart pointers}
+\input{../betterpl/other-rust-smartptr}
+
+\subsection{exercise: smart pointer use case}
+\input{../betterpl/which-smartptr-exer}
+
+\section{zero-overhead}
+\input{../betterpl/zero-overhead-p}
+
+\section{aside: other language enforcement?}
+\input{../betterpl/other-things-lang-enforce}
+
+\subsection{example: constant time languages}
+\input{../betterpl/fact}
+
+\section{principle: least privilege}
+\input{../sandbox/least-priv}
+
+\subsection{what do browsers need?}
+\input{../sandbox/what-browser-perms}
+
+\subsection{OS users}
+\input{../sandbox/os-users}
+
+\subsection{promise: privilege separation}
+\input{../sandbox/browser-priv-sep-intro}
+
+\section{privilege separation: video decode}
+\input{../sandbox/privsep-video-decode}
+
+\subsection{another user is not enough}
+\input{../sandbox/privsep-video-decode-too-much}
+
+\subsection{awkwardness of creating a new user}
+\input{../sandbox/privsep-video-decode-new-userp}
+
+\section{system calls as OS interface}
+\input{../sandbox/what-systemcalls}
+
+\section{simple Linux system call filtering}
+\input{../sandbox/linux-syscall-filter}
+
+\section{definition: sandbox}
+\input{../sandbox/sandbox-defn}
+
+\section{Chrome architecture}
+\input{../sandbox/chrome-arch}
+
+% FIXME: Chrome Site Isolation
+\subsection{Site Isolation}
+\input{../sandbox/chrome-site-isolation}
+
+\section{OpenSSH architecture}
+\input{../sandbox/openssh-privsep}
+
+\subsection{exercise: priv sep for}
+\input{../sandbox/priv-sep-for-exer}
+
+\section{normal application confinement?}
+\input{../sandbox/app-confine-intro}
+
+\subsection{more fine-grained filtering?}
+\input{../sandbox/linux-syscall-filter-delta}
+
+\end{document}

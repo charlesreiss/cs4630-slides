@@ -1,0 +1,21 @@
+\begin{frame}[fragile,label=addBoundsHarder]{harder bounds-checking}
+    \lstset{language=C,style=smaller}
+\begin{lstlisting}
+void vulnerable(char *buffer) {
+    char buffer[100];
+    int c;
+    int i = 0;
+    while ((c = getchar()) != EOF && c != '\n') {
+        buffer[i] = c;
+    }
+}
+void vulnerable_checked(char *buffer) {
+    int c;
+    int i = 0;
+    while ((c = getchar()) != EOF && c != '\n') {
+        FAIL_IF(i >= UNKNOWN || i < UNKNOWN);
+        buffer[i] = c;
+    }
+}
+\end{lstlisting}
+\end{frame}

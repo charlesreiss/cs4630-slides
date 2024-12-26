@@ -1,0 +1,108 @@
+\graphicspath{{./figures/}}
+\title{}
+\usepackage[outputdir=latex.out]{minted}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+
+\section{Rust}
+
+% FIXME
+\subsection{aside: why do people like C/C++?}
+\input{../betterpl/why-ccpp}
+% FIXME
+
+\subsection{safety + escape hatch}
+\input{../betterpl/safe-plus-escape-hatch}
+
+\input{../betterpl/java-escape-hatch}
+
+\subsection{general philosophy}
+\input{../betterpl/rust-general}
+
+\subsection{general syntax}
+\input{../betterpl/rust-syntax-basic}
+
+\subsection{references}
+\subsubsection{basic example}
+\input{../betterpl/rust-refs}
+
+\subsubsection{in context}
+\input{../betterpl/rust-ex-with-refs}
+
+\subsection{basic ownership}
+\input{../betterpl/rust-ownership}
+
+\subsection{exercise}
+\input{../betterpl/rust-ownership-exer}
+
+\section{Rust: stopping dangling pointers}
+\input{../betterpl/rust-no-dangle-rules}
+
+\subsection{borrowing}
+\input{../betterpl/rust-borrowing}
+
+\subsection{exercise}
+\input{../betterpl/rust-no-dangle-rules-apply}
+
+\subsection{lifetimes}
+
+\subsubsection{motivation}
+\input{../betterpl/why-lifetimes}
+
+\subsubsection{lifetime tracking}
+\againframe<2>{dangleRules}
+\input{../betterpl/rust-lifetimes}
+
+\subsection{one writer}
+\againframe<3>{dangleRules}
+\input{../betterpl/rust-one-writer}
+
+\section{Rust: escape hatches and supporting dynamic allocation}
+\input{../betterpl/dynamic-alloc-basic}
+
+\subsection{escape hatches implementing Vec}
+\input{../betterpl/rust-escape-inside-vec}
+
+\subsection{implementing new sharing schemes}
+\input{../betterpl/rust-impl-rc}
+
+\subsection{concurrency}
+\input{../betterpl/rust-concurrency}
+
+\subsubsection{example Linux concurrency UAF}
+\input{../betterpl/linux-conc-uaf}
+
+\section{aside: other language enforcement?}
+\input{../betterpl/other-things-lang-enforce}
+
+% FIXME: example of concurrency based exploit in Linux
+
+\subsection{other Rust smart pointers}
+\input{../betterpl/other-rust-smartptr}
+\subsection{exercise: smart pointer use case}
+\input{../betterpl/which-smartptr-exer}
+
+
+\section{zero-overhead}
+\input{../betterpl/zero-overhead-p}
+
+\section{aside: other language enforcement?}
+\input{../betterpl/other-things-lang-enforce}
+
+\subsection{example: constant time languages}
+\input{../betterpl/fact}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+
+\subsection{Rust linked list}
+\input{../betterpl/rust-ll}
+
+\end{document}

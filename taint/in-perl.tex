@@ -1,5 +1,5 @@
 \begin{frame}[fragile,label=perlTT1]{taint tracking in Perl (1)}
-    \begin{minted}[fontsize=\small]{Perl}
+\begin{Verbatim}[fontsize=\small]
 #! perl -T
 # -T: enable taint tracking
 use warnings; use strict;
@@ -10,14 +10,14 @@ my $name = readline(STDIN);
 my $dir = $name . "-dir";
 
 system("mkdir $dir");
-\end{minted}
+\end{Verbatim}
     \begin{itemize}
     \item ``Insecure dependency in system while running with -T switch at perltaint.pl line 10, <STDIN> line 1.''
     \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile,label=perlTT2]{taint tracking in Perl (2)}
-\begin{minted}[fontsize=\small]{Perl}
+\begin{Verbatim}[fontsize=\small]
 #! perl -T
 # -T: enable taint tracking
 use warnings; use strict;
@@ -31,7 +31,7 @@ my $name = readline(STDIN);
 my $dir = $name . "-dir";
 
 system("mkdir $name");
-\end{minted}
+\end{Verbatim}
 \end{frame}
 
 

@@ -1,0 +1,237 @@
+\graphicspath{{./figures/}}
+\title{buffer overflows}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+\usetikzlibrary{arrows.meta}
+
+
+\section{buffer overflows, generally}
+\input{../overflow/generally}
+
+\section{simple overflow}
+% FIXME: what if gets()
+\input{../overflow/simple-overflow}
+
+\section{stack smashing, high-level}
+\input{../overflow/smash-context}
+
+% FIXME: exercise: simple overflow offset
+\subsection{exercise}
+\input{../overflow/simple-overflow-exer}
+
+\section{stack smashing, high-level}
+\input{../overflow/smash-context}
+
+\subsection{example of overflow}
+\input{../overflow/smash-oflow-ex}
+
+\subsubsection{exercise: stack layout}
+\input{../overflow/smash-oflow-ex-stack-layout-exer}
+
+\subsubsection{exercise answer: stack layout}
+\input{../overflow/smash-oflow-stack}
+
+\subsubsection{crash, revisited}
+\input{../overflow/smash-oflow-crash}
+
+\subsection{return-to-stack}
+\input{../overflow/return-to-stack}
+
+\section{constructing return-to-stack}
+\input{../overflow/smash-construct-parts}
+
+\subsection{writing shellcode}
+\againframe<2>{makeAttack}
+\input{../overflow/smash-shellcode}
+
+\input{../overflow/smash-recall-virus} % FIXME: modify to match TRICKY
+
+\input{../overflow/smash-virus-to-shell} % FIXME: modify to match TRICKY (need less here)
+
+\subsection{setting return address}
+\againframe<3>{makeAttack}
+    % FIXME: diagram showing stack distance
+\input{../overflow/smash-set-ret}
+
+\subsubsection{exercise}
+\input{../overflow/smash-set-ret-ex}
+
+\subsubsection{exercise (alt)}
+\input{../overflow/smash-set-ret-ex-alt}
+
+% FIXME: ASLR slides
+
+\subsection{still varies without ASLR?}
+\input{../overflow/stackloc-vary}
+
+\subsection{how the stack starts on Linux}
+\input{../overflow/linux-initial-stack}
+
+\subsubsection{nop sleds}
+\input{../overflow/nop-sled}
+
+\input{../overflow/nop-sled-use}
+
+\subsubsection{finding where return address is}
+\againframe<4>{makeAttack}
+\input{../overflow/ret-addr-guess}
+
+\section{stack smashing demo / debugger tutorial?}
+\input{../overflow/gdb-tut}
+
+\section{example: Morris worm stack smashing}
+\input{../overflow/morris-worm-smash}
+
+
+% FIXME: actual demo
+\section{restricted characters in shell code}
+     %FIXME: add simple example
+\input{../overflow/shell-code-restricted}   
+
+\section{restricted characters in pointers}
+\input{../overflow/pointer-restricted}
+
+\section{review: tricky parts of stack smashing}
+\input{../overflow/stack-smash-tricky}
+
+\section{format string exploit}
+
+\subsection{format strings and the stack}
+\input{../overflow/format-view-stack}
+
+\subsection{printf writes!}
+\input{../overflow/format-printf-writes}
+
+\subsection{vulnerable code}
+\input{../overflow/format-exploit-example}
+
+\subsection{exploit with RA}
+\input{../overflow/format-exploit-ra}
+
+\subsection{splitting the write}
+\input{../overflow/format-exploit-ra-parts}
+
+\subsection{format exploit defense: FORTIFY\_SOURCE}
+\input{../overflow/format-exploit-fortify}
+
+\section{beyond stack smashing}
+\input{../overflow/beyond-stack-smash}
+
+\section{arbitrary writes}
+\input{../overflow/arb-write}
+
+\section{write targets, continued}
+
+\subsection{C++ inheritence}
+\input{../overflow/fp-cpp}
+
+\subsection{options for attacking function pointer tables}
+    % FIXME: find another function pointer in memory
+\input{../overflow/fp-table-attack}
+
+\subsection{vtable overwrite exercise}
+\input{../overflow/fp-vtable-over-exer}
+
+\section{one write into another}
+\againframe<6>{arbWrite}
+
+\subsection{pointer subterfuge}
+\input{../overflow/subterfuge}
+
+\subsection{example: return address overwrite}
+\input{../overflow/write-ra-subter}
+
+\subsection{example: GOT overwrite}
+\input{../overflow/write-got-subter}
+
+\subsubsection{careful stack layout?}
+\input{../overflow/subterfuge-better-canary}
+
+\subsubsection{structs containing pointers}
+\input{../overflow/subterfuge-structs-globals}
+
+\section{arc injection}
+\begin{frame}{so far overwrites}
+    \begin{itemize}
+    \item once we found a way to overwrite function pointer\\
+          easiest solution seems to be: direct to our code
+    \item \ldots but alterante places to direct it to
+    \end{itemize}
+\end{frame}
+
+\input{../overflow/arc-injection}
+
+\section{case study: NTP exploit}
+\input{../overflow/ntp-case-study}
+
+\subsection{subterfuge exercise}
+\input{../overflow/subterfuge-exer}
+
+\section{overflows on the heap, first look}
+\subsection{simple case}
+\input{../overflow/heap-simple}
+
+\subsection{adjacent on the heap}
+\input{../overflow/heap-adjacent}
+
+\subsection{preview: heap structure}
+\input{../overflow/heap-structure-preview}
+
+% FIXME: go into example from sudo
+\section{sudo exploit example}
+\input{../overflow/sudo-ex}
+
+
+\section{heap smashing}
+\input{../overflow/heap-smash-intro}
+
+\subsection{heap bookkeeping}
+\input{../overflow/heap-bookkeeping}
+
+\subsection{bookkeeping to pointer subterfuge}
+\input{../overflow/heap-pointer-subter}
+
+% FIXME: exercise, using linked-list heap exploit to write something
+\subsection{exericse}
+\input{../overflow/heap-subter-exer}
+
+\section{alternate malloc designs?}
+\input{../overflow/alt-malloc}
+
+\section{use-after-free}
+\input{../overflow/heap-use-after-free}
+
+\subsection{pattern}
+\input{../overflow/heap-use-after-free-pattern}
+
+\subsection{exercise}
+\input{../overflow/heap-uaf-exer}
+
+\subsection{example}
+\input{../overflow/heap-use-after-free-chrome}
+
+\subsection{JS and similar interfaces v use-after-free}
+\input{../overflow/heap-use-after-free-js}
+
+\section{double-free}
+\input{../overflow/double-free}
+
+% FIXME: exercise, double-free usage?
+\subsection{exercise}
+\input{../overflow/double-free-exer}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\subsection{old virus to shellcode slides}
+\input{../overflow/smash-recall-virus-old} % FIXME: modify to match TRICKY
+
+\input{../overflow/smash-virus-to-shell-old} % FIXME: modify to match TRICKY (need less here)
+
+\end{document}

@@ -1,0 +1,69 @@
+\graphicspath{{./figures/}}
+\title{}
+\usepackage[outputdir=latex.out]{minted}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+\section{simple control flow integrity}
+
+\subsection{idea: checking returns?}
+
+\input{../cfi/simple-check-return}
+
+    % FIXME: verify that it's after a call instruction
+        
+        % FIXME: same idea, but mark the return sites explicitly
+    % FIXME: verify that it's after a call isntruction for the right function
+        % FIXME: same idea, but mark the return sites explicitly
+
+\subsubsection{versus canaries?}
+\input{../cfi/check-return-v-canary}
+
+\subsection{checking VTable calls?}
+    % FIXME: applying idea to calls to VTable-based function call
+\input{../cfi/check-vtable}
+
+\subsection{checking VTable call returns?}
+    % FIXME
+\input{../cfi/check-vtable-return}
+
+\subsection{checking indirect function calls}
+    % FIXME: trivial idea: was there a pointer?
+        % well, that's not very nice\ldots
+\input{../cfi/checking-indirect}
+
+
+\section{CFI overhead}
+\input{../cfi/overhead}
+
+\section{what does CFI actually prevent}
+\againframe<2>{cfiLikeCanariesP2}
+
+\section{more general control flow integrity}
+
+\subsection{concept: control flow graph}
+\input{../cfi/control-flow-graph} % FIXME: needs explanation of how labels assigned
+
+\subsection{and function pointers}
+\input{../cfi/cfg-fptrs}
+
+\subsection{finding function pointer values?}
+\input{../cfi/cfg-algo}
+
+
+% FIXME:
+\subsection{imprecision: unions, etc.}
+\input{../cfi/cfg-unions}
+
+\section{Clang's CFI implementation}
+\input{../cfi/clang-cfi}
+
+\section{Clang's CFI prevents?}
+\input{../cfi/prevent-exer}
+
+
+\end{document}

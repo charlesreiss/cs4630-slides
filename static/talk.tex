@@ -1,0 +1,56 @@
+\graphicspath{{./figures/}}
+\title{static analysis}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+
+\section{Static Analysis, briefly}
+
+\subsection{fuzzing as symbolic execution compromise}
+\input{../static/symb-v-static}
+
+\subsection{example: model for use-after-free}
+\input{../static/use-after-free-simple-model}
+    % FIXME: move loop discussion later
+
+\subsection{exercise: aliasing and model}
+\input{../static/use-after-free-model-exer}
+
+\subsection{points-to analysis}
+\input{../static/points-to} % FIXME: move earlier?
+
+\subsection{complicating points-to analysis}
+\input{../static/points-to-complex}
+
+\subsection{example: model for use-after-free, with loop}
+\input{../static/use-after-free-simple-model-loop}
+
+\subsection{example: model for array bounds}
+\input{../static/bounds-modelp}
+
+\subsection{analysis for common insecure patterns}
+\input{../static/clang-static-patterns}
+
+\subsection{static analysis limits?}
+\input{../static/static-limits}
+
+\begin{frame}{preview: information flow}
+    \begin{itemize}
+    \item really common pattern we want to find: \\
+        data from somewhere gets to dangerous place
+        \begin{itemize}
+        \item pointer to stack escapes function
+        \item input makes it to SQL query, file name
+        \end{itemize}
+    \item we'll talk about it specially next
+    \end{itemize}
+\end{frame}
+
+\subsection{summary / actual tools}
+\input{../static/actual-tools}
+
+\end{document}

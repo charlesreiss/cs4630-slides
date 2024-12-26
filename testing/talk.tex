@@ -1,0 +1,86 @@
+\title{greybox fuzzing / static analysis / taint tracking}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+
+\section{testing for security}
+\input{../testing/general-testing}
+
+\section{fuzzing, generally}
+\input{../testing/fuzzing-intro}
+
+\subsection{``blackbox''}
+\input{../testing/fuzzing-blackbox}
+
+\subsection{what can we test}
+\input{../testing/fuzz-test-what-properties}
+
+\subsection{other applications}
+\input{../testing/other-apps}
+
+\subsection{some practical issues}
+\input{../testing/fuzzing-practical}
+
+\subsubsection{lots of bad tests?}
+\input{../testing/lots-of-bad-tests}
+
+\subsubsection{example: Yang et al}
+\input{../testing/example-csmith}
+
+\subsection{what makes good tests?} % FIXME: turn into exerccise?
+\input{../testing/brainstorm-what-tests}
+
+\section{metric: coverage}
+\input{../testing/max-coveragep}
+
+\section{symbolic execution}
+\input{../testing/symbolic-exec}
+
+\subsection{example}
+% FIXME: expand example more
+\input{../testing/symbolic-exec-example}
+
+\subsection{for bounds checking}
+\input{../testing/symbolic-exec-example-bounds}
+
+\subsection{with pointers}
+\input{../testing/symbolic-exec-example-ptr}
+
+\subsection{exercise}
+\input{../testing/symbolic-exec-exer}
+
+\subsection{solving equations??}
+\input{../testing/solving-equation-p} % FIXME: screenshot of Z3
+    % FIXME: explanation of SMT solver performance
+
+\subsection{summary: tricky problems with symbolic execution}
+\input{../testing/symbolic-exec-tricky-sum}
+
+\subsection{real symbolic execution}
+     % FIXME: example from KLEE, SYMCC papers of what they did
+        % of their performance
+\input{../testing/symbolic-exec-real}
+
+\section{coverage-guided fuzzing}
+\input{../testing/coverage-fuzzing}
+
+\subsection{examples}
+\input{../testing/coverage-fuzzing-example}
+
+\subsection{exercise}
+\input{../testing/coverage-fuzzing-exer}
+
+\subsection{AFL as running example}
+\input{../testing/afl}
+
+\subsection{automatic test case simplification}
+\input{../testing/autosimplify}
+
+\subsection{AFL: test template support}
+\input{../testing/afl-test-templates}
+
+\end{document}

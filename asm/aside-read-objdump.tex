@@ -5,18 +5,18 @@
 \begin{itemize}
 \item often, we'll want to work from binaries to assembly
 \item tool we'll use on Linux: \texttt{objdump}
-\item example from \textit{objdump --disassemble} of hello-wolrd program:
+\item example from \textit{\tt objdump --disassemble} of hello-world program:
 \end{itemize}
 \begin{Verbatim}[fontsize=\fontsize{10}{11},commandchars=\\\{\}]
 \varMark{2}{0000000000001060 <main>}:
-    \varMark{3}{1060}:  \varMark{4}{f3 0f 1e fa}           endbr64 
-    \varMark{3}{1064}:  \varMark{4}{50}                    push   %rax
-    \varMark{3}{1065}:  \varMark{4}{48 8d 3d 98 0f 00 00}  lea    \varMark{6}{0xf98(%rip)},%rdi \varMark{6}{# 2004 <_IO_stdin_used+0x4>}
-            \varOnly{6}{\myemph{# 2004 <_IO_stdin_used+0x4>}}
-    \varMark{3}{106c}:  \varMark{4}{e8 df ff ff ff}        \varMark{5}{callq  1050 <puts@plt>}
-    \varMark{3}{1071}:  \varMark{4}{31 c0}                 xor    %eax,%eax
-    \varMark{3}{1073}:  \varMark{4}{5a}                    pop    %rdx
-    \varMark{3}{1074}:  \varMark{4}{c3}                    retq   
+  \varMark{3}{1060}:  \varMark{4}{f3 0f 1e fa}           endbr64 
+  \varMark{3}{1064}:  \varMark{4}{50}                    push   %rax
+  \varMark{3}{1065}:  \varMark{4}{48 8d 3d 98 0f 00 00}  lea    \varMark{6}{0xf98(%rip)},%rdi \varMark{6}{# 2004 <_IO_stdin_used+0x4>}
+          \varOnly{6}{\myemph{# 2004 <_IO_stdin_used+0x4>}}
+  \varMark{3}{106c}:  \varMark{4}{e8 df ff ff ff}        \varMark{5}{callq  1050 <puts@plt>}
+  \varMark{3}{1071}:  \varMark{4}{31 c0}                 xor    %eax,%eax
+  \varMark{3}{1073}:  \varMark{4}{5a}                    pop    %rdx
+  \varMark{3}{1074}:  \varMark{4}{c3}                    retq   
 \end{Verbatim}
 \begin{tikzpicture}[overlay,remember picture]
 \tikzset{

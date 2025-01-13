@@ -9,7 +9,7 @@
 \end{frame}
 
 \begin{frame}[fragile,label=tlsExample1]{TLS example (read) (C)}
-\begin{lstlisting}[language=C]
+\begin{lstlisting}[language=C,style=size10]
 #include <threads.h>
 thread_local int thread_local_value = 0;
 int get_thread_local() {
@@ -17,7 +17,7 @@ int get_thread_local() {
 }
 \end{lstlisting}
 \hrule
-\begin{Verbatim}[fontsize=\small]
+\begin{Verbatim}[fontsize=\fontsize{10}{11}\selectfont]
 0000000000001149 <get_thread_local>:
     1149:       f3 0f 1e fa             
                     endbr64 
@@ -34,7 +34,7 @@ TLS off    0x0000000000002df0 vaddr 0x0000000000003df0 paddr 0x0000000000003df0 
 \end{frame}
 
 \begin{frame}[fragile,label=tlsExample2]{TLS example (write) (C)}
-\begin{lstlisting}[language=C]
+\begin{lstlisting}[language=C,style=size10]
 #include <threads.h>
 thread_local int thread_local_value = 0;
 void set_thread_local(int new_value) {

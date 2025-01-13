@@ -68,7 +68,7 @@ movps %xmm0, result
     \coordinate (overlayPlace) at ([xshift=1cm,yshift=.5cm]current page.center);
     \tikzset{overThing/.style={
         draw=red,very thick,rectangle,at=(overlayPlace),
-        anchor=west,align=left
+        anchor=west,align=left,fill=white,
     }}
     \begin{visibleenv}<2|handout:0>
         \node [overThing] {array of 4 floats};

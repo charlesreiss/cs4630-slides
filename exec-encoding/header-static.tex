@@ -38,18 +38,16 @@ LOAD off    0x0207950 vaddr 0x0608950 paddr 0x0608950 align 2**12
 
 \end{Verbatim}
 \begin{itemize}
-\item load {\tt \myemph<2>{0x1bd04ed}} bytes:
+\item load {\tt \myemph<2>{0x1bd04ed}} bytes (\myemph<3>{read+executable}):
         \begin{itemize}
         \item from {\tt 0x1000} bytes into the file 
         \item to memory at {\tt 0x401000} \\
-        \item \myemph<3>{readable and executable}
         \end{itemize}
-\item load {\tt 0x8f40} bytes:
+\item load {\tt 0x8f40} bytes (read+write):
         \begin{itemize}
         \item from {\tt 0x207950} bytes into the file 
         \item to memory at {\tt 0x608950} 
         \item \myemph<4>{plus ({\tt 0xc718}--{\tt 0x8f40}) bytes of zeroes}
-        \item readable and writable
         \end{itemize}
 \end{itemize}
 \end{frame}

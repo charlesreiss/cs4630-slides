@@ -1,20 +1,23 @@
 
 \begin{frame}[fragile,label=addressing1]{addressing modes (1)}
     \begin{itemize}
-        \item {\tt \$constant}
-        \item {\tt displacement(\%base, \%index, scale)}
+        \item {\small AT\&T} {\tt \%reg}\\ {\small Intel} {\tt REG}
+        \item {\small AT\&T} {\tt \$constant} \\{\small Intel} {\tt constant}
+        \item {\small AT\&T} {\tt displacement(\%base, \%index, scale)} \\
+        {\small Intel} {\tt [base+index*scale+displacement]}
             \begin{itemize}
             \item {\tt displacement} (absolute)
             \item {\tt displacement(\%base)}
             \item {\tt displacement(,\%index, scale)}
             \end{itemize}
-        \item (= $\text{displacement} + \text{base} + \text{index} \times \text{scale}$)
     \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile,label=addressing2]{addressing modes (2)}
     \begin{itemize}
-        \item {\tt displacement(\%rip)} (64-bit only)
+        \item {\small AT\&T} {\tt displacement(\%rip)} \\
+              {\small Intel} {\tt [RIP + displacement]}
+
 \begin{lstlisting}
 thing: .quad 42
 ...
@@ -30,18 +33,19 @@ movq thing(%rip), %rax
 
 \begin{frame}[fragile,label=addressing3]{addressing modes (3)}
     \begin{itemize}
-        \item {\tt jmp *\%rax} (or {\tt call})
+        \item {\small AT\&T} {\tt jmp *\%rax} \\
+            {\small Intel} {\tt jmp RAX}
         \begin{itemize}
-        \item Intel syntax: {\tt jmp RAX}
-        \item what you'd expect to be {\tt jmp (\%rax)}
+        \item jmp to address specified by RAX
         \end{itemize}
-        \item {\tt jmp *(\%rax)}
+    \item {\small AT\&T} {\tt jmp *(\%rax)} \\
+        {\small Intel} {\tt jmp [RAX]}
         \begin{itemize}
         \item read value from memory at RAX
         \item PC becomes location in that value
-        \item Intel syntax: {\tt jmp [RAX]}
         \end{itemize}
-        \item {\tt jmp *(\%rax,\%rbx,8)}
+    \item {\small AT\&T} {\tt jmp *(\%rax,\%rbx,8)} \\
+        {\small Intel} {\tt jmp [RAX+RBX*8]}
     \end{itemize}
 \end{frame}
 

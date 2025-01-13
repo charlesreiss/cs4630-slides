@@ -5,12 +5,12 @@
 string:
     .asciz "abcdefgh"
 .text
-    movq $string, %rax
-    movq string, %rdx
-    movb (%rax), %bl
-    leal 1(%rbx), %ebx
-    movb %bl, (%rax)
-    movq %rdx, 4(%rax)
+    movq $string, %rax // mov RAX, STRING
+    movq string, %rdx  // mov RDX, [STRING]
+    movb (%rax), %bl   // mov BL, [RAX]
+    leal 1(%rbx), %ebx // lea EBX, [RBX+1]
+    movb %bl, (%rax)   // mov [RAX], BL
+    movq %rdx, 4(%rax) // mov [4+RAX], RDX
 \end{lstlisting}
 {\small What is the final value of string?}
 \begin{tabular}{ll}

@@ -1,0 +1,78 @@
+\begin{frame}[fragile]{finding strings}
+\begin{Verbatim}[commandchars=~\{\},fontsize=\fontsize{9}{10}]
+$ hexdump -c mystery
+00000000  7f 45 4c 46 02 01 01 00  00 00 00 00 00 00 00 00  |.ELF............|
+00000010  03 00 3e 00 01 00 00 00  c0 60 00 00 00 00 00 00  |..>......`......|
+00000020  40 00 00 00 00 00 00 00  08 5e 03 00 00 00 00 00  |@........^......|
+00000030  00 00 00 00 40 00 38 00  0d 00 40 00 1e 00 1d 00  |....@.8...@.....|
+~textit{[... many more lines ...]}
+00000e60  00 5f 49 54 4d 5f 64 65  72 65 67 69 73 74 65 72  |._ITM_deregister|
+00000e70  54 4d 43 6c 6f 6e 65 54  61 62 6c 65 00 5f 5f 67  |TMCloneTable.__g|
+00000e80  6d 6f 6e 5f 73 74 61 72  74 5f 5f 00 5f 49 54 4d  |mon_start__._ITM|
+00000e90  5f 72 65 67 69 73 74 65  72 54 4d 43 6c 6f 6e 65  |_registerTMClone|
+00000ea0  54 61 62 6c 65 00 77 61  64 64 63 68 00 63 6c 65  |Table.waddch.cle|
+00000eb0  61 72 6f 6b 00 6e 6f 65  63 68 6f 00 6d 76 70 72  |arok.noecho.mvpr|
+~textit{[... many more lines ...]}
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{exercise: heuristic?}
+    \begin{itemize}
+    \item could scan through pages of hexdump for something interesting\ldots
+    \vspace{.5cm}
+    \item good heuristic for automating this process?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{strings utility (1)}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}]
+$ strings mystery
+/lib64/ld-linux-x86-64.so.2
+*7lT1
+A9B*
+m8m7
+_ITM_deregisterTMCloneTable
+__gmon_start__
+_ITM_registerTMCloneTable
+waddch
+clearok
+\end{Verbatim}
+\vspace{-1em}
+\ldots
+\begin{Verbatim}[fontsize=\fontsize{9}{10}]
+        prints help
+        identify object
+        left
+        down
+        right
+\end{Verbatim}
+\vspace{-1em}
+\ldots
+\begin{Verbatim}[fontsize=\fontsize{9}{10}]
+        save game
+        quit
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{strings utility (2)}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}]
+$ strings --bytes=40 mystery
+character you want help for (* for all):
+you feel a wrenching sensation in your gut
+your armor appears to be weaker now. Oh my!
+you feel a sting in your arm and now feel weaker
+Level: %d  Gold: %-5d  Hp: %*d(%*d)  Str: %2d(%d)  Ac: %-2d  Exp: %d/%ld  %s
+Ok, if you want to exit that badly, I'll have to allow it
+Hello %s, just a moment while I dig the dungeon...
+orry, but your terminal window has too few columns.
+Sorry, but your terminal window has too few lines.
+please specifiy a letter between 'A' and 'Z'
+\end{Verbatim}
+\ldots
+\end{frame}
+
+\begin{frame}{in Ghidra}
+\small (after making new project, loading mystery file) \\
+\includegraphics[width=0.8\textwidth]{../re-tools/ghidra-strings-mystery-ex}
+\end{frame}
+

@@ -12,11 +12,17 @@
 \end{itemize}
 \begin{lstlisting}[style=small]
 movq $0x123456789abcdef, %rax
+    // Intel: MOVABS RAX, 0x123456789abcdef
 xor %eax, %eax
 // %rax is 0, not 0x1234567800000000
 movl $-1, %ebx
+    // Intel: MOV EBX, -1
 // %rbx is 0xFFFFFFFF, not -1 (0xFFFFF...FFF)
 \end{lstlisting}
+\begin{itemize}
+\item 32-bit instructions are often shorter than 64-bit ones, \\
+so compilers will prefer \texttt{mov \$1234, \%ecx} to \texttt{mov \$1234, \%rcx}
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile,label=overlap2]{overlapping registers (2)}

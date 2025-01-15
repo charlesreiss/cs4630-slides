@@ -26,7 +26,7 @@ movq $42, 100(%rbx,%rcx,4)
     \item operand length: {\tt q}
         \begin{itemize}
         \item {\tt l} = 4; {\tt w} = 2; {\tt b} = 1
-        \item 
+        \item can be omitted when implied by context
         \end{itemize}
     \item {\tt 100(\%rbx,\%rcx,4)}: \\ {\tt memory[100 + rbx + rcx * 4]}
     \item {\tt sub \%rax, \%rbx}: {\tt rbx $\leftarrow$ rbx - rax}
@@ -42,6 +42,7 @@ movq $42, 100(%rbx,%rcx,4)
         \item DWORD for 4
         \item WORD for 2
         \item BYTE for 1
+        \item can be omitted when implied by context
         \end{itemize}
     \end{itemize}
 \end{frame}

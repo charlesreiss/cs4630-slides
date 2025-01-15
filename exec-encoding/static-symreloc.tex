@@ -65,58 +65,16 @@ OFFSET           TYPE              VALUE
 \end{tikzpicture}
 \end{frame}
 
-
-\begin{frame}[fragile,label=linkingExObj]{hello.exe}
+\begin{frame}[fragile]{hello.o (pre-static or dynamic linking)}
 \begin{Verbatim}[commandchars=\\\{\},fontsize=\fontsize{9}{10}\selectfont]
-SYMBOL TABLE:
-0000000000000000 l    d  .text  0000000000000000 .text
-0000000000000000 l    d  .data  0000000000000000 .data
-0000000000000000 l    d  .bss   0000000000000000 .bss
-0000000000000000 l       .data  0000000000000000 string
-0000000000000000 \myemphSix{g}       \myemphSeven{.text  0000000000000000} main
-0000000000000000         \myemphTwo{*UND*  0000000000000000 puts}
+Disassembly of section .text:
 
-RELOCATION RECORDS FOR [.text]:
-OFFSET           TYPE              VALUE 
-0000000000000003 \myemphFive{R_X86_64_32S}      \myemphFour{.data}
-0000000000000008 \myemphFive{R_X86_64_PC32}     \myemphThree{puts}-0x0000000000000004
+0000000000000000 <main>:
+   0:   48 c7 c7 00 00 00 00    mov    $0x0,%rdi
+                        3: R_X86_64_32S .data
+   7:   e8 00 00 00 00          call   c <main+0xc>
+                        8: R_X86_64_PLT32       puts-0x4
+   c:   c3                      ret    
 \end{Verbatim}
-\begin{tikzpicture}[overlay,remember picture]
-    \tikzset{overBox/.style={at=(boxLoc),anchor=center,align=center,draw,rectangle,fill=white}}
-    \coordinate (boxLoc) at ([yshift=-2.5cm]current page.center);
-    \begin{visibleenv}<2>
-        \node[overBox] {
-            undefined symbol: look for {\tt puts} elsewhere
-        };
-    \end{visibleenv}
-    \begin{visibleenv}<3>
-        \node[overBox] {
-           insert address of puts, format for {\tt call}
-        };
-    \end{visibleenv}
-    \begin{visibleenv}<4>
-        \node[overBox] {
-           insert address of string, format for {\tt movq}
-        };
-    \end{visibleenv}
-    \begin{visibleenv}<5>
-        \node[overBox] {
-            different ways to represent address \\
-            {\tt 32S} --- signed 32-bit value \\
-            {\tt PC32} --- 32-bit difference from current address
-        };
-    \end{visibleenv}
-    \begin{visibleenv}<6>
-        \node[overBox] {
-            {\tt g}: global --- used by other files \\
-            {\tt l}: local 
-        };
-    \end{visibleenv}
-    \begin{visibleenv}<7>
-        \node[overBox] {
-            {\tt .text} segment beginning plus 0 bytes
-        };
-    \end{visibleenv}
-\end{tikzpicture}
 \end{frame}
 

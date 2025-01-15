@@ -1,9 +1,9 @@
 \usetikzlibrary{arrows.meta,decorations.pathmorphing,patterns}
 
 \begin{frame}<2->{ELF LOAD}
-\begin{tikzpicture}
+\begin{tikzpicture}[y=0.9cm]
 \begin{pgfonlayer}{fg}
-    \draw[very thick] (0, 0) rectangle (4, 6);
+\draw[very thick] (0, 0) rectangle (4, 6);
 \node[font=\huge,black!25,align=center] at (2, 3) {
     program \\ on\\ disk
 };
@@ -16,7 +16,7 @@
 
 \begin{scope}[xshift=6cm]
     \begin{pgfonlayer}{fg}
-        \draw[very thick] (0, 7) -- (0, 0) -- (4, 0) -- (4, 7);
+        \draw[overlay,very thick] (0, 7) -- (0, 0) -- (4, 0) -- (4, 7);
         \draw[overlay,very thick,decorate,decoration={zigzag,segment length=2.5mm}] (0, 7) -- (4, 7);
     \node[font=\huge,black!25,align=center] at (2, 3) {
         program \\ in\\ memory
@@ -24,7 +24,7 @@
     \end{pgfonlayer}
     \coordinate (vaddr off) at (4, 4);
     \coordinate (vaddr end copy) at (4, 5.54);
-    \coordinate (vaddr end all) at (4, 6.64);
+    \coordinate[overlay] (vaddr end all) at (4, 6.64);
 \draw[thick,Latex-,font=\small] (4, 0) -- ++(.5, 0) node[right,align=left] {addr {\tt 0}};
 \end{scope}
 \begin{visibleenv}<2->
@@ -43,7 +43,7 @@
         node[midway,font=\small,left] {\tt 0x1544};
     \draw[thick,Latex-Latex] ([xshift=.15cm]vaddr off) -- ([xshift=.15cm]vaddr end copy)
         node[midway,font=\small,right] {\tt 0x1544};
-    \draw[thick,Latex-Latex] ([xshift=-4.15cm]vaddr off) -- ([xshift=-4.15cm]vaddr end all)
+    \draw[overlay,thick,Latex-Latex] ([xshift=-4.15cm]vaddr off) -- ([xshift=-4.15cm]vaddr end all)
         node[midway,font=\small,left] {\tt 0x2644};
     \fill[red!20] (load off) rectangle ([xshift=4cm]load end);
     \fill[red!20] (vaddr off) rectangle ([xshift=-4cm]vaddr end copy);

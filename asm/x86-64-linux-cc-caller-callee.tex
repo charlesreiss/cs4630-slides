@@ -1,0 +1,46 @@
+
+\begin{frame}{caller-saved registers}
+    \begin{itemize}
+        \item functions \myemph{may} freely \myemph{trash} these
+        \vspace{.5cm}
+        \item return value register {\tt \%rax}
+        \item argument registers: \\
+            \begin{itemize}
+            \item {\tt \%rdi}, {\tt \%rsi}, {\tt \%rdx}, 
+              {\tt \%rcx}, {\tt \%r8}, {\tt \%r9}
+              \end{itemize}
+        \item \%r11
+        \item MMX/SSE/AVX registers: {\tt \%xmm0-15}, etc.
+        \item floating point stack: {\tt \%st(0)-\%st(7)}
+        \item condition codes (used by {\tt jne}, etc.)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=calleeSaved]{callee-saved registers}
+    \begin{itemize}
+    \item functions \myemph{must preserve} these
+    \vspace{.5cm}
+    \item {\tt \%rsp} (stack pointer), {\tt \%rbp} (frame pointer, maybe)
+    \item {\tt \%r12-\%r15}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=callerCallee]{caller/callee-saved}
+\lstset{style=small}
+\begin{lstlisting}
+foo:
+    pushq %r12 // r12 is caller-saved
+    ... use r12 ...
+    popq %r12
+    ret
+
+...
+other_function:
+    pushq %r11 // r11 is caller-saved
+    ...
+    callq foo
+    popq %r11
+\end{lstlisting}
+\end{frame}
+
+% XXX enter/leave ???

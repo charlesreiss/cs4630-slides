@@ -1,0 +1,23 @@
+
+
+\begin{frame}[fragile,label=callStack]{the call stack}
+\begin{lstlisting}[language=C,style=small]
+foo(a,b,c,d,e,f,g,h);
+\end{lstlisting}
+\begin{tikzpicture}
+\tikzset{>=Latex}
+\matrix[tight matrix,nodes={text width=7cm,font=\tt}] (theStack) {
+    \ldots \\
+    \normalfont (stack allocations in caller) \\
+    \normalfont (saved registers, if any) \\
+    h \\
+    g \\
+    \normalfont return address \\
+    \normalfont (first stack allocation in {\tt foo}) \\
+    \ldots \\
+};
+\draw[very thick,->] ([xshift=0.25cm]theStack-1-1.east)  -- ([xshift=0.25cm]theStack-8-1.east)
+    node[right] {decreasing addresses};
+\draw[red,thick,->] (theStack-6-1.east) -- ++(.5cm,0cm) node[right] {stack pointer after call};
+\end{tikzpicture}
+\end{frame}

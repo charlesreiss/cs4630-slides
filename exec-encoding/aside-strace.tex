@@ -12,7 +12,7 @@
 
 \begin{frame}[fragile,label=staticStrace]{statically linked hello.exe}
 \begin{itemize}
-\item \small{\tt gcc -static -o hello-static.exe hello.s}
+\item \small{\tt gcc -no-pie -static -o hello-static.exe hello.s}
 \item \small{\tt strace ./hello-static.exe}:
 \end{itemize}
 \begin{Verbatim}[commandchars=@\{\},fontsize=\fontsize{8}{9}\selectfont]

@@ -1,7 +1,7 @@
 
 \begin{frame}[fragile,label=straceDynamic]{dynamically linked hello.exe}
 \begin{itemize}
-\item \small{\tt gcc -o hello.exe hello.s}
+\item \small{\tt gcc -no-pie -o hello.exe hello.s}
 \item \small{\tt strace ./hello.exe}:
 \end{itemize}
 \begin{Verbatim}[commandchars=@\{\},fontsize=\fontsize{8}{9}\selectfont]

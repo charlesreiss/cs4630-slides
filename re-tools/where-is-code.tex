@@ -39,7 +39,6 @@ print_hello:
     \myemph{1142:	65 6c                	gs insb (%dx),%es:(%rdi)}
     \myemph{1144:	6c                   	insb   (%dx),%es:(%rdi)}
     \myemph{1145:	6f                   	outsl  %ds:(%rsi),(%dx)}
-    \myemph{1146:	21 00                	and    %eax,(%rax)}
     \myemph{1146:	2e                   	cs}
     \myemph{	...}
 0000000000001148 <print_hello>:
@@ -69,6 +68,9 @@ print_hello:
         \item skip over strings of zero-bytes just before symbol
         \end{itemize}
     \item problem: can misidentify jumped to instructions
+        \begin{itemize}
+        \item especially if symbols stripped to save space/hinder reverse engineering
+        \end{itemize}
     \item exercise: algorithm to fix?
         \begin{itemize}
         \item (Ghidra does this)

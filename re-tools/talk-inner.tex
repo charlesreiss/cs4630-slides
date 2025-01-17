@@ -13,7 +13,6 @@
 \input{../re-tools/lib-syscall}
 
 \section{disassembly, need for xrefs}
-
 \input{../re-tools/where-is-code}
 
 \section{cross-references}
@@ -22,21 +21,23 @@
 \section{high-level overviews}
 
 \subsection{function callers/callees}
-\input{../re-tools/function-call-callee}
+\input{../re-tools/function-call-callee} % FIXME: cleanup exercise
 
 \subsection{control flow graphs}
+\input{../re-tools/func-graphs}
 
-% CFG for main() function in mystery
+\subsection{arrows on the side}
+\input{../re-tools/side-arrows}
 
 \section{decompiling}
+
+\subsection{decompiler}
+\input{../re-tools/decomp-ex}
 
 % intermediate representation for main() function in mystery
 % decompiled representation
 \subsection{Ghidra: intermediate representation}
-
-\subsection{finding loops, etc.}
-
-% what if no natural C struture?
+\input{../re-tools/ghidra-ir}
 
 \section{more high-level overviews}
 
@@ -50,7 +51,8 @@
 
 \subsection{data, parameter types, arrays}
 
-\section{pattern matching}
+\section{patching things}
+\input{../re-tools/patch}
 
 \section{with debuggers}
 

@@ -17,7 +17,8 @@ SLIDEDECKS = \
     betterpl \
     cfi \
     sandbox \
-    symbolic
+    symbolic \
+    re-tools
 
 
 all: $(patsubst %,_dist/%.pdf,$(SLIDEDECKS))

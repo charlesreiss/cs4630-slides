@@ -1,29 +1,29 @@
 
 \begin{frame}[fragile,label=dynamicPutsLazy]{lazy binding}
 \begin{Verbatim}[commandchars=Q\{\},fontsize=\fontsize{8}{9}\selectfont]
-0000000000401040 <puts@plt>:
-  401040:       f3 0f 1e fa             endbr64 
-  401044:       f2 ff 25 cd 2f 00 00    bnd jmpq *0x2fcd(%rip)  # 404018
+0000000000401030 <puts@plt>:
+  401030:       ff 25 62 22 00 00       jmp    *0x2262(%rip)        # 403298 <puts@GLIBC_2.2.5>
 ...
 Contents of section .got.plt:
- 404000 203e4000 00000000 00000000 00000000   >@.............
- 404010 00000000 00000000 Qtextbf{30104000 00000000}  ........0.@.....
+ 403280 a0304000 00000000 00000000 00000000  .0@.............
+ 403290 00000000 00000000 Qtextbf{36104000 00000000}  ........6.@.....
 \end{Verbatim}
 \begin{itemize}
-\item initial contents of {\tt 0x404018} = {\tt 0x401030} (in .got.plt)
+\item initial contents of {\tt 0x403298} = {\tt 0x401036} (in .got.plt)
     \begin{itemize}
     \item not part of standard library????
     \end{itemize}
-\item<2-> code found at 0x401030 is routine to invoke dynamic linker code:
+\item<2-> code found at 0x401036 is routine to invoke dynamic linker code:
 \end{itemize}
 \begin{visibleenv}<2->
 \begin{Verbatim}[commandchars=Q\{\},fontsize=\fontsize{8}{9}\selectfont]
-  401020:       ff 35 e2 2f 00 00       pushq  0x2fe2(%rip)        # 404008 <_GLOBAL_OFFSET_TABLE_+0x8>
-  401026:       f2 ff 25 e3 2f 00 00    bnd jmpq *0x2fe3(%rip)        # 404010 <_GLOBAL_OFFSET_TABLE_+0x10>
-  40102d:       0f 1f 00                nopl   (%rax)
-  401030:       f3 0f 1e fa             endbr64 
-  401034:       68 00 00 00 00          pushq  $0x0
-  401039:       f2 e9 e1 ff ff ff       bnd jmpq 401020 <.plt>
+  401020:       ff 35 62 22 00 00       push   0x2262(%rip)       
+    # 403288 <_GLOBAL_OFFSET_TABLE_+0x8>
+  401026:       ff 25 64 22 00 00       jmp    *0x2264(%rip)    
+    # 403290 <_GLOBAL_OFFSET_TABLE_+0x10>
+...
+  401036:       68 00 00 00 00          push   $0x0
+  40103b:       e9 e0 ff ff ff          jmp    401020 <_init+0x20>
 \end{Verbatim}
 \end{visibleenv}
 \end{frame}

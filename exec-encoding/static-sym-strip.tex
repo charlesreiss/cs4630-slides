@@ -1,0 +1,28 @@
+\begin{frame}[fragile]{symbols in executable}
+\begin{Verbatim}[fontsize=\small]
+SYMBOL TABLE:
+0000000000000000 l    df *ABS*  0000000000000000 crt1.o
+00000000004002b4 l     O .note.ABI-tag  0000000000000020 __abi_tag
+0000000000000000 l    df *ABS*  0000000000000000 assert.o
+0000000000498530 l     O .rodata        0000000000000013 errstr.0
+0000000000401100 l     F .text  000000000000000f __assert_fail_base.cold
+\end{Verbatim}
+\ldots
+\begin{itemize}
+\item by default, symbol information in statically-linked executable
+\item \ldots but not actually used to run it!
+\vspace{.5cm}
+\item can be stripped (-s linker option or strip command) isntead:
+\end{itemize}
+\begin{Verbatim}[fontsize=\small]
+SYMBOL TABLE:
+no symbols
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{exercise: finding without symbols?}
+\begin{itemize}
+\item how can I find where functions are without symbols?
+\item ideally: some \textit{automated} way to do this?
+\end{itemize}
+\end{frame}

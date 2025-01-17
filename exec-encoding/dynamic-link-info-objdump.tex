@@ -16,18 +16,19 @@
 \begin{Verbatim}[commandchars=Q\{\},fontsize=\fontsize{9}{10}\selectfont]
 DYNAMIC RELOCATION RECORDS
 OFFSET           TYPE              VALUE 
-...
-0000000000404018 R_X86_64_JUMP_SLOT  puts@GLIBC_2.2.5
+0000000000403ff0 R_X86_64_GLOB_DAT  __libc_start_main@GLIBC_2.34
+0000000000403ff8 R_X86_64_GLOB_DAT  __gmon_start__@Base
+0000000000403fe8 R_X86_64_JUMP_SLOT  puts@GLIBC_2.2.5
+
 ...
 
 Text:
-0000000000401040 <puts@plt>:
-  401040:       f3 0f 1e fa             endbr64 
-  401044:       f2 ff 25 cd 2f 00 00    bnd jmpq *0x2fcd(%rip) # 404018
+0000000000401030 <puts@plt>:
+  401030:       ff 25 b2 2f 00 00       jmp    *0x2fb2(%rip)        # 403fe8 <puts@GLIBC_2.2.5>
 \end{Verbatim}
 \begin{itemize}
-    \item stub reads pointer from 0x404018, jump to location
-    \item {\tt 0x404018} part of `global offset table' (GOT)
+    \item stub reads pointer from 0x403fe8, jump to location
+    \item {\tt 0x403fe8} part of `global offset table' (GOT)
     \item relocation table entry indicates where puts pointer goes
 \end{itemize}
 \end{frame}

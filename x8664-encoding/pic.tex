@@ -10,9 +10,13 @@
 {\tt
 \begin{tabular}{l|l}
 movb label, \%al & 8a 04 25 {\normalfont\it label's addr (32 bit)} \\
+{\small {\normalfont Intel:} mov AL, [label]} \\
 jmp *label & ff 24 25 {\normalfont\it label's addr (32 bit)} \\
+{\small {\normalfont Intel:} jmp [label]} \\
 movb label(\%rip), \%al & 8a 05 {\normalfont\it \%rip - label's addr (32 bit)} \\
+{\small {\normalfont Intel NASM:} mov AL, [REL label] } \\
 jmp label & e9 {\normalfont\it \%rip - label's addr (32 bit)} \\
+{\small {\normalfont Intel NASM:} jmp [REL label]} \\
 \end{tabular}
 }
 how to know which? --- check manual

@@ -65,7 +65,8 @@ OFFSET           TYPE              VALUE
 \end{tikzpicture}
 \end{frame}
 
-\begin{frame}[fragile]{hello.o (pre-static or dynamic linking)}
+\begin{frame}[fragile]{hello.o / statically linked, no PIE}
+hello.o:
 \begin{Verbatim}[commandchars=\\\{\},fontsize=\fontsize{9}{10}\selectfont]
 Disassembly of section .text:
 
@@ -75,6 +76,17 @@ Disassembly of section .text:
    7:   e8 00 00 00 00          call   c <main+0xc>
                         8: R_X86_64_PLT32       puts-0x4
    c:   c3                      ret    
+\end{Verbatim}
+\hrule
+hello.exe (gcc -static -no-pie):
+\begin{Verbatim}[commandchars=\\\{\},fontsize=\fontsize{9}{10}\selectfont]
+Disassembly of section .text:
+...
+ 00000000004016c3 <main>:
+   4016c3:▶      48 c7 c7 b5 16 40 00 ▶  mov    $0x4016b5,%rdi
+   4016ca:▶      e8 e1 a9 00 00       ▶  call   40c0b0 <_IO_puts>
+   4016cf:▶      c3                   ▶  ret    
+...
 \end{Verbatim}
 \end{frame}
 

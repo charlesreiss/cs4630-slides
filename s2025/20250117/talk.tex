@@ -18,6 +18,17 @@
     \end{itemize}
 \end{frame}
 
+\begin{frame}{assignment}
+    \begin{itemize}
+    \item assembly-reading practice
+    \item identifying how some C code was compiled
+    \item figuring out what some simple `mystery' assembly code does
+    \end{itemize}
+\end{frame}
+
+\section{string instructions}
+\input{../asm/string-instrs}
+
 \section{addressing modes} % FIXME: move to backup?
 
 \input{../asm/addressing-modes}
@@ -40,8 +51,24 @@
 
 \input{../exec-encoding/talk-basic}
 \input{../exec-encoding/talk-dl-extra}
+
+\begin{frame}{preview: x86-64 encoding}
+    \begin{itemize}
+    \item going to go through how to generate/decode x86-64 machine code
+    \vspace{.5cm}
+    \item when practical we're going to use tools for this in practice
+    \item goal: understand:
+        \begin{itemize}
+        \item when code can or cannot be moved around
+        \item corner cases assembler/disassembler has trouble with
+        \item how we can construct machine code that only uses certain bytes (e.g. non-zero)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
 \input{../x8664-encoding/body}
 
+\input{../re-tools/talk-inner}
 
 \section{backup slides}
 \begin{frame}{backup slides}

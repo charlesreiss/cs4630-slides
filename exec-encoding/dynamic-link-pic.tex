@@ -18,7 +18,7 @@
 \path[fill=green!20] (0, -3) rectangle (4, -3.5)
     node[midway,font=\small] (link call stub) {linker calling stub};
 \path[fill=orange!20] (0, -3.5) rectangle (4, -4.5);
-\node[font=\fontsize{9}{10}\tt] (puts stub call) at (3, -4.25) {call \ldots};
+\node[font=\fontsize{9}{10}\tt] (puts stub call) at (3, -4.25) {jmp \ldots};
 \node[anchor=west,font=\small] (puts stub) at (0, -4) {puts stub};
 
 \fill[violet!20] (0, -4.5) rectangle (4, -6);
@@ -47,7 +47,7 @@
     \draw[thick] (1, -2.5) rectangle (4, -2.75);
     \draw[thick,alt=<2-3>{pattern=north west lines},alt=<2>{pattern color=red}] (1, -2.75) rectangle (4, -3);
 \path[fill=green!20] (0, -3) rectangle (4, -3.5)
-    node[midway,font=\small] {linker calling stub};
+    node[midway,font=\small] (link call stub alt)(link call stub alt)  {linker calling stub};
 \path[fill=orange!20] (0, -3.5) rectangle (4, -4.5);
 \node[font=\fontsize{9}{10}\tt] (puts stub call) at (3, -4.25) {jmp \ldots};
 \node[anchor=west,font=\small] (puts stub) at (0, -4) {puts stub};
@@ -79,7 +79,7 @@
 };
 
 \begin{visibleenv}<4>
-    \draw[alt=<4>{red},thick,-Latex] (1, -2.875) -- ++(-1.25cm, 0cm) |- (link call stub.west);
+    \draw[alt=<4>{red},thick,-Latex] (1, -2.875) -- ++(-1.25cm, 0cm) |- (link call stub alt.west);
 \end{visibleenv}
 
 \end{scope}

@@ -78,7 +78,58 @@ print_hello:
     \end{itemize}
 \end{frame}
 
-% FIXME: exercise: Q: what to do about range of addresses given context?
+\begin{frame}[fragile]{some tricky cases (1)}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont]
+_start:
+    ...
+    movq $main, %rdi
+    ...
+    call __libc_start_main
+    ...
+\end{Verbatim}
+\hrule
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont]
+struct DeviceTypeFuncs {
+    void (*Send)(struct DeviceInfo*, char *);
+    void (*Recv)(struct DeviceInfo, char *, size_t);
+};
+void SendToDevice(struct DeviceInfo* info, char *data) {
+    (info->funcs->Send)(data);
+}
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{some tricky cases (2)}
+\begin{Verbatim}
+table:
+    .int case1 - table
+    .int case2 - table
+...
+
+    lea table(%rip), %rax
+    addq (%rax, %rdi, 4), %rax
+    jmp *%rax
+\end{Verbatim}
+\hrule
+\begin{Verbatim}
+    movq $function + 0x12340, %rax
+    movq $0x1234, %r9
+    sll $4, %r9
+    addq %r9, %rax
+    call *%rax
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{some tricky cases (3)}
+\begin{Verbatim}[fontsize=\small]
+    call complex_func_returning_three
+    lea next2-3(%rax), %rax
+    jmp *%rax
+    .byte 0x39, 0x59, 0x60, 0x89, 0xFF
+next2:
+    addq ...
+\end{Verbatim}
+\end{frame}
 
 
 \begin{frame}

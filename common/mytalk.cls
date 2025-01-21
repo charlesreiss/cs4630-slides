@@ -7,6 +7,10 @@
 
 \RequirePackage{etoolbox}
 
+\RequirePackage{pdfpages}
+
+\RequirePackage{emoji}
+
 
 \newtoggle{heldback}
 \togglefalse{heldback}
@@ -27,7 +31,6 @@
 \setcounter{tocdepth}{5}
 
 \RequirePackage{fontspec}
-\RequirePackage{emoji}
 \RequirePackage{tikz}
 \RequirePackage{comment}
 \RequirePackage{graphicx}
@@ -113,6 +116,8 @@
     \setbeamerfont*{itemize/enumerate body}{size=\fontsize{15}{17}}%
     \setbeamerfont*{itemize/enumerate subbody}{size=\fontsize{13}{15}}%
     \setlength\leftmargini{0em}%
+    \setbeamerfont{alerted text}{shape=\ifmmode\relax\else\itshape\fi}%
+    \setbeamercolor{alerted text}{fg=red!50!orange}%
 }
 \tikzset{tikzmark prefix/.expand once=\thepage-\the\beamer@slideinframe-}
 \mode<all>

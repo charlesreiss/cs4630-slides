@@ -7,9 +7,6 @@
 
 \RequirePackage{etoolbox}
 
-\RequirePackage{pdfpages}
-
-\RequirePackage{emoji}
 
 
 \newtoggle{heldback}
@@ -38,6 +35,8 @@
 \RequirePackage{listings}
 \RequirePackage{lmodern}
 \RequirePackage[normalem]{ulem} % for sout
+\RequirePackage{pdfpages}
+\RequirePackage{emoji}
 
 \renewcommand<>{\sout}[1]{\alt#2{\beameroriginal{\sout}{#1}}{#1}}
 

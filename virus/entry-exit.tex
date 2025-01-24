@@ -3,14 +3,15 @@
 \begin{frame}[fragile,label=vienna]{Vienna: infection}
 \lstset{
     language=myasm,
-    style=smaller
+    style=smaller,
+    moredelim={**[is][\btHL<2>]{~hi2~}{~endhi2~}},
 }
 \begin{tikzpicture}
 \tikzset{programBox/.style={draw,thick},every label/.style={inner sep=1mm,outer sep=0mm}}
 \node[programBox,minimum height=3cm,label={north:uninfected},anchor=north west] (uninfect) at (0,0) {
 \begin{lstlisting}
 0x0100:
-    mov $0x4f28, %cx
+    ~hi2~mov $0x4f28, %cx~endhi2~
     /* b9 28 4f */
 0x0103:
     mov $0x9e4e, %si
@@ -25,7 +26,7 @@
 
 \end{lstlisting}
 };
-\node[programBox,anchor=north west,label={north:infected}] at ([xshift=1cm]uninfect.north east) {
+\node[overlay,programBox,anchor=north west,label={[overlay]north:infected}] at ([yshift=.5cm,xshift=1cm]uninfect.north east) {
 \begin{lstlisting}
 0x0100: jmp 0x0700
 0x0103: mov $0x9e4e, %si
@@ -43,7 +44,7 @@
     ret
 ...
 0x0903:
-    .bytes 0xb9 0x28 0x4f
+    ~hi2~.bytes 0xb9 0x28 0x4f~endhi2~
 ...
 \end{lstlisting}
 };

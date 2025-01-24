@@ -1,0 +1,28 @@
+\begin{frame}[fragile]{segment rounding}
+\providecommand{\myemphA}[1]{\myemph<2>{#1}}
+\providecommand{\myemphB}[1]{\myemph<3>{#1}}
+objdump -x /bin/ls: 
+\begin{Verbatim}[fontsize=\fontsize{9}{10},commandchars=\\\{\}]
+   LOAD off    0x0000000000004000 vaddr 0x0000000000004000 paddr 0x0000000000004000 align 2**12
+        filesz \myemphA{0x0000000000013091} memsz 0x0000000000013091 flags r-x
+   LOAD off    \myemphB{0x0000000000018000} vaddr 0x0000000000018000 paddr 0x0000000000018000 align 2**12
+        filesz 0x0000000000007458 memsz 0x0000000000007458 flags r--
+\end{Verbatim}
+running /bin/ls in gdb:
+\begin{Verbatim}[fontsize=\fontsize{9}{10},commandchars=\\\{\}]
+(gdb) info proc map
+process 1178818
+Mapped address spaces:
+
+          Start Addr           End Addr       Size     Offset  Perms  objfile
+      0x555555554000     0x555555558000     0x4000        0x0  r--p   /usr/bin/ls
+      0x555555558000     0x55555556c000    \myemphA{0x14000}     0x4000  r-xp   /usr/bin/ls
+      0x55555556c000     0x555555574000     0x8000    0x18000  r--p   /usr/bin/ls
+      0x555555574000     0x555555577000     0x3000    0x1f000  rw-p   /usr/bin/ls
+....
+\end{Verbatim}
+\begin{itemize}
+\item allocations must be in multiples of 0x1000 (4096) --- pages!
+\item rounding of sizes, start locations means empty space between segments
+\end{itemize}
+\end{frame}

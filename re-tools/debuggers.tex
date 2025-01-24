@@ -11,7 +11,7 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{selected debugger features}
+\begin{frame}{selected debugger features (1)}
     \begin{itemize}
     \item watchpoint (GDB/LLDB \texttt{watch})
         \begin{itemize}
@@ -19,6 +19,11 @@
         \end{itemize}
     \item breakpoints on system calls (GDB \texttt{catch syscall \ldots})
     \item searching memory for strings (GDB \texttt{find}, LLDB \texttt{memory find})
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{selected debugger fetures (2)}
+    \begin{itemize}
     \item saving `core' files (GDB \texttt{generate-core-file NAME})
         \begin{itemize}
         \item full copy of program's memory, can reload in debugger later
@@ -54,9 +59,6 @@
     \begin{itemize}
     \item relies on GDB python support + some python packages installed
     \item see installation docs
-        \begin{itemize}
-        \item on NX/Portal, might need to module load + install with venv/pip/conda/etc.
-        \end{itemize}
     \end{itemize}
 \end{frame}
 

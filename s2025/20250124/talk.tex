@@ -1,0 +1,63 @@
+\date{}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item LOAD directives in ELF files
+    \item position-independent versus not
+    \vspace{.5cm}
+    \item x86-64: opcode | mod / reg (or ext. opcode) / r/m | SIB | constants
+    \item tables for ModRM and SIB bytes
+    \item REX prefix to add extra register bits/mark 64-bit instructions
+    \end{itemize}
+\end{frame}
+
+\subsection{adding 64-bit}
+\input{../x8664-encoding/add-64}
+
+\subsection{exercise}
+\input{../x8664-encoding/ex-64}
+
+\subsection{encoding overall}
+\input{../x8664-encoding/overall-encoding-diag}
+
+\subsection{misc prefixes}
+\input{../x8664-encoding/misc-prefixes}
+
+\subsection{examples}
+\input{../x8664-encoding/examples}
+
+\subsection{some impossible instructions}
+\input{../x8664-encoding/impossible}
+
+\subsection{position-independence} 
+\input{../x8664-encoding/pic}
+
+\subsection{PIC: which should be exercise?}
+\input{../x8664-encoding/pic-which}
+
+\begin{frame}{RE2 homework}
+\end{frame}
+
+\input{../re-tools/talk-inner}
+
+\input{../virus/talk-inner}
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\subsection{exercise}
+\input{../x8664-encoding/ex-32}
+
+\input{../exec-encoding/talk-backup}
+\input{../asm/talk-backup}
+
+
+\end{document}

@@ -1,0 +1,18 @@
+
+\begin{frame}{reverse debugging?}
+    \begin{itemize}
+    \item old idea: `reverse debugging'
+    \item in addition to \texttt{step}/\texttt{continue}, \\
+        debugger could have \texttt{reverse-step}/\texttt{reverse-continue}
+    \item typically implemented by recording `trace' of execution
+    \vspace{.5cm}
+    \item some implementations (with varyingly middling performance
+        \begin{itemize}
+        \item \url{https://rr-project.org} for x86-64 Linux (needs sysadmin to set some things)
+        \item QEMU for full virtual machines (not just one program)
+        \item built-in to GDB, but not maintained/possibly broken with modern systems
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+

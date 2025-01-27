@@ -33,23 +33,6 @@
     \item forcing jump to address/return from function (GDB \texttt{jump}/\texttt{return})
     \end{itemize}
 \end{frame}
-
-\begin{frame}{reverse debugging?}
-    \begin{itemize}
-    \item old idea: `reverse debugging'
-    \item in addition to \texttt{step}/\texttt{continue}, \\
-        debugger could have \texttt{reverse-step}/\texttt{reverse-continue}
-    \item typically implemented by recording `trace' of execution
-    \vspace{.5cm}
-    \item some implementations (with varyingly middling performance
-        \begin{itemize}
-        \item \url{https://rr-project.org} for x86-64 Linux (needs sysadmin to set some things)
-        \item QEMU for full virtual machines (not just one program)
-        \item built-in to GDB, but not maintained/possibly broken with modern systems
-        \end{itemize}
-    \end{itemize}
-\end{frame}
-
 \begin{frame}{Ghidra debugger integration}
 \includegraphics[width=0.35\textwidth]{../re-tools/ghidra-open-debugger.png}
 \includegraphics[width=0.55\textwidth]{../re-tools/ghidra-open-debugger2.png}

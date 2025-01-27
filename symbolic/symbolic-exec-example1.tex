@@ -1,0 +1,110 @@
+\usetikzlibrary{calc,shapes}
+\usetikzlibrary{graphdrawing}
+\usetikzlibrary{graphs}
+\usegdlibrary{trees}
+
+\begin{frame}[fragile,label=choosePath0]{example 1}
+\lstset{language=C,style=smaller}
+\begin{lstlisting}
+void foo(int a, int b) {
+  /* (0) */
+  if (a != 0) {
+    b -= 2;
+    a += b;
+  }
+  /* (1) */
+  if (b < 5) {
+    b += 4;
+  }
+  /* (2) */
+  if (a + b == 5)
+    INTERESTING();
+}
+\end{lstlisting}
+    \begin{tikzpicture}[overlay, remember picture]
+        \tikzset{
+            every node/.style={font=\scriptsize},
+            condition/.style={draw=red,thick,ellipse},
+            question/.style={fill=red!20,draw=black,thick,align=left},
+            dashedQuestion/.style={fill=red!20,draw=black,dashed,thick,align=left},
+            state/.style={draw=blue,thick,rectangle,align=center},
+            invisible/.style={opacity=0,text opacity=0},
+        }
+        \begin{scope}[tree layout,grow=down]
+            \node[state,desired at={([xshift=-5cm,yshift=-2cm]current page.north east)}] (top) {at (0): \\ a: $\alpha$, b: $\beta$}
+                child { node[condition,visible on=<2->] { a != 0 }
+                    child { node[state,visible on=<3->,alt=<4>{very thick}{thick}] {at (1): \\ $\alpha\not=0$\\a: $\alpha+\beta - 2$, b: $\beta - 2$} edge from parent[visible on=<3->] node {true}
+                        child { node[condition,visible on=<4->] { b < 5 } edge from parent[visible on=<4->]
+                            child {
+                                node[state,visible on=<5->] {
+                                    at (2): \\ $\alpha\not=0\text{; }\beta-2<5$ \\ a: $\alpha+\beta-2$, b: $\beta + 2$
+                                } edge from parent[visible on=<5->] node {true}
+                                child {
+                                    node[question,visible on=<6->] {
+                                        $\alpha \not= 0$; $\beta - 2 < 5$; \\
+                                        $\alpha + 2\beta = 5$? \\
+                                        \hrulefill
+                                        \text{can} happen: $(\alpha,\beta)=(5,0)$
+                                    } edge from parent[visible on=<6->]
+                                }
+                            }
+                            child { node[state,visible on=<7->] {at (2): \\ $\alpha\not=0\text{; }\beta-2\ge5$ \\ a: $\alpha+\beta-2$, b: $\beta - 2$}
+                                edge from parent[visible on=<7->] node {false}
+                                child { node[visible on=<7->,dashedQuestion] {} edge from parent[visible on=<7->] }
+                            }
+                        }
+                    }
+                    child { node[state,visible on=<3->] {at (1): \\ $\alpha=0$\\a: $\alpha$, b: $\beta$} edge from parent[visible on=<3->] node {false}
+                        child { node[condition,visible on=<8->] { b < 5 } 
+                            edge from parent[visible on=<8->]
+                            child { node[state,visible on=<8->] {at (2): \\ $a=0\text{; }\beta<5$ \\ a: $\alpha$, b: $\beta+4$} edge from parent[visible on=<8->] node {true}
+                                child { node[visible on=<8->,dashedQuestion] {} edge from parent[visible on=<8->] }
+                            }
+                            child { node[state,visible on=<8->] {at (2): \\ $a=0\text{; }\beta\ge5$ \\ a: $\alpha$, b: $\beta$} edge from parent[visible on=<8->] node {false}
+                                child { node[visible on=<8->,dashedQuestion] {} edge from parent[visible on=<8->] }
+                            }
+                        }
+                    }
+                }
+                ;
+        \end{scope}
+    \end{tikzpicture}
+    \begin{itemize}
+        \item<2> every variable represented as an \myemph{equation}
+        \item<2> final step: generate solution for each path
+            \begin{itemize}
+                \item 100\% test coverage
+            \end{itemize}
+    \end{itemize}
+\imagecredit{Adapted from Hicks, ``Symbolic Execution for Finding Bugs''}
+\end{frame}
+
+\begin{frame}[fragile]{example 1 in angr}
+\begin{Verbatim}[fontsize=\fontsize{10}{11},commandchars=\\\{\}]
+p = angr.Project("./example1", load_options={'auto_load_libs': False})
+
+foo_addr = p.loader.main_object.get_symbol('foo').rebased_addr
+INTERESTING_addr = p.loader.main_object.get_symbol('INTERESTING').rebased_addr
+input_a = claripy.BVS('initial_a', 32)
+input_b = claripy.BVS('initial_b', 32)
+init_state = p.factory.call_state(foo_addr, input_a, input_b)
+
+simgr = p.factory.simulation_manager(init_state)
+print("at beginning:", simgr)
+simgr.explore(find=INTERESTING_addr)
+print("after explore:", simgr)
+for state in simgr.found:
+    found_a = state.solver.eval(input_a)
+    found_b = state.solver.eval(input_b)
+    print(f'(a, b) = ({found_a}, {found_b})')
+\end{Verbatim}
+\hrule
+\begin{Verbatim}[fontsize=\fontsize{10}{11}]
+after explore: <SimulationManager with 4 deadended, 4 found>                                             
+(a, b) = (0, 1)                                                                                          
+(a, b) = (0, 5)                                                                                          
+(a, b) = (1, 2)                                                                                          
+(a, b) = (9, 2147483648)   
+\end{Verbatim}
+\end{frame}
+

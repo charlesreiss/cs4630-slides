@@ -6,13 +6,136 @@
     \titlepage
 \end{frame}
 
+\input{../common/listingsLib}
+
 \begin{frame}{last time}
+    \begin{itemize}
+    \item x86-64 encoding examples
+        \begin{itemize}
+        \item using REX prefixes
+        \end{itemize}
+    \item relative v absolute addressing
+    \vspace{.5cm}
+    \item finding strings, external refs in executables
+    \item disassembly, and difficulties with instruction beginnings
+    \item automatic cross-referencing
+    \item ``decompiling'' (assembly to C conversion)
+    \end{itemize}
 \end{frame}
 
-\input{../re-tools/talk-inner} % FIXME:
+\begin{frame}{anonymous feedback}
+    \begin{itemize}
+    \item re: answer sheet submission for RE1
+        \begin{itemize}
+        \item ``(Pertaining to the setup of the RE1 answer sheet) There REALLY needs to be some form of indicator that your answers are being recorded/submitted as right now I completed RE1 in its entirety prior to midnight but am still wondering if my input has gone through and whether it can be viewed on the network.''
+        \end{itemize}
+    \item should've gone over quiz system earlier, green around answer indicates submission
+    \item will have some slack around 11:59pm deadline
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{quiz Q3}
+    \begin{itemize}
+    \item relocation records re \textit{contents} of relocation table entries
+    \item table entries contain addresses of actaul place to reference function
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{quiz Q4A, B}
+\begin{Verbatim}[fontsize=\small]
+cmpb 0x4(%rip), %bl  # 0x4(%rip) = nop opcode
+jle quux
+jmpq *(%rax)
+quux: nop
+\end{Verbatim}
+\hrule
+\begin{Verbatim}[fontsize=\small]
+leaq malloc(%rip), %rax
+movq $100, %rdi
+call *%rax
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{quiz Q4C, D}
+\begin{Verbatim}[fontsize=\small]
+call foo
+foo: pop %rax
+movb (%rax), %bl
+xorq %rax, %rax
+\end{Verbatim}
+\hrule
+\begin{Verbatim}[fontsize=\small]
+movq $0x10000, %rax
+lea 0x1234(%rdi,%rsi), %rdi
+jmp *(%rax)
+\end{Verbatim}
+\end{frame}
+
+\section{high-level overviews}
+
+\subsection{function callers/callees}
+\input{../re-tools/function-call-callee} % FIXME: cleanup exercise
+
+\subsection{control flow graphs}
+\input{../re-tools/func-graphs}
+
+\subsection{arrows on the side}
+\input{../re-tools/side-arrows}
+
+\section{decompiling}
+
+\subsection{decompiler}
+\input{../re-tools/decomp-ex}
+
+% intermediate representation for main() function in mystery
+% decompiled representation
+\subsection{Ghidra: intermediate representation}
+\input{../re-tools/ghidra-ir}
+
+\begin{frame}{preview: symbolic execution}
+    \begin{itemize}
+    \item having generic intermediate form helps with analyses
+    \item one tool we'll talk about later: symbolic execution
+        \begin{itemize}
+        \item run intermediate form with algebra
+        \end{itemize}
+    \vspace{.5cm}
+    \item can do automated analyses like:
+        \begin{itemize}
+        \item what are possible values of Y in this code?
+        \item what inputs reach this code?
+        \item what conditions cause X to be out of bounds?
+        \end{itemize}
+    \vspace{.5cm}
+    \end{itemize}
+\end{frame}
+
+
+\section{patching things}
+\input{../re-tools/patch}
+
+\section{on/with debuggers}
+\input{../re-tools/debuggers} % FIXME: screenshots
+% FIXME: 
 
 \input{../virus/talk-inner}
 \begin{frame}{backup slides}
 \end{frame}
+\section{finding library/system calls}
 
+    % FIXME: objdump -R
+    % FIXME: objdump -t
+
+\input{../re-tools/lib-syscall}
+
+
+\section{disassembly, need for xrefs}
+\input{../re-tools/where-is-code}
+
+\section{reverse debugging}
+\input{../re-tools/reverse-debug}
+
+\section{symbolic execution preview}
+\input{../symbolic/symbolic-exec-example0}
+\input{../symbolic/symbolic-exec-example1}
 \end{document}

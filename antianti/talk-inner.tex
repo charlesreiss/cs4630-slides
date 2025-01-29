@@ -1,0 +1,141 @@
+
+\section{anti-anti-virus}
+\input{../antianti/intro}
+
+\input{../antianti/intro-terms}
+
+\section{other obfuscation}
+\subsection{why obfuscation, generally}
+\input{../antianti/other-obfuscate}
+
+\section{Tigress and its transformations}
+\input{../antianti/tigress-xforms-example}
+
+\section{obfuscation utility?}
+\input{../antianti/obfus-not-good-ex}
+
+\section{packers}
+\subsection{hashed data}
+\input{../antianti/hashed-data}
+
+\subsection{encrypted data}
+\input{../antianti/encrypted-data}
+
+\subsection{encrypted data and signatures}
+\input{../antianti/encrypted-and-sigs}
+
+\subsection{encrypted code}
+\input{../antianti/encrypted-code}
+
+\subsection{case study: Cascade}
+\input{../antianti/cascade-decrypter}
+
+\section{exercise: handling decrypter}
+\input{../antianti/ex-handling-decrypter}
+
+
+\subsection{decrypter variations}
+\input{../antianti/decrypter-variants}
+
+\section{metamorphic, etc. idea}
+\input{../antianti/metamorphic-play-mouse}
+
+\section{oligomorphic viruses}
+\againframe<2>{playMouse}
+\input{../antianti/olig}
+
+\subsection{case study: W95/Memorial}
+\input{../antianti/w95memorial}
+
+\section{polymorphic viruses}
+\input{../antianti/poly-intro}
+
+\subsection{case study: 1260}
+\input{../antianti/1260}
+
+\subsection{more generic mutation}
+\input{../antianti/mutation-engine-generic}
+
+\section{terminology: packers}
+\input{../antianti/packers}
+
+\section{anti-packer strategies} % FIXME: move earlier?
+\subsection{generic anti-packers}
+\input{../antianti/packer-detect}
+
+\subsection{packers and W xor X/DEP}
+\input{../antianti/packers-and-depwx}
+
+\subsection{exercise: limitations of generic anti-packer}
+\input{../antianti/packer-detect-limit-ex}
+
+\section{metamorphic viruses}
+     %FIXME: not very clear
+\input{../antianti/meta-intro}
+
+\subsection{example: changing bodies}
+\input{../antianti/meta-body-change-example}
+
+\subsection{case study: Evol}
+\input{../antianti/evol}
+
+\subsection{handling relocation with mutation}
+\input{../antianti/mutate-reloc}
+
+\subsection{fancy mutation engines}
+\input{../antianti/fancy-mutation-engine}
+
+\section{anti-virtualization strategies}
+\subsection{basic issues}
+\input{../antianti/antivm-intro}
+
+\subsection{automated analysis: lack of patience?}
+\input{../antianti/antivm-patience}
+
+\section{goats and anti-goat}
+\input{../antianti/goat}
+
+\section{anti-debugging}
+\input{../antianti/antidebug-intro}
+
+\subsection{breaking breakpoints}
+\againframe<2>{debuggerThings}
+
+\input{../antianti/antidebug-breakpt-int3}
+
+\subsubsection{aside: modern breakpoints}
+\input{../antianti/debug-modern-breakpt}
+
+\subsection{breaking single-stepping (short)}
+\againframe<3>{debuggerThings}
+\input{../antianti/antidebug-ss}
+
+\section{emulation-based obfuscation}
+\input{../antianti/emulate-obfuscate}
+
+\section{retroviruses / direct antiantivirus}
+\input{../antianti/retro}
+
+\subsection{hiding}
+\input{../antianti/stealth}
+
+\subsection{chkrootkit}
+\input{../antianti/chkrootkit}
+
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\subsection{heuristics to find packers}
+\input{../antianti/packer-detect}
+
+\subsection{rootkits and chkrootkit}
+\input{../antianti/chkrootkit}
+
+\subsection{aside: disinfection}
+\input{../heur-detect/aside-disinfect} % FIXME: clamav example?
+
+
+\subsection{signatures and extracting encryptd code?}
+\input{../antianti/encrypted-code-sigs-analyze}

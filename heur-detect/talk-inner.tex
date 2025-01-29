@@ -1,10 +1,51 @@
+\section{discussion question}
+\input{../heur-detect/invoke-detect-ex}
 
+\section{why don't viruses\ldots}
+\input{../heur-detect/intro-from-virus}
+
+\section{the cat and mouse game}
+\input{../heur-detect/cat-and-mouse}
+
+\section{antimalware goals}
+\input{../heur-detect/goals}
+
+\section{simple detection: tripwire} 
+    % FIXME: tripwire
+\input{../heur-detect/tripwire}
+
+\section{application whitelisting: AppLocker}
+\input{../heur-detect/applocker-whitelist}
+
+\section{secure boot}
+\input{../virus/secure-boot}
+
+\section{signature-based detection, generally}
+% FIXME: key idea: in files
+
+\input{../heur-detect/signature}
+
+\subsection{detecting Vienna exercise?}
+\input{../heur-detect/vienna-detect-ex}
+
+\subsection{case study: Vienna}
+\input{../heur-detect/vienna-sig}
+
+\subsection{difficult goals for signatures}
+\input{../heur-detect/signature-goals}
+
+\subsection{Vienna: general pattern?}
+     % FIXME: more examples of general things Vienna does
+\input{../heur-detect/vienna-general-patternp}
+
+\section{regular expressions}
+\input{../heur-detect/regular-expressions}
+
+\subsection{flex example}
+\input{../heur-detect/flex-example}
 
 \subsection{flex state machines}
 \input{../heur-detect/flex-state-machine}
-
-
-    % FIXME: more complex state machine
 
 \input{../heur-detect/why-state-machine}
 
@@ -55,57 +96,3 @@
 \subsection{machine learning and adversaries}
 \input{../heur-detect/ml-problems}
 
-\subsection{flex state machines}
-\input{../heur-detect/flex-state-machine}
-
-
-    % FIXME: more complex state machine
-
-\input{../heur-detect/why-state-machine}
-
-\subsection{backtracking problems?}
-\input{../heur-detect/flex-opt-btp}
-
-\input{../heur-detect/flex-state-machine-complex}
-
-\subsection{flex: Vienna example}
-\input{../heur-detect/vienna-patterns-flex}
-
-\subsection{why the flexibility?}
-\input{../heur-detect/pattern-flexibility}
-% FIXME: exercise
-\subsection{exercise: what's easy/hard for patterns}
-\input{../heur-detect/hard-for-patternsp}
-
-\section{making scanners more efficient}
-\input{../heur-detect/making-efficient}
-
-\subsection{fixed strings}
-\againframe<2>{effScanners}
-\input{../heur-detect/fixed-strings}
-
-\subsection{selective scanning}
-\againframe<3>{effScanners}
-\input{../heur-detect/selective-scanning}
-
-\section{example: ClamAV}
-    % FIXME: show example patterns and more
-\input{../heur-detect/example-clam-av}
-
-\section{new malware detection?}
-\input{../heur-detect/new-malwarep}
-
-\section{heuristics based on executable/library regularity}
-\input{../heur-detect/exec-lib-regularity}
-
-\section{behavior based detection}
-\input{../heur-detect/behavior}
-
-\subsection{instrumenting programs}
-\input{../heur-detect/hooking}
-
-\section{AI heuristic case study: DREBIN}
-\input{../heur-detect/case-study-android}
-
-\subsection{machine learning and adversaries}
-\input{../heur-detect/ml-problems}

@@ -70,6 +70,8 @@
 \pgfdeclarelayer{fg}
 \pgfsetlayers{bg,main,fg}
 
+\RequirePackage{contour}
+
 
 % HIGHLIGHT TOOLS
 \newcounter{image}

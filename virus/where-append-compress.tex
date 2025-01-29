@@ -1,5 +1,6 @@
 \usetikzlibrary{arrows.meta,patterns}
 \begin{frame}{appending}
+    \pdftooltip{
     \begin{tikzpicture}
     \draw[thick] (0, 0) rectangle (4, -5) node[midway,align=center] {original\\executable};
     \draw[line width=2mm,-Latex,black!60] (4.1, -3) -- (6.9, -3);
@@ -12,6 +13,7 @@
     \draw[thick,Latex-] (1, -1.25) -- (1.4, -1.25);
     \end{scope}
     \end{tikzpicture}
+    }{executable transformed by replacing some of the original code with jmp + appending virus}
 \end{frame}
 
 \begin{frame}{appending and executable formats}

@@ -1,13 +1,14 @@
 \usetikzlibrary{arrows.meta,chains}
 
-\begin{frame}<1-2>[label=bootProc]{boot process}
+\begin{frame}<1-2>[fragile,label=bootProc]{boot process}
+    \pdftooltip{
     \begin{tikzpicture}
         \begin{scope}[start chain=going below,every node/.style={draw,align=center,join,on chain,thick,minimum width=3.5cm},
                       every join/.style={-Latex,thick}]
         \node[draw=none] (fixedLoc) { processor reset };
-        \node[alt=<3>{draw=red,very thick}{}] (bios) {BIOS/EFI \\ \small (chip on motherboard)};
-        \node[alt=<2>{draw=red,very thick}{}] (bootloader) {bootloader};
-        \node[alt=<4>{draw=red,very thick}{}] (os) {operating system};
+        \node[alt=<3>{draw=orange,very thick}{}] (bios) {BIOS/EFI \\ \small (chip on motherboard)};
+        \node[alt=<2>{draw=orange,very thick}{}] (bootloader) {bootloader};
+        \node[alt=<4>{draw=orange,very thick}{}] (os) {operating system};
         \end{scope}
         \node[left=.5cm of bios,font=\small] (biosLabel) {very CPU/motherboard-specific code};
         \draw[-Latex,thick] (biosLabel) -- (bios);
@@ -16,6 +17,13 @@
         \node[left=.5cm of os,font=\small] (osLabel) {files in a filesystem};
         \draw[-Latex,thick] (osLabel) -- (os);
     \end{tikzpicture}
+    }{
+        Boot process, starting from processor reset.
+        First, the BIOS of EFI is loadeed from a chip on the motherboard. 
+        Then, a bootloader in a fixed location on disk runs, which has the code to figure out
+        where individual files are on disk. This finally loads the operating system code
+        from its files.
+    }
 \end{frame}
 
 \begin{frame}{bootloaders in the DOS era}
@@ -42,7 +50,7 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{bootloader viruses}
+\begin{frame}[fragile]{bootloader viruses}
     \newcommand{\tearBox}{
         \draw[very thick] (0, -6) -- (0, 0) -- (4, 0) -- (4, -6);
         \draw[thick] (0, -6) -- (1.2, -5.5) -- (2., -6.6) -- (2.6, -5.8) -- (3.5, -6.6) -- (4, -6);
@@ -50,15 +58,16 @@
     \begin{itemize}
     \item example: Stoned
     \end{itemize}
+    \pdftooltip{
     \begin{tikzpicture}
         \draw[fill=green!20] (0, 0) rectangle (4, -.2);
         \draw[fill=yellow!20] (0, -.2) rectangle (4, -0.5) node[midway,font=\tiny] { partition table };
         \draw[fill=green!20] (0, -.5) rectangle (4, -1.0) node[midway,font=\small] { bootloader };
         \tearBox
         \begin{scope}[xshift=7cm]
-        \draw[fill=red!20] (0, 0) rectangle (4, -.2);
+        \draw[fill=violet!20] (0, 0) rectangle (4, -.2);
         \draw[fill=yellow!20] (0, -.2) rectangle (4, -0.5) node[midway,font=\tiny] { partition table };
-        \draw[fill=red!20] (0, -.5) rectangle (4, -1.0) node[midway,font=\small] { virus code };
+        \draw[fill=violet!20] (0, -.5) rectangle (4, -1.0) node[midway,font=\small] { virus code };
         \begin{scope}[yshift=-4cm]
         \draw[fill=green!20] (0, 0) rectangle (4, -.2);
         \draw[fill=green!20] (0, -.5) rectangle (4, -1.0) node[midway,font=\small] { saved bootloader };
@@ -67,13 +76,21 @@
         \tearBox 
         \end{scope}
         \draw[line width=1mm,black!50, -Latex] (4.2, -3) -- (6.8, -3);
-
+        %
         \begin{pgfonlayer}{bg}
             \begin{visibleenv}<2>
                 \path[fill=blue!30] (0, -4) rectangle (4, -5) node[midway] { data here??? };
             \end{visibleenv}
         \end{pgfonlayer}
     \end{tikzpicture}
+    }{
+        The original contents of disk shows a bootloader at the beginning with a partition table
+        in the middle of it.
+        This is transformed to the bootloader being replaced by the virus code (but the partition table
+        is preserved). So the virus can
+        run the original bootloader after it finishes, a copy of the original bootloader is saved
+        elsewhere on disk
+    }
 \end{frame}
 
 \begin{frame}{data here???}

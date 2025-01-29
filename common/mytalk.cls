@@ -37,6 +37,7 @@
 \RequirePackage[normalem]{ulem} % for sout
 \RequirePackage{pdfpages}
 \RequirePackage{emoji}
+\RequirePackage{pdfcomment}
 
 \renewcommand<>{\sout}[1]{\alt#2{\beameroriginal{\sout}{#1}}{#1}}
 

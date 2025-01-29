@@ -1,6 +1,7 @@
 \usetikzlibrary{arrows.meta}
 
 \begin{frame}{replace executable}
+    \pdftooltip{
     \begin{tikzpicture}
     \draw[thick] (0, 0) rectangle (4, -6) node[midway,align=center] {original\\executable};
     \draw[line width=2mm,-Latex,black!60] (4.1, -3) -- (6.9, -.5);
@@ -8,6 +9,7 @@
     \draw[thick,fill=red!20] (0, 0) rectangle (4, -1) node[midway,align=center] {virus code};
     \end{scope}
     \end{tikzpicture}
+    }{original executable transformed to virus code}
 \end{frame}
 
 \begin{frame}{replace executable?}
@@ -25,6 +27,7 @@
 \end{frame}
 
 \begin{frame}{replace executable --- subtle}
+    \pdftooltip{
     \begin{tikzpicture}
     \draw[thick] (0, 0) rectangle (4, -6) node[midway,align=center] {original\\executable};
     \draw[line width=2mm,-Latex,black!60] (4.1, -3) -- (6.9, -.5);
@@ -36,5 +39,7 @@
     \draw[thick] (0, -1.5) rectangle (4, -7.2) node[midway,align=center] {original\\executable};
     \end{scope}
     \end{tikzpicture}
+    }{original executable transformed to virus code followed by a copy of the original executable. The virus
+        code writes the copy to a tempfile and runs it.}
 \end{frame}
 

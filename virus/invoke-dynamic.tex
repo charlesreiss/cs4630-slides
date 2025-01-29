@@ -1,4 +1,5 @@
 \begin{frame}{infecting shared libraries via relocations}
+\pdftooltip{
 \begin{tikzpicture}
     \draw[thick] (0, 0) rectangle (4, -6) coordinate (bottomRight) node[midway] { \tt kernel32.dll };
     \draw[thick,fill=yellow!20] (0, 0) rectangle (4, -0.5) node[midway,font=\small] {header};
@@ -10,7 +11,7 @@
     \node[anchor=north west] at (GFAName.south west) {\tt \ldots};
     \draw[-Latex,thick] ([xshift=.5mm]GFAName.east) coordinate (startArrowA) -- ([xshift=.5cm]GFAName.west -| bottomRight) |- (3, -5);
     \fill[black] (startArrowA) circle[radius=.5mm];
-
+    %
     \draw[line width=2mm,-Latex,black!60] (4.6, -3) -- (6.9, -3);
     \begin{scope}[xshift=7cm]
     \draw[thick] (0, 0) rectangle (4, -6) coordinate (bottomRight) node[midway] { \tt kernel32.dll };
@@ -26,6 +27,14 @@
     \fill[red] (startArrowA) circle[radius=.5mm];
     \end{scope}
 \end{tikzpicture}
+}{
+    kernel32.dll (an important shared library on Windows) is shown with a symbol table that
+    has an entry for function GetFileAttributesA (a Windows function for getting
+    basic information about a file, like whether or not it is a directory). That symbol table
+    entry points somewhere in the middle of the .dll file.\textLF\textLF
+    This is transformed into a version where virus code is appended to the .dll file,
+    and the symbol table entry for GetFileAttributes now points to the virus code.
+}
 \end{frame}
 
 \begin{frame}{other dynamic-linking-based infections}
@@ -34,11 +43,12 @@
     \vspace{.5cm}
     \item relocations on executable
         \begin{itemize}
-        \item this isn't the table entry for \texttt{puts}, \\ it's the one for \texttt{evilvirus}
+        \item this isn't the global offset table entry for \texttt{puts}, \\ it's the one for \texttt{evilvirus}
         \end{itemize}
     \item list of needed libraries?
         \begin{itemize}
         \item the C standard library and virus.so
+        \item `init' code run when shared libraries loaded
         \end{itemize}
     \item stubs and calls to stub
         \begin{itemize}

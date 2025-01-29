@@ -13,16 +13,14 @@ running /bin/ls in gdb:
 (gdb) info proc map
 process 1178818
 Mapped address spaces:
-
           Start Addr           End Addr       Size     Offset  Perms  objfile
       0x555555554000     0x555555558000     0x4000        0x0  r--p   /usr/bin/ls
       0x555555558000     0x55555556c000    \myemphA{0x14000}     0x4000  r-xp   /usr/bin/ls
       0x55555556c000     0x555555574000     0x8000    0x18000  r--p   /usr/bin/ls
-      0x555555574000     0x555555577000     0x3000    0x1f000  rw-p   /usr/bin/ls
 ....
 \end{Verbatim}
 \begin{itemize}
-\item allocations must be in multiples of 0x1000 (4096) --- pages!
-\item rounding of sizes, start locations means empty space between segments
+\item requested 0x13091 bytes, loaded 0x14000
+\item x86-64 Linux: OS allocates only in one page = 4096-byte chunks
 \end{itemize}
 \end{frame}

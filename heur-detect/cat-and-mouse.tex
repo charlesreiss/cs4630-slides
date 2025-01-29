@@ -4,19 +4,32 @@
     \setbeamertemplate{navigation symbols}{}
     \contourlength{.2mm}
     \begin{frame}[plain]
+        \pdftooltip{
+            \begin{tikzpicture}
+            \path (0, 0) rectangle (15, -8);
+            \end{tikzpicture}
+        }{Promotional image of the Tom and Jerry cartoon with a Tom the cat chasing a Jerry the mouse.\textLF The Tom and Jerry title is crossed out and Anti-Virus and Virus is written below.}
         \begin{tikzpicture}[remember picture,overlay]
-            \node[at=(current page.center)] (image) {
+            \node[at={([xshift=8cm]current page.north east)},anchor=north east,inner sep=0mm] (image under1){
                 \includegraphics[height=\paperheight]{../heur-detect/1600x1200-Tom-Jerry-Chase}
             };
-            %\draw[help lines] (0, 0) grid (12, -8);
-            \begin{scope}[shift={([yshift=-0.75cm,xshift=1cm]image.north west)}]
-            \node[cross out,draw,line width=1mm,black,at={(9,-6)},anchor=center,minimum width=6cm,minimum height=1.25cm] {};
-            \node[at={(3,-8.25)},anchor=center,font=\Huge\bfseries,
-                red!90!black,align=left] {\contour{black}{Anti-\hspace{-.4ex}Virus}};
-            \node[at={(6.5,-8.25)},anchor=center,font=\large\bfseries,
-                red!90!black,align=left,rotate=30] {\contour{black}{and}};
-            \node[at={(8.5,-8.25)},anchor=center,font=\Huge\bfseries,
-                red!90!black,align=left] {\contour{black}{Virus}};
+            \node[at={([xshift=10cm]current page.north east)},anchor=north east,inner sep=0mm] (image under2){
+                \includegraphics[height=\paperheight]{../heur-detect/1600x1200-Tom-Jerry-Chase}
+            };
+            \node[at={(current page.north west)},anchor=north west,inner sep=0mm] (image) {
+                \includegraphics[height=\paperheight]{../heur-detect/1600x1200-Tom-Jerry-Chase}
+            };
+            \begin{scope}[shift={(image.north west)}]
+                %\draw[help lines] (0, 0) grid (12, -8);
+                \node[cross out,draw,line width=1mm,black,at={(8.7,-5.8)},anchor=center,minimum width=6cm,minimum height=1.25cm] {};
+                \begin{scope}[xshift=1cm]
+                    \node[at={(3,-8.25)},anchor=center,font=\Huge\bfseries,
+                        red!90!black,align=left] {\contour{black}{Anti-\hspace{-.4ex}Virus}};
+                    \node[at={(6.5,-8.25)},anchor=center,font=\large\bfseries,
+                        red!90!black,align=left,rotate=30] {\contour{black}{and}};
+                    \node[at={(8.5,-8.25)},anchor=center,font=\Huge\bfseries,
+                        red!90!black,align=left] {\contour{black}{Virus}};
+                \end{scope}
             \end{scope}
         \end{tikzpicture}
      \end{frame}

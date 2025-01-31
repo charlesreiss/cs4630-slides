@@ -8,15 +8,15 @@
         moredelim={**[is][\btHL<3-4|handout:0>]{~34~}{~end~}},
         moredelim={**[is][\btHL<4|handout:0>]{~4~}{~end~}},
         }
-\begin{tabular}{lll}
+\begin{tabular}{l@{\hspace{1cm}}ll}
 \begin{lstlisting}
-~2~jmp 0x0700~end~
-mov $0x9e4e, %si
-...
-/* app code */
-...
+~2~jmp 0x0700~end~ /* C */
+mov $0x9e4e, %si /* A */
+...              /* A */
+/* more app code */ 
+...              /* A */
 ~3~push %cx~end~
-mov $0x8f9, %si
+mov $0x8f9, %si /* C */
 ...
 mov $0x0100, %di
 mov $3, %cx
@@ -52,6 +52,8 @@ xor %bx, %bx
 \end{lstlisting}
 \\
 \end{tabular}
+\verb|/* C */| = constant changes when Vienna relocated \\
+\verb|/* A */| = application code
 \end{frame}
 
 \begin{frame}{simple signature (1)}

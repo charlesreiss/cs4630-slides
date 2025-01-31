@@ -21,7 +21,23 @@
 \againframe<2>{hookingList}
 
 \begin{frame}
-\includegraphics[height=0.9\textheight]{../antianti/filter-driver}
+\includegraphics[height=0.9\textheight]{../heur-detect/filter-driver} 
+\end{frame}
+
+\begin{frame}{Linux hooking}
+\begin{itemize}
+\item several possible mechanisms
+\item tracepoints, kprobes
+    \begin{itemize}
+    \item cause hooking functions to run when kernel functions called or return
+    \item hooker function can arrange for logging or other action
+    \end{itemize}
+\item seccomp BPF
+    \begin{itemize}
+    \item allow hooker to write `program' to examine system calls of selected processes
+    \item can deny/change/log those system calls
+    \end{itemize}
+\end{itemize}
 \end{frame}
 
 \againframe<3>{hookingList}

@@ -22,8 +22,23 @@
 
 \section{signature-based detection, generally}
 % FIXME: key idea: in files
-
 \input{../heur-detect/signature}
+
+\begin{frame}{aside: signature types}
+    \begin{itemize}
+    \item one goal: detect malware without it running
+        \begin{itemize}
+        \item examine code+data
+        \end{itemize}
+    \item our first topic
+    \vspace{.5cm}
+    \item alternate idea: detect running malware
+        \begin{itemize}
+        \item examine operations performed by software
+        \end{itemize}
+    \item we'll revisit later
+    \end{itemize}
+\end{frame}
 
 \subsection{detecting Vienna exercise?}
 \input{../heur-detect/vienna-detect-ex}
@@ -78,7 +93,7 @@
     % FIXME: show example patterns and more
 \input{../heur-detect/example-clam-av}
 
-\section{new malware detection?}
+\section{new malware detection? avoiding evasion?}
 \input{../heur-detect/new-malwarep}
 
 \section{heuristics based on executable/library regularity}

@@ -1,0 +1,60 @@
+
+\begin{frame}{unicorn as tool}
+\includegraphics[width=\textwidth]{../antianti/unicorn-page}
+\end{frame}
+
+\begin{frame}[fragile]{unicorn example (1)}
+\begin{Verbatim}[fontsize=\small]
+$ cat test.s
+    mov $10000, %edi
+    imul $2, %rdi, %rdi
+$ gcc -c test.s; objcopy -j .text test.o -O binary test.bin
+\end{Verbatim}
+\begin{Verbatim}[fontsize=\small]
+code = Path('test.bin').read_bytes()
+uc = Uc(UC_ARCH_X86, UC_MODE_64)
+uc.mem_map(0x10000, 1024 * 1024)
+uc.mem_write(0x10000, code)
+uc.emu_start(0x10000, 0x10000 + len(code))
+print("RDI",uc.reg_read(UC_X86_REG_RDI))
+\end{Verbatim}
+\hrule
+\texttt{RDI 20000}
+\end{frame}
+
+\begin{frame}[fragile]{unicorn example (2)}
+\begin{Verbatim}[fontsize=\small]
+...
+uc.hook_add(UC_HOOK_CODE, hook_code_func)
+def hook_code_func(uc, addr, size, user_data):
+    print(f"{addr:x} ({size} byte instruction): "
+          f"{codecs.encode(uc.mem_read(addr, size), 'hex').decode()}")
+uc.emu_start(0x10000, 0x10000 + len(code))
+\end{Verbatim}
+\hrule
+\begin{Verbatim}[fontsize=\small]
+10000 (5 byte instruction): bf10270000
+10005 (4 byte instruction): 486bff02
+\end{Verbatim}
+\end{frame}
+
+
+\begin{frame}[fragile]{unipacker psuedocode}
+\begin{Verbatim}[fontsize=\small]
+data, size = parse_executable()
+uc.mem_map(BASE_ADDR, size)
+uc.mem_write(BASE_ADDR, data)
+for dll in get_executable_libraries():
+    uc.mem_map(dll['addr'], dll['size'])
+    uc.mem_write(dll['addr'], dll['data'])
+...
+uc.hook_add(UC_HOOK_CODE, before_execute)
+uc.emu_start(...)
+
+def before_execute(...): # called before each instruction
+    ...
+    if address in MODIFIED_SECTION:
+        dump_memory_now()
+\end{Verbatim}
+\end{frame}
+

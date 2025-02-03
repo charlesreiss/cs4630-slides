@@ -1,0 +1,97 @@
+\date{}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item malware detection --- cat and mouse
+    \item detecting file changes (tripwire example)
+    \item whitelisting
+        \begin{itemize}
+        \item application whitelisting, secure boot
+        \item problems with scripts
+        \end{itemize}
+    \item ``signatures''
+    \item start: regular expressions to match malware
+    \end{itemize}
+\end{frame}
+
+\section{regular expressions}
+\input{../heur-detect/regular-expressions}
+
+\subsection{flex example}
+\input{../heur-detect/flex-example}
+
+\subsection{flex state machines}
+\input{../heur-detect/flex-state-machine}
+
+\input{../heur-detect/why-state-machine}
+
+\subsection{backtracking problems?}
+\input{../heur-detect/flex-opt-btp}
+
+\input{../heur-detect/flex-state-machine-complex}
+
+\subsection{flex: Vienna example}
+\input{../heur-detect/vienna-patterns-flex}
+
+\subsection{why the flexibility?}
+\input{../heur-detect/pattern-flexibility}
+% FIXME: exercise
+\subsection{exercise: what's easy/hard for patterns}
+\input{../heur-detect/hard-for-patternsp}
+
+\section{making scanners more efficient}
+\input{../heur-detect/making-efficient}
+
+\subsection{fixed strings}
+\againframe<2>{effScanners}
+\input{../heur-detect/fixed-strings}
+
+\subsection{selective scanning}
+\againframe<3>{effScanners}
+\input{../heur-detect/selective-scanning}
+
+\section{example: ClamAV}
+    % FIXME: show example patterns and more
+\input{../heur-detect/example-clam-av}
+
+\section{aside: YARA}
+\begin{frame}{YARA}
+    \begin{itemize}
+    \item possibly more modern open source signature format?
+    \item (partially supported by ClamAV)
+    \end{itemize}
+\end{frame}
+
+\section{new malware detection? avoiding evasion?}
+\input{../heur-detect/new-malwarep}
+
+\section{heuristics based on executable/library regularity}
+\input{../heur-detect/exec-lib-regularity}
+
+\section{behavior based detection}
+\input{../heur-detect/behavior}
+
+\subsection{instrumenting programs}
+\input{../heur-detect/hooking}
+
+\section{AI heuristic case study: DREBIN}
+\input{../heur-detect/case-study-android}
+
+\subsection{machine learning and adversaries}
+\input{../heur-detect/ml-problems}
+
+\input{../antianti/talk-inner}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\end{document}

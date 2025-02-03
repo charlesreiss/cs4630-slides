@@ -7,7 +7,7 @@
         \item we'll talk about the ideas behind many of them
         \end{itemize}
     \vspace{.5cm}
-    \item future assignment: modify code obfuscated with Tigress
+    \item future assignment involving code obfuscated with Tigress
     \end{itemize}
 \end{frame}
 \begin{frame}{example Tigress transformations}
@@ -62,7 +62,7 @@ void foo(int a, int b) {
 \end{frame}
 
 \begin{frame}[fragile,label=TigressFlatten]{Tigress: example transform: Flatten}
-\begin{lstlisting}[language=C++,style=smaller]
+\begin{lstlisting}[language=C++,style=size10]
 void foo() {
     A;
     if (X) {
@@ -74,10 +74,10 @@ void foo() {
 }
 \end{lstlisting}
 \hrule
-\begin{lstlisting}[language=C++,style=smaller]
+\begin{lstlisting}[language=C++,style=size10]
 void foo() {
     int s = 0;
-    for (;;) {
+    while (1) { 
         switch(s) {
         case 0: A; s = X ? 1 : 2; break;
         case 1: B; s = 3; break;

@@ -17,6 +17,31 @@
     \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile,label=TigressEncpde]{Tigress: provided transform: EncodeLiterals}
+\begin{lstlisting}[language=C++,style=size10]
+void Print() { printf("Hello!"); printf("World!"); }
+\end{lstlisting}
+\hrule
+\begin{lstlisting}[language=C++,style=size10]
+void GetString(int x, char *buffer) {
+    switch (x) {
+    case 0:
+        buffer[0] = 'H'; buffer[1] = 'e'; buffer[2] = 'l'; ...;
+        break;
+    case 1:
+        buffer[0] = 'W'; buffer[1] = 'o'; buffer[2] = 'r'; ...;
+        break;
+    case 2:
+    ...
+    }
+}
+void Print() { char buf[100];
+    GetString(0, buf); printf(buf);
+    GetString(1, buf); printf(buf);
+}
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}[fragile,label=TigressMerge]{Tigress: provided transform: Merge}
 \begin{lstlisting}[language=C++,style=smaller]
 void foo(int a) { code for foo }

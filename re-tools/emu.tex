@@ -10,6 +10,9 @@ $ cat test.s
     imul $2, %rdi, %rdi
 $ gcc -c test.s; objcopy -j .text test.o -O binary test.bin
 \end{Verbatim}
+\vspace{.1cm}
+\hrule
+\vspace{.1cm}
 \begin{Verbatim}[fontsize=\small]
 code = Path('test.bin').read_bytes()
 uc = Uc(UC_ARCH_X86, UC_MODE_64)
@@ -18,7 +21,9 @@ uc.mem_write(0x10000, code)
 uc.emu_start(0x10000, 0x10000 + len(code))
 print("RDI",uc.reg_read(UC_X86_REG_RDI))
 \end{Verbatim}
+\vspace{.1cm}
 \hrule
+\vspace{.1cm}
 \texttt{RDI 20000}
 \end{frame}
 
@@ -28,7 +33,9 @@ print("RDI",uc.reg_read(UC_X86_REG_RDI))
 uc.hook_add(UC_HOOK_CODE, hook_code_func)
 def hook_code_func(uc, addr, size, user_data):
     print(f"{addr:x} ({size} byte instruction): "
-          f"{codecs.encode(uc.mem_read(addr, size), 'hex').decode()}")
+          f"{codecs.encode(
+                uc.mem_read(addr, size), 'hex'
+             ).decode()}")
 uc.emu_start(0x10000, 0x10000 + len(code))
 \end{Verbatim}
 \hrule
@@ -51,9 +58,9 @@ for dll in get_executable_libraries():
 uc.hook_add(UC_HOOK_CODE, before_execute)
 uc.emu_start(...)
 
-def before_execute(...): # called before each instruction
+def before_execute(uc, addr, ...): # called before each instruction
     ...
-    if address in MODIFIED_SECTION:
+    if in_modified_section(addr):
         dump_memory_now()
 \end{Verbatim}
 \end{frame}

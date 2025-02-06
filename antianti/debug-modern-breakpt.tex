@@ -5,10 +5,7 @@
     \item modern x86: 4 ``breakpoint'' registers (\myemph{DR0--DR3})
         \begin{itemize}
         \item contain address of program instructions
-        \item need more than 4? sorry
-            \begin{itemize}
-            \item probably fall back to int 3 technique
-            \end{itemize}
+        \item need more than 4? probably fallback to \texttt{int 3}
         \end{itemize}
     \item processor triggers exception when address reached
         \begin{itemize}

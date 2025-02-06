@@ -39,6 +39,7 @@ builtin_strcpy(param_1, "yes");
     \item modifying machine code at run time
     \item running the program in a custom (JVM-esque) interpreter
         \begin{itemize}
+        \item will give example later
         \item converting code to data
         \end{itemize}
     \end{itemize}
@@ -89,6 +90,13 @@ builtin_strcpy(param_1, "yes");
 \subsection{aside: instruction traces}
 \input{../antianti/instr-traces}
 
+\section{anti-virtualization strategies}
+\subsection{basic issues}
+\input{../antianti/antivm-intro}
+
+\subsection{automated analysis: lack of patience?}
+\input{../antianti/antivm-patience}
+
 \section{packer issues}
 \subsection{packers and W xor X/DEP}
 \input{../antianti/packers-and-depwx}
@@ -111,13 +119,6 @@ builtin_strcpy(param_1, "yes");
 
 \subsection{fancy mutation engines}
 \input{../antianti/fancy-mutation-engine}
-
-\section{anti-virtualization strategies}
-\subsection{basic issues}
-\input{../antianti/antivm-intro}
-
-\subsection{automated analysis: lack of patience?}
-\input{../antianti/antivm-patience}
 
 \section{goats and anti-goat}
 \input{../antianti/goat}

@@ -1,0 +1,21 @@
+
+\begin{frame}[fragile]{unipacker psuedocode}
+\begin{Verbatim}[fontsize=\small]
+data, size = parse_executable()
+uc.mem_map(BASE_ADDR, size)
+uc.mem_write(BASE_ADDR, data)
+for dll in get_executable_libraries():
+    uc.mem_map(dll['addr'], dll['size'])
+    uc.mem_write(dll['addr'], dll['data'])
+uc.hook_add(UC_HOOK_CODE, before_execute)
+...
+uc.emu_start(...)
+
+# called before each instruction
+def before_execute(uc, addr, ...):
+    if in_modified_section(addr):
+        dump_memory_now()
+    ...
+\end{Verbatim}
+\end{frame}
+

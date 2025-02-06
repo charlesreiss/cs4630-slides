@@ -79,9 +79,31 @@
 \subsection{aside: instruction traces}
 \input{../antianti/instr-traces}
 
+\section{anti-virtualization strategies}
+\subsection{basic issues}
+\input{../antianti/antivm-intro}
+
+\subsection{automated analysis: lack of patience?}
+\input{../antianti/antivm-patience}
+
+
 \section{packer issues}
 \subsection{packers and W xor X/DEP}
 \input{../antianti/packers-and-depwx}
+
+\section{aside: future assignment}
+\begin{frame}{OBFUSCATE assignment}
+    \begin{itemize}
+    \item modifying `password-protected' tic-tac-toe game not to be
+    \vspace{.5cm}
+    \item three versions:
+        \begin{itemize}
+        \item just stripped
+        \item some Tigress transformations
+        \item `encrypted' code
+        \end{itemize}
+    \end{itemize}
+\end{frame}
 
 \subsection{exercise: limitations of generic anti-packer}
 \input{../antianti/packer-detect-limit-ex}
@@ -101,13 +123,6 @@
 
 \subsection{fancy mutation engines}
 \input{../antianti/fancy-mutation-engine}
-
-\section{anti-virtualization strategies}
-\subsection{basic issues}
-\input{../antianti/antivm-intro}
-
-\subsection{automated analysis: lack of patience?}
-\input{../antianti/antivm-patience}
 
 \section{goats and anti-goat}
 \input{../antianti/goat}

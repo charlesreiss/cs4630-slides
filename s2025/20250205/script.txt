@@ -1,0 +1,47 @@
+demo script:
+- Defined Strings -> YOUR TASK
+- Rename found functions
+- Find reference
+- Rename found function 0x4e1520
+- Show GDB:
+    b *0x4e1520
+    run
+    select 1;
+    x/s $rsi
+    continue
+
+- Find printYourTaskString() call
+- Rename var in if (... == 3) condition
+- Right-click get references to that var
+- Show references:
+    - set to 0 at beginning of callsPrintYourTask
+    - find next rerference to triggeringVar | 2
+    - scroll to top of long function 0x444550 rename it
+        doesTriggerOr2
+- Show GDB:
+    b *0x444550
+    run
+    x/s $rdi
+    continue
+    x/s $rdi
+    continue
+    ...
+- Look at switch statement at top of doesTriggerOr2
+    know param_1 is part of input
+    *param_1 is first char
+    rename temp var used after copying *param_1 for switch lookup
+    
+- Rename + retype (&DAT_00548d60) to byte[256] lookupTable
+- Show interesting case is value 0xF:
+- Show lookup table --- index 33 = 0xF, 33 = !
+- see second condition is param_1[1] (second char) = 0x2a
+    - use equates to show *
+
+- switch to WRITE in callsPrintYourTask
+    local_9dc = 0x76?
+
+- observe local_9dc pointer passed to doesTriggerOr2
+    - search of 0x76, see it goes to set *param_2
+    - is case 8
+        - note that setting is overriden if temp var from switch lookup
+             not '

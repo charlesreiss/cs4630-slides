@@ -1,0 +1,46 @@
+\date{}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item signature matching
+    \item regular expressions as signatures
+        \begin{itemize}
+        \item looking for malicious machine code
+        \end{itemize}
+    \item how distinctive/stable are signatures?
+    \item signature matching speed
+        \begin{itemize}
+        \item byte-by-byte state machines + tables
+        \item quickly finding `anchor' strings
+        \end{itemize}
+    \item behavior-based detection
+    \end{itemize}
+\end{frame}
+
+\input{../common/listingsLib}
+
+\subsection{instrumenting programs}
+\input{../heur-detect/hooking}
+
+\section{AI heuristic case study: DREBIN}
+\input{../heur-detect/case-study-android}
+
+\subsection{machine learning and adversaries}
+\input{../heur-detect/ml-problems}
+
+\input{../antianti/talk-inner}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\input{../heur-detect/talk-backup}
+\input{../antianti/talk-backup}
+
+\end{document}

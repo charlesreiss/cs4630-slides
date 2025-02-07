@@ -4,6 +4,7 @@ SLIDEDECKS = \
     asm \
     x8664-encoding \
     exec-encoding \
+    command-inj \
     virus \
     heur-detect \
     antianti \

@@ -39,21 +39,3 @@ case KEYCODE_B: return 'b';
 \end{lstlisting}
 \end{itemize}
 \end{frame}
-
-\begin{frame}{taint tracking for malware analysis}
-\begin{itemize}
-\item mark contents of file as tainted, then ID how used
-    \begin{itemize}
-    \item can find dependent conditional jumps/etc.
-    \end{itemize}
-\item figure out where network packet goes
-    \begin{itemize}
-    \item across processes with whole-virtual-machine analysis
-    \end{itemize}
-\vspace{.5cm}
-\item can `tag' each byte of input differently
-    \begin{itemize}
-    \item identify which bytes of input jump depends on
-    \end{itemize}
-\end{itemize}
-\end{frame}

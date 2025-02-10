@@ -5,19 +5,20 @@ subprocess.check_call(
     "write_report_for '" + name + "' output.pdf"
 )
 \end{Verbatim}
+\hrule
 \begin{itemize}
 \item name = \texttt{'; malicious\_command; /bin/true '};
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{command injection (review?)}
-\hrule
 \begin{Verbatim}[fontsize=\small]
 name = UNTRUSTED_INPUT
 result = db_connection.execute(
     "SELECT a, b, c FROM items WHERE name = '" + name + "'"
 )
 \end{Verbatim}
+\hrule
 \begin{itemize}
 \item name = \texttt{'; SELECT password FROM users WHERE name = 'foo}
 \end{itemize}

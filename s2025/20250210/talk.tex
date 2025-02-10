@@ -1,0 +1,88 @@
+\date{}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+
+
+\section{metamorphic viruses}
+     %FIXME: not very clear
+\input{../antianti/meta-intro}
+
+\subsection{example: changing bodies}
+\input{../antianti/meta-body-change-example}
+
+\subsection{case study: Evol}
+\input{../antianti/evol}
+
+\subsection{handling relocation with mutation}
+\input{../antianti/mutate-reloc}
+
+\subsection{fancy mutation engines}
+\input{../antianti/fancy-mutation-engine}
+
+\section{goats and anti-goat}
+\input{../antianti/goat}
+
+\section{anti-debugging}
+\input{../antianti/antidebug-intro}
+
+\subsection{breaking breakpoints}
+\againframe<2>{debuggerThings}
+
+\input{../antianti/antidebug-breakpt-int3}
+
+\subsubsection{aside: modern breakpoints}
+\input{../antianti/debug-modern-breakpt}
+
+\subsection{breaking single-stepping (short)}
+\againframe<3>{debuggerThings}
+\input{../antianti/antidebug-ss}
+
+\section{emulation-based obfuscation}
+\input{../antianti/emulate-obfuscate}
+
+\section{retroviruses / direct antiantivirus}
+\input{../antianti/retro}
+
+\subsection{hiding}
+\input{../antianti/stealth}
+
+\subsection{chkrootkit}
+\input{../antianti/chkrootkit}
+
+\input{../command-inj/talk-inner}
+
+\input{../taint/talk-inner}
+
+\input{../overflow/talk-inner}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\subsection{heuristics to find packers}
+\input{../antianti/packer-detect}
+
+\subsection{rootkits and chkrootkit}
+\input{../antianti/chkrootkit}
+
+\subsection{aside: disinfection}
+\input{../heur-detect/aside-disinfect} % FIXME: clamav example?
+
+\subsection{signatures and extracting encryptd code?}
+\input{../antianti/encrypted-code-sigs-analyze}
+
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\input{../antianti/talk-backup}
+
+
+\end{document}

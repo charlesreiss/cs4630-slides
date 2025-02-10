@@ -1,5 +1,14 @@
-\begin{frame}{taint tracking assembly?}
-\includegraphics[width=\textwidth]{../taint/panaroma}
+\begin{frame}{taint tracking assembly}
+\begin{itemize}
+\item taint-tracking often proposed at \textit{assembly} level
+\item examples:
+\vspace{.5cm}
+\item Panda.RE (2013--??)
+    \begin{itemize}
+    \item along with virtual machine record+replay
+    \end{itemize}
+\item Panaroma (Yin and Song, UC Berkeley, CCS '07)
+\end{itemize}
 \end{frame}
 
 \begin{frame}{high-level overview}
@@ -33,10 +42,18 @@ case KEYCODE_B: return 'b';
 
 \begin{frame}{taint tracking for malware analysis}
 \begin{itemize}
-\item uses proposed by Panaroma authors:
+\item mark contents of file as tainted, then ID how used
+    \begin{itemize}
+    \item can find dependent conditional jumps/etc.
+    \end{itemize}
+\item figure out where network packet goes
+    \begin{itemize}
+    \item across processes with whole-virtual-machine analysis
+    \end{itemize}
 \vspace{.5cm}
-\item keypresses $\rightarrow$ network packets
-\item network packets $\rightarrow$ malware outputs
-\item browser history $\rightarrow$ network packets
+\item can `tag' each byte of input differently
+    \begin{itemize}
+    \item identify which bytes of input jump depends on
+    \end{itemize}
 \end{itemize}
 \end{frame}

@@ -1,0 +1,54 @@
+
+
+\section{beyond stack smashing}
+\input{../overflow-subterfuge/beyond-stack-smash}
+
+\section{arbitrary writes}
+\input{../overflow-subterfuge/arb-write}
+
+\section{write targets, continued}
+
+\subsection{C++ inheritence}
+\input{../overflow-subterfuge/fp-cpp}
+
+\subsection{options for attacking function pointer tables}
+    % FIXME: find another function pointer in memory
+\input{../overflow-subterfuge/fp-table-attack}
+
+\subsection{vtable overwrite exercise}
+\input{../overflow-subterfuge/fp-vtable-over-exer}
+
+\section{one write into another}
+\againframe<6>{arbWrite}
+
+\subsection{pointer subterfuge}
+\input{../overflow-subterfuge/subterfuge}
+
+\subsection{example: return address overwrite}
+\input{../overflow-subterfuge/write-ra-subter}
+
+\subsection{example: GOT overwrite}
+\input{../overflow-subterfuge/write-got-subter}
+
+\subsubsection{careful stack layout?}
+\input{../overflow-subterfuge/subterfuge-better-canary}
+
+\subsubsection{structs containing pointers}
+\input{../overflow-subterfuge/subterfuge-structs-globals}
+
+\section{arc injection}
+\begin{frame}{so far overwrites}
+    \begin{itemize}
+    \item once we found a way to overwrite function pointer\\
+          easiest solution seems to be: direct to our code
+    \item \ldots but alterante places to direct it to
+    \end{itemize}
+\end{frame}
+
+\input{../overflow-subterfuge/arc-injection}
+
+\section{case study: NTP exploit}
+\input{../overflow-subterfuge/ntp-case-study}
+
+\subsection{subterfuge exercise}
+\input{../overflow-subterfuge/subterfuge-exer}

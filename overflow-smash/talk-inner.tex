@@ -1,0 +1,73 @@
+
+\section{stack smashing, high-level}
+\input{../overflow-smash/smash-context}
+
+\subsection{example of overflow}
+\input{../overflow-smash/smash-oflow-ex}
+
+\subsubsection{exercise: stack layout}
+\input{../overflow-smash/smash-oflow-ex-stack-layout-exer}
+
+\subsubsection{exercise answer: stack layout}
+\input{../overflow-smash/smash-oflow-stack}
+
+\subsubsection{crash, revisited}
+\input{../overflow-smash/smash-oflow-crash}
+
+\subsection{return-to-stack}
+\input{../overflow-smash/return-to-stack}
+
+\section{constructing return-to-stack}
+\input{../overflow-smash/smash-construct-parts}
+
+\subsection{writing shellcode}
+\againframe<2>{makeAttack}
+\input{../overflow-smash/smash-shellcode}
+
+\input{../overflow-smash/smash-recall-virus} % FIXME: modify to match TRICKY
+
+\input{../overflow-smash/smash-virus-to-shell} % FIXME: modify to match TRICKY (need less here)
+
+\subsection{setting return address}
+\againframe<3>{makeAttack}
+    % FIXME: diagram showing stack distance
+\input{../overflow-smash/smash-set-ret}
+
+\subsubsection{exercise}
+\input{../overflow-smash/smash-set-ret-ex}
+
+\subsubsection{exercise (alt)}
+\input{../overflow-smash/smash-set-ret-ex-alt}
+
+\subsection{still varies without ASLR?}
+\input{../overflow-smash/stackloc-vary}
+
+\subsection{how the stack starts on Linux}
+\input{../overflow-smash/linux-initial-stack}
+
+\subsubsection{nop sleds}
+\input{../overflow-smash/nop-sled}
+
+\input{../overflow-smash/nop-sled-use}
+
+\subsubsection{finding where return address is}
+\againframe<4>{makeAttack}
+\input{../overflow-smash/ret-addr-guess}
+
+\section{stack smashing demo / debugger tutorial?}
+\input{../overflow-smash/gdb-tut}
+
+\section{example: Morris worm stack smashing}
+\input{../overflow-smash/morris-worm-smash}
+
+
+% FIXME: actual demo
+\section{restricted characters in shell code}
+     %FIXME: add simple example
+\input{../overflow-smash/shell-code-restricted}   
+
+\section{restricted characters in pointers}
+\input{../overflow-smash/pointer-restricted}
+
+\section{review: tricky parts of stack smashing}
+\input{../overflow-smash/stack-smash-tricky}

@@ -9,6 +9,12 @@ SLIDEDECKS = \
     heur-detect \
     antianti \
     overflow \
+    overflow-basic \
+    overflow-smash \
+    overflow-format \
+    overflow-subterfuge \
+    overflow-heap \
+    uaf \
     mitigate \
     rop \
     static \

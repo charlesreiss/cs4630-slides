@@ -16,6 +16,10 @@ SLIDEDECKS = \
     overflow-heap \
     uaf \
     mitigate \
+    mitigate-intro \
+    mitigate-stack \
+    mitigate-aslr \
+    mitigate-memprotect \
     rop \
     static \
     taint \

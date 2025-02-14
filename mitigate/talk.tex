@@ -8,147 +8,19 @@
 \input{../common/listingsLib}
 
 \usetikzlibrary{arrows.meta,calc,matrix,positioning}
-
-\section{aside on ASLR}
-\subsection{actual stack location}
-\input{../mitigate/actual-stackloc}
-
-\subsection{without ASLR}
-\input{../mitigate/stackloc-no-aslr}
-
-\subsection{ASLR preview}
-\input{../mitigate/aslr-preview}
-
-\subsection{still varies without ASLR?}
-\input{../overflow-smash/stackloc-vary}
-
-\section{mitigations, generally}
-\input{../mitigate/def-mitigate}
-
 \section{mitigating stack smashing}
 \input{../mitigate/how-mit-ss}
 
-\section{stack canaries}
-\subsection{in code}
-\input{../mitigate/stack-can-ex}
-
-\subsection{general operation}
-\input{../mitigate/stack-can-pic}
-
-\subsection{requirements and how they can fail to be met}
-\input{../mitigate/stack-can-hopes} % FIXME: repeat slide with highlites
-
-\subsection{how glibc generates canaries}
-\input{../mitigate/gcc-canary-gen}
-
-\subsection{GCC and canaries}
-\input{../mitigate/gcc-canary-opts}
-
-\subsection{canary costs}
-\input{../mitigate/canary-overhead}
-
-\subsection{overall pros/cons}
-\input{../mitigate/canary-pros-cons}
-
-\subsection{stack canary summary}
-\input{../mitigate/canary-summary}
-
-\subsection{noncontiguous overwrites}
-\againframe<2>{stackCanHopes}
-\input{../mitigate/stack-overwrite-noncontig}
-
-%FIXME: polls entry for exercise
-\input{../mitigate/stack-overwrite-noncontig-exer}
+\input{../mitigate-intro/talk-inner}
 
 
-\subsection{information disclosure}
-\againframe<3>{stackCanHopes}
-\subsubsection{examples}
-\input{../mitigate/some-info-disc-bugs}
+\input{../mitigate-aslr/talk-inner}
 
-\subsubsection{exercise}
-\input{../mitigate/info-disc-stack-addr-exer}
+\input{../mitigate-stack/talk-inner}
 
-\subsubsection{avoiding?}
-\againframe<2>{reCanary}
-
-% FIXME: exercise: using info disclosure bug?
-
-\section{shadow stacks}
-\input{../mitigate/shadow-stack}
-
-\subsection{Intel's hardware support?}
-\input{../mitigate/shadow-stack-cet}
-
-\subsection{can we prevent writes now?}
-\input{../mitigate/prevent-writes-now}
-
-\subsection{exceptions, setjmp, etc.}
-\input{../mitigate/shadow-stack-except}
-
-\subsection{exercise: shadow stacks stop}
-\input{../mitigate/shadow-stacks-stop-ex}
-
-\section{memory protection}
-\subsection{generally}
-\input{../mitigate/mem-protect}
-
-\subsection{page-level permissions}
-\input{../mitigate/page-protect}
-
-\subsection{guard pages / replacing stack canaries?}
-\input{../mitigate/guard-pages}
-
-\subsection{exercise: guard page overhead}
-\input{../mitigate/guard-page-overhead}
-
-\subsection{read-only pages}
-\input{../mitigate/ro-pages}
-
-\subsection{non-executable pages}
-\input{../mitigate/write-xor-exec}
-
-\subsubsection{unfortunate history of HW/SW support}
-\input{../mitigate/wx-hw-support}
-
-\subsubsection{if you can't write machine code}
-\input{../mitigate/wx-incomplete}
-
-\section{ASLR}
-\subsection{what it is}
-\input{../mitigate/aslr}
-
-\subsection{how much entropy}
-\input{../mitigate/aslr-entropy}
-
-\subsection{kept together: danger of leaks}
-\input{../mitigate/aslr-leaks}
+\input{../mitigate-memprotect/talk-inner}
 
 
-\subsection{exercise: using a leak}
-\input{../mitigate/aslr-using-leak-exer}
-\input{../mitigate/aslr-entropy-together}
-
-\subsection{alternate approach: Windows}
-\input{../mitigate/aslr-windows-pic}
-
-\subsection{making ASLR: removing hard-coded addresses}
-\input{../mitigate/aslr-pic}
-
-\subsubsection{without absolute}
-\input{../mitigate/aslr-without-abs-ex}
-
-\subsection{changes with position-independent code}
-\input{../mitigate/pic-cost-code}
-
-\subsection{PIE}
-\input{../mitigate/aslr-pie}
-
-\subsection{position-independent cost}
-\input{../mitigate/pic-switch-example}
-
-\subsubsection{measurements}
-\input{../mitigate/pic-cost-measure}
 
 \section{backup slides}
 \begin{frame}{backup slides}

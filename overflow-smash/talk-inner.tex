@@ -28,8 +28,22 @@
 
 \input{../overflow-smash/smash-virus-to-shell} % FIXME: modify to match TRICKY (need less here)
 
-\subsection{setting return address}
+\section{locating the stack}
 \againframe<3>{makeAttack}
+\subsection{actual stack location}
+\input{../overflow-smash/actual-stackloc}
+
+\subsection{without ASLR}
+\input{../overflow-smash/stackloc-no-aslr}
+
+\subsection{ASLR preview}
+\input{../mitigate-aslr/aslr-preview}
+
+\subsection{still varies without ASLR?}
+\input{../overflow-smash/stackloc-vary}
+
+
+\subsection{setting return address}
     % FIXME: diagram showing stack distance
 \input{../overflow-smash/smash-set-ret}
 

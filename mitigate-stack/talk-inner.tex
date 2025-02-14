@@ -1,0 +1,61 @@
+
+\section{stack canaries}
+\subsection{in code}
+\input{../mitigate-stack/stack-can-ex}
+
+\subsection{general operation}
+\input{../mitigate-stack/stack-can-pic}
+
+\subsection{requirements and how they can fail to be met}
+\input{../mitigate-stack/stack-can-hopes} % FIXME: repeat slide with highlites
+
+\subsection{how glibc generates canaries}
+\input{../mitigate-stack/gcc-canary-gen}
+
+\subsection{GCC and canaries}
+\input{../mitigate-stack/gcc-canary-opts}
+
+\subsection{canary costs}
+\input{../mitigate-stack/canary-overhead}
+
+\subsection{overall pros/cons}
+\input{../mitigate-stack/canary-pros-cons}
+
+\subsection{stack canary summary}
+\input{../mitigate-stack/canary-summary}
+
+\subsection{noncontiguous overwrites}
+\againframe<2>{stackCanHopes}
+\input{../mitigate-stack/stack-overwrite-noncontig}
+
+%FIXME: polls entry for exercise
+\input{../mitigate-stack/stack-overwrite-noncontig-exer}
+
+\subsection{information disclosure}
+\againframe<3>{stackCanHopes}
+\subsubsection{examples}
+\input{../mitigate-stack/some-info-disc-bugs}
+
+\subsubsection{exercise}
+\input{../mitigate-stack/info-disc-stack-addr-exer}
+
+\subsubsection{avoiding?}
+\againframe<2>{reCanary}
+
+% FIXME: exercise: using info disclosure bug?
+
+\section{shadow stacks}
+\input{../mitigate-stack/shadow-stack}
+
+\subsection{Intel's hardware support?}
+\input{../mitigate-stack/shadow-stack-cet}
+
+\subsection{can we prevent writes now?}
+\input{../mitigate-stack/prevent-writes-now}
+
+\subsection{exceptions, setjmp, etc.}
+\input{../mitigate-stack/shadow-stack-except}
+
+\subsection{exercise: shadow stacks stop}
+\input{../mitigate-stack/shadow-stacks-stop-ex}
+

@@ -1,0 +1,40 @@
+\date{}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item command injection
+    \item user input ``tainting'' sensitive data
+    \item dynamic taint tracking
+        \begin{itemize}
+        \item metadata about `where value came from' with each variable/register/etc.
+        \item update when computations performed
+        \end{itemize}
+    \item buffer overflow on the stack
+        \begin{itemize}
+        \item figuring out stack layout
+        \item cases with convenient variable after buffer
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\input{../overflow-smash/talk-inner}
+
+\input{../overflow-subterfuge/talk-inner}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+
+\input{../overflow/talk-basic}
+\input{../overflow/talk-backup}
+
+\end{document}

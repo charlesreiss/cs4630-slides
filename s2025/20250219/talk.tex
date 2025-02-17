@@ -1,0 +1,73 @@
+\date{}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+
+\input{../mitigate-stack/stack-can-hopes}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item Morris worm as example
+    \item idea of running shell (command prompt) from shellcode
+    \vspace{.5cm}
+    \item mitigate $\sim$ partial way to prevent attack
+    \item stack canaries
+    \item non-contiguous buffer overflows
+    \item information disclosure
+        \begin{itemize}
+        \item less serious `read bad memory' bug becomes more serious
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{on the quiz}
+\end{frame}
+
+\begin{frame}{on the setting stack pointer exercise}
+\end{frame}
+
+\input{../mitigate-stack/stack-overwrite-noncontig-exer}
+
+\subsection{information disclosure}
+\againframe<3>{stackCanHopes}
+\subsubsection{examples}
+\input{../mitigate-stack/some-info-disc-bugs}
+
+\subsubsection{exercise}
+\input{../mitigate-stack/info-disc-stack-addr-exer}
+
+\begin{frame}{information disclosure elsewhere}
+    \begin{itemize}
+    \item also a problem for other mitigations
+        \begin{itemize}
+        \item address randomization
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\section{shadow stacks}
+\input{../mitigate-stack/shadow-stack}
+
+\subsection{Intel's hardware support?}
+\input{../mitigate-stack/shadow-stack-cet}
+
+\subsection{can we prevent writes now?}
+\input{../mitigate-stack/prevent-writes-now}
+
+\subsection{exceptions, setjmp, etc.}
+\input{../mitigate-stack/shadow-stack-except}
+
+\subsection{exercise: shadow stacks stop}
+\input{../mitigate-stack/shadow-stacks-stop-ex}
+
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\end{document}

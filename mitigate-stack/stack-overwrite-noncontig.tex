@@ -9,7 +9,7 @@ void vulnerable() {
     int i;
     cin >> i;
     /* Oops!
-       sizeof(scores) is 8 * sizeof(int) */
+       sizeof(scores) is 4 * sizeof(int) */
     if (i < 0 || i >= sizeof(scores))
       continue;
     cout << "Set to what value?" << endl;

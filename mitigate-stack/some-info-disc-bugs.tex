@@ -26,7 +26,7 @@ void vulnerable() {
 \begin{frame}[fragile,label=infoDisc1b]{information disclosure (1b)}
 \lstset{
     language=C++,
-    style=small
+    style=smaller
 }
 \begin{lstlisting}
 void vulnerable() {
@@ -37,7 +37,6 @@ void vulnerable() {
         }
     ...
 }
-
 void leak() {
     int secrets[] = { 
         12345678, 23456789, 34567890,
@@ -46,7 +45,6 @@ void leak() {
     cout << (void*) secrets << endl;
     do_something_with(secrets);
 }
-
 int main() {leak(); vulnerable();}
 \end{lstlisting}
 \begin{tikzpicture}[overlay,remember picture]

@@ -127,10 +127,38 @@ afterString:
         \item {\tt inc}, {\tt dec}, {\tt push}, {\tt pop} with first eight 32-bit registers
         \end{itemize}
     \item {\tt h} --- push one-byte constant
+    \item {\tt i} --- {\tt imul} constant, reg, reg
+    \item {\tt H} --- REX prefix with 'W' set
     \item {\tt p}--{\tt z} --- conditional jumps to 1-byte offset
     \vspace{.5cm}
-    \item<2> note: can \myemph{write machine code, jump to it}
+    \item<2> note: can \myemph{write machine code on stack, then run it}
     \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{some alphanumeric shellcode patterns}
+\begin{Verbatim}[fontsize=\small]
+// mov %rax, %rcx
+push %rax
+pop %rcx
+
+// %rax = 0
+pushb $0x41
+pop %rax
+xor $0x41, %ax
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{falling through to written code}
+\begin{Verbatim}[fontsize=\small]
+[start of shellcode]
+... set %rax to `syscall' machine code
+push %rax
+...
+...
+[stack pointer starts here]
+...
+[return address was here]
+\end{Verbatim}
 \end{frame}
 
 \begin{frame}{actual limitation}

@@ -1,0 +1,61 @@
+\date{}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item stack smashing pattern
+    \item overwrite return address on the stack
+    \item point it to `shellcode' --- code given as part of input
+    \item shellcode does what attacker desires
+    \vspace{.5cm}
+    \item `nop sled' to handle some inconsistency in shellcode address
+    \end{itemize}
+\end{frame}
+
+\section{stack smashing}
+\input{../overflow-smash/smash-construct-parts}
+
+\subsubsection{finding where return address is}
+\againframe<4>{makeAttack}
+\input{../overflow-smash/ret-addr-guess}
+
+\section{stack smashing demo / debugger tutorial?}
+\input{../overflow-smash/gdb-tut}
+
+\section{example: Morris worm stack smashing}
+\input{../overflow-smash/morris-worm-smash}
+
+
+% FIXME: actual demo
+\section{restricted characters in shell code}
+     %FIXME: add simple example
+\input{../overflow-smash/shell-code-restricted}   
+
+\section{restricted characters in pointers}
+\input{../overflow-smash/pointer-restricted}
+
+\section{review: tricky parts of stack smashing}
+\input{../overflow-smash/stack-smash-tricky}
+
+
+\input{../mitigate-stack/talk-inner}
+
+\input{../overflow-subterfuge/talk-inner}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\subsubsection{nop sleds}
+\input{../overflow-smash/nop-sled}
+
+\input{../overflow-smash/nop-sled-use}
+
+\end{document}

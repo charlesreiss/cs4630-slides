@@ -1,0 +1,15 @@
+\begin{frame}[fragile]{repeated reads}
+\begin{itemize}
+\item sometimes find ``read gadgets''
+    \begin{itemize}
+    \item example buffer overflow into pointer
+    \end{itemize}
+\item often reusable (e.g. input in loop in server)
+\item can find value with multiple steps
+    \begin{itemize}
+    \item read global pointer that points in middle of array on stack, then
+    \item then read that pointer + 8, pointer + 16, etc. until finding stack canary
+    \end{itemize}
+\item can leak 8+ bytes with repeated 1-byte leak
+\end{itemize}
+\end{frame}

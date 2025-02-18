@@ -1,7 +1,7 @@
 \begin{frame}[fragile,label=infoDisc1a]{information disclosure (1a)}
 \lstset{
     language=C++,
-    style=small
+    style=smaller
 }
 \begin{lstlisting}
 void vulnerable() {
@@ -32,7 +32,7 @@ void vulnerable() {
     int value;
     ...
         } else if (command == "get") {
-            cout << value << endl;
+            printf("%d\n", value);
         }
     ...
 }
@@ -58,7 +58,7 @@ running this program \\
 \begin{frame}[fragile,label=infoDisc2]{information disclosure (2)}
 \lstset{
     language=C,
-    style=small
+    style=smaller
 }
 \begin{lstlisting}
 void process() {
@@ -80,7 +80,7 @@ void process() {
 \begin{frame}[fragile,label=infoDisc3]{information disclosure (3)}
 \lstset{
     language=C,
-    style=small,
+    style=smaller,
 }
 \begin{lstlisting}
 struct foo {

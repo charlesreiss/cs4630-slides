@@ -13,15 +13,15 @@
 \begin{frame}{last time}
     \begin{itemize}
     \item Morris worm as example
-    \item idea of running shell (command prompt) from shellcode
-    \vspace{.5cm}
-    \item mitigate $\sim$ partial way to prevent attack
-    \item stack canaries
-    \item non-contiguous buffer overflows
-    \item information disclosure
+    \item writing machine code without certain byte values
         \begin{itemize}
-        \item less serious `read bad memory' bug becomes more serious
+        \item x86-64 subset: incl. push/pop/some xor/imul
+        \item can write new machine code from old machine code
+        \item observation: stack is after shellcode
         \end{itemize}
+    \item alternate places to put shellcode
+    \item stack canaries
+    \item information leaks (start)
     \end{itemize}
 \end{frame}
 
@@ -67,6 +67,7 @@
 \againframe<3>{stackCanHopes}
 \subsubsection{examples}
 \input{../mitigate-stack/some-info-disc-bugs}
+\input{../mitigate-stack/repeat-read}
 
 \subsubsection{exercise}
 \input{../mitigate-stack/info-disc-stack-addr-exer}
@@ -79,6 +80,15 @@
         \end{itemize}
     \end{itemize}
 \end{frame}
+    % FIXME:
+        % example of working out how stack layout matches
+        % f1() f2() --> uninit int
+        % f3() use stack canary
+
+\subsubsection{avoiding?}
+\againframe<2>{reCanary}
+
+% FIXME: exercise: using info disclosure bug?
 
 \section{shadow stacks}
 \input{../mitigate-stack/shadow-stack}

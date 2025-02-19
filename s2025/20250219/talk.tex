@@ -26,6 +26,36 @@
 \end{frame}
 
 \begin{frame}{on the quiz}
+    \begin{itemize}
+    \item quiz Q1 --- hooking functionality for examining list of running programs
+        \begin{itemize}
+        \item hooking = intercepting/manipulation use of this function
+        \item can use this to tell when functionality in use --- not veyr good indication of activity
+        \end{itemize}
+    \item quiz Q2 --- analysis in Ghidra --- typically not running malware
+
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{long NOP setting instructions}
+    \begin{itemize}
+    \item Q came up during TRICKY office hours
+    \end{itemize}
+\begin{Verbatim}
+   1:   66 66 2e 0f 1f 84 00    data16 cs nopw 0x0(%rax,%rax,1)
+   8:   00 00 00 00 
+   c:   0f 1f 40 00             nopl   0x0(%rax)
+\end{Verbatim}
+\begin{itemize}
+\item what are these instructions/why?
+\item long nops recommended in Intel manuals
+    \begin{itemize}
+    \item 66, 2e are do-nothing prefixes
+    \item 0f 1f is opcode for argument-taking nop instruction
+    \item argument is (mostly) ignored, but takes up space
+    \end{iitemize}
+\item long nops recommended b/c more efficient to process than lots of short nops
+\end{itemize}
 \end{frame}
 
 \begin{frame}{on the setting stack pointer exercise}
@@ -65,6 +95,7 @@
 \subsection{exercise: shadow stacks stop}
 \input{../mitigate-stack/shadow-stacks-stop-ex}
 
+\input{../overflow-subterfuge/talk-inner}
 
 \section{backup slides}
 \begin{frame}{backup slides}

@@ -1,0 +1,23 @@
+\begin{frame}[fragile]{exercise: stack layout?}
+\begin{tikzpicture}
+\node[align=left,draw,very thick] (C-code) {
+\lstinputlisting[language=C,style=size9]{../overflow-basic/vuln2.c}
+};
+\node[overlay,align=left,draw,very thick,anchor=north west] (asm-code)  at ([yshift=1cm,xshift=.5cm]C-code.north east){
+\lstinputlisting[language=myasm,style=size9]{../overflow-basic/vuln2.s}
+};
+\begin{visibleenv}<2->
+\coordinate (base) at ([xshift=0cm,yshift=-.5cm]C-code.south west);
+\tikzset{
+    myl/.style={font=\tt\fontsize{9}{10}\selectfont},
+}
+\draw[ultra thick] (base) rectangle ++(4cm, -3cm);
+\path ([xshift=4cm]base) node[above right=0cm,myl,yshift=-.25cm] {return address (rsp+200)};
+\draw[thick] (base) rectangle ++ (4cm, .1cm);
+\draw[thick,fill=blue!20] (base) rectangle ++(4cm, -.2cm) node[above right=0cm,myl,yshift=-.25cm] {old rbp, old rbx (rsp+184)};
+\draw[thick,fill=violet!20] ([yshift=-.2cm]base) rectangle ++(4cm, -.5cm) node[above right=0cm,myl] {needed\_hash (rsp+144)};
+\draw[thick,fill=yellow!20] ([yshift=-0.7cm]base) rectangle ++(4cm, -.5cm) node[above right=0cm,myl] {actual\_hash (rsp+112)};
+\draw[thick,fill=green!20] ([yshift=-1.4cm]base) rectangle ++(4cm, -1.6cm) node[above right=0cm,myl] {buffer (rsp+0)};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}

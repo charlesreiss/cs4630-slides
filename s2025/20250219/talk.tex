@@ -9,6 +9,7 @@
 \input{../common/listingsLib}
 
 \input{../mitigate-stack/stack-can-hopes}
+\input{../mitigate-stack/stack-can-ex}
 
 \begin{frame}{last time}
     \begin{itemize}
@@ -33,7 +34,10 @@
         \item can use this to tell when functionality in use --- not veyr good indication of activity
         \end{itemize}
     \item quiz Q2 --- analysis in Ghidra --- typically not running malware
-
+        \begin{itemize}
+        \item should have been more explicit about listings/decompiler/etc. view in Ghidra
+        \item these views not very affected by conditional execution/calling obscure functions
+        \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -41,7 +45,7 @@
     \begin{itemize}
     \item Q came up during TRICKY office hours
     \end{itemize}
-\begin{Verbatim}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}]
    1:   66 66 2e 0f 1f 84 00    data16 cs nopw 0x0(%rax,%rax,1)
    8:   00 00 00 00 
    c:   0f 1f 40 00             nopl   0x0(%rax)
@@ -53,7 +57,7 @@
     \item 66, 2e are do-nothing prefixes
     \item 0f 1f is opcode for argument-taking nop instruction
     \item argument is (mostly) ignored, but takes up space
-    \end{iitemize}
+    \end{itemize}
 \item long nops recommended b/c more efficient to process than lots of short nops
 \end{itemize}
 \end{frame}
@@ -89,6 +93,8 @@
 \againframe<2>{reCanary}
 
 % FIXME: exercise: using info disclosure bug?
+
+\input{../mitigate-stack/canary-benchmarks}
 
 \section{shadow stacks}
 \input{../mitigate-stack/shadow-stack}

@@ -1,0 +1,15 @@
+\begin{frame}{CET and shadow-stack manipulation}
+    \begin{itemize}
+    \item Intel CET has instructions to manipulate shadow stack pointer
+    \item RDSSP (read shadow stck pointer)
+        \begin{itemize}
+        \item used by glibc setjmp
+        \end{itemize}
+    \item INCSSP (increment shadow stack pointer)
+        \begin{itemize}
+        \item apparently used by glibc longjmp in common case
+        \end{itemize}
+    \vspace{.5cm}
+    \item also some functionality for switching shadow stacks
+    \end{itemize}
+\end{frame}

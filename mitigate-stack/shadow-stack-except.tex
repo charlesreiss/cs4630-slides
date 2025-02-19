@@ -59,7 +59,14 @@ void Quux() {
 \end{lstlisting}    
 \end{frame}
 
-\begin{frame}{dealing with non-local returns}
+\begin{frame}{shadow stacks and non-lcoal returns}
+    \begin{itemize}
+    \item need to modify these functions to support shadow stacks, it seems?
+    \item violates idea of hardware extension that modifies CALL/RET operation
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{one way: dealing with non-local returns}
 \begin{itemize}
 \item exceptions and setjmp/longjmp deliberately skip return calls
 \item one solution: ``direct'' shadow stack

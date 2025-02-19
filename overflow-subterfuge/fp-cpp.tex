@@ -4,7 +4,6 @@
 \lstset{
     language=C++,style=smaller,
 }
-    \vspace{-.5cm}
 \begin{lstlisting}
 class InputStream {
 public:
@@ -68,7 +67,6 @@ public:
 \lstset{
     language=C,style=smaller,
 }
-\vspace{-.5cm}
 \begin{lstlisting}
 struct InputStream_vtable {
     int (*get)(InputStream* this);
@@ -89,7 +87,6 @@ struct InputStream {
 \lstset{
     language=C,style=smaller,
 }
-\vspace{-.5cm}
 \begin{lstlisting}
 struct SeekableInputStream_vtable {
     struct InputStream_vtable as_InputStream;
@@ -113,7 +110,6 @@ struct FileInputStream {
 \lstset{
     language=C,style=smaller,
 }
-\vspace{-.5cm}
 \begin{lstlisting}
 SeekableInputStream_vtable the_FileInputStream_vtable = {
     &FileInputStream_get,

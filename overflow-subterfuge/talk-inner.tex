@@ -1,18 +1,36 @@
 \subsection{pointer subterfuge}
 \input{../overflow-subterfuge/subterfuge}
 
+\section{arbitrary writes}
+\input{../overflow-subterfuge/arb-write}
+
+\againframe<3>{arbWrite}
+
 \subsection{example: return address overwrite}
+\againframe<4>{arbWrite}
 \input{../overflow-subterfuge/write-ra-subter}
+
+\subsection{exercise}
+\input{../overflow-subterfuge/simple-subter-ex}
+
+\subsubsection{careful stack layout?}
+\input{../overflow-subterfuge/subterfuge-better-canary}
+
+\subsubsection{structs containing pointers}
+\input{../overflow-subterfuge/subterfuge-structs-globals}
 
 \section{beyond stack smashing}
 \input{../overflow-subterfuge/beyond-stack-smash}
 
-\section{arbitrary writes}
-\input{../overflow-subterfuge/arb-write}
+
 
 \section{write targets, continued}
+\subsection{example: GOT overwrite}
+\againframe<5>{arbWrite}
+\input{../overflow-subterfuge/write-got-subter}
 
 \subsection{C++ inheritence}
+\againframe<5>{arbWrite}
 \input{../overflow-subterfuge/fp-cpp}
 
 \subsection{options for attacking function pointer tables}
@@ -22,18 +40,12 @@
 \subsection{vtable overwrite exercise}
 \input{../overflow-subterfuge/fp-vtable-over-exer}
 
+
+
+
 \section{one write into another}
 \againframe<6>{arbWrite}
 
-
-\subsection{example: GOT overwrite}
-\input{../overflow-subterfuge/write-got-subter}
-
-\subsubsection{careful stack layout?}
-\input{../overflow-subterfuge/subterfuge-better-canary}
-
-\subsubsection{structs containing pointers}
-\input{../overflow-subterfuge/subterfuge-structs-globals}
 
 \section{arc injection}
 \begin{frame}{so far overwrites}

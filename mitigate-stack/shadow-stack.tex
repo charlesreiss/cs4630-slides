@@ -97,7 +97,7 @@ function:
 
 \begin{frame}[fragile,label=actShadowStack]{Android/AArch64 shadow stacks (1)}
    \begin{itemize}
-    \item \tiny via \url{https://clang.llvm.org/docs/ShadowCallStack.html} (see also {\url{https://security.googleblog.com/2019/10/protecting-against-code-reuse-in-linux_30.html}})
+    \item {\tiny via \url{https://clang.llvm.org/docs/ShadowCallStack.html} (see also {\url{https://security.googleblog.com/2019/10/protecting-against-code-reuse-in-linux_30.html}})}
     \item dedicate register \texttt{x18} to shadow stack pointer
         \begin{itemize}
         \item x30 = return address (after ARM's call instruction (bl))

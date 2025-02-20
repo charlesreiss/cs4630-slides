@@ -6,7 +6,27 @@
     \titlepage
 \end{frame}
 
+\input{../common/listingsLib}
+
 \begin{frame}{last time}
+    \begin{itemize}
+    \item setting integers to set return address
+        \begin{itemize}
+        \item `type-punning' skill we'll need later
+        \end{itemize}
+    \item information leaks
+        \begin{itemize}
+        \item uninitialized variables
+        \item out-of-bound reads of array
+        \item overflows into pointers/etc. 
+        \item ``read gadgets''
+        \end{itemize}
+    \item shadow stacks
+        \begin{itemize}
+        \item store return addresses separately
+        \item sometimes duplicates, sometimes not
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
 \input{../overflow-subterfuge/talk-inner}

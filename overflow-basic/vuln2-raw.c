@@ -1,0 +1,19 @@
+extern char* gets(char*);
+extern int memcmp(void*,void*,unsigned long);
+extern void ComputeSHA256(void*,void*);
+extern void Interesting();
+void vulnerable() {
+    unsigned char needed_hash[32] = {
+        0xc3, 0xab, 0x8f, 0xf1, 0x37, 0x20, 0xe8, 0xad,
+        0x90, 0x47, 0xdd, 0x39, 0x46, 0x6b, 0x3c, 0x89,
+        0x74, 0xe5, 0x92, 0xc2, 0xfa, 0x38, 0x3d, 0x4a,
+        0x39, 0x60, 0x71, 0x4c, 0xae, 0xf0, 0xc4, 0xf2
+    };
+    unsigned char actual_hash[32];
+    char buffer[100];
+    gets(buffer);
+    ComputeSHA256(buffer, actual_hash);
+    if (memcmp(needed_hash, actual_hash, 32) == 0) {
+        Interesting();
+    }
+}

@@ -3,3 +3,4 @@ talk-slides.pdf
 talk-slides-heldback.pdf
 latex.out
 test.pdf
+_dist/*.pdf

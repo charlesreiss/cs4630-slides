@@ -16,17 +16,17 @@ public:
     virtual void seek(int offset) = 0;
     virtual int tell() = 0;
 };
-class FileInputStream : public InputStream {
+class FileInputStream : public SeekableInputStream {
 public:
-    int get();
-    void seek(int offset);
-    int tell();
+    virtual int get();
+    virtual void seek(int offset);
+    virtual int tell();
     ...
 };
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}<1>[label=inheritMemLay]{C++ inheritence: memory layout}
+\begin{frame}<1>[label=inheritMemLay]{C++ inheritence: approx memory layout}
 \begin{tikzpicture}
     \tikzset{
         vt/.style={fill=blue!30},

@@ -1,0 +1,48 @@
+\begin{frame}[fragile]{calling virtual method}
+\begin{Verbatim}[fontsize=\fontsize{9}{10},commandchars=\\\{\}]
+SeekableInputStream *in = ...;  // 8(%rsp)
+in->get();
+in->seek(10);
+\end{Verbatim}
+\hrule
+\begin{Verbatim}[fontsize=\fontsize{9}{10},commandchars=\\\{\}]
+\textit{# in->get();}
+movq    8(%rsp), %rdi // rdi <- in
+movq    (%rdi), %rax  // rax <- vtable
+call    *(%rax)       // call vtable[0]
+\relax
+\textit{# in->seek(10);}
+movq    8(%rsp), %rdi // rdi <- in
+movl    $10, %esi     // esi <- 10
+movq    (%rdi), %rax  // rax <- vtable
+call    *8(%rax)      // call vtable[1]
+\end{Verbatim}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{FileInputStream assembly (1)}
+%\begin{Verbatim}[fontsize=\fontsize{9}{10}]
+\begin{Verbatim}[fontsize=\fontsize{9}{10},commandchars=\\\{\}]
+_ZN15FileInputStreamC2Ev: \textit{// constructor}
+   \textit{# rdi == this}
+   movq    $_ZTV15FileInputStream+16, (%rdi)
+   ...
+   ret
+\textit{# VTable for FileInputStream}
+_ZTV15FileInputStream:
+    \textit{# offset (for multiple inheritence)}
+    .quad   0 
+    \textit{# info for typeid() operator}
+    .quad   _ZTI15FileInputStream
+    \textit{# VTable pointer points here}
+    \textit{# FileInputStream::get}
+    .quad   _ZN15FileInputStream3getEv
+    \textit{# FileInputStream::seek}
+    .quad   _ZN15FileInputStream4seekEi
+    \textit{# FileInputStream::tell}
+    .quad   _ZN15FileInputStream4tellEv
+\end{Verbatim}
+\end{frame}
+
+

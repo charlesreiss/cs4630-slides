@@ -1,0 +1,71 @@
+\date{}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+\input{../common/listingsLib}
+
+\section{arbitrary writes}
+\input{../overflow-subterfuge/arb-write}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item information leaks
+    \item overwriting pointers on the stack
+    \item ``write gadget'' via overwriting pointer
+        \begin{itemize}
+        \item overwrite pointer to trick program into overwriting other pointer
+        \item multiple levels of indirection
+        \item how to choose value depends on context
+        \end{itemize}
+    \item overwriting return addresses
+    \item overwriting global offset table entries
+    \item VTables for implementing polymorphism
+    \end{itemize}
+\end{frame}
+
+\subsection{options for attacking function pointer tables}
+    % FIXME: find another function pointer in memory
+\input{../overflow-subterfuge/fp-table-attack}
+
+\subsection{vtable overwrite exercise}
+\input{../overflow-subterfuge/fp-vtable-over-exer}
+
+
+
+
+\section{one write into another}
+\againframe<6>{arbWrite}
+
+
+\section{arc injection}
+\begin{frame}{so far overwrites}
+    \begin{itemize}
+    \item once we found a way to overwrite function pointer\\
+          easiest solution seems to be: direct to our code
+    \item \ldots but alterante places to direct it to
+    \end{itemize}
+\end{frame}
+
+\input{../overflow-subterfuge/arc-injection}
+
+\section{case study: NTP exploit}
+\input{../overflow-subterfuge/ntp-case-study}
+
+\subsection{subterfuge exercise}
+\input{../overflow-subterfuge/subterfuge-exer}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+\subsection{C++ inheritence}
+\againframe<5>{arbWrite}
+\input{../overflow-subterfuge/fp-cpp}
+
+\subsubsection{in real assembly}
+\input{../overflow-subterfuge/fp-cpp-asm}
+
+
+\end{document}

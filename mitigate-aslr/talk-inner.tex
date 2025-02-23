@@ -1,14 +1,20 @@
 
 
 \section{ASLR}
+\input{../mitigate-aslr/aslr-preview}
+
 \subsection{what it is}
 \input{../mitigate-aslr/aslr}
 
 \subsection{how much entropy}
 \input{../mitigate-aslr/aslr-entropy}
 
+\subsection{entropy exercise?}
+\input{../mitigate-aslr/entropy-exer}
+
 \subsection{info leak}
 \input{../mitigate-aslr/info-disc-stack-addr-exer}
+    % FIXME: multiple good guesses
 
 \subsection{kept together: danger of leaks}
 \input{../mitigate-aslr/aslr-leaks}
@@ -17,23 +23,21 @@
 \input{../mitigate-aslr/aslr-using-leak-exer}
 \input{../mitigate-aslr/aslr-entropy-together}
 
+
+\subsection{Unix PIC history}
+\input{../mitigate-aslr/unix-pic-history}
+
 \subsection{alternate approach: Windows}
 \input{../mitigate-aslr/aslr-windows-pic}
 
-\subsection{making ASLR: removing hard-coded addresses}
-\input{../mitigate-aslr/aslr-pic}
-
-\subsubsection{without absolute}
+\subsection{exercise: without absolute addresses?}
 \input{../mitigate-aslr/aslr-without-abs-ex}
 
-\subsection{changes with position-independent code}
+\subsubsection{changes with position-independent code}
 \input{../mitigate-aslr/pic-cost-code}
 
-\subsection{PIE}
+\subsection{PIE / PIC}
 \input{../mitigate-aslr/aslr-pie}
 
-\subsection{position-independent cost}
-\input{../mitigate-aslr/pic-switch-example}
-
-\subsubsection{measurements}
+\subsection{PIC cost measurements}
 \input{../mitigate-aslr/pic-cost-measure}

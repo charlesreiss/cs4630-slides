@@ -1,0 +1,13 @@
+\begin{frame}{entropy exercise}
+    \begin{itemize}
+    \item suppose we have 32-bit Linux server vulnerable to stack smashing
+    \item \ldots but stack address randomized with 256 possible starting locations
+        \begin{itemize}
+        \item +/- 0x80 in increments of 0x1000
+        \end{itemize}
+    \item server is automatically restarted after unsuccessful attack
+    \item suppose stack layout is 8KB buffer + return address + 12KB other stuff
+    \item what should attacker do to maximize chance of success?
+    \item about how many tries needed for successful attack?
+    \end{itemize}
+\end{frame}

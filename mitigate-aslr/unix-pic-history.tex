@@ -1,0 +1,16 @@
+\begin{frame}{position-independent code}
+    \begin{itemize}
+    \item position-independent code = code that can be loaded anywhere
+        \begin{itemize}
+        \item no hard-coded addresses
+        \end{itemize}
+    \item necessary prerequisite for most of ASLR
+    \vspace{.5cm}
+    \item Unix did this for libraries for non-security reasons
+        \begin{itemize}
+        \item share memory between multiple programs loading same library
+        \item allow programs to load libraries at any location
+        \end{itemize}
+    \item but not other programs, probably because of overheads
+    \end{itemize}
+\end{frame}

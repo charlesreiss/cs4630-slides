@@ -6,6 +6,7 @@
     \item 2. stack starts at \texttt{0x7FFF FFFF FFFF} - \textit{random number} $\times$ \texttt{0x1000}
         \begin{itemize}
         \item randomization disabled? \textit{random number} $= 0$
+        \item times \texttt{0x1000} because OS has to allocate whole pages (0x1000 bytes)
         \end{itemize}
 \end{itemize}
 \begin{tikzpicture}[overlay,remember picture]
@@ -14,6 +15,7 @@
 };
 \end{tikzpicture}
 \end{frame}
+
 
 \begin{frame}<1>[fragile,label=aslr64]{program memory (x86-64 Linux; ASLR)}
 \begin{tikzpicture}[remember picture]
@@ -31,7 +33,7 @@
 \begin{pgfonlayer}{bg}
     \node[right=1mm of stack.north east,mylabel] {\myemph<1>{$\pm$ 0x004 0000 0000}};
 \end{pgfonlayer}
-\node[mybox, minimum height=.5cm, below=0.5cm of stack] (heapB) {Dynamic/Non-fixed exe/Libraries (mmap)};
+\node[mybox, minimum height=.5cm, below=0.5cm of stack] (heapB) {mmap/non-fixed exe/libs};
 \begin{pgfonlayer}{bg}
     \node[right=1mm of heapB.north east,mylabel] (heapBLabel) {\myemph<1>{$\pm$ 0x100 0000 0000}};
     \node[below=0mm of heapBLabel,font=\small,inner sep=0mm] {(filled from top with ASLR)};
@@ -43,12 +45,12 @@
 \begin{pgfonlayer}{bg}
 \node[right=1mm of heap.south east,mylabel] (heapBLabel) {\myemph<1>{$\pm$ 0x200 0000}};
 \end{pgfonlayer}
-\node[mybox, minimum height=.5cm, below=0.2mm of heap] (data) {Writable data if fixed exe addresses};
+\node[mybox, minimum height=.5cm, below=0.2mm of heap] (data) {fixed exe writeable (sometimes)};
 \begin{pgfonlayer}{bg}
 \node[right=1mm of data.south east,mylabel] (bottomLabel) {\myemph<2-3>{0x0000 0000 0060 0000}*};
 \node[below=0mm of bottomLabel,font=\small,inner sep=0mm] {(constants + 2MB alignment)};
 \end{pgfonlayer}
-\node[mybox, minimum height=.5cm, below=0.6cm of data] (sdata) {Code + Constants if fixed exe addresses};
+\node[mybox, minimum height=.5cm, below=0.6cm of data] (sdata) {fixed exe code/data};
 \begin{pgfonlayer}{bg}
 \node[right=1mm of sdata.south east,mylabel] (sbottomLabel) {\myemph<2-3>{0x0000 0000 0040 0000}};
 \end{pgfonlayer}
@@ -96,11 +98,11 @@
 \begin{pgfonlayer}{bg}
 \node[right=1mm of heap.south east,mylabel] (heapBLabel) {\myemph{$\pm$ 0x200 0000}};
 \end{pgfonlayer}
-\node[mybox, minimum height=.5cm, below=0.2mm of heap] (data) {Writable data};
+\node[mybox, minimum height=.5cm, below=0.2mm of heap] (data) {fixed exe writeable (sometimes)};
 \begin{pgfonlayer}{bg}
 %\node[right=1mm of data.south east,mylabel] (bottomLabel) {0x0804 0000};
 \end{pgfonlayer}
-\node[mybox, minimum height=.5cm, below=0.6cm of data] (sdata) {Code + Constants if fixed exe addresses};
+\node[mybox, minimum height=.5cm, below=0.6cm of data] (sdata) {fixed exe code/data};
 \begin{pgfonlayer}{bg}
 \node[right=1mm of sdata.south east,mylabel] (bottomLabel) {0x0804 8000};
 \end{pgfonlayer}
@@ -113,7 +115,7 @@
 
 \begin{frame}{how much guessing?}
     \begin{itemize}
-    \item gaps change by multiples of page (4K)
+    \item gaps change by multiples of page size (4KB)
         \begin{itemize}
         \item lower 12 bits are \myemph{fixed}
         \end{itemize}

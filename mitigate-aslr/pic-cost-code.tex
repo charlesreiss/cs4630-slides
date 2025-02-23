@@ -94,7 +94,7 @@ c3                	retq
 
 \end{frame}
 
-\begin{frame}[fragile,label=x86Worse]{32-bit x86 is worse}
+\begin{frame}[fragile,label=x86Worse]{32-bit x86 is worse (1)}
     \begin{itemize}
     \item no relative addressing for {\tt mov}, {\tt lea}, \ldots
     \item even changes ``stubs'' for printf:
@@ -117,4 +117,57 @@ c3                	retq
     /* needs to be set by caller */
 \end{lstlisting}
 \end{frame}
+
+\begin{frame}[fragile,label=x86Worse]{32-bit x86 is worse (1)}
+    \begin{itemize}
+    \item no relative addressing for {\tt mov}, {\tt lea}, \ldots
+    \item even changes ``stubs'' for printf:
+    \end{itemize}
+\lstset{
+    language=myasm,
+    style=smaller,
+    escapeinside=~~,
+}
+\begin{lstlisting}
+// BEFORE: (fixed addresses)
+08049040 <puts@plt>:
+ 8049040:       ff 25 04 c0 04 08       jmp    *0x804c004
+
+// AFTER: (position-independent)
+00000490 <puts@plt>:
+ 490:	ff a3 10 00 00 00    jmp    *0x10~\myemphThree{(\%ebx)}~
+    /* %ebx --- address of global offset table */
+    /* needs to be set by caller */
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=x86Worse2]{32-bit x86 is worse (2)}
+    \begin{itemize}
+    \item changes to call
+    \end{itemize}
+\lstset{
+    language=myasm,
+    style=smaller,
+    escapeinside=~~,
+}
+\begin{lstlisting}
+// BEFORE: (fixed addresses)
+ 8049061:  68 08 a0 04 08      push   $0x804a008
+ 8049066:  e8 d5 ff ff ff      call   8049040 <puts@plt>
+
+// AFTER: (position-independent)
+000010d0 <__x86.get_pc_thunk.bx>:
+    10d0:  8b 1c 24            mov    (%esp),%ebx
+    10d3:  c3                  ret
+...
+
+    106e:  e8 5d 00 00 00      call   10d0 <__x86.get_pc_thunk.bx>
+    1073:  81 c3 65 2f 00 00   add    $0x2f65,%ebx
+...
+    107d:  8d 83 30 e0 ff ff   lea    -0x1fd0(%ebx),%eax
+    1083:  50                  push   %eax
+    1084:  e8 b7 ff ff ff      call   1040 <puts@plt>
+\end{lstlisting}
+\end{frame}
+
 

@@ -1,14 +1,14 @@
 \begin{frame}[fragile,label=infoDiscEx]{exercise}
 \begin{tikzpicture}
 \node (first) {
-\begin{lstlisting}[language=C,style=size10]
+\begin{lstlisting}[language=C,style=size9]
 struct point {
     int x, y, z;
 };
 \end{lstlisting};
 };
 \node[anchor=north west] at (first.north east) {
-\begin{lstlisting}[language=C,style=size10]
+\begin{lstlisting}[language=C,style=size9]
 struct point *p;
 ...
     if (command == "get") { 
@@ -21,13 +21,14 @@ struct point *p;
 \end{tikzpicture}
 \vspace{-.25cm}
 \begin{itemize}
-\item Which initial value for \texttt{p} (``left over'' from prior use of register, etc.) would be most useful for figuring out the stack canary value?
+\item Which initial value for \texttt{p} (``left over'' from prior use of register, etc.) would be 
+    most useful for a later buffer overflow attack?
 \begin{itemize}
 \item A. \texttt{p} is an invalid pointer and accessing it will crash the program
-\item B. \texttt{p} points to space on the stack that is currently unallocated, but last contained an input buffer
-\item C. \texttt{p} points to a struct allocated on the heap
+\item B. \texttt{p} points to global variable
+\item C. \texttt{p} points to space on the stack that is currently unallocated, but last contained an input buffer
 \item D. \texttt{p} points to space on the stack that currently holds a return address
-\item E. \texttt{p} points to space on the stack that is currently unallocated, but last contained a pointer to the last used byte of an input buffer on the stack
+\item E. \texttt{p} points to space on the stack that is currently unallocated, but last contained a pointer to the last used byte of an array on the stack
 \end{itemize}
 \end{itemize}
 \end{frame}

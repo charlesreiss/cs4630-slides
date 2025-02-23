@@ -21,9 +21,7 @@ printf("%s\n", f);
 
 \begin{frame}[fragile,label=useLeak2]{exercise: using a leak (2)}
 \begin{lstlisting}[language=C++,style=script]
-class Foo {
-    virtual const char *bar() { ... }
-};
+class Foo { virtual const char *bar() { ... } };
 ...
 Foo *f = new Foo;
 char *p = new char[1024];

@@ -1,24 +1,61 @@
 
-\begin{frame}{PIE}
+\begin{frame}{GCC/Clang options}
     \begin{itemize}
-    \item position-independent executables (PIE)
+    \item -fPIC: generate position-independent code for library
         \begin{itemize}
-        \item no hardcoded addresses
+        \item -fpic --- possibly less flexible/faster version on some platforms
         \end{itemize}
-    \item alternative: \myemph{edit code (not global offset table) at load time}
+    \item -fPIE, -fpie: generate position-independent code for executable
+    \item -pie: link position-independent executable
         \begin{itemize}
-        \item Windows solution
+        \item -no-pie: don't (where -pie is default)
         \end{itemize}
-    \item GCC: \texttt{-pie -fPIE}
+    \item -shared: link shared library
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{-fPIC/-fPIE differences}
+\begin{Verbatim}[fontsize=\small]
+extern int foo;
+int example() {return foo;}
+\end{Verbatim}
+with -fPIC:
+\begin{Verbatim}[fontsize=\small]
+0000000000000000 <example>:
+   0:   48 8b 05 00 00 00 00    mov    0x0(%rip),%rax        # 7 <example+0x7>
+              3: R_X86_64_REX_GOTPCRELX       foo-0x4
+   7:   8b 00                   mov    (%rax),%eax
+   9:   c3                      ret
+\end{Verbatim}
+with -fPIE:
+\begin{Verbatim}[fontsize=\small]
+0000000000000000 <example>: 
+   0:   8b 05 00 00 00 00       mov    0x0(%rip),%eax        # 6 <example+0x6>
+              2: R_X86_64_PC32        foo-0x4
+   6:   c3                      ret
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{GOTPCREL}
+    \begin{itemize}
+    \item saw two different relocations for global \texttt{int foo}:
+    \item \texttt{R\_X86\_64\_PC32} relocation = 32-bit offset to variable
         \begin{itemize}
-        \item \texttt{-pie} is linking option
-        \item \texttt{-fPIE} is compilation option
-        \item related option: \texttt{-fPIC} (position independent code)
-            \begin{itemize}
-            \item used to compile runtime-loaded libraries
-            \end{itemize}
+        \item okay in executable: we'll figure out where \texttt{foo} is
+        \item will redirect libraries to use exectuable version
+        \end{itemize}
+    \item \texttt{R\_X86\_64\_REX\_GOTPCRELX} relocation = 32-bit offset to global offset table entry containing address
+        \begin{itemize}
+        \item \texttt{foo}'s location decided at runtime by linker
+        \item runtime linker writes pointer to library's global offset table
+        \item (`REX' part says where instruction starts relative to constant, for fancy linkers)
         \end{itemize}
     \end{itemize}
 \end{frame}
 
-
+\begin{frame}{global offset tableS?}
+    \begin{itemize}
+    \item executable and library loaded at different addresses
+    \item each has own global offset table loaded next to it
+    \end{itemize}
+\end{frame}

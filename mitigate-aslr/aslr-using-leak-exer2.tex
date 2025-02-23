@@ -1,0 +1,39 @@
+\begin{frame}[fragile]{ex: using information leak (2)}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}]
+printf("buffer = %p", buffer)
+\end{Verbatim}
+--- \\
+{\small \texttt{buffer = 0x646d06d15040}} \\
+--- \\
+\begin{Verbatim}[fontsize=\fontsize{9}{10}]
+$ objdump -tR a.out
+...
+0000000000004040 g     O .bss   0000000000000400              buffer
+...
+0000000000003fb0 R_X86_64_JUMP_SLOT  strlen@GLIBC_2.2.5
+$ objdump -d a.out
+...
+0000000000001090 <strlen@plt>:
+    1090:       f3 0f 1e fa             endbr64
+    1094:       ff 25 16 2f 00 00       jmp    *0x2f16(%rip)        # 3fb0 <strlen@GLIBC_2.2.5>
+    109a:       66 0f 1f 44 00 00       nopw   0x0(%rax,%rax,1)
+...
+\end{Verbatim}
+\begin{itemize}
+\item exercise: address to overwrite to make strlen(X) run other code?
+\end{itemize}
+\end{frame}
+
+\begin{frame}{ex: using information leak (2) soln}
+\begin{itemize}
+\item buffer address = 0x646d06d15040 - offset = 0x4040  
+    \begin{itemize}
+    \item printed out actual value
+    \end{itemize}
+\item offset = 0x646d06d11000
+\item GOT entry address = 0x3fb0 + offset = 0x646d06d14fb0
+    \begin{itemize}
+    \item 0x3fb0 = jump slot location
+    \end{itemize}
+\end{itemize}
+\end{frame}

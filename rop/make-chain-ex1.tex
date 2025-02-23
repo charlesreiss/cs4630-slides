@@ -5,16 +5,36 @@
     \item goal: run ``\texttt{system("/bin/sh")}''
     \item known info:
 \end{itemize}
-\small \tt
+{\small \tt
 \begin{tabular}{ll}
 \normalfont address & \normalfont instructions \\
 0x100000 & (system function) \\
 0x100100 & mov \%rdi, (\%rax); ret \\
-0x100200 & pop \%rax, ret \\
-0x100300 & pop \%rdi, ret \\
+0x100200 & pop \%rax; ret \\
+0x100300 & pop \%rdi; ret \\
 0x200000 & (some global variable) \\
 \end{tabular}
+}
 \begin{itemize}
 \item exercise: what can be written at return address + after to do this?
 \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=makerop1soln]{one solution}
+\begin{itemize}
+\item[] [0x100200: \myemph<2>{pop \%rax}; \myemph<3>{ret}]
+\item[] \only<2>{\%rsp->}[\myemph<2>{0x200000}]
+\item[] \only<3>{\%rsp->}[\myemph<3>{0x100300}: \myemph<4>{pop \%rdi}; \myemph<5>{ret}]
+\item[] \only<4>{\%rsp->}["/bin/sh\textbackslash 0"]
+\item[] \only<5>{\%rsp->}[\myemph<5>{0x100100}: \myemph<6>{mov \%rdi, (\%rax)}; \myemph<7>{ret}]
+\item[] \only<6-7>{\%rsp->}[\myemph<7>{0x100300}: \myemph<8>{pop \%rdi}; \myemph<9>{ret}]
+\item[] \only<8>{\%rsp->}[\myemph<8>{0x200000}]
+\item[] \only<9>{\%rsp->}[\myemph<9>{0x100000}: system()]
+\end{itemize}
+\begin{tikzpicture}[overlay,remember picture]
+\node[anchor=north east,draw,very thick,align=left] at ([xshift=-.5cm,yshift=-.5cm]current page.north east) {
+    \%rax = \alt<2->{\myemph<2>{\texttt{0x200000}}}{???} \\
+    \%rdi = \alt<8->{\myemph<8>{0x200000}}{\alt<4->{\myemph<4>{\texttt{"/bin/sh\textbackslash 0"} as int}}{???}}
+};
+\end{tikzpicture}
 \end{frame}

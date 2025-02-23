@@ -25,7 +25,7 @@
     \item ROPgadget: tool that does this
     \end{itemize}
 \begin{lstlisting}[language={},style=small]
-$ ROPgadget.py --binary /bin/ls
+$ ROPgadget --binary /bin/ls
 ....
 0x000000000000f09d : xor r8d, r8d ; cmp rcx, rsi ; jb 0xf0b9 ; jmp 0xf0e6
 0x0000000000012a22 : xor r8d, r8d ; jmp 0x11fee
@@ -44,3 +44,13 @@ Unique gadgets found: 6472
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}{selected ROP gadget options}
+    \begin{itemize}
+    \item {\tt --offset X}: set start location for binray/library
+    \item {\tt --badbytes XYZ}: ignores gadgets whose addresses contain cerain bytes
+        \begin{itemize}
+        \item to handle restrictions on input --- e.g no newline
+        \item similar to writing shellcode without specific bytes
+        \end{itemize}
+    \end{itemize}
+\end{frame}

@@ -1,3 +1,45 @@
+\begin{frame}{making things read-only}
+    \begin{itemize}
+    \item would really like to have things that shouldn't change be read-only
+    \vspace{.5cm}
+    \item simple cases:
+    \item machine code
+    \item constants
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{separate sections}
+\begin{Verbatim}[fontsize=\small]
+char *foo = "Hello";
+char bar[] = "Hello";
+\end{Verbatim}
+turns into:
+\begin{Verbatim}[fontsize=\small,commandchars=\\\{\}]
+\myemph{.data}
+bar:
+    .string "Hello"
+...
+foo:
+    .quad .LC0
+.section \myemph{.rodata.str1.1,"aMS",@progbits}
+# aMS = allocatable,mergeable,strings, @progbits = data
+.LC0:
+    .string "Hello"
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{separate segments}
+\begin{itemize}
+\item compiler needs to separate constants/code/data into different sections
+\item linker uses this info to make LOAD directives
+    \begin{itemize}
+    \item can mark some LOAD directives as read-only
+    \end{itemize}
+\item usually compiler writes \textit{linker script} specifying order of sections + how many LAOD directives
+\end{itemize}
+\end{frame}
+
+
 \begin{frame}{recall: function pointer targets}
     \begin{itemize}
     \item wanted to overwrite special pointer:
@@ -7,26 +49,20 @@
     \item tables of function pointers used for inheritence
     \item global offset table
     \vspace{.5cm}
-    \item last two: need to change infrequently
-    \item idea: make read-only
+    \item can't realistically make first two read-only
     \end{itemize}
 \end{frame}
 
-\begin{frame}{RELRO}
+\begin{frame}{read-only problems}
     \begin{itemize}
-        \item \textbf{REL}ocation \textbf{R}ead-\textbf{O}nly
-        \item Linux option: make dynamic linker structures read-only after startup
-        \item partial RELRO: everything but GOT pointers to library functions
-            \begin{itemize}
-            \item notably includes C++ virtual function tables
-            \end{itemize}
-        \item full RELRO: everything including those pointers
-            \begin{itemize}
-            \item requires disabling ``lazy'' linking
-            \item (could do without disabling --- but slower (how much?) startup)
-            \end{itemize}
-        \item appears as ELF program header entry
+    \item global offset table and vtable entries produced at runtime
+    \item addresses of functions, etc. not chosen until program loaded
+    \item \ldots or later with ``lazy'' linking
+        \begin{itemize}
+        \item recall: filling in global offset tables as functions called
+        \end{itemize}
+    \vspace{.5cm}
+    \item if we just set these as read-only, loading code will break
     \end{itemize}
 \end{frame}
-
 

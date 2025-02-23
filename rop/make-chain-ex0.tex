@@ -3,18 +3,45 @@
     \item goal: run ``\texttt{example(0)}''
     \item known info:
     \end{itemize}
-\small \tt
+{\small \tt
 \begin{tabular}{ll}
 \normalfont address & \normalfont instructions \\
 0x100000 & (example function) \\
-0x100100 & pop \%rdi, ret \\
-0x100200 & xor \%eax, \%eax, ret \\
-0x100300 & xor \%edi, \%edi, ret \\
+0x100100 & pop \%rdi; ret \\
+0x100200 & xor \%eax, \%eax; ret \\
+0x100300 & xor \%edi, \%edi; ret \\
 \end{tabular}
+}
 \begin{itemize}
 \item exercise: what can be written at return address + after to do this?
     \begin{itemize}
     \item just putting 0x100000: runs example function with wrong argument
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=makerop0soln]{making an ROP chain --- one solution}
+\begin{itemize}
+\item[] [\myemph<4>{0x100100}: \myemph<2>{pop \%rdi}; \myemph<3>{ret}]
+\item[] \myemph<2>{\myemph<5>{0x0}}
+\item[] [\myemph<3>{\myemph<6>{0x100000}}: example]
+\vspace{.5cm}
+\item as bytes (to put in buffer overflow):
+    \begin{itemize}
+    \item {\tt \myemph<4>{00 01 10 00 00 00 00 00} \myemph<5>{00 00 00 00 00 00 00 00}
+               \myemph<6>{00 00 10 00 00 00 00 00}}
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=makerop0solnB]{making an ROP chain --- another solution}
+\begin{itemize}
+\item[] [\myemph<4>{0x100200}: \myemph<2>{xor \%edi, \%edi}; \myemph<3>{ret}]
+\item[] [\myemph<3>{\myemph<5>{0x100000}}: example]
+\vspace{.5cm}
+\item as bytes (to put in buffer overflow):
+    \begin{itemize}
+    \item {\tt \myemph<4>{00 02 10 00 00 00 00 00} \myemph<5>{00 00 10 00 00 00 00 00}}
     \end{itemize}
 \end{itemize}
 \end{frame}

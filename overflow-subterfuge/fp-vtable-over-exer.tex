@@ -1,4 +1,4 @@
-\usetikzlibrary{arrows.meta,matrix}
+\usetikzlibrary{arrows.meta,matrix,decorations.pathmorphing}
 \begin{frame}[fragile,label=vtExer]{exercise}
 \vspace{-.25cm}
 \begin{tikzpicture}
@@ -8,16 +8,20 @@
     \matrix[tight matrix,nodes={text width=3.8cm,text depth=.1ex,font=\small\tt},
             label={[align=center]west:o\\b\\j\\s},anchor=north west] (vulnClass)  at (0, 0) {
         |[vt]| vtable pointer \\
-        |[minimum height=1cm]| buffer\\
+        |[minimum height=.9cm]| buffer\\
         |[vt]| vtable pointer \\
-        |[minimum height=1cm]| \ldots \\
+        |[minimum height=1.1cm]| \ldots \\
     };
-    \draw[white,ultra thick] ([yshift=2.5mm,xshift=-2mm]vulnClass.south west) -- ++(4mm,1mm);
-    \draw[white,ultra thick] ([yshift=2.5mm,xshift=-2mm]vulnClass.south east) -- ++(4mm,1mm);
-    \draw[thick] ([yshift=2mm,xshift=-2mm]vulnClass.south west) -- ++(4mm,1mm);
-    \draw[thick] ([yshift=3mm,xshift=-2mm]vulnClass.south west) -- ++(4mm,1mm);
-    \draw[thick] ([yshift=2mm,xshift=-2mm]vulnClass.south east) -- ++(4mm,1mm);
-    \draw[thick] ([yshift=3mm,xshift=-2mm]vulnClass.south east) -- ++(4mm,1mm);
+    \draw[white,ultra thick] ([yshift=3.5mm,xshift=-1mm]vulnClass.south west) -- ++(2mm,0mm);
+    \draw[white,ultra thick] ([yshift=3.5mm,xshift=-1mm]vulnClass.south east) -- ++(2mm,0mm);
+    \draw[thin] ([yshift=3mm,xshift=-1mm]vulnClass.south west) -- ++(2mm,0mm);
+    \draw[thin] ([yshift=4mm,xshift=-1mm]vulnClass.south west) -- ++(2mm,0mm);
+    \draw[thin] ([yshift=3mm,xshift=-1mm]vulnClass.south east) -- ++(2mm,0mm);
+    \draw[thin] ([yshift=4mm,xshift=-1mm]vulnClass.south east) -- ++(2mm,0mm);
+    \draw[thin,decorate,decoration={straight zigzag}] ([yshift=3mm,xshift=1mm]vulnClass.south west) --
+                 ([yshift=3mm,xshift=-1mm]vulnClass.south east);
+    \draw[thin,decorate,decoration={straight zigzag}] ([yshift=4mm,xshift=1mm]vulnClass.south west) --
+                 ([yshift=4mm,xshift=-1mm]vulnClass.south east);
     \matrix[tight matrix,nodes={text width=3.8cm,text depth=.1ex,font=\small\tt},anchor=north west] (isVT) at (0, -3) {
         \tt slot for foo\\
         \tt slot for bar\\

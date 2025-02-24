@@ -6,7 +6,7 @@
         vt/.style={fill=blue!30},
     }
     \matrix[tight matrix,nodes={text width=3.8cm,text depth=.1ex,font=\small\tt},
-            label={north:objArray},anchor=north west] (vulnClass)  at (0, 0) {
+            label={[align=center]west:o\\b\\j\\s},anchor=north west] (vulnClass)  at (0, 0) {
         |[vt]| vtable pointer \\
         |[minimum height=1cm]| buffer\\
         |[vt]| vtable pointer \\
@@ -26,19 +26,18 @@ public:
     virtual void foo();
     virtual void bar();
 };
-VulnerableClass objArray[10];
+VulnerableClass objs[10];
 \end{lstlisting}
 };
 \end{tikzpicture}
 \begin{itemize}
-\item if we can overflow \texttt{objArray[0].buffer} to change array[1]'s vtable pointer and know array[1].foo() will be called; finish the plan:
+\item Assume \verb|gets(objs[0].buffer)| is run and eventually \verb|ptr->foo()| will be run where \verb|ptr == &objs[1]|.
 \end{itemize}
 \small \begin{tabular}{ll}
-buffer[0]: \rule{2cm}{.1mm} \hspace{1cm} & A. shellcode \\
-buffer[50]: \rule{2cm}{.1mm} \hspace{1cm} & B. address of buffer[0]\\
-array[1]'s vtable pointer: \rule{2cm}{.1mm} \hspace{1cm} & C. address of buffer[50] \\
-~ & D. address of original vtable \\
-~ & E. address of objArray[0]'s vtable \\
-~ & E. address of objArray[1]'s vtable pointer \\
+input start: \rule{2cm}{.1mm} \hspace{1cm} & A. shellcode \hspace{1cm} B. address of objs[0].buffer[0] \\
+input+50 bytes: \rule{2cm}{.1mm} \hspace{1cm} & C. address of objs[0].buffer[50]\\
+input+100 bytes: \rule{2cm}{.1mm} \hspace{1cm} & D. address of original vtable \\
+~ & E. address of objs[0]'s vtable \\
+~ & F. address of objs[1]'s vtable pointer \\
 \end{tabular}
 \end{frame}

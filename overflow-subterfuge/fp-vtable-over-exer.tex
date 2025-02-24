@@ -12,6 +12,12 @@
         |[vt]| vtable pointer \\
         |[minimum height=1cm]| \ldots \\
     };
+    \draw[white,ultra thick] ([yshift=2.5mm,xshift=-2mm]vulnClass.south west) -- ++(4mm,1mm);
+    \draw[white,ultra thick] ([yshift=2.5mm,xshift=-2mm]vulnClass.south east) -- ++(4mm,1mm);
+    \draw[thick] ([yshift=2mm,xshift=-2mm]vulnClass.south west) -- ++(4mm,1mm);
+    \draw[thick] ([yshift=3mm,xshift=-2mm]vulnClass.south west) -- ++(4mm,1mm);
+    \draw[thick] ([yshift=2mm,xshift=-2mm]vulnClass.south east) -- ++(4mm,1mm);
+    \draw[thick] ([yshift=3mm,xshift=-2mm]vulnClass.south east) -- ++(4mm,1mm);
     \matrix[tight matrix,nodes={text width=3.8cm,text depth=.1ex,font=\small\tt},anchor=north west] (isVT) at (0, -3) {
         \tt slot for foo\\
         \tt slot for bar\\

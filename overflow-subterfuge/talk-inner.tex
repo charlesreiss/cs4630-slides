@@ -49,6 +49,25 @@
 \section{one write into another}
 \againframe<6>{arbWrite}
 
+\begin{frame}[fragile]{write to write}
+\begin{Verbatim}[fontsize=\small]
+struct A {
+    char name[100];
+    long irrelevant;
+    ...
+    struct B* other_thing;
+    ...
+};
+struct B {
+    char name[100];
+    ...
+}
+...
+    gets(a_object->name);
+    gets(a_object->other_thing->name);
+...
+\end{Verbatim}
+\end{frame}
 
 \section{arc injection}
 \begin{frame}{so far overwrites}

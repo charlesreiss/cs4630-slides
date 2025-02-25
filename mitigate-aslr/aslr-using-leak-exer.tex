@@ -11,10 +11,16 @@ printf("%s\n", f);
 \item Part 1: What address is most likely leaked by the above?
     \begin{itemize}
     \item A. the location of the Foo object allocated on the heap
-    \item B. the location of the first entry in Foo's VTable"
-    \item C. the location of the first instruction of Foo::Foo() (Foo's compiler-generated constructor)"
+    \item B. the location of the first entry in Foo's VTable
+    \item C. the location of the first instruction of Foo::Foo() (Foo's compiler-generated constructor)
     \item D. the location of the stack pointer
     \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{using a leak (1) answer}
+\begin{itemize}
+\item printing out beginning of C++ object = VTable pointer
 \end{itemize}
 \end{frame}
 
@@ -39,5 +45,21 @@ printf("%s\n", f);
     \item p's address was 0x901000
     \end{itemize}
 \item which of the above can I compute based on the leak?
+\end{itemize}
+\end{frame}
+
+\begin{frame}{using a leak (2) answer}
+\begin{itemize}
+\item VTable pointer part of same object/library containing class Foo definition
+\item so can use its location to find code/data from same executable
+    \begin{itemize}
+    \item gadget in main executable
+    \item Foo::bar definition
+    \item global variables (not listed)
+    \end{itemize}
+\item can't use it to find things on heap, stack, in C library
+    \begin{itemize}
+    \item those are separately randomized
+    \end{itemize}
 \end{itemize}
 \end{frame}

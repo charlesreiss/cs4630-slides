@@ -15,3 +15,24 @@
         \end{itemize}
     \end{itemize}
 \end{frame}
+
+\begin{frame}{solution (greater than 4096 byte)}
+    \begin{itemize}
+    \item $100$ objects of approx. 10000 bytes
+        \begin{itemize}
+        \item need to pad to 12288 (3 x 4096) bytes
+        \item $228\,800$ wasted bytes for $1\,000\,000$ bytes of allocations
+        \end{itemize}
+    \item $1\,000$ objects of approx. 1000 bytes
+        \begin{itemize}
+        \item need to pad to (4096) bytes
+        \item $3\,049\,000$ wasted bytes for $1\,000\,000$ bytes of allocations
+        \end{itemize}
+    \item $100\,000$ objects of approx 100 bytes
+        \begin{itemize}
+        \item need to pad to (4096) bytes
+        \item $39\,490\,00$ wasted bytes for $10\,000\,000$ bytes of allocations
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

@@ -17,7 +17,7 @@ int main() {
 \end{frame}
 
 \begin{frame}[fragile,label=relocVTable2]{position-independent versus not}
-\begin{lstlisting}[language=C++,style=script]
+\begin{Verbatim}[fontsize=\fontsize{8}{9}\selectfont]
 $ objdump -R example2
 
 example2:     file format elf64-x86-64
@@ -33,9 +33,9 @@ OFFSET           TYPE              VALUE
 0000000000003ff0 R_X86_64_GLOB_DAT  __gmon_start__
 0000000000003ff8 R_X86_64_GLOB_DAT  _ITM_registerTMCloneTable
 0000000000003fd0 R_X86_64_JUMP_SLOT  _Znwm@GLIBCXX_3.4
-\end{lstlisting}
+\end{Veratim}
 \hrule
-\begin{lstlisting}[language=C++,style=script]
+\begin{Verbatim}[fontsize=\fontsize{8}{9}\selectfont]
 $ objdump -R example2-nopie
 
 example2-nopie:     file format elf64-x86-64
@@ -45,5 +45,5 @@ OFFSET           TYPE              VALUE
 0000000000403ff0 R_X86_64_GLOB_DAT  __libc_start_main@GLIBC_2.2.5
 0000000000403ff8 R_X86_64_GLOB_DAT  __gmon_start__
 0000000000404018 R_X86_64_JUMP_SLOT  _Znwm@GLIBCXX_3.4
-\end{lstlisting}
+\end{Verbatim}
 \end{frame}

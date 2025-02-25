@@ -17,6 +17,7 @@
     % FIXME: multiple good guesses
 
 \subsection{kept together: danger of leaks}
+\input{../mitigate-aslr/aslr-entropy-together}
 \input{../mitigate-aslr/aslr-leaks}
 
 \subsection{exercise: using a leak}
@@ -25,8 +26,18 @@
 \subsection{exercise: using a leak (2)}
 \input{../mitigate-aslr/aslr-using-leak-exer2}
 
-\input{../mitigate-aslr/aslr-entropy-together}
-
+\section{ASLR cost/history}
+\begin{frame}{why not always ASLR?}
+    \begin{itemize}
+    \item ASLR seems like no-brainer
+        \begin{itemize}
+        \item have to choose address anyway
+        \item why not choose at random?
+        \end{itemize}
+    \item big problem: performance/code size impacts
+    \item (smaller problem: inconsistent behavior when bugs)
+    \end{itemize}
+\end{frame}
 
 \subsection{Unix PIC history}
 \input{../mitigate-aslr/unix-pic-history}
@@ -39,6 +50,9 @@
 
 \subsubsection{changes with position-independent code}
 \input{../mitigate-aslr/pic-cost-code}
+
+\subsubsection{recall: vtable pointers?}
+\input{../mitigate-aslr/reloc-vtable}
 
 \subsection{PIE / PIC}
 \input{../mitigate-aslr/aslr-pie}

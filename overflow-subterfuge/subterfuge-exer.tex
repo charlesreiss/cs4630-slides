@@ -25,3 +25,20 @@ void vulnerable(char *STRING1, char *STRING2) {
     \end{itemize}
 \end{itemize}
 \end{frame}
+
+\begin{frame}[fragile,label=subterExerSoln]{subterfuge exercise solution}
+\begin{lstlisting}[language=C++,style=script]
+struct Student { char email[128]; struct Assignment *assignments[16]; ...  };
+struct Assignment { char submission_file[128]; char regrade_request[1024]; ...  };
+\end{lstlisting}
+\begin{itemize}
+\item STRING1 (email) controls \textit{what address to overwrite} (want \texttt{0x1020304050})
+    \begin{itemize}
+    \item \verb|&s->assignments[0] == &email[128]|
+    \item make bytes 128--128+8 be pointer to fake assignment
+    \item want fake assignment\verb|->regrade_request| address to be 0x1020304050
+    \item fake assignment address needs to be at 0x1020304050 -  128
+    \end{itemize}
+\item STRING2 (regrade\_reqest) controls \textit{what value to set} (want \texttt{0xAABBCCDD})
+\end{itemize}
+\end{frame}

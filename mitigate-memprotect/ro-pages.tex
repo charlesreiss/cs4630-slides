@@ -28,14 +28,27 @@ foo:
 \end{Verbatim}
 \end{frame}
 
-\begin{frame}{separate segments}
+\begin{frame}[fragile]{separate segments (1)}
+\begin{Verbatim}[fontsize=\small,commandchars=\\\{\}]
+LOAD off    0x0018000 vaddr 0x0018000 paddr 0x0018000 align 2**12
+     filesz 0x0007458 memsz 0x0007458 flags \myemph{r--}
+LOAD off    0x001ffd0 vaddr 0x0020fd0 paddr 0x0020fd0 align 2**12
+     filesz 0x00012a8 memsz 0x0002570 flags \myemph{rw-}
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{separate segments (2)}
 \begin{itemize}
-\item compiler needs to separate constants/code/data into different sections
+\item compiler needs to separate constants/code/data into different segments
 \item linker uses this info to make LOAD directives
     \begin{itemize}
     \item can mark some LOAD directives as read-only
     \end{itemize}
-\item usually compiler writes \textit{linker script} specifying order of sections + how many LAOD directives
+\item need to add padding to make sure segments start at beginning of page 
+    \begin{itemize}
+    \item one reason for rounding we saw in TRICKY
+    \end{itemize}
+\item usually compiler writes \textit{linker script} specifying order of sections + padding + how many LOAD directives
 \end{itemize}
 \end{frame}
 

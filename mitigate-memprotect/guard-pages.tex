@@ -54,7 +54,7 @@
 \begin{frame}[fragile]{guard pages and arrays/structs}
 \begin{Verbatim}
 struct foo {
-    char buffer[1000];
+    char buffer[10000];
     /* can't really put guard page here */
     int *ptr;
 };
@@ -62,6 +62,6 @@ struct foo {
 \begin{itemize}
 \item C compiler expects buffer and ptr to be adjacent
 \item can't add guard page without changing all code that accesses \texttt{struct foo}
-\item similar poblem with separating elements of arrays
+\item similar problem with separating elements of arrays
 \end{itemize}
 \end{frame}

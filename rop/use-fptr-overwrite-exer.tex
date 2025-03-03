@@ -15,7 +15,7 @@ void vulnerable(struct Example *e) {
 \item \small if we overwrite process\_function's address with the address of the gadget
     \texttt{mov \%rsi, \%rsp; ret}, then input (scanf) start with \ldots?
     \begin{itemize}
-    \item A. the shellcode to run
+    \item A. the shellcode to run (assuming exec+writeable memory)
     \item B. an ROP chain to run
     \item C. the address of shellcode (or existing function) in decimal
     \item D. the address of the ROP chain to run written out in decimal
@@ -67,7 +67,7 @@ void vulnerable(struct Example *e) {
 \item \small if we overwrite process\_function's address with the address of the gadget
     \texttt{push \%rdx; jmp *(\%rdi)}, then the beginning of the input should contain\ldots \\
     \begin{itemize}
-    \item A. the shellcode to run
+    \item A. the shellcode to run (assuming exec+writeable memory)
     \item B. an ROP chain to run
     \item C. the address of shellcode (or existing function) 
     \item D. the address of the ROP chain 

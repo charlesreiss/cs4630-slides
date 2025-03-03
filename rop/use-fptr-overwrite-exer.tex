@@ -7,13 +7,13 @@ struct Example {
 void vulnerable(struct Example *e) {
     long index; char name[1000];
     gets(e->input); /* can overwrite process_function */
-    scanf("%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
+    sscanf(e->input, "%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
     (e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);
 }
 \end{lstlisting}
 \begin{itemize}
 \item \small if we overwrite process\_function's address with the address of the gadget
-    \texttt{mov \%rsi, \%rsp; ret}, then second input (scanf) should contain?
+    \texttt{mov \%rsi, \%rsp; ret}, then input (scanf) start with \ldots?
     \begin{itemize}
     \item A. the shellcode to run
     \item B. an ROP chain to run
@@ -29,7 +29,7 @@ void vulnerable(struct Example *e) {
 \begin{frame}[fragile,label=useFPtrOverwrite1Explain]{explanation}
 \begin{lstlisting}[language=C++,style=script]
 gets(e->input); /* can overwrite process_function */
-scanf("%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
+sscanf(e->input, "%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
 (e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);
 \end{lstlisting}
 \texttt{"1234,FOO......."} + addr of \texttt{mov \%rsi, \%rsp, ret}
@@ -57,15 +57,14 @@ struct Example {
     void (*process_function)(Example *, long, char *);
 };
 void vulnerable(struct Example *e) {
-    long index;
-    char name[1000];
+    long index; char name[1000];
     gets(e->input); /* can overwrite process_function */
     scanf("%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
     (e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);
 }
 \end{lstlisting}
 \begin{itemize}
-\item if we overwrite process\_function's address with the address of the gadget
+\item \small if we overwrite process\_function's address with the address of the gadget
     \texttt{push \%rdx; jmp *(\%rdi)}, then the beginning of the input should contain\ldots \\
     \begin{itemize}
     \item A. the shellcode to run
@@ -81,7 +80,7 @@ void vulnerable(struct Example *e) {
 \begin{frame}[fragile,label=useFPtrOverwrite1Explain]{explanation (one option)}
 \begin{lstlisting}[language=C++,style=script]
 gets(e->input); /* can overwrite process_function */
-scanf("%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
+sscanf(e->input, "%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
 (e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);
 \end{lstlisting}
 \texttt{"FOOBARBAZ......."} + addr of \texttt{push \%rdx; jmp *(\%rdi)}
@@ -104,7 +103,7 @@ scanf("%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
 \begin{frame}[fragile,label=useFPtrOverwrite2Explain]{explanation (unlikely alternative?)}
 \begin{lstlisting}[language=C++,style=script]
 gets(e->input); /* can overwrite process_function */
-scanf("%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
+sscanf(e->input, "%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
 (e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);
 \end{lstlisting}
 \texttt{"1234567890,FOO......."} + addr of \texttt{push \%rdx; jmp *(\%rdi)}

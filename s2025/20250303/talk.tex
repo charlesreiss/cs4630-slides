@@ -1,0 +1,49 @@
+\date{}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item write XOR execute
+    \item address space layout randomization (ASLR)
+    \item limits on usable entropy
+    \item keeping executables/libraries together
+    \item information leaks and their utility
+    \item position-independent isn't free
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{on stack alignment}
+\end{frame}
+
+\begin{frame}{assignment Q\&A}
+\end{frame}
+
+% FIXME:
+
+\subsubsection{changes with position-independent code}
+\input{../mitigate-aslr/pic-cost-code}
+
+\subsubsection{recall: vtable pointers?}
+\input{../mitigate-aslr/reloc-vtable}
+
+\subsection{PIE / PIC}
+\input{../mitigate-aslr/aslr-pie}
+
+\subsection{PIC cost measurements}
+\input{../mitigate-aslr/pic-cost-measure}
+
+\input{../rop/talk-inner}
+
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\end{document}

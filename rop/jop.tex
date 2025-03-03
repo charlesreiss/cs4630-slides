@@ -1,9 +1,15 @@
 
 \begin{frame}{jump-oriented programming}
     \begin{itemize}
-        \item just look for gadgets that end in \texttt{call} or \texttt{jmp}
-        \item don't even need to set stack
-        \item harder to find than \texttt{ret}-based gadgets
+        \item seems like \texttt{ret} is the problem?
+            \begin{itemize}
+            \item solve by protecting rets (e.g. hardware shadow stack)?
+            \end{itemize}
+        \item problem: don't actually need \texttt{ret}
+        \vspace{.5cm}
+        \item<2-> just look for gadgets that end in \texttt{call} or \texttt{jmp}
+        \item<2-> don't even need to set stack
+        \item<2-> harder to find than \texttt{ret}-based gadgets
             \begin{itemize}
             \item but almost always as powerful as ret-based gadgets
             \end{itemize}

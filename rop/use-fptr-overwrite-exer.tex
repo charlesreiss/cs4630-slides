@@ -5,17 +5,15 @@ struct Example {
     void (*process_function)(Example *, long, char *);
 };
 void vulnerable(struct Example *e) {
-    long index;
-    char name[1000];
+    long index; char name[1000];
     gets(e->input); /* can overwrite process_function */
     scanf("%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
     (e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);
 }
 \end{lstlisting}
 \begin{itemize}
-\item if we overwrite process\_function's address with the address of the gadget
-    \texttt{mov \%rsi, \%rsp; ret}, then the beginning of the input
-    should contain\ldots \\
+\item \small if we overwrite process\_function's address with the address of the gadget
+    \texttt{mov \%rsi, \%rsp; ret}, then second input (scanf) should contain?
     \begin{itemize}
     \item A. the shellcode to run
     \item B. an ROP chain to run

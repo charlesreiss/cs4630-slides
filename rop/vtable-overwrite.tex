@@ -59,7 +59,7 @@ void Bar::vulnerable() {
             \draw[Latex-, thick,red] (3, -5) -- ++(0cm, -.5cm) node[below] {rdi value};
         \end{visibleenv}
         \begin{visibleenv}<4->
-            \node[align=left,thick,draw,anchor=north east,fill=white] (gadget) at (-1, -3) {
+            \node[align=left,thick,draw,anchor=north east,fill=white] (gadget) at (-.5, -3) {
                 gadget: \\ \texttt{push \%rdx; jmp *(\%rsi)}
             };
             \draw[-Latex,ultra thick, dashed, red] (0, -2.25) -| (gadget.north);

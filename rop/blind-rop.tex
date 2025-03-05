@@ -1,0 +1,44 @@
+\begin{frame}{blind ROP}
+    \begin{itemize}
+    \item so far: seems like we need executable to do ROP
+    \item \ldots turns out, not really
+    \vspace{.5cm}
+    \item example attack scenario:
+        \begin{itemize}
+        \item stack canaries + ASLR + write XOR execute in use
+        \item server that's automatically restarted on crash
+        \item \ldots and as same randomization every time (fork, what Windows does)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{blind canary leaking}
+    \begin{itemize}
+    \item let's say we have stack overflow:
+        \begin{itemize}
+        \item [buffer we can overwrite][stack canary][return address]
+        \end{itemize}
+    \item if we overwrite 0x43 into first byte of stack canary and it doesn't crash\ldots
+    \item \ldots then first byte of stack canary was 0x43
+    \item if we overwrite 0x43 into first byte + 0x58 in second and it doesn't crash\ldots
+    \item \ldots then first+second byte of stack canary was 0x43 + 0x58
+    \item can use this to read stack canary
+        \begin{itemize}
+        \item approx 128 attempts per byte = 1024 trials for 8-byte stack canary
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{blind return address leaking}
+    \begin{itemize}
+    \item can use same idea to leak return address (byte-by-byte)
+    \item know other interesting addresses are nearby
+    \vspace{.5cm}
+    \item by guessing addresses find:
+        \begin{itemize}
+        \item `stop' gadget --- hang program
+        \item `crash' gadget --- close connection prematurely
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

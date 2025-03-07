@@ -39,19 +39,30 @@ ret
 Suppose we have 64-byte ROP chain \\
 w/o whitespace in it. How to write input? \\
 (Multiple might work) \\
-A. \textit{[160 As]}\textit{[ROP chain]} X \\
-B. \textit{[168 As]}\textit{[ROP chain]} X \\
-C. \textit{[80 As]}\textit{[ROP chain]} X \\
+A. \textit{[80 As]}\textit{[ROP chain]} X \\
+B. \textit{[160 As]}\textit{[ROP chain]} X \\
+C. \textit{[168 As]}\textit{[ROP chain]} X \\
 D. \textit{[ROP chain]}\textit{[36 As]}\textit{[ROP chain addr]} X \\
-E. X \textit{[88 As]}\textit{[ROP chain]} \\
-F. X \textit{[96 As]}\textit{[ROP chain]} \\
-G. \textit{[ROP chain]} \textit{[80 As]}\textit{[ROP chain addr]} \\
+E. \textit{[ROP chain]} \textit{[80 As]}\textit{[ROP chain addr]} \\
+F. X \textit{[88 As]}\textit{[ROP chain]} \\
+G. X \textit{[96 As]}\textit{[ROP chain]} \\
 };
 \end{tikzpicture}
 \end{frame}
 
-\begin{frame}{solution}
+\begin{frame}{solution preview}
+    \begin{itemize}
+    \item want \textit{stack pointer}, not \textit{program counter} to point to ROP chain
+    \item program counter will point to gadgets
+    \vspace{.5cm}
+    \item will align ROP chain so it's top of stack as function returns
+    \item program counter (where returned to) will be in gadgets
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{solution (2)}
 \begin{itemize}
+\item {\scriptsize C. \textit{[168 As] X }\textit{[ROP chain]} X or E. X \textit{[88 As]}\textit{[ROP chain]}
 \item stack layout: 
     \begin{itemize}
     \item [first (80 bytes)][second (80 bytes)][saved RBX][return address]

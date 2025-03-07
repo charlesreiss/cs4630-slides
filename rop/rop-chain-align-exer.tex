@@ -60,21 +60,22 @@ G. X \textit{[96 As]}\textit{[ROP chain]} \\
     \end{itemize}
 \end{frame}
 
-\begin{frame}{solution (2)}
-\begin{itemize}
-\item {\scriptsize C. \textit{[168 As] X }\textit{[ROP chain]} X or E. X \textit{[88 As]}\textit{[ROP chain]}
-\item stack layout: 
+\begin{frame}{solution}
     \begin{itemize}
-    \item [first (80 bytes)][second (80 bytes)][saved RBX][return address]
+    \item {\scriptsize C. \textit{[168 As] X }\textit{[ROP chain]} X or E. X \textit{[88 As]}\textit{[ROP chain]}}
+    \item stack layout: 
+        \begin{itemize}
+        \item ~[first (80 bytes)][second (80 bytes)][saved RBX][return address]
+        \end{itemize}
+    \item \texttt{first} at return address - 168 bytes
+    \item \texttt{second} at return address - 88 bytes
+    \item ROP chain's first 8 bytes = address of first gadget to run
+        \begin{itemize}
+        \item e.g. address of \texttt{pop \%rdi, ret}
+        \end{itemize}
+    \item ROP chain's next bytes = things popped by first gadget
+        \begin{itemize}
+        \item e.g. value for \%rdi, followed by next gadget address
+        \end{itemize}
     \end{itemize}
-\item \texttt{first} at return address - 168 bytes
-\item \texttt{second} at return address - 88 bytes
-\item ROP chain's first 8 bytes = address of first gadget to run
-    \begin{itemize}
-    \item e.g. address of \texttt{pop \%rdi, ret}
-\item ROP chain's next bytes = things popped by first gadget
-    \begin{itemize}
-    \item e.g. value for \%rdi, followed by next gadget address
-    \end{itemize}
-\end{itemize}
 \end{frame}

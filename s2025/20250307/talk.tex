@@ -1,0 +1,64 @@
+\date{}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+\usetikzlibrary{arrows.meta,patterns}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item assembling ROP chains manually
+    \item finding gadgets
+    \item heuristically finding ROP chians
+    \vspace{.5cm}
+    \item replacing non-return addresses
+        \begin{itemize}
+        \item can use gadgets to replace function pointers
+        \item idea 1: change stack pointer, use ROP chian
+        \item idea 2: use chain of jmps/calls
+        \end{itemize}
+    \item `jump-oriented programming'
+    \end{itemize}
+\end{frame}
+
+\section{ROP}
+\subsection{exercise: ROP alignemnt}
+\input{../rop/rop-chain-align-exer}
+
+\subsection{exercise: using function pointer overwrite}
+\input{../rop/use-fptr-overwrite-exer}
+
+\subsection{just get rid of rets?}
+\input{../rop/get-rid-of-ret}
+
+\subsection{other defenses?}
+\input{../rop/other-defense}
+
+\section{blind ROP}
+\begin{frame}{blind ROP}
+    \begin{itemize}
+    \item \url{https://www.scs.stanford.edu/brop/}
+    \end{itemize}
+\end{frame}
+\input{../rop/blind-rop-setup}
+\input{../rop/blind-rop}
+
+\includepdf[pages=-]{bittau-brop-slides}
+
+
+% FIXME: blind ROP?
+%\includepdf
+
+\input{../bounds/talk-inner}
+
+
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\end{document}

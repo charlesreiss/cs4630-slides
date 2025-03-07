@@ -1,0 +1,744 @@
+latexrun -W no-overfull --latex-cmd=lualatex --latex-args=-shell-escape talk-slides.tex
+latex.out/talk-slides.vrb:45: error: Undefined control sequence
+      at \endtikzpicture ...r@layerlist@globally \endscope \let \pgf@baseline =\pgf@s...
+                                                           ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{tikzpicture}
+latex.out/talk-slides.vrb: error: Missing $ inserted
+      at <inserted text>
+    from <to be read again>
+    from \endpgfpicture ...er@layerlist@globally \endgroup \hss \egroup \pgf@restore@...
+                                                           ^
+    from \endtikzpicture ...ist@from@global \endpgfpicture \endgroup
+                                                           ^
+latex.out/talk-slides.vrb: error: Missing } inserted
+      at <inserted text>
+    from <to be read again>
+    from \endpgfpicture ...er@layerlist@globally \endgroup \hss \egroup \pgf@restore@...
+                                                           ^
+    from \endtikzpicture ...ist@from@global \endpgfpicture \endgroup
+                                                           ^
+latex.out/talk-slides.vrb: error: Missing } inserted
+      at <inserted text>
+    from <to be read again>
+    from \endpgfpicture ...bal \pgf@insertlayers \endgroup \pgfsys@discardpath \endgr...
+                                                           ^
+    from \endtikzpicture ...ist@from@global \endpgfpicture \endgroup
+                                                           ^
+latex.out/talk-slides.vrb: error: [tikz] Giving up on this path. Did you forget a semicolon?
+      at \sl@GenericError ...                              \endgroup
+                                                           ^
+    from \GenericError  ...sl@GenericError {#1}{#2}{#3}{#4}\fi \ifcase \sl@Save \or \...
+                                                           ^
+    from \tikz@expand ...path. Did you forget a semicolon?}\let \pgfutil@next =\tikz@...
+                                                           ^
+latex.out/talk-slides.vrb:45: error: Extra }, or forgotten \endgroup
+      at \endpgfpicture ...dpicture \endgroup \hss \egroup \pgfsys@typesetpicturebox ...
+                                                           ^
+    from \endtikzpicture ...ist@from@global \endpgfpicture \endgroup
+                                                           ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{tikzpicture}
+latex.out/talk-slides.vrb: warning: extra `}' in log; file names may be wrong
+latex.out/talk-slides.vrb: warning: extra `}' in log; file names may be wrong
+latex.out/talk-slides.vrb: warning: extra `}' in log; file names may be wrong
+../rop/rop-chain-align-exer.tex: error: \begin{tikzpicture} on input line 2 ended by \end{beamer@framepauses}
+      at \sl@GenericError ...                              \endgroup
+                                                           ^
+    from \GenericError  ...sl@GenericError {#1}{#2}{#3}{#4}\fi \ifcase \sl@Save \or \...
+                                                           ^
+    from \@checkend ...ed@a \@currenvir \else \@badend {#1}\fi
+                                                           ^
+../rop/rop-chain-align-exer.tex: error: Missing } inserted
+      at <inserted text>
+    from <to be read again>
+    from \end  ...dafter \endgroup \if@endpe \@doendpe \fi \UseHook {env/#1/after}\if...
+                                                           ^
+    from \endbeamer@frameslide ...\end {beamer@framepauses}\egroup \ifx \beamer@frame...
+                                                           ^
+../rop/rop-chain-align-exer.tex: error: Extra }, or forgotten \endgroup
+      at \endbeamer@frameslide ...amer@framepauses}\egroup \ifx \beamer@frametitle \@...
+                                                           ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \iterate ...e {\beamer@whichframes }\beamer@donow \ifbeamer@twoscreenstext \...
+                                                           ^
+    from \loop ...elax \expandafter \iterate \fi }\iterate \let \iterate \relax
+                                                           ^
+../rop/rop-chain-align-exer.tex: warning: extra `}' in log; file names may be wrong
+../rop/rop-chain-align-exer.tex: warning: extra `}' in log; file names may be wrong
+../rop/rop-chain-align-exer.tex: warning: extra `}' in log; file names may be wrong
+../rop/rop-chain-align-exer.tex: error: \begin{tikzpicture} on input line 2 ended by \end{beamer@frameslide}
+      at \sl@GenericError ...                              \endgroup
+                                                           ^
+    from \GenericError  ...sl@GenericError {#1}{#2}{#3}{#4}\fi \ifcase \sl@Save \or \...
+                                                           ^
+    from \@checkend ...ed@a \@currenvir \else \@badend {#1}\fi
+                                                           ^
+../rop/rop-chain-align-exer.tex: error: Improper \prevdepth
+      at \newpage ...everypar {}\fi \par \ifdim \prevdepth >\z@ \vskip -\ifdim \prevd...
+                                                           ^
+    from \clearpage ...opskip \hbox {}\fi \fi \fi \newpage \write \m@ne {}\vbox {}\pe...
+                                                           ^
+    from <argument> ...startpage }{\beamer@frameendpage }}}\clearpage
+    from \@secondoftwo #1#2->#2
+../rop/rop-chain-align-exer.tex: error: Missing \endgroup inserted
+      at <inserted text>
+    from <to be read again>
+    from \newpage ...xdepth \else \prevdepth \fi \fi \vfil \penalty -\@M
+                                                           ^
+    from \clearpage ...opskip \hbox {}\fi \fi \fi \newpage \write \m@ne {}\vbox {}\pe...
+                                                           ^
+../rop/rop-chain-align-exer.tex: error: Missing } inserted
+      at <inserted text>
+    from <to be read again>
+    from \newpage ...xdepth \else \prevdepth \fi \fi \vfil \penalty -\@M
+                                                           ^
+    from \clearpage ...opskip \hbox {}\fi \fi \fi \newpage \write \m@ne {}\vbox {}\pe...
+                                                           ^
+../rop/use-fptr-overwrite-exer.tex:25: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../rop/use-fptr-overwrite-exer.tex: warning: extra `}' in log; file names may be wrong
+../rop/use-fptr-overwrite-exer.tex: warning: extra `}' in log; file names may be wrong
+../rop/use-fptr-overwrite-exer.tex: warning: extra `}' in log; file names may be wrong
+latex.out/comment.cut:22: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+latex.out/comment.cut: warning: extra `}' in log; file names may be wrong
+latex.out/comment.cut: warning: extra `}' in log; file names may be wrong
+latex.out/comment.cut: warning: extra `}' in log; file names may be wrong
+../rop/use-fptr-overwrite-exer.tex:77: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../rop/use-fptr-overwrite-exer.tex: warning: extra `}' in log; file names may be wrong
+../rop/use-fptr-overwrite-exer.tex: warning: extra `}' in log; file names may be wrong
+../rop/use-fptr-overwrite-exer.tex: warning: extra `}' in log; file names may be wrong
+latex.out/comment.cut:22: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+latex.out/comment.cut: warning: extra `}' in log; file names may be wrong
+latex.out/comment.cut: warning: extra `}' in log; file names may be wrong
+latex.out/comment.cut: warning: extra `}' in log; file names may be wrong
+latex.out/comment.cut:45: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+latex.out/comment.cut: warning: extra `}' in log; file names may be wrong
+latex.out/comment.cut: warning: extra `}' in log; file names may be wrong
+latex.out/comment.cut: warning: extra `}' in log; file names may be wrong
+../rop/get-rid-of-ret.tex:20: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../rop/get-rid-of-ret.tex: warning: extra `}' in log; file names may be wrong
+../rop/get-rid-of-ret.tex: warning: extra `}' in log; file names may be wrong
+../rop/get-rid-of-ret.tex: warning: extra `}' in log; file names may be wrong
+../rop/get-rid-of-ret.tex:29: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../rop/get-rid-of-ret.tex: warning: extra `}' in log; file names may be wrong
+../rop/get-rid-of-ret.tex: warning: extra `}' in log; file names may be wrong
+../rop/get-rid-of-ret.tex: warning: extra `}' in log; file names may be wrong
+../rop/get-rid-of-ret.tex:33: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../rop/get-rid-of-ret.tex: warning: extra `}' in log; file names may be wrong
+../rop/get-rid-of-ret.tex: warning: extra `}' in log; file names may be wrong
+../rop/get-rid-of-ret.tex: warning: extra `}' in log; file names may be wrong
+../rop/other-defense.tex:16: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../rop/other-defense.tex: warning: extra `}' in log; file names may be wrong
+../rop/other-defense.tex: warning: extra `}' in log; file names may be wrong
+../rop/other-defense.tex: warning: extra `}' in log; file names may be wrong
+talk.tex:46: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+talk.tex: warning: extra `}' in log; file names may be wrong
+talk.tex: warning: extra `}' in log; file names may be wrong
+talk.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop-setup.tex:11: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../rop/blind-rop-setup.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop-setup.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop-setup.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop-setup.tex:28: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../rop/blind-rop-setup.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop-setup.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop-setup.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop-setup.tex:71: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../rop/blind-rop-setup.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop-setup.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop-setup.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop-setup.tex:116: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../rop/blind-rop-setup.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop-setup.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop-setup.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop-setup.tex:130: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../rop/blind-rop-setup.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop-setup.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop-setup.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop.tex:9: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../rop/blind-rop.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop.tex:30: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../rop/blind-rop.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop.tex:46: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../rop/blind-rop.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop.tex: warning: extra `}' in log; file names may be wrong
+../rop/blind-rop.tex: warning: extra `}' in log; file names may be wrong
+../bounds/intro.tex:10: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/intro.tex: warning: extra `}' in log; file names may be wrong
+../bounds/intro.tex: warning: extra `}' in log; file names may be wrong
+../bounds/intro.tex: warning: extra `}' in log; file names may be wrong
+../bounds/compiler-added.tex:12: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/compiler-added.tex: warning: extra `}' in log; file names may be wrong
+../bounds/compiler-added.tex: warning: extra `}' in log; file names may be wrong
+../bounds/compiler-added.tex: warning: extra `}' in log; file names may be wrong
+../bounds/compiler-added.tex:32: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/compiler-added.tex: warning: extra `}' in log; file names may be wrong
+../bounds/compiler-added.tex: warning: extra `}' in log; file names may be wrong
+../bounds/compiler-added.tex: warning: extra `}' in log; file names may be wrong
+../bounds/compiler-added.tex:48: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/compiler-added.tex: warning: extra `}' in log; file names may be wrong
+../bounds/compiler-added.tex: warning: extra `}' in log; file names may be wrong
+../bounds/compiler-added.tex: warning: extra `}' in log; file names may be wrong
+../bounds/compiler-added.tex:64: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/compiler-added.tex: warning: extra `}' in log; file names may be wrong
+../bounds/compiler-added.tex: warning: extra `}' in log; file names may be wrong
+../bounds/compiler-added.tex: warning: extra `}' in log; file names may be wrong
+../bounds/compiler-added.tex:84: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/compiler-added.tex: warning: extra `}' in log; file names may be wrong
+../bounds/compiler-added.tex: warning: extra `}' in log; file names may be wrong
+../bounds/compiler-added.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lib-functions.tex:19: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/bounds-lib-functions.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lib-functions.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lib-functions.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lib-functions.tex:33: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/bounds-lib-functions.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lib-functions.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lib-functions.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lib-functions.tex:46: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/bounds-lib-functions.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lib-functions.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lib-functions.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lib-functions.tex:61: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/bounds-lib-functions.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lib-functions.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lib-functions.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lib-functions.tex:77: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/bounds-lib-functions.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lib-functions.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lib-functions.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lib-functions.tex:91: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/bounds-lib-functions.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lib-functions.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lib-functions.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lang-support-intro.tex:7: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/bounds-lang-support-intro.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lang-support-intro.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bounds-lang-support-intro.tex: warning: extra `}' in log; file names may be wrong
+../bounds/simple-c.tex:7: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/simple-c.tex: warning: extra `}' in log; file names may be wrong
+../bounds/simple-c.tex: warning: extra `}' in log; file names may be wrong
+../bounds/simple-c.tex: warning: extra `}' in log; file names may be wrong
+../bounds/simple-c.tex:30: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/simple-c.tex: warning: extra `}' in log; file names may be wrong
+../bounds/simple-c.tex: warning: extra `}' in log; file names may be wrong
+../bounds/simple-c.tex: warning: extra `}' in log; file names may be wrong
+../bounds/harder.tex:21: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/harder.tex: warning: extra `}' in log; file names may be wrong
+../bounds/harder.tex: warning: extra `}' in log; file names may be wrong
+../bounds/harder.tex: warning: extra `}' in log; file names may be wrong
+../bounds/fat-pointers.tex:31: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/fat-pointers.tex: warning: extra `}' in log; file names may be wrong
+../bounds/fat-pointers.tex: warning: extra `}' in log; file names may be wrong
+../bounds/fat-pointers.tex: warning: extra `}' in log; file names may be wrong
+../bounds/fat-pointers-strcpy.tex:22: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/fat-pointers-strcpy.tex: warning: extra `}' in log; file names may be wrong
+../bounds/fat-pointers-strcpy.tex: warning: extra `}' in log; file names may be wrong
+../bounds/fat-pointers-strcpy.tex: warning: extra `}' in log; file names may be wrong
+../bounds/fat-pointers-overheadp.tex:7: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/fat-pointers-overheadp.tex: warning: extra `}' in log; file names may be wrong
+../bounds/fat-pointers-overheadp.tex: warning: extra `}' in log; file names may be wrong
+../bounds/fat-pointers-overheadp.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bad-things-c-prog.tex:14: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/bad-things-c-prog.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bad-things-c-prog.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bad-things-c-prog.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bad-things-c-prog.tex:28: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/bad-things-c-prog.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bad-things-c-prog.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bad-things-c-prog.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bad-things-c-prog.tex:48: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/bad-things-c-prog.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bad-things-c-prog.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bad-things-c-prog.tex: warning: extra `}' in log; file names may be wrong
+../bounds/fat-pointer-ccured.tex:18: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/fat-pointer-ccured.tex: warning: extra `}' in log; file names may be wrong
+../bounds/fat-pointer-ccured.tex: warning: extra `}' in log; file names may be wrong
+../bounds/fat-pointer-ccured.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-intro.tex:4: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/baggy-bounds-intro.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-intro.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-intro.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-intro.tex:18: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/baggy-bounds-intro.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-intro.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-intro.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-trick.tex:23: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/baggy-bounds-trick.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-trick.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-trick.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-table.tex:93: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/baggy-bounds-table.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-table.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-table.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-table.tex:127: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/baggy-bounds-table.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-table.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-table.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-table.tex:144: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/baggy-bounds-table.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-table.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-table.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-checks.tex:4: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/baggy-bounds-checks.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-checks.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-checks.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-checks.tex:25: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/baggy-bounds-checks.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-checks.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-checks.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-checks.tex:35: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/baggy-bounds-checks.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-checks.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-checks.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-overhead-exer.tex:20: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/baggy-bounds-overhead-exer.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-overhead-exer.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-overhead-exer.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-overhead-exer.tex:22: error: [beamer] No frame has been designated to resume under the name "bbOverheadExer1"
+      at \sl@GenericError ...                              \endgroup
+                                                           ^
+    from \GenericError  ...sl@GenericError {#1}{#2}{#3}{#4}\fi \ifcase \sl@Save \or \...
+                                                           ^
+    from ...heldback}{}{\againframe<2>{bbOverheadExer1}}
+../bounds/baggy-bounds-overhead-exer.tex:44: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/baggy-bounds-overhead-exer.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-overhead-exer.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-overhead-exer.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-tagging.tex:12: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/baggy-bounds-tagging.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-tagging.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-tagging.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-perf.tex:8: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/baggy-bounds-perf.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-perf.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-perf.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-perf.tex:14: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/baggy-bounds-perf.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-perf.tex: warning: extra `}' in log; file names may be wrong
+../bounds/baggy-bounds-perf.tex: warning: extra `}' in log; file names may be wrong
+../bounds/within-object.tex:14: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/within-object.tex: warning: extra `}' in log; file names may be wrong
+../bounds/within-object.tex: warning: extra `}' in log; file names may be wrong
+../bounds/within-object.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bad-things-fortran-index.tex:15: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/bad-things-fortran-index.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bad-things-fortran-index.tex: warning: extra `}' in log; file names may be wrong
+../bounds/bad-things-fortran-index.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-v-baggy.tex:18: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/asan-v-baggy.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-v-baggy.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-v-baggy.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-check.tex:23: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/asan-check.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-check.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-check.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-stack-layout.tex:47: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/asan-stack-layout.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-stack-layout.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-stack-layout.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-v-baggy.tex:18: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/asan-v-baggy.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-v-baggy.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-v-baggy.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-check.tex:23: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/asan-check.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-check.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-check.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-stack-layout.tex:47: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/asan-stack-layout.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-stack-layout.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-stack-layout.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-within-object.tex:52: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/asan-within-object.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-within-object.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-within-object.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-procon.tex:17: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/asan-procon.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-procon.tex: warning: extra `}' in log; file names may be wrong
+../bounds/asan-procon.tex: warning: extra `}' in log; file names may be wrong
+../bounds/memcheck.tex:11: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/memcheck.tex: warning: extra `}' in log; file names may be wrong
+../bounds/memcheck.tex: warning: extra `}' in log; file names may be wrong
+../bounds/memcheck.tex: warning: extra `}' in log; file names may be wrong
+../bounds/which-prevents.tex:18: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+../bounds/which-prevents.tex: warning: extra `}' in log; file names may be wrong
+../bounds/which-prevents.tex: warning: extra `}' in log; file names may be wrong
+../bounds/which-prevents.tex: warning: extra `}' in log; file names may be wrong
+talk.tex:62: error: Extra }, or forgotten \endgroup
+      at \endframe ->\egroup \begingroup \def \@currenvir {frame}
+                             ^
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{frame}
+talk.tex: warning: extra `}' in log; file names may be wrong
+talk.tex: warning: extra `}' in log; file names may be wrong
+talk.tex: warning: extra `}' in log; file names may be wrong
+talk.tex: error: \begin{frame} on input line 61 ended by \end{document}
+      at \sl@GenericError ...                              \endgroup
+                                                           ^
+    from \GenericError  ...sl@GenericError {#1}{#2}{#3}{#4}\fi \ifcase \sl@Save \or \...
+                                                           ^
+    from \@checkend ...ed@a \@currenvir \else \@badend {#1}\fi
+                                                           ^
+talk.tex:64: error: You can't use `\end' in internal vertical mode
+      at \enddocument ...cument/end}\deadcycles \z@ \@@end
+    from \end  ...ook {env/#1/end}}\csname end#1\endcsname \@checkend {#1}\expandafte...
+                                                           ^
+    from \end{document}
+talk.tex: warning: extra `}' in log; file names may be wrong
+talk.tex: error: \begin{frame} on input line 61 ended by \end{document}
+      at \sl@GenericError ...                              \endgroup
+                                                           ^
+    from \GenericError  ...sl@GenericError {#1}{#2}{#3}{#4}\fi \ifcase \sl@Save \or \...
+                                                           ^
+    from \@checkend ...ed@a \@currenvir \else \@badend {#1}\fi
+                                                           ^
+talk-slides.tex: error: Emergency stop: job aborted, no legal \end found
+      at <*> talk-slides.tex
+talk-slides.tex: Fatal error (no output file produced)
+talk-slides.tex: 7 overfull warnings not shown (use -Wall to show them)
+There were errors; output not updated
+make: *** [../Makefile.inc:6: talk-slides.pdf] Error 1

@@ -1,0 +1,100 @@
+\usetikzlibrary{calc}
+
+\section{adding bounds checking}
+\input{../bounds/intro}
+
+\subsection{compiler-added?}
+\input{../bounds/compiler-added}
+\subsection{and library functions}
+        % FIXME: exercise: what should call have been
+            % needs answers
+\input{../bounds/bounds-lib-functions}
+
+\subsection{language support?}
+
+\input{../bounds/bounds-lang-support-intro}
+
+\subsection{simple case for bounds checking in C}
+\input{../bounds/simple-c}
+
+\subsection{the problematic case}
+\input{../bounds/harder}
+
+\subsection{fat pointer idea}
+% FIXME: smoother transition
+    % FIXME: exercise about problematic cases
+\input{../bounds/fat-pointers}
+
+\subsubsection{strcpy example}
+\input{../bounds/fat-pointers-strcpy}
+
+\subsubsection{overhead?}
+\input{../bounds/fat-pointers-overheadp}
+
+\subsection{unfortunate things C programmers do}
+\input{../bounds/bad-things-c-prog}
+
+\subsection{fat pointers in reality?}
+\input{../bounds/fat-pointer-ccured}
+
+\section{baggy bounds checking}
+\input{../bounds/baggy-bounds-intro}
+
+\subsection{trick for good performance}
+\input{../bounds/baggy-bounds-trick}
+
+\subsection{the lookup table}
+\input{../bounds/baggy-bounds-table}
+
+\subsection{checks using table}
+\input{../bounds/baggy-bounds-checks}
+
+\subsection{exercise: overhead estimating?}
+\input{../bounds/baggy-bounds-overhead-exer}
+
+\subsection{alternative: pointer tagging}
+\input{../bounds/baggy-bounds-tagging}
+
+\subsection{performance?}
+\input{../bounds/baggy-bounds-perf}
+
+\subsection{problem: pointers within objects}
+% FIXME
+\input{../bounds/within-object}
+
+\subsection{corner cases}
+\input{../bounds/bad-things-fortran-index}
+
+\section{AddressSanitizer}
+\input{../bounds/asan-v-baggy}
+
+\subsection{ASan's added check}
+\input{../bounds/asan-check}
+
+\subsection{stack layout}
+\input{../bounds/asan-stack-layout}
+
+
+
+\section{AddressSanitizer}
+\input{../bounds/asan-v-baggy}
+
+\subsection{ASan's added check}
+\input{../bounds/asan-check}
+
+\subsection{stack layout}
+\input{../bounds/asan-stack-layout}
+
+\subsection{can't change object layout?}
+\input{../bounds/asan-within-object}
+
+\subsection{pro/con}
+\input{../bounds/asan-procon}
+
+\section{valgrind memcheck, briefly}
+\input{../bounds/memcheck}
+
+\section{exericse: which prevents}
+\input{../bounds/which-prevents}
+% FIXME: exercise
+    % which scheme will prevent XXX

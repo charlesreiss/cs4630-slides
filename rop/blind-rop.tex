@@ -1,44 +1,46 @@
-\begin{frame}{blind ROP}
+\begin{frame}{utility gadgets}
     \begin{itemize}
-    \item so far: seems like we need executable to do ROP
-    \item \ldots turns out, not really
+    \item once we find return address through leak\ldots
+    \item look for nearby address with particular behavior:
     \vspace{.5cm}
-    \item example attack scenario:
-        \begin{itemize}
-        \item stack canaries + ASLR + write XOR execute in use
-        \item server that's automatically restarted on crash
-        \item \ldots and as same randomization every time (fork, what Windows does)
-        \end{itemize}
+    \item `stop' gadget --- hang program
+    \item `crash' gadget --- close connection prematurely
     \end{itemize}
 \end{frame}
 
-\begin{frame}{blind canary leaking}
+\begin{frame}{looking for pops}
     \begin{itemize}
-    \item let's say we have stack overflow:
+    \item common form for gadget is \texttt{pop XXX; ret}
+    \item how can we tell if we might have that?
+    \item write to stack:   
         \begin{itemize}
-        \item [buffer we can overwrite][stack canary][return address]
+        \item gadget being tested address, followed by
+        \item stop gadget address, followed by
+        \item crash gadget address
         \end{itemize}
-    \item if we overwrite 0x43 into first byte of stack canary and it doesn't crash\ldots
-    \item \ldots then first byte of stack canary was 0x43
-    \item if we overwrite 0x43 into first byte + 0x58 in second and it doesn't crash\ldots
-    \item \ldots then first+second byte of stack canary was 0x43 + 0x58
-    \item can use this to read stack canary
+    \item \texttt{pop XXX; ret} gadget will crash
         \begin{itemize}
-        \item approx 128 attempts per byte = 1024 trials for 8-byte stack canary
+        \item XXX becomes stop address; then ret to crash
+        \end{itemize}
+    \item \texttt{...; ret} gadget will hang
+        \begin{itemize}
+        \item ret to stop
         \end{itemize}
     \end{itemize}
 \end{frame}
 
-\begin{frame}{blind return address leaking}
+\begin{frame}{blind ROP outline}
     \begin{itemize}
-    \item can use same idea to leak return address (byte-by-byte)
-    \item know other interesting addresses are nearby
-    \vspace{.5cm}
-    \item by guessing addresses find:
+    \item look for gadget that pops a lot from the stack
         \begin{itemize}
-        \item `stop' gadget --- hang program
-        \item `crash' gadget --- close connection prematurely
+        \item likely allows setting lots of registers
         \end{itemize}
+    \item look for strcmp() function
+        \begin{itemize}
+        \item should crash/not crash based on whether two registers are valid pointers
+        \item use to set RDX (consequence of Linux libc implementation)
+        \end{itemize}
+    \item look for write() function 
+    \item use write() function to output program machine code to network
     \end{itemize}
 \end{frame}
-

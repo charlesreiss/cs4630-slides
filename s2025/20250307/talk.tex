@@ -11,13 +11,13 @@
 
 \begin{frame}{last time}
     \begin{itemize}
+    \item tracing return-oriented programming chains
     \item assembling ROP chains manually
     \item finding gadgets
     \item heuristically finding ROP chians
-    \vspace{.5cm}
     \item replacing non-return addresses
         \begin{itemize}
-        \item can use gadgets to replace function pointers
+        \item can use `gadgets' to replace function pointers, run other gadget
         \item idea 1: change stack pointer, use ROP chian
         \item idea 2: use chain of jmps/calls
         \end{itemize}

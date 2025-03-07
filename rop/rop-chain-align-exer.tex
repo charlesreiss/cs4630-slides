@@ -39,14 +39,31 @@ ret
 Suppose we have 64-byte ROP chain \\
 w/o whitespace in it. How to write input? \\
 (Multiple might work) \\
-A. \textit{[100 As]}\textit{[ROP chain]} X \\
-B. \textit{[44 As]}\textit{[ROP chain]} X \\
-C. \textit{[36 As]}\textit{[ROP chain]} X \\
+A. \textit{[160 As]}\textit{[ROP chain]} X \\
+B. \textit{[168 As]}\textit{[ROP chain]} X \\
+C. \textit{[80 As]}\textit{[ROP chain]} X \\
 D. \textit{[ROP chain]}\textit{[36 As]}\textit{[ROP chain addr]} X \\
-E. X \textit{[42 As]}\textit{[ROP chain]} \\
-F. X \textit{[50 As]}\textit{[ROP chain]} \\
-G. \textit{[ROP chain]} \textit{[50 As]}\textit{[ROP chain addr]} \\
+E. X \textit{[88 As]}\textit{[ROP chain]} \\
+F. X \textit{[96 As]}\textit{[ROP chain]} \\
+G. \textit{[ROP chain]} \textit{[80 As]}\textit{[ROP chain addr]} \\
 };
 \end{tikzpicture}
 \end{frame}
 
+\begin{frame}{solution}
+\begin{itemize}
+\item stack layout: 
+    \begin{itemize}
+    \item [first (80 bytes)][second (80 bytes)][saved RBX][return address]
+    \end{itemize}
+\item \texttt{first} at return address - 168 bytes
+\item \texttt{second} at return address - 88 bytes
+\item ROP chain's first 8 bytes = address of first gadget to run
+    \begin{itemize}
+    \item e.g. address of \texttt{pop \%rdi, ret}
+\item ROP chain's next bytes = things popped by first gadget
+    \begin{itemize}
+    \item e.g. value for \%rdi, followed by next gadget address
+    \end{itemize}
+\end{itemize}
+\end{frame}

@@ -1,0 +1,19 @@
+\begin{frame}{consistency?}
+    \begin{itemize}
+    \item how to predict what gets reused?
+    \vspace{.5cm}
+    \item use debugger + print out all the addreses
+        \begin{itemize}
+        \item look for duplicates
+        \item probably fixed number of allocations before duplicate
+        \end{itemize}
+    \item allocators like reusing `perfectly size' space
+        \begin{itemize}
+        \item free something + immediately allocate same size
+        \end{itemize}
+    \item trigger use-after-free bug lots of times
+        \begin{itemize}
+        \item one of them will match up
+        \end{itemize}
+    \end{itemize}
+\end{frame}

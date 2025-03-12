@@ -1,0 +1,56 @@
+\date{}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+
+\usetikzlibrary{arrows.meta,patterns}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item finding gadgets in programs
+        \begin{itemize}
+        \item look for RET, JMP, etc
+        \item go back some bytes, try disassembling
+        \end{itemize}
+    \item heuristics for generating automatic chains
+        \begin{itemize}
+        \item look for specific gadgets --- likely in big program
+        \item canned technique for putting together
+        \end{itemize}
+    \item starting chains with non-returns
+        \begin{itemize}
+        \item one idea: set \%rsp, keep going
+        \item another: chain jmp+calls
+        \end{itemize}
+    \item jump-oriented programming
+        \begin{itemize}
+        \item dispatcher gadgets
+        \end{itemize}
+    \item blind ROP
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{post-mortem on some assignments}
+\end{frame}
+
+\begin{frame}{scheduling notes}
+\end{frame}
+
+\input{../overflow-heap/talk-inner} 
+
+\input{../uaf/talk-inner}
+    % FIXME: add slide on using debugger, finding memory reuse pattern
+    % FIXME: add slide on "heap spary" type ideas
+    % FIXME: jemalloc case study
+
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\end{document}

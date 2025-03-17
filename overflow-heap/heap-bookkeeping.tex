@@ -54,10 +54,13 @@
         \end{itemize}
     \item figure out how big allocation is when free() is called
     \vspace{.5cm}
-    \item common strategy: keep this information next to objects
+    \item two common strategies for tracking metadata:
         \begin{itemize}
-        \item avoids needing lookup table/etc. to find it
-        \item avoids needing separate allocation for metadata space
+        \item \myemph{before each allocation} (example: GNU libc malloc [Linux default])
+        \item before `arenas' of allocations (example: jemalloc [Firefox; *BSD default?])
+            \begin{itemize}
+            \item lookup by rounding memory address
+            \end{itemize}
         \end{itemize}
     \end{itemize}
 \end{frame}

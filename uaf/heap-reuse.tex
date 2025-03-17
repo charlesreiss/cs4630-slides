@@ -6,7 +6,35 @@
         \item free() = add to head of list
         \item malloc() = scan from head of list
         \end{itemize}
-    \item makes it very easy to predict what will reuse allocation
-    \item if different --- less easy, but still likely
+    \item if done, makes it easy to predict what will reuse allocation
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{complicating easy reuse}
+    \begin{itemize}
+    \item usually can't precisely control what is allocated/free'd
+    \item some allocators mostly use different ordering than last in, first-out
+        \begin{itemize}
+        \item example: lowest to highest address
+        \end{itemize}
+    \item often different lists for different size ranges/threads
+    \item freeing big object may make space for multiple future allocations
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{aside: heap feng shui/grooming}
+    \begin{itemize}
+    \item \url{http://www.phreedom.org/research/heap-feng-shui/heap-feng-shui.html}
+    \item one idea:
+    \item allocate lots of objects to fill up likely holes
+        \begin{itemize}
+        \item choose sizes/etc. based on allocator
+        \item allocators usually have separate `regions' for different sizes
+        \end{itemize}
+    \item allocate three objects of appropriate size
+        \begin{itemize}
+        \item probably three consecutive allocations
+        \end{itemize}
+    \item free `middle' object + expect it to be reused
     \end{itemize}
 \end{frame}

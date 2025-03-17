@@ -82,14 +82,14 @@ struct AllocInfo {
 \begin{scope}[overlay]
     \draw[stackBox,fill=black!20] (0, 1) rectangle (3, -7);
 
-    \draw[onStack] (0, 1) rectangle (3, 0) node[midway,font=\small,align=center] {free space \\ (deleted obj.)};
+    \draw[onStack] (0, 1) rectangle (3, 0) node[midway,font=\small,align=center] {free space};
     \draw[onStack,fill=white] (0, -0.0) rectangle (3, -0.5) node[midway,font=\small] (freeANext) {next};
     \draw[onStack,fill=white] (0, -0.5) rectangle (3, -1.0) node[midway,font=\small] (freeAPrev) {prev};
     \draw[onStack,fill=white] (0, -1.0) rectangle (3, -1.5) node[midway,font=\small] (freeASize) {size/free};
 
     \draw[very thick, red, rounded corners] (0, 1) rectangle (3, -1.5);
 
-    \draw[onStack,fill=blue!20] (0, -1.5) rectangle (3, -3.0) node[midway,font=\small,align=center] (freeBAlloc) {new'd object};
+    \draw[onStack,fill=blue!20] (0, -1.5) rectangle (3, -3.0) node[midway,font=\small,align=center] (freeBAlloc) {malloc'd object};
     \draw[onStack,fill=white] (0, -3.0) rectangle (3, -3.5) node[midway,font=\small] (freeBSize) {size/free};
     
     \draw[very thick, red, rounded corners] (0, -1.5) rectangle (3, -3.5);
@@ -129,15 +129,16 @@ struct AllocInfo {
 }
 \begin{lstlisting}
 int free(void *object) {
-    ...
-    block_after = object + object_size;
-    if (block_after->free) {
-        /* unlink from list, about to merge with previous block */
-        new_block->size += block_after->size;
-        ~2~block_after->prev->next = block_after->next;~end~
-        block_after->next->prev = block_after->prev;
-    }
-    ...
+  ...
+  block_after = object + object_size;
+  if (block_after->free) {
+    /* unlink from list,
+       prepare to merge with previous block */
+    new_block->size += block_after->size;
+    ~2~block_after->prev->next = block_after->next;~end~
+    block_after->next->prev = block_after->prev;
+  }
+  ...
 }
 \end{lstlisting}
 \begin{itemize}

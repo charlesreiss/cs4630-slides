@@ -35,10 +35,81 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{post-mortem on some assignments}
+\begin{frame}{review: blind ROP}
+    \begin{itemize}
+    \item key idea: `stack reading'
+        \begin{itemize}
+        \item guess what's on stack in overflow
+        \item if match: no crash; otherwise crash
+        \item keep retrying because server rebooted
+        \end{itemize}
+    \item guess + observe to find useful gadgets
+        \begin{itemize}
+        \item know we can find: `crash' and `hang' gadgets
+        \item whether `hang' gadget runs indicates what earlier parts of chain pops
+        \item know we can find: function epilogue that pops registers
+        \item \ldots in consistent order (because compiler is consistent)
+        \item know we can find: stubs for library funcions
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
-\begin{frame}{scheduling notes}
+\begin{frame}{post-mortem on some assignments}
+    \begin{itemize}
+    \item OVER
+        \begin{itemize}
+        \item surprised by submissions not overflowing buffer (too little output)
+        \item some students trying to use ROP chain (not needed/surprising)
+        \item apparently WSL (Windows Subsystem for Linux) can ignore executable stack setting? (we test on system like portal)
+        \end{itemize}
+    \item 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{scheduling notes (1)}
+    \begin{itemize}
+    \item upcoming assignments:
+    \space{.5cm}
+    \item ROP --- this week
+    \item use-after-free --- next week
+        \begin{itemize}
+        \item this week lecture topic: on the heap
+        \end{itemize}
+    \item (tentative) RUST --- after that
+        \begin{itemize}
+        \item adapt some use-after-free'ing code in `memory safe' programming language
+        \item new assignment, need to update lecture material
+        \end{itemize}
+    \item (tentative) FUZZ --- using whitebox fuzz-testing tool
+    \item (planned) SANDBOX 
+        \begin{itemize}
+        \item use seccomp (Linux system call sandboxing tool) to `secure' insecure library
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{scheduling notes (2)}
+    \begin{itemize}
+    \item immediate topic: the heap
+        \begin{itemize}
+        \item so far: relying on predictable stack+global vars
+        \item ``randomness'' of the malloc/etc. seems hard to deal with?
+        \item topic 1: what can buffer overflows on the heap do
+        \item topic 2: taking advantage of use-after-free bugs
+        \end{itemize}
+    \item next topics (unsure re: order)
+        \begin{itemize}
+        \item ``memory-safe'' non-garbage-collected programming languages (example: Rust)
+        \item finding memory safety bugs: grey/whitebox fuzz testing, symbolic execution
+        \item `fast' bounds-checking support
+        \item sandboxing + privilege separation (running dangerous code where it can't do harm)
+        \item (if time) web security (same-origin; CSRF; XSS)
+        \end{itemize}
+    \item topics I'm tentatively skipping:
+        \begin{itemize}
+        \item format string exploits
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
 \input{../overflow-heap/talk-inner} 

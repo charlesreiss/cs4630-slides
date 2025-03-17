@@ -9,10 +9,56 @@
     hiLine/.style={red!90!black},
 }
 
-\begin{frame}{diversion: implementing malloc/new}
+
+\begin{frame}{Linux memory allocation calls}
     \begin{itemize}
-    \item many ways to implement malloc/new
-    \item we will talk about one common technique
+    \item \texttt{brk()}
+        \begin{itemize}
+        \item set `break' at end of heap region
+        \item one big memory region for dynamic memory
+        \item used to be only way to allocate memory
+        \item minimum size of changes = 4KB (x86-64)
+        \item want larger changes for speed
+        \end{itemize}
+    \item \texttt{mmap()}
+        \begin{itemize}
+        \item allocate new memory region
+        \item more complex OS bookkeeping than brk()
+            \begin{itemize}
+            \item adding to list of memory regions, not changing a size
+            \end{itemize}
+        \item minimum size = 4KB
+        \item want much larger allocations for speed
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{malloc()/free()/etc. as memory partitioners}
+    \begin{itemize}
+    \item for ``small'' objects (less than kilobytes)
+    \item malloc() allocates \textit{big chunks of memory}
+    \item then subdivides them on the fly
+    \vspace{.5cm}
+    \item different strategies to do this
+    \item all need to track \textit{metadata} about allocated objects!
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{malloc() metadata?}
+    \begin{itemize}
+    \item need to:
+    \vspace{.5cm}
+    \item find unused chunks of memory
+        \begin{itemize}
+        \item even after A=malloc(), B=malloc(), C=malloc(), free(B)
+        \end{itemize}
+    \item figure out how big allocation is when free() is called
+    \vspace{.5cm}
+    \item common strategy: keep this information next to objects
+        \begin{itemize}
+        \item avoids needing lookup table/etc. to find it
+        \item avoids needing separate allocation for metadata space
+        \end{itemize}
     \end{itemize}
 \end{frame}
 

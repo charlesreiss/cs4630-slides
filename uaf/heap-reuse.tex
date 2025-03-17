@@ -1,0 +1,12 @@
+\begin{frame}{easy heap reuse}
+    \begin{itemize}
+    \item strategy of keeping linked list of free items?
+    \item simplest way to write code:
+        \begin{itemize}
+        \item free() = add to head of list
+        \item malloc() = scan from head of list
+        \end{itemize}
+    \item makes it very easy to predict what will reuse allocation
+    \item if different --- less easy, but still likely
+    \end{itemize}
+\end{frame}

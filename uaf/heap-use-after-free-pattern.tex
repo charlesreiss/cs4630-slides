@@ -12,3 +12,64 @@
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile,label=uafTypeConfPat]{use-after-free type confusion}
+    \begin{itemize}
+    \item \myemph{pointer to struct A used as struct B}
+    \item some applications:
+    \item \myemph<2>{information leak}
+        \begin{itemize}
+        \item pointer in A overlaps with integer/string/etc. in B
+        \item make program set pointer in A, then print value from B
+        \end{itemize}
+    \item arbitrary read/write
+        \begin{itemize}
+        \item pointer in A overlaps with integer/string/etc. in B
+        \item modify value in B
+        \item trigger program to read/write in A
+        \end{itemize}
+    \item code execution
+        \begin{itemize}
+        \item VTable pointer in A overlaps integer/sting/etc. in B
+        \item modify value in B
+        \item trigger program to use VTable to call method in A
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{information leak?}
+{\tt\begin{tabular}{l|l} 
+struct Cart \{ & struct String \{ \\
+int date; & char *buffer; \\
+int num\_items; &  ~ \\ 
+    ~         & size\_t size; \\
+    \ldots & \ldots \\
+\};
+\end{tabular}
+}
+\begin{itemize}
+\item allocate Cart + trigger use-after-Free
+\item allocate String
+\item read values from use-after-free'd Cart
+\end{itemize}
+\end{frame}
+
+\begin{frame}{arbitrary write}
+{\tt\begin{tabular}{l|l} 
+struct Cart \{ & struct String \{ \\
+int date; & char *buffer; \\
+int num\_items; &  ~ \\ 
+\ldots & size\_t size; \\
+\ldots & \ldots \\
+\};
+\end{tabular}
+}
+\begin{itemize}
+\item allocate Cart + trigger use-after-free
+\item allocate String
+\item set date + item count to match pointer value
+    \begin{itemize}
+    \item only date if modifying lower bits of pointer value
+    \end{itemize}
+\item modify value in String
+\end{itemize}
+\end{frame}

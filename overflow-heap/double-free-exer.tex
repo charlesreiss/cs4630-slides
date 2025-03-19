@@ -1,4 +1,6 @@
 \begin{frame}[fragile,label=doubleFreeExer]{double-free exercise}
+\begin{tikzpicture}
+\node[draw] (code) { 
 \begin{lstlisting}[language=C++,style=script]
 free(...) {
     freed->next = first_free
@@ -23,6 +25,10 @@ vulnerable() {
     strlcpy(s, attacker_input3, 100);
 }
 \end{lstlisting}
-Exericse: which input should contain address to overwrite? \\
-which input should contain value to put in that address?
+};
+\node[anchor=north west,align=left] at (code.north east) {
+To do memory[0x123456] $\leftarrow$ 0x789abc \\
+what should input1/input2/input3 be?
+};
+\end{tikzpicture}
 \end{frame}

@@ -11,23 +11,27 @@
 void vulnerable() {
   int items[100];
   int count;
-  bool success = try_read_input(&count);
+  bool success =
+    try_read_input(&count);
   if (!success) { ... }
   if (count * sizeof() >= sizeof(items)) {
     printf("cannot handle that many\n"); return;
   }
   for (int i = 0; i < count; i += 1) {
-      if (!try_read_input(&items[i])) { 
-        printf("preature end of input\n"); return;
-      }
+    if (!try_read_input(&items[i])) { 
+      printf("preature end of input\n"); return;
+    }
   }
   process_items(items);
 }
 \end{lstlisting}
 };
-\end{tikzpicture}
+\node [overlay,draw,very thick,align=left,anchor=north west,font=\fontsize{12}{13}\selectfont] at ([yshift=.5cm,xshift=-6.25cm]code.north east) {
 assume return address immediately after items array: \\
 Q: what first input number to provide? \\
-Q: how to encode return address replacement 0x12345678 ?
+Q: how to encode return address \\
+replacement \texttt{0x12345678}?
+};
+\end{tikzpicture}
 \end{frame}
 

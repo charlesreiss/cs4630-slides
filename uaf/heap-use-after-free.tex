@@ -1,4 +1,4 @@
-
+\usetikzlibrary{calc}
 \tikzset{
     stackBox/.style={very thick},
     onStack/.style={thick},
@@ -37,5 +37,34 @@ the_foo->something();
 \draw[onStack,fill=yellow!20] (4, -3) rectangle (7, -5) node[midway,align=center,font=\small] { data for Bar  };
 \end{visibleenv}
 \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{realistic use-after-free}
+    \begin{itemize}
+    \item code shown above seems very contrived
+    \item though bugs that are this simple do happen
+        \begin{itemize}
+        \item usually immediate reuse does not cause problems
+        \end{itemize}
+    \vspace{.5cm}
+    \item one likely case: two pointers to value
+        \begin{itemize}
+        \item example: object referenced from webpage + local variables in javascript
+        \item example: object freed from one thread while another uses it
+        \item example: ``reference count'' bookkeeping error
+        \end{itemize}
+    \item neglecting to handle case
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\includegraphics[height=0.8\textheight]{../uaf/uaf-causes-raid}
+\imagecredit{Chen, Liu, Xiao, and Wang, ``All Use-After-Free Vulnerabilities are not Created Equal: An Empirical Study on Their Characteristics and Detectability'' (2023)}
+\end{frame}
+
+\begin{frame}
+\includegraphics[height=0.7\textheight]{../uaf/uaf-distance} \\
+(LOFTLOD = line of free to line of dereference; BB = basic block)
+\imagecredit{Chen, Liu, Xiao, and Wang, ``All Use-After-Free Vulnerabilities are not Created Equal: An Empirical Study on Their Characteristics and Detectability'' (2023)}
 \end{frame}
 

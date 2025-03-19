@@ -1,0 +1,26 @@
+\begin{frame}[fragile]{exercise}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}]
+struct Codec {
+    void (*DecodeFrame)(...); void (*Seek)(...); ...
+    char *name;
+};
+struct Video {
+    struct Codec *codec; const char *filename;
+    int framerate, width, height, frames; FILE *fh;
+    ...
+};
+struct BrowserWindow {
+    int num_tabs; int active_tab_index; struct BrowserTab *all_tabs; 
+    ...
+};
+struct BrowserTab {
+    struct BrowserWindow *window;
+    char current_url[1024];
+    ...
+};
+\end{Verbatim}
+\begin{itemize}
+\item \small Suppose UAF of BrowserTab being overwritten by new Video object\ldots
+\item \small To break ASLR, what methods to access BrowserTab would be useful?
+\end{itemize}
+\end{frame}

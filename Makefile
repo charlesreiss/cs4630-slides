@@ -10,6 +10,7 @@ SLIDEDECKS = \
     antianti \
     overflow \
     overflow-basic \
+    overflow-int \
     overflow-smash \
     overflow-format \
     overflow-subterfuge \

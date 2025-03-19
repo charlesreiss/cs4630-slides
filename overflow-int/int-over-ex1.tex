@@ -1,0 +1,72 @@
+
+\begin{frame}[fragile,label=intOverflowEx]{integer overflow example (1)}
+\lstset{
+    language=C,
+    morekeywords=item,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\begin{lstlisting}
+item *load_items(int len) {
+  int total_size = ~2~len * sizeof(item);~end~
+  if (total_size >= LIMIT) {
+    return NULL;
+  }
+  item *items = malloc(total_size);
+  for (int i = 0; i < len; ++i) {
+    int failed = read_item(&items[i]);
+    if (failed) {
+      free(items);
+      return NULL;
+    }
+  }
+  return items;
+}
+\end{lstlisting}
+};
+\node[align=left,anchor=north west,font=\small] (t1) at (0,0) {
+    {\tt len} = {\tt 0x4000 0001} \\
+    {\tt sizeof(item)} = {\tt 0x10}
+};
+\node[align=left,anchor=north west,font=\small] (t2) at (t1.south west) {
+    {\tt total\_size} = \\
+    {\tt 0x\textcolor{red}{4} 0000 0010} \\
+};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=intOverflowEx]{integer overflow example (2)}
+\lstset{
+    language=C,
+    morekeywords=item,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\begin{lstlisting}
+/* adapted from https://project-zero.issues.chromium.org/issues/42451651 
+   Windows Kernel bug! */
+char *FormatNumber(char *source, short source_len) {
+    unsigned short dest_size = source_len * 6;
+    char *dest = malloc(dest_size);
+    char *p = dest;
+    for (unsigned short i = 0; < source_len; i += 1) {
+        *p++ = "0123456789ABCDEF"[*source >> 4];
+        *p++ = "0123456789ABCDEF"[*source & 0xF];
+        *p++ = ' ';
+        source++;
+    }
+}
+
+\end{lstlisting}
+};
+\node[align=left,anchor=north west,font=\small] (t1) at (0,0) {
+    {\tt source\_len} = {0x2AAB} \\
+    {\tt sizeof(item)} = {\tt 0x{\color{red}1}0002}
+};
+\end{tikzpicture}
+\end{frame}
+

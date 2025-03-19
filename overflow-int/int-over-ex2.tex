@@ -1,0 +1,25 @@
+\usetikzlibrary{calc}
+
+\begin{frame}[fragile,label=intUOEx]{integer under/overflow: real example}
+    \begin{itemize}
+        \item part of another Google Chrome exploit by Pinkie Pie:
+    \end{itemize}
+    \begin{lstlisting}[language=C,style=small,morekeywords={uint32,size_t}]
+// In graphics command processing code:
+uint32 ComputeMaxResults(size_t size_of_buffer) {
+    return (size_of_buffer - sizeof(uint32)) / sizeof(T);
+} 
+size_t ComputeSize(size_t num_results) {
+    return sizeof(T) * num_results + sizeof(uint32);
+} 
+// exploit: size_of_buffer < sizeof(uint32)
+\end{lstlisting}
+    \begin{itemize}
+        \item result: write 8 bytes after buffer 
+            \begin{itemize}
+                \item sometimes overwrites data pointer
+            \end{itemize}
+    \end{itemize}
+\imagecredit{via \url{https://blog.chromium.org/2012/05/tale-of-two-pwnies-part-1.html}}
+\end{frame}
+

@@ -1,16 +1,12 @@
 
-\begin{frame}{other policies Rust supports}
+\begin{frame}{other `smart pointers' Rust supports}
     \begin{itemize}
-        \item \myemph<2>{RefCell} --- borrowing, but check at runtime, not compile-time
-            \begin{itemize}
-            \item detect at runtime if used while already used
-            \item internally: destructor call when returned object goes out of scope
-            \end{itemize}
-        \item Weak --- reference-counting, but don't contribute to count
-            \begin{itemize}
-            \item detect at runtime if used with count = 0
-            \end{itemize}
-        \item Mutex --- with multicore, enforce one user at a time by waiting
+        \item saw: Rc (reference count), RefCell (track active borrows)
+        \item Box --- wrap heap-allocation, free when it goes out of scope
+        \item OnceCell --- allow setting value exactly once + unlimited reads after set
+        \item Arc --- atomic reference count --- multithread reference count
+        \item Mutex --- enforce one thread at a time by waiting
+        \item RwLock --- enforce one writer + any number of reads by waiting
         \item \ldots
     \end{itemize}
 \end{frame}

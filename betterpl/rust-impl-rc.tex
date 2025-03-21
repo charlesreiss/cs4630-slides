@@ -8,11 +8,13 @@
         \item callbacks on ownership ending (normally deallocation)
             \begin{itemize}
             \item Rust compiler enforces that ref-like object not in use when free call made
+            \item<2> Rc: deallocating \verb|Rc<T>| decrements shared count
+            \item<2> Rc: real object only decremented on count == 0
             \end{itemize}
-        \item<2> Rc: deallocating \verb|Rc<T>| decrements shared count
-        \item<2> Rc: real object only decremented on count == 0
         \item choice of what happens on copy
-        \item<2> Rc: no implicit copy; explicit \verb|clone| operation increments count
+            \begin{itemize}
+            \item<2> Rc: no implicit copy; explicit \verb|clone| operation increments count
+            \end{itemize}
     \end{itemize}
 \end{frame}
  

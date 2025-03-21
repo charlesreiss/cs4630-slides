@@ -24,8 +24,11 @@
 \subsection{general philosophy}
 \input{../betterpl/rust-general}
 
-\subsection{general syntax}
+\subsection{general syntax (1)}
 \input{../betterpl/rust-syntax-basic}
+
+\subsection{functions for types}
+\input{../betterpl/rust-syntax-impl}
 
 \subsection{references}
 \subsubsection{basic example}
@@ -33,6 +36,17 @@
 
 \subsubsection{in context}
 \input{../betterpl/rust-ex-with-refs}
+
+% FIXME: refs example with struct
+\subsection{references in structs}
+\input{../betterpl/rust-ex-with-refs-struct}
+
+\subsection{methods}
+\input{../betterpl/rust-syntax-impl}
+
+
+% FIXME: \subsection{no NULL}
+% FIXME: Option<> + pattern matching + enum
 
 \subsection{basic ownership}
 \input{../betterpl/rust-ownership}
@@ -49,8 +63,8 @@
 \subsection{exercise}
 \input{../betterpl/rust-no-dangle-rules-apply}
 
-\subsection{lifetimes}
 
+\subsection{lifetimes}
 \subsubsection{motivation}
 \input{../betterpl/why-lifetimes}
 
@@ -67,6 +81,9 @@
 
 \subsection{escape hatches implementing Vec}
 \input{../betterpl/rust-escape-inside-vec}
+
+\subsection{raw pointers}
+\input{../betterpl/rust-raw-pointers}
 
 \subsection{implementing new sharing schemes}
 \input{../betterpl/rust-impl-rc}

@@ -1,5 +1,5 @@
 \begin{frame}[fragile,label=whyLifetime1]{why lifetimes? (1)}
-\begin{lstlisting}
+\begin{minted}[fontsize=\fontsize{12}{13}]{Rust}
 let x = vec![1, 2, 3, 4];
 let mut q = &x[1];
 {
@@ -12,14 +12,14 @@ let mut q = &x[1];
     println!("{}", *r);
 }
 println!("{}", *q);
-\end{lstlisting}
+\end{minted}
 \begin{itemize}
 \item need to prevent \texttt{q} referring to values that live too long
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile,label=whyLifetime2]{why lifetimes? (2)}
-\begin{lstlisting}
+\begin{minted}[fontsize=\fontsize{12}{13}]{Rust}
 fn mystery(ptr: &i32, vec: &Vec<i32>) -> &i32 {...}
 
 fn example() {
@@ -32,7 +32,7 @@ fn example() {
     }
     println!("{}", *q);
 }
-\end{lstlisting}
+\end{minted}
 \begin{itemize}
 \item question: should assignment to be q from mystery be allowed?
 \end{itemize}

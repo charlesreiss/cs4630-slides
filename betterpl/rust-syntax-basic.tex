@@ -1,5 +1,5 @@
 \usetikzlibrary{positioning,shapes.callouts}
-\begin{frame}[fragile,label=rustHelloWorld1]{simple Rust syntax (1)}
+\begin{frame}[fragile,label=rustHelloWorld1]{simple Rust syntax (1a)}
 \begin{minted}{Rust}
 fn main() {
     println!("Hello, World!\n");
@@ -7,26 +7,40 @@ fn main() {
 \end{minted}
 \end{frame}
 
+\begin{frame}[fragile,label=rustHelloWorld1]{simple Rust syntax (1b)}
+\begin{minted}{Rust}
+fn main() {
+    let name = "World";
+    println!("Hello, {}!\n", name);
+}
+\end{minted}
+\end{frame}
+
 \begin{frame}[fragile,label=rustHelloWorld2]{simple Rust syntax (2)}
-\begin{minted}[fontsize=\fontsize{10}{11}]{Rust}
+\begin{minted}[fontsize=\fontsize{11}{12}]{Rust}
 fn timesTwo(number: i32) -> i32 {
     return number * 2;
+}
+
+/* or last value automatically returned: */
+fn timesTwo(number: i32) -> i32 {
+    number * 2
 }
 \end{minted}
 \end{frame}
 
 \begin{frame}[fragile,label=rustHelloWorld3]{simple Rust syntax (3)}
-    \begin{minted}[fontsize=\fontsize{10}{11}]{Rust}
+    \begin{minted}[fontsize=\fontsize{11}{12}]{Rust}
 struct Student {
     name: String,
     id: i32,
 }
 
 fn get_example_student() -> Student {
-    return Student {
+    Student {
         name: String::from("Example Fakelastname"),
         id: 42,
-    };
+    }
 }
 \end{minted}
 \end{frame}

@@ -1,7 +1,6 @@
 
 \usetikzlibrary{positioning,shapes.callouts}
-\begin{frame}[fragile,label=rustTimesTwo]{Rust example}
-\vspace{-.25cm}
+\begin{frame}[fragile,label=rustTimesTwo]{Rust example with refs}
     \begin{minted}[fontsize=\fontsize{10}{11}\selectfont,escapeinside=||]{Rust}
 use std::io;
 
@@ -29,7 +28,7 @@ fn main() {
             };
         \end{visibleenv}
         \begin{visibleenv}<3>
-            \node[my callout=ref,anchor=center,align=left] at ([yshift=1cm]box) {
+            \node[my callout=ref,anchor=center,align=left] at ([yshift=-2cm]box) {
                 pass mutable reference to input
             };
         \end{visibleenv}

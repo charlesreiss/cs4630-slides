@@ -1,0 +1,15 @@
+\begin{frame}{C++ has `smart pointers'}
+    \begin{itemize}
+    \item probably what inspired Rust Box, Rc, etc.
+    \vspace{.5cm}
+    \item \texttt{std::shared\_ptr} (like Rc), \texttt{std::unique\_ptr} (like Box)
+        \begin{itemize}
+        \item like Rust Deref/DerefMut, implement \texttt{operator*} and \texttt{operator->} to act
+            like `normal' pointers
+        \end{itemize}
+    \item like Rust, internally return temporary real references
+    \vspace{.5cm}
+    \item problem: no compiler enforcement of ownership rules
+    \item can accidentally use real reference when it is invalid
+    \end{itemize}
+\end{frame}

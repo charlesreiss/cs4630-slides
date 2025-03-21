@@ -1,0 +1,59 @@
+\date{}
+\title{}
+\usepackage[outputdir=latex.out]{minted}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item pointer subterfuge via heap metadata
+        \begin{itemize}
+        \item exploiting linked-list manipulation
+        \item inconvenience of `extra' memory write
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{UAF assignment}
+    \begin{itemize}
+    \item two vulnerable C++ program
+    \item fake grading system
+    \item ability for Grader object to overlap Info object
+    \item part 1: overwrite `grade' data directly
+    \item part 2: probably VTable overwrite
+    \end{itemize}
+\end{frame}
+
+\section{use-after-free con't}
+\subsection{exercise: info leak}
+\input{../uaf/heap-uaf-exer-info}
+
+\subsection{exercise: subterfuge}
+\input{../uaf/heap-uaf-exer-subter}
+
+\subsection{exercise: vtable}
+\input{../uaf/heap-uaf-exer}
+
+\subsection{aside: concurrency + UAF}
+\input{../uaf/linux-conc-uaf}
+
+\subsection{example}
+\input{../uaf/heap-use-after-free-chrome}
+
+\subsection{JS and similar interfaces v use-after-free}
+\input{../uaf/heap-use-after-free-js}
+
+\input{../overflow-int/talk-inner}
+
+\input{../betterpl/talk-inner}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\input{../betterpl/talk-backup}
+\end{document}

@@ -8,10 +8,10 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile,label=rustOwnership1]{Rust objects and ownership (1)}
+\begin{frame}[fragile,label=rustOwnership1]{Rust objects and ownership (1a)}
     \begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
 fn mysum(vector: Vec<u32>) -> u32 {
-    let mut total: u32 = 0
+    let mut total: u32 = 0;
     for value in &vector {
         total += value
     }

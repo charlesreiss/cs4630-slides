@@ -1,21 +1,34 @@
-\begin{frame}<1>[fragile,label=escapeHatchSupport1]{Rust escape hatch support}
+\begin{frame}<1>[fragile,label=escapeHatchSupportRc]{Rust escape hatch support}
     \begin{itemize}
-        \item escape hatch: make new reference-like types
+        \item escape hatch: make new reference-like object
+            \begin{itemize}
+            \item (\ldots implemented by returning temporary `real' references)
+            \end{itemize}
         \item<2> Rc: \verb|Rc<T>| acts like \verb|&T|
         \item callbacks on ownership ending (normally deallocation)
+            \begin{itemize}
+            \item Rust compiler enforces that ref-like object not in use when free call made
+            \end{itemize}
         \item<2> Rc: deallocating \verb|Rc<T>| decrements shared count
-        \item choice of what happens on move/copy
-        \item<2> Rc: transferring Rc makes new copy, increments shared count
+        \item<2> Rc: real object only decremented on count == 0
+        \item choice of what happens on copy
+        \item<2> Rc: no implicit copy; explicit \verb|clone| operation increments count
     \end{itemize}
 \end{frame}
  
 \begin{frame}[fragile,label=refCounting]{alternative rule: reference counting}
     \begin{itemize}
     \item keep track of number of references
+    \item increment count when making new `clone' of reference
+    \item decrement when reference goes away
+        \begin{itemize}
+        \item Rust borrowing rules will enforce it is not used when this happens
+        \end{itemize}
     \item delete when count goes to zero
         \begin{itemize}
         \item Rust automatically calls destructor --- no programmer effort
         \end{itemize}
+    \item explicit operation to make new reference
     \item Rust implement with Rc type (``counted reference'')
     \end{itemize}
 \end{frame}
@@ -30,53 +43,128 @@ struct Student {
     grades: Vec<Rc<Grade>>,
 }
 struct Assignment {
-    name: String
+    name: String,
     grades: Vec<Rc<Grade>>
 }
 
 fn add_grade(student: &mut Student, assignment: &mut Assignment, score: i32) {
     let grade = Rc::new(Grade {
-        score: i32,
-        studentName: student.name,
-        assignmentName: assignment.name,
+        score: score,
+        studentName: student.name.clone(),
+        assignmentName: assignment.name.clone(),
     })
-    student.grades.push(grade.clone())
-    assignment.grades.push(grade.clone())
+    student.grades.push(Rc::clone(&grade));
+    assignment.grades.push(Rc::clone(&grade));
+    println!("Added grade with score={}", grade.score);
 }
 \end{minted}
 \end{frame}
 
-\againframe<2>{escapeHatchSupport1}
+\againframe<2>{escapeHatchSupportRc}
 
-\begin{frame}[fragile,label=rcImplA]{Rc implementationed (annotated) (1)}
+\begin{frame}[fragile,label=rcImplA]{Rc implementation (approx) (0)}
+\begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+struct RcInner<T: ?Sized> {
+    strong: Cell<usize>,    // <-- count of Rc<T>s pointing to this
+    weak: Cell<usize>,      // <-- count of Weak<T>s pointing to this
+    value: T,               // <-- actual data
+}
+
+pub struct Rc<T: ?Sized> {
+    ptr: NonNull<RcInner<T>>,
+    phantom: PhantomData<RcInner<T>>, // <- so compiler infers what operations are safe better
+}
+\end{minted}
+\begin{itemize}
+\item NonNull = raw pointer wrapper
+\item Cell = way to have mutable field of immutable object
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[fragile,label=rcImplA]{Rc implementation (approx) (1)}
 \begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
 impl<T: ?Sized> Clone for Rc<T> {
     ... 
     fn clone(&self) -> Rc<T> {
-        self.inc_strong(); // <-- incremenet reference count
+        self.inc_strong(); // <-- increment reference count
         Rc { ptr: self.ptr }
     }
 }
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label=rcImplB]{Rc implementation (annotated) (2)}
+\begin{frame}[fragile,label=rcImplB]{Rc implementation (approx) (2)}
 \begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
 unsafe impl<#[may_dangle] T: ?Sized> Drop for Rc<T> {
     ...
     fn drop(&mut self) { // <-- compilers calls on deallocation
         unsafe {
-           let ptr = *self.ptr;
-
-           self.dec_strong(); // <-- decrement reference cont
-           if self.strong() == 0 { // if ref count is 0
-                // destroy the contained object
-                ptr::drop_in_place(&mut (*ptr).value);
-                ...
+            self.inner().dec_strong();
+            if self.inner().strong() == 0 {
+                self.drop_slow();
             }
         }
     }
     ...
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=rcImplC]{Rc implementation (approx) (3)}
+\begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+impl<T: ?Sized> Deref for Rc<T> {
+    type Target = T;
+
+    #[inline(always)]
+    fn deref(&self) -> &T {
+        &self.inner().value
+    }
+}
+\end{minted}
+\begin{itemize}
+\item observation: returned reference still has lifetime
+\item compiler will enforce that extracted reference only used when Rc object valid
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Rc limitations}
+    \begin{itemize}
+    \item Rc: only gives references to \textit{read-only} objects
+        \begin{itemize}
+        \item cannot enforce ``only one mutable reference'' rule
+        \end{itemize}
+    \item Rc: allows memory leaks via circular references
+        \begin{itemize}
+        \item correct way to handle ciruclar references: Weak
+        \item \ldots but not enforcement that it is used when needed
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{aside: Weak}
+\begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+struct Foo {
+    my_bar: Rc<Bar>,
+    ...
+}
+struct Bar {
+    my_foo: Weak<Foo>.
+    ...
+}
+...
+let bar: Bar = ...;
+...
+match bar.my_foo.upgrade() {
+    Some(foo_rc) => {
+        // foo_rc is an Rc<Foo>
+        ...
+    },
+    None => {
+        // the foo object was deleted
+    }
 }
 \end{minted}
 \end{frame}

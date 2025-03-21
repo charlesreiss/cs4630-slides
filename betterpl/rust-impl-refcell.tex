@@ -1,0 +1,154 @@
+\begin{frame}<0>[fragile,label=escapeHatchSupportRefCell]{Rust escape hatch support}
+    \begin{itemize}
+        \item escape hatch: make new reference-like types
+            \begin{itemize}
+            \item (\ldots implemented by returning temporary `real' references)
+            \end{itemize}
+        \item<2> RefCell: \verb|borrow_mut()| method gives mutable-ref-like object
+            \begin{itemize}
+            \item crashed if conflicting borrowing active
+            \end{itemize}
+        \item<2> RefCell<T> \verb|x|: \verb|x.borrow()| gives immutable-ref-like object
+            \begin{itemize}
+            \item crashed if conflicting borrowing active
+            \end{itemize}
+        \item callbacks on ownership ending (normally deallocation)
+            \begin{itemize}
+            \item Rust compiler enforces that ref-like object not in use when free call made
+            \end{itemize}
+        \item<2> RefCell<T> --- deallocate normally
+        \item choice of what happens on move/copy
+        \item<2> RefCell<T> ---- no implicit copy; explicit clone makes clone of T
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{alternate rule: tracked usage}
+    \begin{itemize}
+    \item runtime-enforced version of Rust borrowing rules
+    \item \texttt{borrow\_mut()}: give \verb|&mut T|-like object only if other active borrows
+        \begin{itemize}
+        \item increment counter of active mutable borrows (instead of tracking statically)
+        \item decrement counter when \verb|&mut T| no longer in use 
+        \end{itemize}
+    \item \texttt{borrow()}: give \verb|&T|-like object only if no active mutable borrows
+        \begin{itemize}
+        \item increment counter of active immutable borrows
+        \item decrement counter when \verb|&T| no longer in use
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{RefCell example (0)}
+\begin{minted}[fontsize=\fontsize{9}{10}]{Rust}
+fn myadd(x: &RefCell<i32>, y: &RefCell<i32>, z: &RefCell<i32>) {
+    let mut x_value = x.borrow_mut();
+    let y_value = y.borrow();
+    let z_value = z.borrow();
+    *x_value += *y_value;
+    *x_value += *z_value;
+    println!("{}, {}, {}", x_value, y_value, z_value);
+}
+
+fn main() {
+    let x: RefCell<i32> = RefCell::new(1);
+    let y: RefCell<i32> = RefCell::new(2);
+    let z: RefCell<i32> = RefCell::new(3);
+    
+    myadd(&x, &y, &z); // 6, 2, 3
+    myadd(&x, &y, &y); // 10, 2, 2
+    myadd(&x, &x, &x); // RUNTIME ERROR
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{RefCell example (1)}
+\begin{minted}[fontsize=\fontsize{9}{10}]{Rust}
+fn appendsum(x: &RefCell<Vec<i32>>, y: &RefCell<Vec<i32>>, z: &RefCell<Vec<i32>>) {
+    let mut x_value = x.borrow_mut();
+    let y_value = y.borrow();
+    let z_value = z.borrow();
+    let i = 0;
+    for (y_number, z_number) in y_value.iter().zip(z_value.iter()) {
+        x_value.push(y_number + z_number);
+    }
+    println!("{:?}", *x_value)
+}
+
+fn main() {
+    let x: RefCell<Vec<i32>> = RefCell::new(vec![1]);
+    let y: RefCell<Vec<i32>> = RefCell::new(vec![2]);
+    let z: RefCell<Vec<i32>> = RefCell::new(vec![3]);
+    
+    appendsum(&x, &y, &z);
+    appendsum(&x, &y, &y);
+    appendsum(&x, &x, &x);
+}
+\end{minted}
+\end{frame}
+
+\againframe<2>{escapeHatchSupportRefCell}
+
+\begin{frame}[fragile]{approx RefCell implementation (1)}
+\begin{minted}[fontsize=\fontsize{9}{10}]{Rust}
+pub struct RefCell<T: ?Sized> {
+    // mutable integer
+        // set to -1 on mutable borrow
+        // incremented on immutable borrow
+    borrow: Cell<BorrowFlag>,
+    value: UnsafeCell<T>,
+}
+
+pub fn borrow_mut(&self) -> RefMut<'_, T> { ... }
+
+pub struct RefMut<'b, T: ?Sized + 'b> {
+    value: NonNull<T>,
+    borrow: BorrowRefMut<'b>,
+    ...
+}
+\end{minted}
+\begin{itemize}
+\item RefMut = type that acts like reference (\texttt{Deref}, \texttt{DerefMut})
+\item BorrowRefMut = contains pointer to Cell<BorrowFlag>, handles updates
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{approx RefCell implementation (RefMut)}
+\begin{minted}[fontsize=\fontsize{9}{10}]{Rust}
+pub struct RefMut<'b, T: ?Sized + 'b> {
+    value: NonNull<T>,
+    borrow: BorrowRefMut<'b>,
+    ...
+}
+
+impl<T: ?Sized> DerefMut for RefMut<'_, T> {
+    fn deref_mut(&mut self) -> &mut T {
+        unsafe { self.value.as_mut() }
+    }
+}
+\end{minted}
+\end{frame}
+
+
+\begin{frame}[fragile]{approx RefCell implementation (BorrowRefMut)}
+\begin{minted}[fontsize=\fontsize{9}{10}]{Rust}
+struct BorrowRefMut<'b> {
+    borrow: &'b Cell<BorrowFlag>,
+}
+impl Drop for BorrowRefMut<'_> {
+    fn drop(&mut self) {
+        let borrow = self.borrow.get(); self.borrow.set(borrow + 1);
+    }
+}
+impl<'b> BorrowRefMut<'b> {
+    fn new(borrow: &'b Cell<BorrowFlag>) -> Option<BorrowRefMut<'b>> {
+        match borrow.get() {
+            UNUSED => {
+                borrow.set(UNUSED - 1); Some(BorrowRefMut { borrow })
+            }
+            _ => None,
+        }
+    }
+}
+\end{minted}
+\end{frame}
+

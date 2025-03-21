@@ -24,7 +24,7 @@ fn foo(rect: &mut Rectangle) {
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label=rustTrait1]{traits (1a)}
+\begin{frame}[fragile,label=rustTrait1a]{traits (1a)}
 \begin{minted}[fontsize=\fontsize{12}{13}]{Rust}
 // import std.cmp.PartialEq; import std.cmp.Eq;
 pub struct Rectangle {
@@ -43,7 +43,7 @@ impl Eq for Rectangle {}
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label=rustTrait1]{traits (1b)}
+\begin{frame}[fragile,label=rustTrait1b]{traits (1b)}
 \begin{minted}{Rust}
 #[derive(PartialEq,Eq)]
 pub struct Rectangle {

@@ -10,6 +10,62 @@
 \input{../common/listingsLib}
 
 \begin{frame}{last time}
+    \begin{itemize}
+    \item using use-after-free exploits
+        \begin{itemize}
+        \item ``toolbox'' of two objects in same place in memory
+        \item info leak from pointer in same place as readable values
+        \item code exec from VTable and data at same place
+        \end{itemize}
+    \item Chrome exploit example:
+        \begin{itemize}
+        \item multiple objects
+        \item triggering exploit multiple times with JavaScript
+        \end{itemize}
+    \item integer overflow
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{quiz Q1}
+    \begin{itemize}
+    \item global offset table with RELRO
+    \vspace{.5cm}
+    \item global offset table region loaded as writeable
+    \item then fill in addresses based on loaded libraries
+        \begin{itemize}
+        \item even if not randomized, not determined until after program starts
+        \item \ldots so can't be loaded read-only
+        \end{itemize}
+    \item then change permissions
+    \end{itemize}
+\end{frame}
+\begin{frame}[fragile]{quiz Q4}
+\begin{Verbatim}[fontsize=\fontsize{10}{11}]
+(e.function /* X */)(input2 /* Y */, input3 /* Z */);
+\end{Verbatim}
+\hrule
+effect of code in vulernable:
+\begin{Verbatim}[fontsize=\fontsize{10}{11}]
+    mov $Y, %rdi
+    mov $Z, %rsi
+    call X // push $AFTER_CALL; jmp X
+AFTER_CALL:
+\end{Verbatim}
+\begin{itemize}
+\item goal: set \%rsp to ROP chain, then run ret
+\item 0x4050d9: popq \%rsp, ret
+    \begin{itemize}
+    \item if X = 0x4050d9, sets stack pointer to AFTER\_CALL
+    \item BUT if we can run it with ROP chain address pushed already
+    \item will reset stack pointer to its value
+    \end{itemize}
+\item 0x413eb6: pushq \%rsi; orw \%bh, \%bh; jmp *\%rdi
+    \begin{itemize}
+    \item if X = 0x413eb6:
+    \item push RSI (Z) to stack --- ideal setup for 0x4050d9
+    \item jump to RDI (Y)
+    \end{itemize}
+\end{itemize}
 \end{frame}
 
 \input{../overflow-int/talk-inner}

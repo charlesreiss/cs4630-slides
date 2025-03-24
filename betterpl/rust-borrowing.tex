@@ -18,7 +18,8 @@ fn foo() {
     println!("vector[0] is {}" , vector[0]);
 }
 \end{minted}
-\end{frame
+\end{frame}
+
 \begin{frame}[fragile,label=dangling1]{dangling pointers?}
 \begin{lstlisting}[language=C,style=small]
 int *dangling_pointer() {
@@ -50,8 +51,6 @@ error[E0106]: missing lifetime specifier
     \end{visibleenv}
 \end{tikzpicture}
 \end{frame}
-
-}
 
 \begin{frame}[fragile,label=rustBorrowing2]{borrowing (2)}
 \begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
@@ -202,7 +201,7 @@ error[E0499]: cannot borrow `vector` as mutable more than once at a time
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile,label=rustBorrowing4b]{borrowing (4c)}
+\begin{frame}[fragile,label=rustBorrowing4c]{borrowing (4c)}
 \begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
 fn foo() {
     let mut vector: Vec<u32> = vec![1, 2, 3];
@@ -212,9 +211,9 @@ fn foo() {
 }
 \end{minted}
 \begin{tikzpicture}[overlay,remember picture]
-    \begin{visibleenv}<2>
-    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
-\begin{lstlisting}[language={},style=smaller]
+\begin{visibleenv}<2>
+\node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\begin{lstlisting}[style=smaller,language={}]
 error[E0499]: cannot borrow `vector` as mutable more than once at a time
   --> src/main.rs:10:5
    |
@@ -225,10 +224,9 @@ error[E0499]: cannot borrow `vector` as mutable more than once at a time
 11 |     *first_elem += 1;
    |     ---------------- first borrow later used here
    |
-   = help: use `.split_at_mut(position)` to obtain two mutable non-overlapping sub-slices
 \end{lstlisting}
 };
-    \end{visibleenv}
+\end{visibleenv}
 \end{tikzpicture}
 \end{frame}
 

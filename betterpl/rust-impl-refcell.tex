@@ -130,6 +130,22 @@ impl<T: ?Sized> DerefMut for RefMut<'_, T> {
 \end{minted}
 \end{frame}
 
+\begin{frame}{RefMut idea}
+    \begin{itemize}
+    \item RefMut acts like a mutable reference value
+        \begin{itemize}
+        \item DerefMut implementation allows conversion to reference when needed
+        \item done automatically when you try to use like reference
+        \item (also similar non-mutable reference wrapper type)
+        \end{itemize}
+    \item compiler automatically \texttt{drop}s when it goes out of scope
+    \item compiler knows RefMut contains item with lifetime \texttt{'b}
+        \begin{itemize}
+        \item compile-time error to use for too long
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
 
 \begin{frame}[fragile]{approx RefCell implementation (BorrowRefMut)}
 \begin{minted}[fontsize=\fontsize{9}{10}]{Rust}

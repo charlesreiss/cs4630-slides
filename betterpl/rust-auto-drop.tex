@@ -1,0 +1,88 @@
+\begin{frame}[fragile]{Rust dropping (1)}
+\begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
+struct Example {}
+
+impl Drop for Example {
+    fn drop(&mut self) {
+        println!("in Example's drop")
+    }
+}
+
+fn main() {
+    {
+        let t = Example {};
+        println!("A");
+    }
+    println!("B");
+}
+\end{minted}
+output: A(newline)in Example's drop(newline)B
+\end{frame}
+
+\begin{frame}[fragile]{Rust dropping (2)}
+\begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
+struct Example {}
+
+impl Drop for Example {
+    fn drop(&mut self) {
+        println!("in Example's drop")
+    }
+}
+
+fn main() {
+    let q: Example;
+    {
+        let t = Example {};
+        println!("A");
+        q = t;
+    }
+    println!("B");
+}
+\end{minted}
+output: A(newline)B(newline)in Example's drop
+\end{frame}
+
+\begin{frame}[fragile]{Rust dropping (3)}
+\begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
+#[derive(Clone)] struct Example {}
+
+impl Drop for Example {
+    fn drop(&mut self) {
+        println!("in drop")
+    }
+}
+
+fn main() {
+    let q: Example;
+    {
+        let t = Example {};
+        println!("A");
+        q = t.clone();
+    }
+    println!("B");
+}
+\end{minted}
+output: A(newline)in drop(newline)B(newline)in drop
+\end{frame}
+
+\begin{frame}{preview: wrapper objects as tool}
+    \begin{itemize}
+    \item to manage memory, make objects with custom \texttt{drop} functions
+    \item creating object: allocates memory; droping: frees memory
+    \vspace{.5cm}
+    \item Rust compiler will insert drop calls automatically
+    \item \ldots and borrowing will enforce error if object still in use
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{aside: RAII and C++}
+    \begin{itemize}
+    \item common C++ idea that Rust is copying: \\
+        \textit{Resource Acquisition is Initialization} (RAII)
+    \item will show ``smart pointer'' types where idea prominent in C++
+    \item \ldots but C++ lacks compiler borrowing/etc. enforcement
+    \vspace{.5cm}
+    \item idea probably didn't start with C++, though most prominent current version
+    \end{itemize}
+\end{frame}
+

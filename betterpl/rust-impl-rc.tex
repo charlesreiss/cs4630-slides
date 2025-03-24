@@ -35,7 +35,85 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile,label=refCountingEx]{Ref Counting Example}
+\begin{frame}[fragile,label=refCountingEx0a]{Ref Counting Example (0a)}
+\begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
+use std::rc::Rc;
+
+fn main() {
+    let s_ref: &String;
+    let s1: Rc<String>;
+    {
+        let s2: Rc<String> = Rc::new(String::from("example"));
+        s1 = Rc::clone(&s2);
+        s_ref = &*s1;
+        println!("{s1} {s_ref} {s2}");
+            // example example example
+        println!("count={}", Rc::strong_count(&s1));
+            // count=2
+    }
+    println!("count={}", Rc::strong_count(&s1));
+        // count=2
+    println!("{s1} {s_ref}");
+        // example example
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=refCountingEx0b]{Ref Counting Example (0b)}
+\begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
+use std::rc::Rc;
+
+fn main() {
+    let s_ref: &String;
+    let s1: Rc<String>;
+    {
+        let s2: Rc<String> = Rc::new(String::from("example"));
+        s1 = Rc::clone(&s2);
+        s_ref = &*s1;
+        println!("{s1} {s_ref} {s2}");
+        println!("count={}", Rc::strong_count(&s1));
+    }
+    println!("count={}", Rc::strong_count(&s1));
+    println!("{s1} {s_ref}");
+}
+\end{minted}
+\begin{tikzpicture}[overlay,remember picture]
+    \begin{visibleenv}<2>
+    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\begin{lstlisting}[language={},style=script]
+error[E0597]: `s2` does not live long enough
+  --> src/main.rs:9:19
+   |
+7  |         let s2: Rc<String> = Rc::new(String::from("example"));
+   |             -- binding `s2` declared here
+8  |         s1 = Rc::clone(&s2);
+9  |         s_ref = &*s2;
+   |                   ^^ borrowed value does not live long enough
+...
+14 |     }
+   |     - `s2` dropped here while still borrowed
+...
+17 |     println!("{}", s_ref);
+   |                    ----- borrow later used here
+\end{lstlisting}
+};
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Rc<> into real ref}
+    \begin{itemize}
+    \item can turn Rc into real ref
+    \item borrowing rule enforces that Rc object stays around
+    \vspace{.5cm}
+    \item allows us to ensure it's not drop()d while still in use
+    \item \ldots and use it with functions that expect `normal' reference
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[fragile,label=refCountingEx]{Ref Counting Example (1)}
 \begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
 struct Grade {
     score: i32, studentName: String, assignmentName: String,

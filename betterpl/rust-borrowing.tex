@@ -87,7 +87,7 @@ fn foo() {
 \begin{tikzpicture}[overlay,remember picture]
     \begin{visibleenv}<2>
     \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
-\begin{lstlisting}[language={},style=smaller]
+\begin{lstlisting}[language={},style=script]
 error[E0502]: cannot borrow `vector` as mutable because it is also borrowed as immutable
   --> src/main.rs:11:10
    |
@@ -121,7 +121,7 @@ fn foo() {
 \begin{tikzpicture}[overlay,remember picture]
     \begin{visibleenv}<2>
     \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
-\begin{lstlisting}[language={},style=smaller]
+\begin{lstlisting}[language={},style=script]
 error[E0502]: cannot borrow `vector` as mutable because it is also borrowed as immutable
   --> src/main.rs:11:10
    |
@@ -175,7 +175,7 @@ fn foo() {
 \begin{tikzpicture}[overlay,remember picture]
     \begin{visibleenv}<2>
     \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
-\begin{lstlisting}[language={},style=smaller]
+\begin{lstlisting}[language={},style=script]
 error[E0499]: cannot borrow `vector` as mutable more than once at a time
   --> src/main.rs:11:10
    |

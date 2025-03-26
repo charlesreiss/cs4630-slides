@@ -1,0 +1,111 @@
+\date{}
+\title{}
+\date{}
+\usepackage[outputdir=latex.out]{minted}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item simple ownership: one owner at a time
+    \item can \textit{give away ownership}
+    \item only owner can access/modify/delete value
+    \end{itemize}
+\end{frame}
+
+\subsection{exercise}
+\input{../betterpl/rust-ownership-exer}
+
+\subsection{single owner rule issue}
+\input{../betterpl/rust-owner-rule-limit}
+
+\section{Rust: stopping dangling pointers}
+\input{../betterpl/rust-no-dangle-rules}
+
+\subsection{borrowing}
+\input{../betterpl/rust-borrowing}
+
+\subsection{exercise}
+\input{../betterpl/rust-no-dangle-rules-apply}
+
+
+\subsection{lifetimes}
+\subsubsection{motivation}
+\againframe<2>{dangleRules}
+\input{../betterpl/why-lifetimes}
+
+\subsubsection{lifetime tracking}
+\input{../betterpl/rust-lifetimes}
+
+\subsection{one writer}
+\againframe<3>{dangleRules}
+\input{../betterpl/rust-borrowing-mut}
+
+\input{../betterpl/rust-borrowing-mut-loop}
+
+\section{destructors}
+\input{../betterpl/rust-auto-drop}
+
+\section{Rust: escape hatches and supporting dynamic allocation}
+\input{../betterpl/dynamic-alloc-basic}
+
+\subsection{escape hatches implementing Vec}
+\input{../betterpl/rust-escape-inside-vec}
+
+\subsection{raw pointers}
+\input{../betterpl/rust-raw-pointers}
+
+% FIXME: RefCell
+
+\subsection{implementing new sharing schemes}
+\subsubsection{Rc}
+\input{../betterpl/rust-impl-rc}
+
+\subsection{non-Rust smart pointers}
+\input{../betterpl/cpp-smart-pointer}
+
+\subsubsection{RefCell}
+\input{../betterpl/rust-impl-refcell}
+
+\subsection{aside: concurrency + UAF}
+\input{../uaf/linux-conc-uaf}
+
+\subsection{concurrency}
+\input{../betterpl/rust-concurrency}
+
+\section{aside: other language enforcement?}
+\input{../betterpl/other-things-lang-enforce}
+
+% FIXME: example of concurrency based exploit in Linux
+
+\subsection{other Rust smart pointers}
+\input{../betterpl/other-rust-smartptr}
+
+\subsection{exercise: smart pointer use case}
+\input{../betterpl/which-smartptr-exer}
+
+\subsection{Rust linked list}
+\input{../betterpl/rust-ll}
+
+\section{zero-overhead}
+\input{../betterpl/zero-overhead-p}
+
+\section{aside: other language enforcement?}
+\input{../betterpl/other-things-lang-enforce}
+
+\subsection{example: constant time languages}
+\input{../betterpl/fact}
+
+
+\input{../bounds/talk-inner}
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+\subsection{basic ownership}
+\input{../betterpl/rust-ownership}
+
+\end{document}

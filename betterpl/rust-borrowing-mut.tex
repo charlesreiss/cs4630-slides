@@ -1,0 +1,176 @@
+
+
+\begin{frame}[fragile,label=rustBorrowing3]{borrowing (3a)}
+\begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+fn add1(vector: &mut Vec<u32>) {
+    for value in vector {
+        *value += 1
+    }
+}
+
+fn foo() {
+    let mut vector: Vec<u32> = vec![1, 2, 3];
+    let first_elem: &u32 = &vector[0];
+    println!("*first_elem is {}", *first_elem);
+    add1(&mut vector);
+    println!("*first_elem is {}", *first_elem);
+}
+\end{minted}
+\begin{tikzpicture}[overlay,remember picture]
+    \begin{visibleenv}<2>
+    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\begin{lstlisting}[language={},style=script]
+error[E0502]: cannot borrow `vector` as mutable because it is also borrowed as immutable
+  --> src/main.rs:11:10
+   |
+9  |     let first_elem: &u32 = &vector[0];
+   |                             ------ immutable borrow occurs here
+10 |     println!("*first_elem is {}", *first_elem);
+11 |     add1(&mut vector);
+   |          ^^^^^^^^^^^ mutable borrow occurs here
+12 |     println!("*first_elem is {}", *first_elem);
+   |                                   ----------- immutable borrow later used here
+\end{lstlisting}
+};
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=rustBorrowing3]{borrowing (3b)}
+\begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+fn append1(vector: &mut Vec<u32>) {
+    vector.push(1);
+}
+
+fn foo() {
+    let mut vector: Vec<u32> = vec![1, 2, 3];
+    let first_elem: &u32 = &vector[0];
+    println!("*first_elem is {}", *first_elem);
+    append1(&mut vector);
+    println!("*first_elem is {}", *first_elem);
+}
+\end{minted}
+\begin{tikzpicture}[overlay,remember picture]
+    \begin{visibleenv}<2>
+    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\begin{lstlisting}[language={},style=script]
+error[E0502]: cannot borrow `vector` as mutable because it is also borrowed as immutable
+  --> src/main.rs:11:10
+   |
+9  |     let first_elem: &u32 = &vector[0];
+   |                             ------ immutable borrow occurs here
+10 |     println!("*first_elem is {}", *first_elem);
+11 |     add1(&mut vector);
+   |          ^^^^^^^^^^^ mutable borrow occurs here
+12 |     println!("*first_elem is {}", *first_elem);
+   |                                   ----------- immutable borrow later used here
+\end{lstlisting}
+};
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=rustBorrwing3AsC]{aside: find the bug}
+\begin{lstlisting}[style=script]
+struct vec { int *data; int size; };
+void append1(struct vec *v) {
+    v.data = realloc(v.data, sizeof(int) * (v.size + 1));
+    v.data[v.size] = 1;
+    v.size += 1;
+}
+
+fn foo() {
+    struct vec vector;
+    vector.data = malloc(sizeof(int) * 3);
+    vector.data[0] = 1; vector.data[1] = 2; vector.data[2] = 3;
+    vector.size = 3;
+    int *first_elem = &vector.data[0];
+    printf("*first_elem is %d\n", *first_elem);
+    append1(&vector);
+    printf("*first_elem is %d\n"", *first_elem);
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=rustBorrowing4a]{borrowing (4a)}
+\begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+fn add1(vector: &mut Vec<u32>) {
+    for value in vector {
+        *value += 1
+    }
+}
+
+fn foo() {
+    let mut vector: Vec<u32> = vec![1, 2, 3];
+    let first_elem: &mut u32 = &mut vector[0];
+    *first_elem += 1;
+    add1(&vector);
+    println!("vector is {:?}", vector);  // [3, 3, 4]
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=rustBorrowing4b]{borrowing (4b)}
+\begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+fn add1(vector: &mut Vec<u32>) {
+    for value in vector {
+        *value += 1
+    }
+}
+
+fn foo() {
+    let mut vector: Vec<u32> = vec![1, 2, 3];
+    let first_elem: &mut u32 = &mut vector[0];
+    add1(&vector); 
+    *first_elem += 1; // ERROR, two mutable borrowings of vector
+    println!("vector is {:?}", vector);  
+}
+\end{minted}
+\begin{tikzpicture}[overlay,remember picture]
+    \begin{visibleenv}<2>
+    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\begin{lstlisting}[language={},style=script]
+error[E0499]: cannot borrow `vector` as mutable more than once at a time
+  --> src/main.rs:11:10
+   |
+9  |     let first_elem: &mut u32 = &mut vector[0];
+   |                                     ------ first mutable borrow occurs here
+10 |     *first_elem += 1;
+11 |     add1(&mut vector);
+   |          ^^^^^^^^^^^ second mutable borrow occurs here
+12 |     println!("first_elem is {}", *first_elem);
+   |                                  ----------- first borrow later used here
+\end{lstlisting}
+};
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=rustBorrowing4c]{borrowing (4c)}
+\begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+fn foo() {
+    let mut vector: Vec<u32> = vec![1, 2, 3];
+    let first_elem: &mut u32 = &mut vector[0];
+    vector[1] += 2;  // ERROR: two mutable borrowings
+    *first_elem += 1;
+}
+\end{minted}
+\begin{tikzpicture}[overlay,remember picture]
+\begin{visibleenv}<2>
+\node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\begin{lstlisting}[style=smaller,language={}]
+error[E0499]: cannot borrow `vector` as mutable more than once at a time
+  --> src/main.rs:10:5
+   |
+9  |     let first_elem: &mut u32 = &mut vector[0];
+   |                                     ------ first mutable borrow occurs here
+10 |     vector[1] += 2;
+   |     ^^^^^^ second mutable borrow occurs here
+11 |     *first_elem += 1;
+   |     ---------------- first borrow later used here
+   |
+\end{lstlisting}
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}

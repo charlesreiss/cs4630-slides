@@ -1,0 +1,21 @@
+\begin{frame}[fragile,label=singleOwner]{single owner rule limit}
+\begin{itemize}
+\item single owner prevents use-after-free, etc.
+\item \ldots but too limiting in practice
+\item basically doesn't allow references:
+\end{itemize}
+\begin{Verbatim}
+let v = vec![1,2,3];
+let x = &v;
+// now both x, v reference same vector?
+// violates single owner rule!
+\end{Verbatim}
+\begin{itemize}
+\item will extend rule to be more flexible with two changes:
+    \begin{itemize}
+    \item borrowing
+    \item multiple readers, one writer
+    \end{itemize}
+\end{itemize}
+\end{frame}
+

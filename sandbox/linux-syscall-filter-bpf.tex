@@ -1,0 +1,52 @@
+\begin{frame}[fragile]{BPF filter example (1)}
+\begin{itemize}
+\item showing syntax for producing machine code from C macros / non-extended BPF
+\end{itemize}
+\begin{Verbatim}[fontsize=\fontsize{10}{11}]
+// memory[offset of "nr"] --> accumulator
+BPF_STMT(BPF_LD | BPF_W | BPF_ABS, (offsetof(struct seccomp_data, nr))),
+// if (accumulator == SYS_write) PC += 1
+BPF_STMT(BPF_JMP | BPF_JEQ, BPF_K, SYS_write, 1, 0),
+// return "kill process"
+BPF_STMT(BPF_RET | BPF_K, SECCOMP_RET_KILL_PROCESS),
+// return "allow"
+BPF_STMT(BPF_RET | BPF_K, SECCOMP_RET_ALLOW),
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{BPF filter example (2)}
+\begin{Verbatim}[fontsize=\fontsize{10}{11}]
+// memory[offset of "nr"] --> accumulator
+BPF_STMT(BPF_LD | BPF_W | BPF_ABS, (offsetof(struct seccomp_data, nr))),
+// if (accumulator == SYS_write) PC += 1 else PC += 0
+BPF_STMT(BPF_JMP | BPF_JEQ, BPF_K, SYS_write, 1, 0),
+// return "kill process"
+BPF_STMT(BPF_RET | BPF_K, SECCOMP_RET_KILL_PROCESS),
+// memory[offset of args[0]] --> accumulator
+BPF_STMT(BPF_LD | BPF_W | BPF_ABS, (offsetof(struct seccomp_data, args[0]))),
+// if (accumulator == 2) PC += 1 else PC += 0
+BPF_STMT(BPF_JMP | BPF_JEQ, BPF_K, 2, 1, 0),
+BPF_STMT(BPF_RET | BPF_K, SECCOMP_RET_KILL_PROCESS),
+BPF_STMT(BPF_RET | BPF_K, SECCOMP_RET_ALLOW),
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{other BPF operations}
+    \begin{itemize}
+    \item arithmetic (add, or, xor, \ldots)
+    \item in eBPF (extended BPF): 10 additional registers
+        \begin{itemize}
+        \item not just accumulator
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{running BPF fast/safely}
+    \begin{itemize}
+    \item idea: can verify in advance that\ldots
+    \item there are no loops
+    \item there are no out-of-bounds accesses
+    \vspace{.5cm}
+    \item convert to assembly function to run very fast
+    \end{itemize}
+\end{frame}

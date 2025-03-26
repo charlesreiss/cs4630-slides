@@ -33,12 +33,21 @@
 \section{system calls as OS interface}
 \input{../sandbox/what-systemcalls}
 
-\section{simple Linux system call filtering}
-\input{../sandbox/linux-syscall-filter}
-
 \section{definition: sandbox}
 \input{../sandbox/sandbox-defn}
 
+\section{Linux system call filtering}
+\subsection{simple Linux system call filtering}
+\input{../sandbox/linux-syscall-filter}
+
+\subsection{more fine-grained filtering?}
+\input{../sandbox/linux-syscall-filter-delta}
+
+\input{../sandbox/linux-syscall-filter-bpf}
+
+\input{../sandbox/linux-syscall-open-filter-hard}
+
+\subsection{more sophisticated filters}
 \section{Chrome architecture}
 \input{../sandbox/chrome-arch}
 
@@ -55,8 +64,6 @@
 \section{normal application confinement?}
 \input{../sandbox/app-confine-intro}
 
-\subsection{more fine-grained filtering?}
-\input{../sandbox/linux-syscall-filter-delta}
 
 \subsection{applied to VLC?}
 \input{../sandbox/app-confine-vlc-example}

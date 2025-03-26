@@ -1,0 +1,130 @@
+\begin{frame}{autorestarting servers}
+    \begin{itemize}
+    \item common strategy for servers:
+    \item start server `workers' with same randomization
+        \begin{itemize}
+        \item fork()'d from common process or
+        \item only re-randomized addresses on reboot
+        \end{itemize}
+    \item automatically restart server workers after crash
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{autorestarting servers [pseudocode]}
+\begin{Verbatim}
+void vulnerable() {
+    char buffer[128];
+    read_from_network_into(buffer);
+    ...
+}
+
+int main() {
+    while (true) {
+        setup_new_connection();
+        run_in_new_process(vulnerable);
+    }
+}
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{a little overwrite (1)}
+\begin{tikzpicture}
+\coordinate (stack tl) at (0, 0);
+\path[draw,thick,fill=yellow!20] (stack tl) ++(0cm, -1cm) coordinate (ra tl) rectangle ++(3.5, -.5)
+    coordinate (ra br)
+    node [midway] {return address};
+\coordinate (ra bl) at (ra tl |- ra br);
+\path[draw,thick,fill=violet!20,pattern=north east lines,pattern color=black!20] (ra bl) rectangle ++(3.5, -.5) coordinate (can br)
+    node [midway] {stack canary};
+\coordinate (can bl) at (ra tl |- can br);
+\path[draw,thick,fill=green!20,align=center] (can bl) rectangle ++(3.5, -2)  coordinate (buf br)
+    node [midway] {buffer};
+\begin{visibleenv}<2->
+    \draw[orange,very thick](ra bl) -- ++ (.5cm,0) |- (can br) -- (buf br) -| cycle;
+\end{visibleenv}
+\begin{scope}[shift={([xshift=1cm,yshift=1cm]ra br)}]
+    \begin{visibleenv}<2->
+        \node[align=left,anchor=north west] (before-after) at (0, 0) {
+            \begin{tabular}{ll}%
+            original canary & \tt AB CD EF 01 23 45 67 89 \\%
+            after overwrite & \tt ?? CD EF 01 23 45 67 89 \\
+            \end{tabular}
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<3->
+        \node[align=left,anchor=north west] (outcomes) at (before-after.south west) {
+            if {\tt ??}~is {\tt AB}: program works normally \\
+            \hspace{.5cm} $\rightarrow$ server gives response \\
+            if {\tt ??}~not {\tt AB}: program crashes \\
+            \hspace{.5cm} $\rightarrow$ connection closes prematurely  \\
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<4->
+        \node[align=left,anchor=north west] (repeat) at ([xshift=-2cm]outcomes.south west) {
+            idea: \myemph<4>{keep trying values until it doesn't crash} \\
+            if canary not rerandomzied, will find first byte after 256 tries \\
+            then \myemph<5>{repeat for every other byte of canary}
+        };
+    \end{visibleenv}
+\end{scope}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{a little overwrite (2)}
+\begin{tikzpicture}
+\coordinate (stack tl) at (0, 0);
+\path[draw,thick,fill=yellow!20] (stack tl) ++(0cm, -1cm) coordinate (ra tl) rectangle ++(3.5, -.5)
+    coordinate (ra br)
+    node [midway] {return address};
+\coordinate (ra bl) at (ra tl |- ra br);
+\path[draw,thick,fill=violet!20,pattern=north east lines,pattern color=black!20] (ra bl) rectangle ++(3.5, -.5) coordinate (can br)
+    node [midway] {stack canary};
+\coordinate (can bl) at (ra tl |- can br);
+\path[draw,thick,fill=green!20,align=center] (can bl) rectangle ++(3.5, -2)  coordinate (buf br)
+    node [midway] {buffer};
+\begin{visibleenv}<1->
+    \draw[orange,very thick](ra bl) -| (can br) -- (buf br) -| cycle;
+\end{visibleenv}
+\begin{visibleenv}<2->
+    \draw[orange,very thick](ra tl) -- ++ (.5cm,0) |- (ra br) -- (buf br) -| cycle;
+\end{visibleenv}
+\begin{scope}[shift={([xshift=1cm,yshift=1cm]ra br)}]
+    \begin{visibleenv}<2->
+        \node[align=left,anchor=north west] (before-after) at (0, 0) {
+            \begin{tabular}{ll}%
+            original return address & \tt 49 43 2A AB 44 00 00 \\%
+            after overwrite & \tt ?? 43 2A AB 44 00 00
+            \end{tabular}
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<3->
+        \node[align=left,anchor=north west] (outcomes) at (before-after.south west) {
+            if {\tt ??}~is {\tt 49}: program works normally \\
+            \hspace{.5cm} $\rightarrow$ server gives normal response \\
+            if {\tt ??}~not {\tt 49}: program does something wierd \\
+            \hspace{.5cm} $\rightarrow$ probably weird response \\
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<4->
+        \node[align=left,anchor=north west] (repeat) at ([xshift=-2cm]outcomes.south west) {
+            can use this to `break' ASLR \\
+            find return address value with good confidence
+        };
+    \end{visibleenv}
+\end{scope}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{blind ROP concept}
+    \begin{itemize}
+    \item once we know stack canary + return address value
+    \item we can guess where program code is
+        \begin{itemize}
+        \item it's around where the vulnerable is returning to normally
+        \end{itemize}
+    \vspace{.5cm}
+    \item can try replacing return address with nearby addresses
+    \item \ldots and see what it does
+    \item turns out --- can exploit program \myemph{without access to executable}
+    \end{itemize}
+\end{frame}

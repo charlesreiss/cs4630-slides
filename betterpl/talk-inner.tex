@@ -38,6 +38,9 @@
 \subsection{exercise}
 \input{../betterpl/rust-ownership-exer}
 
+\subsection{single owner rule issue}
+\input{../betterpl/rust-owner-rule-limit}
+
 \section{Rust: stopping dangling pointers}
 \input{../betterpl/rust-no-dangle-rules}
 
@@ -50,10 +53,10 @@
 
 \subsection{lifetimes}
 \subsubsection{motivation}
+\againframe<2>{dangleRules}
 \input{../betterpl/why-lifetimes}
 
 \subsubsection{lifetime tracking}
-\againframe<2>{dangleRules}
 \input{../betterpl/rust-lifetimes}
 
 \subsection{one writer}
@@ -101,6 +104,8 @@
 \subsection{exercise: smart pointer use case}
 \input{../betterpl/which-smartptr-exer}
 
+\subsection{Rust linked list}
+\input{../betterpl/rust-ll}
 
 \section{zero-overhead}
 \input{../betterpl/zero-overhead-p}

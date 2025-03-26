@@ -7,7 +7,14 @@
         \end{itemize}
     \item \myemph<1>{owner can let someone borrow object \myemph<2>{\textbf{temporarily}}}
         \begin{itemize}
-        \item must know when object is given back
+        \item allows us to give away reference to object
+        \item track as if object temporarily moved
+        \item need to know \myemph<2>{how long object is borrowed forjj}
+        \end{itemize}
+    \item can borrow object for \myemph<3>{reading \textbf{while others} also \textbf{reading}}
+        \begin{itemize}
+        \item don't need to force exclusive owner/borrower of object
+        \item need to distinguish mutable and immutable borrowing
         \end{itemize}
     \item only \myemph<3>{\textbf{modify}} object when exactly one user
         \begin{itemize}

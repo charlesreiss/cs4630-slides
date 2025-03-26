@@ -1,6 +1,6 @@
 
 
-\begin{frame}[fragile,label=rustBorrowing3]{borrowing (3a)}
+\begin{frame}[fragile,label=rustBorrowing3a]{borrowing (3a)}
 \begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
 fn add1(vector: &mut Vec<u32>) {
     for value in vector {
@@ -13,7 +13,7 @@ fn foo() {
     let first_elem: &u32 = &vector[0];
     println!("*first_elem is {}", *first_elem);
     add1(&mut vector);
-    println!("*first_elem is {}", *first_elem);
+    println!("*first_elem is {}", *first_elem); // ERROR
 }
 \end{minted}
 \begin{tikzpicture}[overlay,remember picture]
@@ -36,7 +36,7 @@ error[E0502]: cannot borrow `vector` as mutable because it is also borrowed as i
 \end{tikzpicture}
 \end{frame}
 
-\begin{frame}[fragile,label=rustBorrowing3]{borrowing (3b)}
+\begin{frame}[fragile,label=rustBorrowing3b]{borrowing (3b)}
 \begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
 fn append1(vector: &mut Vec<u32>) {
     vector.push(1);
@@ -47,7 +47,7 @@ fn foo() {
     let first_elem: &u32 = &vector[0];
     println!("*first_elem is {}", *first_elem);
     append1(&mut vector);
-    println!("*first_elem is {}", *first_elem);
+    println!("*first_elem is {}", *first_elem); // ERROR
 }
 \end{minted}
 \begin{tikzpicture}[overlay,remember picture]
@@ -79,7 +79,7 @@ void append1(struct vec *v) {
     v.size += 1;
 }
 
-fn foo() {
+void foo() {
     struct vec vector;
     vector.data = malloc(sizeof(int) * 3);
     vector.data[0] = 1; vector.data[1] = 2; vector.data[2] = 3;
@@ -102,9 +102,11 @@ fn add1(vector: &mut Vec<u32>) {
 
 fn foo() {
     let mut vector: Vec<u32> = vec![1, 2, 3];
+    // (lifetime of first_elem starts here)
     let first_elem: &mut u32 = &mut vector[0];
     *first_elem += 1;
-    add1(&vector);
+    // (lifetime of first_elem ends here)
+    add1(&mut vector);
     println!("vector is {:?}", vector);  // [3, 3, 4]
 }
 \end{minted}
@@ -121,7 +123,7 @@ fn add1(vector: &mut Vec<u32>) {
 fn foo() {
     let mut vector: Vec<u32> = vec![1, 2, 3];
     let first_elem: &mut u32 = &mut vector[0];
-    add1(&vector); 
+    add1(&mut vector); 
     *first_elem += 1; // ERROR, two mutable borrowings of vector
     println!("vector is {:?}", vector);  
 }

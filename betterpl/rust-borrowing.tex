@@ -20,7 +20,7 @@ fn foo() {
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label=dangling1]{dangling pointers? (1a)}
+\begin{frame}[fragile,label=dangling1a]{dangling pointers? (1a)}
 \begin{lstlisting}[language=C,style=small]
 int *dangling_pointer() {
     int array[3] = {1,2,3};
@@ -52,7 +52,7 @@ error[E0106]: missing lifetime specifier
 \end{tikzpicture}
 \end{frame}
 
-\begin{frame}[fragile,label=dangling1]{dangling pointers? (1b)}
+\begin{frame}[fragile,label=dangling1b]{dangling pointers? (1b)}
 \begin{minted}[fontsize=\small]{Rust}
 /* 'static = "valid forever" */
 fn dangling_pointer() -> &'static mut i32 {
@@ -135,7 +135,7 @@ error[E0597]: `v` does not live long enough
 \end{tikzpicture}
 \end{frame}
 
-\begin{frame}[fragile,label=rustBorrowing2]{borrowing (2a)}
+\begin{frame}[fragile,label=rustBorrowing2a]{borrowing (2a)}
 \begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
 fn add1(vector: &mut Vec<u32>) {
     for value in vector {
@@ -151,7 +151,7 @@ fn foo() {
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile,label=rustBorrowing2]{borrowing (2b)}
+\begin{frame}[fragile,label=rustBorrowing2b]{borrowing (2b)}
 \begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
 fn add1(vector: &mut Vec<u32>) {
     for value in vector {

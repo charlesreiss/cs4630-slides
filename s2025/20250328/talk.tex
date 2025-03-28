@@ -8,6 +8,16 @@
 \end{frame}
 
 \begin{frame}{last time}
+    \begin{itemize}
+    \item single-owner rule
+    \item allowing borrowing
+    \item tracking lifetime; annotations for lifetimes
+    \item multiple readers, one writer
+        \begin{itemize}
+        \item avoiding inconsistencies re: pointers/etc. changing
+        \end{itemize}
+    \item rules conservative --- often prohibit ``actually safe'' things
+    \end{itemize}
 \end{frame}
 
 \input{../common/listingsLib}
@@ -24,10 +34,9 @@
     \item some potential areas, but seem rather niche
         \begin{itemize}
         \item turning XSS into useful exploit (but not much to say?)
+        \item security with embedded other pages/user content
         \item web tracking/privacy (is this the right class for that?)
-        \item security when one page embeds another
         \item restricting browser extensions
-        \item single-sign-on (really network security topic?)
         \end{itemize}
     \end{itemize}
 \end{frame}
@@ -55,6 +64,16 @@
 
 \subsubsection{RefCell}
 \input{../betterpl/rust-impl-refcell}
+
+\subsection{assignment}
+\begin{frame}{assignment}
+    \begin{itemize}
+    \item Rust program that uses unsafe/raw pointers
+    \item has use of pointers that violates single-owner idea
+    \vspace{.5cm}
+    \item your task: change it to be all safe
+    \end{itemize}
+\end{frame}
 
 \subsection{aside: concurrency + UAF}
 \input{../uaf/linux-conc-uaf}

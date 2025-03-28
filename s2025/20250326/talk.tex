@@ -9,8 +9,15 @@
 
 \input{../common/listingsLib}
 
-\begin{frame}{last time}
+\begin{frame}[fragile]{last time}
     \begin{itemize}
+    \item Rust syntax
+        \begin{itemize}
+        \item \verb|fn x(a1: Type1, a2: Type2) -> Type3 { ...}|
+        \item \verb|struct X { v1 : Type1, ... }|
+        \item \verb|impl X { fn method(&mut self, ...) ...|
+        \item \verb|trait Y { fn method(...); } impl Y for X { ... }|
+        \end{itemize}
     \item simple ownership: one owner at a time
     \item can \textit{give away ownership}
     \item only owner can access/modify/delete value
@@ -107,5 +114,21 @@
 \end{frame}
 \subsection{basic ownership}
 \input{../betterpl/rust-ownership}
+\subsection{general syntax (1)}
+\input{../betterpl/rust-syntax-basic}
+
+\subsection{functions for types}
+\input{../betterpl/rust-syntax-impl}
+
+\subsection{references}
+\subsubsection{basic example}
+\input{../betterpl/rust-refs}
+
+\subsubsection{in context}
+\input{../betterpl/rust-ex-with-refs}
+
+% FIXME: refs example with struct
+\subsection{references in structs}
+\input{../betterpl/rust-ex-with-refs-struct}
 
 \end{document}

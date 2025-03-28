@@ -74,7 +74,7 @@ fn main() {
         println!("count={}", Rc::strong_count(&s1));
     }
     println!("count={}", Rc::strong_count(&s1));
-    println!("{s1} {s_ref}");
+    println!("{s1} {s_ref}");  // ERROR
 }
 \end{minted}
 \begin{tikzpicture}[overlay,remember picture]
@@ -139,6 +139,47 @@ fn add_grade(student: &mut Student, assignment: &mut Assignment, score: i32) {
 }
 \end{minted}
 \end{frame}
+
+\begin{frame}{Rc limitations}
+    \begin{itemize}
+    \item Rc: only gives references to \textit{read-only} objects
+        \begin{itemize}
+        \item cannot enforce ``only one mutable reference'' rule
+        \item \ldots we'll look at doing that next, but needs more bookkeeping
+        \end{itemize}
+    \item Rc: allows memory leaks via circular references
+        \begin{itemize}
+        \item correct way to handle ciruclar references: Weak
+        \item \ldots but not enforcement that it is used when needed
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{aside: Weak}
+\begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+struct Foo {
+    my_bar: Rc<Bar>,
+    ...
+}
+struct Bar {
+    my_foo: Weak<Foo>.
+    ...
+}
+...
+let bar: Bar = ...;
+...
+match bar.my_foo.upgrade() {
+    Some(foo_rc) => {
+        // foo_rc is an Rc<Foo>
+        ...
+    },
+    None => {
+        // the foo object was deleted
+    }
+}
+\end{minted}
+\end{frame}
+
 
 \againframe<2>{escapeHatchSupportRc}
 
@@ -207,45 +248,5 @@ impl<T: ?Sized> Deref for Rc<T> {
 \item observation: returned reference still has lifetime
 \item compiler will enforce that extracted reference only used when Rc object valid
 \end{itemize}
-\end{frame}
-
-
-\begin{frame}{Rc limitations}
-    \begin{itemize}
-    \item Rc: only gives references to \textit{read-only} objects
-        \begin{itemize}
-        \item cannot enforce ``only one mutable reference'' rule
-        \end{itemize}
-    \item Rc: allows memory leaks via circular references
-        \begin{itemize}
-        \item correct way to handle ciruclar references: Weak
-        \item \ldots but not enforcement that it is used when needed
-        \end{itemize}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{aside: Weak}
-\begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
-struct Foo {
-    my_bar: Rc<Bar>,
-    ...
-}
-struct Bar {
-    my_foo: Weak<Foo>.
-    ...
-}
-...
-let bar: Bar = ...;
-...
-match bar.my_foo.upgrade() {
-    Some(foo_rc) => {
-        // foo_rc is an Rc<Foo>
-        ...
-    },
-    None => {
-        // the foo object was deleted
-    }
-}
-\end{minted}
 \end{frame}
 

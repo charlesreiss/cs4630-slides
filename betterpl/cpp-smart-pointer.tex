@@ -7,9 +7,23 @@
         \item like Rust Deref/DerefMut, implement \texttt{operator*} and \texttt{operator->} to act
             like `normal' pointers
         \end{itemize}
-    \item like Rust, internally return temporary real references
+    \item like Rust, internally return temporary real references/pointers
     \vspace{.5cm}
     \item problem: no compiler enforcement of ownership rules
-    \item can accidentally use real reference when it is invalid
+    \item can accidentally use `temporary' reference/pointer for too long
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{reference counting elsewhere}
+    \begin{itemize}
+    \item a lot of programs do manual reference counting
+        \begin{itemize}
+        \item example: lots of stuff in Linux kernel
+        \end{itemize}
+    \item Swift, Perl, Python implicitly do reference counting for `normal' references  
+        \begin{itemize}
+        \item means normal references not `zero-overhead'
+        \item more predictable object deallocation than `normal' garbage collection
+        \end{itemize}
     \end{itemize}
 \end{frame}

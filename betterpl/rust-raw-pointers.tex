@@ -46,7 +46,7 @@ fn main() {
     println!("{:?} {:#x}", x, pointer_value);
         // 0x58a7196d5b10 0x58a7196d5b10
     unsafe{*x = 0x123456;}
-    unsafe{*(x.wrapping_add(1)) = 0x234567;}
+    unsafe{*(x.add(1)) = 0x234567;}
     let y: *mut u32 = (pointer_value+1) as *mut u32;
     println!("{:#x}", unsafe{*y});
         // release mode: 0x67001234

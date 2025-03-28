@@ -8,7 +8,7 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile,label=insideVec]{deep inside Vec}
+\begin{frame}[fragile,label=insideVec1]{deep inside Vec (1)}
 \begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
 pub struct Vec<T> {
     buf: RawVec<T>, // interface to malloc
@@ -27,6 +27,35 @@ impl<T> Vec<T> {
                 let len = self.len;
                 ptr::drop_in_place(self.get_unchecked_mut(len));
             }
+        }
+    }
+    ...
+}
+\end{minted}
+\end{frame}
+
+
+\begin{frame}[fragile,label=insideVec1]{deep inside Vec (1)}
+\begin{minted}[fontsize=\fontsize{8}{9}\selectfont]{Rust}
+impl<T> Vec<T> {
+    ...
+    pub const fn as_mut_ptr(&mut self) -> *mut T {
+        ...
+        self.buf.ptr()
+    }
+    ...
+    pub fn push(&mut self, value: T) {
+        // Inform codegen that the length does not change across grow_one().
+        let len = self.len;
+        // This will panic or abort if we would allocate > isize::MAX bytes
+        // or if the length increment would overflow for zero-sized types.
+        if len == self.buf.capacity() {
+            self.buf.grow_one();
+        }
+        unsafe {
+            let end = self.as_mut_ptr().add(len);
+            ptr::write(end, value);
+            self.len = len + 1;
         }
     }
     ...

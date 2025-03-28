@@ -122,9 +122,11 @@ fn add1(vector: &mut Vec<u32>) {
 
 fn foo() {
     let mut vector: Vec<u32> = vec![1, 2, 3];
+    // (lifetime of first_elem starts here)
     let first_elem: &mut u32 = &mut vector[0];
     add1(&mut vector); 
     *first_elem += 1; // ERROR, two mutable borrowings of vector
+    // (lifetime of first_elem ends here)
     println!("vector is {:?}", vector);  
 }
 \end{minted}

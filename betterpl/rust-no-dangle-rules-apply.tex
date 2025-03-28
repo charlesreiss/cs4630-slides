@@ -1,4 +1,4 @@
-\begin{frame}[fragile,label=noDangleApply1Exer]{applying rules (1)}
+\begin{frame}[fragile,label=noDangleApply1Exer]{applying rules (1a)}
 \begin{itemize}
 \item single owner, someone can borrow temporarily
 \item only modify if exactly one user
@@ -27,6 +27,29 @@ printf("%d\n", x); // (4)
     \item A. (original owner) the variable x
     \item B. (borrowed) the pointer/reference p
     \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=noDangleApply1Exer]{applying rules (1b)}
+\begin{itemize}
+\item single owner, someone can borrow temporarily
+\item only modify if exactly one user
+\end{itemize}
+\begin{tikzpicture}
+\node (left) {
+\begin{lstlisting}[language={},style=script]
+let x = vec![vec![1],vec![2]];
+let y = &mut x[0];
+let z = &mut y[0];
+y.push(4);
+x.push(vec![4]);
+*z += 1;
+y.push(5);
+\end{lstlisting}
+};
+\end{tikzpicture}
+\begin{itemize}
+\item exercise: what compile errors? how to fix and get same result?
 \end{itemize}
 \end{frame}
 

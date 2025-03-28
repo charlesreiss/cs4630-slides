@@ -28,15 +28,16 @@
     \item area I'm not super familiar with
     \item major topics in this area seem covered in 3710
         \begin{itemize}
-        \item XSS 
+        \item XSS
         \item CSRF (some versions of 3710; maybe not Orebaughs?)
         \end{itemize}
     \item some potential areas, but seem rather niche
         \begin{itemize}
-        \item turning XSS into useful exploit (but not much to say?)
-        \item security with embedded other pages/user content
-        \item web tracking/privacy (is this the right class for that?)
+        \item turning XSS into useful exploit (seems not very interesting\ldots)
+        \item security with embedded other pages/user content/etc. (CSP, separate domains, etc.)
         \item restricting browser extensions
+        \item web tracking/privacy (is this the right class for that?)
+        \item shellcode/command inj that accesses the network (more networking?)
         \end{itemize}
     \end{itemize}
 \end{frame}
@@ -53,6 +54,9 @@
 \subsection{raw pointers}
 \input{../betterpl/rust-raw-pointers}
 
+
+\subsection{Cell}
+\input{../betterpl/rust-cell}
 % FIXME: RefCell
 
 \subsection{implementing new sharing schemes}
@@ -72,6 +76,11 @@
     \item has use of pointers that violates single-owner idea
     \vspace{.5cm}
     \item your task: change it to be all safe
+    \item likely strategies:
+        \begin{itemize}
+        \item change pointers into ID numbers looked up in map
+        \item use Rc for shared objects
+        \end{itemize}
     \end{itemize}
 \end{frame}
 

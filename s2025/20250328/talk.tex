@@ -1,0 +1,96 @@
+\date{}
+\title{}
+\date{}
+\usepackage[outputdir=latex.out]{minted}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{last time}
+\end{frame}
+
+\input{../common/listingsLib}
+
+\begin{frame}{aside: anonymous feedback}
+    \begin{itemize}
+    \item ``Please teach us about web based exploitation.''
+    \item area I'm not super familiar with
+    \item major topics in this area seem covered in 3710
+        \begin{itemize}
+        \item XSS 
+        \item CSRF (some versions of 3710; maybe not Orebaughs?)
+        \end{itemize}
+    \item some potential areas, but seem rather niche
+        \begin{itemize}
+        \item turning XSS into useful exploit (but not much to say?)
+        \item web tracking/privacy (is this the right class for that?)
+        \item security when one page embeds another
+        \item restricting browser extensions
+        \item single-sign-on (really network security topic?)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\section{destructors}
+\input{../betterpl/rust-auto-drop}
+
+\section{Rust: escape hatches and supporting dynamic allocation}
+\input{../betterpl/dynamic-alloc-basic}
+
+\subsection{escape hatches implementing Vec}
+\input{../betterpl/rust-escape-inside-vec}
+
+\subsection{raw pointers}
+\input{../betterpl/rust-raw-pointers}
+
+% FIXME: RefCell
+
+\subsection{implementing new sharing schemes}
+\subsubsection{Rc}
+\input{../betterpl/rust-impl-rc}
+
+\subsection{non-Rust smart pointers}
+\input{../betterpl/cpp-smart-pointer}
+
+\subsubsection{RefCell}
+\input{../betterpl/rust-impl-refcell}
+
+\subsection{aside: concurrency + UAF}
+\input{../uaf/linux-conc-uaf}
+
+\subsection{concurrency}
+\input{../betterpl/rust-concurrency}
+
+\section{aside: other language enforcement?}
+\input{../betterpl/other-things-lang-enforce}
+
+% FIXME: example of concurrency based exploit in Linux
+
+\subsection{other Rust smart pointers}
+\input{../betterpl/other-rust-smartptr}
+
+\subsection{exercise: smart pointer use case}
+\input{../betterpl/which-smartptr-exer}
+
+\subsection{Rust linked list}
+\input{../betterpl/rust-ll}
+
+\section{zero-overhead}
+\input{../betterpl/zero-overhead-p}
+
+\section{aside: other language enforcement?}
+\input{../betterpl/other-things-lang-enforce}
+
+\subsection{example: constant time languages}
+\input{../betterpl/fact}
+
+\input{../testing/talk-inner}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+\subsection{basic ownership}
+\input{../betterpl/rust-ownership}
+
+\end{document}

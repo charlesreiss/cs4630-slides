@@ -1,0 +1,15 @@
+\begin{frame}[fragile]{want a more than coverage}
+\begin{lstlisting}[style=smaller]
+int array[16];
+for (int i = 0; i < 100; ++i) {
+    if (next_input() != 42)
+        break;
+    array[i] = next_input();
+}
+\end{lstlisting}
+\begin{itemize}
+\item if just counting coverage\ldots
+\item hard to end up doing extra iterations of above loop
+\item supplementing idea: count number of times blocks reached
+\end{itemize}
+\end{frame}

@@ -6,9 +6,64 @@
         \begin{itemize}
         \item delete when no owner
         \end{itemize}
-    \item also Box class --- wraps heap allocation of a single value
+    \item also \texttt{Box} class --- wraps heap allocation of a single value
         \begin{itemize}
-        \item basically same as Vec except one element
+        \item can be used like reference to object
+        \item similar to C++ \texttt{unique\_ptr}
         \end{itemize}
     \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Box}
+\begin{minipage}{0.48\textwidth}
+\begin{minted}[fontsize=\fontsize{9}{10}]{Rust}
+pub fn f1a() -> Box<u32> {
+    let mut value: Box<u32> =
+            Box::new(0);
+    *value += 1;
+    q(*value);
+    value
+}
+
+pub fn f1b() {
+    let mut value: Box<u32> =
+            Box::new(0);
+    *value += 1;
+    q(*value);
+}
+
+pub fn f2() -> u32 {
+    let mut value: u32 = 0;
+    value += 1;
+    q(value);
+    value
+}
+\end{minted}
+\end{minipage}
+\begin{minipage}{0.48\textwidth}
+\begin{lstlisting}[language=C++,style=script]
+unsigned *f1a() {
+    unsigned *value =
+            malloc(sizeof(unsigned));
+    *value += 1;
+    q(*value);
+    return value;
+}
+
+unsigned *f1b() {
+    unsigned *value =
+            malloc(sizeof(unsigned));
+    *value += 1;
+    q(*value);
+    free(value);
+}
+
+unsigned f2() {
+    unsigned value = 0;
+    value += 1;
+    q(value);
+    return value
+}
+\end{lstlisting}
+\end{minipage}
 \end{frame}

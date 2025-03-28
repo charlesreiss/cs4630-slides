@@ -4,7 +4,7 @@
 \usegdlibrary{trees}
 
 
-\begin{frame}[fragile,label=choosePath1]{example 2}
+\begin{frame}[fragile,label=choosePath2]{example 2}
 \lstset{language=C,style=smaller}
 \begin{lstlisting}
 void foo(unsigned a,
@@ -38,21 +38,21 @@ void foo(unsigned a,
         \begin{scope}[tree layout,grow=down]
             \node[state,desired at={([xshift=-3cm,yshift=-.5cm]current page.north east)}] (top) {a: $\alpha$, b: $\beta$, c: $\delta$}
                 child { node[condition,visible on=<2->] { a != 0 }
-                    child { node[state,visible on=<3->,alt=<4>{very thick}{thick}] {$\alpha\not=0$\\a: $\alpha$, b: $\beta - \delta$} edge from parent[visible on=<3->] node {true}
+                    child { node[state,visible on=<3->,alt=<4>{very thick}{thick}] {$\alpha\not=0$---a: $\alpha$, b: $\beta - \delta$} edge from parent[visible on=<3->] node {true}
                         child { node[condition,visible on=<4->] { b < 5 } edge from parent[visible on=<4->]
                             child {
                                 node[state,visible on=<5->] {
-                                    $\alpha\not=0\text{; }\beta-\delta<5$ \\ a: $\alpha$, \\ b: $\beta -\delta$
-                                } edge from parent[visible on=<5->] node {true}
+                                    $\alpha\not=0\text{; }\beta-\delta<5$ \\ a: $\alpha$,  b: $\beta -\delta$
+                                } edge from parent[visible on=<5->] node[visible on=<5->] {true} edge from parent[visible on=<5->]
                                 child {
                                     node[condition,visible on=<6->] {
                                         a > c
-                                    }
+                                    } edge from parent[visible on=<6->]
                                     child {
                                         node[state,visible on=<6->] {
                                             $\alpha\not=0\text{; }\beta-\delta<5\text{; }\beta>\delta$ \\
-                                            a: $\alpha+\beta-\delta$, \\ b: $\beta -\delta + 4$
-                                        }
+                                            a: $\alpha+\beta-\delta$, b: $\beta -\delta + 4$
+                                        } edge from parent[visible on=<6->]
                                         child {
                                             node[question,visible on=<7->] {
                                                 $\alpha \not= 0$; $\beta- \delta < 5$; $\beta>\delta$ \\
@@ -65,22 +65,22 @@ void foo(unsigned a,
                                     child {
                                         node[state,visible on=<8->] {
                                             $\alpha \not= 0$; $\beta-\delta < 5$; $\beta\le\delta$ \\
-                                            a: $\alpha$, \\ b: $\beta - \delta + 4$
+                                            a: $\alpha$, b: $\beta - \delta + 4$
                                         } edge from parent[visible on=<8->]
                                         child {
-                                            node[dashedQuestion] {}
+                                            node[dashedQuestion] {} edge from parent[visible on=<8->]
                                         }
                                     }
                                 }
                             }
-                            child { node[state,visible on=<9->] {$\alpha\not=0\text{; }\beta-\delta\ge5$ \\ a: $\alpha+\beta-2$, \\ b: $\beta - 2$}
-                                edge from parent[visible on=<9->] node {false}
+                            child { node[state,visible on=<9->] {$\alpha\not=0\text{; }\beta-\delta\ge5$---a: $\alpha+\beta-2$, \\ b: $\beta - 2$}
+                                edge from parent[visible on=<9->] node {false} edge from parent[visible on=<9->]
                                 child { node[visible on=<9->,dashedQuestion] {} edge from parent[visible on=<7->] }
                             }
                         }
                     }
-                    child { node[state,visible on=<3->] {$\alpha=0$\\a: $\alpha$, \\ b: $\beta$} edge from parent[visible on=<3->] node {false}
-                        child { node[dashedQuestion] {} }
+                    child { node[state,visible on=<3->] {$\alpha=0$\\a: $\alpha$, b: $\beta$} edge from parent[visible on=<3->] node {false} edge from parent[visible on=<3->]
+                        child { node[dashedQuestion] {} } edge from parent[visible on=<3->]
                         }
                     }
                 ;

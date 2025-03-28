@@ -30,20 +30,18 @@ int foo(int a, int b) {
                 child {
                     node[state,visible on=<2->] {at (1): \\
                         a: $\alpha + 2\beta$, b: $\beta$
-                    }
+                    } edge from parent[visible on=<2->]
                     child {
                         node[state,visible on=<3->] {at (2): \\
                             a: $\alpha + 2\beta$, b: $4\beta$
-                        }
+                        } edge from parent[visible on=<3->]
                         child {
                             node[state,visible on=<4->] {after func: \\
                             return: $\alpha + 2\beta + 4\beta = \alpha+6\beta$
-                            }
-                        }
-                    }
-                }
-        
-                ;
+                            }edge from parent[visible on=<4->]
+                        } 
+                    } 
+                } ;
         \end{scope}
     \end{tikzpicture}
 \begin{itemize}

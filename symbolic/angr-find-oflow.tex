@@ -1,0 +1,19 @@
+\begin{frame}[fragile]{angr and `solving' overflows/etc.}
+\begin{Verbatim}[fontsize=\fontsize{8}{9}]
+...
+p = angr.Project('./over.exe', load_options={'auto_load_libs': False})
+input_chars = [claripy.BVS('in_{}'.format(i), 8) for i in range(5000)]
+the_input = claripy.Concat(*input_chars)
+st = p.factory.full_init_state(...,
+    stdin=angr.SimFileStream(name='stdin', content=the_input, has_end=True),
+)
+st.libc.max_gets_size = 4500
+sm = p.factory.simulation_manager(st, save_unconstrained=True)
+for _ in range(10000):
+    sm.step()
+    for un_st in sm.unconstrained:
+        un_st.add_constraints(st.regs.pc == 0x12345678)
+        print(un_st.posix.dumps(0))
+        break
+\end{Verbatim}
+\end{frame}

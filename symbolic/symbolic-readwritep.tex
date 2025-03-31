@@ -30,17 +30,41 @@ void example(int a, int b) {
 }
 \end{lstlisting}
 \begin{itemize}
-\item exact idea 1: separate branch for all 10 possible values of x, y
+\item separate branch for all 10 possible values of x, y
 \item gets correct answer --- but 100x extra branches to explore?
 \end{itemize}
 \end{frame}
 
-\begin{frame}{memory optimizations/compromises}
+\begin{frame}{angr `concretization' strategies}
     \begin{itemize}
-    \item try to construct \textit{sets} of possible values to combine branches
-    \item choose small set of concrete values for pointer to avoid state explosiion
+    \item angr's design: choose specific set of real addresses for reads and writes
+    \item problem: really common to have thousands/millions of possibilities
+    \vspace{.5cm}
+    \item default policy:
         \begin{itemize}
-        \item even if imprecise
+        \item choose any of range of 1024 possibilities for read
+        \item only choose maximum address for write, except for annotated values
         \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{higher-level strategies}
+    \begin{itemize}
+    \item KLEE (2008; OSDI): symbolic execution for bugfinding
+    \item works from LLVM bytecode, not assembly
+    \vspace{.5cm}
+    \item track \textit{memory objects} that pointers point to
+        \begin{itemize}
+        \item angr can't easily do this --- info not available in assembly
+        \end{itemize}
+    \item if pointer goes outside intended memory object: found a bug!
+        \begin{itemize}
+        \item deliberate caveat: find overflow bugs, not \textit{exploits}
+        \end{itemize}
+    \item if pointer can have multiple objects: fork execution for each one
+        \begin{itemize}
+        \item like it was an if statement
+        \end{itemize}
+    \item solve equation for all possible indices in memory object
     \end{itemize}
 \end{frame}

@@ -1,0 +1,206 @@
+\begin{frame}[fragile]{running example}
+\begin{lstlisting}[language=C,style=script]
+int array[2];
+int foo(int x, int y){
+    array[x] = 0x10;
+    array[y] = 0x20;
+    return array[x] + array[y];
+}
+\end{lstlisting}
+\begin{itemize}
+\item exercise: possible return values?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{in angr (0)}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont]
+p = angr.Project('mem-demo.so', load_options={'auto_load_libs': False})
+x = claripy.BVS('x', 31).zero_extend(1) # 0 sign bit + [31 unknown bits]
+y = claripy.BVS('y', 31).zero_extend(1) # 0 sign bit + [31 unknown bits]
+foo_func = p.loader.find_symbol('foo').rebased_addr
+foo_prototype = angr.sim_type.SimTypeFunction(
+    args=(angr.sim_type.SimTypeInt(), angr.sim_type.SimTypeInt()),
+    returnty=angr.sim_type.SimTypeInt()
+)
+st = p.factory.call_state(foo_func, x, y, prototype=foo_prototype)
+st.add_constraints(x >= 0, x < 2, y >= 0, y < 2)
+sm = p.factory.simulation_manager(st, save_unconstrained=True)
+sm.explore()
+print(sm)
+    # <SimulationManager with 1 deadended>
+print(sm.deadended[0].regs.eax)
+    # <BV32 0x40>
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{in angr (0): warnings}
+\begin{Verbatim}[fontsize=\fontsize{8}{9}]
+WARNING  | The program is accessing register with an unspecified value.
+           This could indicate unwanted behavior.
+WARNING  | angr will cope with this by generating an unconstrained symbolic variable
+           and continuing. You can resolve this by:
+WARNING  | 1) setting a value to the initial state
+WARNING  | 2) adding the state option ZERO_FILL_UNCONSTRAINED_{MEMORY,REGISTERS}, 
+              to make unknown regions hold null
+WARNING  | 3) adding the state option SYMBOL_FILL_UNCONSTRAINED_{MEMORY,REGISTERS},
+              to suppress these messages.
+WARNING  | Filling register 76 with 4 unconstrained bytes referenced from 0x4010fd
+           (foo+0x4 in mem-demo.so (0x10fd))
+WARNING  | Filling register 68 with 4 unconstrained bytes referenced from 0x401107
+           (foo+0xe in mem-demo.so (0x1107))
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{in angr (0b)}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont]
+p = angr.Project('mem-demo.so', load_options={'auto_load_libs': False})
+x = claripy.BVS('x', 31).zero_extend(1)
+y = claripy.BVS('y', 31).zero_extend(1)
+foo_func = p.loader.find_symbol('foo').rebased_addr
+foo_prototype = angr.sim_type.SimTypeFunction(
+    args=(angr.sim_type.SimTypeInt(), angr.sim_type.SimTypeInt()),
+    returnty=angr.sim_type.SimTypeInt()
+)
+st = p.factory.call_state(foo_func, x, y, prototype=foo_prototype,
+    add_options=[
+        angr.options.SYMBOL_FILL_UNCONSTRAINED_MEMORY,
+        angr.options.SYMBOL_FILL_UNCONSTRAINED_REGISTERS,
+    ]
+)
+st.add_constraints(x < 2, y < 2)
+sm = p.factory.simulation_manager(st, save_unconstrained=True)
+sm.explore()
+print(sm)
+    # <SimulationManager with 1 deadended>
+print(sm.deadended[0].regs.eax)
+    # <BV32 0x40>
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{what's angr doing?}
+\begin{Verbatim}[fontsize=\fontsize{11}{12}]
+...
+print(sm.deadended[0].solver.min(x))
+    # 1
+print(sm.deadended[0].solver.max(x))
+    # 1
+print(sm.deadended[0].solver.min(y))
+    # 1
+print(sm.deadended[0].solver.max(y))
+    # 1
+\end{Verbatim}
+\begin{itemize}
+\item problem: angr's default memory write strategy: use maximum possible value for address
+\item compromise: \\
+often close enough \\
+simplifies work for equation solver dramatically \\
+often allows avoiding symbolic execution for much faster emulation 
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{requesting symbolic addressing (1)}
+\begin{Verbatim}[fontsize=\fontsize{10}{11}]
+st = p.factory.call_state(foo_func, x, y, prototype=foo_prototype,
+    add_options=[
+        angr.options.SYMBOL_FILL_UNCONSTRAINED_MEMORY,
+        angr.options.SYMBOL_FILL_UNCONSTRAINED_REGISTERS,
+        angr.options.SYMBOLIC_WRITE_ADDRESSES, # ****** ADDED ******
+    ]
+)
+...
+print(sm.deadended[0].regs.eax)
+\end{Verbatim}
+\hrulefill
+\begin{Verbatim}[fontsize=\fontsize{10}{11}]
+<BV32 0x20 + (if x_0_31 == 0x1 then (if y_1_31 == 0x1 then 0x20 else
+(if x_0_31 == 0x1 then 0x10 else 0x2)) else (if x_0_31 == 0x0 then
+(if y_1_31 == 0x0 then 0x20 else (if x_0_31 == 0x0 then 0x10 else 0x1))
+else 0xc0deb4be))>
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{requesting symbolic addressing (2)}
+\begin{Verbatim}[fontsize=\fontsize{10}{11}]
+<BV32 0x20 + (if x_0_31 == 0x1 then (if y_1_31 == 0x1 then 0x20 else
+(if x_0_31 == 0x1 then 0x10 else 0x2)) else (if x_0_31 == 0x0 then
+(if y_1_31 == 0x0 then 0x20 else (if x_0_31 == 0x0 then 0x10 else 0x1))
+else 0xc0deb4be))>
+\end{Verbatim}
+\hrulefill
+\begin{itemize}
+\item 0x20 + 
+    \begin{itemize}
+    \item if x==1:
+        \begin{itemize}
+        \item if y == 1: 0x20
+        \item if x == 1: 0x10 
+        \item else [impossible]: 0x2 (original array value)
+        \end{itemize}
+    \item if x==0:
+        \begin{itemize}
+        \item if y == 0: 0x20
+        \item if x == 0: 0x10 
+        \item else [impossible]: 0x1 (original array value)
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{with more possibilities}
+\begin{Verbatim}[fontsize=\small]
+int array[30] = { ... }
+\end{Verbatim}
+\begin{Verbatim}[fontsize=\small]
+...
+st.add_constraints(x < 30, y < 30) # instead of x < 2, y < 2
+...
+\end{Verbatim}
+\begin{itemize}
+\item result: much bigger expression\ldots
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{even more possibilities}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}]
+...
+st.add_constraints(x < 100, y < 100) # instead of x < 2, y < 2
+...
+\end{Verbatim}
+\begin{itemize}
+\item problem: angr doesn't consider all possibilities for write by default if more
+    than 128 bytes worth
+\item so: select a new set of strategies
+\end{itemize}
+\begin{Verbatim}[fontsize=\fontsize{8}{9}]
+st.memory.write_strategies = [
+    angr.concretization_strategies.SimConcretizationStrategyRange(4 * 100),
+    angr.concretization_strategies.SimConcretizationStrategyMax()
+]
+st.memory.read_strategies = ... # similar
+\end{Verbatim}
+\begin{itemize}
+\item when accessing memory, consider results of:
+\item a range of up 400 bytes of possibilities \textit{OR}
+\item the maximum possible value
+\end{itemize}
+\end{frame}
+
+\begin{frame}{speed changes}
+\begin{itemize}
+\item just loading file + setting up: about 1.6 s
+\item x < 2, y < 2: around 2.0 s (0.4 s of work)
+\item x < 30, y < 30: around 2.2 s (0.6 s of work)
+\item x < 100, y < 100: around 2.6 s (1.0 s of work)
+\item x < 200, y < 200: around 4.3 s (2.9 s of work)
+\item x < 300, y < 300: around 6.5 s (4.9 s of work)
+\item x < 400, y < 400: around 9.4 s (7.8 s of work)
+\end{itemize}
+\end{frame}
+
+% FIXME:
+    % example with size-2 arrayk
+    % example with size-10 array
+        % show explosion of expression
+    % example with addition: 0x40 always
+    % example with really complex expression
+

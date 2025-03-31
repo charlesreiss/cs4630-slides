@@ -16,14 +16,11 @@
 \input{../symbolic/symbolic-exec-example1}
 \input{../symbolic/symbolic-exec-example2}
 
-% FIXME:
-    % applying to reverse engineering:
-        % symbolic execution on assembly
-        % example with call to suspicious function
+\subsection{aside: symbolic exec abstraction}
+\input{../symbolic/symbolic-exec-abstract}
 
-    % challenge we'll talk about later
-        % how to model pointers?
-        
+\subsection{concolic}
+\input{../symbolic/symbolic-aside}
 
 \subsection{for bounds checking}
 \input{../symbolic/symbolic-exec-example-bounds}
@@ -45,17 +42,14 @@
 \input{../symbolic/symbolic-readwritep}
 \input{../symbolic/symbolic-varmem-example}
 
+\section{libc optimization}
+\input{../symbolic/angr-libc}
+
 \section{finding overflows examples}
 \input{../symbolic/angr-find-oflow}
 % FIXME 
     % on OVER, SUBTERFUGE, ROP
     % making RT equal something with OVER
 
-\section{avoiding state explosion?}
-% FIXME: write
-
-\section{symbolic execution for ROP}
-% FIXME: write
-\begin{frame}{angrop}
-\end{frame}
-
+\section{symbolic execution tradeoffs}
+\input{../symbolic/exec-tradeoffs}

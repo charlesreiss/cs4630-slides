@@ -1,0 +1,35 @@
+\begin{frame}{symbolic exec tradeoffs}
+    \begin{itemize}
+    \item very resource intensive, often intractable
+        \begin{itemize}
+        \item sort of analyses one runs for weeks to find bugs/exploits
+        \item limits on size of inputs
+        \end{itemize}
+    \item tools that work from source code probably a lot faster
+        \begin{itemize}
+        \item can avoid complications of working with `raw' pointers
+        \end{itemize}
+    \item often compromising accuracy for performance
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{things symbolic exec good/bad at}
+    \begin{itemize}
+    \item good:
+    \item \textit{if konw where input comes from}, exploring most code paths input code trigger
+    \item \textit{if code has bounds check}, finding bugs that do out-of-bound accesses
+        \begin{itemize}
+        \item trick: execute slow version with debugging tools that do extra bounds checks
+        \end{itemize}
+    \vspace{.5cm}
+    \item bad:
+    \item handling variable-sized data (symbolic write issue)
+        \begin{itemize}
+        \item better for variants using higher-level representation with machine code
+        \end{itemize}
+    \item handling large inputs/codebases/functions
+        \begin{itemize}
+        \item lots of memory + compute usage for modestly sized code
+        \end{itemize}
+    \end{itemize}
+\end{frame}

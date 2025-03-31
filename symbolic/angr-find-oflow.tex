@@ -1,5 +1,5 @@
-\begin{frame}[fragile]{angr and `solving' overflows/etc.}
-\begin{Verbatim}[fontsize=\fontsize{8}{9}]
+\begin{frame}[fragile]{angr and `solving' overflows/etc. (1)}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}]
 ...
 p = angr.Project('./over.exe', load_options={'auto_load_libs': False})
 input_chars = [claripy.BVS('in_{}'.format(i), 8) for i in range(5000)]
@@ -9,11 +9,40 @@ st = p.factory.full_init_state(...,
 )
 st.libc.max_gets_size = 4500
 sm = p.factory.simulation_manager(st, save_unconstrained=True)
-for _ in range(10000):
-    sm.step()
-    for un_st in sm.unconstrained:
-        un_st.add_constraints(st.regs.pc == 0x12345678)
-        print(un_st.posix.dumps(0))
-        break
 \end{Verbatim}
 \end{frame}
+
+\begin{frame}[fragile]{angr and `solving' overflows/etc. (2)}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}]
+...
+sm = p.factory.simulation_manager(st, save_unconstrained=True)
+while True:
+    sm.step()
+    for un_st in sm.unconstrained:
+        if un_st.solver.symbolic(un_st.regs_pc):
+            un_st.add_constraints(un_st.regs.pc == 0x12345678)
+            print(un_st.posix.dumps(0))
+            break
+\end{Verbatim}
+\begin{itemize}
+\item my desktop: produces input that overwrites return address 0x12345678 for OVER in about 2 minutes + 16 GB of RAM
+\end{itemize}
+\end{frame}
+
+\begin{frame}{automatic exploits?}
+\begin{itemize}
+\item setting PC to particular value is good start
+\item can extend further:
+\item scan emulated environment for executable memory with symbolic contents
+    \begin{itemize}
+    \item angr: can enable map of where symbolic values are used in memory (looked up by dependent part of input)
+    \end{itemize}
+\item check how value of registers/stack pointer relates to input
+    \begin{itemize}
+    \item see which registers/etc. are symbolic
+    \item try to solve for 
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+

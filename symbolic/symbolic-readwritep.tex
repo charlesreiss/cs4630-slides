@@ -55,7 +55,8 @@ void example(int a, int b) {
     \vspace{.5cm}
     \item track \textit{memory objects} that pointers point to
         \begin{itemize}
-        \item angr can't easily do this --- info not available in assembly
+        \item angr can't really do this --- info not available in assembly
+        \item really want to have `pointers' that aren't integers
         \end{itemize}
     \item if pointer goes outside intended memory object: found a bug!
         \begin{itemize}

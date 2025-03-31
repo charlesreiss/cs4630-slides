@@ -1,0 +1,85 @@
+\begin{frame}{handling I/O}
+    \begin{itemize}
+    \item so far: showed function arguments being variables
+    \item often: want to handle I/O
+    \vspace{.5cm}
+    \item idea: track contents of files like arrays in memory
+        \begin{itemize}
+        \item bytes of file can be symbolic (expressions)
+        \item read/write operations use/modify these arrays
+        \end{itemize}
+    \item want to test different inputs
+        \begin{itemize}
+        \item initialize virtual file to fixed contents
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{angr: symbolic input}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}]
+# array of 5000 symbolic bytes named in_0, in_1, ...
+input_chars = [claripy.BVS('in_{}'.format(i), 8) for i in range(5000)]
+the_input = claripy.Concat(*input_chars)
+
+# setup symbolic execution state with stdin being this file
+st = p.factory.full_init_state(...,
+    stdin=angr.SimFileStream(name='stdin', content=the_input, has_end=True),
+)
+...
+\end{Verbatim}
+\begin{itemize}
+\item simulation runs copying symbolic values when stdin is read
+\item then, find a specific state, solve for \textbf{\textit{a}} possible value
+    \begin{itemize}
+    \item (0 = Linux `file descriptor' for stdin; 1 = stdout)
+    \end{itemize}
+\end{itemize}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}]
+print("stdin", some_state.posix.dumps(0))
+print("stdout", some_state.posix.dumps(1))
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{angr and virtual files}
+    \begin{itemize}
+    \item angr: two ways to intercept file operations
+    \item one: intercept system calls (requests to OS)
+        \begin{itemize}
+        \item means very Linux-specific and very Windows-specific code
+        \item one gets()/fgets()/etc. operation often turns into many system calls
+        \end{itemize}
+    \item two: replace libc functions with `symbolic' versions
+        \begin{itemize}
+        \item faster
+        \item doesn't work in statically linked programs
+        \item won't detect issues resulting from libc details
+        \item (example: leftover uninitalized values)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{example: other libc interception}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}]
+class memcpy(angr.SimProcedure):
+  def run(self, dst_addr, src_addr, limit):
+    if not self.state.solver.symbolic(limit):
+        conditional_size = self.state.solver.eval(limit)
+    else:
+      # constraints on the limit are added during the store
+      max_memcpy_size = self.state.libc.max_memcpy_size
+      max_limit = self.state.solver.max_int(limit)
+      min_limit = self.state.solver.min_int(limit)
+      conditional_size = min(max_memcpy_size, max(min_limit, max_limit))
+      ...
+    ...
+    # simplified 
+    src_mem = self.state.memory.load(src_addr, conditional_size, endness="Iend_BE")
+    self.state.memory.store(dst_addr, src_mem, size=conditional_size, endness="Iend_BE")
+
+    return dst_addr
+\end{Verbatim}
+\begin{itemize}
+\item approximation --- choosing specific size
+\end{itemize}
+\end{frame}
+

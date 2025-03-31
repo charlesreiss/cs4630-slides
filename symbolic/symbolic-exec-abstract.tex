@@ -1,0 +1,19 @@
+\begin{frame}{executing what\ldots}
+    \begin{itemize}
+    \item angr: executing machine code
+        \begin{itemize}
+        \item works on any existing application
+        \item handles programs with mix of many programming languages
+        \item allows mixing with ``fast''(ish) emulation
+        \item can find issues resulting from reused uninitialized values/etc.
+        \item more convenient for building exploits
+        \end{itemize}
+    \item other systems (exmaple: KLEE): work on `intermediate representation'
+        \begin{itemize}
+        \item simplifies equations dramatically
+        \item idenitfies out-of-bounds/etc. accesses as error typically \\
+        (even if it never triggers something exploitable now)
+        \item tractable without approximation for much larger programs
+        \end{itemize}
+    \end{itemize}
+\end{frame}

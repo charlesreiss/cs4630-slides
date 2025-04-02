@@ -68,7 +68,7 @@ void foo(unsigned a,
                                             a: $\alpha$, b: $\beta - \delta + 4$
                                         } edge from parent[visible on=<8->]
                                         child {
-                                            node[dashedQuestion] {} edge from parent[visible on=<8->]
+                                            node[dashedQuestion,visible on=<8->] {} edge from parent[visible on=<8->]
                                         }
                                     }
                                 }
@@ -80,7 +80,7 @@ void foo(unsigned a,
                         }
                     }
                     child { node[state,visible on=<3->] {$\alpha=0$\\a: $\alpha$, b: $\beta$} edge from parent[visible on=<3->] node {false} edge from parent[visible on=<3->]
-                        child { node[dashedQuestion] {} } edge from parent[visible on=<3->]
+                        child { node[dashedQuestion,visible on=<3->] {} edge from parent[visible on=<3->] } edge from parent[visible on=<3->]
                         }
                     }
                 ;

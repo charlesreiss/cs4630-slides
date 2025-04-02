@@ -11,12 +11,6 @@
         \item not enough time/space to explore all those paths
         \item too complicated to actually solve equations to find inputs
         \end{itemize}
-    \vspace{.5cm}
-    \item greybox fuzzing: one practical compromise
-        \begin{itemize}
-        \item replaced equation solving with (educated) guessing
-        \item tried to explore enough paths
-        \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -31,11 +25,11 @@
             \item if analysis finds way to reach assertion failure, it's fails the assertion
             \end{itemize}
         \vspace{.5cm}
-        \item symbolic execution, greybox fuzzing: always sound
+        \item greybox fuzzing, symbolic exec \textit{without approximations}: always sound
             \begin{itemize}
             \item because they actually run the program
             \end{itemize}
-        \item symbolic execution: complete \textbf{if all paths are solved}
+        \item symbolic execution without approximations: complete \textbf{if all paths are solved}
             \begin{itemize}
             \item but that isn't practical for a large program
             \end{itemize}
@@ -46,10 +40,13 @@
     \begin{itemize}
     \item other design points than symbolic execution:
     \vspace{.5cm}
-    \item tracking \myemph{all the varaible values}
+    \item not tracking \myemph{all the variable values}
     \item alternative: \myemph{just track properties of interest}
     \vspace{.5cm}
     \item compute precisely \myemph{what paths through code are possible}
-    \item alternative: \myemph{use some approximation}
+    \item alternative: \myemph{track sub/superset of possible paths}
+        \begin{itemize}
+        \item superset = find false positives; subset = false negatives
+        \end{itemize}
     \end{itemize}
 \end{frame}

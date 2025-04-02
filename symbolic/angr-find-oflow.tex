@@ -21,26 +21,48 @@ while True:
     for un_st in sm.unconstrained:
         if un_st.solver.symbolic(un_st.regs_pc):
             un_st.add_constraints(un_st.regs.pc == 0x12345678)
-            print(un_st.posix.dumps(0))
+            print(un_st.posix.dumps(0)) # compute stdin value
             break
 \end{Verbatim}
 \begin{itemize}
-\item my desktop: produces input that overwrites return address 0x12345678 for OVER in about 2 minutes + 16 GB of RAM
+\item my desktop w/ slow angr install: produces input that overwrites return address 0x12345678 for OVER in about 2 minutes
 \end{itemize}
 \end{frame}
 
-\begin{frame}{automatic exploits?}
+\begin{frame}{semi-automatic exploits?}
 \begin{itemize}
-\item setting PC to particular value is good start
+\item finding what part of input sets PC to particular value is good start
+\vspace{.5cm}
 \item can extend further:
 \item scan emulated environment for executable memory with symbolic contents
     \begin{itemize}
-    \item angr: can enable map of where symbolic values are used in memory (looked up by dependent part of input)
+    \item angr: enable lookup table (input byte $\rightarrow$ where in simulated memory)
     \end{itemize}
 \item check how value of registers/stack pointer relates to input
     \begin{itemize}
     \item see which registers/etc. are symbolic
-    \item try to solve for 
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{symbolic execution as RE tool}
+\begin{itemize}
+\item angr --- primarily designed for program analysis
+    \begin{itemize}
+    \item can tie to getting function call graph/etc. information
+    \item (like displayed in Ghidra, but programmatically)
+    \end{itemize}
+\item can filter symbolic execution down particular path
+    \begin{itemize}
+    \item identify path + solve for how to go that way
+    \item examine registers/memory after each step
+    \item manually identify good/bad paths
+    \end{itemize}
+\item can record history of calls/memory accesses in path
+\item for practicality: need to prune irrelevant paths
+    \begin{itemize}
+    \item can specify functions to avoid
+    \item can set custom `exploration' strategy to filter
     \end{itemize}
 \end{itemize}
 \end{frame}

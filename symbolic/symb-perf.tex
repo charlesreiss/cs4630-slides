@@ -1,11 +1,22 @@
-\begin{frame}{performance issue with symbolic exec}
+\begin{frame}{performance issue with symbolic exec (1)}
     \begin{itemize}
     \item for angr: I've been running with pypy (JIT'ing Python)
         \begin{itemize}
         \item (because easier for me to install)
         \item probably means I'm missing a bunch of performance
         \end{itemize}
-    \item but more fundamental issues:
+    \item for bugfinding: something like KLEE probably better
+        \begin{itemize}
+        \item working from higher-level representation than assembly/machine code
+        \item (of course, less useful for reverse engineering)
+        \end{itemize}
+    \item but more fundamental issues\ldots
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{performance issues with symbolic exec (2)}
+    \begin{itemize}
+    \item some more fundamental issues:
         \begin{itemize}
         \item loops with variable iteration count explode number of states
         \item memory accesses explode number of states/condition complexity
@@ -15,6 +26,9 @@
         \begin{itemize}
         \item prune likely less-useful paths
         \item merge identical states reached in different ways
+        \item keep symbolic inputs as small as possible
+        \item replace uninteresting functions with approximations
+        \item only symbolically execute `interesting' functions
         \item \ldots
         \end{itemize}
     \end{itemize}

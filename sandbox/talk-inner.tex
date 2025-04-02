@@ -1,0 +1,160 @@
+
+
+\section{principle: least privilege}
+\input{../sandbox/least-priv}
+
+\subsection{what do browsers need?}
+\input{../sandbox/what-browser-perms}
+
+\subsection{OS users}
+\input{../sandbox/os-users}
+
+\subsection{promise: privilege separation}
+\input{../sandbox/browser-priv-sep-intro}
+
+\section{privilege separation: video decode}
+\input{../sandbox/privsep-video-decode}
+
+\subsection{another user is not enough}
+\input{../sandbox/privsep-video-decode-too-much}
+
+\subsection{awkwardness of creating a new user}
+\input{../sandbox/privsep-video-decode-new-userp}
+
+\section{system calls as OS interface}
+\input{../sandbox/what-systemcalls}
+
+\section{definition: sandbox}
+\input{../sandbox/sandbox-defn}
+
+\section{Linux system call filtering}
+\subsection{simple Linux system call filtering}
+\input{../sandbox/linux-syscall-filter}
+
+\subsection{more fine-grained filtering?}
+\input{../sandbox/linux-syscall-filter-delta}
+
+\input{../sandbox/linux-syscall-filter-bpf}
+
+\input{../sandbox/linux-syscall-open-filter-hard}
+
+\subsection{more sophisticated filters}
+\section{Chrome architecture}
+\input{../sandbox/chrome-arch}
+
+% FIXME: Chrome Site Isolation
+\subsection{Site Isolation}
+\input{../sandbox/chrome-site-isolation}
+
+\section{OpenSSH architecture}
+\input{../sandbox/openssh-privsep}
+
+\subsection{exercise: priv sep for}
+\input{../sandbox/priv-sep-for-exer}
+
+\section{normal application confinement?}
+\input{../sandbox/app-confine-intro}
+
+
+\subsection{applied to VLC?}
+\input{../sandbox/app-confine-vlc-example}
+
+\subsection{shared services?}
+\input{../sandbox/app-confine-shared-services}
+
+\subsection{pro/con shared services}
+\input{../sandbox/app-confine-levels}
+
+\subsection{SELinux}
+\input{../sandbox/selinux}
+
+\subsection{versus capability-type approach}
+\input{../sandbox/v-cap-approach}
+
+\subsection{chroot}
+\input{../sandbox/chroot}
+
+\subsubsection{exercise}
+\input{../sandbox/chroot-exer}
+
+\subsection{Linux namespaces}
+\input{../sandbox/linux-ns}
+
+% FIXME: Chrome sandboxing failing:
+    % https://theori.io/research/escaping-chrome-sandbox/
+        % Binder (Chrome internal IPC library)
+    % % https://googleprojectzero.blogspot.com/2020/04/you-wont-believe-what-this-one-line.html
+    % https://bugs.chromium.org/p/project-zero/issues/detail?id=1991
+    % https://bugs.chromium.org/p/project-zero/issues/detail?id=1985
+
+% FIXME: SELinux sandbox escape:
+    % https://www.openwall.com/lists/oss-security/2016/09/25/1
+
+\subsection{Linux programs that attempt confinement}
+\input{../sandbox/example-linux}
+
+\subsection{containers}
+\input{../sandbox/containers}
+
+
+\subsubsection{runC bug}
+\input{../sandbox/runc-bug}
+
+\subsection{SELinux sandbox escape}
+\input{../sandbox/selinux-escape}
+\section{the Android sandbox}
+\input{../sandbox/android-sandbox}
+
+% FIXME: Android sandbox
+
+\subsection{OSX sandboxing}
+\input{../sandbox/osx-sandbox}
+\subsection{Qubes}
+\input{../sandbox/qubes}
+
+\section{Which sandboxing?}
+\input{../sandbox/which-sandbox-exer}
+
+\section{sandboxing without OS support}
+\input{../sandbox/no-os-support}
+
+\subsection{Wasm}
+\input{../sandbox/wasm}
+
+
+\section{sandboxing API: RLBox}
+\input{../sandbox/rlbox}
+
+\section{application permissions}
+\input{../sandbox/app-perms}
+
+\subsection{UI problems}
+\input{../sandbox/app-perm-problems}
+
+\subsection{do request right permissions?}
+\againframe<2>{appPermUI}
+\input{../sandbox/app-perm-right}
+
+\subsection{do users understand permissions?}
+\againframe<3>{appPermUI}
+\input{../sandbox/app-perm-users}
+
+\subsection{how to ask for permission?}
+\input{../sandbox/app-perm-how}
+
+\subsection{permissions abuse: Cloak and Dagger}
+\input{../sandbox/cloak-and-dagger}
+
+\subsection{permissions abuse: information leak}
+\input{../sandbox/info-leak-reardon}
+
+% FIXME: sandboxing and UIs
+
+
+% FIXME: https://www.usenix.org/system/files/sec19-reardon.pdf
+% FIXME: SFI and/or WAsm
+
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}

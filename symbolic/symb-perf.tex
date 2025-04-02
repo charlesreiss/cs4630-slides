@@ -1,0 +1,21 @@
+\begin{frame}{performance issue with symbolic exec}
+    \begin{itemize}
+    \item for angr: I've been running with pypy (JIT'ing Python)
+        \begin{itemize}
+        \item (because easier for me to install)
+        \item probably means I'm missing a bunch of performance
+        \end{itemize}
+    \item but more fundamental issues:
+        \begin{itemize}
+        \item loops with variable iteration count explode number of states
+        \item memory accesses explode number of states/condition complexity
+        \item conditions sometimes intractable to solve
+        \end{itemize}
+    \item some heuristics to mitigate
+        \begin{itemize}
+        \item prune likely less-useful paths
+        \item merge identical states reached in different ways
+        \item \ldots
+        \end{itemize}
+    \end{itemize}
+\end{frame}

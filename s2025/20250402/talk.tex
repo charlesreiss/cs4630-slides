@@ -1,0 +1,88 @@
+\date{}
+\title{}
+\date{}
+\usepackage[outputdir=latex.out]{minted}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item random testing and its problems
+        \begin{itemize}
+        \item overtesting `syntax error' inputs
+        \item lots of changing things that don't run different code
+        \end{itemize}
+    \item coverage idea --- try to run all the code
+    \item coverage-guided fuzz testing
+        \begin{itemize}
+        \item make variants of set of `base' tests
+        \item add to set of base tests when change in what code runs
+        \item instrument program to check what code runs
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{note re: lecture recordings}
+\end{frame}
+
+\input{../common/listingsLib}
+
+\begin{frame}{aside: industrial scale fuzz-testing}
+    \begin{itemize}
+    \item lots of testing in parallel
+        \begin{itemize}
+        \item AFL and similar tools can coordinate multiple test workers
+        \end{itemize}
+    \item fast tests
+        \begin{itemize}
+        \item try to test without starting new copy of program/etc. everytime
+        \item prefer base tests that don't have long runtime
+        \end{itemize}
+    \item heuristics for:   
+        \begin{itemize}
+        \item guessing which base tests are more useful
+        \item making coverage metrics more useful (e.g. compare char-by-char instead of large units)
+        \item \ldots
+        \end{itemize}
+    \item in practice: successful + relatively easy security-bug finding techniques
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{duplicate test cases}
+\begin{Verbatim}[fontsize=\small]
+for (int i = 0; i < 10; i += 1) {
+    if (...) break;
+    else if (...) { A } else { B }
+}
+if (...) { C }
+if (...) { D: BUG() }
+\end{Verbatim}
+\begin{itemize}
+\item want: one way to reach BUG() (example: segfault)
+\item coverage-guided fuzzing will often find many, example:
+    \begin{itemize}
+    \item one test case that runs Ax3, Bx7,C, D
+    \item one test case that runs Ax10, D (and not B or C)
+    \item one test case that runs C, D (and not A or B)
+    \end{itemize}
+\item extra work needed to consolidate results for bug-fixing
+\end{itemize}
+\end{frame}
+
+\begin{frame}{FUZZ assignment}
+\end{frame}
+
+\input{../symbolic/talk-inner}
+
+\input{../static/talk-inner}
+
+\input{../sandbox/talk-inner}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\end{document}

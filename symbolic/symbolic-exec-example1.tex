@@ -80,7 +80,7 @@ void foo(int a, int b) {
 \end{frame}
 
 \begin{frame}[fragile]{example 1 in angr}
-\begin{Verbatim}[fontsize=\fontsize{10}{11},commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\fontsize{10}{11}]
 p = angr.Project("./example1", load_options={'auto_load_libs': False})
 
 foo_addr = p.loader.main_object.get_symbol('foo').rebased_addr

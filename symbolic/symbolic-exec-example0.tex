@@ -86,7 +86,7 @@ simgr = p.factory.simulation_manager(init_state)
 \end{frame}
 
 \begin{frame}[fragile]{angr running}
-\begin{Verbatim}[fontsize=\fontsize{10}{11},commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\fontsize{10}{11}]
 print(f"RIP={simgr.active[0].regs.rip} versus {foo_addr:#x}")
     # \textit{RIP=<BV64 0x4011f9> versus 0x4011f9}
 print(f"EAX={simgr.active[0].regs.eax}")

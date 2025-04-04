@@ -16,13 +16,13 @@
 
 \begin{frame}{complete versus sound}
     \begin{itemize}
-        \item complete:
+        \item complete (all true positives found)
             \begin{itemize}
-            \item if way to reach assertion failure, analysis finds it
+            \item if way to find problem, analysis finds it
             \end{itemize}
-        \item sound:
+        \item sound (no false positives found)
             \begin{itemize}
-            \item if analysis finds way to reach assertion failure, it's fails the assertion
+            \item if analysis finds way problem, it's a real problem
             \end{itemize}
         \vspace{.5cm}
         \item greybox fuzzing, symbolic exec \textit{without approximations}: always sound

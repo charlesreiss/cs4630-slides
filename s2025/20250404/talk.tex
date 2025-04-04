@@ -1,0 +1,57 @@
+\date{}
+\title{}
+\date{}
+\usepackage[outputdir=latex.out]{minted}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item symbolic execution idea
+        \begin{itemize}
+        \item emulate program with symbolic (algebraic) instead of concrete values
+        \item solve equations to figure out direction of if statements/etc.
+        \end{itemize}
+    \item for generating test cases/finding bugs
+        \begin{itemize}
+        \item can explore ``all'' paths without guesswork
+        \end{itemize}
+    \item for reverse engineering/exploit generation
+        \begin{itemize}
+        \item track how input ends up in registers/memory
+        \item figure out how to get some code to run
+        \end{itemize}
+    \item performance issues 
+    \item compromises on completeness for practicality
+    \end{itemize}
+\end{frame}
+
+
+
+\section{libc optimization}
+\input{../symbolic/angr-libc}
+
+\section{finding overflows examples}
+\input{../symbolic/angr-find-oflow}
+% FIXME 
+    % on OVER, SUBTERFUGE, ROP
+    % making RT equal something with OVER
+
+\section{performance problems}
+\input{../symbolic/symb-perf}
+
+\input{../static/talk-inner}
+
+\input{../sandbox/talk-inner}
+
+
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\end{document}

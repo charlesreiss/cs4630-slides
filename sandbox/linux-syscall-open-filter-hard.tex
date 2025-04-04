@@ -1,4 +1,27 @@
 
+\begin{frame}[fragile,label=open]{Linux system call: open}
+\begin{lstlisting}[language=C,style=small]
+open("foo.txt", O_RDONLY);
+\end{lstlisting}
+\begin{itemize}
+\item parameters:
+    \begin{itemize}
+    \item system call number: 2 (``open'')
+    \item argument 1: 0x7fffe983 (address of string ``foo.txt'')
+    \item argument 2: 0 (value of ``\texttt{O\_RDONLY}'')
+    \end{itemize}
+\item very problematic to filter using BPF interface
+\vspace{.5cm}
+\item can deal with using `ptrace' --- Linux debugging interface
+    \begin{itemize}
+    \item BPF can trigger something like a debugger breakpoint
+    \item breakpoint wakes up monitor program (attached like debugger)
+    \item `monitor' program can perform system call on program's behalf
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+
 \begin{frame}[fragile,label=openRuleP1]{lots of ways to open (1)}
 \begin{itemize}
 \item let's say we want to allow/disallow (but not `normal' files):

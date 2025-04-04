@@ -15,7 +15,7 @@
 \end{frame}
 
 \begin{frame}[fragile,label=selinuxLabels1]{viewing/assigning labels (1)}
-\begin{Verbatim}
+\begin{Verbatim}[fontsize=\small]
 $ ls -Z /var/log/lastlog
 -rw-r--r--. root root system_u:object_r:lastlog_t:s0   /var/log/lastlog
 \end{Verbatim}
@@ -25,7 +25,7 @@ $ ls -Z /var/log/lastlog
 \item object role
 \item lastlog type
 \end{itemize}
-\begin{Verbatim}
+\begin{Verbatim}[fontsize=\small]
 $ chcon --type=newtype_t some_file
 \end{Verbatim}
 \end{frame}
@@ -34,7 +34,7 @@ $ chcon --type=newtype_t some_file
 \begin{itemize}
 \item labels via: ``file context mapping''
 \end{itemize}
-\begin{Verbatim}
+\begin{Verbatim}[fontsize=\small]
 $ semanage fcontext --add --type web_files_t '/var/www/html(/.*)?'
 $ restorecon -R -v /var/www/html
 \end{Verbatim}

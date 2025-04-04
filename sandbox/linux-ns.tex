@@ -137,3 +137,17 @@ bin     current     lib     usr
         \end{itemize}
     \end{itemize}
 \end{frame}
+
+\begin{frame}{Linux control groups}
+    \begin{itemize}
+    \item control groups --- tied to namespaces
+    \item primarily: CPU/memory/IO performance restrictions
+        \begin{itemize}
+        \item primarily intended for `friendly sharing' (containers, etc.)
+        \item important for preventing denial-of-service/etc.
+        \item not as big a security conern as file/user/etc. access
+        \end{itemize}
+    \item also mechanism for adding IO device restrictions
+    \item also mechanism to start/stop a bunch of processes together
+    \end{itemize}
+\end{frame}

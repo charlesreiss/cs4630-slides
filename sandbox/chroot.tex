@@ -25,6 +25,7 @@
     \end{itemize}
 \end{frame}
 
+
 \begin{frame}[fragile,label=lsChrootExample]{chroot ls}
 \begin{lstlisting}[language={},style=smaller]
 # mkdir /tmp/example
@@ -43,6 +44,18 @@ lib  lib64  ls
 lib  lib64  ls
 # 
 \end{lstlisting}
+\end{frame}
+
+\begin{frame}{duplicating OS?}
+    \begin{itemize}
+    \item seems like we need second copy of system files
+    \vspace{.5cm}
+    \item modern Linux has better solution (more detail later):
+    \item ``bind mounts''
+        \begin{itemize}
+        \item make alias to part of normal filesystem in temporary directory
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{chroot escapes}

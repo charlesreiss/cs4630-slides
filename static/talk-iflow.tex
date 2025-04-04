@@ -1,0 +1,27 @@
+\begin{frame}{preview: information flow}
+    \begin{itemize}
+    \item really common pattern we want to find: \\
+        data from somewhere gets to dangerous place
+        \begin{itemize}
+        \item pointer to stack escapes function
+        \item input makes it to SQL query, file name
+        \end{itemize}
+    \item we'll talk about it specially next
+    \end{itemize}
+\end{frame}
+
+\section{information flow}
+\input{../static/info-flow-intro}
+
+\subsection{data flow graph}
+\input{../static/info-flow-graph}
+
+\subsection{control flow versus information flow} 
+\input{../static/info-flow-graph-controlp}
+
+\subsection{challenges for data flow}
+\input{../static/data-flow-challenges}
+
+\subsection{sources and sinks}
+\input{../static/sources-and-sinks}
+

@@ -30,6 +30,9 @@
         \end{itemize}
     \vspace{.5cm}
     \item mechanism: reassign user ID numbers in kernel
+        \begin{itemize}
+        \item figuring out what user ID means --- always apply current process mapping
+        \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -129,12 +132,13 @@ bin     current     lib     usr
 \begin{frame}{Linux namespaces (4)}
     \begin{itemize}
     \item other resources with namespaces
+    \item network --- common usage: virtual network device for set processes
         \begin{itemize}
-        \item network --- common usage: virtual network device for set processes
-        \item hostname (``UTS'')
-        \item process identifiers
-        \item control groups (resource limits for memory, CPU usage, disk I/O, etc.)
+        \item different ``what is my IP address?'' answer for different processes
         \end{itemize}
+    \item hostname (``UTS'')
+    \item process identifiers
+    \item control groups (resource limits for memory, CPU usage, disk I/O, etc.)
     \end{itemize}
 \end{frame}
 

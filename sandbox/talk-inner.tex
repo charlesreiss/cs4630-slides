@@ -39,11 +39,14 @@
 
 \input{../sandbox/linux-syscall-filter-bpf}
 
-\input{../sandbox/linux-syscall-open-filter-hard}
-
-\section{libseccomp}
+\subsection{aside: libseccomp}
 \input{../sandbox/libseccomp}
 
+\subsection{problems with filter}
+\input{../sandbox/linux-syscall-open-filter-hard}
+
+\subsection{shared services?}
+\input{../sandbox/app-confine-shared-services}
 
 \subsection{more sophisticated filters}
 \section{Chrome architecture}
@@ -58,19 +61,6 @@
 
 \subsection{exercise: priv sep for}
 \input{../sandbox/priv-sep-for-exer}
-
-\section{normal application confinement?}
-\input{../sandbox/app-confine-intro}
-
-
-\subsection{applied to VLC?}
-\input{../sandbox/app-confine-vlc-example}
-
-\subsection{shared services?}
-\input{../sandbox/app-confine-shared-services}
-
-\subsection{pro/con shared services}
-\input{../sandbox/app-confine-levels}
 
 
 \subsection{versus capability-type approach}

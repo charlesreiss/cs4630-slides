@@ -1,31 +1,40 @@
+\date{}
+\title{}
+\date{}
+\usepackage[outputdir=latex.out]{minted}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
 
+\input{../common/listingsLib}
 
-\section{principle: least privilege}
-\input{../sandbox/least-priv}
+\begin{frame}{last time}
+    \begin{itemize}
+    \item some strategies for static analysis
+        \begin{itemize}
+        \item not running code like symbolic exec/fuzzing/etc.
+        \item can use approximations of possible code paths
+        \item track abstraction of value\ldots
+            \begin{itemize}
+            \item things pointer could point to
+            \item is pointed-to-value free/not-free at this time
+            \end{itemize}
+        \end{itemize}
+    \item difficulty of sandboxing
+        \begin{itemize}
+        \item what applications need to do
+        \end{itemize}
+    \item privilege separation
+    \item sandboxing via system call filters
+    \end{itemize}
+\end{frame}
 
-\subsection{what do browsers need?}
-\input{../sandbox/what-browser-perms}
+\begin{frame}{quiz}
+\end{frame}
 
-\subsection{OS users}
-\input{../sandbox/os-users}
-
-\subsection{promise: privilege separation}
-\input{../sandbox/browser-priv-sep-intro}
-
-\section{privilege separation: video decode}
-\input{../sandbox/privsep-video-decode}
-
-\subsection{another user is not enough}
-\input{../sandbox/privsep-video-decode-too-much}
-
-\subsection{awkwardness of creating a new user}
-\input{../sandbox/privsep-video-decode-new-userp}
-
-\section{system calls as OS interface}
-\input{../sandbox/what-systemcalls}
-
-\section{definition: sandbox}
-\input{../sandbox/sandbox-defn}
+\begin{frame}{assignment Q+A}
+\end{frame}
 
 \section{Linux system call filtering}
 \subsection{simple Linux system call filtering}
@@ -153,13 +162,9 @@
 \subsection{permissions abuse: information leak}
 \input{../sandbox/info-leak-reardon}
 
-% FIXME: sandboxing and UIs
-
-
-% FIXME: https://www.usenix.org/system/files/sec19-reardon.pdf
-% FIXME: SFI and/or WAsm
-
 
 \section{backup slides}
 \begin{frame}{backup slides}
 \end{frame}
+
+\end{document}

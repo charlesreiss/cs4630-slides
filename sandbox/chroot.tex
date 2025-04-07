@@ -58,6 +58,37 @@ lib  lib64  ls
     \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile,label=chrootOutsideExample1]{accessing outside the root (1)}
+    \begin{itemize}
+    \item can still have open files outside the root
+    \item example: \texttt{chroot /tmp/example /ls >tmp.txt}
+        \begin{itemize}
+        \item `ls' running from chroot writes to `tmp.txt'
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=chrootOutsideExample2]{accessing outside the root (2)}
+    \begin{itemize}
+    \item can still have open directories outside the root
+    \end{itemize}
+\begin{Verbatim}[fontsize=\small]
+int dir_fd = open("/tmp/other", O_PATH);
+// change root to /tmp/example, cd to /
+if (0 != chroot("/tmp/example")) handle_error();
+if (0 != chdir("/")) handle_error();
+// access /tmp/other/other.txt through old open directory
+int other_txt_fd = openat(dir_fd, "other.txt", O_RDONLY);
+read(other_txt_fd, ...);
+// access /tmp/outside.txt through old open directory
+int outside_fd = openat(dir_fd, "../outside.txt", O_RDONLY);
+read(other_fd, ...);
+\end{Verbatim}
+    \begin{itemize}
+    \item oops.
+    \end{itemize}
+\end{frame}
+
 \begin{frame}{chroot escapes}
     \begin{itemize}
     \item chroot prevents accessing files outside the new \texttt{/}

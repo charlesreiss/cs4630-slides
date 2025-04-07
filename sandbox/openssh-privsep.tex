@@ -5,6 +5,11 @@
     \vspace{.5cm}
     \item separate network processing code from authentication code
     \item seperate process per connection --- users don't share
+    \vspace{.5cm}
+    \item developed before system call filtering was widely available
+        \begin{itemize}
+        \item uses separate user + chroot (we'll talk later) to isolate
+        \end{itemize}
     \end{itemize}
 \end{frame}
 

@@ -1,20 +1,4 @@
 \begin{frame}[fragile]{strace hello\_world (1)}
-\begin{itemize}
-\item \texttt{strace} --- Linux tool to trace system calls
-\item run on assembly program we saw earlier:
-\end{itemize}
-\begin{Verbatim}[fontsize=\small]
-$ strace -o trace.txt ./hello_world
-$ cat trace.txt
-execve("./hello_world", ["./hello_world"],
-        0x7ffeedafd0a0 /* 28 vars */) = 0
-write(1, "Hello, World!\n\0", 14)       = 14
-exit(0)                                 = ?
-+++ exited with 0 +++
-\end{Verbatim}
-\end{frame}
-
-\begin{frame}[fragile]{strace hello\_world (2)}
 \begin{lstlisting}[language=C,style=small]
 #include <stdio.h>
 int main() { puts("Hello, World!"); }
@@ -57,29 +41,68 @@ exit_group(0)                           = ?
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{strace hello\_world (2)}
+\begin{frame}[fragile]{only after starting? (1)}
+\begin{itemize}
+\item okay, but that's only after starting up, right\ldots?
+\item surely simpler if we limit system calls after startup
+\item yes, but\ldots
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{only after starting? (2)}
 \begin{lstlisting}[language=C,style=smaller]
 #include <stdio.h>
-int main() { puts("Hello, World!"); }
+int main() {
+    FILE *fh = fopen("output.txt", "w");
+    fprintf(fh, "example");
+    fclose(fh);
+}
 \end{lstlisting}
-\hrule
-\small when dynamically linked:
-\begin{Verbatim}[fontsize=\fontsize{9.5}{10.5}\selectfont]
-execve("./hello_world", ["./hello_world"], 0x7ffcfe91d540 /* 28 vars */) 
-                                        = 0
-brk(NULL)                               = 0x55d6c351b000
-...
-openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
-fstat(3, {st_mode=S_IFREG|0644, st_size=196684, ...}) = 0
-mmap(NULL, 196684, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f7a62dd3000
+\hrulefill
+\begin{Verbatim}[fontsize=\fontsize{9}{10}]
+$ strace ...
+... [startup stuff, not shown] ...
+openat(AT_FDCWD, "output.txt", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 3
+newfstatat(3, "", {st_mode=S_IFREG|0664, st_size=0, ...}, AT_EMPTY_PATH) = 0
+write(3, "example", 7)                  = 7
 close(3)                                = 0
-access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
-openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
-read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0"..., 832) = 832
-...
-close(3)                                = 0
-write(1, "Hello, World!\n", 14)         = 14
-exit_group(0)                           = ?
-+++ exited with 0 +++
 \end{Verbatim}
 \end{frame}
+
+\begin{frame}[fragile]{only after starting? (2)}
+\begin{lstlisting}[language=C,style=script]
+#include <curl/curl.h>
+int main() {
+    CURL *handle = curl_easy_init();
+    curl_easy_setopt(handle, CURLOPT_URL, "https://www.cs.virginia.edu/~cr4bd/test.txt");
+    curl_easy_perform(handle);
+    ...
+}
+\end{lstlisting}
+\vspace{-.5cm}
+\hrulefill
+\begin{Verbatim}[fontsize=\fontsize{8}{9}]
+$ strace ...
+... [startup stuff, not shown] ...
+futex(0x73f0bd640ba4, FUTEX_WAKE_PRIVATE, 2147483647) = 0                                               
+...
+openat(AT_FDCWD, "/usr/lib/ssl/openssl.cnf", O_RDONLY) = 3
+...
+sysinfo({...}) = 0
+...
+socket(AF_INET6, SOCK_DGRAM, IPPROTO_IP) = 3
+close(3)                                = 0                                                             
+socketpair(AF_UNIX, SOCK_STREAM, 0, [3, 4]) = 0                                                         
+fcntl(3, F_GETFL)                       = 0x2 (flags O_RDWR)                                            
+fcntl(3, F_SETFL, O_RDWR|O_NONBLOCK)    = 0                                                             
+...
+rt_sigaction(SIGPIPE, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0                        
+...
+socket(AF_INET, SOCK_STREAM, IPPROTO_TCP) = 5
+setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = 0
+...
+getrandom("\xd6\x8c\xc3\x42\x07\x92"..., 48, 0) = 48 
+...
+\end{Verbatim}
+\end{frame}
+

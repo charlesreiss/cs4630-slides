@@ -1,7 +1,38 @@
 \begin{frame}{changing what programs can name}
     \begin{itemize}
-    \item seccomp, SELinux: program tries to access X, checks if allowed
+    \item seccomp, separate users: program tries to access X, checks if allowed
     \vspace{.5cm}
     \item alternate idea: changing what Xs program can name
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{aside: capabilities/ambient authority (1)}
+    \begin{itemize}
+    \item user permissions --- authority tied to each running program
+    \item ``access control lists'' for resources
+    \item sometimes called ``ambient authority''
+    \vspace{.5cm}
+    \item alternate model: ``capabilities''
+    \item running program has list of things it can access/how
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{aside: capabilities/ambient authority (2)}
+    \begin{itemize}
+    \item capabilities = program has list of things it can access
+    \item most common thing with design: open files
+    \vspace{.5cm}
+    \item used as basis of some operating system designs
+        \begin{itemize}
+        \item not desktop OSes, but\ldots
+        \item Unix/Linux has many things with `flavor' of capabilities
+        \end{itemize}
+    \item in ``fully'' capability-based OSes also\ldots
+        \begin{itemize}
+        \item capabilities for accessing non-regular-file resources (processes, directories,
+            network ports, \ldots)
+        \item way of transferring capabilities between programs (instead of, e.g., filenames/PIDs/etc.)
+        \item OS doesn't track user IDs/etc. (though maybe system services do)
+        \end{itemize}
     \end{itemize}
 \end{frame}

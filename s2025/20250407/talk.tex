@@ -33,6 +33,82 @@
 \begin{frame}{quiz}
 \end{frame}
 
+\begin{frame}[fragile]{quiz Q2}
+\begin{Verbatim}[fontsize=\small]
+struct CalendarEntry{ ...,
+    related_document: RefCell<Document>,
+    attendees: Vec<Rc<Attendee>>
+}
+struct Attendee { ..., calendar: RefCell<Calendar> }
+\end{Verbatim}
+    \begin{itemize}
+    \item B: new calendar entry with different attendees + same document?
+        \begin{itemize}
+        \item RefCell doesn't do reference counting --- only one `master' reference
+        \end{itemize}
+    \item D: remove an attendee from entry's list + update attendee's calendar
+        \begin{itemize}
+        \item yes, provided no other writer for attendee's calendar
+        \item calendar RefCell is internally mutable even though Attendee overall is not
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{quiz Q3}
+\begin{itemize}
+    \item A: add entry to attendee with mutable reference
+        \begin{itemize}
+        \item RefCell --- internally mutable
+        \item fine, provided not in the middle of code also trying to modify Calendar
+        \end{itemize}
+    \item D: multiple mutable references to different attendees, same calendar entry
+        \begin{itemize}
+        \item fine, provided we don't access the calendar entry from multiple references at once
+        \item RefCell checks at runtime when we actually borrow reference
+        \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{quiz Q4}
+\begin{Verbatim}[fontsize=\small]
+struct CalendarEntry { ...,
+    attendees: Vec<Rc<Attendee>>,
+}
+struct Calander { 
+    entries: Vec<Rc<RefCell<CalendarEntry>>>,
+}
+struct Attendee { ...,
+    calendar: RefCell<Calendar>,
+}
+\end{Verbatim}
+    \begin{itemize}
+    \item B: works, but I think less good design
+    \item C: Weak ref in Calendar + Entry = everything gets freed
+        \begin{itemize}
+        \item only weak refs = free CalendarEntry
+        \item nothing making sure CalendarEntry's are not freed, \\ unless 
+        something else keeps list of all CalendarEntrys and all Attendees
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{quiz Q5}
+    \begin{itemize}
+    \item B: \verb|x + y == x * y|
+        \begin{itemize}
+        \item coverage information isn't going to help
+        \item always says that all the code runs
+        \end{itemize}
+    \item C: \verb|x == y && x + y == 4|
+        \begin{itemize}
+        \item problem: if we have test case where x == y, 
+            randomly changing it probably makes that false 
+        \item so, challenge of finding x + y == 4 not helped by information about
+            when we reach second half of \verb|&&|
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
 \begin{frame}{assignment Q+A}
 \end{frame}
 
@@ -40,30 +116,30 @@
 \subsection{simple Linux system call filtering}
 \input{../sandbox/linux-syscall-filter}
 
-\section{aside: strace}
-\input{../sandbox/strace-hello}
-
 \subsection{more fine-grained filtering?}
 \input{../sandbox/linux-syscall-filter-delta}
 
 \input{../sandbox/linux-syscall-filter-bpf}
 
+\subsection{aside: strace}
+\input{../sandbox/strace-hello}
+
+\subsection{filtering is hard}
 \input{../sandbox/linux-syscall-open-filter-hard}
 
 \section{libseccomp}
 \input{../sandbox/libseccomp}
 
 
-\subsection{more sophisticated filters}
+\section{OpenSSH architecture}
+\input{../sandbox/openssh-privsep}
+
 \section{Chrome architecture}
 \input{../sandbox/chrome-arch}
 
 % FIXME: Chrome Site Isolation
 \subsection{Site Isolation}
 \input{../sandbox/chrome-site-isolation}
-
-\section{OpenSSH architecture}
-\input{../sandbox/openssh-privsep}
 
 \subsection{exercise: priv sep for}
 \input{../sandbox/priv-sep-for-exer}

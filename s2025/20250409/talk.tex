@@ -1,66 +1,38 @@
+\date{}
+\title{}
+\date{}
+\usepackage[outputdir=latex.out]{minted}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
 
+\input{../common/listingsLib}
 
-\section{principle: least privilege}
-\input{../sandbox/least-priv}
+\begin{frame}{last time}
+    \begin{itemize}
+    \item challenges with system call filtering
+    \vspace{.5cm}
+    \item privilege separation idea
+    \item limits on what it does/does not mitigate
+    \vspace{.5cm}
+    \item started: idea of choosing what program can name
+    \end{itemize}
+\end{frame}
 
-\subsection{what do browsers need?}
-\input{../sandbox/what-browser-perms}
+\begin{frame}{some FUZZ notes}
+    \begin{itemize}
+    \item fuzz program suddenly stops --- memory limit probably too low
+    \item if number of tests per unit time is low
+        \begin{itemize}
+        \item make base inputs simpler
+        \item worried about something not being in starting inputs? make multiple base cases
+        \end{itemize}
+    \end{itemize}
+\end{frame}
 
-\subsection{OS users}
-\input{../sandbox/os-users}
-
-\subsection{promise: privilege separation}
-\input{../sandbox/browser-priv-sep-intro}
-
-\section{privilege separation: video decode}
-\input{../sandbox/privsep-video-decode}
-
-\subsection{another user is not enough}
-\input{../sandbox/privsep-video-decode-too-much}
-
-\subsection{awkwardness of creating a new user}
-\input{../sandbox/privsep-video-decode-new-userp}
-
-\section{system calls as OS interface}
-\input{../sandbox/what-systemcalls}
-
-\section{definition: sandbox}
-\input{../sandbox/sandbox-defn}
-
-\section{Linux system call filtering}
-\subsection{simple Linux system call filtering}
-\input{../sandbox/linux-syscall-filter}
-
-\section{aside: strace}
-\input{../sandbox/strace-hello}
-
-\subsection{more fine-grained filtering?}
-\input{../sandbox/linux-syscall-filter-delta}
-
-\input{../sandbox/linux-syscall-filter-bpf}
-
-\subsection{aside: libseccomp}
-\input{../sandbox/libseccomp}
-
-\subsection{problems with filter}
-\input{../sandbox/linux-syscall-open-filter-hard}
-
-\subsection{shared services?}
-\input{../sandbox/app-confine-shared-services}
-
-\subsection{more sophisticated filters}
-\section{Chrome architecture}
-\input{../sandbox/chrome-arch}
-
-% FIXME: Chrome Site Isolation
-\subsection{Site Isolation}
-\input{../sandbox/chrome-site-isolation}
-
-\section{OpenSSH architecture}
-\input{../sandbox/openssh-privsep}
-
-\subsection{exercise: priv sep for}
-\input{../sandbox/priv-sep-for-exer}
+\begin{frame}{assignment Q+A}
+\end{frame}
 
 
 \subsection{versus capability-type approach}
@@ -95,9 +67,9 @@
 \subsubsection{runC bug}
 \input{../sandbox/runc-bug}
 
-
 \subsubsection{Chrome sandbox escapes}
 \input{../sandbox/chrome-sandbox-escape}
+
 
 \section{the Android sandbox}
 \input{../sandbox/android-sandbox}
@@ -151,7 +123,13 @@
 % FIXME: https://www.usenix.org/system/files/sec19-reardon.pdf
 % FIXME: SFI and/or WAsm
 
+\input{../bounds/talk-inner}
+
 
 \section{backup slides}
 \begin{frame}{backup slides}
 \end{frame}
+
+\input{../sandbox/talk-backup}
+
+\end{document}

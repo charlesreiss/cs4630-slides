@@ -1,0 +1,92 @@
+\date{}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item capability idea --- limit what program can name
+    \item chroot
+    \item Linux namespaces
+        \begin{itemize}
+        \item changes how looks up\ldots
+        \item mounted filesystems/user IDs/network devices/\ldots
+        \end{itemize}
+    \vspace{.5cm}
+    \item started: sandbox escape
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{SANDBOX homework}
+\end{frame}
+
+\subsubsection{runC bug}
+\input{../sandbox/runc-bug}
+
+\subsubsection{Chrome sandbox escapes}
+\input{../sandbox/chrome-sandbox-escape}
+
+
+\section{the Android sandbox}
+\input{../sandbox/android-sandbox}
+
+% FIXME: Android sandbox
+
+\subsection{OSX sandboxing}
+\input{../sandbox/osx-sandbox}
+\subsection{Qubes}
+\input{../sandbox/qubes}
+
+\section{Which sandboxing?}
+\input{../sandbox/which-sandbox-exer}
+
+\section{sandboxing without OS support}
+\input{../sandbox/no-os-support}
+
+\subsection{Wasm}
+\input{../sandbox/wasm}
+
+
+\section{sandboxing API: RLBox}
+\input{../sandbox/rlbox}
+
+\section{application permissions}
+\input{../sandbox/app-perms}
+
+\subsection{UI problems}
+\input{../sandbox/app-perm-problems}
+
+\subsection{do request right permissions?}
+\againframe<2>{appPermUI}
+\input{../sandbox/app-perm-right}
+
+\subsection{do users understand permissions?}
+\againframe<3>{appPermUI}
+\input{../sandbox/app-perm-users}
+
+\subsection{how to ask for permission?}
+\input{../sandbox/app-perm-how}
+
+\subsection{permissions abuse: Cloak and Dagger}
+\input{../sandbox/cloak-and-dagger}
+
+\subsection{permissions abuse: information leak}
+\input{../sandbox/info-leak-reardon}
+
+% FIXME: sandboxing and UIs
+
+
+% FIXME: https://www.usenix.org/system/files/sec19-reardon.pdf
+% FIXME: SFI and/or WAsm
+
+\input{../bounds/talk-inner}
+
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\end{document}

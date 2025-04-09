@@ -17,8 +17,11 @@
         \item on Windows, programs have `access tokens' representing their permissions
         \item can create `restricted' version to limit access
         \end{itemize}
-    \vspace{.5cm}
-    \item \url{https://googleprojectzero.blogspot.com/2020/04/you-wont-believe-what-this-one-line.html}:
+    \end{itemize}
+\end{frame}
+\begin{frame}{Chrome sandbox escape (3)}
+    \begin{itemize}
+    \item {\tiny \url{https://googleprojectzero.blogspot.com/2020/04/you-wont-believe-what-this-one-line.html}}:
     \item problem: Windows erronously allowed starting new processes with a more unrestricted token
         \begin{itemize}
         \item supposed to have check where the token being used came from, but incomplete

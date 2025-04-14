@@ -1,13 +1,13 @@
 \begin{frame}[fragile,label=authPtr1]{authenticated pointers (1)}
 \begin{lstlisting}[language={},style=smaller]
 some_function:
-    authentication_code <- hash(
+    authentication_code <- MAC(
         secret key, 
         return address
     )
     ... dangerous function code ...
     assert(authenication_code ==
-        hash(secret key, return addres))
+        MAC(secret key, return addres))
     jump to return address
 \end{lstlisting}
 \end{frame}
@@ -15,14 +15,14 @@ some_function:
 \begin{frame}[fragile,label=authPtr2]{authenticated pointers (2)}
 \begin{lstlisting}[language={},style=smaller]
 some_function:
-    authentication_code <- hash(
+    authentication_code <- MAC(
         secret key,
         stack pointer, 
         return address
     )
     ... dangerous function code ...
     assert(authenication_code ==
-        hash(secret key, stack pointer, return address))
+        MAC(secret key, stack pointer, return address))
     jump to return address
 \end{lstlisting}
 \end{frame}
@@ -48,13 +48,13 @@ some_function:
 
 \begin{frame}[fragile,label=authPtr4]{authenticated pointers (4)}
 \begin{lstlisting}[language={},style=smaller]
-some_vtable[index] <- encode(
+some_vtable[index] <- encrypt(
     secret key,
     label,
     address of some of function
 )
 ... dangerous code ...
-function pointer <- decode(
+function pointer <- decrypt(
     secret key,
     label,
     object->vtable[index]
@@ -93,5 +93,16 @@ call function pointer
     \item authentication keys are in special registers --- need OS to read/set
     \vspace{.5cm}
     \item also can ``mix'' in extra info like stack pointer
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{pointer authentication compiler support?}
+    \begin{itemize}
+    \item commonly enabled on ARM64 for return addreses
+    \item known to be used more extensively on macOS X/iOS kernel
+    \item proposals to use on Linux in global offset table, etc.
+        \begin{itemize}
+        \item GNU Linux linker option -z pac-plt; unclear if used `for real'
+        \end{itemize}
     \end{itemize}
 \end{frame}

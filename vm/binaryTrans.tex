@@ -1,0 +1,118 @@
+% From 20170123
+\usetikzlibrary{positioning}
+
+\begin{frame}{binary translation}
+    \begin{itemize}
+    \item compile assembly to new assembly
+    \vspace{1cm}
+    \item works without instruction set support
+    \item early versions of VMWare on x86 (before x86 added virtualisation support)
+    \item can be used to run one platform on another
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=binTransIdea]{binary translation idea}
+\lstset{
+    language=myasm,
+    style=small,
+    morekeywords={movq,addss,subss}
+}
+\begin{tikzpicture}
+\tikzset{
+    code/.style={inner sep=0mm,align=left},
+    hiOn/.style={alt=#1{rounded corners,fill=green,fill opacity=0.3,text opacity=1.0}{}},
+    markOn/.style={alt=#1{rounded corners,draw,thick}{}},
+}
+\node[code,markOn=<2>,hiOn=<3>] (bb1) {
+\begin{lstlisting}
+0x40FE00: addq %rax, %rbx
+movq 14(%r14,4), %rdx
+addss %xmm0, (%rdx)
+...
+0x40FE3A: jne 0x40F404
+\end{lstlisting}
+};
+\node[right=.25cm of bb1,visible on=<2>,align=left] {
+    divide machine code \\
+    into \textit{basic blocks} \\
+    (= ``straight-line'' code) \\
+    (= code till \\ 
+    jump/call/etc.)
+};
+\node[code,right=.25cm of bb1,visible on=<3>] (bb1New) {
+generated code: \\
+\begin{lstlisting}
+// addq %rax, %rbx
+movq rax_location, %rdi
+movq rbx_location, %rsi
+call checked_addq
+movq %rax, rax_location
+...
+// jne 0x40F404
+... // get CCs 
+je do_jne
+movq $0x40FE3F, %rdi
+jmp translate_and_run
+do_jne:
+movq $0x40F404, %rdi
+jmp translate_and_run
+\end{lstlisting}
+};
+\node[code,markOn=<2>,anchor=north west] (bb2) at (bb1.south west){
+\begin{lstlisting}
+subss %xmm0, 4(%rdx)
+...
+je 0x40F543
+\end{lstlisting}
+};
+\node[code,markOn=<2>,anchor=north west] (bb3) at (bb2.south west){
+\begin{lstlisting}
+ret
+\end{lstlisting}
+};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=binTransIdea2]{a binary translation idea}
+    \begin{itemize}
+    \item convert whole \textit{basic blocks}
+        \begin{itemize}
+        \item code upto branch/jump/call
+        \end{itemize}
+    \item end with call to {\tt translate\_and\_run}
+        \begin{itemize}
+        \item compute new \myemph{simulated PC} address to pass to call
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=binTransIdea3]{making binary translation fast}
+    \lstset{style=small,language=myasm,morekeywords={movq}}
+    \begin{itemize}
+    \item cache converted code
+        \begin{itemize}
+        \item {\tt translate\_and\_run} checks cache first
+        \end{itemize}
+    \item patch calls to {\tt translate\_and\_run} to refer directly to cached code
+    \item do something more clever than \lstinline|movq rax_location, ...|
+        \begin{itemize}
+        \item map (some) registers to registers, not memory
+        \end{itemize}
+    \item ends up being ``just-in-time'' compiler
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{binary translation? really?}
+    \begin{itemize}
+    \item early VMWare: for instructions without hardware virtualization support
+        \begin{itemize}
+        \item only needed for little bits of OS code
+        \end{itemize}
+    \item used by Apple to handle changing CPU designs
+    \item Rosetta 2: run Intel on ARM (current)
+    \item Rosetta: run Power PC on Intel (2005--2011)
+    \item Mac 68k emulator: Run Motorola 680x0 on Power PC (1994--2005)
+    \end{itemize}
+\end{frame}
+

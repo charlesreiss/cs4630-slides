@@ -41,14 +41,16 @@ memcpy(buffer, attacker_controlled, len);
         \item GCC options:
             \begin{itemize}
                 \item \texttt{-D\_FORTIFY\_SOURCE=1} --- enable (backwards-compatible only)
-                \item \texttt{-D\_FORTIFY\_SOURCE=2} --- enable (full)
+                \item \texttt{-D\_FORTIFY\_SOURCE=2} --- enable (constant sizes only)
+                \item \texttt{-D\_FORTIFY\_SOURCE=3} --- enable (computed sizes, sometimes)
                 \item \texttt{-U\_FORTIFY\_SOURCE} --- disable
             \end{itemize}
     \end{itemize}
 \end{frame}
 
+
 \begin{frame}[fragile,label=fortifySrcExample]{bounds checking will happen...}
-will add checks (gcc 9.3 \textbf{-O2})
+will add checks (gcc 9.3 \textbf{-O2}, FORTIFY\_SOURCE=1/2)
 \begin{lstlisting}[language=C,style=smaller]
 void example1() {
     char dest1[1024]; memcpy(dest1, ...); ...
@@ -63,15 +65,22 @@ void example3() {
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile,label=fortifySrcExmaple2]{bounds checking won't happen...}
-will not add check (gcc 9.3 \textbf{-O2})
+\begin{frame}[fragile,label=fortifySrcExample2]{bounds checking will happen...}
+will add checks (gcc 14.2 or clang 20 \textbf{-Os}, FORTIFY\_SOURCE=3)
 \begin{lstlisting}[language=C,style=smaller]
 char dest2[1024];
 void example4() {
     char *p = &dest2[mystery()]; memcpy(p, ...); ...
 }
 \end{lstlisting}
-adds check for size 1024 (max possible size):
+\begin{itemize}
+\item no checking with FORTIFY\_SOURCE=2
+\item extra overhead: computing min(50, 1024-mystery())
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=fortifySrcExample3]{bounds checking will happen...}
+will add check (gcc 14.2 or clang 20 \textbf{-Os}, FORTIFY\_SOURCE=3)
 \begin{lstlisting}[language=C,style=smaller]
 char dest2[1024];
 void example5() {
@@ -81,4 +90,48 @@ void example5() {
     memcpy(p, ...); ...
 }
 \end{lstlisting}
+\begin{itemize}
+\item checks for maximum possible with FORTIFY\_SOURCE=2
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=fortifySourceExample4]{bounds checking won't happen...}
+\begin{lstlisting}[language=C,style=smaller]
+char dest2[1024];
+struct Foo {
+    char buffer1[128];
+    int *pointer;
+    ...
+};
+void example6(struct Foo *f, int size) {
+    memcpy(f->buffer1, dest2, size);
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=fortifySourceExample4]{bounds checking won't quite happen...}
+\begin{lstlisting}[language=C,style=smaller]
+char dest2[1024];
+struct Foo {
+    char buffer1[128];
+    int *pointer;
+    ...
+};
+struct Foo f;
+void example6(int size) {
+    memcpy(f.buffer1, dest2, size);
+}
+\end{lstlisting}
+\begin{itemize}
+\item checks that size is less than sizeof(struct Foo) (not 128)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{implementation}
+    \begin{itemize}
+    \item GCC/clang expose `object size` and `dynamic object size' function
+    \item relies on compiler analysis to know size from see declaration or malloc/etc. assignemnt
+    \vspace{.5cm}
+    \item limited
+    \end{itemize}
 \end{frame}

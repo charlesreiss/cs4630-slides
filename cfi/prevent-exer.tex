@@ -1,17 +1,9 @@
 \begin{frame}[fragile,label=cfiPrevents]{CFI prevents?}
 \begin{lstlisting}[language=C++,style=script]
-class Foo { public:
-    virtual void f() { }
-};
-class Bar : public Foo { public:
-    virtual void f() { g(1); }
-};
-class Quux : public Foo { public:
-    virtual void f() { }
-};
-void g(int x) {
-    if (x == 0) { danger(); }
-}
+class Foo { public: virtual void f() { } };
+class Bar : public Foo { public: virtual void f() { g(1); } };
+class Quux : public Foo { public: virtual void f() { } };
+void g(int x) { if (x == 0) { danger(); } }
 int h(int x) { return 0; }
 int (*ptr)(int) = &h;
 \end{lstlisting}

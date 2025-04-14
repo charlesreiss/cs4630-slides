@@ -76,7 +76,7 @@ strlcat(dest, source2, sizeof dest);
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile,label=cppBounds]{C++ bounds checking}
+\begin{frame}[fragile,label=cppBounds]{C++/Rust bounds checking}
 \lstset{language=C,style=small}
 \begin{lstlisting}
 #include <vector>
@@ -88,5 +88,15 @@ data[60] = 0;
 // throws std::out_of_range exception
 data.at(60) = 0;
 \end{lstlisting}
+\vspace{-\baselineskip}
+\hrulefill
+\begin{Verbatim}[fontsize=\small]
+let data: Vec<i32> = ...;
+data.resize(50, 0);
+// undefined behavior:
+unsafe { *data.get_unchecked_mut(60) = 1; }
+// panics at runtime:
+data[60] = 0;  
+\end{Verbatim}
 \end{frame}
 

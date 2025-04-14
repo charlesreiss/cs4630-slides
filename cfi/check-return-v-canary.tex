@@ -17,7 +17,7 @@
 
 \begin{frame}[fragile,label=cfiLikeCanariesP2]{looks like canaries? (2)}
     \begin{itemize}
-    \item what attacks does this NOT stop that canaries don't?
+    \item what attacks does this NOT stop that canaries do?
     \item example: SortList can be called from \texttt{Innocent}, \\ then return from \texttt{Dangerous}
         \begin{itemize}
         \item assumption: attacker can overwrite return address at right time (running on another core? problem with sortFunc1?)

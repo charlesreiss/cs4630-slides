@@ -1,0 +1,62 @@
+BEFORE: reset little webapp
+
+little webapp:
+http://localhost:8000/demo/
+    - sets a cookie to track my session
+    - has session ID
+    - associated "dangerous action" count -- I'll get to that later
+    - show network log with cookie being sent
+
+http://localhost/xss-demo/demos.html
+    - put things in value
+    - shows up on web page
+    - show source code
+
+    - can also make invisible
+    - show network log and open invisible page
+    - show source code
+
+
+---- SOP demo
+
+three frames:
+    one file with secret code
+        open in seperate window, show source code
+    read local secret link *outside of frame* gets its value
+        could have sent it to remote server (via loading image, e.g.)
+
+    show source code
+        same idea with frame containing collagb
+    open error console
+        click collab link
+        show error
+
+   (can ignore last one, unless asked)
+   
+---- CJack Demo
+
+preview:
+    http://localhost:8000/demo/danger/
+    show dangerous action page of webapp we saw before
+
+you can make iframes invisible
+    displayed but transparent
+    
+show source code
+    code to position 
+
+mitigation
+    show http://localhost:8000/demo/danger-framedeny/
+        show HTTP header difference
+
+    mention breaks things like GCal embedding
+
+---- CORS demo
+
+demonstrate the iframe-based read doesn't work -- as before
+    
+    show good read
+    show Access Control Allow header
+
+
+

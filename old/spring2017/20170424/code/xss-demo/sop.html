@@ -1,0 +1,39 @@
+<h1>Reading things from IFrames</h1>
+<style>div {padding-bottom: 5em;} iframe {width:70%}</style>
+<script>
+function readLocalSecret() {
+    alert(document.getElementById('localFrame').contentDocument.getElementById('secret').innerHTML)
+}
+function readCollab() {
+    alert(document.getElementById('collabFrame').contentDocument.innerHTML)
+}
+</script>
+<div>
+<iframe id="localFrame" src="localsecret.html"></iframe><br>
+<a href="javascript:readLocalSecret()">read local secret</a><br>
+</div>
+
+<div>
+<iframe id="collabFrame" src="https://collab.virginia.edu/"></iframe><br>
+<a href="javascript:readCollab()">read collab webpage?</a><br>
+</div>
+
+<script>
+function readRemoteSecret() {
+    alert(document.getElementById('remoteFrame').contentDocument.getElementById('secret').innerHTML)
+}
+</script>
+<div>
+<iframe id="remoteFrame" src="http://demoapp:8000/demo/secret/"></iframe><br>
+<a href="javascript:readRemoteSecret()">read remote secret?</a><br>
+</div>
+
+<script>
+function readRemoteSecret2() {
+    alert(document.getElementById('remoteFrame2').contentDocument.getElementById('secret').innerHTML)
+}
+</script>
+<div>
+<iframe id="remoteFrame2" src="http://demoapp:8000/demo/readable/"></iframe><br>
+<a href="javascript:readRemoteSecret2()">read remote secret?</a><br>
+</div>

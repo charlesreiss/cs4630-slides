@@ -1,0 +1,14 @@
+\usepackage{environ}
+\NewEnviron{tikzcrossout}{
+    \begin{tikzpicture}
+        \node[draw=red,cross out,thick] {
+            \BODY
+        };
+    \end{tikzpicture}
+}
+\graphicspath{{./figures/}}
+\title{x86-64 (2)}
+\date{}
+\begin{document}
+\input{body}
+\end{document}

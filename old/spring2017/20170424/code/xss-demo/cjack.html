@@ -1,0 +1,30 @@
+<style>
+iframe { height: 12em; width: 60em };
+</style>
+<div style="position: absolute; top:4em">
+    Here, <a href="javascript:;">a link</a> over translucent remote dangerous thing
+<iframe src="http://demoapp:8000/demo/danger-nocsrf/" style="position: absolute; left: 0em; opacity: 0.5; z-index: 1; top: -2em"></iframe>
+</div>
+
+<div style="position: absolute; top:20em">
+    Here, <a href="javascript:;">a link</a> over transparent remote dangerous thing
+<iframe src="http://demoapp:8000/demo/danger-nocsrf/" style="position: absolute; left: 0em; opacity: 0; z-index: 1; top: -2em"></iframe>
+</div>
+
+<div style="position: absolute; top:40em">
+    Here, a <a href="javascript:;">link</a> over translucent remote dangerous thing with X-Frame-Options: SAMEORIGIN
+<iframe src="http://demoapp:8000/demo/danger-framedeny/" style="position: absolute; left: 0em; opacity: 0.5; z-index: 1; top: -2em"></iframe>
+</div>
+
+
+<div style="position: absolute; top:60em;padding-top:.5em">
+    Here, <a href="javascript:;">a link</a> over translucent local dangerous thing
+<iframe src="danger.html" style="position: absolute; left: 0em; opacity: 0.5; z-index: 1; top: 0"></iframe>
+</div>
+
+<div style="position: absolute; top:80em;padding-top:.5em">
+    Here, <a href="javascript:;">a link</a> over transparent local dangerous thing
+<iframe src="danger.html" style="position: absolute; left: 0em; opacity: 0; z-index: 1; top: 0em"></iframe>
+</div>
+
+

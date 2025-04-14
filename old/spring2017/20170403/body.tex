@@ -1,0 +1,1146 @@
+\begin{frame}
+    \titlepage
+\end{frame}
+
+{
+\setbeamercolor{background canvas}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{normal text}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{itemize/enumerate body}{fg=white}
+\setbeamercolor{itemize/enumerate subbody}{fg=white}
+\setbeamercolor{titlelike}{bg=blue!40!black,fg=blue!10!white}
+\begin{frame}<1|handout:1>[noframenumbering]{Changelog}
+    \begin{itemize}
+        \item Corrections made in this version not in first posting:
+        \begin{itemize}
+            \item 3 April 2017: Add corrected verison of format string exploit stack picture (slide 5),
+                in addition to marking old segfaulting version (slide 4)
+            \item 3 April 2017: Fix ROP with VTable overwrite example (slide 11) to
+            use \%rsi instead of \%rdi. I somehow thought *(\%rdi) was
+            looking for a pointer to pointer when it certainly does not
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+}
+
+\section{Review}
+
+\begin{frame}{general format}
+    \begin{itemize}
+    \item similar to last midterm
+        \vspace{.5cm}
+    \item short answer and multiple choice
+    \item often reading vulnerable code and answering questions
+    \item less multiple multiple choice
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{topics}
+    \begin{itemize}
+    \item memory error vulnerabilities
+        \begin{itemize}
+        \item stack smashing, pointer subterfuge, heap smashing, double-free
+        \item format string exploits
+        \item use after free
+        \item integer overflows and buffers
+        \end{itemize}
+    \item function pointers to overwrite
+        \begin{itemize}
+        \item return addresses, stubs, VTables
+        \end{itemize}
+    \item mitigations
+        \begin{itemize}
+        \item ASLR, write XOR execute, stack canaries, guard pages, bounds checking
+        \end{itemize}
+    \item return- and jump-oriented programming
+    \end{itemize}
+\end{frame}
+
+\section{Backup Slides}
+
+\tikzset{
+    stackBox/.style={very thick},
+    allocBox/.style={dashed,very thick,fill=blue!20},
+    onStack/.style={thick,align=center},
+    frameOne/.style={fill=blue!15},
+    frameTwo/.style={fill=red!15},
+    markLine/.style={blue!50!black},
+    markLineB/.style={red!90!black},
+    hiLine/.style={red!90!black},
+}
+\begin{frame}[fragile,label=FormatOneSlide]{format string segfault}
+    \begin{tikzpicture}
+        \tikzset{every node/.style={font=\small}}
+        \begin{scope}[x=1.1cm]
+\draw[thick,-Latex] (-0.25,-5) -- (-0.25, -1) node [midway, above, sloped] {increasing addresses};
+        \draw[stackBox] (0, 0) rectangle (4, -7);
+        \draw[onStack] (0, -6) rectangle (4, -7) node[midway] {\texttt{printf} ret. addr.};
+        \draw[onStack,fill=blue!30] (0, -2) rectangle (4, -6);
+        \node at (2, -2.5) { buffer };
+        \draw[onStack,dotted] (0, -5) rectangle (4, -6) node[midway] { \tt \%c\%c\%c\%c \\ \small(use args 2-5) };
+        \draw[onStack,dotted] (0, -4) rectangle (4, -5) node[midway] { \tt \%c\%c\%.92 \\ \small(use args 6-8) };
+        \draw[onStack,dotted] (0, -3) rectangle (4, -4) node[midway] { \tt u\%n \\ \small (use arg 9)};
+        \draw[onStack] (0, -1) rectangle (4, -2) node[midway] { \texttt{vulnerable} ret. addr. };
+        \begin{scope}[xshift=5cm]
+            \draw[stackBox] (0, 0) rectangle (4, -7);
+            \draw[onStack] (0, -6) rectangle (4, -7) node[midway] {\texttt{printf} ret. addr.};
+            \draw[onStack] (0, -5) rectangle (4, -6) node[midway] { \texttt{printf} arg 7 (\%c) };
+            \draw[onStack] (0, -4) rectangle (4, -5) node[midway] { \texttt{printf} arg 8 (\%.92u) };
+            \draw[onStack] (0, -3) rectangle (4, -4) node[midway] { \texttt{printf} arg 9 (\%n) };
+        \end{scope}
+        \node[anchor=north west] at (8.5, 0) {
+\begin{lstlisting}[language=C,style=script]
+void vulnerable() {
+    char buffer[32];
+    fgets(buffer,
+          sizeof(buffer),
+          stdin);
+    printf(buffer);
+}
+
+// input: 
+// "%c%c%c%c%c%c%.92u%n"
+\end{lstlisting}
+        };
+        \end{scope}
+    \end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}[fragile,label=FormatOneSlide]{format string exploit}
+    \begin{tikzpicture}
+        \tikzset{every node/.style={font=\small}}
+        \begin{scope}[x=1.1cm]
+\draw[thick,-Latex] (-0.25,-5) -- (-0.25, -1) node [midway, above, sloped] {increasing addresses};
+        \draw[stackBox] (0, 0) rectangle (4, -7);
+        \draw[onStack] (0, -6) rectangle (4, -7) node[midway] {\texttt{printf} ret. addr.};
+        \draw[onStack,fill=blue!30] (0, -2) rectangle (4, -6);
+        \node at (2, -2.5) { buffer };
+        \draw[onStack,dotted] (0, -5) rectangle (4, -6) node[midway] { \tt \%c\%c\%c\%c \\ \small(use args 2-5) };
+        \draw[onStack,dotted] (0, -4) rectangle (4, -5) node[midway] { \tt \%c\%c\%c\%. \\ \small(use args 6-8) };
+        \draw[onStack,dotted] (0, -3) rectangle (4, -4) node[midway] { \tt 91u\%n \\ \small (use arg 9-10)};
+        \draw[onStack] (0, -1) rectangle (4, -2) node[midway] { \texttt{vulnerable} ret. addr. };
+        \begin{scope}[xshift=5cm]
+            \draw[stackBox] (0, 0) rectangle (4, -7);
+            \draw[onStack] (0, -6) rectangle (4, -7) node[midway] {\texttt{printf} ret. addr.};
+            \draw[onStack] (0, -5) rectangle (4, -6) node[midway] { \texttt{printf} arg 7 (\%c) };
+            \draw[onStack] (0, -4) rectangle (4, -5) node[midway] { \texttt{printf} arg 8 (\%c) };
+            \draw[onStack] (0, -3) rectangle (4, -4) node[midway] { \texttt{printf} arg 9 (\%.91u) };
+            \draw[onStack] (0, -2) rectangle (4, -3) node[midway] { \texttt{printf} arg 10 (\%n) };
+        \end{scope}
+        \node[anchor=north west] at (8.5, 0) {
+\begin{lstlisting}[language=C,style=script]
+void vulnerable() {
+    char buffer[32];
+    fgets(buffer,
+          sizeof(buffer),
+          stdin);
+    printf(buffer);
+}
+
+// input: 
+// "%c%c%c%c%c%c%.92u%n"
+\end{lstlisting}
+        };
+        \end{scope}
+    \end{tikzpicture}
+\end{frame}
+\begin{frame}[fragile,label=formatExample]{format string overwrite: setup}
+\lstset{
+    language=C,
+    style=smaller,
+}
+\begin{lstlisting}
+    /* advance through 5 registers, then
+     * 5 * 8 = 40 bytes down stack, outputting
+     * 4916157 + 9 characters before using 
+     * %ln to store a long.
+     */
+    fputs("%c%c%c%c%c%c%c%c%c%.4196157u%ln", stdout);
+    /* include 5 bytes of padding to make current location
+     * in buffer match where on the stack printf will be reading.
+     */
+    fputs("?????", stdout);
+    void *ptr = (void*) 0x601038;
+    /* write pointer value, which will include \0s */
+    fwrite(&ptr, 1, sizeof(ptr), stdout);
+    fputs("\n", stdout);
+\end{lstlisting}
+\end{frame}
+
+\section{Stack Smashing Review}
+\begin{frame}<1>[label=trickySS]{stack smashing: the tricky parts}
+    \begin{itemize}
+    \item \myemph<2>{construct machine code that works in any executable}
+        \begin{itemize}
+        \item same tricks as writing relocatable virus code
+        \item usual idea: just execute shell (command prompt)
+        \end{itemize}
+    \item \myemph<3>{construct machine code that's valid input}
+        \begin{itemize}
+        \item machine code usually flexible enough
+        \end{itemize}
+    \item \myemph<4>{finding location of return address}
+        \begin{itemize}
+        \item fixed offset from buffer
+        \end{itemize}
+    \item \myemph<5>{finding location of inserted machine code}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=guessedReturnToStack]{guessed return-to-stack}
+\begin{tikzpicture}
+% FIXME:
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+    xscale=1.3,
+}
+\draw[stackBox] (0, 0) rectangle (10, -6);
+\draw[thick,-Latex] (10.25,-5) -- (10.25, -1) node [midway, below, sloped] {increasing addresses};
+\node[at={(5, 0.1)},anchor=south] { highest address (stack started here)};
+\node[at={(5, -6.1)},anchor=north] { lowest address (stack grows here)};
+
+\draw[onStack] (0, -.25) rectangle (10, -1.25) node[midway,align=center,font=\small] (stackAddr)
+     {return address for {\tt vulnerable}: \\ \fontsize{10}{11}\selectfont\tt\bfseries\color{red}70 fd ff ff  ff ff 00 00 (0x7fff ffff fd70)};
+\draw[onStack,fill=black!20] (0, -1.25) rectangle (10, -2.25) node[midway,align=center,font=\small] {unused space (20 bytes)};
+\draw[onStack,fill=blue!20] (0, -2.25) rectangle (10, -5.25) node[midway,align=center,font=\small] {buffer (100 bytes)};
+
+\draw[onStack] (0, -5.25) rectangle (10, -6) node[midway,align=center,font=\small] {return address for {\tt scanf}};
+
+\draw[onStack,fill=green!20,opacity=0.9] (0, -5.25) rectangle (10, -3) node[midway,align=center,font=\small] {nops (was part of buffer)};
+\draw[onStack,fill=red!20,opacity=0.9] (0, -3) rectangle (10, -1.25) node[midway,align=center,font=\small,text=red!50!black] {machine code (was buffer + unused)};
+
+\draw[-Latex,red,ultra thick,dashed] ([yshift=2.5mm]stackAddr.south east) -- ++(.25cm,0cm) |- (0.25, -5);
+\draw[-Latex,red,ultra thick,dashed] ([yshift=2.5mm]stackAddr.south east) -- ++(.25cm,0cm) |- (7.4, -3.5);
+
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}[label=overwriteLocalStack]{simpler overflow: stack}
+\begin{tikzpicture}
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+}
+\draw[stackBox] (0, 0) rectangle (10, -6);
+\draw[thick,-Latex] (10.25,-5) -- (10.25, -1) node [midway, below, sloped] {increasing addresses};
+\node[at={(5, 0.1)},anchor=south] { highest address (stack started here)};
+\node[at={(5, -6.1)},anchor=north] { lowest address (stack grows here)};
+
+\draw[onStack] (0, -.25) rectangle (10, -1.25) node[midway,align=center,font=\small] (stackAddr)
+     {return address for {\tt giveQuiz}};
+\draw[onStack,fill=green!20] (0, -1.25) rectangle (10, -1.75) node[midway,align=center,font=\small] {
+    score (4 bytes): \only<1>{\tt 00 00 00 00}
+    \only<2>{\color{red}\tt 61 61 61 00}
+};
+\draw[onStack,fill=blue!20] (0, -1.75) rectangle (10, -5.25) node[midway,align=center,font=\small] {buffer (100 bytes)};
+
+\draw[onStack] (0, -5.25) rectangle (10, -6) node[midway,align=center,font=\small] {return address for {\tt gets}};
+
+\begin{visibleenv}<2>
+\node[anchor=south west,font=\tt,red] at (0, -5.25) { aaaa\ldots };
+\node[anchor=north east,font=\tt,red] at (10, -1.75) { \ldots aaaa};
+\node[red] at (5, -3) {input: 103 {\tt a}'s ({\tt a} = {\tt 0x61})};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=returnToStackCanary]{stack canary}
+\begin{tikzpicture}
+% FIXME:
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+    xscale=1.3,
+}
+\draw[stackBox] (0, 0) rectangle (10, -6);
+\draw[thick,-Latex] (10.25,-5) -- (10.25, -1) node [midway, below, sloped] {increasing addresses};
+\node[at={(5, 0.1)},anchor=south] { highest address (stack started here)};
+\node[at={(5, -6.1)},anchor=north] { lowest address (stack grows here)};
+
+\draw[onStack] (0, -.25) rectangle (10, -1.25) node[midway,align=center,font=\small] (stackAddr)
+     {return address for {\tt vulnerable}: \\
+     \only<1>{\fontsize{10}{11}\selectfont\tt\color{black}37 fd 40 00  00 00 00 00 (0x40fd37)}
+     \only<2>{\fontsize{10}{11}\selectfont\tt\bfseries\color{red}70 fd ff ff  ff ff 00 00 (0x7fff ffff fd70)}};
+\draw[onStack,fill=black!20] (0, -1.25) rectangle (10, -1.75) node[midway,align=center,font=\small] {canary: \only<1>{\tt b1 ab bd e8 31 15 df 31}\only<2>{\color{red}{\tt ?? ?? ?? ?? ?? ?? ??}}};
+\draw[onStack,fill=black!20] (0, -1.75) rectangle (10, -2.25) node[midway,align=center,font=\small] {unused space (12 bytes)};
+\draw[onStack,fill=blue!20] (0, -2.25) rectangle (10, -5.25) node[midway,align=center,font=\small] {buffer (100 bytes)};
+
+\draw[onStack] (0, -5.25) rectangle (10, -6) node[midway,align=center,font=\small] {return address for {\tt scanf}};
+
+\begin{visibleenv}<2>
+\draw[-Latex,red,ultra thick] ([yshift=2.5mm]stackAddr.south east) -- ++(.25cm,0cm) |- (0.25, -5);
+\node[anchor=south west,red] at (0.25, -4.75) {
+    machine code for the attacker to run
+};
+\end{visibleenv}
+
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=skipCanary]{skipping the canary}
+\begin{tikzpicture}
+% FIXME:
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+}
+\begin{scope}[xscale=1.2]
+\draw[stackBox] (0, 0) rectangle (10, -6);
+\draw[thick,-Latex] (10.25,-5) -- (10.25, -1) node [midway, below, sloped] {increasing addresses};
+\node[at={(5, 0.1)},anchor=south] { highest address (stack started here)};
+\node[at={(5, -6.1)},anchor=north] { lowest address (stack grows here)};
+
+\draw[onStack] (0, -.25) rectangle (10, -1.25) node[midway,align=center,font=\small] (stackAddr)
+     {return address for {\tt f2b} };
+\draw[onStack,fill=red!20] (0, -1.25) rectangle (10, -2.25) node[midway,align=center,font=\small] (canaryAddr)
+     {stack canary};
+\draw[onStack,fill=green!20] (0, -2.25) rectangle (10, -2.75) node[midway,align=center,font=\small] (ptr) {ptr (8 bytes)};
+\draw[onStack,fill=green!20] (0, -2.75) rectangle (10, -3.25) node[midway,align=center,font=\small] (val) {val (8 bytes)};
+\draw[onStack,fill=blue!20] (0, -3.25) rectangle (10, -5.25) node[midway,align=center,font=\small] {buffer (100 bytes)};
+
+\draw[onStack] (0, -5.25) rectangle (10, -6) node[midway,align=center,font=\small] {return address for {\tt scanf}};
+
+\begin{visibleenv}<2->
+\draw[-Latex,orange,ultra thick] ([xshift=1cm]ptr.east) -- ++(2cm,0cm) |- (stackAddr.east);
+\draw[-Latex,orange,ultra thick,dashed] ([xshift=1cm]val.east) -- ++(2cm,0cm) |- (0.25, -5);
+\end{visibleenv}
+
+\begin{visibleenv}<3>
+\draw[-Latex,red,ultra thick] ([yshift=2.5mm]stackAddr.south east) -- ++(.25cm,0cm) |- (0.25, -5);
+\node[anchor=south west,red] at (0.25, -4.75) {
+    machine code for the attacker to run
+};
+\end{visibleenv}
+\end{scope}
+
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=pointerSub]{pointer subterfuge}
+\lstset{
+    language=C,
+    style=small,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    morekeywords={size_t},
+}
+\begin{lstlisting}
+void f2b(void *arg, size_t len) {
+    char buffer[100];
+    long val = ...; /* assume on stack */
+    long *ptr = ...; /* assume on stack */
+    memcpy(buff, arg, len); /* overwrite ptr? */
+    ~2~*ptr = val~end~; /* arbitrary memory write! */
+}
+\end{lstlisting}
+\imagecredit{adapted from Pincus and Baker, Figure 2}
+% FIXME: stack picture
+\end{frame}
+
+
+
+\begin{frame}[fragile,label=gotOverwrite]{attacking the GOT}
+\begin{tikzpicture}
+% FIXME:
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+}
+\draw[stackBox] (0, 0) rectangle (10, -6);
+\draw[thick,-Latex] (10.25,-5) -- (10.25, -1) node [midway, below, sloped] {increasing addresses};
+\node[at={(5, 0.1)},anchor=south] { highest address (stack started here)};
+\node[at={(5, -6.1)},anchor=north] { lowest address (stack grows here)};
+
+\draw[onStack] (0, -.25) rectangle (10, -1.25) node[midway,align=center,font=\small] (stackAddr)
+     {return address for {\tt f2b} };
+\draw[onStack,fill=red!20] (0, -1.25) rectangle (10, -2.25) node[midway,align=center,font=\small] (canaryAddr)
+     {stack canary};
+\draw[onStack,fill=green!20] (0, -2.25) rectangle (10, -2.75) node[midway,align=center,font=\small] (ptr) {ptr (8 bytes)};
+\draw[onStack,fill=green!20] (0, -2.75) rectangle (10, -3.25) node[midway,align=center,font=\small] (val) {val (8 bytes)};
+\draw[onStack,fill=blue!20] (0, -3.25) rectangle (10, -5.25) node[midway,align=center,font=\small] {buffer (100 bytes)};
+
+\draw[onStack] (0, -5.25) rectangle (10, -6) node[midway,align=center,font=\small] {return address for {\tt scanf}};
+
+\node[anchor=south] at (13.5, -1) { global offset table };
+\draw[stackBox] (11.5, -1) rectangle (15.25, -1.5) node[midway,font=\small] (printfEntry) {GOT entry: printf };
+\draw[stackBox] (11.5, -1.5) rectangle (15.25, -2) node[midway,font=\small] {GOT entry: fopen };
+\draw[stackBox] (11.5, -2) rectangle (15.25, -2.5) node[midway,font=\small] {GOT entry: exit };
+
+\begin{visibleenv}<2->
+\draw[-Latex,orange,ultra thick] ([xshift=1cm]ptr.east) -- ++(2cm,0cm) |- (printfEntry.west);
+\draw[-Latex,orange,ultra thick,dashed] ([xshift=1cm]val.east) -- ++(2cm,0cm) |- (0.25, -5);
+\end{visibleenv}
+
+\begin{visibleenv}<3>
+\draw[-Latex,red,ultra thick] ([yshift=2.5mm]printfEntry.south east) -- ++(.25cm,0cm) |- (0.25, -5);
+\node[anchor=south west,red] at (0.25, -4.75) {
+    machine code for the attacker to run
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}<1>[label=inheritMemLay]{C++ inheritence: memory layout}
+\begin{tikzpicture}
+    \tikzset{
+        vt/.style={fill=blue!30},
+    }
+    \matrix[tight matrix,nodes={text width=3.8cm,text depth=.1ex,font=\small\tt},
+            label={north:InputStream},anchor=north west] (inputStream)  at (0, 0) {
+        |[vt]| vtable pointer \\
+    };
+    \matrix[tight matrix,nodes={text width=3.8cm,text depth=.1ex,font=\small\tt},
+            label={north:SeekableInputStream},anchor=north west] (seekableStream) at (4.5, 0) {
+        |[vt]| vtable pointer \\
+    };
+    \matrix[tight matrix,nodes={text width=6cm,text depth=.1ex,font=\small\tt},
+            label={north:FileInputStream},anchor=north west] (fileStream) at (9, 0) {
+        |[vt]| vtable pointer \\
+        file\_pointer \\
+    };
+    \matrix[tight matrix,nodes={text width=3.8cm,text depth=.1ex,font=\small\tt},anchor=north west] (isVT) at (0, -2) {
+        \tt slot for get\\
+    };
+    \matrix[tight matrix,nodes={text width=3.8cm,text depth=.1ex,font=\small\tt},anchor=north west] (seekVT) at (4.5, -2){
+        \tt slot for get \\
+        \tt slot for seek \\
+        \tt slot for tell \\
+    };
+    \matrix[tight matrix,nodes={text width=6cm,text depth=.1ex,font=\small\tt},anchor=north west] (fileVT) at (9, -2){
+        FileInputStream::get \\
+        FileinputStream::seek \\
+        FileInputStream::tell \\
+    };
+    \draw[thick,-Latex] (inputStream-1-1.east) -- ++(.35cm,0cm) |- (isVT-1-1.east);
+    \draw[thick,-Latex] (seekableStream-1-1.east) -- ++(.35cm,0cm) |- (seekVT-1-1.east);
+    \draw[thick,-Latex] (fileStream-1-1.east) -- ++(.35cm,0cm) |- (fileVT-1-1.east);
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}<1>[fragile,label=target]{NTP exploit picture}
+\lstset{
+    language=C,
+    style=small,
+    moredelim={**[is][\btHL<1|handout:0>]{~1~}{~end~}},
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+}
+\begin{lstlisting}
+    memmove((char *)~1~datapt~end~, dp, (unsigned)dlen);
+\end{lstlisting}
+\begin{tikzpicture}
+\tikzset{box/.style={thick}}
+\draw[box,fill=blue!20] (0, 0) rectangle (10, -0.5) node[midway] (datapt) {datapt (global variable)};
+\draw[box,fill=green!20] (0, -0.5) rectangle (10, -1.5) node[midway] {(other global variables)};
+\draw[box,fill=red!20] (0, -1.5) rectangle (10, -2.5) node[midway] (buffer) {buffer (global array)};
+\begin{visibleenv}<1-2>
+    \draw[very thick,violet!70!black,-Latex] (datapt.west) -- ++(-.5cm,0cm) -| (0.5, -1.75);
+\end{visibleenv}
+\begin{visibleenv}<2->
+    \draw[box,fill=orange!20] (11, -1) rectangle (15, -1.5) node[midway] (strlen) {strlen GOT entry};
+\end{visibleenv}
+\begin{visibleenv}<3->
+    \fill[pattern=north west lines,pattern color=red,opacity=0.4] (0, -2.5) rectangle (10, 0);
+    \draw[-Latex,very thick,dashed,red] (datapt) -| ([xshift=-0.5cm]strlen.west) -- (strlen.west);
+\end{visibleenv}
+\begin{visibleenv}<4->
+    \draw[box,fill=violet!20] (11, -3) rectangle (15, -3.5) node[midway] (system) {{\tt system()} stub};
+    \fill[pattern=north west lines,pattern color=red,opacity=0.4] (11, -1) rectangle (15, -1.5);
+    \draw[-Latex,very thick,dashed,red] (strlen.south) -- (system.north);
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{vulnerable stack layout}
+\begin{tikzpicture}
+\tikzset{
+    hideAfterOverflow/.style={alt=<1-3>{}{opacity=0.25}}
+}
+\draw[stackBox] (0, 0) rectangle (8, -6);
+\draw[thick,-Latex] (-.25,-5) -- (-.25, -1) node [midway, above, sloped] {increasing addresses};
+\draw[onStack,hideAfterOverflow] (0, -.75) rectangle (8, -1.25) node[midway,align=center,font=\small] (retFoo)
+    { return address for {\tt other} };
+\draw[onStack,frameOne,hideAfterOverflow] (0, -1.25) rectangle (8, -1.75) node[midway,align=center,font=\small] (saveFoo)
+    { saved {\tt \%rbp} };
+\draw[onStack,frameOne] (0, -1.75) rectangle (8, -3.00) node[midway,align=center,font=\small] (localFoo)
+    { local variables in {\tt other} };
+\draw[Latex-,very thick,markLine,hideAfterOverflow] (8, -1.75) -- ++(.5cm,0cm) node[right] (fooRbp) {{\tt \%rbp} ({\tt other})};
+\draw[Latex-,very thick,markLine] (8, -3.00) -- ++(.5cm,0cm) node[right] {{\tt \%rsp} ({\tt other})};
+\draw[onStack] (0, -3.00) rectangle (8, -3.50) node[midway,align=center,font=\small] (retBar)
+    { return address for {\tt vulnerable} };
+\draw[onStack,frameTwo] (0, -3.50) rectangle (8, -4.00) node[midway,align=center,font=\small] (saveBar)
+    { saved {\tt \%rbp } };
+\draw[onStack,frameTwo] (0, -4.00) rectangle (8, -5.50) node[midway,align=center,font=\small] (localBar)
+    { {\tt buffer} };
+\draw[Latex-,very thick,markLine] (8, -4.00) -- ++(.5cm,0cm) node[right] (barRbp) {{\tt \%rbp} ({\tt vulnerable})};
+\draw[Latex-,very thick,markLine] (8, -5.50) -- ++(.5cm,-.25cm) node[right] {{\tt \%rsp} ({\tt vulnerable})};
+
+\begin{visibleenv}<1-2>
+    \draw[-Latex,ultra thick,dashed,hiLine] (saveBar.east) -- ++(1cm,0cm) -| ([xshift=1cm]fooRbp.east) -- (fooRbp.east);
+\end{visibleenv}
+\begin{visibleenv}<2->
+    \fill[pattern=north west lines,pattern color=black] (0, -4) rectangle (8, -5.5);
+    \fill[pattern=north west lines,pattern color=black] (7, -3.5) rectangle (8, -5);
+\end{visibleenv}
+\begin{visibleenv}<3>
+    \draw[-Latex,ultra thick,dashed,hiLine] (saveBar.east) -| ([xshift=.25cm]barRbp.east) |- (8, -5.2);
+\end{visibleenv}
+\begin{visibleenv}<4->
+    \draw[Latex-,very thick,markLineB] (8, -5.2) -- ++(.5cm,0cm) node[right] (fooRbpNew) {{\tt \%rbp} ({\tt other})};
+    \draw[onStack,fill=white,draw=red!90!black,ultra thick] (0, -4.2) rectangle (8, -4.7) node[midway,align=center,font=\small] (retFooNew)
+    { return address for {\tt other} };
+    \draw[onStack,frameOne,draw=red!90!black,ultra thick] (0, -4.7) rectangle (8, -5.2) node[midway,align=center,font=\small] (saveFooNew)
+    { saved {\tt \%rbp} };
+    \draw[-Latex,ultra thick,dashed,hiLine] (saveBar.east) -| ([xshift=.25cm]barRbp.east) |- (fooRbpNew.east);
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=heapOverflowAdj]{heap overflow: adjacent allocations}
+\begin{tikzpicture}
+\lstset{language=C++,style=small}
+\node[anchor=north east] (code) at (-1,0) {
+\begin{lstlisting}
+class V {
+  char buffer[100];
+public:
+  virtual void ...;
+  ...
+};
+...
+V *first = new V(...);
+V *second = new V(...);
+strcpy(first->buffer,
+       attacker_controlled);
+\end{lstlisting}
+};
+\node[anchor=south] at (2, 0) {the heap};
+\draw[thick,-Latex] (-.25,-5) -- (-.25, -1) node [midway, above, sloped] {increasing addresses};
+\draw[stackBox,fill=black!20] (0, 0) rectangle (4, -6);
+\draw[onStack,fill=white] (0, -0.5) rectangle (4, -2.0) node[midway,font=\small] {\texttt{second}'s \texttt{buffer}};
+\draw[onStack,fill=white] (0, -2.0) rectangle (4, -2.5) node[midway,font=\small] {\texttt{second}'s \textbf{vtable}};
+
+\draw[onStack,fill=white] (0, -3.0) rectangle (4, -4.5) node[midway,font=\small] {\texttt{first}'s \texttt{buffer}};
+\draw[onStack,fill=white] (0, -4.5) rectangle (4, -5.0) node[midway,font=\small] {\texttt{first}'s \textbf{vtable}};
+
+\begin{visibleenv}<2>
+    \fill[pattern=north west lines,pattern color=red!80] (0, -2.0) rectangle (4, -4.5);
+    \node[anchor=west,font=\small,align=left] at (4.1, -3.25) {result of\\overflowing\\buffer};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=vulnHeapSmash]{heap smashing}
+\lstset{
+    style=small,
+    language=C,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\begin{lstlisting}
+char *buffer = malloc(100);
+... 
+~2~strcpy(buffer, attacker_supplied);~end~
+... 
+free(buffer);
+free(other_thing);
+...
+\end{lstlisting}
+};
+
+\tikzset{xscale=0.9}
+\begin{scope}[overlay]
+    \draw[stackBox,fill=black!20] (0, 1) rectangle (3, -7);
+
+    \draw[onStack] (0, 1) rectangle (3, 0) node[midway,font=\small] {free space};
+    \draw[onStack,fill=white] (0, -0.0) rectangle (3, -0.5) node[midway,font=\small] (freeANext) {next};
+    \draw[onStack,fill=white] (0, -0.5) rectangle (3, -1.0) node[midway,font=\small] (freeAPrev) {prev};
+    \draw[onStack,fill=white] (0, -1.0) rectangle (3, -1.5) node[midway,font=\small] (freeASize) {size/free};
+
+    \draw[onStack,fill=blue!20] (0, -1.7) rectangle (3, -3.0) node[midway,font=\small,align=center] (freeBAlloc) {alloc'd object};
+    \fill[pattern color=red,pattern=north west lines] (0, -0.0) rectangle (3, -3.0);
+    \draw[onStack,fill=white] (0, -3.0) rectangle (3, -3.5) node[midway,font=\small] (freeBSize) {size/free};
+
+    \draw[onStack] (0, -3.5) rectangle (3, -5.0) node[midway,font=\small] {free space};
+    \draw[onStack,fill=white] (0, -5.0) rectangle (3, -5.5) node[midway,font=\small] (freeCNext) {next};
+    \draw[onStack,fill=white] (0, -5.5) rectangle (3, -6.0) node[midway,font=\small] (freeCPrev) {prev};
+    \draw[onStack,fill=white] (0, -6.0) rectangle (3, -6.5) node[midway,font=\small] (freeCSize) {size/free};
+    
+    \draw[-Latex,blue,thick] (freeAPrev) -- ++(1.75cm,0cm) -- ++ (0cm, -1cm) -- ++ (4cm,0cm); %|- (freeCSize);
+    \draw[-Latex,blue,thick] (freeCNext) -- ++(2.00cm,0cm) -- ++ (0cm, 1cm) -- ++ (4cm,0cm); % |- (freeASize);
+    \draw[-Latex,blue,thick,opacity=0.5] (freeCPrev) -- ++(1.25cm,0cm) -- ++(0cm,-2cm);
+    \draw[-Latex,blue,thick,opacity=0.5] (freeANext) -- ++(1.75cm,0cm) -- ++(0cm,2cm);
+
+    \begin{visibleenv}<2->
+        \begin{scope}[xshift=-5cm,yshift=-3cm]
+        \tikzset{gotBox/.style={thick,fill=orange!30}}
+        \draw[gotBox] (0, -1) rectangle (4, -1.5) node[midway,font=\small] (freeEntry) {GOT entry: free};
+        \draw[gotBox] (0, -1.5) rectangle (4, -2) node[midway,font=\small] {GOT entry: malloc };
+        \draw[gotBox] (0, -2) rectangle (4, -2.5) node[midway,font=\small] (printfEntry) {GOT entry: printf };
+        \draw[gotBox] (0, -2.5) rectangle (4, -3.0) node[midway,font=\small] {GOT entry: fopen };
+        \end{scope}
+        \draw[-Latex,red,ultra thick,dashed] (freeAPrev) -- ++(-2cm,0cm) |- ([yshift=-.25cm]printfEntry.east);
+        \draw[-Latex,red,ultra thick,dashed] (freeANext) -- ++(-2.5cm,0cm) -- ++(0cm,-2.5cm) -- ++(-.5cm,0cm) node [black,solid,draw,left,align=left,fill=white] (scode) {shellcode\\(or \texttt{system()}?)};
+    \end{visibleenv}
+    \begin{visibleenv}<3->
+        \begin{scope}[xshift=-5cm,yshift=-3cm]
+        \draw[blue,opacity=0.8] (-2, -2) rectangle (0, -2.5) node[midway,font=\small] {size/free};
+        \draw[blue,opacity=0.8] (-2, -1.5) rectangle (0, -2) node[midway,font=\small] {prev};
+        \draw[blue,opacity=0.8] (-2, -1) rectangle (0, -1.5) node[midway,font=\small] {next};
+        \end{scope}
+        \draw[-Latex,blue,ultra thick,dotted] (freeEntry.north) -- ++(0cm,.1cm) -| (scode.south);
+    \end{visibleenv}
+\end{scope}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=dblFree]{double-frees}
+\lstset{
+    style=small,
+    language=C,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+    moredelim={**[is][\btHL<4|handout:0>]{~4~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\begin{lstlisting}
+~2~free(thing);~end~
+~2~free(thing);~end~
+char *~2~p = malloc(...);~end~
+// `p` points to next/prev
+//     on list of avail.
+//     blocks
+strcpy(p, attacker_controlled);
+malloc(...);
+char *q = malloc(...);
+// `q` points to attacker-
+//     chosen address
+strcpy(q, attacker_controlled2);
+...
+\end{lstlisting}
+};
+
+\tikzset{xscale=0.9}
+\begin{scope}[overlay]
+    \draw[stackBox,fill=black!20] (0, 1) rectangle (3, -7);
+
+    \draw[onStack] (0, 1) rectangle (3, 0) node[midway,font=\small] {free space};
+    \draw[onStack,fill=white] (0, -0.0) rectangle (3, -0.5) node[midway,font=\small] (freeANext) {next};
+    \draw[onStack,fill=white] (0, -0.5) rectangle (3, -1.0) node[midway,font=\small] (freeAPrev) {prev};
+    \draw[onStack,fill=white] (0, -1.0) rectangle (3, -1.5) node[midway,font=\small] (freeASize) {size};
+
+    \draw[onStack,fill=blue!20] (0, -1.7) rectangle (3, -3.0) node[midway,font=\small,align=center] (freeBAlloc) {alloc'd object};
+    \draw[onStack,fill=white] (0, -3.0) rectangle (3, -3.5) node[midway,font=\small] (freeBSize) {size};
+
+    \draw[onStack,fill=yellow!20] (0, -3.5) rectangle (3, -6.0) node[midway,font=\small,align=center,yshift=.5cm] {alloc'd object\\
+                \tt thing\only<2->{/p}};
+    \begin{visibleenv}<2->
+    \draw[onStack,fill=yellow!10,dashed] (0, -5.5) rectangle (3, -6.0) node[midway,font=\small] (freeCPrev) {prev};
+    \draw[onStack,fill=yellow!10,dashed] (0, -5.0) rectangle (3, -5.5) node[midway,font=\small] (freeCNext) {next};
+    \draw[-Latex,blue,thick,opacity=0.5] (freeCPrev) -- ++(1.75cm,0cm) -- ++(0cm,-2cm);
+    \draw[-Latex,blue,thick,opacity=0.5] (freeCNext) -- ++(2.25cm,0cm) -- ++(0cm,2cm);
+    \end{visibleenv}
+    \draw[onStack,fill=white] (0, -6.0) rectangle (3, -6.5) node[midway,font=\small] (freeCSize) {size};
+    
+    \draw[-Latex,blue,thick,opacity=0.5] (freeAPrev) -- ++(1.75cm,0cm) -- ++(0cm,-2cm);
+    \draw[-Latex,blue,thick,opacity=0.5] (freeANext) -- ++(2.25cm,0cm) -- ++(0cm,2cm);
+\end{scope}
+    \begin{visibleenv}<3>
+        \node[draw=red, ultra thick, anchor=east,align=left,fill=white] at (-.5, -4) {
+            malloc returns something \myemph{still on free list} \\
+            because double-free made \myemph{loop} in linked list
+        };
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=dblFreeExpand]{double-free expansion}
+\lstset{
+    style=smaller,
+    language=C,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+    moredelim={**[is][\btHL<4|handout:0>]{~4~}{~end~}},
+    moredelim={**[is][\btHL<5|handout:0>]{~5~}{~end~}},
+    moredelim={**[is][\btHL<6|handout:0>]{~6~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\begin{lstlisting}
+// free/delete 1:
+~2~double_freed->next = first_free;~end~
+~2~first_free = chunk;~end~
+// free/delete 2:
+~3~double_freed->next = first_free;~end~
+~3~first_free = chunk~end~
+// malloc/new 1:
+~4~result1 = first_free;~end~
+~4~first_free = first_free->next;~end~
+// + overwrite:
+~4~strcpy(result1, ...);~end~
+// malloc/new 2:
+~5~first_free = first_free->next;~end~
+// malloc/new 3: 
+result3 = first_free;
+strcpy(result3, ...);
+\end{lstlisting}
+};
+\draw[stackBox] (0,0) rectangle (5, -2);
+\draw[onStack,fill=blue!20] (0,0) rectangle (5, -1) node[midway,font=\small] {next / double free'd object};
+\draw[onStack] (0,-1) rectangle (5, -2) node[midway,font=\small] {size};
+\draw[stackBox] (0, -4) rectangle (5, -5) node[midway,font=\small,align=center] {first\_free \\ (global)};
+\draw[stackBox,dashed] (0.5, -2.5) rectangle (5.5, -3.5) node[midway,font=\small,align=center] {(original first free)};
+
+\begin{visibleenv}<1>
+\draw[-Latex,blue,thick] (0, -4.5) -- ++(-0.5cm,0cm) |- (0.5, -3);
+\end{visibleenv}
+\begin{visibleenv}<2-4>
+\draw[-Latex,blue,thick] (0, -4.5) -- ++(-0.5cm,0cm) |- (0, -1.5);
+\end{visibleenv}
+\begin{visibleenv}<2>
+\draw[-Latex,blue,thick] (5, -0.5) -- ++(1.5cm,0cm) |- (5.5, -3);
+\end{visibleenv}
+
+\begin{visibleenv}<3->
+\draw[-Latex,blue,thick] (5, -0.5) -- ++(0.5cm,0cm) |- (5, -1.5);
+\end{visibleenv}
+
+\begin{visibleenv}<4->
+\fill[pattern=north west lines,pattern color=red] (0, 0) rectangle (5, -1);
+\draw[red,dashed,ultra thick,-Latex] (5,-0.5) -- ++(1cm, 0cm) |- (3, -5.5);
+\draw[stackBox,fill=orange!30] (0, -5.25) rectangle (3, -6.25) node[midway,font=\small] {GOT entry: free};
+\end{visibleenv}
+\begin{visibleenv}<4->
+\node[overlay,text=black,draw=red!80,thick,font=\small\tt,anchor=south] at (3, 0) { first/second malloc };
+\end{visibleenv}
+
+\begin{visibleenv}<5->
+\draw[-Latex,blue,thick] (0, -4.5) -- ++(-1cm, 0cm) |- (0, -5.75);
+\node[text=black,draw=red!80,thick,font=\small\tt,anchor=north west] at (3, -6) { third malloc };
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=vulnUAF]{use-after-free}
+\lstset{
+    language=C++,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\begin{lstlisting}
+class Foo {
+    ...
+};
+Foo *the_foo;
+the_foo = new Foo;
+...
+delete the_foo;
+...
+something_else = new Bar(...);
+the_foo->something();
+\end{lstlisting}
+};
+\node[draw,anchor=north west,align=left] at (-3,0) {
+    {\tt something\_else} likely where {\tt the\_foo} was
+};
+\begin{visibleenv}<2>
+\draw[stackBox] (0, -2) rectangle (3, -5);
+\draw[stackBox] (4, -2) rectangle (7, -5);
+\draw[onStack,fill=blue!20] (0, -2) rectangle (3, -3) node[midway,align=center,font=\small] { vtable ptr (Foo) };
+\draw[onStack,fill=blue!20] (0, -3) rectangle (3, -5) node[midway,align=center,font=\small] {data for Foo };
+\draw[onStack,fill=yellow!20] (4, -2) rectangle (7, -3) node[midway,align=center,font=\small] { vtable ptr (Bar)? \\
+                                                                                   other data? };
+\draw[onStack,fill=yellow!20] (4, -3) rectangle (7, -5) node[midway,align=center,font=\small] { data for Bar  };
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}[fragile,label=intOverflowEx]{integer overflow example}
+\lstset{
+    language=C,
+    morekeywords=item,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\begin{lstlisting}
+item *load_items(int len) {
+  int total_size = ~2~len * sizeof(item);~end~
+  if (total_size >= LIMIT) {
+    return NULL;
+  }
+  item *items = malloc(total_size);
+  for (int i = 0; i < len; ++i) {
+    int failed = read_item(&items[i]);
+    if (failed) {
+      free(items);
+      return NULL;
+    }
+  }
+  return items;
+}
+\end{lstlisting}
+};
+\node[align=left,anchor=north west,font=\small] (t1) at (0,0) {
+    {\tt len} = {\tt 0x4000 0001} \\
+    {\tt sizeof(item)} = {\tt 0x10}
+};
+\node[align=left,anchor=north west,font=\small] (t2) at (t1.south west) {
+    {\tt total\_size} = \\
+    {\tt 0x\textcolor{red}{4} 0000 0010} \\
+};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}<1>[fragile,label=aslr64]{program memory (x86-64 Linux; ASLR)}
+\begin{tikzpicture}[remember picture]
+\tikzset{
+    mylabel/.style={font=\ttfamily,align=center,append after command={([xshift=.1cm]\tikzlastnode.west) edge[ultra thick] ++(-.2cm,0cm)}},
+    mybox/.style={draw,rectangle,minimum width=7cm,fill=white},
+    myhigh/.style={draw,rectangle,line width=1mm, draw=blue!80!black,opacity=.3},
+}
+\node[mybox,minimum height=.5cm,inner ysep=0mm,pattern=north west lines,pattern color=black!50!white] (kernel) {Used by OS};
+\begin{pgfonlayer}{bg}
+    \node[right=1mm of kernel.north east,mylabel] (topLabel) {0xFFFF FFFF FFFF FFFF};
+    \node[right=1mm of kernel.south east,mylabel] {0xFFFF 8000 0000 0000};
+\end{pgfonlayer}
+\node[mybox, minimum height=.5cm, below=.45cm of kernel] (stack) {Stack};
+\begin{pgfonlayer}{bg}
+    \node[right=1mm of stack.north east,mylabel] {\myemph<1>{$\pm$ 0x004 0000 0000}};
+\end{pgfonlayer}
+\node[mybox, minimum height=.5cm, below=0.5cm of stack] (heapB) {Dynamic/Libraries (mmap)};
+\begin{pgfonlayer}{bg}
+    \node[right=1mm of heapB.north east,mylabel] (heapBLabel) {\myemph<1>{$\pm$ 0x100 0000 0000}};
+    \node[below=0mm of heapBLabel,font=\small,inner sep=0mm] {(filled from top with ASLR)};
+\end{pgfonlayer}
+%\begin{pgfonlayer}{bg}
+%    \node[right=1mm of heapB.south east,mylabel] (heapBLabel) {0x0000 2baa aaaa b000 \\ $\pm$ 0x100 0000 0000\*};
+%\end{pgfonlayer}
+\node[mybox, minimum height=.5cm, below=0.5cm of heapB] (heap) {Heap (brk/sbrk)};
+\begin{pgfonlayer}{bg}
+\node[right=1mm of heap.south east,mylabel] (heapBLabel) {\myemph<1>{$\pm$ 0x200 0000}};
+\end{pgfonlayer}
+\node[mybox, minimum height=.5cm, below=0.2mm of heap] (data) {Writable data};
+\begin{pgfonlayer}{bg}
+\node[right=1mm of data.south east,mylabel] (bottomLabel) {\myemph<2-3>{0x0000 0000 0060 0000}*};
+\node[below=0mm of bottomLabel,font=\small,inner sep=0mm] {(constants + 2MB alignment)};
+\end{pgfonlayer}
+\node[mybox, minimum height=.5cm, below=0.6cm of data] (sdata) {Code + Constants};
+\begin{pgfonlayer}{bg}
+\node[right=1mm of sdata.south east,mylabel] (sbottomLabel) {\myemph<2-3>{0x0000 0000 0040 0000}};
+\end{pgfonlayer}
+\coordinate (memBottom) at ($(sdata.south east) + (0mm, -2mm)$);
+\begin{pgfonlayer}{bg}
+\draw[pattern=north west lines, pattern color=black!40!white] (kernel.north west) rectangle (memBottom);
+\end{pgfonlayer}
+
+\begin{visibleenv}<3>
+    \begin{scope}[overlay]
+    \node[draw=red,ultra thick,fill=white,anchor=center,
+          inner sep=.5cm,font=\Large] at (current page.center) {
+        why are these addresses fixed?
+    }; 
+    \end{scope}
+\end{visibleenv}
+
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}<2>[label=mappingList]{the mapping (set by OS)}
+\begin{tikzpicture}
+\tikzset{
+    dot/.style={draw=none}
+}
+\matrix[tight matrix,nodes={minimum height=.525cm,text width=3cm,font=\small\tt},
+    row 1/.style={nodes={font=\bfseries\small\normalfont}},
+    column 1/.style={nodes={draw=none,text width=6cm}},
+    column 2/.style={nodes={text width=1cm}},
+    column 3/.style={nodes={text width=1cm}},
+    column 4/.style={nodes={alt=<2>{opacity=1.0,red}{opacity=0.0},text width=1cm}},
+] {
+program address range \& read? \& write? \& exec? \& real address\\
+0x0000 --- 0x0FFF \& no \& no \& no \& --- \\
+0x1000 --- 0x1FFF \& no \& no \& no \& --- \\
+|[dot]| \ldots \\
+0x40 0000 --- 0x40 0FFF \& yes \& no \& yes \& 0x... \\
+0x40 1000 --- 0x40 1FFF \& yes \& no \& yes \& 0x... \\
+0x40 2000 --- 0x40 2FFF \& yes \& no \& yes \& 0x... \\
+|[dot]| \ldots \\
+0x60 0000 --- 0x60 0FFF \& yes \& yes \& no\& 0x... \\
+0x60 1000 --- 0x60 1FFF \& yes \& yes \& no\& 0x... \\
+|[dot]| \ldots \\
+|[font=\scriptsize]| 0x7FFF FF00 0000 --- 0x7FFF FF00 0FFF \& yes \& yes \& no\& 0x... \\
+|[font=\scriptsize]| 0x7FFF FF00 1000 --- 0x7FFF FF00 1FFF \& yes \& yes \& no\& 0x... \\
+|[dot]| \ldots \\
+};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{malloc/new guard pages}
+\begin{tikzpicture}
+    \draw[thick,-Latex] (-0.25,-5) -- (-0.25, -1) node [midway, above, sloped] {increasing addresses};
+    \node[anchor=south] at (3, 0) {the heap};
+    \draw[stackBox] (0, 0) rectangle (6, -6);
+    \draw[onStack,fill=blue!20] (0, -2) rectangle (6, -3.5)
+        node[midway,align=center] {\texttt{malloc(6000)} \\ (or \texttt{new char[6000]}) };
+    \draw[onStack,pattern=north west lines,pattern color=red] (0, -1) rectangle (6, -2)
+        node[midway,fill=white] {guard page};
+    \draw[onStack,pattern=north west lines,pattern color=red] (0, -4) rectangle (6, -5)
+        node[midway,fill=white] {guard page};
+    \draw[onStack,fill=black!20] (0, -3.5) rectangle (6, -4)
+        node[midway] {unused space};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=returnToSomewhere]{return-to-somewhere}
+\begin{tikzpicture}
+% FIXME:
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+}
+\begin{scope}[xscale=0.75]
+\draw[stackBox] (0, 0) rectangle (10, -6);
+\draw[thick,-Latex] (10.25,-5) -- (10.25, -1) node [midway, below, sloped] {increasing addresses};
+\node[at={(5, 0.1)},anchor=south] { highest address (stack started here)};
+\node[at={(5, -6.1)},anchor=north] { lowest address (stack grows here)};
+
+\draw[onStack] (0, -.25) rectangle (10, -1.25) node[midway,align=center,font=\small] (stackAddr)
+     {return address for {\tt vulnerable}: \\ address of {\tt do\_useful\_stuff}};
+\draw[onStack,fill=black!20] (0, -1.25) rectangle (10, -2.25) node[midway,align=center,font=\small] {unused space (20 bytes)};
+\draw[onStack,fill=blue!20] (0, -2.25) rectangle (10, -5.25) node[midway,align=center,font=\small] {buffer (100 bytes)};
+
+\draw[onStack] (0, -5.25) rectangle (10, -6) node[midway,align=center,font=\small] {return address for {\tt scanf}};
+
+\draw[onStack,fill=red!20,opacity=0.9] (0, -5.25) rectangle (10, -1.25) node[midway,align=center,font=\small,text=red!50!black] {unused junk};
+
+\draw[-Latex,red,ultra thick,dashed] ([yshift=2.5mm]stackAddr.south east) -- ++(.25cm,0cm) |-
+    (11, -4.25) node[align=left,right,font=\small] { {\tt do\_useful\_stuff} \\ (already in program) };
+
+\begin{visibleenv}<2>
+\fill[white,opacity=0.5, overlay] (-1,-2) rectangle (18, -8);
+\end{visibleenv}
+\end{scope}
+\end{tikzpicture}
+\begin{tikzpicture}[overlay,remember picture]
+\begin{visibleenv}<2>
+\node[fill=white,draw,ultra thick,align=center,anchor=center] at (current page.center) {
+    code is \myemph{already in program}??? \\
+    how often does this happen??? \\
+    \ldots turns out ``\myemph{usually}'' --- more later in semester
+};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=loadChain]{ROP chain}
+\begin{tikzpicture}
+% FIXME:
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+    useLine/.style={very thick,blue,Latex-},
+    useLineRet/.style={red,very thick,-Latex,dashed},
+    gadgetBox/.style={blue,thick,text=black,draw,align=left,font=\small},
+}
+\begin{scope}[xscale=0.75]
+\draw[stackBox] (0, 3) rectangle (10, -3);
+\draw[thick,-Latex] (-.25,-1) -- (-.25, 1) node [midway, above, sloped] {increasing addresses};
+\draw[onStack,fill=green!20,opacity=0.9] (0, 3.00) rectangle (10, 1.75) node[midway,align=center,font=\small] (theString)
+     {string to print};
+\draw[onStack,red] (0, 1.75) rectangle (10, .75) node[midway,align=center,font=\small] (gadgetTwo)
+     {pointer to second gadget};
+\draw[onStack,fill=green!20] (0, .75) rectangle (10, -.25) node[midway,align=center,font=\small] (putsAddr)
+     {address of \texttt{puts} (popped from stack)};
+\draw[onStack,red] (0, -.25) rectangle (10, -1.25) node[midway,align=center,font=\small] (stackAddr)
+     {return address for {\tt vulnerable}: \\pointer to first gadget};
+\draw[onStack,fill=blue!20] (0, -1.25) rectangle (10, -2.25) node[midway,align=center,font=\small] {buffer (100 bytes)};
+\draw[onStack,fill=red!20,opacity=0.9] (0, -2.25) rectangle (10, -1.25) node[midway,align=center,font=\small,text=red!50!black] {unused junk};
+        \draw[-Latex,red,ultra thick,dashed] (stackAddr.east) -- ++(3cm,0cm) 
+        node[right,gadgetBox] (firstGad) { {\tt popq \%rax} \\ {\tt ret} };
+        \draw[-Latex,red,ultra thick,dashed] (gadgetTwo.east) -- ++(3cm,0cm)
+        node[right,gadgetBox] (secondGad) { {\tt mov \%rsp, \%rdi} \\ {\tt call *\%rax} };
+    \begin{visibleenv}<2->
+        \node[gadgetBox,dashed,below=1cm of firstGad] (realRet) {
+            \texttt{ret} (in vulnerable)
+        };
+        \draw[useLineRet] ([xshift=1ex]realRet.west) -- ([xshift=-1ex,yshift=2ex]stackAddr.south east);
+    \end{visibleenv}
+    \begin{visibleenv}<3->
+        \draw[useLine] ([yshift=.6em,xshift=1ex]firstGad.west) -- (putsAddr.east);
+    \end{visibleenv}
+    \begin{visibleenv}<4->
+        \draw[useLineRet] ([yshift=-.6em,xshift=1ex]firstGad.west) -- ([xshift=-1ex,yshift=2ex]gadgetTwo.south east);
+    \end{visibleenv}
+    \begin{visibleenv}<4->
+        \draw[useLine] ([yshift=.6em,xshift=1ex]secondGad.west) -- (theString.east);
+    \end{visibleenv}
+\end{scope}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=VTblOver]{VTable overwrite with gadget}
+\lstset{language=C++,style=small}
+    \begin{tikzpicture}
+        \node[anchor=north east] (code) at (1.5, 0) {
+\begin{lstlisting}
+class Bar {
+  char buffer[100];
+  Foo *foo;
+  int x, y;
+  ...
+};
+
+void Bar::vulnerable() {
+  gets(buffer);
+  foo->some_method(x, y);
+  // (*foo->vtable[K])(foo, x, y)
+  // foo == rdi, x == rsi, y == rdx
+}
+\end{lstlisting}
+};
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+    useLine/.style={very thick,blue,Latex-},
+    useLineRet/.style={red,very thick,-Latex,dashed},
+    gadgetBox/.style={blue,thick,text=black,draw,align=left,font=\small},
+}
+        \begin{visibleenv}<1-2>
+\draw[thick,-Latex] (-.25,-4) -- (-.25, -1) node [midway, above, sloped] {increasing addresses};
+        \end{visibleenv}
+    \draw[stackBox] (0, 0) rectangle (3, -5);
+        \draw[onStack,fill=green!20] (0, -1.5) rectangle (3, -5) node[midway] {buffer};
+        \draw[onStack,fill=yellow!20] (0, -1) rectangle (3, -1.5) node[midway] {foo};
+        \draw[onStack,fill=yellow!20] (0, -0) rectangle (3, -1) node[midway] {x, y};
+
+        \draw[stackBox] (4, 0) rectangle (7, -3);
+        \draw[onStack](4, -2.5) rectangle (7, -3) node[midway] {vtable ptr};
+
+        \draw[stackBox] (4, -4) rectangle (7, -6);
+        \node[midway,anchor=south] at (5.5, -5) {func. ptrs};
+        \draw[fill=blue!30] (4, -5) rectangle (7, -5.5) node[midway] { some\_method };
+
+        \draw[-Latex, very thick,blue] (3, -1.25) -- ++ (.5cm, 0) |- (4, -2.9);
+        \draw[-Latex, very thick,blue] (7, -2.75) -- ++ (.5cm, 0) |- (7, -5.9);
+        \begin{visibleenv}<2->
+            \fill[pattern=north west lines,pattern color=red] (0, -0) rectangle (3, -1.5);
+            \draw[-Latex, ultra thick, dashed, red] (3, -1.25) -- ++(.5cm, 0) |- (3, -4.9);
+            \draw[fill=white,fill opacity=0.9,draw=red,very thick] (0, -5) rectangle (3, -4.5)
+                node[midway] {``vtable'' ptr};
+        \end{visibleenv}
+        \begin{visibleenv}<3->
+            \draw[fill=blue!30,fill opacity=0.9,draw=red,very thick] (0, -2.5) rectangle (3, -2)
+                node[midway] {\text{gadget} ptr};
+            \draw[-Latex, ultra thick, dashed, red] (0, -4.75) -- ++(-.5cm, 0) |- (0, -3);
+            \draw[fill=white,fill opacity=0.9,draw=red,very thick] (0, 0) rectangle (3, -1)
+                node[midway] { rsi, \textbf{rdx} values };
+            \draw[Latex-, thick,red] (3, -5) -- ++(0cm, -.5cm) node[below] {rdi value};
+        \end{visibleenv}
+        \begin{visibleenv}<4->
+            \node[align=left,thick,draw,anchor=north east,fill=white] (gadget) at (-1, -3) {
+                gadget: \\ \texttt{push \%rdx; jmp *(\%rdi)}
+            };
+            \draw[-Latex,ultra thick, dashed, red] (0, -2.25) -| (gadget.north);
+            \draw[fill=white,thick,draw=red,text=black]
+                (0, -2.5) rectangle (3, -3) node[midway] {\tt\small *(\%rdi)};
+        \end{visibleenv}
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}<6>[fragile,label=lkpTble]{allocations and lookup table}
+    \begin{tikzpicture}
+        \draw[onStack] (0, 0) rectangle (4, -7);
+        \draw[allocBox] (0, 0) rectangle (4, -0.4);
+        \draw[stackBox] (0, 0) rectangle (4, -0.5);
+        \draw[allocBox] (0, -0.5) rectangle (4, -0.8);
+        \draw[stackBox] (0, -0.5) rectangle (4, -1.0);
+        \draw[allocBox] (0, -1) rectangle (4, -1.9);
+        \draw[stackBox] (0, -1) rectangle (4, -2);
+        \draw[allocBox] (0, -2) rectangle (4, -2.4);
+        \draw[stackBox] (0, -2) rectangle (4, -2.5);
+        \draw[allocBox] (0, -2.5) rectangle (4, -2.7);
+        \draw[stackBox] (0, -2.5) rectangle (4, -3);
+        \draw[stackBox] (0, -3) rectangle (4, -4);
+        \draw[allocBox] (0, -4) rectangle (4, -5.2);
+        \draw[stackBox] (0, -4) rectangle (4, -6);
+
+        \begin{visibleenv}<1->
+            \node[anchor=north west,align=left] at (9, 0) {
+                object allocated in \\ \myemph<1>{power-of-two `slots'}
+            };
+        \end{visibleenv}
+        \begin{visibleenv}<2->
+            \matrix[tight matrix,
+                nodes={text width=1cm,font=\small\tt},anchor=north west,label={north:table}] (tbl) at (7, -1) {
+                $2^4$ \\ $2^4$  \\ $2^5$ \\ $2^5$ \\ $2^4$ \\ $2^4$ \\
+                $0$ \\ $0$ \\
+                $2^6$ \\ $2^6$ \\ $2^6$ \\ $2^6$ \\
+            };
+            \begin{scope}[thick,dotted,-Latex]
+            \draw (4, -.25) -- (tbl-1-1.west);
+            \draw (4, -.75) -- (tbl-2-1.west);
+            \draw (4, -1.25) -- (tbl-3-1.west);
+            \draw (4, -1.75) -- (tbl-4-1.west);
+            \draw (4, -2.25) -- (tbl-5-1.west);
+            \draw (4, -2.75) -- (tbl-6-1.west);
+            \draw (4, -3.25) -- (tbl-7-1.west);
+            \draw (4, -3.75) -- (tbl-8-1.west);
+            \draw (4, -4.25) -- (tbl-9-1.west);
+            \end{scope}
+        \end{visibleenv}
+        \begin{visibleenv}<3>
+            \draw[ultra thick,red] (0, -1) rectangle (4, -2);
+            \node[draw,ultra thick,red,inner sep=0mm,fit=(tbl-3-1) (tbl-4-1)] {};
+            \draw[ultra thick,blue] (0, -4) rectangle (4, -6);
+            \node[draw,ultra thick,blue,inner sep=0mm,fit=(tbl-9-1) (tbl-12-1)] {};
+        \end{visibleenv}
+        \begin{visibleenv}<3->
+            \node[anchor=north west,align=left] at (9, -2) {
+                table stores sizes \\
+                \myemph{for each 16 bytes}
+            };
+        \end{visibleenv}
+        \begin{visibleenv}<4>
+            \draw[ultra thick,red] (0, -3) rectangle (4, -4);
+            \node[draw,ultra thick,red,inner sep=0mm,fit=(tbl-7-1) (tbl-8-1)] {};
+        \end{visibleenv}
+        \begin{visibleenv}<4->
+            \node[anchor=north west,align=left] at (9, -3.5) {
+                addresses \textbf<4>{multiples of size} \\
+                (may \myemph{require padding})
+            };
+        \end{visibleenv}
+        \begin{pgfonlayer}{bg}
+        \begin{visibleenv}<5>
+            \fill[red!30] (0, -5.2) rectangle (4, -6.);
+            \fill[red!30] (0, -2.7) rectangle (4, -3.);
+            \fill[red!30] (0, -1.9) rectangle (4, -2.);
+            \fill[red!30] (0, -2.4) rectangle (4, -2.5);
+            \fill[red!30] (0, -0.8) rectangle (4, -1.);
+            \fill[red!30] (0, -0.4) rectangle (4, -0.5);
+        \end{visibleenv}
+        \end{pgfonlayer}
+        \begin{visibleenv}<5->
+            \node[anchor=north west,align=left] at (9, -5.5) {
+                sizes are \textbf<5>{powers of two} \\
+                (may \myemph{require padding})
+            };
+        \end{visibleenv}
+    \end{tikzpicture}
+\end{frame}
+
+% FIXME: FORMAT input versus output
+% FIXME: stack smashing
+% FIXME: pointer subterfuge
+% FIXME: VTables
+% FIXME: integer overflow
+% FIXME: baggy bounds
+% FIXME: ...

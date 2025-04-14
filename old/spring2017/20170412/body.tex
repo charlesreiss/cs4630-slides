@@ -1,0 +1,1395 @@
+\begin{frame}
+    \titlepage
+\end{frame}
+
+{
+\setbeamercolor{background canvas}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{normal text}{bg=blue!40!black,fg=blue!10!white}
+\setbeamercolor{itemize/enumerate body}{fg=white}
+\setbeamercolor{itemize/enumerate subbody}{fg=white}
+\setbeamercolor{titlelike}{bg=blue!40!black,fg=blue!10!white}
+\begin{frame}<1|handout:1>[noframenumbering]{Changelog}
+    \begin{itemize}
+        \item Corrections made in this version not in first posting:
+        \begin{itemize}
+            \item 12 April 2017: slide 15: correct arrow from B-freed to D-freed
+            \item 12 April 2017: slide 42: correct phrasing on what is borrowed
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+}
+
+\tikzset{
+    stackBox/.style={very thick},
+    allocBox/.style={dashed,very thick,fill=blue!20},
+    onStack/.style={thick},
+    frameOne/.style={fill=blue!15},
+    frameTwo/.style={fill=red!15},
+    markLine/.style={blue!50!black},
+    markLineB/.style={red!90!black},
+    hiLine/.style={red!90!black},
+}
+
+\begin{frame}<0>[fragile,label=altTechs]{alternative techniques}
+    \begin{itemize}
+        \item \myemph<2>{memory error detectors} --- to help with software \textbf{testing}
+            \begin{itemize}
+            \item reliably detect single-byte overwrites, use-after-free
+            \item bitmap for every bit of memory --- should this be accessed
+            \item \textbf{not} suitable for stopping exploits
+            \item examples: AddressSanitizer, Valgrind MemCheck
+            \end{itemize}
+        \item \myemph<3>{automatic testing tools} --- run programs to trigger memory bugs
+        \item \myemph<4>{static analysis} --- analyze programs and either
+            \begin{itemize}
+            \item find likely memory bugs, or
+            \item prove absence of memory bugs
+            \end{itemize}
+        \item \myemph<5>{better programming languages}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{fuzzing assignment}
+    \begin{itemize}
+    \item target: a program that reindents C source files
+        \begin{itemize}
+        \item from FreeBSD, modified to run on Linux
+        \item original uses sandboxing --- so probably not actual security iussues
+        \end{itemize}
+    \item tool: american fuzzy lop
+    \item along with AddressSanitizer --- find crashes
+        \begin{itemize}
+            \item probably buffer overflows
+        \end{itemize}
+    \item crashes are easy to find --- so won't have to fuzz for long
+        \begin{itemize}
+        \item but in real scenario would run fuzzer for hours/days
+        \item (or until coverage is very good)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\againframe<4>{altTechs}
+
+\begin{frame}{other program analysis}
+    \begin{itemize}
+        \item other design points than symbolic execution
+        \item higher level of abstractions:
+        \vspace{.5cm}
+        \item can avoid path explosion
+        \item ignore irrelevant parts of the program
+        \item focus on finding common bug patterns
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=easyCase1]{the easy case (1)}
+    \lstset{language=C,style=small}
+\begin{lstlisting}
+int vulnerable() {
+    int buffer[100];
+    ...
+    return buffer[100];
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=easyCase2]{the easy case (2)}
+    \lstset{language=C,style=small}
+\begin{lstlisting}
+void vulnerable(char *input) {
+    char buffer[100];
+    strcpy(buffer, input);
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=easyCase3]{the easy case (3)}
+    \lstset{language=C,style=small}
+\begin{lstlisting}
+void vulnerable() {
+    ...
+    ...
+    if (some_condition()) {
+        free(some_variable);
+        ...
+        use(some_variable->data);
+    }
+}
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile,label=easyCaseS1]{the somewhat easy case (1)}
+    \lstset{language=C,style=small}
+\begin{lstlisting}
+void vulnerable(int *input, int num_items) {
+    int buffer[100];
+    int size = min(num_items * sizeof(int), sizeof(buffer) * sizeof(int));
+    memcpy(buffer, input, size);
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=easyCaseS2]{the somewhat easy case (2)}
+\begin{lstlisting}
+int vulnerable(char *input) {
+    char buffer[100] = ...;
+    return buffer[input[0]];
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{complete versus sound}
+    \begin{itemize}
+        \item complete versus sound
+            \begin{itemize}
+                \item complete: no false positive
+                    \begin{itemize}
+                        \item says error --- actually a memory error
+                    \end{itemize}
+                \item sound: no false negative
+                    \begin{itemize}
+                        \item says no error --- actually no memory errors
+                    \end{itemize}
+            \end{itemize}
+        \item many real analyzers \myemph{neither complete nor sound}
+        \item sometimes assisted by programmer annotations
+            \begin{itemize}
+                \item e.g. ``this pointer should not be null''
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{a brief look}
+    \begin{itemize}
+    \item we won't talk fully about program analysis
+    \item \myemph{more general/flexible} than symbolic execution
+    \item can \myemph{avoid analyzing irrelevant} parts of the program
+    \item can generalize to make analysis practical
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{one idea: simpler models}
+    \begin{itemize}
+        \item model for use-after-free, pointer is:
+            \begin{itemize}
+            \item allocated
+            \item freed
+            \end{itemize}
+        \item just track this logical state for each pointer
+        \item ignore everything else
+        \item assume all code is reachable
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=useAfterFree1]{checking use-after-free (1)}
+    \lstset{
+        language=C,style=script,
+        moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+    }
+\begin{tikzpicture}
+\node[anchor=north east] at (-.2, 0) {
+\begin{lstlisting}
+int *someFunction(int foo, int bar) {
+    int *quux = malloc(sizeof(int));
+    // A
+    if (Complex(foo)) {
+        free(quux);
+        // B
+    }
+    ...
+    if (Complex(bar)) {
+        // C
+        *quux = bar;
+    }
+    ...
+}
+\end{lstlisting}
+};
+
+    \tikzset{flow/.style={draw,thick,font=\fontsize{9}{10}\selectfont,anchor=north west},
+    flowLine/.style={thick,-Latex}}
+    \begin{scope}[y=0.8cm]
+        \node[flow,dashed] (A) at (0, 0) { A: quux: \textit{allocated} };
+        \node[flow] (B) at (1, -1) { B: quux: \textit{freed} };
+        \node[flow] (C1) at (1, -2) { C (from \textit{freed}): USE-AFTER-FREE };
+        \begin{visibleenv}<2->
+        \node[flow] (C2) at (1, -4) { C (from \textit{allocated}): ok };
+        \end{visibleenv}
+        \draw[flowLine] (B.east) -- ++(1cm, 0cm);
+        \draw[flowLine] ([xshift=.5cm]A.south west) |- ([yshift=.1cm]B.west);
+        \draw[flowLine] ([yshift=-.1cm]B.west) -- ++(-.2cm, 0cm) |- ([yshift=.1cm]C1.west);
+        \begin{visibleenv}<2->
+        \draw[flowLine] ([xshift=.5cm]A.south west) |- ([yshift=.1cm]C2.west);
+        \end{visibleenv}
+    \end{scope}
+    
+    \begin{visibleenv}<3->
+        \node[draw=red,very thick,fill=white,align=center] at (0, -6) {
+            static analysis can give warning --- probably bad 
+            \only<4->{\\ but maybe \texttt{Complex(foo) == !Complex(bar)}}
+        };
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}[fragile,label=useAfterFree2]{checking use-after-free (2)}
+    \lstset{
+        language=C,style=script,
+        moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+    }
+\begin{tikzpicture}
+\node[anchor=north east] at (-.2, 0) {
+\begin{lstlisting}
+void someFunction() {
+    int *quux = malloc(sizeof(int));
+    ...
+    // A
+    do {
+        // B
+        ...
+        if (someFunction()) {
+            free(quux);
+            // C
+        }
+        ...
+        // D
+    } while (complexFunction());
+    ...
+    // E
+    *quux++;
+}
+\end{lstlisting}
+};
+    \tikzset{flow/.style={draw,thick,font=\fontsize{9}{10}\selectfont,anchor=north west},
+    flowLine/.style={thick,-Latex},
+    flowLineB/.style={very thick,dotted,-Latex},
+    }
+    \begin{scope}[y=0.8cm]
+        \begin{visibleenv}<1->
+        \node[flow] (A) at (0, 0) { A: \textit{allocated} };
+        \draw[flowLine] ([xshift=.5cm]A.south west) |- ([yshift=.1cm]B.west);
+            \node[flow,alt=<3>{red}{},alt=<1-2>{dashed}] (B) at (1, -1) { B (from \textit{allocated}): \textit{allocated} };
+        \end{visibleenv}
+        \begin{visibleenv}<2->
+        \node[flow] (C1) at (1, -2) { C (from \textit{allocated}): quux: \textit{freed} };
+            \node[flow,alt=<1-4>{dashed}{}] (D1) at (1, -3) { D (from \textit{freed}): \textit{freed} };
+        \node[flow] (E1) at (2, -4) { E (from \textit{freed}): USE-AFTER-FREE };
+        \draw[flowLine] ([yshift=-.1cm]B.west) -- ++(-.2cm, 0cm) |- ([yshift=.1cm]C1.west);
+        \draw[flowLine] ([yshift=-.1cm]C1.west) -- ++(-.2cm, 0cm) |- ([yshift=.1cm]D1.west);
+        \draw[flowLine] ([yshift=-.1cm]D1.west) -- ++(-.2cm, 0cm) |- ([yshift=.1cm]E1.west);
+        \end{visibleenv}
+        \begin{visibleenv}<3->
+        \node[flow,alt=<3>{dashed}{}] (D2) at (1, -5) { D (from \textit{allocated}): \textit{allocated} };
+        \draw[flowLine,alt=<3>{red}{}] ([yshift=-.1cm]B.west) -- ++(-.3cm, 0cm) |- ([yshift=.1cm]D2.west);
+        \node[flow] (E2) at (2, -6) { E (from \textit{allocated}): ok };
+        \draw[flowLine,alt=<3>{red}{}] ([yshift=-.1cm]D2.west) -- ++(-.2cm, 0cm) |- ([yshift=.1cm]E2.west);
+        \end{visibleenv} 
+        \begin{visibleenv}<4->
+        \draw[flowLineB,alt=<4>{red}{}] ([yshift=-.1cm]D2.east) -- ++(2.5cm, 0cm) |- ([yshift=.1cm]B.east);
+        \end{visibleenv} 
+        \begin{visibleenv}<5->
+            \node[flow,alt=<5>{dashed}{}] (B2) at (1, -7) { B (from \textit{freed}): \textit{freed} };
+            \draw[flowLine,alt=<5>{red}{}] ([yshift=-.1cm]D1.west) -- ++(-.8cm, 0cm) |- ([yshift=.1cm]B2.west);
+            \node[flow] (C2) at (1, -8) { C (from \textit{freed}): DOUBLE-FREE };
+            \draw[flowLine] ([yshift=-.1cm]B2.west) -- ++(-.8cm, 0cm) |- ([yshift=.1cm]C2.west);
+        \end{visibleenv} 
+        \begin{visibleenv}<6->
+            \draw[flowLineB,alt=<6>{red}{}] ([yshift=-.1cm]B2.east) -- ++(3cm, 0cm) |- ([yshift=.2cm]D1.east);
+        \end{visibleenv}
+    \end{scope}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{static analysis over symbolic execution}
+    \begin{itemize}
+        \item can deal with hard cases by \myemph{being imprecise}
+        \begin{itemize}
+        \item can't try every path? generalize
+        \item generate false positives and/or false negatives
+        \end{itemize}
+        \item can deal with hard cases with \textit{annotations}
+        \begin{itemize}
+        \item ``I promise this value is allocated here''
+        \item ``I promise this value is freed here''
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{avoiding false positives}
+    \begin{itemize}
+        \item after finding error, search for program path to triggers it
+        \item good time to use symbolic-execution-like techniques
+        \vspace{.5cm}
+        \item can use heuristics to decide path is too unlikely
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=practic]{static analysis practicality}
+    \begin{itemize}
+    \item good at finding some kinds of bugs
+        \begin{itemize}
+        \item array out-of-bounds probably not one
+        \end{itemize}
+    \item excellent for ``bug patterns'' like:
+\begin{lstlisting}
+struct Foo* foo;
+...
+foo = malloc(sizeof(struct Bar));
+\end{lstlisting}
+    \item false positive rates are often 20+\% or more
+    \item somet tools assume lots of annotations
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{static analysis tools}
+    \begin{itemize}
+    \item Coverity, Fortify --- commerical static analysis tools
+    \item Splint --- unmaintained?
+            \begin{itemize}
+                \item written by David Evans and his research group in the late 90s/early 00s
+            \end{itemize}
+    \item FindBugs (Java)
+    \item clang-analyzer --- part of Clang compiler
+    \item Microsoft's Static Driver Verifier  --- required for Windows drivers:
+        \begin{itemize}
+            \item mostly checks correct usage of Windows APIs
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\againframe<5>{altTechs}
+
+\section*{Better Programming Languages}
+
+\begin{frame}{better programming languages}
+    \begin{itemize}
+        \item get better information from programmer
+        \item ideal: eliminate memory errors \myemph{without making program slower}
+        \item some overlap with static analysis
+            \begin{itemize}
+                \item information used to prove no memory errors
+            \end{itemize}
+        \item example: ``smart pointer'' libraries for C++
+        \item example: Rust
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{safety rules}
+    \begin{itemize}
+    \item rule for avoiding bounds errors in C
+        \begin{itemize}
+        \item always pass around array buffers with size
+        \item always check size
+        \end{itemize}
+    \item this is easy to enforce at compile-time
+        \begin{itemize}
+        \item Java does it
+        \end{itemize}
+    \item but problem: what about when I don't want overhead of checking?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=javaEscapeHatch]{Java: unofficial escape hatch}
+    \begin{itemize}
+    \item Oracle JDK and OpenJDK come with a class called \texttt{com.sun.Unsafe}
+    \item Example methods:
+    \end{itemize}
+\begin{lstlisting}
+public long allocateMemory(long size);
+                        // returns pointer value
+public void freeMemory(long address);
+public long getLong(long address);
+public void putLong(long address, long x);
+\end{lstlisting}
+    \begin{itemize}
+    \item can be used to, e.g.,  write ``fast'' IntArray class
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Rust philosophy}
+    \begin{itemize}
+    \item default rules that only allow `safe' things
+        \begin{itemize}
+        \item no dangling pointers
+        \item no out-of-bounds accesses
+        \end{itemize}
+    \item escape hatch to use ``raw'' pointers or unchecked libraries
+    \item escape hatch can be used to write useful libraries
+        \begin{itemize}
+            \item e.g. Vector/ArrayList equivalent
+            \item \myemph{expose interface that is safe}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=rustHelloWorld1]{simple Rust syntax (1)}
+\begin{minted}{Rust}
+fn main() {
+    println!("Hello, World!\n");
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=rustHelloWorld2]{simple Rust syntax (2)}
+    \begin{minted}[fontsize=\fontsize{10}{11}]{Rust}
+fn timesTwo(number: i32) -> i32 {
+    return number * 2;
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=rustHelloWorld3]{simple Rust syntax (3)}
+    \begin{minted}[fontsize=\fontsize{10}{11}]{Rust}
+struct Student {
+    name: String,
+    id: i32,
+}
+
+fn get_example_student() -> Student {
+    return Student {
+        name: String::from("Example Fakelastname"),
+        id: 42,
+    };
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=rustHelloWorld4]{simple Rust syntax (4)}
+    \begin{minted}[fontsize=\fontsize{10}{11}\selectfont,escapeinside=||]{Rust}
+fn factorial(number: i32) -> i32 {
+    let mut|\tikzmark{mut}| result = 1;
+    let mut index = 1;
+    while index <= number {
+        result *= index;
+        index = index + 1;
+    }
+    return result;
+}
+\end{minted}
+    \begin{tikzpicture}[overlay,remember picture]
+        \coordinate (box) at (current page.center);
+        \begin{visibleenv}<2>
+            \node[mycallout=mut,anchor=center,align=left] at ([yshift=2cm]box) {
+                ``input'' is a mutable variable \\
+                type automatically inferred as i32 (32-bit int)
+            };
+        \end{visibleenv}
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=rustTimesTwoB]{Rust references}
+\vspace{-.25cm}
+    \begin{minted}[fontsize=\fontsize{10}{11}\selectfont,escapeinside=||]{Rust}
+fn main() {
+    let mut x: u32 = 42;
+
+    {
+        let y: &mut u32 = &mut x;
+        *y = 100;
+    }
+
+    let z: &u32 = &x;
+
+    println!("x = {}; z = {}", x, x);
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=rustTimesTwo]{Rust example}
+\vspace{-.25cm}
+    \begin{minted}[fontsize=\fontsize{10}{11}\selectfont,escapeinside=||]{Rust}
+use std::io;
+
+fn main() {
+    println!("Enter a number: ");
+
+    let mut|\tikzmark{mut}| input = String::new();
+    // could have also written:
+    //   let mut input: String = String::new();
+    
+    io::stdin().read_line(&mut|\tikzmark{ref}| input);
+
+    // parse number or fail with an error message
+    let number: u32|\tikzmark{int}| = input.trim().parse()
+        .expect("That was not a number!");
+    println!("Twice that number is: {}", number * 2);
+}
+\end{minted}
+    \begin{tikzpicture}[overlay,remember picture]
+        \coordinate (box) at (current page.center);
+        \begin{visibleenv}<2>
+            \node[mycallout=mut,anchor=center,align=left] at ([yshift=2cm]box) {
+                ``input'' is a mutable variable \\
+                type is automatically inferred as String
+            };
+        \end{visibleenv}
+        \begin{visibleenv}<3>
+            \node[mycallout=ref,anchor=center,align=left] at ([yshift=1cm]box) {
+                pass mutable reference to input
+            };
+        \end{visibleenv}
+        \begin{visibleenv}<4>
+            \node[mycallout=int,anchor=center,align=left] at (box) {
+                number is an immutable unsigned 32-bit integer
+            };
+        \end{visibleenv}
+    \end{tikzpicture}
+\end{frame}
+
+
+
+\begin{frame}{rules to stop dangling pointers (1)}
+    \begin{itemize}
+    \item objects have an single \myemph{owner}
+    \item owner is the only one allowed to modify an object
+    \item owner can give away ownership
+    \item simplest version: only owner can access object
+    \item never have multiple references to object --- always move/copy
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=rustOwnership1]{Rust objects and ownership (1)}
+    \begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
+fn mysum(vector: Vec<u32>) -> u32 {
+    let mut total: u32 = 0
+    for value in &vector {
+        total += value
+    }
+    return total
+}
+
+fn foo() {
+    let vector: Vec<u32> = vec![1, 2, 3];
+    let sum = mysum(vector);
+    // **moves** vector into mysum()
+         // philosophy: no implicit expensive copies
+    
+    println!("Sum is {}", sum);
+    // ERROR
+    println!("vector[0] is {}" , vector[0]);
+}
+\end{minted}
+    \begin{tikzpicture}[overlay,remember picture]
+        \begin{visibleenv}<2>
+            \node[anchor=center,font=\small,draw=black,ultra thick,fill=white] at (current page.center){
+            \begin{lstlisting}[language={},style=script]
+   Compiling lecture-demo v0.1.0 (file:///home/cr4bd/spring2017/cs4630/...
+error[E0382]: use of moved value: `vector`
+  --> src/main.rs:16:34
+   |
+13 |     let sum = mysum(vector);
+   |                     ------ value moved here
+...
+16 |     println!("vector[0] is {}" , vector[0]);
+   |                                  ^^^^^^ value used here after move
+\end{lstlisting}
+        };
+        \end{visibleenv}
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=rustOwnership2]{Rust objects and ownership (2)}
+    \begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
+fn mysum(vector: Vec<u32>) -> u32 {
+    let mut total: u32 = 0
+    for value in &vector {
+        total += value
+    }
+    return total
+}
+
+fn foo() {
+    let vector: Vec<u32> = vec![1, 2, 3];
+    let sum = mysum(vector.clone());
+    // give away a copy of vector instead
+        // mysum will dispose, since it owns it
+    
+    println!("Sum is {}", sum);
+    println!("vector[0] is {}" , newVector[0]);
+}
+\end{minted}
+    \begin{tikzpicture}[overlay,remember picture]
+        \begin{visibleenv}<2>
+            \node[anchor=center,font=\small,draw=black,ultra thick,fill=white,align=center] at (current page.center){
+            mysum borrows a copy
+        };
+        \end{visibleenv}
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{moving?}
+    \begin{itemize}
+    \item moving a Vec --- really copying a pointer to an array and its size
+    \item cloning a Vec --- making a copy of the array itself, too
+    \vspace{.5cm}
+    \item Rust defaults to moving non-trivial types
+    \item some trivial types (u32, etc.) are copied by default
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=rustOwnership3]{Rust objects and ownership (3)}
+    \begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
+fn mysum(vector: Vec<u32>) -> (u32, Vec<u32>) {
+    let mut total: u32 = 0
+    for value in &vector {
+        total += value
+    }
+    return (total, vector)
+}
+
+fn foo() {
+    let vector: Vec<u32> = vec![1, 2, 3];
+    let (sum, newVector) = mysum(vector);
+    // give away vector, get it back
+    
+    println!("Sum is {}", sum);
+    println!("vector[0] is {}" , newVector[0]);
+}
+\end{minted}
+    \begin{tikzpicture}[overlay,remember picture]
+        \begin{visibleenv}<2>
+        \node[anchor=center,font=\small,draw=black,ultra thick,align=center,fill=white] 
+            at (current page.center) {
+        mysum ``borrows'' vector, then gives it back \\
+        uses pointers
+        };
+        \end{visibleenv}
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{ownership rules}
+    \begin{itemize}
+    \item exactly one owner at a time
+    \item giving away ownership means you \myemph{can't use object}
+        \begin{itemize}
+        \item<2> common idiom --- temporarily give away object
+        \end{itemize}
+    \item either give object new owner or deallocate
+    \end{itemize}
+\end{frame}
+
+\begin{frame}<1>[label=dangleRules]{rules to stop dangling pointers (2)}
+    \begin{itemize}
+    \item objects have an single \textbf{owner}
+    \item owner can give away ownership permanently
+        \begin{itemize}
+        \item object is ``moved''
+        \end{itemize}
+    \item owner can let someone borrow object \myemph<2>{\textbf{temporarily}}
+        \begin{itemize}
+        \item must know when object is given back
+        \end{itemize}
+    \item only \myemph<3>{\textbf{modify}} object when exactly one user
+        \begin{itemize}
+        \item owner or exclusive borrower
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=rustBorrowing1]{borrowing}
+    \begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+fn mysum(vector: &Vec<u32>) -> u32 {
+    let mut total: u32 = 0
+    for value in vector {
+        total += value
+    }
+    return total
+}
+
+fn foo() {
+    let vector: Vec<u32> = vec![1, 2, 3];
+    let sum = mysum(&vector);
+    // automates (vector, sum) = mysum(vector) idea
+    
+    println!("Sum is {}", sum);
+    println!("vector[0] is {}" , vector[0]);
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=dangling1]{dangling pointers?}
+\begin{lstlisting}[language=C,style=small]
+int *dangling_pointer() {
+    int array[3] = {1,2,3};
+    return &array[0]; // not an error
+}
+\end{lstlisting}
+\hrulefill
+    \begin{minted}[fontsize=\small]{Rust}
+fn dangling_pointer() -> &mut i32 {
+    let array = vec![1,2,3];
+    return &mut array[0]; // ERROR
+}
+\end{minted}
+\begin{tikzpicture}[overlay,remember picture]
+    \begin{visibleenv}<2>
+    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\begin{lstlisting}[language={},style=smaller]
+error[E0106]: missing lifetime specifier
+  --> src/main.rs:19:25
+   |
+19 | fn dangling_pointer() -> &mut i32 {
+   |                          ^ expected lifetime parameter
+   |
+   = help: this function's return type contains a borrowed value,
+           but there is no value for it to be borrowed from
+\end{lstlisting}
+};
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+% FIXME: example with thing to borrow from, not used
+
+\againframe<2>{dangleRules}
+
+\begin{frame}{lifetimes}
+    \begin{itemize}
+    \item every reference in Rust has a \myemph{lifetime}
+    \item intuitively: how long reference is usable
+    \item Rust compiler infers and checks lifetimes
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{lifetime rules}
+    \begin{itemize}
+    \item object is borrowed for duration of reference lifetime
+        \begin{itemize}
+        \item can't modify object during lifetime
+        \item can't let object go out of scope during lifetime
+        \end{itemize}
+    \item lifetime of function args must include whole function call
+    \item references returned from function must have lifetimes
+        \begin{itemize}
+        \item based on arguments or static (valid for entire program)
+        \end{itemize}
+    \item references stored in structs must have lifetime longer than struct
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=lifetimeHard]{lifetime inference}
+\begin{minted}[fontsize=\small]{Rust}
+fn get_first(values: &Vec<String>) -> &String {
+    return &values[0];
+}
+\end{minted}
+\begin{itemize}
+    \item compiler infers lifetime of return value is same as input
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=lifetimeHard2]{lifetime hard cases}
+\begin{minted}[fontsize=\small]{Rust}
+// ERROR:
+fn get_first_matching(prefix: &str, values: &Vec<String>)
+                            -> &String {
+    for item in values {
+        if item.starts_with(prefix) {
+            return item
+        }
+    }
+    panic!()
+}
+\end{minted}
+\begin{itemize}
+    \item this is a compile-error, because of the return value
+    \item compiler need to be told lifetime of return value
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=lifetimeAnnot]{lifetime annotations}
+    \begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+fn get_first_matching<'a, 'b>(prefix: &'a str, values: &'b Vec<String>)
+                            -> &'b String {
+    for item in values {
+        if item.starts_with(prefix) {
+            return item
+        }
+    }
+    panic!()
+}
+\end{minted}
+\begin{itemize}
+    \item prefix has lifetime $a$
+    \item values and returned string have lifetime $b$
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=lifetimeAnnot2]{lifetime annotations}
+    \begin{minted}[fontsize=\fontsize{10}{11}]{Rust}
+fn get_first_matching<'a, 'b>(prefix: &'a str, values: &'b Vec<String>)
+                            -> &'b String {
+    for item in values {
+        if item.starts_with(prefix) {
+            return item
+        }
+    }
+    panic!()
+}
+
+fn get_first(values: &Vec<String>) -> &String {
+    let prefix: String = compute_prefix();
+    return get_first_matching(&prefix, values)
+    // prefix deallocated here
+}
+\end{minted}
+\end{frame}
+
+\againframe<3>{dangleRules}
+
+\begin{frame}[fragile,label=restrictMod]{restricting modification}
+    \begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+fn modifyVector(vector: &mut Vec<u32>) { ... }
+fn foo() {
+    let vector: Vec<u32> = vec![1, 2, 3];
+    for value in &vector {
+        if value == 2 {
+            modifyVector(&mut vector) // ERROR
+        }
+    }
+}
+    \end{minted}
+\begin{itemize}
+    \item trying to give away mutable reference
+    \item \ldots while the for loop has a reference
+\end{itemize}
+\end{frame}
+
+\begin{frame}{data races}
+    \begin{itemize}
+    \item Rusts rules around modification built assuming concurrency
+    \item idea: multiple processes/threads running at same time might use value
+    \item safe policy: all reading \textit{or} only one at a time
+    \item if multiple at a time: problems are called ``data races''
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=raceUAF]{data races for use-after-free}
+\begin{Verbatim}
+Expand Vec             | Read Vec
+-------------------------------------------
+                       | mov pointer, %rax
+                       | ...
+mov $100, %rdi         |
+call malloc            |
+mov pointer, %rdi      |
+mov %rax, pointer      |
+call free              |
+                       | ...
+                       | mov (%rax), %rax
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{what about dynamic allocation?}
+    \begin{itemize}
+    \item saw Rust's Vec class --- equivalent to C++ vector/Java ArrayList
+    \item idea: Vec wraps a heap allocation of an array
+    \item owner of Vec ``owns'' heap allocation
+        \begin{itemize}
+        \item delete when no owner
+        \end{itemize}
+    \item also Box class --- wraps heap allocation of a single value
+        \begin{itemize}
+        \item basically same as Vec except one element
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\againframe<4>{dangleRules}
+
+\begin{frame}{ownership is enough?}
+    \begin{itemize}
+    \item what if my program is more complicated than single owner I borrow from?
+    \vspace{.5cm}
+    \item exercise: when are cases where this doesn't work?
+        \begin{itemize}
+        \item think of data structures you've implemented
+        \end{itemize}
+    \item exercise: what are other rules to prevent dangling pointers?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{escape hatch}
+    \begin{itemize}
+    \item Rust lets you avoid compiler's mechanisms
+    \item implement your own
+    \item \textbf{unsafe} keyword
+    \item how Vec is implemented
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=insideVec]{deep inside Vec}
+\begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
+pub struct Vec<T> {
+    buf: RawVec<T>, // interface to malloc
+    len: usize,
+}
+
+impl<T> Vec<T> {
+    ...
+    pub fn truncate(&mut self, len: usize) {
+        unsafe {
+            // drop any extra elements
+            while len < self.len {
+                // decrement len before the drop_in_place(), so a panic on Drop
+                // doesn't re-drop the just-failed value.
+                self.len -= 1;
+                let len = self.len;
+                ptr::drop_in_place(self.get_unchecked_mut(len));
+            }
+        }
+    }
+    ...
+}
+\end{minted}
+\end{frame}
+
+
+
+\begin{frame}<1>[fragile,label=escapeHatchSupport1]{Rust escape hatch support}
+    \begin{itemize}
+        \item escape hatch: make new reference-like types
+        \item<2> Rc: \verb|Rc<T>| acts like \verb|&T|
+        \item callbacks on ownership ending (normally deallocation)
+        \item<2> Rc: deallocating \verb|Rc<T>| decrements shared count
+        \item choice of what happens on move/copy
+        \item<2> Rc: transferring Rc makes new copy, increments shared count
+    \end{itemize}
+\end{frame}
+ 
+\begin{frame}[fragile,label=refCounting]{alternative rule: reference counting}
+    \begin{itemize}
+    \item keep track of number of references
+    \item delete when count goes to zero
+        \begin{itemize}
+        \item Rust automatically calls destructor --- no programmer effort
+        \end{itemize}
+    \item Rust implement with Rc type (``counted reference'')
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=refCountingEx]{Ref Counting Example}
+\begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
+struct Grade {
+    score: i32, studentName: String, assignmentName: String,
+}
+struct Student {
+    name: String,
+    grades: Vec<Rc<Grade>>,
+}
+struct Assignment {
+    name: String
+    grades: Vec<Rc<Grade>>
+}
+
+fn add_grade(student: &mut Student, assignment: &mut Assignment, score: i32) {
+    let grade = Rc::new(Grade {
+        score: i32,
+        studentName: student.name,
+        assignmentName: assignment.name,
+    })
+    student.grades.push(grade.clone())
+    assignment.grades.push(grade.clone())
+}
+\end{minted}
+\end{frame}
+
+\againframe<2>{escapeHatchSupport1}
+
+\begin{frame}[fragile,label=rcImplA]{Rc implementationed (annotated) (1)}
+\begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+impl<T: ?Sized> Clone for Rc<T> {
+    ... 
+    fn clone(&self) -> Rc<T> {
+        self.inc_strong(); // <-- incremenet reference count
+        Rc { ptr: self.ptr }
+    }
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=rcImplB]{Rc implementation (annotated) (2)}
+\begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+unsafe impl<#[may_dangle] T: ?Sized> Drop for Rc<T> {
+    ...
+    fn drop(&mut self) { // <-- compilers calls on deallocation
+        unsafe {
+           let ptr = *self.ptr;
+
+           self.dec_strong(); // <-- decrement reference cont
+           if self.strong() == 0 { // if ref count is 0
+                // destroy the contained object
+                ptr::drop_in_place(&mut (*ptr).value);
+                ...
+            }
+        }
+    }
+    ...
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}{other policies Rust supports}
+    \begin{itemize}
+        \item \myemph<2>{RefCell} --- borrowing, but check at runtime, not compile-time
+            \begin{itemize}
+            \item detect at runtime if used while already used
+            \item internally: destructo call when returned object goes out of scope
+            \end{itemize}
+        \item Weak --- reference-counting, but don't contribute to count
+            \begin{itemize}
+            \item detect at runtime if used with count = 0
+            \end{itemize}
+        \item \ldots
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{shared idea of all policies}
+    \begin{itemize}
+    \item normal users only use `safe' interfaces
+    \item advanced users can make new `safe' interfaces
+        \begin{itemize}
+        \item find something that makes their use-case works
+        \end{itemize}
+    \item no overhead if compiler can prove lifetimes
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{zero-overhead}
+    \begin{itemize}
+    \item normal case --- lifetimes --- have no overhead
+    \item compiler proves safety, generates code with no bookkeeping
+        \vspace{.5cm}
+    \item other policies (e.g. reference counting) do
+    \item \ldots but can implement new ones if not good enough
+    \end{itemize}
+\end{frame}
+
+% FIXME: explicit lifetimes
+
+\begin{frame}{plans for the future}
+    \begin{itemize}
+        \item command injection bugs
+        \item web browser security
+        \item I am flexible --- different topics you want?
+            \begin{itemize}
+            \item sandboxing (another mitigation)
+            \item synchornization-related security bugs
+            \item static analysis?
+            \item new mitigations proposed in research?
+            \item other?
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+\section{Backup Slides}
+% ---
+
+\begin{frame}{one idea: bounding values}
+    \begin{itemize}
+    \item model values as \myemph{abstraction}
+    \item somewhat similar to \textit{types}
+    \item example: lowest/highest value every integer can contain
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=provBoundsSimple]{oversimplified array bounds}
+    \lstset{
+        language=C,style=script,
+        moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+    }
+\begin{tikzpicture}
+\node[anchor=north east] at (-.2, 0) {
+\begin{lstlisting}
+int data[100];
+int getItem() {
+    int index = getFromUser();
+    // A
+    if (~2~index < 0~end~) {
+        // B
+        index = 0;
+        // C
+    } else {
+        // D
+        if (index > 99) {
+            // E
+            index = 99;
+            // F
+        } else {
+            // G
+        }
+        // H
+    }
+    // I
+    return data[index];
+}
+\end{lstlisting}
+};
+    \tikzset{flow/.style={draw,thick,font=\fontsize{9}{10}\selectfont,anchor=north west},
+    flowLine/.style={thick,-Latex}}
+    \begin{scope}[y=0.8cm]
+        \node[flow] (A) at (0, 0) { A: index: $[-\infty, +\infty]$ };
+        \node[flow,visible on=<2->,alt=<2>{red}{}] (B) at (1, -1) { B: index: $[-\infty, -1]$ };
+        \begin{visibleenv}<3->
+        \node[flow] (C) at (1, -2) { C: index: $[0, 0]$ };
+        \end{visibleenv}
+        \node[flow,visible on=<2->,alt=<2>{red}{}] (D) at (1, -3) { D: index: $[0, \infty]$ };
+        \begin{visibleenv}<4->
+        \node[flow] (E) at (2, -4) { E: index: $[100, \infty]$ };
+        \node[flow,alt=<5>{red}] (F) at (2, -5) { F: index: $[99, 99]$ };
+        \node[flow,alt=<5>{red}] (G) at (2, -6) { G: index: $[0, 99]$ };
+        \node[flow,alt=<5>{red,very thick}] (H)  at (1, -7) { H: index: $[0, 99]$ };
+            \node[flow,alt=<6>{red,very thick}] (I) at (0, -8) { I: index: $[0, 99]$ };
+        \end{visibleenv}
+        \draw[flowLine,alt=<2>{red}] ([xshift=.5cm]A.south west) |- ([yshift=.1cm]B.west);
+        \begin{visibleenv}<2->
+        \draw[flowLine] ([yshift=-.1cm]B.west) -- ++(-.2cm, 0cm) |- ([yshift=.1cm]C.west);
+        \draw[flowLine] ([xshift=.5cm]A.south west) |- ([yshift=.1cm]D.west);
+        \end{visibleenv}
+        \begin{visibleenv}<4->
+        \draw[flowLine] ([yshift=-.1cm]E.west) -- ++(-.2cm, 0cm) |- ([yshift=.1cm]F.west);
+        \draw[flowLine] ([xshift=.5cm]D.south west) |- ([yshift=.1cm]E.west);
+        \draw[flowLine] ([xshift=.5cm]D.south west) |- ([yshift=.1cm]G.west);
+        \draw[flowLine] ([yshift=-.1cm]F.west) -| ([xshift=.25cm]H.north west);
+        \draw[flowLine] ([yshift=-.1cm]G.west) -| ([xshift=.25cm]H.north west);
+        \draw[flowLine] ([yshift=-.1cm]C.west) -| ([xshift=.25cm]I.north west);
+        \draw[flowLine] ([yshift=-.1cm]H.west) -| ([xshift=.25cm]I.north west);
+        \end{visibleenv}
+
+        \node[align=left,visible on=<5>] at (8, -7) {
+            \textbf{conservative} rule: \\
+            take union of ranges
+        };
+    \end{scope}
+    % FIXME: lines about combining these
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=provBoundsDistract]{oversimplified array bounds (2)}
+    \lstset{
+        language=C,style=script,
+        moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+    }
+\begin{tikzpicture}
+\node[anchor=north east] at (-.2, 0) {
+\begin{lstlisting}
+int data[100];
+int getItem() {
+    int index = getFromUser();
+    int functionToUse = getFromUser();
+    // A
+    if (index < 0) {
+        // B
+        return ERROR;
+    }
+    // C
+    switch (functionToUse) {
+        ...
+        // unknown, hard to understand code
+        // that doesn't change index
+        // and might not even terminate
+        ...
+    }
+    // D
+    if (index > 100) {
+        index = 99;
+    }
+    // E
+    return data[index];
+}
+\end{lstlisting}
+};
+    \tikzset{flow/.style={draw,thick,font=\fontsize{9}{10}\selectfont,anchor=north west},
+    flowLine/.style={thick,-Latex}}
+    \begin{scope}[y=0.8cm]
+        \node[flow] (A) at (0, 0) { A: index: $[-\infty, +\infty]$ };
+        \node[flow] (B) at (1, -1) { B: index: $[-\infty, -1]$ };
+        \node[flow] (C) at (0, -2) { C: index: $[0, +\infty]$ };
+        \node[flow] (D) at (0, -3) { D: index: $[0, +\infty]$ };
+        \node[flow] (E) at (0, -4) { E: index: $[0, 99]$ };
+        \draw[flowLine] ([xshift=.5cm]A.south west) |- ([yshift=.1cm]B.west);
+        \draw[flowLine] ([yshift=-.1cm]A.west) -- ++(-.2cm, 0cm) |- ([yshift=.1cm]C.west);
+        \draw[flowLine] ([yshift=-.1cm]C.west) -- ++(-.2cm, 0cm) |- ([yshift=.1cm]D.west);
+        \draw[flowLine] ([yshift=-.1cm]D.west) -- ++(-.2cm, 0cm) |- ([yshift=.1cm]E.west);
+
+        \node[align=left,visible on=<5>] at (8, -7) {
+            \textbf{conservative} rule: \\
+            take union of ranges
+        };
+    \end{scope}
+    % FIXME: lines about combining these
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=provNoBounds]{oversimplified array bounds (bug)}
+    \lstset{
+        language=C,style=script,
+        moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+    }
+\begin{tikzpicture}
+\node[anchor=north east] at (-.2, 0) {
+\begin{lstlisting}
+int data[100];
+int getItem() {
+    int index = getFromUser();
+    // A
+    if (index < 0) {
+        // B
+        index = 0;
+        // C
+    } else {
+        // D
+        if (~2~index > 100~end~) {
+            // E
+            index = 99;
+            // F
+        } else {
+            // G
+        }
+        // H
+    }
+    // I
+    return data[index];
+}
+\end{lstlisting}
+};
+    \tikzset{flow/.style={draw,thick,font=\fontsize{9}{10}\selectfont,anchor=north west},
+    flowLine/.style={thick,-Latex}}
+    \begin{scope}[y=0.8cm]
+        \node[flow] (A) at (0, 0) { A: index: $[-\infty, +\infty]$ };
+        \node[flow] (B) at (1, -1) { B: index: $[-\infty, -1]$ };
+        \node[flow] (C) at (1, -2) { C: index: $[0, 0]$ };
+        \node[flow] (D) at (1, -3) { D: index: $[0, \infty]$ };
+        \node[flow] (E) at (2, -4) { E: index: $[100, \infty]$ };
+        \node[flow] (F) at (2, -5) { F: index: $[99, 99]$ };
+        \node[flow] (G) at (2, -6) { G: index: $[0, 100]$ };
+        \node[flow,alt=<2>{red}{}] (H)  at (1, -7) { H: index: $[0, 100]$ };
+        \node[flow] (I) at (0, -8) { I: index: $[0, 100]$ };
+        \draw[flowLine] ([xshift=.5cm]A.south west) |- ([yshift=.1cm]B.west);
+        \draw[flowLine] ([yshift=-.1cm]B.west) -- ++(-.2cm, 0cm) |- ([yshift=.1cm]C.west);
+        \draw[flowLine] ([yshift=-.1cm]E.west) -- ++(-.2cm, 0cm) |- ([yshift=.1cm]F.west);
+        \draw[flowLine] ([xshift=.5cm]A.south west) |- ([yshift=.1cm]D.west);
+        \draw[flowLine] ([xshift=.5cm]D.south west) |- ([yshift=.1cm]E.west);
+        \draw[flowLine] ([xshift=.5cm]D.south west) |- ([yshift=.1cm]G.west);
+        \draw[flowLine] ([yshift=-.1cm]F.west) -| ([xshift=.25cm]H.north west);
+        \draw[flowLine] ([yshift=-.1cm]G.west) -| ([xshift=.25cm]H.north west);
+        \draw[flowLine] ([yshift=-.1cm]C.west) -| ([xshift=.25cm]I.north west);
+        \draw[flowLine] ([yshift=-.1cm]H.west) -| ([xshift=.25cm]I.north west);
+    \end{scope}
+    % FIXME: lines about combining these
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}[fragile,label=cantProve]{too hard array bounds}
+    \lstset{language=C,style=script}
+\begin{tikzpicture}
+\node[anchor=north east] at (-.2, 0) {
+\begin{lstlisting}
+int data[100];
+int defaultIndex; // range: [0, 99]
+int getItem() {
+    int index = getFromUser();
+    int useDefault = 0;
+    // A 
+    if (index < 0 || index > 99) {
+        useDefault = 1;
+    }
+    // B
+    if (useDefault) {
+        return data[defaultIndex];
+    } else {
+        // C
+        return data[index];
+    }
+}
+\end{lstlisting}
+};
+    \tikzset{flow/.style={draw,thick,font=\small}}
+    \tikzset{flow/.style={draw,thick,font=\fontsize{9}{10}\selectfont,anchor=north west},
+    flowLine/.style={thick,-Latex}}
+    \begin{scope}[y=0.8cm]
+        \node[flow] (A) at (0, 0) { A: index: $[-\infty, +\infty]$ };
+        \node[flow] (B) at (1, -1) { B: index: $[-\infty, +\infty]$ };
+        \node[flow] (C) at (1, -2) { C: index: at worst: $[-\infty, +\infty]$; at best: ??? };
+        \draw[flowLine] ([yshift=-.1cm]A.west) -- ++(-.2cm, 0cm) |- ([yshift=.1cm]B.west);
+        \draw[flowLine] ([yshift=-.1cm]B.west) -- ++(-.2cm, 0cm) |- ([yshift=.1cm]C.west);
+    \end{scope}
+    \begin{visibleenv}<2>
+        \node[draw=red,very thick,fill=white] at (0, -4) {
+            analysis \myemph{too simple} to handle this code \\
+            ``path-sensitivty''
+        };
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{diversion: Option<T>}
+    \begin{itemize}
+    \item Rust has no null
+    \item but has Option<T> type
+    \item if $x$ is a variable of type T:
+        \begin{itemize}
+            \item Some(x)
+            \item None (like Java null)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=rLL]{Rust linked list}
+    \begin{itemize}
+    \item not actually a good idea
+    \item use \verb|Box<...>| to represent object on the heap
+    \item no null, use \verb|Option<Box<...>>| to represent pointer.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=rustLL]{Rust linked list (not recommended)}
+\begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
+struct LinkedListNode {
+    value: u32,
+    next: Option<Box<LinkedListNode>>,
+}
+
+fn allocate_list() -> LinkedListNode {
+    return LinkedListNode {
+        value: 1,
+        next: Some(Box::new(LinkedListNode {
+            value: 2,
+            next: Some(Box::new(LinkedListNode {
+                value: 3,
+                next: None
+            }))
+        }))
+    }
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=rustLLNoBox1]{why the box? (1)}
+\begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+struct LinkedListNode { // ERROR
+    value: u32,
+    next: Option<LinkedListNode>,
+}
+
+// error[E0072]: recursive type `LinkedListNode` has infinite size
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=rustLLNoBox2]{why the box? (2)}
+\begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
+struct LinkedListNode { // ERROR
+    value: u32,
+    next: Option<&LinkedListNode>,
+}
+// error[E0106]: missing lifetime specifier
+//  --> src/main.rs:48:18
+//    |
+// 48 |     next: Option<&LinkedListNode>,
+//    |                  ^ expected lifetime parameter
+\end{minted}
+\end{frame}

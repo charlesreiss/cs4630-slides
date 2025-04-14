@@ -1,0 +1,14 @@
+\beamer@endinputifotherversion {3.36pt}
+\beamer@sectionintoc {1}{Malware}{2}{0}{1}
+\beamer@sectionintoc {2}{Vulnerabilities and Exploits}{10}{0}{2}
+\beamer@sectionintoc {3}{Defenses and Counter-Defenses}{19}{0}{3}
+\beamer@sectionintoc {4}{Some History}{22}{0}{4}
+\beamer@subsectionintoc {4}{1}{The Morris Worm}{22}{0}{4}
+\beamer@subsectionintoc {4}{2}{Stuxnet}{26}{0}{4}
+\beamer@subsectionintoc {4}{3}{Cryptolockers}{27}{0}{4}
+\beamer@subsectionintoc {4}{4}{Adware}{28}{0}{4}
+\beamer@subsectionintoc {4}{5}{Misc monetizations}{30}{0}{4}
+\beamer@sectionintoc {5}{Logistics}{31}{0}{5}
+\beamer@sectionintoc {6}{On ethics/law}{37}{0}{6}
+\beamer@sectionintoc {7}{Semester Outline}{40}{0}{7}
+\beamer@sectionintoc {8}{Conclusion}{41}{0}{8}

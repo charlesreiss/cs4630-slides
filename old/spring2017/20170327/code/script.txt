@@ -1,0 +1,20 @@
+vi overflow.c
+vi overflow.txt
+cat /proc/self/maps # implicit ASLR demo
+cat /proc/self/maps
+cat /proc/self/maps
+ps
+cat /proc/<shell-pid>/maps
+setarch x86_64 -vRL bash
+cat /proc/self/maps
+cat /proc/self/maps
+
+gdb ./overflow.exe
+!cat /proc/<pid>/maps
+
+# slide: our-task
+# gadgets
+
+# back to demo:
+
+

@@ -1,0 +1,29 @@
+setarch x86_64 -v -RL bash
+# run till segfault
+gdb ./bad-stripped
+run <1000-as.txt
+x/i $rip
+x/10i $rip-20
+# look at objdump output
+# find call to getchar
+gdb ./bad-stripped
+b *0x4005d6
+b *0x4005de
+run <1000-as.txt
+p $rsp # write down somewhere
+disassemble 0x4005de,0x400610
+b *0x40060e 
+cont
+p $rsp # write down somewhere
+watch *0x7fffffffdfd8
+info breakpoints
+disable all but start of function
+kill
+run <1000-as.txt
+cont
+enable watchpoint
+cont
+disassemble 0x4005d6,0x400600
+# observe, just changed using 0xc(%rsp,%rbx,1)
+p $rbx # offset 124
+kill

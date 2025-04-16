@@ -615,20 +615,20 @@ document.forms[0].submit();
                 node[midway,above] { goto example.com/frontpage };
         \end{scope}
         \begin{visibleenv}<2>
-            \node[mycallout2=redirectOne,anchor=center,align=left] at ($(browser.east)!0.5!(server2.west)$) {
+            \node[my callout2=redirectOne,anchor=center,align=left] at ($(browser.east)!0.5!(server2.west)$) {
                 tell browser to make request to socialnetwork; \\
                 they will handle login
             };
         \end{visibleenv}
         \begin{visibleenv}<3>
-            \node[mycallout2=redirectTwo,anchor=center,align=left] at ([yshift=2cm]$(browser.east)!0.5!(server2.west)$) {
+            \node[my callout2=redirectTwo,anchor=center,align=left] at ([yshift=2cm]$(browser.east)!0.5!(server2.west)$) {
                 socialnetwork verifies user's cookie \\
                 (maybe displays login prompt) \\
                 then redirects back to example.com with \myemph{token}
             };
         \end{visibleenv}
         \begin{visibleenv}<4>
-            \node[mycallout2=token,anchor=center,align=left] at ($(browser.east)!0.5!(server2.west)$) {
+            \node[my callout2=token,anchor=center,align=left] at ($(browser.east)!0.5!(server2.west)$) {
                 example.com can \myemph{send token to socialnetwork to verify} \\
                 e.g. make request to socialnetwork to get username 
             };

@@ -16,3 +16,63 @@
     \end{itemize}
 \end{itemize}
 \end{frame}
+
+\begin{frame}{answer (1)}
+\begin{itemize}
+\item which schemes detect or prevent from being harmful\ldots?
+    \begin{itemize}
+    \item 1. call to assembly code that goes beyond buffer?
+    \end{itemize}
+\item only Valgrind Memcheck handles assembly code
+\item other techniques require C compiler to produce different assembly
+\end{itemize}
+\end{frame}
+
+\begin{frame}{answer (2)}
+\begin{itemize}
+\item which schemes detect or prevent from being harmful\ldots?
+    \begin{itemize}
+    \item 2. allowing attacker to insert 150 bytes in 100 byte buffer on heap?
+    \end{itemize}
+\item schemes:
+    \begin{itemize}
+    \item A. ``fat pointers'' approach --- yes
+    \item B. Baggy Bounds checking ---yes, detect + crash
+    \item C. AddressSanitizer --- yes, detect + crash
+    \item D. Valgrind Memcheck --- yes, detect + rash
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{answer (3)}
+\begin{itemize}
+\item which schemes detect or prevent from being harmful\ldots?
+    \begin{itemize}
+    \item 3. allowing attacker to insert 120 bytes in 100 byte buffer on stack?
+    \end{itemize}
+\item schemes:
+    \begin{itemize}
+    \item A. ``fat pointers'' approach --- yes
+    \item B. Baggy Bounds checking ---prevent from being harmful / no crash
+    \item C. AddressSanitizer --- yes, detect + crash (red zone)
+    \item D. Valgrind Memcheck --- no --- no memory to mark invalid
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{answer (3)}
+\begin{itemize}
+\item which schemes detect or prevent from being harmful\ldots?
+    \begin{itemize}
+    \item 4. attecker exploiting code that does array[attacker\_index] to overwrite something outside heap array?
+    \end{itemize}
+    \end{itemize}
+\item schemes:
+    \begin{itemize}
+    \item A. ``fat pointers'' approach --- yes
+    \item B. Baggy Bounds checking --- yes
+    \item C. AddressSanitizer --- no --- attacher index can find valid memory
+    \item D. Valgrind Memcheck --- no --- (same as AddressSanitizer)
+    \end{itemize}
+\end{itemize}
+\end{frame}

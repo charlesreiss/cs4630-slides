@@ -1,0 +1,97 @@
+\date{}
+\title{}
+\date{}
+\usepackage[outputdir=latex.out]{minted}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+
+\begin{frame}{last time}
+\end{frame}
+
+\begin{frame}{on SANDBOX}
+\end{frame}
+
+\begin{frame}{on CHALLENGE}
+\end{frame}
+
+\section{baggy bounds con't}
+\subsection{checks using table}
+\input{../bounds/baggy-bounds-checks}
+
+\subsection{exercise: overhead estimating?}
+\input{../bounds/baggy-bounds-overhead-exer}
+
+\subsection{alternative: pointer tagging}
+\input{../bounds/baggy-bounds-tagging}
+
+\subsection{performance?}
+\input{../bounds/baggy-bounds-perf}
+
+\subsection{problem: pointers within objects}
+% FIXME
+\input{../bounds/within-object}
+
+\subsection{corner cases}
+\input{../bounds/bad-things-fortran-index}
+
+\section{AddressSanitizer}
+\input{../bounds/asan-v-baggy}
+
+\subsection{ASan's added check}
+\input{../bounds/asan-check}
+
+\subsection{stack layout}
+\input{../bounds/asan-stack-layout}
+
+
+
+\section{AddressSanitizer}
+\input{../bounds/asan-v-baggy}
+
+\subsection{ASan's added check}
+\input{../bounds/asan-check}
+
+\subsection{stack layout}
+\input{../bounds/asan-stack-layout}
+
+\subsection{can't change object layout?}
+\input{../bounds/asan-within-object}
+
+\subsection{pro/con}
+\input{../bounds/asan-procon}
+
+\section{valgrind memcheck, briefly}
+\input{../bounds/memcheck}
+
+\subsection{aside: binary translation}
+\input{../vm/binaryTrans}
+
+\subsection{aside: other binary translation applications}
+% FIXME
+
+\section{exericse: which prevents}
+\input{../bounds/which-prevents}
+% FIXME: exercise
+    % which scheme will prevent XXX
+
+\input{../cfi/talk-inner}
+
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+\section{baggy bounds checking}
+\input{../bounds/baggy-bounds-intro}
+
+\subsection{trick for good performance}
+\input{../bounds/baggy-bounds-trick}
+
+\subsection{the lookup table}
+\input{../bounds/baggy-bounds-table}
+
+
+\end{document}

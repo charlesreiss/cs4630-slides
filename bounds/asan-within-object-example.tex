@@ -1,0 +1,15 @@
+\begin{frame}[fragile,label=withinObj]{revisted: within object}
+\begin{lstlisting}
+struct foo {
+    char buffer[1024];
+    int *pointer;
+};
+struct foo array_of_foos[1024];
+...
+char *p = &array_of_foos[4].buffer[4]
+\end{lstlisting}
+\begin{itemize}
+\item exercise: What out-of-bounds accesses to `p' can AddressSanitizer detect?
+\item how does that compare to baggy bounds? To the `fat pointers' strategy?
+\end{itemize}
+\end{frame}

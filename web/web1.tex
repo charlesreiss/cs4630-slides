@@ -1,3 +1,4 @@
+\usetikzlibrary{arrows.meta}
 \begin{frame}<0>[fragile,label=storedXSS]{stored cross-site scripting}
 \begin{tikzpicture}
     \node[draw,thick,inner sep=5mm,align=left,text=red!70!black,align=left] (commentBox) {
@@ -83,20 +84,20 @@
             every node/.style={align=left,anchor=center},
         }
         \begin{visibleenv}<2>
-        \node[mycallout=method,anchor=center] at (overBox) {
+        \node[my callout=method,anchor=center] at (overBox) {
             method: GET or POST most common \\
             GET --- read web page \\
             POST --- submit form
         };
         \end{visibleenv}
         \begin{visibleenv}<3>
-        \node[mycallout=host,anchor=center] at (overBox) {
+        \node[my callout=host,anchor=center] at (overBox) {
             headers: \\
             extra information with request
         };
         \end{visibleenv}
         \begin{visibleenv}<4>
-        \node[mycallout=host,anchor=center] at (overBox) {
+        \node[my callout=host,anchor=center] at (overBox) {
             example extra info: domain name from URL \\
             servers can host mutliple domains
         };

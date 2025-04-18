@@ -1,0 +1,65 @@
+\begin{frame}[fragile,label=authPtr1]{authenticated pointers (1)}
+\begin{lstlisting}[language={},style=smaller]
+some_function:
+    authentication_code <- MAC(
+        secret key, 
+        return address
+    )
+    ... dangerous function code ...
+    assert(authenication_code ==
+        MAC(secret key, return addres))
+    jump to return address
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=authPtr2]{authenticated pointers (2)}
+\begin{lstlisting}[language={},style=smaller]
+some_function:
+    authentication_code <- MAC(
+        secret key,
+        stack pointer, 
+        return address
+    )
+    ... dangerous function code ...
+    assert(authenication_code ==
+        MAC(secret key, stack pointer, return address))
+    jump to return address
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile,label=authPtr3]{authenticated pointers (3)}
+\begin{lstlisting}[language={},style=smaller]
+some_function:
+    return address <- encode(
+        secret key,
+        stack pointer, 
+        return address
+    )
+    ... dangerous function code ...
+    return address <- decode_or_crash(
+        secret key,
+        stack pointer, 
+        return address
+    )
+    jump to return address
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=authPtr4]{authenticated pointers (4)}
+\begin{lstlisting}[language={},style=smaller]
+some_vtable[index] <- encrypt(
+    secret key,
+    label,
+    address of some of function
+)
+... dangerous code ...
+function pointer <- decrypt(
+    secret key,
+    label,
+    object->vtable[index]
+)
+call function pointer
+\end{lstlisting}
+\end{frame}
+

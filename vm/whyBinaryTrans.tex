@@ -1,0 +1,39 @@
+
+\begin{frame}{why binary translation?: POPF}
+    \begin{itemize}
+    \item x86 has an instruction called POPF
+    \item pop flags from stack
+    \begin{itemize}
+    \item condition codes --- {\tt CF}, {\tt ZF}, {\tt PF}, {\tt SF}, {\tt OF}, etc.
+    \item direction flag ({\tt DF}) --- used by string instructions
+    \item \textbf<2>{\myemph<2>{I/O privilege level}} ({\tt IOPL})
+    \item \textbf<2>{\myemph<2>{interrupt enable flag}} ({\tt IF})
+    \item \ldots
+    \end{itemize}
+    \item<2> some flags are \myemph{privileged!}
+    \item<2> popf \myemph{\textbf{silently}} doesn't change them in user mode
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{more binary translation problems}
+    \begin{itemize}
+    \item PUSHF also bad --- want to pretend interrupts are disabled, e.g.
+    \item several more x86 instructions
+    \vspace{.5cm}
+    \item processor extensions to change these to be virtualizable
+    \item mechanism: flag to make them trigger interrupt to virtual machine monitor
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{other binary translation utility}
+    \begin{itemize}
+    \item enables other software analysis on unmodified binaries
+    \item example: valgrind, debugging tools:   
+        \begin{itemize}
+        \item memory errors
+        \item synchronization bugs
+        \item \ldots
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

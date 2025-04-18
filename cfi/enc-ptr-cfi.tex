@@ -1,0 +1,29 @@
+\begin{frame}{authentication keys}
+    \begin{itemize}
+    \item processes can have multiple authentication keys active
+    \item easy to use separate keys for
+        \begin{itemize}
+        \item return address pointers
+        \item function pointers (in VTables, for example)
+        \item any pointers to data
+        \end{itemize}
+    \item authentication keys are in special registers --- need OS to read/set
+    \vspace{.5cm}
+    \item also can ``mix'' in extra info like stack pointer
+        \begin{itemize}
+        \item similar to separate key for each stack address
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{different limits}
+    \begin{itemize}
+    \item CFI and pointer authentication both limit use of address
+    \item \ldots but don't eliminate potential for abuse:
+        \begin{itemize}
+        \item can still call wrong function in CFI
+        \item can still use wrong signed pointer
+        \end{itemize}
+    \item scope of labels/authenticatoin keys+extra info important
+    \end{itemize}
+\end{frame}

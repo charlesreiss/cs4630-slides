@@ -1,0 +1,41 @@
+\date{}
+\title{}
+\date{}
+\usepackage[outputdir=latex.out]{minted}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item comparing bounds-checking
+        \begin{itemize}
+        \item fat pointers --- track bound with pointer, check pointer dereference
+        \item baggy bounds --- table lookup object start, check pointer arithmetic
+        \item ASan/memcheck --- table lookup is-valid, check dereference
+        \end{itemize}
+    \item design constraints:
+        \begin{itemize}
+        \item binary compatibility  --- limits on structs
+        \item bug detection v silent overflow prevention
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{on CHALLENGE}
+\end{frame}
+
+\section{exericse: which prevents}
+\input{../bounds/which-prevents}
+
+\input{../cfi/talk-inner}
+
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\end{document}

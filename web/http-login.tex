@@ -1,0 +1,19 @@
+
+\begin{frame}{implementing logins on HTTP}
+    \begin{itemize}
+        \item typical mechanism: \myemph{cookies}
+        \item information for \myemph{client to send} with future requests to server
+        \begin{itemize}
+            \item limited to \myemph{particular domain} (or domain+path)
+        \end{itemize}
+    \item Server sets cookie set via header in HTTP response
+        \begin{itemize}
+            \item \texttt{\fontsize{10}{10}\selectfont Set-Cookie: key=theInfo; domain=example.com; expires=Wed, Apr \ldots}
+        \end{itemize}
+    \item Client sends back cookie with \myemph{every HTTP request}
+        \begin{itemize}
+            \item \texttt{\fontsize{10}{10}\selectfont Cookie: key=theInfo}
+        \end{itemize}
+    \item JavaScript can also read or set Cookie
+    \end{itemize}
+\end{frame}

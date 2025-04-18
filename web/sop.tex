@@ -1,0 +1,110 @@
+
+\begin{frame}[fragile,label=webInWeb]{web pages in web pages (1)}
+    \vspace{-.25cm}
+\begin{minted}[bgcolor=bg,fontsize=\small]{HTML}
+<iframe id="localFrame" src="./localsecret.html"
+    onload="readLocalSecret()"></iframe>
+<script>
+function readLocalSecret() {
+    alert(document.getElementById('localFrame').
+          contentDocument.innerHTML);
+}
+</script>
+\end{minted}
+    \begin{itemize}
+    \vspace{-.25cm}
+    \item displays localsecret.html's \myemph{contents} in an alert box
+    \item can also extract specific parts of page
+    \item same idea works for sending it to remote server
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=webInWebOther]{web pages in web pages (2)}
+    \vspace{-.25cm}
+    \setlength{\parskip}{-0.5\baselineskip}
+\begin{minted}[bgcolor=bg,fontsize=\small,highlightlines=2,highlightcolor=green!30!white]{HTML}
+<iframe id="remoteFrame"
+    src="https://collab.virginia.edu/..."
+    onload="readRemoteSecret()></iframe>
+<script>
+function doIt() {
+    alert(document.getElementById('remoteFrame').
+          contentDocument.innerHTML);
+}
+</script>
+\end{minted}
+    \begin{itemize}
+    \vspace{-.25cm}
+    \item will this work?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{what happened?}
+    \begin{itemize}
+        \item ``TypeError: document.getElementById(...).contentDocument is null''
+        \item web browser denied access
+        \vspace{.5cm}
+    \item \myemph{Same Origin Policy}
+    \end{itemize}
+\end{frame}
+
+
+\section{same-origin policy}
+
+\begin{frame}{browser protection}
+    \begin{itemize}
+        \item websites want to \myemph{load content dynamically}
+    \begin{itemize}
+        \item Google docs --- send what others are typing
+        \item webmail clients autoloading new emails, etc.
+        \item \ldots
+    \end{itemize}
+    \item but shouldn't be able to do so from any other website
+        \begin{itemize}
+        \item e.g. read grades of Collab if I'm logged in
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{same-origin policy}
+    \begin{itemize}
+        \item two pages from same \myemph{\textbf{origin}}: scripts can do anything
+        \item two pages from different \myemph{\textbf{origins}}: almost no information
+            \vspace{.5cm}
+        \item idea: different websites can't interfere with each other
+            \begin{itemize}
+            \item facebook can't learn what you do on Google --- unless Google allows it
+            \end{itemize}
+        \item \myemph{enforced by browser}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{origins}
+    \begin{itemize}
+        \item origin: part of URL up to server name:
+            \begin{itemize}
+                \item \texttt{\myemph{https://example.com}/foo/bar}
+                \item \texttt{\myemph{http://localhost}\tikzmark{local1}/foo/bar}
+                \item \texttt{\myemph{http://localhost:8000}\tikzmark{local2}/foo/bar}
+                \item \texttt{\myemph{https://www.example.com}/foo/bar}
+                \item \texttt{\myemph{http://example.com}/foo/bar}
+                \item \texttt{\myemph{https://other.com}/foo/bar}
+                \item \texttt{\myemph{file:///}home/cr4bd}
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\againframe<2>{cookieFields}
+
+\begin{frame}{origins and shared servers}
+    \begin{itemize}
+        \item very hard to safely share a \myemph{domain name}
+    \item can never let attacker write scripts on same domain
+        \begin{itemize}
+        \item even if cookies don't matter
+        \end{itemize}
+    \item similar issues with plugins (e.g. Flash)
+    \vspace{.5cm}
+\item can share server --- one server can host \myemph{multiple names}
+    \end{itemize}
+\end{frame}

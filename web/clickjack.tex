@@ -1,0 +1,34 @@
+
+\begin{frame}{embedding webpages maliciously}
+    \begin{itemize}
+    \item can have little `frame' of other webpage within webpage
+    \item can't read contents of webpage
+    \item can't press buttons in webpage
+    \vspace{.5cm}
+    \item but can:
+        \begin{itemize}
+        \item make other webpage transparent
+        \item show/hide other webpage in response to mouse movement
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{clickjacking demo}
+    % FIXME
+\end{frame}
+
+\begin{frame}{clickjacking defenses}
+    \begin{itemize}
+    \item tell browser ``no embedding'' with HTTP header
+    \item example: \texttt{\small Content-Security-Policy: frame-ancestors 'self'}
+        \begin{itemize}
+        \item only embed from same origin
+        \end{itemize}
+        \vspace{.5cm}
+    \item JavaScript on page can detect if in iframe, etc.
+        \begin{itemize}
+        \item make form buttons not work if so
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

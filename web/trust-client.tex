@@ -1,0 +1,79 @@
+
+\begin{frame}[fragile,label=trustCli1]{trusting the client (1)}
+\begin{minted}[fontsize=\small]{HTML}
+<form action="https://example.com/formmail.pl" method="POST">
+<input type="hidden" name="recipient"
+       value="webmaster@example.com">
+Your email: <input name="from" value=""><br>
+Your message: <textarea name="message"></textarea>
+...
+<input type="submit">
+</form>
+\end{minted}
+    \begin{itemize}
+        \item if this my form, can I get a recipient of \texttt{spamtarget@foo.com}?
+            \begin{itemize}
+                \item Am I \myemph{enabling spammers}??
+            \end{itemize}
+        \item<2> Yes, because attacker could \myemph{make own version of form}
+    \end{itemize}
+\end{frame}
+\begin{frame}[fragile,label=RefererHeader]{Referer header}
+Submitting form at \texttt{https://example.com/feedback.html}:
+\begin{framed}
+\tt\small
+POST /formmail.pl HTTP/1.1 \\
+Host: example.com \\
+Content-Type: application/x-www-form-urlencoded \\
+\myemph{Referer: https://example.com/feedback.html} \\
+~ \\
+recipient=webmaster@example.com\&from=\ldots \\
+\end{framed}
+    \begin{itemize}
+        \item \textbf{sometimes} sent by web browser
+        \item if browser always sends, \myemph{does this help?}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=trustCli2]{trusting the client (2)}
+\begin{minted}[fontsize=\small]{HTML}
+<form action="https://example.com/formmail.pl" method="POST">
+<input type="hidden" name="recipient"
+       value="webmaster@example.com">
+...
+<input type="submit">
+</form>
+\end{minted}
+    \begin{itemize}
+    \item can I get a recipient of \texttt{spamtarget@example.com} \myemph{and the right referer header}?
+        \begin{itemize}
+        \item attacker can't modify the form on example.com!
+        \item browser sends header with URL of form
+        \end{itemize}
+    \item<2> Yes, because attacker can \myemph{customize their browser}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=trustCliNoOne]{trusting the client (3)}
+\setlength{\parskip}{0em}
+\fontsize{10}{11}\selectfont\tt
+ISS E-Security Alert  \\
+February 1, 2000 
+
+Form Tampering Vulnerabilities in Several Web-Based Shopping Cart Applications
+
+\ldots
+
+Many web-based shopping cart applications \myemph{use hidden fields in HTML forms} to
+hold parameters for items in an online store. These parameters can include
+the item's name, weight, quantity, product ID, and \myemph{price}.\ldots
+
+\ldots
+
+Several of these applications use a security method based on \myemph{the HTTP header}
+to verify the request is coming from an appropriate site.\ldots
+
+The ISS X-Force has identified \myemph{eleven shopping cart applications} that are vulnerable to form tampering. \ldots
+
+~
+\end{frame}

@@ -1,0 +1,39 @@
+
+\subsection{not working: iMessage flaw}
+    % https://www.bishopfox.com/blog/2016/04/if-you-cant-break-crypto-break-the-client-recovery-of-plaintext-imessage-data/
+
+\begin{frame}<1>[label=iMsgBug,fragile]{iMessage bug}
+    \begin{itemize}
+        \item iMessage (Apple IM client): embedded browser to display messages
+            \begin{itemize}
+            \item a common (easy?) way to write user interfaces
+            \end{itemize}
+        \item bug: click on \myemph{malicious link, send message logs to attacker}
+        \vspace{.5cm}
+        \item<2-> message links could \myemph<2>{include javascript}
+        \item<2-> same-origin policy \myemph<2>{not enforced}
+    \end{itemize}
+
+        \imagecredit{https://www.bishopfox.com/blog/2016/04/if-you-cant-break-crypto-break-the-client-recovery-of-plaintext-imessage-data/}
+\end{frame}
+
+\againframe<2>{iMsgBug}
+
+\begin{frame}{JavaScript URL}
+    \begin{itemize}
+        \item \fbox{\texttt{javascript:some java script code}} is a kind of URL
+        \item runs JavaScript when clicked (\myemph{permissions of current web page})
+        \item iMessages allowed \texttt{\textit{ANYTHING}://\textit{ANYTHING}} as a link
+            \begin{itemize}
+            \item \texttt{https://www.google.com/}
+            \item \texttt{invalidnamethatdoesnotdoanything://otherStuff}
+            \item \texttt{javascript://\%0a\fbox{JavaScriptCodeHere}} (\%0a = newline)
+            \end{itemize}
+        \item JS can request \fontsize{11}{12}\texttt{file:///Users/somename/Library/Messages/chat.db}
+            \begin{itemize}
+                \item \myemph{no same origin policy just for the UI}
+                \item should have prohibited this
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+

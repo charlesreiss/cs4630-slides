@@ -1,0 +1,22 @@
+
+
+\begin{frame}<1>[label=cookieFields]{cookie fields}
+    \begin{itemize}
+        \item cookie data: whatever server wants; typically \myemph{session ID}
+        \begin{itemize}
+            \item \myemph{same problems as hidden fields}
+            \item usually tied to database on server
+            \item supposed to be kept secret by logged-in user
+        \end{itemize}
+    \item \texttt{domain}: to what servers should browser send the cookie
+        \begin{itemize}
+            \item \fbox{\texttt{facebook.com}} --- login.facebook.com, www.facebook.com, facebook.com, etc.
+        \end{itemize}
+    \item \myemph<2>{\textbf<2>{\texttt{path}}: to what URLs on a server should browser send the cookie}
+        \begin{itemize}
+            \item \fbox{\texttt{/foo}} --- server.com/foo, server.com/foo/bar, etc.
+        \end{itemize}
+    \item \texttt{expires}: when the browser should forget the cookie
+    \item (and more)
+    \end{itemize}
+\end{frame}

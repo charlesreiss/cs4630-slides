@@ -1,0 +1,43 @@
+
+
+\begin{frame}<1>[fragile,label=evilInnocent]{evil website/innoncent website}
+    \begin{tikzpicture}
+        \tikzset{>=Latex}
+        \node[fill=green!30,minimum height=6cm,minimum width=2cm,align=center,anchor=north west] (browser) at (0, 0) {
+            victim user's  \\ web browser
+        };
+        \node[fill=red!30,dashed,thick,draw,minimum height=2cm,minimum width=2cm,align=center,anchor=north east] (attacker) at (14, 0) {
+            attacker\\ website
+        };
+        \node[fill=blue!30,minimum height=3cm,minimum width=2cm,align=center,anchor=north east] (server) at (14, -2.25) {
+            victim \\ website
+        };
+
+
+        \draw[thick,<-] ([yshift=-.5cm] attacker.north west) -- ([yshift=-.5cm]browser.north east) node[midway,above] {
+            get some web page
+        };
+        \draw[thick,->] ([yshift=-1.5cm] attacker.north west) -- ([yshift=-1.5cm]browser.north east) node[midway,above] {
+            do something with victim website
+        };
+
+        \draw[thick,->] ([yshift=-2.75cm] browser.north east) -- ([yshift=-.5cm]server.north west) node[midway,above] {
+            request chosen by attacker
+        };
+        \draw[thick,<-] ([yshift=-4.25cm] browser.north east) -- ([yshift=-2cm]server.north west) node[midway,above,align=center] {
+            page with javascript chosen by attacker? \\
+            \small injected command: ``send secret cookie to attacker''?
+        };
+        \begin{visibleenv}<2>
+        \draw[thick,<-] ([yshift=-5.25cm] browser.north east) -- ([yshift=-3cm]server.north west) node[midway,above] {
+            \myemph{results of action chosen by attacker?}
+        };
+        \end{visibleenv}
+        \begin{visibleenv}<1>
+        \node[fill=red!30,dashed,thick,draw,minimum height=1cm,minimum width=2cm,align=center,anchor=north east] (attacker2) at (14, -5.45) {
+        };
+            \draw[thick,->] ([yshift=-5.85cm] browser.north east)  -- ([yshift=-.25cm]attacker2.north west) node[midway, above] {secret values from victim website};
+        \end{visibleenv}
+    \end{tikzpicture}
+\end{frame}
+

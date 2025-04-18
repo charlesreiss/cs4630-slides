@@ -1,0 +1,55 @@
+
+\begin{frame}[fragile,label=HTTPReq]{HTTP requests}
+\texttt{https://server.com/dir/file?query=string\#anchor} \\
+    browser connects to server.com; \textbf{browser} sends:
+\begin{framed}
+\tt
+\myemph<2>{GET}\tikzmark{method} /dir/file?query=string HTTP/1.1 \\
+\myemph<3>{Host: \myemph<4>{server.com}\tikzmark{host}} \\
+\myemph<3>{\textit{Other-Key}:  \textit{Other-Value}} \\
+\ldots \\
+~ \\
+\end{framed}
+    \begin{tikzpicture}[overlay,remember picture]
+        \coordinate (overBox) at ([yshift=-2cm]current page.center);
+        \tikzset{
+            every node/.style={align=left,anchor=center},
+        }
+        \begin{visibleenv}<2>
+        \node[my callout=method,anchor=center] at (overBox) {
+            method: GET or POST most common \\
+            GET --- read web page \\
+            POST --- submit form
+        };
+        \end{visibleenv}
+        \begin{visibleenv}<3>
+        \node[my callout=host,anchor=center] at (overBox) {
+            headers: \\
+            extra information with request
+        };
+        \end{visibleenv}
+        \begin{visibleenv}<4>
+        \node[my callout=host,anchor=center] at (overBox) {
+            example extra info: domain name from URL \\
+            servers can host mutliple domains
+        };
+        \end{visibleenv}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile,label=HTTPResp]{HTTP responses}
+\texttt{https://server.com/path/to/file?query=string\#anchor} \\
+    after browser sends request; \textbf{server} sends:
+\begin{framed}
+\tt
+HTTP/1.1 200 OK \\
+Content-Type: text/html\tikzmark{contentType} \\
+\textit{Other-Key}:  \textit{Other-Value} \\
+~ \\
+<html>\ldots
+\end{framed}
+    \begin{tikzpicture}[overlay,remember picture]
+        \coordinate (overBox) at ([yshift=-2cm]current page.center);
+    \end{tikzpicture}
+\end{frame}
+

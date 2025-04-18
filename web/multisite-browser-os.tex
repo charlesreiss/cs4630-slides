@@ -1,0 +1,42 @@
+
+\begin{frame}{the web}
+    \begin{tikzpicture}
+        \node[draw,thick,fill=blue!30] (browser) {
+            Web Browser
+        };
+        \node[draw,thick,fill=green!30,right=2cm of browser] (webSite1) {
+            facebook.com
+        };
+        \node[draw,thick,fill=green!30,below=.5cm of webSite1] (webSite2) {
+            foobar.com (uses facebook login)
+        };
+        \node[draw,thick,fill=red!30,below=.5cm of webSite2] (webSite3) {
+            evil.com (run by attacker)
+        };
+        \draw[thick,Latex-Latex] (browser) -- (webSite1.west);
+        \draw[thick,Latex-Latex] (browser) -- (webSite2.west);
+        \draw[thick,Latex-Latex] (browser) -- (webSite3.west);
+    \end{tikzpicture}
+\begin{itemize}
+    \item one web browser talks to multiple websites
+    \item how does it (or does it) keep each websites seperate?
+    \item even though websites can link to each other/etc.?
+\end{itemize}
+\end{frame}
+
+\begin{frame}{the browser is basically an OS}
+    \begin{itemize}
+    \item websites are JavaScript programs
+    \item websites can communicate with each other
+        \begin{itemize}
+        \item one website can embed another
+        \item cause browser to send requests to another
+        \end{itemize}
+    \item websites can store data on the browser
+        \begin{itemize}
+        \item cookies
+        \item local storage
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+

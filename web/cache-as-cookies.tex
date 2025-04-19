@@ -1,0 +1,24 @@
+\begin{frame}{caches as cookies}
+    \begin{itemize}
+    \item let's say we load an image
+    \item with unique ETag each time
+    \vspace{.5cm}
+    \item browser stores ETag, makes If-None-Match request
+    \item \ldots kinda acts like cookie
+        \begin{itemize}
+        \item but not susceptible to third-party cokie rules
+        \end{itemize}
+    \vspace{.5cm}
+    \item part of set of ideas called `supercookies'
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Firefox supercookie mitigations}
+    \begin{itemize}
+    \item \url{https://blog.mozilla.org/security/2021/01/26/supercookie-protections/}
+    \item for each top-level website, separate:
+    \vspace{.5cm}
+    \item caches (for everything --- images, resolved domain names, fonts, etc.)
+    \item connections (even for same hostname)
+    \end{itemize}
+\end{frame}

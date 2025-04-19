@@ -1,0 +1,24 @@
+
+
+\begin{frame}{same-origin incompleteness}
+    \begin{itemize}
+    \item can, for example: 
+        \begin{itemize}
+        \item load remote image and check image width height
+        \item load remote javascript and use its variables
+        \end{itemize}
+    \item used to be case that this would send all cookies
+        \begin{itemize}
+        \item so image/javascript might be only logged-in accessible
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{cross-site cookie policy changes}
+    \begin{itemize}
+    \item new cookie attribute \texttt{SameSite=\ldots}:
+    \item \texttt{Strict}: only if same top-level origin making request
+    \item \texttt{Lax} (essentially new default): not on embedded (image/iframe/etc.) requests from different origin
+    \item \texttt{None}: on all requests
+    \end{itemize}
+\end{frame}

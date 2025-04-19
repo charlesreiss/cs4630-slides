@@ -1,15 +1,15 @@
-\begin{frame}{Chrome sandbox escape (1)}
+\begin{frame}{Chrome sandbox escapes (1)}
     \begin{itemize}
     \item recall: renderer communicates with `browser kernel'
     \item `browser kernel' might have bugs in this interface
         \begin{itemize}
-        \item example: \url{https://project-zero.issues.chromium.org/issues/42451090} --- missing access check for `wrong' website
-        \item example: \url{https://chromereleases.googleblog.com/2021/09/stable-channel-update-for-desktop.html} \url{https://starlabs.sg/blog/2022/01-the-cat-escaped-from-the-chrome-sandbox/} --- use after free in API available from renderer
+        \item example: {\scriptsize \url{https://project-zero.issues.chromium.org/issues/42451090}} --- missing access check for `wrong' website
+        \item example: {\scriptsize \url{https://chromereleases.googleblog.com/2021/09/stable-channel-update-for-desktop.html} \url{https://starlabs.sg/blog/2022/01-the-cat-escaped-from-the-chrome-sandbox/}} --- use after free in API available from renderer
         \end{itemize}
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Chrome sandbox escape (2)}
+\begin{frame}{Chrome sandbox escapes (2)}
     \begin{itemize}
     \item Chrome Windows sandbox
     \item based on ``restricted access tokens''
@@ -17,16 +17,11 @@
         \item on Windows, programs have `access tokens' representing their permissions
         \item can create `restricted' version to limit access
         \end{itemize}
-    \end{itemize}
-\end{frame}
-\begin{frame}{Chrome sandbox escape (3)}
-    \begin{itemize}
     \item {\tiny \url{https://googleprojectzero.blogspot.com/2020/04/you-wont-believe-what-this-one-line.html}}:
     \item problem: Windows erronously allowed starting new processes with a more unrestricted token
         \begin{itemize}
         \item supposed to have check where the token being used came from, but incomplete
         \end{itemize}
-    \item \ldots but needed to get `handle' to that token
-    \item solution: ask to duplicate another running process
+    \item tricky to get unrestricted token --- but could duplicate another process's (oops!)
     \end{itemize}
 \end{frame}

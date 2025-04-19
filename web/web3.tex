@@ -58,38 +58,40 @@
 
 \begin{frame}{changing the cookie policy (2)}
     \begin{itemize}
-    \item current Firefox ``tracking protection'' approach:
-    \item manually(?) created list of sites that do tracking
-    \item \ldots and can be ignored without breaking things
+    \item by default: don't send cookies on embedded cross-origin requests
+    \item varying ideas about restricting third-party cookies
     \end{itemize}
 \end{frame}
 
-\begin{frame}{changing the cookie policy (3)}
+\begin{frame}{third-party cookie restrictions}
     \begin{itemize}
-    \item EFF Privacy Badger: heuristic apporach
-    \item create score using 
+    \item Firefox:
         \begin{itemize}
-        \item amount of info in cookies
-        \item number of places third-party appears
+        \item separate `cookie jar' for each top-level domain
+        \item tracker.com loaded from foo.com != tracker.com loaded from bar.com
+        \item \myemph<2>{heuristics to avoid breaking some websites}
         \end{itemize}
-    \item block requests to third-party or filter cookies if score too high
-    \item hard-coded exceptions for common false positives/tricky caes
+    \item Safari
         \begin{itemize}
-        \item `surrogate' code to avoid breaking website by blocking
-            \begin{itemize}
-            \item tracking code has callbacks to third-party
-            \end{itemize}
-        \item e.g. facebook.com and fbcdn.com
+        \item don't see third-party cookies
+        \item opt-in to separate cookie jar?
+        \end{itemize}
+    \item Chrome:
+        \begin{itemize}
+        \item opt-in to partitioned cookie jar
         \end{itemize}
     \end{itemize}
 \end{frame}
+
+% FIXME: heuristics
+
 
 \begin{frame}[fragile,label=noCookieTrack]{tracking without cookies}
     \begin{itemize}
     \item websites can do tracking even with no cookies
         \begin{itemize}
         \item information in URLs --- add \texttt{?sessionID} to all links
-        \item other forms of browser storage --- e.g. via Flash
+        \item web page caches
         \end{itemize}
     \item websites can ``fingerprint'' browser and machine
         \begin{itemize}

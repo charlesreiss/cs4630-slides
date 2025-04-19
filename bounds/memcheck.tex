@@ -3,10 +3,13 @@
 \begin{frame}{Valgrind Memcheck}
     \begin{itemize}
     \item similar to AddressSanitizer --- but no compiler modificaitons
-    \item instead: is a virtual machine (plus alternate malloc/new implementation)
+    \item instead: is an emulator (plus alternate malloc/new implementation)
+        \begin{itemize}
+        \item implemented using binary translation (just-in-time compilation)
+        \end{itemize}
     \vspace{.5cm}
     \item only (reliably) detects errors on heap
-    \item but works on \myemph{unmodified} binaries
+    \item but works on \myemph{unmodified} binariesk
     \end{itemize}
 \end{frame}
 

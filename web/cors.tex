@@ -1,0 +1,41 @@
+\begin{frame}{cross-origin resource sharing}
+    \begin{itemize}
+    \item sometimes want exceptions to usual origin policy:
+    \vspace{.5cm}
+    \item let scripts on foo.com load data from bar.com
+        \begin{itemize}
+        \item example: bar.com running maps API
+        \end{itemize}
+    \item need mechanism for bar.com to give permission
+        \begin{itemize}
+        \item don't accidentally leak logged-in only info
+        \end{itemize}
+    \item historically didn't worry about this:
+        \begin{itemize}
+        \item no restrictions on loading images/scripts from elsewhere
+        \item \ldots even though they may be based on cookies/etc.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Access-Control-Allow\ldots}
+    \begin{itemize}
+    \item Origin
+    \item Headers
+    \item Credentials
+    \item Request-Heaers
+    \item Request-Method
+    \item Max-Age
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{preflighting}
+    % FIXME: show OPTIONS request
+\end{frame}
+
+\begin{frame}{Cross-Origin-Resource-Policy}
+    % FIXME
+\end{frame}
+
+\begin{frame}{crossorigin attribute}
+\end{frame}

@@ -10,12 +10,121 @@
 \input{../common/listingsLib}
 
 \begin{frame}{last time}
+    \begin{itemize}
+    \item `fat pointer'-based bounds-checking
+        \begin{itemize}
+        \item have pointers include bounds of object/array
+        \item can check on \textit{pointer dereference}
+        \end{itemize}
+    \item unfortunate C programming practices that break fat pointers
+        \begin{itemize}
+        \item converting pointers to ints and back
+        \item converting pointer to Inner struct to Outer struct
+        \end{itemize}
+    \item baggy bounds check
+        \begin{itemize}
+        \item store bounds in lookup table
+        \item check \textit{pointer arithmetic}
+        \item (can't allow out-of-bounds pointer --- lost bounds information)
+        \item make things multiple of power of two to speed up checks
+        \item (at cost of a bunch of extra space)
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
-\begin{frame}{on SANDBOX}
+\begin{frame}{on SANDBOX (1)}
+    \begin{itemize}
+    \item will set filter \textit{after} worker program starts
+        \begin{itemize}
+        \item don't need to allow system calls needed for program startup only
+        \end{itemize}
+    \item okay for your program to abort on invalid operation
+    \vspace{.5cm}
+    \item IPC library aborts on communication problem
+        \begin{itemize}
+        \item choice I made because I thought people wouldn't check return values
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
-\begin{frame}{on CHALLENGE}
+
+\begin{frame}{on SANDBOX (2)}
+    \begin{itemize}
+    \item on strace
+        \begin{itemize}
+        \item I think it's easiest to use strace on original program or test program that just calls dadasubst (since less going on)
+        \item if using -f: lines prefixed with process IDs
+        \item could figure out which PID is which by, e.g., outputting something and looking for it
+        \item probably strace will show something when filter gets tripped
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{on SANDBOX (3)}
+    \begin{itemize}
+    \item linking libseccomp -- \texttt{-lseccomp} when making executable
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{on CHALLENGE (1)}
+    \begin{itemize}
+    \item complete any 5 of 7 challenges
+    \item your goal: create attackX.py (or .c or etc.), so that
+        \begin{itemize}
+        \item \texttt{python attackX.py exploit.dat}
+        \item (get new copy of challengeX.exe)
+        \item \texttt{setarch -RL env - ./challengeX.exe <exploit.dat}
+        \end{itemize}
+    \item terminates normally and produces output saying you passed the challenge
+        \begin{itemize}
+        \item (more details in the assignment writeup)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{on CHALLENGE (2)}
+    \begin{itemize}
+    \item can complete any 5 of 7 for full credit
+        \begin{itemize}
+        \item 20\% credit for each completed, no extra credit
+        \item (any partial credit will be based on best 5 submitted)
+        \end{itemize}
+    \item will have challenges numbered in my rough guess about difficulty
+        \begin{itemize}
+        \item my guess may be wrong
+        \item my guess may assume you make good (educated) guess about what strategy to use
+        \end{itemize}
+    \item will supply example solutions to prior attack-like assignments
+    \item some challenges will come with source code/README
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{schedule note}
+    \begin{itemize}
+    \item haven't been keeping schedule page up-to-date, sorry!
+    \item should be better now
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{future classes plan}
+    \begin{itemize}
+    \item bounds-checking (today?)
+        \begin{itemize}
+        \item AddressSanitizer, valgrind memchcek
+        \end{itemize}
+    \item control-flow integrity (CFI)
+        \begin{itemize}
+        \item check that calls/return go to `valid' locations
+        \item what ENDBR64 is about
+        \end{itemize}
+    \item if time --- cross-site scripting (XSS) mitigations and same-origin policy (SOP)
+        \begin{itemize}
+        \item Content-Security-Policy
+        \item cookie flags (secure; HTTPOnly; \ldots)
+        \item restrictions on requests between webpages (
+        \end{itemize}
+    \item Q: should I cut down/move CFI stuff and prioritize XSS/SOP?
+    \end{itemize}
 \end{frame}
 
 \section{baggy bounds con't}
@@ -67,9 +176,6 @@
 \section{valgrind memcheck, briefly}
 \input{../bounds/memcheck}
 
-\subsection{aside: binary translation}
-\input{../vm/binaryTrans}
-
 \subsection{aside: other binary translation applications}
 % FIXME
 
@@ -92,6 +198,9 @@
 
 \subsection{the lookup table}
 \input{../bounds/baggy-bounds-table}
+
+\subsection{aside: binary translation}
+\input{../vm/binaryTrans}
 
 
 \end{document}

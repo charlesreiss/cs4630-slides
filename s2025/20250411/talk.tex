@@ -1,10 +1,13 @@
 \date{}
 \title{}
 \date{}
+\usepackage[outputdir=latex.out]{minted}
 \begin{document}
 \begin{frame}
     \titlepage
 \end{frame}
+
+\input{../common/listingsLib}
 
 \begin{frame}{last time}
     \begin{itemize}
@@ -23,6 +26,16 @@
 \begin{frame}{SANDBOX homework}
 \end{frame}
 
+\begin{frame}{sandbox escapes generally}
+    \begin{itemize}
+    \item bug in sandbox interface
+        \begin{itemize}
+        \item example: memory/injection error in handling inputs
+        \end{itemize}
+    \item unintended functionality of sandboxed operations
+    \end{itemize}
+\end{frame}
+
 \subsubsection{runC bug}
 \input{../sandbox/runc-bug}
 
@@ -37,8 +50,10 @@
 
 \subsection{OSX sandboxing}
 \input{../sandbox/osx-sandbox}
+
 \subsection{Qubes}
 \input{../sandbox/qubes}
+
 
 \section{Which sandboxing?}
 \input{../sandbox/which-sandbox-exer}
@@ -48,10 +63,6 @@
 
 \subsection{Wasm}
 \input{../sandbox/wasm}
-
-
-\section{sandboxing API: RLBox}
-\input{../sandbox/rlbox}
 
 \section{application permissions}
 \input{../sandbox/app-perms}

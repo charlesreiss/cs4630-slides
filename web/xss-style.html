@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html><head>
+<style>
+    input[value^=V] {background: url(https://example.invalid/?foo)}
+    input[value^=X] {background: url(https://example.invalid/?quux)}
+    input {background: url(https://example.invalid/?bar)}
+</style>
+</head><body>
+<form>
+<input type=text value="Fill this in">
+<input type=text value="Virginia">
+<input type=button value=example>
+</form>
+</body>

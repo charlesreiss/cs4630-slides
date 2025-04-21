@@ -34,8 +34,8 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Content Security Policy examples}
-    \begin{itemize}
+\begin{frame}{Content Security Policy examples (1)}
+    \begin{itemize} 
         \item \fbox{\parbox{11cm}{\tt \small Content-Security-Policy: script-src 'self' www.google-analytics.com; object-src 'none'}}
         \begin{itemize}
             \item allow scripts from same host or \texttt{www.google-analytics.com}
@@ -68,4 +68,46 @@ document...
         \item browser doesn't enforce that it changes; server's job
         \end{itemize}
     \end{itemize}
+\end{frame}
+
+\begin{frame}{CSP report-only}
+    \begin{itemize}
+    \item content-security-policy-report-only
+        \begin{itemize}
+        \item don't block anything, but tell server if violation
+        \end{itemize}
+    \item can use to check before setting binding policy
+    \item can scan reports for possible issues without breaking webpage
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{CSP feature expansion}
+    \begin{itemize}
+    \item originally: CSP was anti-XSS measure
+        \begin{itemize}
+        \item meant as `defense in depth' --- in case normal filtering fails
+        \end{itemize}
+    \item now also has directives to control
+        \begin{itemize}
+        \item embedding webpages without permission (e.g. `clickjacking' attacks)
+        \item TLS usage
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{CSP deployment (2020 paper)}
+\includegraphics[height=0.85\textheight]{../web/roth-ndss-title}
+\end{frame}
+
+\begin{frame}{CSP deployment (2014-2019)}
+\includegraphics[height=0.85\textheight]{../web/roth-ndss-fig5}
+\end{frame}
+
+\begin{frame}{CSP implementation bugs (1)}
+\includegraphics[height=0.9\textheight]{../web/franken-title}
+\end{frame}
+
+\begin{frame}{CSP implementation bugs (2)}
+\includegraphics[width=0.45\textwidth]{../web/franken-fig3}
+\includegraphics[width=0.45\textwidth]{../web/franken-fig10}
 \end{frame}

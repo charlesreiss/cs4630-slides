@@ -15,3 +15,53 @@
     \item have IP addresses, too --- very good hints
     \end{itemize}
 \end{frame}
+
+\begin{frame}{tracking without cookies: redirect}
+    \begin{tikzpicture}
+        \tikzset{
+            >=Latex,
+        }
+        \node[fill=blue!30,minimum height=8cm,anchor=north west] (browser) at (0,0) { browser };
+        \node[fill=green!30,minimum height=2cm,anchor=north east] (server1) at (15,0){ \tt example.com };
+        \node[fill=yellow!30,minimum height=2cm,anchor=north east] (server2) at (15, -2.5) { \tt tracker.com };
+        \node[fill=green!30,minimum height=3cm,anchor=north east] (server3) at (15, -5) { \tt example.com};
+        \begin{scope}[>=Latex,ultra thick,every node/.style={font=\tt\fontsize{10}{10}\selectfont,align=left,inner sep=.25mm},y=1.2cm]
+            \draw[->] ([yshift=-.5cm]browser.north east) -- ([yshift=-.5cm]server1.north west)
+                node[midway,above] { GET /foo/ \\ Cookie: exampleUserId=...};
+            \draw[<-] ([yshift=-1.5cm]browser.north east) -- ([yshift=-1.5cm]server1.north west)
+                node[midway,above,align=center] (redirectOne) { goto \texttt{tracker.com/?from=foo.com/foo;exampleUserId=...} };
+            \draw[->] ([yshift=-3.0cm]browser.north east) -- ([yshift=-0.5cm]server2.north west)
+                node[midway,above] { GET /foo\\ Cookie: TrackerSessionID=... };
+            \draw[<-] ([yshift=-4.0cm]browser.north east) -- ([yshift=-1.5cm]server2.north west)
+                node[midway,above] (redirectTwo) {  goto example.com/foo/?real=1 };
+            \draw[->] ([yshift=-5.5cm]browser.north east) -- ([yshift=-0.5cm]server3.north west)
+                node[midway,above] (token) { GET /foo/?real=1 \\ ...};
+        \end{scope}
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{no redirect?}
+\begin{itemize}
+\item can achieve similar effect by embedding iframe, other resources
+\end{itemize}
+\end{frame}
+
+\begin{frame}{tracking without cookies}
+    \begin{itemize}
+    \item problem: this looks exactly like a normal single-sign-on flow
+    \vspace{.5cm}
+    \item Firefox, Safari use heuristics to distinguish:
+    \item in Firefox ({\scriptsize \url{https://developer.mozilla.org/en-US/docs/Web/Privacy/Guides/Redirect_tracking_protection}})
+        \begin{itemize}
+        \item periodically clear cookies/other storage from redirect/etc.-like trackers
+        \item if on list of known trackers, no user interaction
+        \item \ldots
+        \end{itemize}
+    \item in Safari ({\scriptsize \url{https://webkit.org/tracking-prevention/}})
+        \begin{itemize}
+        \item look for redirect/embed like patterns
+        \item periodically clear cookies/etc. if no user interaction
+        \item \ldots
+        \end{itemize}
+    \end{itemize}
+\end{frame}

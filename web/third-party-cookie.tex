@@ -3,39 +3,23 @@
     \begin{itemize}
     \item idea: no ``third-party'' cookies
     \item only send cookies for URL in address bar
-    \vspace{.5cm}
-    \item<2> now embedded Google calendar can't use my credentials
-    \item<2> what about websites that use multiple domains?
     \end{itemize}
 \end{frame}
 
-\begin{frame}{changing the cookie policy (2)}
-    \begin{itemize}
-    \item by default: don't send cookies on embedded cross-origin requests
-    \item varying ideas about restricting third-party cookies
-    \end{itemize}
+\begin{frame}{via ArsTechnica}
+\includegraphics[width=\textwidth]{../web/arstech-3rd-party-cookie}
 \end{frame}
 
 \begin{frame}{third-party cookie restrictions}
     \begin{itemize}
     \item Firefox:
-        \begin{itemize}
-        \item separate `cookie jar' for each top-level domain
-        \item tracker.com loaded from foo.com != tracker.com loaded from bar.com
-        \item \myemph<2>{heuristics to avoid breaking some websites}
-        \end{itemize}
-    \item Safari
-        \begin{itemize}
-        \item don't see third-party cookies
-        \item opt-in to separate cookie jar?
-        \end{itemize}
-    \item Chrome:
-        \begin{itemize}
-        \item opt-in to partitioned cookie jar
-        \end{itemize}
+    \vspace{.5cm}
+    \item separate `cookie jar' for each top-level domain
+    \item tracker.com loaded from foo.com != tracker.com loaded from bar.com
+    \vspace{.5cm}
+    \item Safari:
+    \item third-party cookies just blocked
     \end{itemize}
 \end{frame}
-
-% FIXME: heuristics
 
 

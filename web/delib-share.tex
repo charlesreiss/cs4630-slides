@@ -11,7 +11,6 @@
 \end{frame}
 
 \begin{frame}[label=ssoLogin]{deliberate sharing: single-sign-on API}
-\vspace{-.5cm}
     \begin{tikzpicture}
         \tikzset{
             >=Latex,
@@ -54,20 +53,5 @@
             };
         \end{visibleenv}
     \end{tikzpicture}
-\end{frame}
-
-\begin{frame}{deliberate sharing: retrieving information}
-    \begin{itemize}
-    \item what about retrieving information from JavaScript?
-    \item example: Google Translator API
-    \item example: Token to Username API
-    \vspace{.5cm}
-    \item explicit mechanism for server opt-in to cross-origin requests (where webpage can read result)
-        \begin{itemize}
-        \item Cross-Origin Resource Sharing
-        \end{itemize}
-    \item \myemph{no opt-in? JS fails} like before
-    \item always sends Origin --- no pretending to be innocent user
-    \end{itemize}
 \end{frame}
 

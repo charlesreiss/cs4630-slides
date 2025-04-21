@@ -1,0 +1,38 @@
+<h1>Cross Origin Resource Sharing demo</h1>
+<script>
+var request = new XMLHttpRequest()
+function readRemoteThingGood() {
+    request.open('GET', 'http://demoapp:8000/demo/readable/', true);
+    request.onreadystatechange = finishedRead;
+    request.send()
+}
+function readRemoteThingBad() {
+    request.open('GET', 'http://demoapp:8000/demo/secret/', true);
+    request.onreadystatechange = finishedRead;
+    request.send()
+}
+function finishedRead() {
+    if (request.readyState == XMLHttpRequest.DONE) {
+        if (request.status == 200) {
+            alert(request.responseText)
+        } else {
+            alert("Got non-OK status " + request.status)
+        }
+    }
+}
+</script>
+
+<button onclick="readRemoteThingGood()">do remote read of readable thing</button>
+<button onclick="readRemoteThingBad()">do remote read of unreadable thing</button>
+
+<br><br><br>
+
+<script>
+function readRemoteSecret2() {
+    alert(document.getElementById('remoteFrame2').contentDocument.getElementById('secret').innerHTML)
+}
+</script>
+<div>
+<iframe id="remoteFrame2" src="http://demoapp:8000/demo/readable/"></iframe><br>
+<a href="javascript:readRemoteSecret2()">read readable secret via iframe?</a><br>
+</div>

@@ -1,0 +1,97 @@
+\date{}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item control flow integrity
+        \begin{itemize}
+        \item on computed jump, check where it goes
+        \item label locations based on compile-time information
+        \item check label before jumping
+        \end{itemize}
+    \item imprecision of CFI
+        \begin{itemize}
+        \item still around misdirection --- return to a different call
+        \item merge labels or check many labels when one call can reach many functions
+        \item conservative compile-time analysis may include impossible paths
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{quiz Q1A}
+    \begin{itemize}
+    \item run a program such that it has access to two particular user's home directories
+        \begin{itemize}
+        \item assuming files in user home directories are readable/etc. `normally'
+        \end{itemize}
+    \end{itemize}
+\begin{Verbatim}[fontsize=\small]
+$ unshare --user --mount --map-root-user
+# mkdir /tmp/workdir; cd /tmp/workdir
+# mkdir -p home/user1 home/user2 bin lib lib64
+# mount --bind /home/user1 /tmp/workdir/home/user1
+# mount --bind /home/user2 /tmp/workdir/home/user2
+# mount -o ro --bind /usr /tmp/workdir/usr
+...
+# chroot /tmp/workdir /bin/program
+\end{Verbatim}
+    \begin{itemize}
+    \item access to world/group accessible files in user1/user2's directories
+    \item no access to other user's directories, even if world/group/etc. accessible:
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{quiz Q2}
+    \begin{itemize}
+    \item option A: array with VTable pointers
+        \begin{itemize}
+        \item array won't have gaps between objects
+        \item AddressSanitizer won't be able to add red zone
+        \end{itemize}
+    \item option C: next/prev in list of free memory regions
+        \begin{itemize}
+        \item AddressSanitizer replaces malloc(), add `red zones' between things
+        \end{itemize}
+    \item option D: array[X] where X is attacker supplied
+        \begin{itemize}
+        \item only detects if array[X] is not valid memory
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\section{Clang's CFI implementation}
+\input{../cfi/clang-cfi}
+
+\section{Clang's CFI prevents?}
+\input{../cfi/prevent-exer}
+
+\subsection{problems with dynamically loaded code}
+\input{../cfi/dynamic-p}
+
+\section{Intel's `CFI'}
+\input{../cfi/intel-cfi}
+
+\section{authenticated pointers}
+\subsection{motivation}
+\input{../cfi/enc-ptr-motivation}
+\subsection{ARM support}
+\input{../cfi/arm-enc-ptrs}
+\subsection{relating to CFI}
+\input{../cfi/enc-ptr-cfi}
+\subsection{in iOS/OS X}
+\input{../cfi/osx-enc-ptrs}
+% FIXME
+
+\input{../web/talk-inner}
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\input{../web/talk-backup}
+
+\end{document}

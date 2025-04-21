@@ -1,10 +1,13 @@
 \date{}
 \title{}
 \date{}
+\usepackage[outputdir=latex.out]{minted}
 \begin{document}
 \begin{frame}
     \titlepage
 \end{frame}
+\usetikzlibrary{calc}
+\input{../common/listingsLib}
 
 \begin{frame}{last time}
     \begin{itemize}
@@ -23,7 +26,7 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{quiz Q1A}
+\begin{frame}[fragile]{quiz Q1A}
     \begin{itemize}
     \item run a program such that it has access to two particular user's home directories
         \begin{itemize}
@@ -42,7 +45,6 @@ $ unshare --user --mount --map-root-user
 \end{Verbatim}
     \begin{itemize}
     \item access to world/group accessible files in user1/user2's directories
-    \item no access to other user's directories, even if world/group/etc. accessible:
     \end{itemize}
 \end{frame}
 

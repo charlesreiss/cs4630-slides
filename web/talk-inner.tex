@@ -1,6 +1,5 @@
 
 \usetikzlibrary{arrows.meta,calc,shapes.callouts,positioning}
-\input{../web/stored-xss}
 \section{the web overall}
 \input{../web/multisite-browser-os}
 
@@ -12,13 +11,21 @@
 \input{../web/cookie-fields}
 
 \subsection{XSS cookie extraction}
+\input{../web/reflect-xss}
+\input{../web/stored-xss}
 \input{../web/xss-example}
+
+\subsection{XSS and user content}
+\input{../web/xss-user-content}
 
 \subsection{XSS mitiations}
 \input{../web/xss-mit}
 
 \subsection{CSP}
 \input{../web/csp}
+
+\subsection{aside: clickjacking}
+\input{../web/clickjack}
 
 \subsection{embedded/SOP}
 \input{../web/sop}

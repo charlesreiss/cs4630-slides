@@ -1,0 +1,10 @@
+latexrun -W no-overfull --latex-cmd=lualatex --latex-args=-shell-escape talk-slides.tex
+latex.out/talk-slides.aux: warning: Label `submitForm<1>' multiply defined
+latex.out/talk-slides.aux: warning: Label `submitForm' multiply defined
+latex.out/talk-slides.aux: warning: Label `noCookieTrack<1>' multiply defined
+latex.out/talk-slides.aux: warning: Label `noCookieTrack' multiply defined
+latex.out/talk-slides.aux: warning: Label `noCookieTrack<2>' multiply defined
+talk-slides.tex: warning: There were multiply-defined labels
+talk-slides.tex: warning: extra `)' in log; file names may be wrong 
+talk-slides.tex: warning: extra `)' in log; file names may be wrong 
+talk-slides.tex: 2 underfull warnings, 34 overfull warnings not shown (use -Wall to show them)

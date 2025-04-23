@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<iframe id='fr'></iframe>
+<script>
+var frame = document.getElementById('fr');
+frame.onload = function() {
+    frame.contentWindow.getElementById('form-id').submit();
+}
+frame.src = "test2.html";
+</script>

@@ -1,0 +1,37 @@
+\date{}
+\title{}
+\date{}
+\usepackage[outputdir=latex.out]{minted}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+\usetikzlibrary{arrows.meta,calc,shapes.callouts,positioning}
+\input{../common/listingsLib}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item practical control-flow integrity
+        \begin{itemize}
+        \item one label with ENDBR64 (x86-64) / BTI (ARM)
+        \item Clang grouping functions + bitmask strategy
+        \end{itemize}
+    \item pointer authentication
+        \begin{itemize}
+        \item add message authentication code to pointer
+        \item protect against manipulation of sensitive pointers
+        \item include extra info (address, method name, etc.) to prevent `mixing' pointers
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\input{../web/talk-inner}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\input{../web/talk-backup}
+
+
+\end{document}

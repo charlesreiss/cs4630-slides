@@ -1,21 +1,28 @@
 
 \section{XSS mitigations}
 
-\begin{frame}<1-2>[label=XSSmits]{XSS mitigations}
+\begin{frame}<1-2>[label=XSSmits]{webapp XSS mitigations}
     \begin{itemize}
     \item host dangerous stuff on different domain
         \begin{itemize}
         \item has different cookies
         \end{itemize}
+    \item \myemph<2>{filter/escape inputs} (same as normal command injection)
+        \begin{itemize}
+        \item some libraries to help --- very easy to get this wrong
+        \end{itemize}
+    \item \myemph<3>{web application firewalls}
+        \begin{itemize}
+        \item module on web server that look for `bad-looking' requests
+        \end{itemize}
     \item Content-Security-Policy
         \begin{itemize}
         \item server says ``browser, don't run scripts here''
         \end{itemize}
-    \item \myemph<3>{HttpOnly cookies}
+    \item \myemph<4>{HttpOnly cookies}
         \begin{itemize}
         \item server says ``browser, don't share this with code on the page''
         \end{itemize}
-    \item \myemph<2>{filter/escape inputs} (same as normal command injection)
     \end{itemize}
 \end{frame}
 
@@ -42,6 +49,20 @@
 \end{frame}
 
 \againframe<3>{XSSmits}
+
+\begin{frame}{web application firewall rule}
+\begin{Verbatim}[fontsize=\small]
+# via coreruleset.org, simplified some
+SecRule REQUEST_COOKIES|...|REQUEST_FILENAME|ARGS_NAMES|ARGS|XML:\
+    /* "@rx (?i)<script[^>]*>[\s\S]*?" \
+    "id:941140,phase:2,block,cpature..."
+\end{Verbatim}
+\begin{itemize}
+\item look for \verb|<script>| tags in request
+\end{itemize}
+\end{frame}
+
+\againframe<4>{XSSmits}
 
 \begin{frame}<1-2>[fragile,label=HTTPOnlyCookie]{HTTP-only cookies}
     \begin{itemize}

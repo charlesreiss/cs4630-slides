@@ -3,11 +3,15 @@
 \section{the web overall}
 \input{../web/multisite-browser-os}
 
+\section{HTTP request/response}
 \input{../web/http-req-resp}
 
 %\input{../web/web1}
 \section{HTTP logins with cookies}
 \input{../web/http-login}
+
+\subsection{aside: CSRF}
+\input{../web/csrf}
 
 \subsection{cookie fields}
 \input{../web/cookie-fields}
@@ -17,8 +21,8 @@
 \input{../web/stored-xss}
 \input{../web/xss-example}
 
-\subsection{XSS and user content}
-\input{../web/xss-user-content}
+\subsection{XSS detection}
+\input{../web/xss-detect}
 
 \subsection{XSS mitiations}
 \input{../web/xss-mit}
@@ -26,7 +30,7 @@
 \subsection{CSP}
 \input{../web/csp}
 
-\subsection{aside: clickjacking}
+\subsection{clickjacking}
 \input{../web/clickjack}
 
 \subsection{embedded/SOP}
@@ -37,6 +41,16 @@
 
 \subsection{SOP details/leak}
 \input{../web/sop-detail-leak}
+
+\section{information leaks despite SOP}
+
+\subsection{facebook login: embedding}
+\againframe<2>{noSameOrigin}
+\input{../web/web-sop-fb-login}
+
+\subsection{timing leak}
+\input{../web/web-sop-timing}
+
 
 \subsection{deliberate sharing}
 \input{../web/delib-share}

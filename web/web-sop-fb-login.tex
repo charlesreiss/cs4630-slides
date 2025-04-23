@@ -1,0 +1,25 @@
+
+\begin{frame}[fragile,label=inFB]{logged into facebook? (1)}
+    \begin{itemize}
+        \item \texttt{https://www.facebook.com/login.php?next=\textit{URL}}
+        \item login page if \myemph{you are not logged in}
+            \item otherwise redirects to \textit{URL}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=inFB2]{logged into facebook? (2)}
+    \begin{itemize}
+        \item \texttt{https://www.facebook.com/favicon.ico} is an image
+        \item load via conditional redirect:
+    \end{itemize}
+    \begin{minted}[fontsize=\small,breaklines,breakafter==]{HTML}
+<img src="http://www.facebook.com/login.php?next= https%3A//www.facebook.com/favicon.ico"
+    onload="doLoggedInStuff()"
+    onerror="doNotLoggedInStuff()">
+\end{minted}
+    \begin{itemize}
+    \item with third-party cookies enabled\ldots (more later)
+    \item would work/not work depending on if logged into facebook
+    \end{itemize}
+\imagecredit{via \texttt{https://robinlinus.github.io/socialmedia-leak/}}
+\end{frame}

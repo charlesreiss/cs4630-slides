@@ -1,0 +1,75 @@
+/*-- scss:rules --*/
+
+.reveal .slide ul li {
+    list-style-type: none;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
+.reveal .slide ul li ul li {
+    margin-top: 0em;
+    margin-bottom: 0.05em;
+    font-size: 90%;
+}
+
+.reveal .slide > ul {
+    margin-left: 0em;
+}
+
+.my-full > p {
+    width: 100%;
+    height: 100%;
+}
+
+.my-full > p img {
+    width: 100%;
+    height: 100%;
+}
+
+.my-small, .my-small p {
+    font-size: 90%;
+    line-height: 1.0;
+}
+
+.reveal .slide > p {
+    line-height: 1.0;
+}
+
+.reveal .slide table td {
+    border: none;
+    padding-bottom: 0em;
+    padding-top: 0em;
+}
+
+.reveal .fragment.myem-only.current-fragment{
+    color: #ff6000;
+    font-style: italic;
+}
+
+.reveal .fragment.myem.visible {
+    color: #ff6000;
+    font-style: italic;
+}
+
+.reveal code {
+    color: inherit;
+}
+
+.reveal em {
+    color: #ff6000;
+    font-style: italic;
+}
+
+.mypre {
+    white-space: pre;
+}
+
+section > ul {
+    margin: 0 0 0 0;
+}
+
+@media print {
+    .slide-chalkboard-buttons {
+        display: none ! important
+    }
+}

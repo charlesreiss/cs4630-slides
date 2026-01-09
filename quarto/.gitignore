@@ -1,0 +1,11 @@
+/.quarto/
+**/*.quarto_ipynb
+*.pdf
+**/latex.out/*.pdf
+**/texfig/*.svg
+!**/figures/*.pdf
+**/*.html
+.venv
+talk.html
+talk.pdf
+talk_files

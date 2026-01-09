@@ -1,0 +1,198 @@
+\usepackage{xparse}
+\usepackage{xcolor}
+\usepackage{expl3}
+\usepackage{l3opacity}
+\usepackage{sourcecodepro}
+\usepackage{trace}
+\usepackage{lmodern}
+\usepackage{listings}
+\ifluatex
+    \def\EmptyMapping{}
+\else
+    \def\EmptyMapping{\addfontfeatures{Mapping=}}
+\fi
+\graphicspath{{.}{common}}
+\input{common/listingsLib}
+
+\usetikzlibrary{arrows.meta,calc,patterns,positioning,matrix}
+\tikzset{ 
+    ampersand replacement=\&,
+    tight matrix node/.style={draw,rectangle,inner sep=1pt, outer sep=0pt,text width=1cm,minimum height=.4cm,anchor=center},
+    tight matrix node noline/.style={rectangle,inner sep=1pt, outer sep=0pt,text width=1cm,minimum height=.4cm,anchor=center},
+    tight matrix/.style={
+        matrix of nodes,
+        inner sep=1pt, outer sep=0pt,
+        row sep=-\pgflinewidth,
+        column sep=-\pgflinewidth,
+        nodes={tight matrix node},
+    },
+    tight matrix no line/.style={
+        matrix of nodes,
+        inner sep=1pt, outer sep=0pt,
+        row sep=-\pgflinewidth,
+        column sep=-\pgflinewidth,
+        nodes={tight matrix node noline},
+    },
+}
+\pgfdeclarelayer{bg}
+\pgfdeclarelayer{fg}
+\pgfsetlayers{bg,main,fg}
+\renewcommand*\familydefault{\sfdefault}
+\ExplSyntaxOn
+\debug_on:n{all}
+\bool_new:N \l_overlay_is_correct_bool
+\bool_new:N \g_overlay_need_continue_bool
+\str_new:N \l_overlay_current_spec_str
+\int_new:N \g_overlay_current_slide_int
+\clist_new:N \l_overlay_current_step_clist
+\box_new:N \l_overlay_tmp_box
+
+\msg_new:nnn {overlay} {trace-match} {On~slide~#1:~Range~`#2'~match:`#3'}
+\cs_generate_variant:Nn \msg_log:nnnnn {nnVVn}
+
+% set \l_overlay_is_correct_bool based on specification#1
+\cs_new_protected:Npn \overlay_parse:n #1
+  {
+    \bool_set_false:N \l_overlay_is_correct_bool
+    \str_set:Nn \l_overlay_current_spec_str {#1}
+    \exp_args:No \overlay_parse_alts:n {\l_overlay_current_spec_str}
+  }
+\cs_new_protected:Npn \overlay_parse_alts:n #1
+  {
+    \overlay_parse_alts:w #1 | \q_recursion_tail | \q_recursion_stop
+  }
+% copied from ltx-talk overlay decode logic
+\cs_new_protected:Npn \overlay_parse_alts:w #1 |
+  {
+      \quark_if_recursion_tail_stop:n {#1}
+      \clist_set:Nn \l_overlay_current_step_clist {#1}
+      \clist_map_inline:Nn \l_overlay_current_step_clist
+      { \overlay_parse_range:w ##1 - - \q_stop }
+      \overlay_parse_alts:w
+  }
+% cases:
+    % -X --> ...  - [X] - [-]  (#1 empty, #3 == -)
+    % X --> ...   [X] - [] - []  (#2, #3 empty)
+    % X- --> ...  [X] - [] - [-] (#2 empty, #3 == -)
+    % X-Y --> ... [X] - [Y]- [--] (#2 empty, #3 == --)
+\cs_new_protected:Npn \overlay_parse_range:w #1 - #2 - #3 \q_stop
+  {
+     \tl_if_empty:nTF {#3}
+       { \overlay_check_single:n {#1} }
+       { \tl_if_blank:nTF {#2}
+         { \overlay_check_range:nn {#1} { \c_max_int } }
+         { \tl_if_blank:nTF {#1}
+           { \overlay_check_range:nn {0} {#2} }
+           { \overlay_check_range:nn {#1} {#2} }
+         }
+       }
+
+  }
+\cs_new_protected:Npn \overlay_update_continue:n #1
+  {
+    \int_compare:nNnF {#1} = \c_max_int
+      {
+        \int_compare:nNnT \g_overlay_current_slide_int < {#1}
+          {
+            \bool_gset_true:N \g_overlay_need_continue_bool
+          }
+      }
+  }
+\cs_new_protected:Npn \overlay_check_single:n #1
+  {
+      \overlay_update_continue:n {#1}
+      \int_compare:nNnT \g_overlay_current_slide_int = {#1}
+        {
+          \msg_log:nnVVn {overlay} {trace-match}
+             \g_overlay_current_slide_int \l_overlay_current_spec_str {#1}
+          \bool_set_true:N \l_overlay_is_correct_bool
+          %\clist_map_break:
+        }
+  }
+
+\cs_new_protected:Npn \overlay_check_range:nn #1 #2
+  {
+    \overlay_update_continue:n {#1}
+    \overlay_update_continue:n {#2}
+    \int_compare:nT {\g_overlay_current_slide_int <= #2}
+      {
+        \int_compare:nT {\g_overlay_current_slide_int >= #1}
+          {
+             \msg_log:nnnnn {overlay} {trace-match}
+                \g_overlay_current_slide_int \l_overlay_current_spec_str {#1-#2}
+             \bool_set_true:N \l_overlay_is_correct_bool
+             %\clist_map_break:
+          }
+      }
+  }
+
+
+\NewDocumentCommand\alt{D<>{}mm}{%
+  \overlay_parse:n {#1}
+  %\bool_log:N \l_overlay_is_correct_bool
+  %\str_log:N \l_overlay_current_spec_str
+  \bool_if:NTF \l_overlay_is_correct_bool
+    {#2}
+    {#3}
+}
+
+\NewDocumentCommand\only{D<>{}m}{%
+  \overlay_parse:n {#1}
+  %\bool_log:N \l_overlay_is_correct_bool
+  %\str_log:N \l_overlay_current_spec_str
+  \bool_if:NT \l_overlay_is_correct_bool
+    {#2}
+}
+
+\NewDocumentEnvironment{onlyenv}{D<>{}}
+  {
+    \group_begin:
+    \overlay_parse:n {#1}
+    \bool_if:NF \l_overlay_is_correct_bool
+      {\vbox_set:Nw \l_overlay_tmp_box}
+  }
+  {
+    \bool_if:NF \l_overlay_is_correct_bool
+      {\vbox_set_end:}
+    \group_end:
+  }
+\NewDocumentEnvironment{visibleenv}{D<>{}}
+  {
+    \group_begin:\begin{scope}
+    \alt<#1>{}{\pgfsetfillopacity{0}\pgfsetstrokeopacity{0}}
+    \pgftransparencygroup
+  }
+  {
+    \endpgftransparencygroup
+    \end{scope}\group_end:
+  }
+\NewDocumentCommand\myemph{D<>{}m}
+  {
+    \group_begin:\alt<#1>{\color{orange!50!red}\itshape}{}#2\group_end:
+  }
+\RenewDocumentCommand\textbf{D<>{}m}
+  {
+    \group_begin:\alt<#1>{\bfseries}{}#2\group_end:
+  }
+
+\NewDocumentCommand{\setSlide}{m}{
+  \bool_gset_false:N \g_overlay_need_continue_bool
+  \int_gset:Nn \g_overlay_current_slide_int #1
+}
+
+\ExplSyntaxOff
+
+\tikzset{
+    alt/.code args={<#1>#2#3}{%
+      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+    },%
+    slidealt/.code args={<#1>#2#3}{%
+      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+    },%
+    beameralt/.code args={<#1>#2#3}{%
+      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+    },%
+    invisible/.style={opacity=0},%
+    visible on/.style={slidealt=#1{}{invisible}},%
+}
+\setSlide{1}

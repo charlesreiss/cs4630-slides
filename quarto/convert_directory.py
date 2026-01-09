@@ -14,7 +14,6 @@ EXCLUDED = (
     'talk-slides2',
 )
 
-
 def run_logged(command: List[str | Path]):
     logger.info('running %s', command)
     subprocess.check_call(command)
@@ -39,11 +38,13 @@ def convert_directory(base_directory: Path, output_directory: Path):
     if not output_directory.exists():
         output_directory.mkdir()
     for item in base_directory.iterdir():
-        if (item.suffix == '.pdf' or item.suffix == '.png') and item.stem not in EXCLUDED:
+        if (item.suffix == '.pdf' or item.suffix == '.png') and \
+           item.stem not in EXCLUDED:
             shutil.copyfile(item, output_directory / item.name)
         elif item.is_dir() and item.name == 'figures':
             shutil.copytree(item, output_directory / item.name)
-        elif item.suffix == '.tex' and item.stem not in EXCLUDED:
+        elif item.suffix == '.tex' and \
+           item.stem not in EXCLUDED:
            convert_tex(item, output_directory)
 
     run_logged([
@@ -61,4 +62,3 @@ if __name__ == '__main__':
     for directory in args.directory:
         convert_directory(directory, Path.cwd() / directory.name)
 
-    

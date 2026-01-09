@@ -1397,7 +1397,7 @@ class Document(_MyAstItem):
     def __init__(self, *args):
         self.parts = []
         for part in args:
-            if isinstance(part, HeldbackFrames) or isinstance(part, ScopedDocument):
+            if isinstance(part, HeldbackFrames) and isinstance(part, ScopedDocument):
                 self.parts += part.document.parts
             else:
                 self.parts.append(part)

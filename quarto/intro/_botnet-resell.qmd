@@ -1,0 +1,30 @@
+
+### reselling others machines  {.smaller}
+
+
+* botnets 
+
+* making money from other people's computers/Internet connection
+* denial of service attacks
+* advertising fraud
+* sending spam
+* ‘mining’ cryptocurrency
+
+
+<!-- \setbeamertemplate(navigation symbols,) -->
+
+### denial of service attacks 
+
+
+![](/intro/mirai-attacks){}
+ [From Antonakakis et al, ‘‘Understanding the Mirai Botnet’’ (2017)]{.mycredit}
+
+<!-- \setbeamertemplate(navigation symbols,) -->
+
+### advertizing fraud  {.smaller}
+
+
+![](/intro/tdss-cost-head){}
+ 
+![](/intro/tdss-cost-low){}
+

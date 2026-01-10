@@ -1,0 +1,36 @@
+
+### stealing banking credentials  {.smaller}
+
+
+![](/intro/all-your-cards-tbl3){}
+ [From Haslebacher et al, ‘‘All Your Cards Are Belong To Us: Understanding Online Carding Forms’’, arXiv preprint 1607.0017v1]{.mycredit}
+
+### web-camera blackmail 
+
+
+![](/intro/oc-sext-head){}
+
+
+### flooding websites 
+
+
+* distributed denial of service
+* example: October 2016 against DNS provider Dyn 
+
+   * used by Twitter, GitHub, Amazon, …, …
+
+
+
+### monetized DDoS 
+
+
+![](/intro/ddos-ext-head){}
+
+
+### other motivations 
+
+
+* ‘‘cloud’’ of hijacked machines for computation
+* pride, vengeance (website defacement, etc.)
+* …
+

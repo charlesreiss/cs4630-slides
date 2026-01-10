@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+            \node[at=(current page.north),anchor=north] {
+                \includegraphics[width=0.8\mypaperwidth]{../intro/catch-ratter-title}
+            };
+            \node[at=(current page.south),anchor=south] {
+                \includegraphics[height=0.5\mypaperheight]{../intro/catch-ratter-abs1}
+            };
+        \end{scope}
+\end{tikzpicture}

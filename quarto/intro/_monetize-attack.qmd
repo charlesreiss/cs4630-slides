@@ -1,0 +1,11 @@
+
+### why talk about why/what?  {.smaller}
+
+
+* doesn't change malware much
+* (also, not a likely topic later in this course)
+* … but… 
+
+* attacking monetization/other goals often effective…
+* may be more effective than our focus on exploits/code/etc.
+

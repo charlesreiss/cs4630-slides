@@ -1,0 +1,25 @@
+
+### potentially unwanted programs (PUP) 
+
+
+* most commonly: programs bundled with other programs
+* sometimes disclosed but in (deceptive?) fine print
+* sometimes considered malware, sometimes not
+
+
+### bad behavior by ‘normal’ programs 
+
+
+* some mostly-legitimate programs also do malware-like things 
+
+* location info collected by cell phone apps?
+* advertisments injected by useful browser extensions?
+
+
+<!-- \setbeamertemplate(navigation symbols,) -->
+
+###  
+
+
+![](/intro/app-location-data-art){}
+

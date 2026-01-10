@@ -1,0 +1,16 @@
+
+### non-vulnerabilities? 
+
+
+* with trojans/potentially unwanted software, problem is subtle 
+
+* usually unintended consequence of designed-for level of access 
+
+   * e.g. browser extensions supposed to be able to add content to webpages
+   * e.g. applications you install supposed to be able to change/delete files
+
+* not what we'll call a <it>vulnerability</it>  
+
+   * but still a security problem
+
+

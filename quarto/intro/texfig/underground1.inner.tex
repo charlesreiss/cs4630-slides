@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+\node[anchor=center,draw,very thick] (quote) at (current page.center) {
+    \includegraphics[width=0.9\mypaperwidth]{../intro/bm-sell-cvv}
+};
+\node[font=\fontsize{11}{12}\selectfont,anchor=north,align=left] (quote explain) at (quote.south){
+        advertisment for stolen credentials on an IRC (Internet Relay Chat) server \\
+        via Team Cymru, ``The underground Economy: Priceless'' (2006, Usenix ;login: magazine)
+    };
+    \node[font=\fontsize{11}{12}\selectfont,anchor=north west,align=left] at (quote explain.south west) {
+        (CVV = card verification value --- verification number on back of credit cards) \\
+        (DL = driver's license?)
+    };
+\end{scope}
+\end{tikzpicture}

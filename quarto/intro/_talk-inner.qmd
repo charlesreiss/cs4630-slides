@@ -1,0 +1,86 @@
+
+{{< include ../intro/_ransom-screen.qmd >}}
+
+# Malware and malware types {visibility="hidden"}
+
+{{< include ../intro/_malware.qmd >}}
+
+## PUP {visibility="hidden"}
+
+{{< include ../intro/_pup.qmd >}}
+
+## Web malware locations {visibility="hidden"}
+
+{{< include ../intro/_how-get-there.qmd >}}
+
+## exercise/discussion {visibility="hidden"}
+
+{{< include ../intro/_malware-type-ex.qmd >}}
+
+## stalkerware, dual-use software {visibility="hidden"}
+
+{{< include ../intro/_stalkerware.qmd >}}
+
+# follow the money {visibility="hidden"}
+
+{{< include ../intro/_follow-the-money.qmd >}}
+
+## Malware Types? {visibility="hidden"}
+
+{{< include ../intro/_malware-types-data.qmd >}}
+
+## Pay-Per-Install {visibility="hidden"}
+
+{{< include ../intro/_pay-per-install.qmd >}}
+
+## Adware {visibility="hidden"}
+
+### againframe(followTheMoney)
+
+{{< include ../intro/_adware.qmd >}}
+
+## Reselling Info {visibility="hidden"}
+
+{{< include ../intro/_resell-info.qmd >}}
+
+## Ransomware: cryptolockers {visibility="hidden"}
+
+### againframe(followTheMoney)
+
+{{< include ../intro/_cryptolockers.qmd >}}
+
+## targetting / other extortion {visibility="hidden"}
+
+{{< include ../intro/_rats-and-extortion.qmd >}}
+
+## black markets, generally {visibility="hidden"}
+
+{{< include ../intro/_black-markets.qmd >}}
+
+## espinoge {visibility="hidden"}
+
+{{< include ../intro/_malware-esp.qmd >}}
+
+## SolarWinds{visibility="hidden"}
+
+{{< include ../intro/_solarwinds.qmd >}}
+
+## Stuxnet{visibility="hidden"}
+
+{{< include ../intro/_stuxnet.qmd >}}
+
+## Note on attacking monetization {visibility="hidden"}
+
+{{< include ../intro/_monetize-attack.qmd >}}
+
+# Software vulnerabilities, versus exploit {visibility="hidden"}
+
+{{< include ../intro/_vuln-classes.qmd >}}
+
+# Malware spreading {visibility="hidden"}
+
+{{< include ../intro/_malware-spreading.qmd >}}
+
+# Defenses {visibility="hidden"}
+
+{{< include ../intro/_malware-defenses.qmd >}}

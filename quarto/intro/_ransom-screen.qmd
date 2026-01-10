@@ -1,0 +1,8 @@
+
+<!-- \setbeamertemplate(navigation symbols,) -->
+
+###  
+
+
+![](/intro/cryptowall_ransom){}
+

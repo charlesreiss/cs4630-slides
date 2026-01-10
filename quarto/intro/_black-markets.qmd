@@ -1,0 +1,21 @@
+
+### the underground economy (1) 
+
+![](texfig/underground1.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+
+
+### the underground economy (2) 
+
+
+![advertisements for `drops' (bank accounts for money laundering) and  
+        for `cashiers' (criminals who will clean out accounts)  
+        via Team Cymru, ``The underground Economy: Priceless'' (2006, Usenix ;login: magazine)
+    ](/intro/underground-dropscashiers){}
+
+
+### the underground econmomy (3) 
+
+
+![via Thomas et al, ``Framing Dependencies Introduced by Underground Commoditization'' (2015)
+](/intro/taxonomy-underground){}
+

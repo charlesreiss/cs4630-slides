@@ -1,0 +1,31 @@
+
+###  
+
+![](texfig/stalkerware.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+
+
+### dual-use, context-sensitivity  {.smaller}
+
+
+* this class: mostly talking about clearly anti-user software 
+
+   * … and how it tries to be covert
+ 
+
+* but there are also problems of <it>dual-use</it> software 
+
+   * phone tracking anti-theft software
+   * computer remote administration software
+
+* (also problems of intentionally ‘evil’ software masquarding as legit) 
+
+   * (e.g. marketted on ‘‘how to spy on your \rule{1cm.5pt}’’ blog)
+   * (e.g. unnecessairily well hidden when installed)
+
+* ideally, prevent ‘‘bad’’ use somehow 
+
+   * phone OS should prevent <it>covert</it> tracking?
+   * antimalware software should notice such software?
+   * …
+
+

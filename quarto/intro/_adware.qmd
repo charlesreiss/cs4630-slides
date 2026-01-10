@@ -1,0 +1,31 @@
+
+### ad injection (1) 
+
+
+* internet advertising is big business
+* … but you need to pay websites to add ads?
+* how about <em>modifying browser</em> to add/change ads 
+
+* mostly <em>bundled</em> with legitimate software
+
+
+<!-- \setbeamertemplate(navigation symbols,) -->
+
+###  
+
+
+![](/intro/ad-inject-amazon){}
+ [From Thomas et al, ‘‘Ad Injection at Scale: Assessing Deceptive Advertisement Modifications’’]{.mycredit}
+
+### ad injection (2)  {.smaller}
+
+
+
+* 5% of Google-accessing clients (2014)
+* >90% using code from VC-backed firm SuperFish: 
+
+* \$19.3 M in investment (CrunchBase)
+* \$38M in revenue (Forbes, 2015)
+* defunct after Lenovo root CA incident (2015)
+* … but founders reported started new, similar venture (JustVisual; according to TechCrunch)
+ [Adware prevalence: Thomas et al, ‘‘Ad Injection at Scale: Assessing Deceptive Advertisement Modifications’’]{.mycredit}

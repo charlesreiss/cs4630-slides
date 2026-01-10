@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+            \node[at=(current page.north),anchor=north] (head){
+                \includegraphics[width=0.9\mypaperwidth]{../intro/ipv-spyware-paper-head}
+            };
+            \node[at={([yshift=5mm]current page.south)},anchor=south] {
+                \includegraphics[width=0.98\mypaperwidth]{../intro/ipv-spyware-types}
+            };
+        \end{scope}
+\end{tikzpicture}

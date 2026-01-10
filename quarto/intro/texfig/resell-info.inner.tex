@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+\node[anchor=north west,at={(current page.north west)}] (zdnet logo) {
+    \includegraphics[width=0.08\mypaperwidth]{../intro/ad-blocker-zdnet-logo2}
+};
+\node[anchor=north east,at={(current page.north east)}] (title) {
+    \includegraphics[width=0.9\mypaperwidth]{../intro/ad-blocker-user-data-title}
+};
+\node[anchor=north,at={(title.south)}] (author) {
+    \includegraphics[width=0.9\mypaperwidth]{../intro/ad-blocker-author}
+};
+\node[anchor=north,at={([yshift=-2cm]author.south)}] {
+    \includegraphics[width=0.9\mypaperwidth]{../intro/ad-blocker-user-data-quote}
+};
+\end{scope}
+\end{tikzpicture}

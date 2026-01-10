@@ -1,0 +1,43 @@
+
+## The Morris Worm {visibility="hidden"}
+
+###  
+
+
+![](/intro/nyt-head-virus){}
+
+
+###  
+
+
+![](/intro/nyt-head-morris){}
+
+
+### Morris worm mechanisms  {.smaller}
+
+
+
+* used vulnerabilities in some versions of: 
+
+   * mail servers (<code>sendmail</code>)
+   * user information servers (<code>fingerd</code>)
+
+* also spread using <code>rsh</code>/<code>rexec</code> (predecessor to ssh)
+* hid by being called <code>sh</code> (default shell)
+* strings obscured slightly in binary
+ [Eichin and Rochlis, ‘‘With Microscope and Tweezers: An Analysis of the Internet Virus of November 1998’’]{.mycredit}
+
+### the early Internet 
+
+
+* pretty homogeneous --- almost all Unix-like systems
+* <code>sendmail</code> was ‘‘the’’ email server to run
+* most institutions vulnerable
+
+
+### Morris worm intent versus effect 
+
+
+* code in viruses tried to avoid ‘‘reinfecting’’ machines
+* … but not actually effective
+

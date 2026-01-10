@@ -1,0 +1,21 @@
+
+### cryptolockers 
+
+
+* encrypt files, hold for ‘‘ransom’’
+* decryption key stored only on attacker-controlled server
+* possibly decrypt files if victim pays 
+
+* many millions in revenues  
+
+   * accurate numbers are hard to find
+
+
+
+{{< include ../intro/_ransom-screen.qmd >}}
+
+### other ransomware 
+
+
+* we have your private data, pay us or it gets released
+

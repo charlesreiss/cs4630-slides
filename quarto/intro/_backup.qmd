@@ -1,0 +1,16 @@
+
+## extoring spyware {visibility="hidden"}
+
+{{< include ../intro/_extort-spyware.qmd >}}
+
+## Non-vulnerabilities {visibility="hidden"}
+
+{{< include ../intro/_non-vuln-p.qmd >}}
+
+## Writing malware (taxonomy) {visibility="hidden"}
+
+{{< include ../intro/_malware-writing.qmd >}}
+
+## Resell botnet {visibility="hidden"}
+
+{{< include ../intro/_botnet-resell.qmd >}}

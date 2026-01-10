@@ -1,0 +1,24 @@
+
+### more targetted stealing/extortion 
+
+
+
+<!-- \setbeamertemplate(navigation symbols,) -->
+
+###  
+
+![](texfig/rats-and-extortion.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+
+
+### to catch ratter results  {.smaller}
+
+
+* 2016/7 study
+* 61% attempt to access webcam; 26% microphone 
+
+   * (both not present in experimenter's ‘honeypot’)
+
+* 31% enable keylogger (passwords?)
+* approx. 5% harass legit user
+* approx. 2% try to phish legit user
+

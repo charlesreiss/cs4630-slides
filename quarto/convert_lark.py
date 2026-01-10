@@ -77,6 +77,7 @@ any_text_not_linebreak: any_text_basic*
     | _SQUARE_BRACKET -> square_bracket
     | LSTSET -> lstset
     | TIKZSET -> tikzset
+    | INCLUDE_GRAPHICS -> include_graphics
     | any_text_raw
 
 columns: (column whitespace?)+
@@ -143,7 +144,8 @@ _BRACE.-10: /\{/
 _END_BRACE.-10: /\}/
 _SQUARE_BRACKET: /\[/
 _END_SQUARE_BRACKET: /\]/
-SIMPLE_COMMAND.-10: /\\(?!begin|end|fontsize|_|lstset|tikzset|newsavebox|savebox|verb|lstinline)\w+/
+INCLUDE_GRAPHICS.-10: /\\includegraphics\[[^]]+\]\{[^}]+\}/
+SIMPLE_COMMAND.-10: /\\(?!begin|end|fontsize|_|lstset|tikzset|newsavebox|savebox|verb|lstinline|includegraphics)\w+/
 LSTSET.0: /\\lstset\{
         (?:
             [^{}]+
@@ -189,6 +191,49 @@ def _title_to_filename(title: str) -> str:
     if len(result) > 40:
         result = result[:40]
     return result
+
+def _is_just_includegraphics(tikz_code: str) -> _SimpleFigure:
+    m = re.match(r'''
+        \s*
+        \\begin\{tikzpicture\}(?:\[[^\]]+\])?
+            \s*
+            \\node\s*\[\s*(?:at=[^,=\]]+|anchor=[^,=\]]+)+\]\s*[^{]*\{\s*
+                \\includegraphics(?:\[[^\]]+\])?\s*\{(?P<path>[^}]+)\}
+            \s*\}\s*;\s*
+        \\end\{tikzpicture\}
+        \s*
+    ''', tikz_code, re.X)
+    if m is not None:
+        return _SimpleFigure(m.group('path').replace('../', '/'))
+    m = re.match(r'''
+        \s*
+        \\begin\{tikzpicture\}(?:\[[^\]]+\])?
+            \s*
+            \\node\s*\[(?P<options>[^\]]+)\]\s*
+            \((?P<name>[^)]+)\)
+            \s*
+            at
+            \s*
+            \(current\s+page\.center\)
+            \s*
+            \{\s*
+                \\includegraphics(?:\[[^\]]+\])?\s*\{(?P<path>[^}]+)\}
+            \s*\}\s*;\s*
+            \\node\s*\[[^\]]+\]\s*(?:\((?P<labelname>[^)]+)\)\s*)?
+            at\s*\((?P<secondname>[^).]+)\.(?P<direction>[^)]+)\)
+            \s*\{\s*
+                (?P<label>[^}]+)
+            \}\s*;\s*
+        \\end\{tikzpicture\}
+        \s*
+    ''', tikz_code, re.X)
+    if m is not None and m.group('name') == m.group('secondname') and 'label' not in m.group('options'):
+        filename = m.group('path').replace('../', '/')
+        label = m.group('label').replace('\\\\', ' ')
+        return _SimpleFigure(filename, None, label)
+    elif m is not None:
+        assert False, m
+    return None
 
 @dataclass
 class RenderContext:
@@ -537,8 +582,10 @@ class _InlineCommand(_MyAstItem):
                 before, after = '^', ''
             elif self.command in (r'\ldots,'):
                 before, after = '\N{horizontal ellipsis}', ''
-            elif self.command in (r'\sout,'):
+            elif self.command in (r'\sout',):
                 before, after = '~~', '~~'
+            elif self.command in (r'\imagecredit',):
+                before, after = '[', ']{.mycredit}'
             else:
                 start_arg = 0
                 before, after = self.command + '{', '}'
@@ -934,6 +981,42 @@ class Visibleenv(_MyAstItem):
         else:
             return self.contents.render(context)
 
+def _make_fig_alt(alt_text: str | None) -> str:
+    if alt_text is None:
+        return ''
+    else:
+        alt_text_escaped = alt_text.replace('"', '&quot;')
+        alt_text_escaped = alt_text_escaped.replace('\n', ' ')
+        alt_text_escaped = alt_text_escaped.strip()
+        maybe_alt = f' fig-alt="{alt_text_escaped}"'
+        return maybe_alt
+
+@dataclass
+class _SimpleFigure(_MyAstItem):
+    filename: str
+    alt_text: str | None = None
+    caption: str = ''
+
+    @property
+    def estimated_lines(self) -> int:
+        return 4
+
+    def render(self, context: RenderContext) -> str:
+        maybe_alt = _make_fig_alt(self.alt_text)
+        return f'\n![{self.caption}]({self.filename})' + '{' + maybe_alt + '}\n'
+
+@dataclass
+class IncludeGraphics(_SimpleFigure):
+    def __init__(self, token):
+        m = re.match(r'''
+            \\includegraphics\[(?P<options>[^]]+)\]
+                \{
+                    (?P<filename>[^}]+)
+                \}
+        ''', token.value, re.X)
+        assert m is not None, token.value
+        self.filename = m.group('filename')
+        self.filename = self.filename.replace('../', '/')
 
 @dataclass
 class Tikzpicture(_MyAstItem):
@@ -949,6 +1032,9 @@ class Tikzpicture(_MyAstItem):
         return False
 
     def render(self, context: RenderContext) -> str:
+        real_figure = _is_just_includegraphics(self.contents.value)
+        if real_figure is not None:
+            return real_figure.render(context)
         max_slide_number = 1
         for m in re.finditer(r'<(?P<n1>\d+)?-?(?P<n2>\d+)?>', self.contents.value):
             for key in ('n1', 'n2'):
@@ -957,6 +1043,10 @@ class Tikzpicture(_MyAstItem):
         tikz_code = self.contents.value
         if '(pic cs:' in tikz_code:
             return '<!--\n```\n' + self.contents.value + '\n```\n-->\n'
+        tikz_code = tikz_code.replace(r'\paperwidth', r'\mypaperwidth')
+        tikz_code = tikz_code.replace(r'\paperheight', r'\mypaperheight')
+        tikz_code = tikz_code.replace(r'\textwidth', r'\mypaperwidth')
+        tikz_code = tikz_code.replace(r'\textheight', r'\mypaperheight')
         options_match = re.search(r'\\begin\{tikzpicture\}\[(?P<options>[^]]+)\]', tikz_code)
         is_overlay = False
         if options_match is not None:
@@ -1026,13 +1116,10 @@ class Tikzpicture(_MyAstItem):
                     alt_text = self.alt_texts[-1]
                 else:
                     alt_text = self.alt_texts[slide_number-1]
-                alt_text_escaped = alt_text.replace('"', '&quot;')
-                alt_text_escaped = alt_text_escaped.replace('\n', ' ')
-                alt_text_escaped = alt_text_escaped.strip()
-                maybe_alt = f' fig-alt="{alt_text_escaped}"'
+                maybe_alt = _make_fig_alt(alt_text)
             if is_overlay:
                 result += f'![]({output_svg_name})' + \
-                    '{.absolute top="0%" left="0%" width=1050 height=700 .my-center ' + maybe_alt
+                    '{.absolute top="0%" left="0%" width=1050 height=600 .my-center ' + maybe_alt
                 if max_slide_number > 1:
                     result += ' .fragment .fade-in-then-out fragment=index='+str(slide_number)
                 result += '}\n'
@@ -1397,7 +1484,7 @@ class Document(_MyAstItem):
     def __init__(self, *args):
         self.parts = []
         for part in args:
-            if isinstance(part, HeldbackFrames) and isinstance(part, ScopedDocument):
+            if isinstance(part, HeldbackFrames) or isinstance(part, ScopedDocument):
                 self.parts += part.document.parts
             else:
                 self.parts.append(part)

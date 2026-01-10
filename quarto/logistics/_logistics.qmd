@@ -1,0 +1,82 @@
+
+### lectures 
+
+
+* recorded, attendance not required
+
+
+### prerequisities 
+
+
+* CS 3710 --- I understand there's some variation…
+* knowledge of C, assembly (CS2130)
+
+
+### homework assignments  {.smaller}
+
+
+* many approx. one week assignments
+* mostly due Friday at 11:59pm ET -- but see calendar 
+
+   * 90% credit for 72 hour late submission
+ 
+
+* some reverse-engineering oriented
+* several demonstrating an exploit
+* some demonstrating vulnerability discovery/mitigation technique
+
+
+### weekly quizzes 
+
+
+* weekly written quizzes
+* released after Wednesday lecture
+* due before Monday lecture
+* starting after second week of class
+
+
+### exam/final homework 
+
+
+* final exam (written), as scheduled 
+
+   * VERY LATE IN FINAL PERIOD
+
+* final ‘challenge’ homework as pseudo-second-part-of-exam
+
+
+### note on course changes 
+
+
+* some question/flexibility re: topics
+
+
+### textbook 
+
+
+* no required textbook 
+
+* some lecture material based on textbook stuff 
+
+   * Peter Szor, ‘‘The Art of Computer Virus Research and Defense’’
+   * (and may use other security textbooks)
+
+* for exploit stuff, a good reference: 
+
+   * Anley, Heasman, Lidner, Richarte, ‘‘The Shellcoder's Handbook, Second Edition’’ (2007)
+
+
+
+### office hours 
+
+
+* will be posted on calendar on website
+
+
+### piazza, etc. 
+
+
+* linked on Canvas 
+
+* use private questions if assignment code, etc. involved
+

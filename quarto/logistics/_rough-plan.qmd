@@ -1,0 +1,16 @@
+
+### a rough plan  {.smaller}
+
+
+* x86-64 assembly 
+
+   * works on department portal/NX, etc.
+
+* (basic) reverse engineering
+* self-spreading malware (viruses, worms)
+* signature-based malware detection
+* anti-anti-malware cat and mouse game
+* memory vulnerabilities
+* vulnerability mitigations; sandboxing
+* vulnerability discovery + less-basic program analysis
+

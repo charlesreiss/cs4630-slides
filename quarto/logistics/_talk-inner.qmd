@@ -1,0 +1,8 @@
+
+{{< include ../logistics/_logistics.qmd >}}
+
+{{< include ../logistics/_ethics-law.qmd >}}
+
+{{< include ../logistics/_v-other-course.qmd >}}
+
+{{< include ../logistics/_rough-plan.qmd >}}

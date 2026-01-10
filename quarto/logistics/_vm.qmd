@@ -1,0 +1,26 @@
+
+### VM 
+
+
+* homework assignments
+* first assignment --- get an appropriate VM working
+
+
+### VM environment 
+
+
+* \textbf{64-bit} Ubuntu 20.04 LTS
+* I'll make an effort for assignments <br>to work in other 64-bit Linux envs
+* but this is what we'll test in 
+
+   * (and some assignments are very sensitive to environment details)
+
+
+
+### related assignment 
+
+
+* assignment on website
+* submission on Collab
+* just get some suitable environment working
+

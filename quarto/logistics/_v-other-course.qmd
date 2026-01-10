@@ -1,0 +1,59 @@
+
+### DADA's awkward history  {.smaller}
+
+
+* Davidson conceived as course on <it>malware</it> 
+
+   * including exploits likely used by malware
+
+* … until 2019 was our only regularly offered security elective 
+
+* but often other faculty taught it as general security class 
+
+   * now have 3710 for that purpose
+
+* also have Network Security (CS 4760) 
+
+   * nominally cryptographic protocols, data integrity, attack surfaces
+   * possibly also covers scanning, web security, …
+
+
+
+### malware changes 
+
+
+* historically, a lot of ‘self-spreading’ malware 
+
+   * viruses, worms, …
+   * (we'll discuss what these terms mean later)
+
+* these days, not the most common ways to get malware 
+
+   * network-based exploits installing malicious software
+   * malicious/unwanted software distributed through app stores/etc.
+
+
+
+### exploit changes  {.smaller}
+
+
+* historically: memory-unsafety exploits
+* biggest source of insecure software for a long time
+* probably still biggest, but… 
+
+* memory safety slowly becoming less of a problem
+* how web browsers/mobile OSes/etc. work more important
+
+
+### trying to add defense 
+
+
+* I've tried to add more ‘defense’ material 
+
+   * memory-safety, testing, sandboxing
+
+* also useful for addressing non-memory-safety, non-injection vulns 
+
+   * a lot less ‘systematic’ material on such exploits
+
+

@@ -1,0 +1,31 @@
+
+### On Ethics 
+
+
+* don't use someone's computer without their permission 
+
+   * or in excess of what they've permitted
+
+* don't assume it's just a harmless prank 
+
+   * unintended (but likely) consequences
+
+* don't assume the system owner would give you permission 
+
+   * if you're afraid to ask, it's not okay
+
+
+
+### On Law  {.smaller}
+
+
+* probably illegal (Federal and/or State crime): 
+
+* accessing computers without authorization 
+
+   * even if nothing is done with the access
+
+* deliberately overloading a service
+* ‘‘backhacking'’ into a malware operator’s machine
+* deploying a worm that patches security holes
+

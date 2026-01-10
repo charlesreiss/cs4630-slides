@@ -1,0 +1,21 @@
+
+### semester outline  {.smaller}
+
+
+* assembly/reverse-engineering 
+
+   * including binary formats
+   * hiding in innocent programs
+
+* heuristic malware detection cat-and-mouse game 
+
+   * signature-based detection
+   * evading signature-based detection
+
+* memory-mismanagement exploits and mitigations 
+
+* (less certain topics)
+* command-injection exploits and mitigations
+* timing attacks and mitigations
+* sandboxing
+

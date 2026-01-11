@@ -48,9 +48,9 @@
 \lstset{
     language=myasm,
     style=small,
-    moredelim={**[is][\btHL<2|handout:0>]{&2}{&}},
-    moredelim={**[is][\btHL<3|handout:0>]{&3}{&}},
-    moredelim={**[is][\btHL<4|handout:0>]{&4}{&}},
+    moredelim={**[is][\btHL<2>]{&2}{&}},
+    moredelim={**[is][\btHL<3>]{&3}{&}},
+    moredelim={**[is][\btHL<4>]{&4}{&}},
     morekeywords={.float,movps,addps},
 }
 \begin{lstlisting}
@@ -70,13 +70,13 @@ movps %xmm0, result
         draw=red,very thick,rectangle,at=(overlayPlace),
         anchor=west,align=left,fill=white,
     }}
-    \begin{visibleenv}<2|handout:0>
+    \begin{visibleenv}<2>
         \node [overThing] {array of 4 floats};
     \end{visibleenv}
-    \begin{visibleenv}<3|handout:0>
+    \begin{visibleenv}<3>
         \node [overThing] {move packed single \\ (single-precision float)};
     \end{visibleenv}
-    \begin{visibleenv}<4|handout:0>
+    \begin{visibleenv}<4>
         \node [overThing] {add packed single \\ (single-precision float)};
     \end{visibleenv}
 \end{tikzpicture}

@@ -73,11 +73,13 @@ any_text_not_linebreak: any_text_basic*
     | _MYALTTEXTB _BRACE whitespace? TIKZPICTURE whitespace? _END_BRACE _BRACE any_text _END_BRACE _BRACE any_text _END_BRACE -> tikzpicture_with_alt
     | _MYALTTEXTC _BRACE whitespace? TIKZPICTURE whitespace? _END_BRACE _BRACE any_text _END_BRACE _BRACE any_text _END_BRACE _BRACE any_text _END_BRACE -> tikzpicture_with_alt
     | _MYALTTEXTD _BRACE whitespace? TIKZPICTURE whitespace? _END_BRACE _BRACE any_text _END_BRACE _BRACE any_text _END_BRACE _BRACE any_text _END_BRACE _BRACE any_text _END_BRACE -> tikzpicture_with_alt
+    | _PDFTOOLTIP _BRACE whitespace? TIKZPICTURE whitespace? _END_BRACE _BRACE any_text _END_BRACE -> tikzpicture_with_alt
     | _BEGIN_VISIBLEENV when any_text _END_VISIBLEENV -> visibleenv
     | _END_SQUARE_BRACKET -> end_square_bracket
     | _SQUARE_BRACKET -> square_bracket
     | LSTSET -> lstset
     | TIKZSET -> tikz_context
+    | NEWCOMMAND -> tikz_context
     | INCLUDE_GRAPHICS -> include_graphics
     | any_text_raw
 
@@ -98,8 +100,9 @@ any_empty_item: whitespace
     | TIKZSET -> tikz_context
     | LSTSET -> lstset
     | NEWSAVEBOX -> tikz_context
+    | NEWCOMMAND -> tikz_context
     | LRBOX -> tikz_context_begin_document
-    | SAVEBOX whitespace? TIKZPICTURE whitespace? _END_BRACE -> tikz_savebox
+    | SAVEBOX -> tikz_context
 
 
 COMMENT.5: /%.*/
@@ -128,6 +131,7 @@ _MYALTTEXT.10: /\\myalttext/
 _MYALTTEXTB.10: /\\myalttextB/
 _MYALTTEXTC.10: /\\myalttextC/
 _MYALTTEXTD.10: /\\myalttextD/
+_PDFTOOLTIP.10: /\\pdftooltip/
 LINEBREAK: /\\\\(?:\[[^]]+\])?/
 NBSP: /~/
 _START_DQUOTE: /``/
@@ -175,9 +179,49 @@ TIKZSET.0: /\\tikzset\{
         )*
     \}/x
 NEWSAVEBOX.0: /\\newsavebox\{\\[^}]+\}|\\newsavebox\\[a-zA-Z]+|\\ifdefined\\[a-zA-Z]+\\else\\newsavebox\\[a-zA-Z]+\\fi/
-SAVEBOX.0: /\\savebox\{\\[^}]+\}\{/
+NEWCOMMAND.0: /\\(?:newcommand|renewcommand|providecommand)\{[^}]+\}(?:
+        \{(?:
+            [^{}]+
+            |
+            \{
+                (?:
+                    \{[^}]*\}
+                |
+                    [^{}]+
+                )*
+            \}
+        )*\}
+        |
+        \[[^\]]*\]
+    )+
+    /x
+SAVEBOX.0: /
+    \\savebox\{\\[^}]+\}\{
+        (?:
+            [^{}]+
+            |
+            \{
+                (?:
+                    \{
+                        (?:
+                            (?:
+                                \{[^}]*\}
+                            |
+                                [^{}]+
+                            )*
+                        |
+                            [^{}]+
+                        )*
+                    \}
+                |
+                    [^{}]+
+                )*
+            \}
+        )*
+    \}
+    /x
 LRBOX.0: /\\begin\{lrbox\}(?s:.*?)\\end\{lrbox\}/
-SIMPLE_ESCAPED.-11: /\\[.&_$%]/
+SIMPLE_ESCAPED.-11: /\\[.&_$%\/#]/
 _NEXT_CELL.-20: /&/
 NEWLINE.-20: /\n+/
 WHITESPACE.-20: /[ \t\v]/
@@ -353,7 +397,7 @@ class _MyAstItem(ast_utils.Ast):
     """Approximate number of lines, primarily for purposes of guessing whether to mark a
     slide with .smaller."""
     @property
-    def estimated_lines(self) -> int:
+    def estimated_lines(self) -> float:
         return 0
 
     def render(self, context: RenderContext) -> str:
@@ -369,8 +413,8 @@ class _RawString(_MyAstItem):
         return self.contents
 
     @property
-    def estimated_lines(self) -> int:
-        return len(self.contents) // 40
+    def estimated_lines(self) -> float:
+        return len(self.contents) / 40
 
     def render(self, context: RenderContext) -> str:
         if self.contents_markdown:
@@ -461,6 +505,7 @@ class When(_MyAstItem):
     def __post_init__(self, raw_when):
         if raw_when:
             self.when = raw_when[1:-1]
+            self.when = self.when.replace('|handout:0', '')
         else:
             self.when = None
 
@@ -510,22 +555,30 @@ class _InlineCommand(_MyAstItem):
         return all(map(attrgetter('can_be_spanned'), self.arguments))
 
     @property
-    def estimated_lines(self) -> int:
+    def estimated_lines(self) -> float:
         if self.command in (r'\vspace', r'\hrule'):
             return 1.5
         else:
-            return len(self.inner_text) // 40
+            return sum(map(attrgetter('estimated_lines'), self.arguments))
 
     def render(self, context: RenderContext) -> str:
         before, after = None, None
         start_arg : int | None = -1
         is_tt = None
         strip_ends = None
-        if self.when and self.when.needs_fragment:
-            if self.command in (r'\myemph',r'\btHL',):
+        when = self.when
+        command = self.command
+        if re.match(r'^\\myemph[A-Z]$', command) is not None:
+            index = ord(command[len(r'\myemph')]) - ord('A')
+            when = When(f'<{index}>')
+            assert when.needs_fragment
+            command = r'\myemph'
+        assert command != r'\myemphA'
+        if when and when.needs_fragment:
+            if command in (r'\myemph',r'\btHL',):
                 before = '['
-                number = str(self.when.number)
-                if self.when.is_after_fragment:
+                number = str(when.number)
+                if when.is_after_fragment:
                     after = (
                         ']{.fragment fragment-index=' + number +
                         ' .custom .myem}'
@@ -537,11 +590,13 @@ class _InlineCommand(_MyAstItem):
                     )
             else:
                 when_str = ''
-                if self.when.raw_when is not None:
-                    when_str = str(self.when_raw_when)
+                if when.raw_when is not None:
+                    when_str = str(when_raw_when)
                 before, after = self.command + when_str + '{', '}'
         else:
-            if self.command in (r'\lstinputlisting',):
+            assert '<' not in command, command
+            assert '&' not in command, command
+            if command in (r'\lstinputlisting',):
                 logging.debug('arguments = %s', self.arguments)
                 file_name = self.arguments[-1].inner_text
                 file_path = context.base_input_path.parent / file_name
@@ -549,7 +604,7 @@ class _InlineCommand(_MyAstItem):
                 output_path.write_text(file_path.read_text())
                 return '\n```\n{{< include /' + str(
                     output_path.relative_to(context.base_quarto_path)) + ' >}}\n```\n'
-            elif self.command in (r'\tt', r'\texttt'):
+            elif command in (r'\tt', r'\texttt'):
                 before, after = '<code>', '</code>'
                 if len(self.arguments) > 0:
                     inner = self.arguments[0].get_interesting_parts()
@@ -564,38 +619,40 @@ class _InlineCommand(_MyAstItem):
                     else:
                         logging.debug('inner = %s', inner)
                 strip_ends = True
-            elif self.command in (r'\myemph',r'\btHL',):
+            elif command in (r'\myemph',r'\btHL',):
                 before, after = '<em>', '</em>'
-            elif self.command in (r'\textit', r'\itshape'):
+            elif command in (r'\textit', r'\itshape'):
                 before, after = '<it>', '</it>'
-            elif self.command in (r'\small',r'\scriptsize'):
+            elif command in (r'\textbf', r'\bfseries'):
+                before, after = '<em>', '</em>'
+            elif command in (r'\small',r'\scriptsize'):
                 can_be_spanned = all(map(attrgetter('can_be_spanned'), self.arguments))
                 if can_be_spanned:
                     before, after = '[', ']{.my-small}'
                 else:
                     before, after = '<div class="my-small">', '</div>\n'
-            elif self.command in (r'\selectfont',):
+            elif command in (r'\selectfont',):
                 before, after = '', ''
-            elif self.command in (r'\hspace',):
+            elif command in (r'\hspace',):
                 start_arg = None
                 before, after = ' ', ''
-            elif self.command in (r'\hrule',):
+            elif command in (r'\hrule',):
                 start_arg = None
                 before, after = '<hr />', '\n'
-            elif self.command in (r'\vspace',):
+            elif command in (r'\vspace',):
                 start_arg = None
                 before, after = '\n', ''
-            elif self.command in (r'\textasciicircum',):
+            elif command in (r'\textasciicircum',):
                 before, after = '^', ''
-            elif self.command in (r'\ldots,'):
+            elif command in (r'\ldots,'):
                 before, after = '\N{horizontal ellipsis}', ''
-            elif self.command in (r'\sout',):
+            elif command in (r'\sout',):
                 before, after = '~~', '~~'
-            elif self.command in (r'\imagecredit',):
+            elif command in (r'\imagecredit',):
                 before, after = '[', ']{.mycredit}'
             else:
                 start_arg = 0
-                before, after = self.command.replace('\\', '\\\\') + '{', '}'
+                before, after = command.replace('\\', '\\\\') + '{', '}'
 
         if context.raw_html and before == '[':
             classes = []
@@ -684,8 +741,7 @@ class AnyText(_MyAstItem):
         return ''.join(map(attrgetter('inner_text'), self.parts))
 
     @property
-    def estimated_lines(self) -> int:
-        logging.debug('self.parts = %s', self.parts)
+    def estimated_lines(self) -> float:
         return sum(map(attrgetter('estimated_lines'), self.parts))
 
     def get_interesting_parts(self) -> List[_MyAstItem]:
@@ -740,7 +796,7 @@ class Column(_MyAstItem):
         return result
 
     @property
-    def estimated_lines(self) -> int:
+    def estimated_lines(self) -> float:
         return self.contents.estimated_lines
 
 @dataclass
@@ -755,7 +811,7 @@ class Columns(_MyAstItem):
         self.columns = columns
 
     @property
-    def estimated_lines(self) -> int:
+    def estimated_lines(self) -> float:
         return max(map(attrgetter('estimated_lines'), self.columns))
 
     def render(self, context: RenderContext) -> str:
@@ -789,6 +845,7 @@ class Moredelim:
                 args.append(AnyText(_RawString(m.group('arg'))))
             args.append(current_inner)
             logging.debug('verbatim command %s/%s from %s', m.group('base_command'), when, command)
+            assert not m.group('base_command').startswith('\\'), self.command
             current_inner = AnyText(
                 GenericCommand(
                     '\\' + m.group('base_command'),
@@ -840,7 +897,7 @@ class Verbatim(_MyAstItem):
     moredelim: list[(str, str, str)] | None = None
 
     @property
-    def estimated_lines(self) -> int:
+    def estimated_lines(self) -> float:
         return self.contents.count('\n')
 
     def __init__(self, token):
@@ -884,7 +941,8 @@ class Verbatim(_MyAstItem):
                 slash = self.command_chars[0]
                 open_brace = self.command_chars[1]
                 close_brace = self.command_chars[2]
-            result = '<pre><code>'
+            logging.debug('\\/{/} = %s/%s/%s', slash, open_brace, close_brace)
+            result = '\n<pre><code>'
             in_command = False
             in_argument = False
             current_moredelim: Moredelim | None = None
@@ -895,6 +953,7 @@ class Verbatim(_MyAstItem):
                 c = self.contents[i]
                 if current_moredelim is not None and self.contents[i:].startswith(current_moredelim.end):
                     current_inner = current_moredelim.generate_command(current_argument)
+                    logging.debug('got command %s', current_inner)
                     with context.inner(pre=True, raw_html=True) as inner_context:
                         result += current_inner.render(inner_context)
                     i += len(current_moredelim.end)
@@ -903,12 +962,14 @@ class Verbatim(_MyAstItem):
                     continue
                 elif in_argument or current_moredelim is not None:
                     if in_argument and c == close_brace:
-                        with context.inner(pre=True, raw_html=True) as inner_context:
-                            result += GenericCommand(
+                        assert not current_command.startswith('\\'), current_command
+                        command_ast = GenericCommand(
                                 '\\' + current_command,
                                 None,
                                 _RawString(current_argument)
-                            ).render(inner_context)
+                            )
+                        with context.inner(pre=True, raw_html=True) as inner_context:
+                            result += command_ast.render(inner_context)
                         in_argument = False
                         current_command = ''
                     elif c == '<':
@@ -925,6 +986,7 @@ class Verbatim(_MyAstItem):
                     if c == open_brace:
                         in_command = False
                         in_argument = True
+                        logging.debug('finished command name %s', current_command)
                         current_argument = ''
                     else:
                         current_command += c
@@ -937,6 +999,7 @@ class Verbatim(_MyAstItem):
                     if current_moredelim is not None:
                         continue
                     if c == slash:
+                        logging.debug('found command at %s', self.contents[i:i+10])
                         in_command = True
                     elif c in '[\\':
                         result += '\\' + c
@@ -954,7 +1017,7 @@ class Verbatim(_MyAstItem):
             result += '</code></pre>\n'
             return result
         else:
-            return f'\n```\n{self.contents}```\n'
+            return f'\n```\n{self.contents}\n```\n'
 
 @dataclass
 class Visibleenv(_MyAstItem):
@@ -962,7 +1025,7 @@ class Visibleenv(_MyAstItem):
     contents: AnyText
 
     @property
-    def estimated_lines(self) -> int:
+    def estimated_lines(self) -> float:
         return self.contents.estimated_lines
 
     @property
@@ -1009,7 +1072,7 @@ class _SimpleFigure(_MyAstItem):
     caption: str = ''
 
     @property
-    def estimated_lines(self) -> int:
+    def estimated_lines(self) -> float:
         return 4
 
     def render(self, context: RenderContext) -> str:
@@ -1035,7 +1098,7 @@ class Tikzpicture(_MyAstItem):
     alt_texts: list[str] | None = None
 
     @property
-    def estimated_lines(self) -> int:
+    def estimated_lines(self) -> float:
         return 4
 
     @property
@@ -1204,7 +1267,7 @@ class Item(_MyAstItem):
         self.contents = args[-1]
 
     @property
-    def estimated_lines(self) -> int:
+    def estimated_lines(self) -> float:
         return max(1, self.contents.estimated_lines)
 
     @property
@@ -1233,7 +1296,7 @@ class Itemize(_MyAstItem):
                 self.items.append(maybe_item)
 
     @property
-    def estimated_lines(self) -> int:
+    def estimated_lines(self) -> float:
         return sum(map(attrgetter('estimated_lines'), self.items)) + 0.4 * len(self.items)
 
     @property
@@ -1286,7 +1349,7 @@ class Tabular(_MyAstItem):
         self.end = rest[-1]
     
     @property
-    def estimated_lines(self) -> int:
+    def estimated_lines(self) -> float:
         return len(self.lines)
 
     @property
@@ -1443,7 +1506,7 @@ class OutsideCommand(_MyAstItem):
             return f'\n## {self.arguments[0].inner_text} ' + '{visibility="hidden"}\n'
         elif self.command == r'\subsubsection':
             return f'\n## {self.arguments[0].inner_text}' + '{visibility="hidden"}\n'
-        elif self.command in (r'\iftoggle', r'\setbeamertemplate',r'\newcommand'):
+        elif self.command in (r'\iftoggle', r'\setbeamertemplate',):
             result = f'\n<!-- {self.command}('
             result += ','.join(map(attrgetter('inner_text'), self.arguments))
             result += ') -->\n'

@@ -2,28 +2,24 @@
 
 \begin{frame}[fragile,label=dynamicPutsOverview]{adding linker stubs}
 \begin{tikzpicture}
-\node[draw,font=\small,label={[draw,fill=white]north:program.s}] (asm) {
-\begin{lstlisting}
-main:
-   ...
-   call puts
-   ...
-\end{lstlisting}
+\node[align=left,draw,font=\small\tt,label={[draw,fill=white]north:program.s}] (asm) {
+main: \\
+\hspace{1cm}   ... \\
+\hspace{1cm} call puts \\
+\hspace{1cm} ... \\
 };
-\node[align=left,draw,font=\small,label={[draw,fill=white]north:program.exe},anchor=north west] (exe) at ([xshift=2cm]asm.north east) {
-\begin{lstlisting}
-GLOBAL_LOOKUP_TABLE:
-    ... // placeholders
-
-puts@plt:
-    jmp *GLOBAL_LOOKUP_TABLE[index]
-    ...
-...
-main:
-    ...
-    call puts@plt
-    ...
-\end{lstlisting}
+\node[align=left,draw,font=\small\tt,label={[draw,fill=white]north:program.exe},anchor=north west] (exe) at ([xshift=2cm]asm.north east) {
+GLOBAL\_LOOKUP\_TABLE: \\
+\hspace{1cm} ... // placeholders \\
+~ \\
+puts@plt: \\
+\hspace{1cm} jmp *GLOBAL\_LOOKUP\_TABLE[index] \\
+\hspace{1cm} ... \\
+\hspace{1cm} ... \\
+main: \\
+\hspace{1cm} ... \\
+\hspace{1cm} call puts@plt \\
+\hspace{1cm} ... 
 \\+ something that says where {\tt puts} in the lookup table
 };
 \draw[-Latex, ultra thick, black!50] (asm.east) -- (asm.west -| exe.west);

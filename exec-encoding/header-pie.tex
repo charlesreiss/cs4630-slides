@@ -18,7 +18,7 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile,label=elfExOver1]{position-independent ELF example}
+\begin{frame}[fragile,label=elfExOverPie1]{position-independent ELF example}
     \begin{itemize}
     \item compiled+linked ``Hello, World'' with {\tt gcc -static-pie}
     \item PIE = position-independent executable
@@ -46,7 +46,7 @@ Program Header:
 }
 \begin{visibleenv}<2>
 \node[note] {
-    DYNAMIC instead of EXEC_P \\
+    DYNAMIC instead of EXEC\_P \\
     similar encoding to shared libraries
 };
 \end{visibleenv}

@@ -6,7 +6,7 @@
 \providecommand{\myemphSix}[1]{\myemph<6>{#1}}
 \providecommand{\myemphSeven}[1]{\myemph<7>{#1}}
 
-\begin{frame}[fragile,label=elfExOver1]{position-independent ELF example}
+\begin{frame}[fragile,label=elfExOverStaticPie1]{position-independent ELF example}
     \begin{itemize}
     \item compiled+linked ``Hello, World'' with {\tt gcc -static-pie}
     \item PIE = position-independent executable
@@ -33,7 +33,7 @@ Sections:
     note/.style={draw,very thick,anchor=south,at=(loc)},
 }
 \node[note] {
-    DYNAMIC instead of EXEC_P \\
+    DYNAMIC instead of EXEC\_P \\
     reuses dynamic linking mechanism
 };
 \end{tikzpicture}

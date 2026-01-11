@@ -33,13 +33,14 @@ optional_argument: _SQUARE_BRACKET any_text _END_SQUARE_BRACKET
 
 when: WHEN?
 
-generic_command: SIMPLE_COMMAND when optional_argument? (_BRACE any_text _END_BRACE)*
+generic_command: SIMPLE_COMMAND when optional_argument? (_BRACE any_text _END_BRACE | _SQUARE_BRACKET any_text _END_SQUARE_BRACKET)*
 
 ?inline_command: generic_command
     | _BRACE any_text_raw any_text _END_BRACE -> bare_block
     | _BRACE SIMPLE_COMMAND+ any_text _END_BRACE -> block_with_command
 
 item: _ITEM when any_text
+    | _ITEM when whitespace? _BRACE _END_BRACE any_text
 
 itemize: _BEGIN_ITEMIZE (whitespace? item)+ _END_ITEMIZE
 
@@ -76,7 +77,7 @@ any_text_not_linebreak: any_text_basic*
     | _END_SQUARE_BRACKET -> end_square_bracket
     | _SQUARE_BRACKET -> square_bracket
     | LSTSET -> lstset
-    | TIKZSET -> tikzset
+    | TIKZSET -> tikz_context
     | INCLUDE_GRAPHICS -> include_graphics
     | any_text_raw
 
@@ -92,9 +93,10 @@ whitespace: whitespace_item+
     | TIKZPICTURE | VERBATIM
 
 any_empty_item: whitespace
-    | SIMPLE_COMMAND when (_BRACE any_text _END_BRACE)* -> outside_command
+    | SIMPLE_COMMAND when (_BRACE any_text _END_BRACE | _SQUARE_BRACKET any_text _END_SQUARE_BRACKET)* -> outside_command
     | BEGIN_GENERIC any_text END_GENERIC -> outside_environment
     | TIKZSET -> tikz_context
+    | LSTSET -> lstset
     | NEWSAVEBOX -> tikz_context
     | LRBOX -> tikz_context_begin_document
     | SAVEBOX whitespace? TIKZPICTURE whitespace? _END_BRACE -> tikz_savebox
@@ -239,6 +241,7 @@ def _is_just_includegraphics(tikz_code: str) -> _SimpleFigure:
 class RenderContext:
     base_input_path: Path
     base_output_path: Path
+    base_quarto_path: Path
     frame_count: int | None = None
     frame_title: str | None = None
     frame_label: str | None = None
@@ -497,7 +500,10 @@ class _InlineCommand(_MyAstItem):
 
     @property
     def inner_text(self):
-        return ''.join(map(attrgetter('inner_text'), self.arguments)).strip()
+        if len(self.arguments) == 0:
+            return self.command
+        else:
+            return ''.join(map(attrgetter('inner_text'), self.arguments)).strip()
 
     @property
     def can_be_spanned(self) -> bool:
@@ -541,7 +547,8 @@ class _InlineCommand(_MyAstItem):
                 file_path = context.base_input_path.parent / file_name
                 output_path = (context.base_output_path.parent / file_path.name)
                 output_path.write_text(file_path.read_text())
-                return '\n```\n{{< include /' + str(output_path.relative_to(context.base_output_path.parent.parent)) + ' >}}\n```\n'
+                return '\n```\n{{< include /' + str(
+                    output_path.relative_to(context.base_quarto_path)) + ' >}}\n```\n'
             elif self.command in (r'\tt', r'\texttt'):
                 before, after = '<code>', '</code>'
                 if len(self.arguments) > 0:
@@ -588,7 +595,7 @@ class _InlineCommand(_MyAstItem):
                 before, after = '[', ']{.mycredit}'
             else:
                 start_arg = 0
-                before, after = self.command + '{', '}'
+                before, after = self.command.replace('\\', '\\\\') + '{', '}'
 
         if context.raw_html and before == '[':
             classes = []
@@ -674,11 +681,11 @@ class AnyText(_MyAstItem):
 
     @property
     def inner_text(self) -> str:
-        logging.debug('self.parts = %s', self.parts)
         return ''.join(map(attrgetter('inner_text'), self.parts))
 
     @property
     def estimated_lines(self) -> int:
+        logging.debug('self.parts = %s', self.parts)
         return sum(map(attrgetter('estimated_lines'), self.parts))
 
     def get_interesting_parts(self) -> List[_MyAstItem]:
@@ -766,13 +773,38 @@ class Moredelim:
     end: str
     command: str
 
+    def generate_command(self, current_argument: str) -> GenericCommand | AnyText:
+        current_inner = AnyText(_RawString(current_argument))
+        for command in reversed(self.command.split('\\')):
+            if command == '':
+                continue
+            m = re.match(r'(?P<base_command>[^{<]+)(?:(?P<when><[^>]+>))?(?:\{(?P<arg>[^}]+)\})?',
+                command)
+            assert m is not None, command
+            when = None
+            if m.group('when') is not None:
+                when = When(m.group('when'))
+            args: list[AnyText] = []
+            if m.group('arg'):
+                args.append(AnyText(_RawString(m.group('arg'))))
+            args.append(current_inner)
+            logging.debug('verbatim command %s/%s from %s', m.group('base_command'), when, command)
+            current_inner = AnyText(
+                GenericCommand(
+                    '\\' + m.group('base_command'),
+                    when,
+                    *args
+                )
+            )
+        return current_inner
+
 def _parse_moredelim_from(settings):
     result = []
     for m in re.finditer(r'''
         moredelim=\{?[^]]+\[[^]]+\] # {**[is]
             \[(?P<command>[^]]+)\] # [\it]
-            \{(?P<start>[^]]+)\} # {X}
-            \{(?P<end>[^]]+)\} # {Y}
+            \{(?P<start>[^}]+)\} # {X}
+            \{(?P<end>[^}]+)\} # {Y}
         ''', settings, re.X):
         result.append(Moredelim(
             m.group('start'),
@@ -847,7 +879,7 @@ class Verbatim(_MyAstItem):
             if self.command_chars is None:
                 slash = None
                 open_brace = None
-                clsoe_brace  = None
+                close_brace  = None
             else:
                 slash = self.command_chars[0]
                 open_brace = self.command_chars[1]
@@ -862,29 +894,8 @@ class Verbatim(_MyAstItem):
             while i < len(self.contents):
                 c = self.contents[i]
                 if current_moredelim is not None and self.contents[i:].startswith(current_moredelim.end):
+                    current_inner = current_moredelim.generate_command(current_argument)
                     with context.inner(pre=True, raw_html=True) as inner_context:
-                        current_inner = AnyText(_RawString(current_argument))
-                        for command in reversed(current_moredelim.command.split('\\')):
-                            if command == '':
-                                continue
-                            m = re.match(r'(?P<base_command>[^{<]+)(?:(?P<when><[^>]+>))?(?:\{(?P<arg>[^}]+)\})?',
-                                command)
-                            assert m is not None, command
-                            when = None
-                            if m.group('when') is not None:
-                                when = When(m.group('when'))
-                            args: list[AnyText] = []
-                            if m.group('arg'):
-                                args.append(AnyText(_RawString(m.group('arg'))))
-                            args.append(current_inner)
-                            logging.debug('verbatim command %s/%s from %s', m.group('base_command'), when, command)
-                            current_inner = AnyText(
-                                GenericCommand(
-                                    '\\' + m.group('base_command'),
-                                    when,
-                                    *args
-                                )
-                            )
                         result += current_inner.render(inner_context)
                     i += len(current_moredelim.end)
                     current_argument = ''
@@ -940,7 +951,7 @@ class Verbatim(_MyAstItem):
                     else:
                         result += c
                 i += 1
-            result += '</code></pre>'
+            result += '</code></pre>\n'
             return result
         else:
             return f'\n```\n{self.contents}```\n'
@@ -1188,6 +1199,10 @@ class Item(_MyAstItem):
     when: When
     contents: AnyText
 
+    def __init__(self, when, *args):
+        self.when = when
+        self.contents = args[-1]
+
     @property
     def estimated_lines(self) -> int:
         return max(1, self.contents.estimated_lines)
@@ -1412,21 +1427,23 @@ class OutsideCommand(_MyAstItem):
             return ''
         elif self.command == r'\input':
             logging.debug('input %s', self.arguments)
-            input_file = Path(self.arguments[0].inner_text)
+            input_file = context.base_output_path.parent / self.arguments[0].inner_text
             input_file = input_file.with_name(
                 '_' + input_file.name
             )
             if not input_file.name.endswith('.tex'):
                 input_file.with_name(input_file.name + '.tex')
             input_file = input_file.with_suffix('.qmd')
-            return '\n{{< include ' + str(input_file) + ' >}}\n'
+            return '\n{{< include /' + \
+                str(input_file.resolve().relative_to(context.base_quarto_path.resolve())) + \
+                ' >}}\n'
         elif self.command == r'\section':
             return f'\n# {self.arguments[0].inner_text} ' + '{visibility="hidden"}\n'
         elif self.command == r'\subsection':
             return f'\n## {self.arguments[0].inner_text} ' + '{visibility="hidden"}\n'
         elif self.command == r'\subsubsection':
             return f'\n## {self.arguments[0].inner_text}' + '{visibility="hidden"}\n'
-        elif self.command in (r'\iftoggle', r'\setbeamertemplate',):
+        elif self.command in (r'\iftoggle', r'\setbeamertemplate',r'\newcommand'):
             result = f'\n<!-- {self.command}('
             result += ','.join(map(attrgetter('inner_text'), self.arguments))
             result += ') -->\n'
@@ -1561,7 +1578,13 @@ def parse_and_render_file(input_file: Path, output_file: Path) -> str:
 
     result = transformer.transform(result)
     logging.debug('transformed as %s', result)
-    return result[0].render(RenderContext(base_input_path=input_file, base_output_path=output_file))
+    return result[0].render(
+        RenderContext(
+            base_input_path=input_file,
+            base_output_path=output_file,
+            base_quarto_path=output_file.parent.parent
+        )
+    )
 
 def main():
     parser = argparse.ArgumentParser()

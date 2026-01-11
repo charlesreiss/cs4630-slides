@@ -1,0 +1,5 @@
+\begin{tikzpicture}
+    \node[draw,font=\tt,very thick] (theCall) {callq printf};
+    \node[draw,font=\tt,below=5cm of theCall,very thick] (theCallResolved) {callq 0x458F0};
+    \draw[very thick,-Latex] (theCall) -- (theCallResolved);
+    \end{tikzpicture}

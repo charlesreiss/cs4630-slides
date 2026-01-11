@@ -1,0 +1,52 @@
+
+### AT&T versus Intel syntax 
+
+
+* AT&amp;T syntax: <br> <code>movq \$42, 100(%rbx,%rcx,4)</code>
+* Intel syntax: <br> <code>mov QWORD PTR [rbx+rcx*4+100], 42</code>
+* effect (pseudo-C): <br> <code>memory[rbx + rcx * 4 + 100] \<- 42</code>
+
+
+### AT&T syntax (1) 
+
+
+```
+movq $42, 100(%rbx,%rcx,4)
+```
+ 
+
+* destination <em>last</em>
+* constants start with <code>\$</code>
+* registers start with <code>%</code>
+
+
+### AT&T syntax (2)  {.smaller}
+
+
+```
+movq $42, 100(%rbx,%rcx,4)
+```
+ 
+
+* operand length: <code>q</code> 
+
+   * <code>l</code> = 4; <code>w</code> = 2; <code>b</code> = 1
+   * can be omitted when implied by context
+
+* <code>100(%rbx,%rcx,4)</code>: <br> <code>memory[100 + rbx + rcx * 4]</code>
+* <code>sub %rax, %rbx</code>: <code>rbx $\\leftarrow{}$ rbx - rax</code>
+
+
+### Intel syntax  {.smaller}
+
+
+* destination <em>first</em>
+* <code>[...]</code> indicates location in memory
+* <code>QWORD PTR [...]</code> for 8 bytes in memory 
+
+   * DWORD for 4
+   * WORD for 2
+   * BYTE for 1
+   * can be omitted when implied by context
+
+

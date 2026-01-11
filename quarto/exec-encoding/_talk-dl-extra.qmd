@@ -1,0 +1,28 @@
+
+## stubs {visibility="hidden"}
+
+{{< include /exec-encoding/_dynamic-link-stubs.qmd >}}
+
+## in objdump{visibility="hidden"}
+
+{{< include /exec-encoding/_dynamic-link-info-objdump.qmd >}}
+
+## dynamic linking indirection, lazy binding {visibility="hidden"}
+
+## picture{visibility="hidden"}
+
+{{< include /exec-encoding/_dynamic-link-pic.qmd >}}
+
+### againframe(dynamicPutsPic)
+
+## lazy binding {visibility="hidden"}
+
+### againframe(dynamicPutsPic)
+
+### againframe(dynamicPutsPic)
+
+{{< include /exec-encoding/_dynamic-link-info-lazy.qmd >}}
+
+# preview: exploits and dynamic linking {visibility="hidden"}
+
+{{< include /exec-encoding/_exploits-and-dl.qmd >}}

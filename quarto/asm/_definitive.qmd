@@ -1,0 +1,88 @@
+<!-- \lstset{language=myasm} -->
+
+# definitive sources {visibility="hidden"}
+
+### x86-64 assembly  {.smaller}
+
+
+* history: AMD constructed 64-bit extension to x86 first 
+
+   * marketing term: AMD64
+
+* Intel first tried a new ISA (Itanium), which failed
+* Then Intel copied AMD64 
+
+   * marketing term: EM64T 
+
+      * Extended Memory 64 Technology
+
+   * later marketing term: Intel 64
+
+* both Intel and AMD have manuals --- definitive reference
+
+
+###  
+
+
+![](/asm/manual-screenshot){}
+
+
+### x86-64 manuals  {.smaller}
+
+
+* Intel manuals: 
+
+   * []{.my-small} \\url{https://software.intel.com/en-us/articles/intel-sdm}
+   * 25 MB, 5240 pages
+   * Volume 2: instruction set reference (2591 pages)
+
+* AMD manuals: 
+
+   * []{.my-small} \\url{https://support.amd.com/en-us/search/tech-docs}
+   * ‘‘AMD64 Architecture Programmer's Manual’’
+
+
+
+### example manual page (1) 
+
+
+![](/asm/example-manual){}
+
+
+### example manual page (2) 
+
+
+![](/asm/example-manual2){}
+
+
+### instruction listing parts (1)  {.smaller}
+
+
+* opcode --- first part of instruction encoding 
+
+   * yes, variable length
+   * ‘‘REX’’???
+   * more later (Friday or next week)
+
+* instruction --- Intel assembly skeleton
+* <code>r/m32</code> --- 32-bit memory or register value
+* 64-bit mode --- does instruction exist in 64-bit mode?
+* compat/leg mode --- in 16-bit/32-bit modes?
+
+
+### instruction listing parts (2) 
+
+
+* dscription + operation (later on page) 
+
+   * text and pseudocode description
+
+* flags affected 
+
+   * flags --- used by <code>jne</code>, etc.
+
+* exceptions --- how can OS be called from this? 
+
+   * example: can invalid memory access happen?
+
+

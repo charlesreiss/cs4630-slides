@@ -1,0 +1,85 @@
+
+### recall(?): virtual memory 
+
+
+
+* illuision of <em>dedicated memory</em>
+ ![](texfig/vm.figure.svg)
+
+
+### segmentation 
+
+
+
+* before virtual memory, there was <em>segmentation</em>
+ 
+::: {.r-stack}
+![](texfig/segmentation.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](texfig/segmentation.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+:::
+
+
+### x86 segmentation  {.smaller}
+
+
+* addresses you've seen are the <em>offsets</em>
+* but every access uses a segment number!
+* segment numbers come from registers 
+
+   * CS --- code segment number (jump, call, etc.)
+   * SS --- stack segment number (push, pop, etc.)
+   * DS --- data segment number (mov, add, etc.)
+   * ES --- addt'l data segment (string instructions)
+   * FS, GS --- extra segments (never default)
+
+* instructions can have a <em>segment override</em>: 
+```
+movq $42, %fs:100(%rsi)
+    // move 42 to segment (# in FS),
+    // offset 100 + RSI 
+```
+
+
+
+###  
+
+
+  
+::: {.r-stack}
+![](texfig/x86SegPic.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](texfig/x86SegPic.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+![](texfig/x86SegPic.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
+:::
+ [Figure: Intel manuals, Vol 3A]{.mycredit}
+
+### x86 segment descriptor 
+
+
+  
+::: {.r-stack}
+![](texfig/segmentation-x86-segment-descriptor.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](texfig/segmentation-x86-segment-descriptor.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+![](texfig/segmentation-x86-segment-descriptor.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
+:::
+ [Figure: Intel manuals, Volume 3A]{.mycredit}
+
+### 64-bit segmentation  {.smaller}
+
+
+* in 64-bit mode:
+* limits are ignored
+* base addresses are ignored
+* … except for <code>%fs</code>, <code>%gs</code> 
+
+   * when explicit segment override is used
+
+* effectively: extra pointer register
+

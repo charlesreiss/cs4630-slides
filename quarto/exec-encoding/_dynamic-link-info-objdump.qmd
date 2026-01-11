@@ -1,0 +1,34 @@
+
+### dynamic linking information 
+
+
+* symbol table in libraries: list of functions/variables to find 
+
+   * with their locations in the library
+
+* relocation records in programs: list of functions/variables 
+
+   * with locations (probably in lookup table) to fill in
+
+
+
+### dynamically linked puts (non-lazy)  {.smaller}
+
+<pre><code>DYNAMIC RELOCATION RECORDS
+OFFSET           TYPE              VALUE 
+0000000000403ff0 R_X86_64_GLOB_DAT  __libc_start_main@GLIBC_2.34
+0000000000403ff8 R_X86_64_GLOB_DAT  __gmon_start__@Base
+0000000000403fe8 R_X86_64_JUMP_SLOT  puts@GLIBC_2.2.5
+
+...
+
+Text:
+0000000000401030 &lt;puts@plt&gt;:
+  401030:       ff 25 b2 2f 00 00       jmp    *0x2fb2(%rip)        # 403fe8 &lt;puts@GLIBC_2.2.5&gt;
+</code></pre>
+ 
+
+* stub reads pointer from 0x403fe8, jump to location
+* <code>0x403fe8</code> part of ‘global offset table’ (GOT)
+* relocation table entry indicates where puts pointer goes
+

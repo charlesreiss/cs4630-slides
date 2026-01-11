@@ -1,0 +1,64 @@
+
+# why executable encodings? {visibility="hidden"}
+
+{{< include /exec-encoding/_why.qmd >}}
+
+# executable and linking format (ELF) {visibility="hidden"}
+
+{{< include /exec-encoding/_elf-format.qmd >}}
+
+## ELF sections {visibility="hidden"}
+
+{{< include /exec-encoding/_elf-sections.qmd >}}
+
+## program headers: example static ELF binary {visibility="hidden"}
+
+{{< include /exec-encoding/_header-static.qmd >}}
+
+## ELF LOAD {visibility="hidden"}
+
+{{< include /exec-encoding/_elf-loading-diag.qmd >}}
+
+## position independent executables {visibility="hidden"}
+
+{{< include /exec-encoding/_pic-exec.qmd >}}
+
+# aside: other formats {visibility="hidden"}
+
+{{< include /exec-encoding/_aside-other-formats.qmd >}}
+
+# executable startup {visibility="hidden"}
+
+{{< include /exec-encoding/_startup.qmd >}}
+
+# dynamic linking {visibility="hidden"}
+
+## linking primer {visibility="hidden"}
+
+{{< include /exec-encoding/_dl-primer.qmd >}}
+
+## in objdump, static{visibility="hidden"}
+
+{{< include /exec-encoding/_static-symreloc.qmd >}}
+
+## aside: symbols in statically linked helo {visibility="hidden"}
+
+{{< include /exec-encoding/_static-sym-strip.qmd >}}
+
+## aside: strace, statically linked strace {visibility="hidden"}
+
+{{< include /exec-encoding/_aside-strace.qmd >}}
+
+## example: strace hello.exe dynamic {visibility="hidden"}
+
+{{< include /exec-encoding/_strace-dynamic.qmd >}}
+
+## where's the linker {visibility="hidden"}
+
+{{< include /exec-encoding/_wheres-the-linker.qmd >}}
+
+## knowing what to load? {visibility="hidden"}
+
+{{< include /exec-encoding/_needed.qmd >}}
+
+{{< include /exec-encoding/_needed-decode.qmd >}}

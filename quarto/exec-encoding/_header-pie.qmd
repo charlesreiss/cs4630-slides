@@ -1,0 +1,53 @@
+
+### providecommand(\myemphTwo,1,#1)
+
+### providecommand(\myemphTwoB,1,#1)
+
+### providecommand(\myemphThree,1,#1)
+
+### providecommand(\myemphFour,1,#1)
+
+### providecommand(\myemphFive,1,#1)
+
+### providecommand(\myemphSix,1)
+
+### myemph(#1)
+
+### providecommand(\myemphSeven,1,#1)
+
+### position-independent executables 
+
+
+* so far: executables loaded to fixed (virtual) address 
+
+* turns out to be undesirable for easily guessable addresses
+* solution: position independent executables 
+
+   * can be loaded at any address at runtime
+
+
+
+### position-independent ELF example  {.smaller}
+
+
+
+* compiled+linked ‘‘Hello, World’’ with <code>gcc -static-pie</code>
+* PIE = position-independent executable
+ <pre><code>a.out:     file format elf64-x86-64
+a.out
+architecture: i386:x86-64, flags 0x00000150:
+HAS_SYMS, \\myemphTwo{DYNAMIC}, D_PAGED
+
+start address 0x0000000000001080
+
+Program Header:
+...
+    LOAD off    0x0000000000000000 vaddr \\myemphThree{0x0000000000000000} paddr 0x0000000000000000 align 2**12
+         filesz 0x00000000000005f8 memsz 0x00000000000005f8 flags r--
+    LOAD off    0x0000000000001000 vaddr 0x0000000000001000 paddr 0x0000000000001000 align 2**12
+         filesz 0x00000000000001f5 memsz 0x00000000000001f5 flags r-x
+...
+</code></pre>
+ ![](texfig/elfExOverPie1.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
+![](texfig/elfExOverPie1.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
+

@@ -1,0 +1,4 @@
+
+## needed info encoding {visibility="hidden"}
+
+{{< include /exec-encoding/_needed-decode.qmd >}}

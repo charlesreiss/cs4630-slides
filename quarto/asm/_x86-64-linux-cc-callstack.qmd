@@ -1,0 +1,9 @@
+
+### the call stack 
+
+
+```
+foo(a,b,c,d,e,f,g,h);
+```
+ ![](texfig/x86-64-linux-cc-callstack.figure.svg)
+

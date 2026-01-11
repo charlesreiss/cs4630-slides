@@ -1,0 +1,19 @@
+
+### linking 
+
+![](texfig/dl-intro-linking.figure.svg)
+
+
+### static v. dynamic linking  {.smaller}
+
+
+* static linking --- linking <em>to create executable</em>
+* dynamic linking --- linking <em>when executable is run</em> 
+
+* conceptually: no difference in how they work
+* reality --- very different mechanisms 
+
+   * extra indirection to avoid modifying much code at runtime
+   * change <it>lookup table</it> instead of code for library locations
+
+

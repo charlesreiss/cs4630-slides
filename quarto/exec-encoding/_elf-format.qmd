@@ -1,0 +1,29 @@
+
+### memory v. disk 
+
+![](texfig/elf-format-memory-v-disk.figure.svg)
+
+
+### ELF (executable and linking format) 
+
+
+
+* Linux [ (and some others)]{.my-small} executable/object file format
+ ![](texfig/elf-format-elf-executable-and-linking-format.figure.svg)
+
+
+### segments versus sections?  {.smaller}
+
+
+* note: ELF terminology; may not be true elsewhere!
+* sections --- <em>object files</em> [ (and usually executables)]{.my-small}, used by <em>linker</em> 
+
+   * have information on intended purpose
+   * linkers combine these to create executables
+   * linkers might omit unneeded sections
+
+* segments --- executables, used to actually load program 
+
+   * program loader is <em>dumb</em> --- doesn't know what segments are for
+
+

@@ -1,0 +1,12 @@
+
+# floationg point calling convention {visibility="hidden"}
+
+{{< include /asm/_floating-point-cc.qmd >}}
+
+# exploring assembly/optimization effects {visibility="hidden"}
+
+{{< include /asm/_aside-opt.qmd >}}
+
+# caller/callee saved {visibility="hidden"}
+
+{{< include /asm/_x86-64-linux-cc-caller-callee.qmd >}}

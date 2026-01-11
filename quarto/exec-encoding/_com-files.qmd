@@ -1,0 +1,10 @@
+
+### Diversion: .COM files  {.smaller}
+
+
+* .COM is a <em>very simple</em> executable format
+* no header, no segments, no sections
+* file contents loaded at fixed address <code>0x0100</code>
+* execution starts at <code>0x0100</code>
+* everything is read/write/execute (no virtual memory)
+

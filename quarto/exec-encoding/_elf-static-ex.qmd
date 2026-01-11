@@ -1,0 +1,17 @@
+
+### exercise  {.smaller}
+
+<pre><code>LOAD off    0x0000000 vaddr 0x00400000 paddr 0x00400000 align 2**12
+     filesz 0x0000518 memsz 0x00000518 flags r--
+LOAD off    0x0001000 vaddr 0x00401000 paddr 0x00401000 align 2**12
+     filesz 0x009352d memsz 0x0009352d flags r-x
+LOAD off    0x0095000 vaddr 0x00495000 paddr 0x00495000 align 2**12
+     filesz 0x00265e5 memsz 0x000265e5 flags r--
+LOAD off    0x00bc0c0 vaddr 0x004bd0c0 paddr 0x004bd0c0 align 2**12
+     filesz 0x0006170 memsz 0x000078c0 flags rw-
+</code></pre>
+ 
+
+* Q1: about how large is this executable on disk?
+* Q2: this executable contains a global array declared like <br><code>int array[SIZE] = ...;</code> <br> what is the largest plausible value for SIZE based on the header?
+

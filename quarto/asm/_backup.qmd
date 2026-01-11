@@ -1,0 +1,8 @@
+
+## and calling conventions {visibility="hidden"}
+
+{{< include /asm/_floating-point-cc.qmd >}}
+
+## aside: optimizations {visibility="hidden"}
+
+{{< include /asm/_aside-opt.qmd >}}

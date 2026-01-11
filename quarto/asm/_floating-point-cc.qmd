@@ -1,0 +1,19 @@
+
+### floating point calling convention 
+
+
+* use <code>%xmm</code> registers in order
+
+
+### note: variadic functions  {.smaller}
+
+
+* variable number of arguments 
+
+   * <code>printf</code>, <code>scanf</code>, …
+   * see <code>man stdarg</code>
+ 
+
+* same as usual
+* … but `%rax` contains number of <code>%xmm</code> used
+

@@ -1,0 +1,109 @@
+
+### floating point operations 
+
+
+* x86 has two ways to do floating point
+* method one --- legacy: x87 floating point instructions 
+
+   * still common in 32-bit x86
+
+* method two --- SSE instructions 
+
+   * work more like what you expect
+
+
+
+### x87 floating point stack  {.smaller}
+
+
+* x87: 8 floating point registers 
+
+   * <code>%st(0)</code> through <code>%st(7)</code>
+
+* arranged as a <em>stack of registers</em>
+* example: `fld 0(%rbx)`  <table>
+   <tr><td>&nbsp;</td><td>before</td><td>after</td></tr>
+<tr><td><code>st(0)</code></td><td>5.0</td><td>(value from memory at <code>%rbx</code>)</td></tr>
+<tr><td><code>st(1)</code></td><td>6.0</td><td>5.0</td></tr>
+<tr><td><code>st(1)</code></td><td>7.0</td><td>6.0</td></tr>
+<tr><td>…</td><td>…</td><td>…</td></tr>
+<tr><td><code>st(6)</code></td><td>10.0</td><td>9.0</td></tr>
+<tr><td><code>st(7)</code></td><td>11.0</td><td>10.0</td></tr>
+</table>
+   
+
+
+### x87 
+
+
+* not going to talk about x87 more in this course
+* essentially obsolete with 64-bit x86
+
+
+### SSE registers  {.smaller}
+
+
+
+* SSE and SSE2 extensions brought <em>vector instructions</em>
+ <!-- \lstset{
+    language=myasm,
+    style=small,
+    moredelim={**[is][\btHL<2>]{&2}{&}},
+    moredelim={**[is][\btHL<3>]{&3}{&}},
+    moredelim={**[is][\btHL<4>]{&4}{&}},
+    morekeywords={.float,movps,addps},
+} -->
+ <pre><code><span data-fragment-index="2" class="fragment custom myem-only">numbers: .float 1 .float 2 .float 3. float 4</span>
+ones:    .float 1 .float 3 .float 5 .float 7
+result:  .float 0 .float 0 .float 0 .float 0
+...
+<span data-fragment-index="3" class="fragment custom myem-only">movps</span> numbers, %xmm0
+movps ones, %xmm1
+<span data-fragment-index="4" class="fragment custom myem-only">addps</span> %xmm1, %xmm0
+movps %xmm0, result
+/* result contains: 1+1=2,2+3=5,3+5=8,4+7=11 */
+</code></pre>
+ ![](texfig/sseRegs.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
+![](texfig/sseRegs.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
+![](texfig/sseRegs.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=3}
+![](texfig/sseRegs.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=4}
+
+
+### XMM registers  {.smaller}
+
+
+* <code>%xmm0</code> through <code>%xmm15</code> [ (<code>%xmm8</code> on 32-bit)]{.my-small}
+* each holds 128-bits --- 
+
+   * 32-bit floating point values (<code>addps</code>, etc.)
+   * 64-bit floating point values (<code>addpd</code>, etc.)
+   * 64/32/16/8-bit integers (<code>paddq/d/w/b</code>, etc.)
+   * [a 32-bit floating point value]{.fragment fragment-index=2 .custom .myem-only}, 96 unused bits (<code>addss</code>, <code>movss</code>, etc.)
+   * [a 64-bit floating point value]{.fragment fragment-index=2 .custom .myem-only}, 64 unused bits (<code>addsd</code>, <code>movsd</code>, etc.)
+ 
+
+* more recently: <code>%ymm0</code> through <code>%ymm15</code> (256-bit, ‘‘AVX’’) 
+
+   * overlap with <code>%xmm\\it{ X}</code> registers
+
+
+
+### FP example  {.smaller}
+
+<!-- \lstset{language=myasm,morekeywords={movss,mulss,subq}} -->
+ 
+```
+multiplyEachElementOfArray:
+/* %rsi = array, %rdi length,
+   %xmm0 multiplier */
+loop:   test %rdi, %rdi
+        je done
+        movss (%rsi), %xmm1
+        mulss %xmm0, %xmm1
+        movss %xmm1, (%rsi)
+        subq $1, %rdi
+        addq $4, %rsi
+        jmp loop
+done:   ret
+```
+

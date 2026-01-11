@@ -1,0 +1,19 @@
+
+### simple executable startup 
+
+
+* copy segments into memory
+* jump to start address
+
+
+### executable startup code 
+
+
+* Linux: executables don't start at <code>main</code>
+* why not? 
+
+   * need to initialize <code>printf</code>, <code>cout</code>, <code>malloc</code>, etc. data structures
+   * <code>main</code> needs to return somewhere
+
+* compiler links in startup code
+

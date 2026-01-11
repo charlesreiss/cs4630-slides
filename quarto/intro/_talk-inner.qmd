@@ -29,10 +29,6 @@
 
 {{< include ../intro/_malware-types-data.qmd >}}
 
-## Pay-Per-Install {visibility="hidden"}
-
-{{< include ../intro/_pay-per-install.qmd >}}
-
 ## Adware {visibility="hidden"}
 
 ### againframe(followTheMoney)
@@ -56,6 +52,10 @@
 ## black markets, generally {visibility="hidden"}
 
 {{< include ../intro/_black-markets.qmd >}}
+
+## Pay-Per-Install {visibility="hidden"}
+
+{{< include ../intro/_pay-per-install.qmd >}}
 
 ## espinoge {visibility="hidden"}
 

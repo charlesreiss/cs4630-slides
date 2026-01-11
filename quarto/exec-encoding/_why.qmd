@@ -1,0 +1,18 @@
+
+### executable encoding: security issues  {.smaller}
+
+
+* malware wants to modify executables 
+
+   * hide in ‘normal’ programs (viruses)
+   * evade program analysis tools by doing weird things
+
+* memory vulnerabilities require understanding memory layout 
+
+   * going from ‘‘write memory address X’’ to ‘‘run arbitrary code’’
+   * where are pointers to functions (we could change?)
+   * where is code (vulnerabilities might want to execute)
+   * where is data (vulnerabilities might want to read/change)
+
+* ways we can load+layout programs that are harder to exploit?
+

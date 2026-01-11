@@ -1,0 +1,14 @@
+
+### other executable formats  {.smaller}
+
+
+* PE (Portable Executable) --- Windows
+* Mach-O --- MacOS X
+* broadly similar to ELF
+* differences: 
+
+   * whether segment/section distinction exists
+   * how linking/debugging info represented
+   * how program start info represented
+
+

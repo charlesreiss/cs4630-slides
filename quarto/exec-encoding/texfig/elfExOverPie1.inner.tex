@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+\coordinate (loc) at ([yshift=1cm]current page.south);
+\tikzset{
+    note/.style={draw,very thick,anchor=south,at=(loc)},
+}
+\begin{visibleenv}<2>
+\node[note] {
+    DYNAMIC instead of EXEC\_P \\
+    similar encoding to shared libraries
+};
+\end{visibleenv}
+\end{scope}
+\end{tikzpicture}

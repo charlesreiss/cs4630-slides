@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+\tikzset{
+    mybox/.style={draw,rectangle,minimum width=10cm,fill=white},
+}
+\node[mybox] (header) {
+    \textbf{header}: machine type, file type, etc.
+};
+\node[mybox,below=0mm of header,align=center] (pHeader) {
+    \textbf{program header}: ``\myemph{segments}'' to load \\
+        (also, some other information)
+};
+\node[mybox,below=0mm of pHeader,align=center] (seg1) {
+    \textbf{segment 1 data}
+};
+\node[mybox,below=0mm of seg1,align=center] (seg2) {
+    \textbf{segment 2 data}
+};
+\node[mybox,below=3mm of seg2,align=center] (seg2) {
+    \textbf{section header}:  \\ list of ``\myemph{sections}''(mostly for linker)
+};
+\end{tikzpicture}

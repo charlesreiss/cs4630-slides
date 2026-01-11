@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+\begin{visibleenv}<1>
+\node[draw,very thick,anchor=south,align=left] at ([yshift=.5cm]current page.south) {
+    executable with headers like dynamic library \\
+    ``position-independent executable'': can be loaded at any address
+};
+\end{visibleenv}
+\end{scope}
+\end{tikzpicture}

@@ -1,0 +1,36 @@
+\begin{tikzpicture}
+    \tikzset{>=Latex}
+    \node[draw,label={north:address},rectangle split,rectangle split parts=2,
+        rectangle split horizontal,font=\small,align=left] (address) {
+        segment \#: \\ \color{orange!70!black}{\tt 0x1} \nodepart{two} offset: \\ \color{magenta!70!black}{\tt 0x23456}
+    };
+    \matrix[tight matrix,nodes={text width=2cm,font=\small\tt,text depth=.4ex,text height=1.2ex},
+        column 1/.style={nodes={text width=1.5cm}},
+        anchor=north west,
+        visible on=<1>,
+    ] (table) at ([xshift=.5cm]address.north east){
+        seg \# \& base \& limit \\
+        0 \& 0x14300 \& 0x60000 \\
+        |[orange!70!black]| 1 \& |[blue!70!black]| 0x50000 \& |[green!70!black]| 0x6F000 \\
+        2 \& 0x70000 \& 0x30000 \\
+    };
+    \matrix[tight matrix,nodes={text width=2cm,font=\small\tt,text depth=.4ex,text height=1.2ex},
+        column 1/.style={nodes={text width=1.5cm}},
+        column 3/.style={nodes={font=\scriptsize\tt, text width=6cm}},
+        anchor=north west,
+        visible on=<2>,
+    ] (table2) at ([xshift=.5cm]address.north east){
+        seg \# \& base \& limit \\
+        0 \& 0x0 \& 0xFFFF FFFF FFFF FFFF \\
+        |[orange!70!black]| 1 \& |[blue!70!black]| 0x0 \& |[green!70!black]| 0xFFFF FFFF FFFF FFFF \\
+        2 \& 0x0 \& 0xFFFF FFFF FFFF FFFF \\
+    };
+    \node[draw,circle,font=\large] (plus) at ([yshift=-2cm]address.two south) { $+$ };
+    \node[font=\large,draw] (less) at (table-3-3.south |- plus) { $<=$ };
+    \draw[magenta!70!black,thick,->] (address.two south) -- (plus);
+    \draw[blue!70!black,thick,->] (table-3-2.south) |- (plus);
+    \draw[green!70!black,thick,->] ([xshift=.25cm]table-3-3.south) -- ([xshift=.25cm]less.north);
+    \draw[magenta!70!black,thick,->] (address.two south) -- ($(plus.north) + (0, .5cm)$) -| ([xshift=-.25cm]less.north);
+    \draw[thick,->] (plus) -- ++ (0,-1cm) node[below] { computed address };
+    \draw[thick,->] (less) -- ++ (0,-1cm) node[below,align=center] { no segmentation \\ fault?};
+\end{tikzpicture}

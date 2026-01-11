@@ -1,0 +1,40 @@
+
+### recall: x86-64 general purpose registers 
+
+
+![](/asm/x86-gprs){}
+ [Immae via Wikipedia]{.mycredit}
+
+### overlapping registers (1)  {.smaller}
+
+
+
+* setting 32-bit registers sets <em>whole</em> 64-bit register
+* extra bits are always zeroes
+ 
+```
+movq $0x123456789abcdef, %rax
+    // Intel: MOVABS RAX, 0x123456789abcdef
+xor %eax, %eax
+// %rax is 0, not 0x1234567800000000
+movl $-1, %ebx
+    // Intel: MOV EBX, -1
+// %rbx is 0xFFFFFFFF, not -1 (0xFFFFF...FFF)
+```
+ 
+
+* 32-bit instructions are often shorter than 64-bit ones, <br> so compilers will prefer <code>mov \$1234, %ecx</code> to <code>mov \$1234, %rcx</code>
+
+
+### overlapping registers (2) 
+
+
+
+* setting <em>8/16-bit registers</em> doesn't change rest of 64-bit register:
+ 
+```
+movq $0x12345789abcdef, %rax
+movw $0xaaaa, %ax
+// %rax is 0x123456789abaaaa
+```
+

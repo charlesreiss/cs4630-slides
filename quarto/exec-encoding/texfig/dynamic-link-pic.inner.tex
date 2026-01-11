@@ -1,0 +1,85 @@
+\begin{tikzpicture}
+\fill[blue!20] (0, 0) rectangle (4, -2);
+\node[anchor=north,font=\small] at (2, 0) {headers};
+\node[align=left,font=\fontsize{8}{9}\selectfont,anchor=north west] (dyn reloc) at (0, -0.7) {
+    dynamic relocation table: \\
+    \ldots \\
+    puts @ \ldots
+};
+\path[fill=yellow!20] (0, -2) rectangle (4, -3);
+\node[anchor=west,font=\small] at (0, -2.5) {GOT};
+    \draw[thick] (1, -2) rectangle (4, -2.25);
+    \draw[thick] (1, -2.25) rectangle (4, -2.5);
+    \draw[thick] (1, -2.5) rectangle (4, -2.75);
+    \draw[thick] (1, -2.75) rectangle (4, -3);
+\path[fill=green!20] (0, -3) rectangle (4, -3.5)
+    node[midway,font=\small] (link call stub) {linker calling stub};
+\path[fill=orange!20] (0, -3.5) rectangle (4, -4.5);
+\node[font=\fontsize{9}{10}\tt] (puts stub call) at (3, -4.25) {jmp \ldots};
+\node[anchor=west,font=\small] (puts stub) at (0, -4) {puts stub};
+
+\fill[violet!20] (0, -4.5) rectangle (4, -6);
+\node [anchor=center,font=\fontsize{9}{10}\tt] (exe call puts) at (3, -5) {call puts};
+\draw[thick,-Latex] (exe call puts.east) -- ++(0.5cm, 0cm) -- ++(0cm, 0.25cm) -| (puts stub call.south west) --
+    ++(0cm,.3cm) -- ++(.1cm,0cm);
+
+\draw[thick,Latex-] (4, -2.875) -- ++ (0.5cm, 0cm) -- ++(0cm, -.8cm) -| ([xshift=-.25cm]puts stub call.east);
+\draw[fill=black!50] ([xshift=-.25cm]puts stub call.east) circle (.05cm);
+\draw[very thick] (0, 0) rectangle (4, -6);
+\node[anchor=south] at (2, 0) {
+    executable
+};
+
+\draw[alt=<2>{red, very thick},thick,-Latex] ([yshift=.3cm,xshift=1cm]dyn reloc.south west) -- ++(3.5cm, 0cm) |- (4, -2.875);
+
+\begin{visibleenv}<4>
+    \draw[alt=<4>{red},thick,-Latex] (1, -2.875) -- ++(-1.25cm, 0cm) |- (link call stub.west);
+\end{visibleenv}
+
+\begin{scope}[xshift=7cm,yshift=1cm]
+\path[fill=yellow!20] (0, -2) rectangle (4, -3);
+\node[anchor=west,font=\small] at (0, -2.5) {GOT};
+    \draw[thick] (1, -2) rectangle (4, -2.25);
+    \draw[thick] (1, -2.25) rectangle (4, -2.5);
+    \draw[thick] (1, -2.5) rectangle (4, -2.75);
+    \draw[thick,alt=<2-3>{pattern=north west lines},alt=<2>{pattern color=red}] (1, -2.75) rectangle (4, -3);
+\path[fill=green!20] (0, -3) rectangle (4, -3.5)
+    node[midway,font=\small] (link call stub alt)(link call stub alt)  {linker calling stub};
+\path[fill=orange!20] (0, -3.5) rectangle (4, -4.5);
+\node[font=\fontsize{9}{10}\tt] (puts stub call) at (3, -4.25) {jmp \ldots};
+\node[anchor=west,font=\small] (puts stub) at (0, -4) {puts stub};
+
+\fill[violet!20] (0, -4.5) rectangle (4, -6);
+\node [anchor=center,font=\fontsize{9}{10}\tt] (exe call puts) at (3, -5) {call puts};
+\draw[thick,-Latex] (exe call puts.east) -- ++(0.5cm, 0cm) -- ++(0cm, 0.25cm) -| (puts stub call.south west) --
+    ++(0cm,.3cm) -- ++(.1cm,0cm);
+
+\draw[thick,Latex-] (4, -2.875) -- ++ (0.5cm, 0cm) -- ++(0cm, -.8cm) -| ([xshift=-.25cm]puts stub call.east);
+\draw[fill=black!50] ([xshift=-.25cm]puts stub call.east) circle (.05cm);
+\begin{visibleenv}<2-3>
+    \path[fill=red!20] (0, -7) rectangle (4, -8)
+        node[midway] {libc.so};
+    \draw[alt=<2>{red},thick,-Latex] (1, -2.875) -- ++(-1.5cm, 0cm) |- (1, -7.25);
+\end{visibleenv}
+\draw[very thick] (0, -1) -- (4, -1);
+\draw[very thick] (0, -8.5) -- (4, -8.5);
+\foreach \myshift in {0, 4} {
+    \begin{scope}[xshift=\myshift cm]
+    \draw[very thick] (0, -1) -- (0, -1.25);
+    \draw[very thick,decorate,decoration=zigzag] (0, -1.25) -- (0, -1.75);
+    \draw[very thick] (0, -1.75) -- (0, -8);
+    \draw[very thick,decorate,decoration=zigzag] (0, -8) -- (0, -8.5);
+    \end{scope}
+}
+\node[anchor=south] at (2, -1) {
+    memory 
+};
+
+\begin{visibleenv}<4>
+    \draw[alt=<4>{red},thick,-Latex] (1, -2.875) -- ++(-1.25cm, 0cm) |- (link call stub alt.west);
+\end{visibleenv}
+
+\end{scope}
+
+
+\end{tikzpicture}

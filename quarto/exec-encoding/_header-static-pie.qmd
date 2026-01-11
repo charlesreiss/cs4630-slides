@@ -1,0 +1,38 @@
+
+### providecommand(\myemphTwo,1,#1)
+
+### providecommand(\myemphTwoB,1,#1)
+
+### providecommand(\myemphThree,1,#1)
+
+### providecommand(\myemphFour,1,#1)
+
+### providecommand(\myemphFive,1,#1)
+
+### providecommand(\myemphSix,1,#1)
+
+### providecommand(\myemphSeven,1,#1)
+
+### position-independent ELF example  {.smaller}
+
+
+
+* compiled+linked ‘‘Hello, World’’ with <code>gcc -static-pie</code>
+* PIE = position-independent executable
+ <pre><code>a.out:     file format elf64-x86-64
+a.out
+architecture: i386:x86-64, flags 0x00000150:
+HAS_SYMS, \\myemphTwo{DYNAMIC}, D_PAGED
+start address 0x0000000000009f90
+
+Program Header:
+...
+
+\\myemphTwo{Dynamic Section:}
+...
+
+Sections:
+...
+</code></pre>
+ ![](texfig/header-static-pie.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+

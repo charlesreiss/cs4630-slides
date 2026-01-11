@@ -1,0 +1,61 @@
+
+### hello.s  {.smaller}
+
+
+```
+.data
+string: .asciz "Hello, World!"
+.text
+.globl main
+main:
+    movq $string, %rdi
+    call puts
+    ret
+```
+
+
+### hello.o (pre-static or dynamic linking)  {.smaller}
+
+<pre><code>SYMBOL TABLE:
+0000000000000000 l    d  .text  0000000000000000 .text
+0000000000000000 l    d  .data  0000000000000000 .data
+0000000000000000 l    d  .bss   0000000000000000 .bss
+0000000000000000 l       .data  0000000000000000 string
+0000000000000000 \\myemphSix{g}       \\myemphSeven{.text  0000000000000000} main
+0000000000000000         \\myemphTwo{*UND*  0000000000000000 puts}
+
+RELOCATION RECORDS FOR \[.text]:
+OFFSET           TYPE              VALUE 
+0000000000000003 \\myemphFive{R_X86_64_32S}      \\myemphFour{.data}
+0000000000000008 \\myemphFive{R_X86_64_PC32}     \\myemphThree{puts}-0x0000000000000004
+</code></pre>
+ ![](texfig/linkingExObjRepeat.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
+![](texfig/linkingExObjRepeat.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
+![](texfig/linkingExObjRepeat.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=3}
+![](texfig/linkingExObjRepeat.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=4}
+![](texfig/linkingExObjRepeat.figure-5.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=5}
+![](texfig/linkingExObjRepeat.figure-6.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=6}
+![](texfig/linkingExObjRepeat.figure-7.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=7}
+
+
+### hello.o / statically linked, no PIE  {.smaller}
+
+hello.o: <pre><code>Disassembly of section .text:
+
+0000000000000000 &lt;main&gt;:
+   0:   48 c7 c7 00 00 00 00    mov    $0x0,%rdi
+                        3: R_X86_64_32S .data
+   7:   e8 00 00 00 00          call   c &lt;main+0xc&gt;
+                        8: R_X86_64_PLT32       puts-0x4
+   c:   c3                      ret    
+</code></pre>
+ <hr />
+ hello.exe (gcc -static -no-pie): <pre><code>Disassembly of section .text:
+...
+ 00000000004016c3 &lt;main&gt;:
+   4016c3:▶      48 c7 c7 b5 16 40 00 ▶  mov    $0x4016b5,%rdi
+   4016ca:▶      e8 e1 a9 00 00       ▶  call   40c0b0 &lt;_IO_puts&gt;
+   4016cf:▶      c3                   ▶  ret    
+...
+</code></pre>
+

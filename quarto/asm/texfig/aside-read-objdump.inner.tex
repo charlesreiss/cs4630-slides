@@ -1,0 +1,41 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+\tikzset{
+    note/.style={
+        draw=red,very thick,fill=white,at={([yshift=-1cm]current page.north)},anchor=north,
+        align=left
+    }
+}
+\begin{visibleenv}<2>
+    \node[note] {symbol main at address 0x1060};
+\end{visibleenv}
+\begin{visibleenv}<3>
+    \node[note] {
+        first column: instruction addresses in hexadecimal \\
+        (if executable/library has fixed address, \\
+        actual addresses they'll be loaded to)
+    };
+\end{visibleenv}
+\begin{visibleenv}<4>
+    \node[note] {
+        machine code as list of byte values in hexadecimal
+    };
+\end{visibleenv}
+\begin{visibleenv}<5>
+    \node[note] {
+        \verb|callq 1050 <puts@plt>| \\
+        call to address 0x1050 \\
+        and \texttt{puts@plt} is at that address
+    };
+\end{visibleenv}
+\begin{visibleenv}<6>
+    \node[note] {
+        \verb|lea 0xf98(%rip),%rdi # 2004 <_IO_stdin_used+0x4>| \\
+        \verb|0xf98(%rip)| computes address 0x2004 \\
+        which is \texttt{0x4} bytes after \verb|_IO_stdin_used|
+    };
+\end{visibleenv}
+\end{scope}
+\end{tikzpicture}

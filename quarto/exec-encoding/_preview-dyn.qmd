@@ -1,0 +1,16 @@
+
+### preview: dynamic linking  {.smaller}
+
+
+* shown so far:
+* statically linked executables 
+
+   * include all library code (instead of loading it from other files)
+
+* whose code is loaded at fixed address 
+
+   * instead of that address being changeable
+ 
+
+* most common today: <br>dynamically-linked, position-independent executables
+

@@ -1,0 +1,29 @@
+
+### linking 
+
+![](texfig/dl-primer-linking.figure.svg)
+
+
+### static v. dynamic linking 
+
+
+* static linking --- linking <em>to create executable</em>
+* dynamic linking --- linking <em>when executable is run</em> 
+
+* conceptually: no difference in how they work
+* reality --- very different mechanisms
+
+
+### linking data structures 
+
+
+* symbol table: <code>name</code> $\\Rightarrow{}$ (section, offset) 
+
+   * example: <code>main:</code> in assembly adds symbol table entry for <code>main</code>
+
+* relocation table: offset $\\Rightarrow{}$ (name, kind) 
+
+   * example: <code>call printf</code> adds relocation for name <code>printf</code>
+   * kind depends on how instruction encodes address
+
+

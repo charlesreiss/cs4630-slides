@@ -1,0 +1,25 @@
+
+### On LEA 
+
+
+* LEA = Load Effective Address
+* uses the syntax of a memory access, but…
+* just computes the address and uses it:
+* `leaq 4(%rax), %rax` same as `addq $4, %rax` 
+
+   * almost --- doesn't set condition codes
+
+
+
+### LEA tricks 
+
+
+* `leaq (%rax,%rax,4), %rax` multiplies <code>%rax</code> by 5 
+
+   * <code>address-of(memory[rax + rax * 4])</code>
+
+* `leal (%rbx,%rcx), %eax` adds rbx + rcx into eax 
+
+   * ignores top 64-bits
+
+

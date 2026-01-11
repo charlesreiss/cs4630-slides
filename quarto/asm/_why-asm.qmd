@@ -1,0 +1,24 @@
+
+### x86-64 assembly and machine code 
+
+
+* your assignments will use it
+* will have examples with lots of assembly
+* x86-64 \\textbf{machine code} will come up
+
+
+### why asm/machine code?  {.smaller}
+
+
+* lots of memory-mismanagement vulnerabilities 
+
+   * program memory layout details matter
+   * machine code details
+
+* want to detect/analyze malware 
+
+   * won't have luxury of working with source code
+   * malware tries to avoid analysis
+   * e.g. using weird code no compiler would produce
+
+

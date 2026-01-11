@@ -1,0 +1,41 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+    \tikzset{overBox/.style={at=(boxLoc),anchor=center,align=center,draw,rectangle,fill=white}}
+    \coordinate (boxLoc) at ([yshift=-2.5cm]current page.center);
+    \begin{visibleenv}<2>
+        \node[overBox] {
+            undefined symbol: look for {\tt puts} elsewhere
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<3>
+        \node[overBox] {
+           insert address of puts, format for {\tt call}
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<4>
+        \node[overBox] {
+           insert address of string, format for {\tt movq}
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<5>
+        \node[overBox] {
+            different ways to represent address \\
+            {\tt 32S} --- signed 32-bit value \\
+            {\tt PC32} --- 32-bit difference from current address
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<6>
+        \node[overBox] {
+            {\tt g}: global --- used by other files \\
+            {\tt l}: local 
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<7>
+        \node[overBox] {
+            {\tt .text} segment beginning plus 0 bytes
+        };
+    \end{visibleenv}
+\end{scope}
+\end{tikzpicture}

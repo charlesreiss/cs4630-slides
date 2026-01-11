@@ -1,0 +1,33 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+    \tikzset{overBox/.style={at=(boxLoc),anchor=center,align=center,draw,rectangle,fill=white,draw=red!70!black,very thick}}
+    \coordinate (boxLoc) at ([yshift=-2cm]current page.center);
+    \begin{visibleenv}<2>
+        \node[overBox] {
+            the standard C library (includes {\texttt{puts}})
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<3>
+        \node[overBox] {
+            memory allocation (different method)
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<4>
+        \node[overBox] {
+            read standard C library header
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<5>
+        \node[overBox] {
+            load standard C library ({\tt 3} = opened file)
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<6>
+        \node[overBox] {
+            allocate zero-initialized data segment for C library
+        };
+    \end{visibleenv}
+\end{scope}
+\end{tikzpicture}

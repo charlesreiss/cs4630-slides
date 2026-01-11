@@ -17,10 +17,10 @@
    * phone tracking anti-theft software
    * computer remote administration software
 
-* (also problems of intentionally ‘evil’ software masquarding as legit) 
+* intentionally ‘evil’ software masquarding as legit 
 
-   * (e.g. marketted on ‘‘how to spy on your \rule{1cm.5pt}’’ blog)
-   * (e.g. unnecessairily well hidden when installed)
+   * remote admin software that's unusually well hidden…
+   * … and marketted on ‘‘how to spy on your \rule{1cm.5pt}’’ blog
 
 * ideally, prevent ‘‘bad’’ use somehow 
 

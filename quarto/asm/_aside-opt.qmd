@@ -1,0 +1,51 @@
+
+### exploring assembly  {.smaller}
+
+
+* compiling little C programs looking at the assembly is nice:
+* <code>gcc -S [\textbf{-O}]{.fragment fragment-index=2 .custom .myem-only}</code> 
+
+   * extra stuff like <code>.cfi</code> directives (for try/catch)
+ 
+
+* or disassemble:
+* <code>gcc [\textbf{-O}]{.fragment fragment-index=2 .custom .myem-only} -c file.c</code> (or make an executable)
+* <code>objdump -dr file.o</code> (or on an executable)  
+
+   * d: disassemble
+   * r: show (non-dynamic) relocations
+
+
+
+### assembly without optimizations  {.smaller}
+
+
+* compilers do <em>really silly things</em> without optimizations: 
+```
+int sum(int x, int y) { return x + y; }
+```
+ 
+ 
+```
+sum:
+    pushq   %rbp
+    movq    %rsp, %rbp
+    movl    %edi, -4(%rbp)
+    movl    %esi, -8(%rbp)
+    movl    -4(%rbp), %edx
+    movl    -8(%rbp), %eax
+    addl    %edx, %eax
+    popq    %rbp
+    ret
+```
+ 
+
+* instead of <code>gcc -O</code> version: 
+ 
+```
+sum:
+    leal (%rdi,%rsi), %eax
+    ret
+```
+
+

@@ -1,0 +1,58 @@
+
+# definitive assembly reference {visibility="hidden"}
+
+{{< include /asm/_definitive.qmd >}}
+
+# registers and overlap {visibility="hidden"}
+
+{{< include /asm/_registers.qmd >}}
+
+# Intel v ATT syntax {visibility="hidden"}
+
+{{< include /asm/_intel-att.qmd >}}
+
+# LEA {visibility="hidden"}
+
+{{< include /asm/_lea.qmd >}}
+
+# exercise (lea + mov) {visibility="hidden"}
+
+{{< include /asm/_lea-mov-ex.qmd >}}
+
+# objdump output {visibility="hidden"}
+
+{{< include /asm/_aside-read-objdump.qmd >}}
+
+# Linux x86-64 calling conventions {visibility="hidden"}
+
+{{< include /asm/_x86-64-linux-cc.qmd >}}
+
+{{< include /asm/_x86-64-linux-cc-callstack.qmd >}}
+
+# floating point {visibility="hidden"}
+
+{{< include /asm/_floating-point.qmd >}}
+
+# string instructions {visibility="hidden"}
+
+{{< include /asm/_string-instrs.qmd >}}
+
+# addressing modes {visibility="hidden"}
+
+{{< include /asm/_addressing-modes.qmd >}}
+
+## where is jump exericse {visibility="hidden"}
+
+{{< include /asm/_where-jump-ex.qmd >}}
+
+# endbr64 {visibility="hidden"}
+
+{{< include /asm/_endbr64.qmd >}}
+
+# segmentation {visibility="hidden"}
+
+{{< include /asm/_segmentation.qmd >}}
+
+## thread-local storage example {visibility="hidden"}
+
+{{< include /asm/_tls-example.qmd >}}

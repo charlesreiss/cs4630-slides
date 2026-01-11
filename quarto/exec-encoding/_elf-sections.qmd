@@ -1,0 +1,96 @@
+
+### section headers  {.smaller}
+
+
+ 
+```
+Sections:
+Idx Name          Size      VMA               LMA               File off  Algn
+  0 .note.ABI-tag 00000020  0000000000400190  0000000000400190  00000190  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  1 .note.gnu.build-id 00000024  00000000004001b0  00000000004001b0  000001b0  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .rela.plt     00000210  00000000004001d8  00000000004001d8  000001d8  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  3 .init         0000001a  00000000004003e8  00000000004003e8  000003e8  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  4 .plt          00000160  0000000000400410  0000000000400410  00000410  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  5 .text         0017ff1d  0000000000400570  0000000000400570  00000570  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  6 __libc_freeres_fn 00002032  0000000000580490  0000000000580490  00180490  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  7 __libc_thread_freeres_fn 0000021b  00000000005824d0  00000000005824d0  001824d0  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  8 .fini         00000009  00000000005826ec  00000000005826ec  001826ec  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  9 .rodata       00044ac8  0000000000582700  0000000000582700  00182700  2**6
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 10 __libc_subfreeres 000000c0  00000000005c71c8  00000000005c71c8  001c71c8  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 11 .stapsdt.base 00000001  00000000005c7288  00000000005c7288  001c7288  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 12 __libc_atexit 00000008  00000000005c7290  00000000005c7290  001c7290  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 13 __libc_thread_subfreeres 00000018  00000000005c7298  00000000005c7298  001c7298  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 14 .eh_frame     000141dc  00000000005c72b0  00000000005c72b0  001c72b0  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 15 .gcc_except_table 0000020b  00000000005db48c  00000000005db48c  001db48c  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 16 .tdata        00000030  00000000007dbea8  00000000007dbea8  001dbea8  2**3
+                  CONTENTS, ALLOC, LOAD, DATA, THREAD_LOCAL
+ 17 .tbss         0000004a  00000000007dbed8  00000000007dbed8  001dbed8  2**3
+                  ALLOC, THREAD_LOCAL
+ 18 .init_array   00000010  00000000007dbed8  00000000007dbed8  001dbed8  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+ 19 .fini_array   00000010  00000000007dbee8  00000000007dbee8  001dbee8  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+ 20 .jcr          00000008  00000000007dbef8  00000000007dbef8  001dbef8  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+ 21 .data.rel.ro  000000e8  00000000007dbf00  00000000007dbf00  001dbf00  2**6
+                  CONTENTS, ALLOC, LOAD, DATA
+ 22 .got          00000010  00000000007dbfe8  00000000007dbfe8  001dbfe8  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+ 23 .got.plt      000000c8  00000000007dc000  00000000007dc000  001dc000  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+ 24 .data         00001f96  00000000007dc100  00000000007dc100  001dc100  2**6
+                  CONTENTS, ALLOC, LOAD, DATA
+ 25 .bss          00005a90  00000000007de0c0  00000000007de0c0  001de096  2**6
+                  ALLOC
+ 26 __libc_freeres_ptrs 00000070  00000000007e3b50  00000000007e3b50  001de096  2**3
+                  ALLOC
+ 27 .note.stapsdt 0000100c  0000000000000000  0000000000000000  001de098  2**2
+                  CONTENTS, READONLY
+ 28 .gnu_debuglink 00000034  0000000000000000  0000000000000000  001df0a4  2**0
+                  CONTENTS, READONLY
+```
+
+
+### sections 
+
+
+* tons of ‘‘sections’’
+* not actually needed/used to run program
+* size, file offset, flags (code/data/etc.) 
+
+   * location in executable <it>and</it> in memory
+
+* some sections aren't stored (no ‘‘CONTENTS’’ flag)  
+
+   * just all zeroes
+
+
+
+### selected sections  {.smaller}
+
+<table>
+<tr><td><code>.text</code></td><td>program code</td></tr>
+<tr><td><code>.bss</code></td><td>initially zero data [ (block started by symbol)]{.my-small}</td></tr>
+<tr><td><code>.data</code></td><td>other writeable data</td></tr>
+<tr><td><code>.rodata</code></td><td>read-only data</td></tr>
+<tr><td><code>.init</code>/<code>.fini</code></td><td>global constructors/destructors</td></tr>
+<tr><td><code>.got</code>/<code>.plt</code></td><td>dynamic linking related</td></tr>
+<tr><td><code>.eh_frame</code></td><td>try/catch related</td></tr>
+</table>
+ [based on \\url{http://people.redhat.com/mpolacek/src/devconf2012.pdf}]{.mycredit}

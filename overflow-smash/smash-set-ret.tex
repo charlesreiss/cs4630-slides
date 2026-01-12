@@ -1,5 +1,20 @@
 \usetikzlibrary{arrows.meta,decorations.pathmorphing,decorations.pathreplacing,patterns}
 
+\newsavebox{\setRetAddrDebugger}
+\begin{lrbox}{\setRetAddrDebugger}
+\begin{lstlisting}[language={},basicstyle=\fontsize{9}{10}\selectfont]
+(gdb) b vulnerable
+Breakpoint 1 at 0x1169
+(gdb) run
+...
+Breakpoint 1, vulnerable ()
+(gdb) info registers
+...
+rsp            0x7fffffffddc8      0x7fffffffddc8
+...
+\end{lstlisting}
+\end{lrbox}
+
 \begin{frame}[fragile,label=setRetAddrDiag]{setting return address (diagram)}
 \begin{tikzpicture}
 \tikzset{
@@ -64,17 +79,7 @@
     \end{visibleenv}
     \begin{visibleenv}<7>
         \node[anchor=north west,draw=red,very thick,font=\small] at (6.5, -.5){
-\begin{lstlisting}[language={},basicstyle=\fontsize{9}{10}\selectfont]
-(gdb) b vulnerable
-Breakpoint 1 at 0x1169
-(gdb) run
-...
-Breakpoint 1, vulnerable ()
-(gdb) info registers
-...
-rsp            0x7fffffffddc8      0x7fffffffddc8
-...
-\end{lstlisting}
+            \usebox{\setRetAddrDebugger}
         };
     \end{visibleenv}
 \end{tikzpicture}

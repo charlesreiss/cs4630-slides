@@ -6,8 +6,6 @@
     moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
     moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
 }
-\begin{tikzpicture}
-\node (code) {
 \begin{lstlisting}
     /* Linux system call (OS request):
        write(1, string, length)
@@ -21,16 +19,13 @@
 string: 
     .asciz "You have been infected with a virus!\n"
 \end{lstlisting}
-};
-\coordinate (codeExplain) at ([xshift=-3cm]code.north east);
-\begin{visibleenv}<2>
-\node[anchor=north west,red,ultra thick,align=left,draw=red,fill=white] at (codeExplain) {
-    problem: after syscall --- crash!
-};
-\end{visibleenv}
-
-\end{tikzpicture}
+\begin{itemize}
+\item<2> \myemph<2>{problem: after syscall --- crash!}
+\end{itemize}
 \end{frame}
+
+\newsavebox{\virusToShellAsm}
+\newsavebox{\virusToShellBits}
 
 \begin{frame}[fragile,label=virusToShellNew2]{virus code to shell-code (2)}
 \lstset{
@@ -41,8 +36,7 @@ string:
     moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
     moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
 }
-\begin{tikzpicture}
-\node (code) {
+\begin{lrbox}{\virusToShellAsm}
 \begin{lstlisting}
     /* Linux system call (OS request):
        write(1, string, length)
@@ -60,9 +54,8 @@ string:
 string: 
     .asciz "You have been infected with a virus!\n"
 \end{lstlisting}
-};
-\begin{visibleenv}<3->
-\node[anchor=north west,align=left] (bits) at ([xshift=-2cm]code.north east) {
+\end{lrbox}
+\begin{lrbox}{\virusToShellBits}
 \begin{lstlisting}[
     language=,
     moredelim={**[is][]{*}{*}},
@@ -81,6 +74,14 @@ b8 e7 00 00 00
 31 ff
 0f 05
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\node (code) {
+\usebox{\virusToShellAsm}
+};
+\begin{visibleenv}<3->
+\node[anchor=north west,align=left] (bits) at ([xshift=-2cm]code.north east) {
+\usebox{\virusToShellBits}
 };
 \end{visibleenv}
 \coordinate (codeExplain) at ([xshift=-3cm]code.north east);

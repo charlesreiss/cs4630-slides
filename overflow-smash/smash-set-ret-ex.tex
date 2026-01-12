@@ -1,6 +1,8 @@
-\begin{frame}[fragile,label=setRetExercise]{exercise: shellcode location (1)}
-\begin{tikzpicture}
-\node (code) {
+
+\newsavebox{\setRetExAC}
+\newsavebox{\setRetExAAsm}
+\newsavebox{\setRetExADbg}
+\begin{lrbox}{\setRetExAC}
 \begin{lstlisting}[language=C++,style=smaller]
 void getInitials(char *init) {
     char first[50]; char second[50];
@@ -9,8 +11,8 @@ void getInitials(char *init) {
     init[1] = second[0];
 }
 \end{lstlisting}
-};
-\node[anchor=north west] (asm) at ([xshift=.2cm]code.north east) {
+\end{lrbox}
+\begin{lrbox}{\setRetExAAsm}
 \begin{lstlisting}[language=myasm,style=smaller]
 0x1189: push %rbx
 xor    %eax,%eax
@@ -31,8 +33,8 @@ add    $0xa0,%rsp
 pop    %rbx
 ret 
 \end{lstlisting}
-};
-\node[anchor=north west] (debug) at (code.south west) {
+\end{lrbox}
+\begin{lrbox}{\setRetExADbg}
 \begin{lstlisting}[language=myasm,style=script]
 (gdb) b getInitials
 Breakpoint 1 at 0x1189
@@ -43,6 +45,18 @@ Breakpoint 1, 0x0000555555555189 in getInitials ()
 (gdb) info registers rsp
 rsp            0x7fffffffdd98      0x7fffffffdd98
 \end{lstlisting}
+\end{lrbox}
+
+\begin{frame}[fragile,label=setRetExercise]{exercise: shellcode location (1)}
+\begin{tikzpicture}
+\node (code) {
+\usebox{\setRetExAC}
+};
+\node[anchor=north west] (asm) at ([xshift=.2cm]code.north east) {
+\usebox{\setRetExAAsm}
+};
+\node[anchor=north west] (debug) at (code.south west) {
+\usebox{\setRetExADbg}
 };
 \begin{visibleenv}<2>
 \node[draw=red,thick,anchor=north west,align=left] at (debug.south west) {

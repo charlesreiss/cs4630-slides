@@ -1,8 +1,8 @@
 
 \begin{frame}[fragile,label=guessEasier]{making guessing easier (1)}
 \lstset{language=myasm,style=smaller}
-\begin{tikzpicture}
-\node[label={[font=\small]north:normal shellcode}] (normal) {
+\begin{minipage}{0.5\textwidth}
+normal shellcode: \\
 \begin{lstlisting}
 xor %eax, %eax
 leaq command(%rip), %rbx
@@ -14,9 +14,9 @@ syscall
 
 command: .ascii "/bin/sh"
 \end{lstlisting}
-};
-
-\node[anchor=north west,label={[font=\small]north:easier to ``guess'' shellcode}] at (normal.north east) {
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+easier to `guess' shellcode: \\
 \begin{lstlisting}
 nop /* one-byte nop */
 nop
@@ -31,7 +31,6 @@ lea command(%rip), %rbx
 ...
 command: .ascii "/bin/sh"
 \end{lstlisting}
-};
-\end{tikzpicture}
+\end{minipage}
 \end{frame}
 

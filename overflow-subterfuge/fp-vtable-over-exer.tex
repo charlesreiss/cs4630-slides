@@ -1,4 +1,16 @@
 \usetikzlibrary{arrows.meta,matrix,decorations.pathmorphing}
+\newsavebox{\vtExerCode}
+\begin{lrbox}{\vtExerCode}
+\begin{lstlisting}[language=C++,style=smaller]
+class VulnerableClass {
+public:
+    char buffer[100];
+    virtual void foo();
+    virtual void bar();
+};
+VulnerableClass objs[10];
+\end{lstlisting}
+\end{lrbox}
 \begin{frame}[fragile,label=vtExer]{exercise}
 \vspace{-.25cm}
 \begin{tikzpicture}
@@ -29,15 +41,7 @@
     \draw[thick,-Latex] (vulnClass-1-1.east) -- ++(.45cm,0cm) |- (isVT-1-1.east);
     \draw[thick,-Latex] (vulnClass-3-1.east) -- ++(.35cm,0cm) |- (isVT-1-1.east);
     \node[anchor=north west] at (5, 0) {
-\begin{lstlisting}[language=C++,style=smaller]
-class VulnerableClass {
-public:
-    char buffer[100];
-    virtual void foo();
-    virtual void bar();
-};
-VulnerableClass objs[10];
-\end{lstlisting}
+\usebox{\vtExerCode}
 };
 \end{tikzpicture}
 \begin{itemize}

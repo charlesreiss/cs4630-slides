@@ -1,6 +1,5 @@
 \begin{frame}[fragile,label=checkVTableRet1]{checking a VTable return}
-\begin{tikzpicture}
-\node[very thick,anchor=north west,align=left] (base asm code) {
+\begin{minipage}{0.5\textwidth}
 \begin{lstlisting}[
     language=myasm,style=smaller,
     moredelim={**[is][\btHL<1->]{~1~}{~end~}},
@@ -14,8 +13,8 @@ example:
   ~1~label $0x64a0cfe3~end~
   ret
 \end{lstlisting}
-};
-\node[very thick,anchor=north east,align=left] (base method code) at ([xshift=.5cm]base asm code.north west) {
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
 \begin{lstlisting}[language=myasm,style=smaller,
     moredelim={**[is][\btHL<1->]{~1~}{~end~}},
 ]
@@ -34,10 +33,9 @@ B::bar():
   jne CRASH
   jmp *%rdx
 \end{lstlisting}
-};
-\node[draw=red,very thick,anchor=north west,align=left] at ([yshift=-.1cm]base method code.south west) {
-if we want to use this label-checking on the return \\
+\end{minipage}
+\begin{itemize}
+\item if we want to use this label-checking on the return \\
 need to choose the same label for A::bar and B::bar return, too
-};
-\end{tikzpicture}
+\end{itemize}
 \end{frame}

@@ -23,8 +23,7 @@
         \item assumption: attacker can overwrite return address at right time (running on another core? problem with sortFunc1?)
         \end{itemize}
     \end{itemize}
-\begin{tikzpicture}
-\node[draw,very thick,align=left] (a) {
+\begin{minipage}{0.5\textwidth}
 \begin{lstlisting}[language=C++,style=smaller]
 void Innocent() {
   ...
@@ -34,8 +33,8 @@ void Innocent() {
   ...
 }
 \end{lstlisting}
-};
-\node[draw,very thick,align=left,anchor=north west] at ([xshift=1cm]a.north east) (b) {
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
 \begin{lstlisting}[language=C++,style=smaller]
 void Dangerous() {
   ...
@@ -45,6 +44,5 @@ void Dangerous() {
   ...
 }
 \end{lstlisting}
-};
-\end{tikzpicture}
+\end{minipage}
 \end{frame}

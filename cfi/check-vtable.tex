@@ -1,6 +1,10 @@
+\newsavebox{\checkVTableACode}
+\newsavebox{\checkVTableAAsmA}
+\newsavebox{\checkVTableAAsmB}
+\newsavebox{\checkVTableAAsmC}
+
 \begin{frame}[fragile,label=checkVTable1]{checking a VTable call}
-\begin{tikzpicture}
-\node[draw,very thick,align=left] (base c code) {
+\begin{lrbox}{\checkVTableACode}
 \begin{lstlisting}[language=C++,style=smaller]
 class A { public:
   virtual void bar() { ... }
@@ -12,8 +16,8 @@ void example(A *obj) {
   obj->bar();
 }
 \end{lstlisting}
-};
-\node[draw,very thick,anchor=north west,align=left] (base asm code) at ([yshift=-.25cm] base c code.south west) {
+\end{lrbox}
+\begin{lrbox}{\checkVTableAAsmA}
 \begin{lstlisting}[language=myasm,style=smaller]
 example:
   // rax <- vtable address
@@ -24,6 +28,34 @@ example:
   call *%rax
   ...
 \end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\checkVTableAAsmB}
+\begin{lstlisting}[language=myasm,style=smaller]
+example:
+  movq (%rdi), %rax
+  movq (%rax), %rax
+  cmpq $0xe0c5df0b, 2(%rax)
+  jne CRASH
+  call *%rax
+  ...
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\checkVTableAAsmC}
+\begin{lstlisting}[language=myasm,style=smaller]
+A::bar():
+  label $0xe0c5df0b
+  ...
+B::bar():
+  label $0xe0c5df0b
+  ...
+\end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\node[draw,very thick,align=left] (base c code) {
+\usebox{\checkVTableACode}
+};
+\node[draw,very thick,anchor=north west,align=left] (base asm code) at ([yshift=-.25cm] base c code.south west) {
+\usebox{\checkVTableAAsmA}
 };
 \begin{visibleenv}<2>
 \node[draw=red,very thick,anchor=north west,align=left,font=\fontsize{12}{13}\selectfont] (warning) at ([xshift= .5cm]base asm code.north east) {
@@ -35,25 +67,10 @@ so, apply same strategy
 \end{visibleenv}
 \begin{visibleenv}<3->
 \node[draw=red,very thick,anchor=north west,align=left] (new asm code) at ([xshift= .5cm]base asm code.north east) {
-\begin{lstlisting}[language=myasm,style=smaller]
-example:
-  movq (%rdi), %rax
-  movq (%rax), %rax
-  cmpq $0xe0c5df0b, 2(%rax)
-  jne CRASH
-  call *%rax
-  ...
-\end{lstlisting}
+\usebox{\checkVTableAAsmB}
 };
 \node[draw=red,very thick,anchor=south west,align=left] (new method code) at ([yshift=.5cm]new asm code.north west) {
-\begin{lstlisting}[language=myasm,style=smaller]
-A::bar():
-  label $0xe0c5df0b
-  ...
-B::bar():
-  label $0xe0c5df0b
-  ...
-\end{lstlisting}
+\usebox{\checkVTableAAsmC}
 };
 \end{visibleenv}
 \end{tikzpicture}

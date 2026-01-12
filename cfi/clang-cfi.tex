@@ -14,9 +14,10 @@
 \end{itemize}
 \end{frame}
 
+\newsavebox{\indirectCfiCode}
+
 \begin{frame}[fragile,label=indirectDiag]{clang idea for CFI indirect calls}
-\begin{tikzpicture}
-\node[draw, very thick, align=left] (dispatcher) {
+\begin{lrbox}{\indirectCfiCode}
 \begin{lstlisting}[language=myasm,style=smaller]
 start_funcs_with_two_string_args:
 .align 8
@@ -36,6 +37,10 @@ compare_reverse_alpha:
   jmp real_compare_reverse_alpha
 end_funcs_with_two_sting_args:
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\node[draw, very thick, align=left] (dispatcher) {
+\usebox{\indirectCfiCode}
 };
 \begin{visibleenv}<1>
 \node[align=left,draw=red,very thick,anchor=north west] at ([xshift=1cm]dispatcher.north east) {

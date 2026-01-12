@@ -1,9 +1,11 @@
 
 \usetikzlibrary{arrows.meta}
 
+\newsavebox{\libCrossCode}
+
+
 \begin{frame}[fragile,label=tracking]{library-crossing CFGs}
-\begin{tikzpicture}
-\node[draw,very thick,label={north:main.c}] (mainc) {
+\begin{lrbox}{\libCrossCode}
 \begin{lstlisting}[language=C++,style=script]
 #include <png.h>
 void ReadImageFromNetwork(
@@ -27,6 +29,10 @@ int main() {
     ...
 }
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\node[draw,very thick,label={north:main.c}] (mainc) {
+\usebox{\libCrossCode}
 };
 \coordinate (base) at ([xshift=.5cm]mainc.north east);
 \begin{scope}[shift=(base)]

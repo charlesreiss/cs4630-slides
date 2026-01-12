@@ -9,27 +9,18 @@
     \end{itemize}
 \end{frame}
 
-
-\begin{frame}[fragile,label=flexEx]{flex example}
+\newsavebox\flexExTop
+\newsavebox\flexExMiddle
+\newsavebox\flexExBottom
 \lstset{style=small,language={}}
-\begin{tikzpicture}
-\begin{scope}
-\tikzset{every node/.style={font=\small,align=left,anchor=north west,inner sep=0mm}}
-\node (vars) {
+\begin{lrbox}{\flexExTop}
 \begin{lstlisting}
         int num_bytes = 0, num_lines = 0;
         int num_foos = 0;
 \end{lstlisting}
-};
-\node (patMacros) at (vars.south west) {
-~
-};
-\node (sepA) at (patMacros.south west) {
-\begin{lstlisting}
-%%
-\end{lstlisting}
-};
-\node (pats) at (sepA.south west) {
+\end{lrbox}
+
+\begin{lrbox}{\flexExMiddle}
 \begin{lstlisting}
 foo     { 
           num_bytes += 3;
@@ -38,13 +29,8 @@ foo     {
 .       { num_bytes += 1; }
 \n      { num_lines += 1; num_bytes += 1; }
 \end{lstlisting}
-};
-\node (sepB) at (pats.south west) {
-\begin{lstlisting}
-%%
-\end{lstlisting}
-};
-\node (mainCode) at (sepB.south west) {
+\end{lrbox}
+\begin{lrbox}{\flexExBottom}
 \begin{lstlisting}
 int main(void) {
     yylex();
@@ -52,6 +38,29 @@ int main(void) {
            num_bytes, num_lines, num_foos);
 }
 \end{lstlisting}
+\end{lrbox}
+
+\begin{frame}[fragile,label=flexEx]{flex example}
+\begin{tikzpicture}
+\begin{scope}
+\tikzset{every node/.style={font=\small,align=left,anchor=north west,inner sep=0mm}}
+\node (vars) {
+\usebox{\flexExTop}
+};
+\node (patMacros) at (vars.south west) {
+~
+};
+\node (sepA) at (patMacros.south west) {
+\tt  \%\%
+};
+\node (pats) at (sepA.south west) {
+\usebox{\flexExMiddle}
+};
+\node (sepB) at (pats.south west) {
+\tt \%\%
+};
+\node (mainCode) at (sepB.south west) {
+\usebox{\flexExBottom}
 };
 \end{scope}
 
@@ -87,6 +96,30 @@ int main(void) {
 \end{tikzpicture}
 \end{frame}
 
+\begin{lrbox}{\flexExTop}
+\begin{lstlisting}
+        int num_bytes = 0, num_lines = 0;
+        int num_foos = 0;
+\end{lstlisting}
+\end{lrbox}
+
+\begin{lrbox}{\flexExMiddle}
+\begin{lstlisting}
+[aA][a-z]* {
+               printf("found a-word '%s'\n",
+                      ~2~yytext~end~);
+           }
+(.|\n)     {} /* default rule: would output text */
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\flexExBottom}
+\begin{lstlisting}
+int main(void) {
+    yylex();
+}
+\end{lstlisting}
+\end{lrbox}
+
 \begin{frame}[fragile,label=flexMatched]{flex: matched text}
 \lstset{
         style=small,
@@ -97,37 +130,21 @@ int main(void) {
 \begin{scope}
 \tikzset{every node/.style={font=\small,align=left,anchor=north west,inner sep=0mm}}
 \node (vars) {
-\begin{lstlisting}
-\end{lstlisting}
 };
 \node (patMacros) at (vars.south west) {
 ~
 };
 \node (sepA) at (patMacros.south west) {
-\begin{lstlisting}
-%%
-\end{lstlisting}
+\tt \%\%
 };
 \node (pats) at (sepA.south west) {
-\begin{lstlisting}
-[aA][a-z]* {
-               printf("found a-word '%s'\n",
-                      ~2~yytext~end~);
-           }
-(.|\n)     {} /* default rule: would output text */
-\end{lstlisting}
+\usebox{\flexExMiddle}
 };
 \node (sepB) at (pats.south west) {
-\begin{lstlisting}
-%%
-\end{lstlisting}
+\%\%
 };
 \node (mainCode) at (sepB.south west) {
-\begin{lstlisting}
-int main(void) {
-    yylex();
-}
-\end{lstlisting}
+\usebox{\flexExBottom}
 };
 \end{scope}
 \tikzset{
@@ -140,6 +157,24 @@ int main(void) {
 \end{tikzpicture}
 \end{frame}
 
+\begin{lrbox}{\flexExTop}
+\begin{lstlisting}
+A        [aA]
+LOWERS   [a-z]
+ANY      (.|\n)
+\end{lstlisting}
+\end{lrbox}
+
+\begin{lrbox}{\flexExMiddle}
+\begin{lstlisting}
+{A}{LOWERS}* {
+                printf("found a-word '%s'\n",
+                       yytext);
+             }
+{ANY}        {} /* default rule would
+                   output text */
+\end{lstlisting}
+\end{lrbox}
 
 \begin{frame}[fragile,label=flexDef]{flex: definitions}
 \lstset{
@@ -151,42 +186,21 @@ int main(void) {
 \begin{scope}
 \tikzset{every node/.style={font=\small,align=left,anchor=north west,inner sep=0mm}}
 \node (vars) {
-\begin{lstlisting}
-\end{lstlisting}
 };
 \node (patMacros) at (vars.south west) {
-\begin{lstlisting}
-A        [aA]
-LOWERS   [a-z]
-ANY      (.|\n)
-\end{lstlisting}
+\usebox{\flexExTop}
 };
 \node (sepA) at (patMacros.south west) {
-\begin{lstlisting}
-%%
-\end{lstlisting}
+\%\%
 };
 \node (pats) at (sepA.south west) {
-\begin{lstlisting}
-{A}{LOWERS}* {
-                printf("found a-word '%s'\n",
-                       yytext);
-             }
-{ANY}        {} /* default rule would
-                   output text */
-\end{lstlisting}
+\usebox{\flexExMiddle}
 };
 \node (sepB) at (pats.south west) {
-\begin{lstlisting}
-%%
-\end{lstlisting}
+\%\%
 };
 \node (mainCode) at (sepB.south west) {
-\begin{lstlisting}
-int main(void) {
-    yylex();
-}
-\end{lstlisting}
+\usebox{\flexExBottom}
 };
 \end{scope}
 \tikzset{

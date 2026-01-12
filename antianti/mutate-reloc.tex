@@ -16,10 +16,9 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile,label=relocEx]{relocation example}
+\newsavebox{\relocCode}
+\begin{lrbox}{\relocCode}
 \lstset{language=myasm,style=small}
-\begin{tikzpicture}
-\node (code) {
 \begin{lstlisting}
     mov ...
     mov ...
@@ -29,6 +28,12 @@ decrypt:
     dec %rcx
     jne decrypt
 \end{lstlisting}
+\end{lrbox}
+
+\begin{frame}[fragile,label=relocEx]{relocation example}
+\begin{tikzpicture}
+\node (code) {
+\usebox{\relocCode}
 };
 \matrix[tight matrix,nodes={font=\small},anchor=north west,
     nodes={font=\tt,text width=2cm,text depth=.1mm,minimum height=.4cm},

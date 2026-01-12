@@ -44,8 +44,27 @@
 
 \againframe<3>{caseEvol}
 
-\begin{frame}[fragile,label=evolXform]{Evol transformations}
+\newsavebox{\evolXExStart}
+\begin{lrbox}{\evolXExStart}
 \lstset{language=myasm,style=small}
+\begin{lstlisting}
+mov %eax, 8(%ebp)
+\end{lstlisting}
+\end{lrbox}
+
+\newsavebox{\evolXExExpand}
+\begin{lrbox}{\evolXExStart}
+\lstset{language=myasm,style=small}
+\begin{lstlisting}
+push %ecx
+mov %ebp, %ecx
+add $0x12, %ecx
+mov %eax, -0xa(%ecx)
+pop %ecx
+\end{lstlisting}
+\end{lrbox}
+
+\begin{frame}[fragile,label=evolXform]{Evol transformations}
     \begin{itemize}
     \item some stuff left alone
     \item static or random one of $N$ transformations
@@ -56,19 +75,11 @@
     every node/.style={font=\small,align=center}
 }
 \node[draw] (movebpEight) {
-\begin{lstlisting}
-mov %eax, 8(%ebp)
-\end{lstlisting}
+\usebox{\evolXExStart}
 };
 
 \node[draw,right=2cm of movebpEight] (movebpExpand) {
-\begin{lstlisting}
-push %ecx
-mov %ebp, %ecx
-add $0x12, %ecx
-mov %eax, -0xa(%ecx)
-pop %ecx
-\end{lstlisting}
+\usebox{\evolXExExpand}
 };
 \node[anchor=north east] at ([yshift=-.25cm]movebpExpand.south east) {
     uses more stack space --- save temporary \\

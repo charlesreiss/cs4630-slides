@@ -19,15 +19,20 @@
 
 \againframe<3>{attackPat}
 
-\begin{frame}[fragile,label=prob]{probability}
+\newsavebox{\randomRun}
+\begin{lrbox}{\randomRun}
 \lstset{language=C,style=smaller}
-    \begin{tikzpicture}
-    \node[draw,align=center] (malware) {
 \begin{lstlisting}
 if (randomNumber() == 4) {
     unpackAndRunEvilCode();
 }
 \end{lstlisting}
+\end{lrbox}
+
+\begin{frame}[fragile,label=prob]{probability}
+    \begin{tikzpicture}
+    \node[draw,align=center] (malware) {
+        \usebox{\randomRun}
     };
     \node[draw,align=left,above right=1cm of malware] (avCase1) {
         antivirus emulator: \\

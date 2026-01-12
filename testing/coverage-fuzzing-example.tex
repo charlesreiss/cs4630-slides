@@ -1,8 +1,9 @@
 
+\newsavebox{\coverageCode}
+
 \begin{frame}[fragile,label=coverageSame]{coverage-guided example}
-    \lstset{language=C,style=script}
-    \begin{tikzpicture}
-        \node[anchor=north east] at (0, 0) {
+\lstset{language=C,style=script}
+\begin{lrbox}{\coverageCode}
 \begin{lstlisting}
 void foo(int a, int b) {
     if (a != 0) {
@@ -24,6 +25,10 @@ void foo(int a, int b) {
     }
 }
 \end{lstlisting}
+\end{lrbox}
+    \begin{tikzpicture}
+        \node[anchor=north east] at (0, 0) {
+\usebox{\coverageCode}
 };
         \tikzset{
             caseBox/.style={draw,thick,align=left,font=\small},
@@ -72,9 +77,8 @@ void foo(int a, int b) {
 
 
 \begin{frame}[fragile,label=coverageExBig]{coverage-guided example}
-    \lstset{language=C,style=smaller}
-    \begin{tikzpicture}
-        \node[anchor=north east] at (0, 0) {
+\lstset{language=C,style=smaller}
+\begin{lrbox}{\coverageCode}
 \begin{lstlisting}
 void foo(unsigned a,
          unsigned b,
@@ -93,6 +97,10 @@ void foo(unsigned a,
     assert(a + b != 7); 
 }
 \end{lstlisting}
+\end{lrbox}
+    \begin{tikzpicture}
+        \node[anchor=north east] at (0, 0) {
+\usebox{\coverageCode}
 };
         \tikzset{
             caseBox/.style={draw,thick,align=left,font=\small},

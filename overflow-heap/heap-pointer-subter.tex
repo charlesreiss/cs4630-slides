@@ -4,16 +4,9 @@
     stackBox/.style={very thick},
     onStack/.style={thick},
 }
+\newsavebox{\heapSmashVulnCode}
 \begin{frame}[fragile,label=vulnHeapSmash]{vulnerable code}
-\lstset{
-    style=small,
-    language=C,
-    moredelim={**[is][\btHL<4|handout:0>]{~2~}{~end~}},
-    moredelim={**[is][\btHL<2-3|handout:0>]{~3~}{~end~}},
-    moredelim={**[is][\btHL<6-|handout:0>]{~6~}{~end~}},
-}
-\begin{tikzpicture}
-\node[anchor=north east] (code) at (-1,0) {
+\begin{lrbox}{\heapSmashVulnCode}
 \begin{lstlisting}
 char *buffer = malloc(100);
 ... 
@@ -23,6 +16,17 @@ char *buffer = malloc(100);
 ~6~free(other_thing);~end~
 ...
 \end{lstlisting}
+\end{lrbox}
+\lstset{
+    style=small,
+    language=C,
+    moredelim={**[is][\btHL<4|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<2-3|handout:0>]{~3~}{~end~}},
+    moredelim={**[is][\btHL<6-|handout:0>]{~6~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\usebox{\heapSmashVulnCode}
 };
 
 \tikzset{xscale=0.9}

@@ -10,10 +10,9 @@
     hiLine/.style={red!90!black},
 }
 
-\begin{frame}[fragile,label=heapOverflowAdj]{heap overflow: adjacent allocations}
-\begin{tikzpicture}
+\newsavebox{\heapAdjacentCode}
+\begin{lrbox}{\heapAdjacentCode}
 \lstset{language=C++,style=small}
-\node[anchor=north east] (code) at (-1,0) {
 \begin{lstlisting}
 class V {
   char buffer[100];
@@ -27,6 +26,12 @@ V *second = new V(...);
 strcpy(first->buffer,
        attacker_controlled);
 \end{lstlisting}
+\end{lrbox}
+
+\begin{frame}[fragile,label=heapOverflowAdj]{heap overflow: adjacent allocations}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\usebox{\heapAdjacentCode}
 };
 \node[anchor=south] at (2, 0) {the heap};
 \draw[thick,-Latex] (-.25,-5) -- (-.25, -1) node [midway, above, sloped] {increasing addresses};

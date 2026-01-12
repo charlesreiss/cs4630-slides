@@ -65,9 +65,8 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile,label=heapLayout]{heap object}
-\begin{tikzpicture}
-\node[anchor=north east] (code) at (-1,0) {
+\newsavebox{\allocInfoDecl}
+\begin{lrbox}{\allocInfoDecl}
 \begin{lstlisting}
 struct AllocInfo {
   bool free;
@@ -76,6 +75,12 @@ struct AllocInfo {
   AllocInfo *next;
 };
 \end{lstlisting}
+\end{lrbox}
+
+\begin{frame}[fragile,label=heapLayout]{heap object}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\usebox{\allocInfoDecl}
 };
 
 \tikzset{xscale=0.9}

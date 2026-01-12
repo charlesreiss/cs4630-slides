@@ -1,6 +1,5 @@
 \begin{frame}[fragile,label=doubleFreeExer]{double-free exercise}
-\begin{tikzpicture}
-\node[draw] (code) { 
+\begin{minipage}{0.5\textwidth}
 \begin{lstlisting}[language=C++,style=script]
 free(...) {
     freed->next = first_free
@@ -25,10 +24,9 @@ vulnerable() {
     strlcpy(s, attacker_input3, 100);
 }
 \end{lstlisting}
-};
-\node[anchor=north west,align=left] at (code.north east) {
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
 To do memory[0x123456] $\leftarrow$ 0x789abc \\
 what should input1/input2/input3 be?
-};
-\end{tikzpicture}
+\end{minipage}
 \end{frame}

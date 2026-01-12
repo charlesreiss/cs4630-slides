@@ -1,5 +1,15 @@
 \usetikzlibrary{arrows.meta,patterns}
 
+\newsavebox{\heapOverflowInObjCode}
+\begin{lrbox}{\heapOverflowInObjCode}
+\begin{lstlisting}
+struct foo {
+    char buffer[100];
+    void (*func_ptr)(void);
+};
+\end{lstlisting}
+\end{lrbox}
+
 \tikzset{
     stackBox/.style={very thick},
     onStack/.style={thick},
@@ -12,12 +22,7 @@
 \begin{frame}[fragile,label=heapOverflowInObj]{easy heap overflows}
 \begin{tikzpicture}
 \node[anchor=north east] (code) at (-1,0) {
-\begin{lstlisting}
-struct foo {
-    char buffer[100];
-    void (*func_ptr)(void);
-};
-\end{lstlisting}
+\usebox{\heapOverflowInObjCode}
 };
 \draw[stackBox] (0, 0) rectangle (4, -6);
 \draw[thick,-Latex] (-.25,-5) -- (-.25, -1) node [midway, above, sloped] {increasing addresses};

@@ -11,6 +11,7 @@
 }
 
 
+\newsavebox{\dblFreeCode}
 \begin{frame}[fragile,label=dblFree]{double-frees}
 \lstset{
     style=small,
@@ -19,8 +20,7 @@
     moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
     moredelim={**[is][\btHL<4|handout:0>]{~4~}{~end~}},
 }
-\begin{tikzpicture}
-\node[anchor=north east] (code) at (-1,0) {
+\begin{lrbox}{\dblFreeCode}
 \begin{lstlisting}
 ~2~free(thing);~end~
 ~3~free(thing);~end~
@@ -36,6 +36,10 @@ char *q = malloc(...);
 strcpy(q, attacker_controlled2);
 ...
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\usebox{\dblFreeCode}
 };
 
 \tikzset{xscale=0.9}
@@ -82,6 +86,7 @@ strcpy(q, attacker_controlled2);
 
 
 % FIXME: as pictures
+\newsavebox{\dblFreeCodeExpand}
 \begin{frame}[fragile,label=dblFreeExpand]{double-free expansion}
 \lstset{
     style=smaller,
@@ -92,8 +97,7 @@ strcpy(q, attacker_controlled2);
     moredelim={**[is][\btHL<5|handout:0>]{~5~}{~end~}},
     moredelim={**[is][\btHL<6|handout:0>]{~6~}{~end~}},
 }
-\begin{tikzpicture}
-\node[anchor=north east] (code) at (-1,0) {
+\begin{lrbox}{\dblFreeCodeExpand}
 \begin{lstlisting}
 // free/delete 1:
 ~2~double_freed->next = first_free;~end~
@@ -112,6 +116,10 @@ strcpy(q, attacker_controlled2);
 result3 = first_free;
 strcpy(result3, ...);
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\usebox{\dblFreeCodeExpand}
 };
 \draw[stackBox] (0,0) rectangle (5, -2);
 \draw[onStack,fill=blue!20] (0,0) rectangle (5, -1) node[midway,font=\small] {next / double free'd object};

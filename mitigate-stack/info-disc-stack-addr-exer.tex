@@ -1,15 +1,14 @@
 
 
 \begin{frame}[fragile,label=infoDiscEx]{exercise (1)}
-\begin{tikzpicture}
-\node (first) {
+\begin{minipage}{0.3\textwidth}
 \begin{lstlisting}[language=C,style=size10]
 struct point {
     int x, y, z;
 };
 \end{lstlisting};
-};
-\node[anchor=north west] at (first.north east) {
+\end{minipage}
+\begin{minipage}{0.7\textwidth}
 \begin{lstlisting}[language=C,style=size10]
 struct point p;
 ...
@@ -19,8 +18,7 @@ struct point p;
     } ...
 ...
 \end{lstlisting}
-};
-\end{tikzpicture}
+\end{minipage}
 \vspace{-.25cm}
 \begin{itemize}
 \item Suppose \texttt{p} (``left over'' from prior use of register, etc.) is stored at the same

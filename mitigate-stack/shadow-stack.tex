@@ -104,8 +104,7 @@ function:
         \end{itemize}
     \item ARM call instruction saves return address in register\ldots
     \end{itemize}
-\begin{tikzpicture}
-\node[draw,label={with shadow stack}] (code1) {
+\begin{minipage}{0.5\textwidth}
 \begin{lstlisting}[language={},style=script]
 str     x30, [x18], #8      
 stp     x29, x30, [sp, #-16]!
@@ -116,8 +115,8 @@ ldp     x29, x30, [sp], #16
 ldr     x30, [x18, #-8]!
 ret
 \end{lstlisting}
-};
-\node[anchor=north east,draw,label={without}] (code2) at (code1.north west) {
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
 \begin{lstlisting}[language={},style=script]
 stp     x29, x30, [sp, #-16]!
 mov     x29, sp
@@ -126,8 +125,7 @@ add     w0, w0, #1
 ldp     x29, x30, [sp], #16
 ret
 \end{lstlisting}
-};
-\end{tikzpicture}
+\end{minipage}
 \end{frame}
 
 \begin{frame}{Android/AArch64 shadow stacks (2)}

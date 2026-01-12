@@ -92,6 +92,7 @@
     \end{tikzpicture}
 \end{frame}
 
+\newsavebox{\manageTblAsm}
 \begin{frame}[fragile,label=managing]{managing the table}
     \begin{itemize}
         \item not just done \texttt{malloc()/new}
@@ -103,9 +104,8 @@ void vulnerable() {
     gets(vulnerable);
 }
 \end{lstlisting}
-    \begin{tikzpicture}[remember picture, overlay]
-        \node[anchor=north east] at ([xshift=-.25cm, yshift=-1cm]current page.north east) {
-    \begin{lstlisting}[style=small,language=myasm]
+\begin{lrbox}{\manageTblAsm}
+\begin{lstlisting}[style=small,language=myasm]
 vulnerable:
   // make %rsp a multiple
   // of 128 (2^7) 
@@ -122,6 +122,10 @@ vulnerable:
   call gets
   ret
 \end{lstlisting}
+\end{lrbox}
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[anchor=north east] at ([xshift=-.25cm, yshift=-1cm]current page.north east) {
+\usebox{\manageTblAsm}
 };
     \end{tikzpicture}
 \end{frame}

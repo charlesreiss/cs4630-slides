@@ -11,19 +11,18 @@
     \end{itemize}
 \end{frame}
 
+\newsavebox{\binTranslateOrig}
+\newsavebox{\binTranslateBBa}
+\newsavebox{\binTranslateBBb}
+\newsavebox{\binTranslateBBc}
+
 \begin{frame}[fragile,label=binTransIdea]{binary translation idea}
 \lstset{
     language=myasm,
     style=small,
     morekeywords={movq,addss,subss}
 }
-\begin{tikzpicture}
-\tikzset{
-    code/.style={inner sep=0mm,align=left},
-    hiOn/.style={alt=#1{rounded corners,fill=green,fill opacity=0.3,text opacity=1.0}{}},
-    markOn/.style={alt=#1{rounded corners,draw,thick}{}},
-}
-\node[code,markOn=<2>,hiOn=<3>] (bb1) {
+\begin{lrbox}{\binTranslateOrig}
 \begin{lstlisting}
 0x40FE00: addq %rax, %rbx
 movq 14(%r14,4), %rdx
@@ -31,16 +30,8 @@ addss %xmm0, (%rdx)
 ...
 0x40FE3A: jne 0x40F404
 \end{lstlisting}
-};
-\node[right=.25cm of bb1,visible on=<2>,align=left] {
-    divide machine code \\
-    into \textit{basic blocks} \\
-    (= ``straight-line'' code) \\
-    (= code till \\ 
-    jump/call/etc.)
-};
-\node[code,right=.25cm of bb1,visible on=<3>] (bb1New) {
-generated code: \\
+\end{lrbox}
+\begin{lrbox}{\binTranslateBBa}
 \begin{lstlisting}
 // addq %rax, %rbx
 movq rax_location, %rdi
@@ -57,18 +48,44 @@ do_jne:
 movq $0x40F404, %rdi
 jmp translate_and_run
 \end{lstlisting}
-};
-\node[code,markOn=<2>,anchor=north west] (bb2) at (bb1.south west){
+\end{lrbox}
+\begin{lrbox}{\binTranslateBBb}
 \begin{lstlisting}
 subss %xmm0, 4(%rdx)
 ...
 je 0x40F543
 \end{lstlisting}
-};
-\node[code,markOn=<2>,anchor=north west] (bb3) at (bb2.south west){
+\end{lrbox}
+\begin{lrbox}{\binTranslateBBc}
 \begin{lstlisting}
 ret
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\tikzset{
+    code/.style={inner sep=0mm,align=left},
+    hiOn/.style={alt=#1{rounded corners,fill=green,fill opacity=0.3,text opacity=1.0}{}},
+    markOn/.style={alt=#1{rounded corners,draw,thick}{}},
+}
+\node[code,markOn=<2>,hiOn=<3>] (bb1) {
+\usebox{\binTranslateOrig}
+};
+\node[right=.25cm of bb1,visible on=<2>,align=left] {
+    divide machine code \\
+    into \textit{basic blocks} \\
+    (= ``straight-line'' code) \\
+    (= code till \\ 
+    jump/call/etc.)
+};
+\node[code,right=.25cm of bb1,visible on=<3>] (bb1New) {
+generated code: \\
+\usebox{\binTranslateBBa}
+};
+\node[code,markOn=<2>,anchor=north west] (bb2) at (bb1.south west){
+\usebox{\binTranslateBBb}
+};
+\node[code,markOn=<2>,anchor=north west] (bb3) at (bb2.south west){
+\usebox{\binTranslateBBc}
 };
 \end{tikzpicture}
 \end{frame}

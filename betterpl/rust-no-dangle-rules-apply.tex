@@ -3,24 +3,22 @@
 \item single owner, someone can borrow temporarily
 \item only modify if exactly one user
 \end{itemize}
-\begin{tikzpicture}
-\node (left) {
+\begin{minipage}{0.5\textwidth}
 \begin{lstlisting}[language={},style=script]
 let mut x = 42;    // (1)
 let p = &mut x;    // (2)
 *p = 10;           // (3)
 println!("{}", x); // (4)
 \end{lstlisting}
-};
-\node[anchor=north west] (right) at (left.north east) {
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
 \begin{lstlisting}[language=C++,style=script]
 int x = 42;        // (1)
 int *p = &x;       // (2)
 *p = 10;           // (3)
 printf("%d\n", x); // (4)
-\end{lstlisting};
-};
-\end{tikzpicture}
+\end{lstlisting}
+\end{minipage}
 \begin{itemize}
 \item Exercise 1/2/3/4: The owner of x on line 1/2/3/4 is:
     \begin{itemize}
@@ -35,8 +33,6 @@ printf("%d\n", x); // (4)
 \item single owner, someone can borrow temporarily
 \item only modify if exactly one user
 \end{itemize}
-\begin{tikzpicture}
-\node (left) {
 \begin{lstlisting}[language={},style=script]
 let x = vec![vec![1],vec![2]];
 let y = &mut x[0];
@@ -46,8 +42,6 @@ x.push(vec![4]);
 *z += 1;
 y.push(5);
 \end{lstlisting}
-};
-\end{tikzpicture}
 \begin{itemize}
 \item exercise: what compile errors? how to fix and get same result?
 \end{itemize}
@@ -58,8 +52,7 @@ y.push(5);
 \item single owner, someone can borrow temporarily
 \item only modify if exactly one user
 \end{itemize}
-\begin{tikzpicture}
-\node (left) {
+\begin{minipage}{0.5\textwidth}
 \begin{lstlisting}[language={},style=script]
 let mut x = 42;    // (1)
 let p = &mut x;    // (2)
@@ -67,8 +60,8 @@ let p = &mut x;    // (2)
 println!("{}", x); // (4)
 *p = 11;           // (5)
 \end{lstlisting}
-};
-\node[anchor=north west] (right) at (left.north east){
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
 \begin{lstlisting}[language=C++,style=script]
 int x = 42;        // (1)
 int *p = &x;       // (2)
@@ -76,8 +69,7 @@ int *p = &x;       // (2)
 printf("%d\n", x); // (4)
 *p = 11;           // (5)
 \end{lstlisting};
-};
-\end{tikzpicture}
+\end{minipage}
 \begin{itemize}
 \item Rust rufuses to compile left-side: x being used while borrowed by p
 \item Which changes would avoid this problem?

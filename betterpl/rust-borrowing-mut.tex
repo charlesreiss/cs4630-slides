@@ -1,5 +1,7 @@
 
 
+\newsavebox{\rustBorrowingMutError}
+
 \begin{frame}[fragile,label=rustBorrowing3a]{borrowing (3a)}
 \begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
 fn add1(vector: &mut Vec<u32>) {
@@ -16,9 +18,7 @@ fn foo() {
     println!("*first_elem is {}", *first_elem); // ERROR
 }
 \end{minted}
-\begin{tikzpicture}[overlay,remember picture]
-    \begin{visibleenv}<2>
-    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\begin{lrbox}{\rustBorrowingMutError}
 \begin{lstlisting}[language={},style=script]
 error[E0502]: cannot borrow `vector` as mutable because it is also borrowed as immutable
   --> src/main.rs:11:10
@@ -31,6 +31,11 @@ error[E0502]: cannot borrow `vector` as mutable because it is also borrowed as i
 12 |     println!("*first_elem is {}", *first_elem);
    |                                   ----------- immutable borrow later used here
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}[overlay,remember picture]
+    \begin{visibleenv}<2>
+    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\usebox{\rustBorrowingMutError}
 };
     \end{visibleenv}
 \end{tikzpicture}
@@ -50,9 +55,7 @@ fn foo() {
     println!("*first_elem is {}", *first_elem); // ERROR
 }
 \end{minted}
-\begin{tikzpicture}[overlay,remember picture]
-    \begin{visibleenv}<2>
-    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\begin{lrbox}{\rustBorrowingMutError}
 \begin{lstlisting}[language={},style=script]
 error[E0502]: cannot borrow `vector` as mutable because it is also borrowed as immutable
   --> src/main.rs:11:10
@@ -65,6 +68,11 @@ error[E0502]: cannot borrow `vector` as mutable because it is also borrowed as i
 12 |     println!("*first_elem is {}", *first_elem);
    |                                   ----------- immutable borrow later used here
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}[overlay,remember picture]
+    \begin{visibleenv}<2>
+    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\usebox{\rustBorrowingMutError}
 };
     \end{visibleenv}
 \end{tikzpicture}
@@ -130,9 +138,7 @@ fn foo() {
     println!("vector is {:?}", vector);  
 }
 \end{minted}
-\begin{tikzpicture}[overlay,remember picture]
-    \begin{visibleenv}<2>
-    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\begin{lrbox}{\rustBorrowingMutError}
 \begin{lstlisting}[language={},style=script]
 error[E0499]: cannot borrow `vector` as mutable more than once at a time
   --> src/main.rs:11:10
@@ -145,6 +151,11 @@ error[E0499]: cannot borrow `vector` as mutable more than once at a time
 12 |     println!("first_elem is {}", *first_elem);
    |                                  ----------- first borrow later used here
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}[overlay,remember picture]
+    \begin{visibleenv}<2>
+    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\usebox{\rustBorrowingMutError}
 };
     \end{visibleenv}
 \end{tikzpicture}
@@ -159,9 +170,7 @@ fn foo() {
     *first_elem += 1;
 }
 \end{minted}
-\begin{tikzpicture}[overlay,remember picture]
-\begin{visibleenv}<2>
-\node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\begin{lrbox}{\rustBorrowingMutError}
 \begin{lstlisting}[style=smaller,language={}]
 error[E0499]: cannot borrow `vector` as mutable more than once at a time
   --> src/main.rs:10:5
@@ -174,6 +183,11 @@ error[E0499]: cannot borrow `vector` as mutable more than once at a time
    |     ---------------- first borrow later used here
    |
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}[overlay,remember picture]
+\begin{visibleenv}<2>
+\node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\usebox{\rustBorrowingMutError}
 };
 \end{visibleenv}
 \end{tikzpicture}

@@ -1,4 +1,5 @@
-
+\newsavebox{\rustBorrowError}
+\newsavebox{\rustBorrowErrorB}
 \begin{frame}[fragile,label=rustBorrowing1]{borrowing (1)}
     \begin{minted}[fontsize=\fontsize{10}{11}\selectfont]{Rust}
 fn mysum(vector: &Vec<u32>) -> u32 {
@@ -34,9 +35,7 @@ fn dangling_pointer() -> &mut i32 {
     return &mut array[0]; // ERROR
 }
 \end{minted}
-\begin{tikzpicture}[overlay,remember picture]
-    \begin{visibleenv}<2>
-    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\begin{lrbox}{\rustBorrowError}
 \begin{lstlisting}[language={},style=smaller]
 error[E0106]: missing lifetime specifier
   --> src/main.rs:19:25
@@ -47,6 +46,11 @@ error[E0106]: missing lifetime specifier
    = help: this function's return type contains a borrowed value,
            but there is no value for it to be borrowed from
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}[overlay,remember picture]
+    \begin{visibleenv}<2>
+    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\usebox{\rustBorrowError}
 };
     \end{visibleenv}
 \end{tikzpicture}
@@ -60,9 +64,7 @@ fn dangling_pointer() -> &'static mut i32 {
     return &mut array[0]; // ERROR
 }
 \end{minted}
-\begin{tikzpicture}[overlay,remember picture]
-    \begin{visibleenv}<2>
-    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\begin{lrbox}{\rustBorrowError}
 \begin{lstlisting}[language={},style=smaller]
 error[E0515]: cannot return value referencing local variable `v`
  --> src/lib.rs:3:12
@@ -74,6 +76,11 @@ error[E0515]: cannot return value referencing local variable `v`
   |            returns a value referencing data owned
   |            by the current function
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}[overlay,remember picture]
+    \begin{visibleenv}<2>
+    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+        \usebox{\rustBorrowError}
 };
     \end{visibleenv}
 \end{tikzpicture}
@@ -96,9 +103,7 @@ fn dangling_pointer(v: Vec<i32>) -> i32 {
     return v[0];
 }
 \end{minted}
-\begin{tikzpicture}[overlay,remember picture]
-    \begin{visibleenv}<3>
-    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\begin{lrbox}{\rustBorrowError}
 \begin{lstlisting}[language={},style=smaller]
 error[E0133]: use of mutable static is unsafe
               and requires unsafe block
@@ -111,10 +116,8 @@ error[E0133]: use of mutable static is unsafe
           multiple threads: aliasing violations
           or data races will cause undefined behavior
 \end{lstlisting}
-};
-    \end{visibleenv}
-    \begin{visibleenv}<2>
-    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\end{lrbox}
+\begin{lrbox}{\rustBorrowErrorB}
 \begin{lstlisting}[language={},style=smaller]
 error[E0597]: `v` does not live long enough
  --> src/lib.rs:3:12
@@ -130,6 +133,16 @@ error[E0597]: `v` does not live long enough
 5 | }
   | - `v` dropped here while still borrowed
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}[overlay,remember picture]
+    \begin{visibleenv}<3>
+    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\usebox{\rustBorrowError}
+};
+    \end{visibleenv}
+    \begin{visibleenv}<2>
+    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\usebox{\rustBorrowErrorB}
 };
     \end{visibleenv}
 \end{tikzpicture}

@@ -8,8 +8,23 @@
     \end{itemize}
 \end{frame}
 
+\newsavebox{\rustOwnershipError}
+
 \begin{frame}[fragile,label=rustOwnership1]{Rust objects and ownership (1a)}
-    \begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
+\begin{lrbox}{\rustOwnershipError}
+\begin{lstlisting}[language={},style=script]
+Compiling lecture-demo v0.1.0 (file:///home/cr4bd/spring2017/cs4630/...
+error[E0382]: use of moved value: `vector`
+  --> src/main.rs:16:34
+   |
+13 |     let sum = mysum(vector);
+   |                     ------ value moved here
+...
+16 |     println!("vector[0] is {}" , vector[0]);
+   |                                  ^^^^^^ value used here after move
+\end{lstlisting}
+\end{lrbox}
+\begin{minted}[fontsize=\fontsize{9}{10}\selectfont]{Rust}
 fn mysum(vector: Vec<u32>) -> u32 {
     let mut total: u32 = 0;
     for value in &vector {
@@ -32,17 +47,7 @@ fn foo() {
     \begin{tikzpicture}[overlay,remember picture]
         \begin{visibleenv}<2>
             \node[anchor=center,font=\small,draw=black,ultra thick,fill=white] at (current page.center){
-            \begin{lstlisting}[language={},style=script]
-   Compiling lecture-demo v0.1.0 (file:///home/cr4bd/spring2017/cs4630/...
-error[E0382]: use of moved value: `vector`
-  --> src/main.rs:16:34
-   |
-13 |     let sum = mysum(vector);
-   |                     ------ value moved here
-...
-16 |     println!("vector[0] is {}" , vector[0]);
-   |                                  ^^^^^^ value used here after move
-\end{lstlisting}
+                \usebox{\rustOwnershipError}
         };
         \end{visibleenv}
     \end{tikzpicture}

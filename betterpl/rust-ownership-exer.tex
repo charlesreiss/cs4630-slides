@@ -1,7 +1,6 @@
 \begin{frame}[fragile,label=ownerRulesExer]{ownership exercise}
-If called like \texttt{p = foo(p)}, which follow single-owner rule?
-\begin{tikzpicture}
-\node (left) {
+If called like \texttt{p = foo(p)}, which follow single-owner rule? \\
+\begin{minipage}{0.5\textwidth}
 \begin{lstlisting}[language=C,style=smaller]
 // (A)
 char *foo(char *p) {
@@ -16,8 +15,8 @@ char *foo(char *p) {
     return p;
 }
 \end{lstlisting}
-};
-\node[anchor=north west] (right) at (left.north east) {
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
 \begin{lstlisting}[language=C,style=smaller]
 // (C)
 char *global;
@@ -32,6 +31,5 @@ char *foo(char *p) {
     return p;
 }
 \end{lstlisting}
-};
-\end{tikzpicture}
+\end{minipage}
 \end{frame}

@@ -1,11 +1,11 @@
 \usetikzlibrary{arrows.meta}
+\newsavebox{\uafCheckLoopCode}
 \begin{frame}[fragile,label=useAfterFree3]{checking use-after-free (3)}
     \lstset{
         language=C,style=script,
         moredelim={**[is][\btHL<2>]{~2~}{~end~}},
     }
-\begin{tikzpicture}
-\node[anchor=north east] at (-.2, 0) {
+\begin{lrbox}{\uafCheckLoopCode}
 \begin{lstlisting}
 void someFunction() {
     int *quux = malloc(sizeof(int));
@@ -27,6 +27,10 @@ void someFunction() {
     ...
 }
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\node[anchor=north east] at (-.2, 0) {
+\usebox{\uafCheckLoopCode}
 };
     \tikzset{flow/.style={draw,thick,font=\fontsize{9}{10}\selectfont,anchor=north west},
     flowLine/.style={thick,-Latex},

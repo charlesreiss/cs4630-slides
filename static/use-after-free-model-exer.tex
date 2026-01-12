@@ -1,6 +1,7 @@
-\begin{frame}[fragile,label=homesModelExer]{exercise: holes in the model?}
-\begin{tikzpicture}
-\node (left) {
+\newsavebox{\uafHolesExer}
+
+\begin{frame}[fragile,label=holesModelExer]{exercise: holes in the model?}
+\begin{lrbox}{\uafHolesExer}
 \begin{lstlisting}[language=C++,style=smaller]
 void example(int a) {
     int *p;
@@ -18,6 +19,10 @@ void example(int a) {
     ...
 }
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\node (left) {
+\usebox{\uafHolesExer}
 };
 \node[anchor=north west,align=left,draw,very thick] at (left.north east) {
 exercise: what should state of pointer q be at C? \\

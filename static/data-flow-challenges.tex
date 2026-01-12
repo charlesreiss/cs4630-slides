@@ -1,6 +1,5 @@
 \begin{frame}[fragile,label=dFlowChallenges1]{static info flow challenges (1)}
-\begin{tikzpicture}
-\node (left) {
+\begin{minipage}{0.5\textwidth}
 \begin{lstlisting}[language=Python,style=smaller]
 # Python example
 def stash(a):
@@ -11,8 +10,8 @@ stash(x)
 x[2] = input()
 print(y[2])
 \end{lstlisting}
-};
-\node[anchor=north west] at ([xshift=3cm]left.north east) {
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
 \begin{lstlisting}[language=C++,style=smaller]
 // C example
 int *y;
@@ -26,8 +25,7 @@ int main() {
     printf("%d\n",x[2]);
 }
 \end{lstlisting}
-};
-\end{tikzpicture}
+\end{minipage}
 \begin{itemize}
 \item same points-to problem with static analysis
 \item need to realize that x[2] and y[2] are the same!
@@ -39,8 +37,6 @@ int main() {
 \end{frame}
 
 \begin{frame}[fragile,label=dFlowChallenges2]{static info flow challenges (2)}
-\begin{tikzpicture}
-\node (left) {
 \begin{lstlisting}[language=Python,style=smaller]
 def retrieve(flag):
     global the_default
@@ -55,8 +51,6 @@ def retrieve(flag):
 retrieve(True)
 retrieve(False)
 \end{lstlisting}
-};
-\end{tikzpicture}
 \begin{itemize}
 \item input can't make it to print here
 \item \ldots but need \textit{path-sensitive} analysis to tell
@@ -65,8 +59,6 @@ retrieve(False)
 \end{frame}
 
 \begin{frame}[fragile,label=dFlowChallenges3]{static info flow challenges (3)}
-\begin{tikzpicture}
-\node (left) {
 \begin{lstlisting}[language=Python,style=smaller]
 x = int(input())
 if x == 0:
@@ -75,8 +67,6 @@ elif x == 1:
     print(1)
 elif ...
 \end{lstlisting}
-};
-\end{tikzpicture}
 \begin{itemize}
 \item does input make it to output?
 \item should we try to detect this?

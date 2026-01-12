@@ -17,13 +17,14 @@
     \end{itemize}
 \end{frame}
 
+\newsavebox{\boundsModelCode}
+
 \begin{frame}[fragile,label=bounds1]{checking array bounds (1)}
-    \lstset{
-        language=C,style=script,
-        moredelim={**[is][\btHL<2>]{~2~}{~end~}},
-    }
-\begin{tikzpicture}
-\node[anchor=north east] at (-.2, 0) {
+\lstset{
+    language=C,style=script,
+    moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+}
+\begin{lrbox}{\boundsModelCode}
 \begin{lstlisting}
 int array[100];
 void someFunction(int foo) {
@@ -35,6 +36,10 @@ void someFunction(int foo) {
     array[foo] += 1;
 }
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\node[anchor=north east] at (-.2, 0) {
+\usebox{\boundsModelCode}
 };
 
     \tikzset{
@@ -57,12 +62,11 @@ void someFunction(int foo) {
 \end{frame}
 
 \begin{frame}[fragile,label=bounds2]{checking array bounds (2)}
-    \lstset{
-        language=C,style=script,
-        moredelim={**[is][\btHL<2>]{~2~}{~end~}},
-    }
-\begin{tikzpicture}
-\node[anchor=north east] at (-.2, 0) {
+\lstset{
+    language=C,style=script,
+    moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+}
+\begin{lrbox}{\boundsModelCode}
 \begin{lstlisting}
 int array[100];
 void someFunction(int foo, bool bar) {
@@ -79,6 +83,10 @@ void someFunction(int foo, bool bar) {
     p[foo] = 1;
 }
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\node[anchor=north east] at (-.2, 0) {
+\usebox{\boundsModelCode}
 };
 
     \tikzset{flow/.style={draw,thick,font=\fontsize{9}{10}\selectfont,anchor=north west},

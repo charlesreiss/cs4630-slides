@@ -14,13 +14,14 @@
     \end{itemize}
 \end{frame}
 
+\newsavebox{\uafCheckCode}
+
 \begin{frame}[fragile,label=useAfterFree1]{checking use-after-free (1)}
     \lstset{
         language=C,style=script,
         moredelim={**[is][\btHL<2>]{~2~}{~end~}},
     }
-\begin{tikzpicture}
-\node[anchor=north east] at (-.2, 0) {
+\begin{lrbox}{\uafCheckCode}
 \begin{lstlisting}
 void someFunction(int foo, int bar) {
     int *quux = malloc(sizeof(int));
@@ -34,6 +35,10 @@ void someFunction(int foo, int bar) {
     ...
 }
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\node[anchor=north east] at (-.2, 0) {
+\usebox{\uafCheckCode}
 };
 
     \tikzset{flow/.style={draw,thick,font=\fontsize{9}{10}\selectfont,anchor=north west},
@@ -68,8 +73,7 @@ void someFunction(int foo, int bar) {
         language=C,style=script,
         moredelim={**[is][\btHL<2>]{~2~}{~end~}},
     }
-\begin{tikzpicture}
-\node[anchor=north east] at (-.2, 0) {
+\begin{lrbox}{\uafCheckCode}
 \begin{lstlisting}
 int *someFunction(int foo, int bar) {
     int *quux = malloc(sizeof(int));
@@ -87,6 +91,10 @@ int *someFunction(int foo, int bar) {
     // D
 }
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\node[anchor=north east] at (-.2, 0) {
+\usebox{\uafCheckCode}
 };
 
     \tikzset{flow/.style={draw,thick,font=\fontsize{9}{10}\selectfont,anchor=north west},

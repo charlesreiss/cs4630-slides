@@ -1,12 +1,6 @@
-\begin{frame}[fragile,label=intOverflowEx]{exercise}
-\lstset{
-    language=C,
-    morekeywords=item,
-    style=smaller,
-    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
-}
-\begin{tikzpicture}
-\node[anchor=north east] (code) at (-1,0) {
+
+\newsavebox{\intOverflowExCode}
+\begin{lrbox}{\intOverflowExCode}
 \begin{lstlisting}
 void vulnerable() {
   int items[100];
@@ -25,6 +19,18 @@ void vulnerable() {
   process_items(items);
 }
 \end{lstlisting}
+\end{lrbox}
+
+\begin{frame}[fragile,label=intOverflowEx]{exercise}
+\lstset{
+    language=C,
+    morekeywords=item,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\usebox{\intOverflowExCode}
 };
 \node [overlay,draw,very thick,align=left,anchor=north west,font=\fontsize{12}{13}\selectfont] at ([yshift=.5cm,xshift=-6.25cm]code.north east) {
 assume return address immediately after items array: \\

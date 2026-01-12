@@ -1,13 +1,6 @@
 
-\begin{frame}[fragile,label=intOverflowEx1a]{integer overflow example (1)}
-\lstset{
-    language=C,
-    morekeywords=item,
-    style=smaller,
-    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
-}
-\begin{tikzpicture}
-\node[anchor=north east] (code) at (-1,0) {
+\newsavebox{\overExampleACode}
+\begin{lrbox}{\overExampleACode}
 \begin{lstlisting}
 item *load_items(int len) {
   int total_size = ~2~len * sizeof(item);~end~
@@ -25,6 +18,18 @@ item *load_items(int len) {
   return items;
 }
 \end{lstlisting}
+\end{lrbox}
+
+\begin{frame}[fragile,label=intOverflowEx1a]{integer overflow example (1)}
+\lstset{
+    language=C,
+    morekeywords=item,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\usebox{\overExampleACode}
 };
 \node[align=left,anchor=north west,font=\small] (t1) at (0,0) {
     {\tt len} = {\tt 0x4000 0001} \\
@@ -37,15 +42,8 @@ item *load_items(int len) {
 \end{tikzpicture}
 \end{frame}
 
-\begin{frame}[fragile,label=intOverflowEx1b]{integer overflow example (2)}
-\lstset{
-    language=C,
-    morekeywords=item,
-    style=smaller,
-    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
-}
-\begin{tikzpicture}
-\node[anchor=north east] (code) at (-1,0) {
+\newsavebox{\overExampleBCode}
+\begin{lrbox}{\overExampleBCode}
 \begin{lstlisting}
 /* adapted from https://project-zero.issues.chromium.org/issues/42451651 
    Windows Kernel bug! */
@@ -62,6 +60,18 @@ char *FormatNumber(char *source, short source_len) {
 }
 
 \end{lstlisting}
+\end{lrbox}
+
+\begin{frame}[fragile,label=intOverflowEx1b]{integer overflow example (2)}
+\lstset{
+    language=C,
+    morekeywords=item,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\usebox{\overExampleBCode}
 };
 \node[align=left,anchor=north west,font=\small] (t1) at (0,0) {
     {\tt source\_len} = {0x2AAB} \\

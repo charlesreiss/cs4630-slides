@@ -1,3 +1,4 @@
+\newsavebox{\virusCodeRecall}
 
 \begin{frame}[fragile,label=virusCodeRecall]{recall: virus code}
 \lstset{
@@ -6,8 +7,7 @@
     moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
     moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
 }
-\begin{tikzpicture}
-\node (code) {
+\begin{lrbox}{\virusCodeRecall}
 \begin{lstlisting}
     ~2~leal string(%rip), %edi~end~
     ~3~pushq $0x4004e0~end~ /* address of puts */
@@ -15,6 +15,10 @@
 string: 
     .asciz "You have been infected with a virus!"
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\node (code) {
+\usebox{\virusCodeRecall}
 };
 \node[anchor=north west,align=left,font=\tt] (bits) at (code.south west) {
 \only<2->{{\color{blue!70!black}8d} {\color{green!70!black}3d} {\color{violet}06 00 00 00} (leal)} \\

@@ -1,3 +1,5 @@
+\newsavebox{\virusToShellACode}
+
 
 \begin{frame}[fragile,label=virusToShell1]{virus code to shell-code (1)}
 \lstset{
@@ -6,8 +8,7 @@
     moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
     moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
 }
-\begin{tikzpicture}
-\node (code) {
+\begin{lrbox}{\virusToShellACode}
 \begin{lstlisting}
     ~2~leaq~end~ string(%rip), %rdi
     ~3~pushq $0x4004e0~end~ /* address of puts */
@@ -15,6 +16,11 @@
 string: 
     .asciz "You have been infected with a virus!"
 \end{lstlisting}
+\end{lrbox}
+
+\begin{tikzpicture}
+\node (code) {
+\usebox{\virusToShellACode}
 };
 \node[anchor=north west,align=left,font=\tt] (bits) at (code.south west) {
 {\myemph{\textbf{48}} {\color{blue!70!black}8d} {\color{green!70!black}3d} {\color{violet}06 00 00 00}} (\myemph{leaq}) \\
@@ -43,6 +49,8 @@ string:
 \end{tikzpicture}
 \end{frame}
 
+\newsavebox{\virusToShellBCode}
+
 \begin{frame}[fragile,label=virusToShell2]{virus code to shell-code (2)}
 \lstset{
     language=myasm,
@@ -50,8 +58,7 @@ string:
     moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
     moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
 }
-\begin{tikzpicture}
-\node (code) {
+\begin{lrbox}{\virusToShellBCode}
 \begin{lstlisting}
     /* Linux system call (OS request):
        write(1, string, length)
@@ -64,6 +71,10 @@ string:
 string: 
     .asciz "You have been infected with a virus!\n"
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\node (code) {
+\usebox{\virusToShellBCode}
 };
 \node[anchor=north west,align=left,font=\tt] (bits) at (code.south west) {
 {\color{orange!70!black}48} {\color{blue!70!black}8d} {\color{green!70!black}35} {\color{violet}0c 00 00 00} (leaq) \\
@@ -81,6 +92,8 @@ string:
 \end{tikzpicture}
 \end{frame}
 
+\newsavebox{\virusToShellCCode}
+
 \begin{frame}[fragile,label=virusToShell3]{virus code to shell-code (3)}
 \lstset{
     language=myasm,
@@ -88,8 +101,7 @@ string:
     moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
     moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
 }
-\begin{tikzpicture}
-\node (code) {
+\begin{lrbox}{\virusToShellCCode}
 \begin{lstlisting}
     /* Linux system call (OS request):
        write(1, string, length)
@@ -107,6 +119,10 @@ string:
 string: 
     .asciz "You have been infected with a virus!\n"
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\node (code) {
+\usebox{\virusToShellCCode}
 };
 \coordinate (codeExplain) at ([xshift=-3cm]code.north east);
 \begin{visibleenv}<2>

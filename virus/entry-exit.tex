@@ -1,14 +1,12 @@
 \usetikzlibrary{calc}
 
-\begin{frame}[fragile,label=vienna]{Vienna: infection}
+\newsavebox{\viennaInfectCodeBefore}
+\begin{lrbox}{\viennaInfectCodeBefore}
 \lstset{
     language=myasm,
     style=smaller,
     moredelim={**[is][\btHL<2>]{~hi2~}{~endhi2~}},
 }
-\begin{tikzpicture}
-\tikzset{programBox/.style={draw,thick},every label/.style={inner sep=1mm,outer sep=0mm}}
-\node[programBox,minimum height=3cm,label={north:uninfected},anchor=north west] (uninfect) at (0,0) {
 \begin{lstlisting}
 0x0100:
     ~hi2~mov $0x4f28, %cx~endhi2~
@@ -23,10 +21,16 @@
        code */
 ....
 0x0700: /* end */
-
 \end{lstlisting}
-};
-\node[overlay,programBox,anchor=north west,label={[overlay]north:infected}] at ([yshift=.5cm,xshift=1cm]uninfect.north east) {
+\end{lrbox}
+
+\newsavebox{\viennaInfectCodeAfter}
+\begin{lrbox}{\viennaInfectCodeAfter}
+\lstset{
+    language=myasm,
+    style=smaller,
+    moredelim={**[is][\btHL<2>]{~hi2~}{~endhi2~}},
+}
 \begin{lstlisting}
 0x0100: jmp 0x0700
 0x0103: mov $0x9e4e, %si
@@ -47,6 +51,16 @@
     ~hi2~.bytes 0xb9 0x28 0x4f~endhi2~
 ...
 \end{lstlisting}
+\end{lrbox}
+
+\begin{frame}[fragile,label=viennaInfect]{Vienna: infection}
+\begin{tikzpicture}
+\tikzset{programBox/.style={draw,thick},every label/.style={inner sep=1mm,outer sep=0mm}}
+\node[programBox,minimum height=3cm,label={north:uninfected},anchor=north west] (uninfect) at (0,0) {
+\usebox{\viennaInfectCodeBefore}
+};
+\node[programBox,anchor=north west,label={[overlay]north:infected}] at ([yshift=.5cm,xshift=1cm]uninfect.north east) {
+\usebox{\viennaInfectCodeAfter}
 };
 \end{tikzpicture}
 \end{frame}

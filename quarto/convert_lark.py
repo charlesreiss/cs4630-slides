@@ -120,6 +120,10 @@ INLINE_VERBATIM.10: /
         \\lstinline\|[^|]+\|
         |
         \\verb\|[^|]+\|
+        |
+        \\lstinline![^!]+\!
+        |
+        \\verb![^!]+\!
     /x
 TIKZPICTURE.10: /\\begin\{tikzpicture\}\s*(?:\[[^]]+\])?\s*\n
                  (?s:.)*?
@@ -875,12 +879,12 @@ class InlineVerbatim(_MyAstItem):
     contents: str
 
     def __init__(self, token):
-        pattern = r'''
-            \\(?:lstinline|verb)\|(?P<contents>[^|]+)\|
-        '''
-        m = re.match(pattern, token.value, re.X)
-        assert m is not None, token.value
-        self.contents = m.group('contents')
+        value = token.value
+        for prefix in (r'\lstinline', r'\verb'):
+            if value.startswith(prefix):
+                value = value[len(prefix):]
+                break 
+        self.contents = value[1:-1]
 
     @property
     def inner_text(self):

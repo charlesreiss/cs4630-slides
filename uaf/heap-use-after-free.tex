@@ -1,16 +1,7 @@
 \usetikzlibrary{calc}
-\tikzset{
-    stackBox/.style={very thick},
-    onStack/.style={thick},
-}
-\begin{frame}[fragile,label=vulnUAF]{vulnerable code}
-\lstset{
-    language=C++,
-    style=smaller,
-    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
-}
-\begin{tikzpicture}
-\node[anchor=north east] (code) at (-1,0) {
+
+\newsavebox{\vulnUAFCode}
+\begin{lrbox}{\vulnUAFCode}
 \begin{lstlisting}
 class Foo {
     ...
@@ -23,6 +14,21 @@ delete the_foo;
 something_else = new Bar(...);
 the_foo->something();
 \end{lstlisting}
+\end{lrbox}
+
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+}
+\begin{frame}[fragile,label=vulnUAF]{vulnerable code}
+\lstset{
+    language=C++,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\usebox{\vulnUAFCode}
 };
 \node[draw,anchor=north west,align=left] at (-3,0) {
     {\tt something\_else} likely where {\tt the\_foo} was

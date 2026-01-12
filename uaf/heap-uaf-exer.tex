@@ -1,6 +1,5 @@
-\begin{frame}[fragile,label=uafExericse]{exercise}
-\begin{tikzpicture}
-\node[draw,very thick,label={north:vuln. code}] (a) {
+\newsavebox{\uafExerciseCodeA}
+\begin{lrbox}{\uafExerciseCodeA}
 \begin{lstlisting}[language=C++,style=script]
 std::istream *in =
     new std::ifstream("in.txt");
@@ -13,23 +12,30 @@ strcpy(other_buffer, INPUT);
 ...
 char c = in->get();
 \end{lstlisting}
+\end{lrbox}
+\newsavebox{\uafExerciseCodeB}
+\begin{lrbox}{\uafExerciseCodeB}
+\begin{lstlisting}[language=C++,style=script]
+std::istream *in =
+    new std::ifstream("in.txt");
+...
+delete in;
+...
+char *other_buffer =
+    new char[strlen(INPUT) + 1];
+strcpy(other_buffer, INPUT);
+...
+char c = in->get();
+\end{lstlisting}
+\end{lrbox}
+
+\begin{frame}[fragile,label=uafExericse]{exercise}
+\begin{tikzpicture}
+\node[draw,very thick,label={north:vuln. code}] (a) {
+\usebox{\uafExerciseCodeA}
 };
 \node[draw,very thick,label={north:ifstream internals},anchor=north west] (b) at (a.north east) {
-\begin{lstlisting}[language=C++,style=script]
-class istream {
-    ...
-    int get() { ... buf->uflow(); ... }
-    streambuf *buf;
-    ~istream() { delete buf; }
-};
-class streambuf {
-    ...
-protected:
-    virtual type_for_char uflow() = 0;
-        /* called to get next char*/
-};
-class _File_streambuf : public streambuf { ... }
-\end{lstlisting}
+\usebox{\uafExerciseCodeB}
 };
 \end{tikzpicture}
 \begin{itemize}

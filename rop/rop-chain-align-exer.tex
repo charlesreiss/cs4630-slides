@@ -1,9 +1,9 @@
 
+\newsavebox{\ropChainAlignExC}
+\newsavebox{\ropChainAlignExAsm}
 
-
-\begin{frame}[fragile]{exercise: ROP chain alignment}
-\begin{tikzpicture}
-\node (code) {
+\begin{frame}[fragile,label=ropChainAlignEx]{exercise: ROP chain alignment}
+\begin{lrbox}{\ropChainAlignExC}
 \begin{lstlisting}[language=C++,style=smaller]
 void getInitials(char *init) {
     char first[50]; char second[50];
@@ -12,8 +12,8 @@ void getInitials(char *init) {
     init[1] = second[0];
 }
 \end{lstlisting}
-};
-\node[anchor=north west] (asm) at ([xshift=.2cm]code.north east) {
+\end{lrbox}
+\begin{lrbox}{\ropChainAlignExAsm}
 \begin{lstlisting}[language=myasm,style=smaller]
 getInitials: push %rbx
 xor    %eax,%eax
@@ -34,6 +34,13 @@ add    $0xa0,%rsp
 pop    %rbx
 ret 
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\node (code) {
+    \usebox{\ropChainAlignExC}
+};
+\node[anchor=north west] (asm) at ([xshift=.2cm]code.north east) {
+\usebox{\ropChainAlignExAsm}
 };
 \node[anchor=north west,align=left,font=\small] at ([yshift=.1cm]code.south west) {
 Suppose we have 64-byte ROP chain \\

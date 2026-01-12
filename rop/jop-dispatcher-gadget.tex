@@ -1,11 +1,27 @@
 \usetikzlibrary{arrows.meta,matrix}
+\newsavebox{\jopGadgetDispatcher}
+\newsavebox{\jopGadgetOther}
 \begin{frame}[fragile,label=jopdispatch1]{programming JOP}
-\begin{tikzpicture}
-\node[draw,label={north:``dispatcher'' gadget}]  (code) {
+\begin{lrbox}{\jopGadgetDispatcher}
 \begin{lstlisting}[language=myasm]
 add $8, %rcx
 jmp *(%rcx)
 \end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\jopGadgetOther}
+\begin{lstlisting}[language=myasm]
+...
+jmp *%rdx
+\end{lstlisting}
+---\textit{ OR }---
+\begin{lstlisting}[language=myasm]
+...
+jmp *(%rdi)
+\end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\node[draw,label={north:``dispatcher'' gadget}]  (code) {
+\usebox{\jopGadgetDispatcher}
 };
 \begin{visibleenv}<2->
 \matrix[tight matrix,anchor=north west,nodes={font=\small,text width=4cm}] (gadget list) at ([xshift=1cm]code.north east) {
@@ -22,15 +38,7 @@ jmp *(%rcx)
 \end{visibleenv}
 \begin{visibleenv}<3->
 \node[draw,label={north:template for other gadgets}] (code 2) at ([xshift=1cm,yshift=-3cm]code.south east) {
-\begin{lstlisting}[language=myasm]
-...
-jmp *%rdx
-\end{lstlisting}
----\textit{ OR }---
-\begin{lstlisting}[language=myasm]
-...
-jmp *(%rdi)
-\end{lstlisting}
+\usebox{\jopGadgetOther}
 };
 \end{visibleenv}
 \end{tikzpicture}

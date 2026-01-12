@@ -1,9 +1,8 @@
 \usetikzlibrary{arrows.meta,fit,patterns}
-
+\newsavebox{\VTblOverCode}
 \begin{frame}[fragile,label=VTblOver]{VTable overwrite with gadget}
 \lstset{language=C++,style=small}
-    \begin{tikzpicture}
-        \node[anchor=north east] (code) at (1.5, 0) {
+\begin{lrbox}{\VTblOverCode}
 \begin{lstlisting}
 class Bar {
   char buffer[100];
@@ -19,6 +18,10 @@ void Bar::vulnerable() {
   // foo == rdi, x == rsi, y == rdx
 }
 \end{lstlisting}
+\end{lrbox}
+    \begin{tikzpicture}
+        \node[anchor=north east] (code) at (1.5, 0) {
+\usebox{\VTblOverCode}
 };
 \tikzset{
     stackBox/.style={very thick},

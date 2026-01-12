@@ -1,4 +1,31 @@
 
+\newsavebox\flexStatesTop
+\newsavebox\flexStatesMiddle
+\newsavebox\flexStatesBottom
+\lstset{style=small,language={}}
+\begin{lrbox}{\flexStatesTop}
+\begin{lstlisting}
+%x str
+\end{lstlisting}
+\end{lrbox}
+
+\begin{lrbox}{\flexStatesMiddle}
+\begin{lstlisting}
+\"          { BEGIN(str); }
+<str>\"     { BEGIN(INITIAL); }
+<str>foo    { printf("foo in string\n"); }
+foo         { printf("foo out of string\n"); }
+<INITIAL,str>(.|\n) {}
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\flexStatesBottom}
+\begin{lstlisting}
+int main(void) {
+    yylex();
+}
+\end{lstlisting}
+\end{lrbox}
+
 \begin{frame}[fragile,label=flexStates]{flex states (1)}
 \lstset{
         style=small,
@@ -9,39 +36,21 @@
 \begin{scope}
 \tikzset{every node/.style={font=\small,align=left,anchor=north west,inner sep=0mm}}
 \node (vars) {
-\begin{lstlisting}
-\end{lstlisting}
 };
 \node (patMacros) at (vars.south west) {
-\begin{lstlisting}
-%x str
-\end{lstlisting}
+\usebox{\flexStatesTop}
 };
 \node (sepA) at (patMacros.south west) {
-\begin{lstlisting}
-%%
-\end{lstlisting}
+\%\%
 };
 \node (pats) at (sepA.south west) {
-\begin{lstlisting}
-\"          { BEGIN(str); }
-<str>\"     { BEGIN(INITIAL); }
-<str>foo    { printf("foo in string\n"); }
-foo         { printf("foo out of string\n"); }
-<INITIAL,str>(.|\n) {}
-\end{lstlisting}
+\usebox{\flexStatesMiddle}
 };
 \node (sepB) at (pats.south west) {
-\begin{lstlisting}
-%%
-\end{lstlisting}
+\%\%
 };
 \node (mainCode) at (sepB.south west) {
-\begin{lstlisting}
-int main(void) {
-    yylex();
-}
-\end{lstlisting}
+\usebox{\flexStatesBottom}
 };
 \end{scope}
 \tikzset{
@@ -59,25 +68,13 @@ int main(void) {
 \end{tikzpicture}
 \end{frame}
 
-\begin{frame}[fragile,label=flexStates2]{flex states (2)}
-\begin{tikzpicture}
-\begin{scope}
-\tikzset{every node/.style={font=\small,align=left,anchor=north west,inner sep=0mm}}
-\node (vars) {
-\begin{lstlisting}
-\end{lstlisting}
-};
-\node (patMacros) at (vars.south west) {
+
+\begin{lrbox}{\flexStatesTop}
 \begin{lstlisting}
 %s afterFoo
 \end{lstlisting}
-};
-\node (sepA) at (patMacros.south west) {
-\begin{lstlisting}
-%%
-\end{lstlisting}
-};
-\node (pats) at (sepA.south west) {
+\end{lrbox}
+\begin{lrbox}{\flexStatesMiddle}
 \begin{lstlisting}
 <afterFoo>foo    { printf("later foo\n"); }
 foo              {
@@ -86,18 +83,35 @@ foo              {
                  }
 (.|\n)  {}  
 \end{lstlisting}
-};
-\node (sepB) at (pats.south west) {
-\begin{lstlisting}
-%%
-\end{lstlisting}
-};
-\node (mainCode) at (sepB.south west) {
+\end{lrbox}
+\begin{lrbox}{\flexStatesBottom}
 \begin{lstlisting}
 int main(void) {
     yylex();
 }
 \end{lstlisting}
+\end{lrbox}
+
+\begin{frame}[fragile,label=flexStates2]{flex states (2)}
+\begin{tikzpicture}
+\begin{scope}
+\tikzset{every node/.style={font=\small,align=left,anchor=north west,inner sep=0mm}}
+\node (vars) {
+};
+\node (patMacros) at (vars.south west) {
+\usebox{\flexStatesTop}
+};
+\node (sepA) at (patMacros.south west) {
+\%\%
+};
+\node (pats) at (sepA.south west) {
+\usebox{\flexStatesMiddle}
+};
+\node (sepB) at (pats.south west) {
+\%\%
+};
+\node (mainCode) at (sepB.south west) {
+\usebox{\flexStatesBottom}
 };
 \end{scope}
 \tikzset{

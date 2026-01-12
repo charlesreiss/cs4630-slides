@@ -6,16 +6,14 @@
         language={},
         moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
         }
-\begin{tikzpicture}
-\node (flexStuff) {
 \begin{lstlisting}
 foo     {...}
 .       {...}
 \n      {...}
 \end{lstlisting}
-};
+\begin{tikzpicture}
 \begin{scope}[every node/.style={font=\tt,thick}]
-\node[initial, state,below=1cm of flexStuff,font=\normalfont\it] (start) {};
+\node[initial,state,font=\normalfont\it] (start) {};
 \node[state,right=1cm of start] (f) {f};
 \node[state,right=1cm of f] (fo) {fo};
 \node[state,right=1cm of fo,accepting] (foo) {foo};

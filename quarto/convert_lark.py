@@ -23,9 +23,10 @@ start: document
 
 document: any_empty_item* (frame any_empty_item*)*
 
-frame: _BEGIN_FRAME when? optional_argument? argument? whitespace? frametitle? any_text _END_FRAME 
+frame: _BEGIN_FRAME when? optional_argument? argument? whitespace? frametitle? any_text _END_FRAME
      |  _IFNOTHELDBACK document _END_BRACE -> heldback_frames
      |  _BRACE document _END_BRACE -> scoped_document
+     |  _BEGIN_DOCUMENT document _END_DOCUMENT -> scoped_document
 
 optional_argument: _SQUARE_BRACKET any_text _END_SQUARE_BRACKET
 
@@ -148,8 +149,10 @@ _BEGIN_TABULAR.10: /\\begin\{tabular\}/
 _END_TABULAR.10: /\\end\{tabular\}/
 _BEGIN_MINIPAGE.10: /\\begin\{minipage\}/
 _END_MINIPAGE.10: /\\end\{minipage\}/
-BEGIN_GENERIC.0: /\\begin\{(?!minipage|tabular|itemize|Verbatim|visibleenv|frame|FragileFrame)\w+\}/
-END_GENERIC.0: /\\end\{(?!minipage|tabular|itemize|Verbatim|visibleenv|frame|FragileFrame)\w+\}/
+_BEGIN_DOCUMENT.10: /\\begin\{document\}/
+_END_DOCUMENT.10: /\\end\{document\}/
+BEGIN_GENERIC.0: /\\begin\{(?!minipage|tabular|itemize|Verbatim|visibleenv|frame|FragileFrame|document)\w+\}/
+END_GENERIC.0: /\\end\{(?!minipage|tabular|itemize|Verbatim|visibleenv|frame|FragileFrame|document)\w+\}/
 _BRACE.-10: /\{/
 _END_BRACE.-10: /\}/
 _SQUARE_BRACKET: /\[/
@@ -661,7 +664,7 @@ class _InlineCommand(_MyAstItem):
         if context.raw_html and before == '[':
             classes = []
             attrs = {}
-            for span_class in re.findall('\.[\w-]+|[\w-]+=\w+', after):
+            for span_class in re.findall(r'\.[\w-]+|[\w-]+=\w+', after):
                 if '=' in span_class:
                     k, v = span_class.split('=')
                     attrs['data-' + k] = v
@@ -1599,7 +1602,7 @@ class ToAST(lark.Transformer):
         if args[1] == '&':
             return _RawString('&', '&amp;')
         elif args[1] == '$':
-            return _RawString('$', '\$')
+            return _RawString('$', r'\$')
         elif args[1] == '\\':
             return _RawString('\\', '\\\\')
         else:

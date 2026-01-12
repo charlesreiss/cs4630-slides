@@ -1,0 +1,16 @@
+
+### avoiding backtracking?  {.smaller}
+
+<!-- \lstset{
+        style=small,
+        language={},
+        moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
+        } -->
+ 
+<pre><code>fox  {...}
+foo  {...}
+off  {...}
+.|\\n {/* do nothing */}
+</code></pre>
+ ![](texfig/flex-state-machine-complex.figure.svg)
+

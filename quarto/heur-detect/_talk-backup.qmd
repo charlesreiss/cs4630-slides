@@ -1,0 +1,20 @@
+
+# flex {visibility="hidden"}
+
+{{< include /heur-detect/_flex-state-machine-complex.qmd >}}
+
+## flex states {visibility="hidden"}
+
+{{< include /heur-detect/_flex-states.qmd >}}
+
+## heuristics to find packers {visibility="hidden"}
+
+{{< include /antianti/_packer-detect.qmd >}}
+
+## rootkits and chkrootkit {visibility="hidden"}
+
+{{< include /antianti/_chkrootkit.qmd >}}
+
+## aside: disinfection {visibility="hidden"}
+
+{{< include /heur-detect/_aside-disinfect.qmd >}}

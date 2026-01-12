@@ -1,0 +1,140 @@
+
+# discussion question {visibility="hidden"}
+
+{{< include /heur-detect/_invoke-detect-ex.qmd >}}
+
+# why don't viruses\ldots {visibility="hidden"}
+
+{{< include /heur-detect/_intro-from-virus.qmd >}}
+
+# the cat and mouse game {visibility="hidden"}
+
+{{< include /heur-detect/_cat-and-mouse.qmd >}}
+
+# antimalware goals {visibility="hidden"}
+
+{{< include /heur-detect/_goals.qmd >}}
+
+# simple detection: tripwire {visibility="hidden"}
+
+{{< include /heur-detect/_tripwire.qmd >}}
+
+# application whitelisting: AppLocker {visibility="hidden"}
+
+{{< include /heur-detect/_applocker-whitelist.qmd >}}
+
+# secure boot {visibility="hidden"}
+
+{{< include /virus/_secure-boot.qmd >}}
+
+# signature-based detection, generally {visibility="hidden"}
+
+{{< include /heur-detect/_signature.qmd >}}
+
+### aside: signature types  {.smaller}
+
+
+* one goal: detect malware without it running 
+
+   * examine code+data
+
+* our first topic 
+
+* alternate idea: detect running malware 
+
+   * examine operations performed by software
+
+* we'll revisit later
+
+
+## detecting Vienna exercise? {visibility="hidden"}
+
+{{< include /heur-detect/_vienna-detect-ex.qmd >}}
+
+## case study: Vienna {visibility="hidden"}
+
+{{< include /heur-detect/_vienna-sig.qmd >}}
+
+## difficult goals for signatures {visibility="hidden"}
+
+{{< include /heur-detect/_signature-goals.qmd >}}
+
+## Vienna: general pattern? {visibility="hidden"}
+
+{{< include /heur-detect/_vienna-general-patternp.qmd >}}
+
+# regular expressions {visibility="hidden"}
+
+{{< include /heur-detect/_regular-expressions.qmd >}}
+
+## flex example {visibility="hidden"}
+
+{{< include /heur-detect/_flex-example.qmd >}}
+
+## flex state machines {visibility="hidden"}
+
+{{< include /heur-detect/_flex-state-machine.qmd >}}
+
+{{< include /heur-detect/_why-state-machine.qmd >}}
+
+## backtracking problems? {visibility="hidden"}
+
+{{< include /heur-detect/_flex-opt-btp.qmd >}}
+
+{{< include /heur-detect/_flex-state-machine-complex.qmd >}}
+
+## flex: Vienna example {visibility="hidden"}
+
+{{< include /heur-detect/_vienna-patterns-flex.qmd >}}
+
+## why the flexibility? {visibility="hidden"}
+
+{{< include /heur-detect/_pattern-flexibility.qmd >}}
+
+## exercise: what's easy/hard for patterns {visibility="hidden"}
+
+{{< include /heur-detect/_hard-for-patternsp.qmd >}}
+
+# making scanners more efficient {visibility="hidden"}
+
+{{< include /heur-detect/_making-efficient.qmd >}}
+
+## fixed strings {visibility="hidden"}
+
+### againframe(effScanners)
+
+{{< include /heur-detect/_fixed-strings.qmd >}}
+
+## selective scanning {visibility="hidden"}
+
+### againframe(effScanners)
+
+{{< include /heur-detect/_selective-scanning.qmd >}}
+
+# example: ClamAV {visibility="hidden"}
+
+{{< include /heur-detect/_example-clam-av.qmd >}}
+
+# new malware detection? avoiding evasion? {visibility="hidden"}
+
+{{< include /heur-detect/_new-malwarep.qmd >}}
+
+# heuristics based on executable/library regularity {visibility="hidden"}
+
+{{< include /heur-detect/_exec-lib-regularity.qmd >}}
+
+# behavior based detection {visibility="hidden"}
+
+{{< include /heur-detect/_behavior.qmd >}}
+
+## instrumenting programs {visibility="hidden"}
+
+{{< include /heur-detect/_hooking.qmd >}}
+
+# AI heuristic case study: DREBIN {visibility="hidden"}
+
+{{< include /heur-detect/_case-study-android.qmd >}}
+
+## machine learning and adversaries {visibility="hidden"}
+
+{{< include /heur-detect/_ml-problems.qmd >}}

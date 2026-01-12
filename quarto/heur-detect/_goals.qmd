@@ -1,0 +1,10 @@
+
+### anti-malware software goals 
+
+
+* prevent malware from running
+* prevent malware from spreading
+* undo the effects of malware 
+
+* key subproblem: detect malware
+

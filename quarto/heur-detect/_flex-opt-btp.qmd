@@ -1,0 +1,15 @@
+
+### precomputing backtracking  {.smaller}
+
+<!-- \lstset{
+        style=small,
+        language={},
+        moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
+        } -->
+ 
+<pre><code>foo     {...}
+.       {...}
+\\n      {...}
+</code></pre>
+ ![](texfig/flex-opt-btp.figure.svg)
+

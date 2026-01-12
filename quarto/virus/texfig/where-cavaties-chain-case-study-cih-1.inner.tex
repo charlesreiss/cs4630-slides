@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+    \draw[thick] (0, 0) rectangle (4, -6) node[midway,align=center] {original\\executable};
+    \draw[line width=2mm,-Latex,black!60] (4.1, -3) -- (6.9, -3);
+    \begin{scope}[xshift=7cm]
+    \draw[fill=red!20,thick] (0, 0) rectangle (4, -0.5) node[midway] {virus startup code};
+    \draw[fill=red!20,thick] (0, -0.5) rectangle (4, -1) node[midway] {virus code locs};
+    \draw[thick] (0, -1) rectangle (4, -6);
+    \draw[fill=red!20,thick] (0, -3) rectangle (4, -3.5)
+        node[midway] {virus code part 1};
+    \draw[fill=red!20,thick] (0, -4) rectangle (4, -4.5)
+        node[midway] {virus code part 2};
+    \draw[fill=red!20,thick] (0, -5) rectangle (4, -5.5)
+        node[midway] {virus code part 3};
+    \draw[dashed,thin,-Latex] (4, -0.75) -- (4.5, -0.75) |- (4, -3.25);
+    \draw[dashed,thin,-Latex] (4, -0.75) -- (4.5, -0.75) |- (4, -4.25);
+    \draw[dashed,thin,-Latex] (4, -0.75) -- (4.5, -0.75) |- (4, -5.25);
+    \end{scope}
+    \end{tikzpicture}

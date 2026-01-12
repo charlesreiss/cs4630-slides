@@ -1,0 +1,24 @@
+\begin{tikzpicture}
+        \draw[fill=green!20] (0, 0) rectangle (4, -.2);
+        \draw[fill=yellow!20] (0, -.2) rectangle (4, -0.5) node[midway,font=\tiny] { partition table };
+        \draw[fill=green!20] (0, -.5) rectangle (4, -1.0) node[midway,font=\small] { bootloader };
+        \tearBox
+        \begin{scope}[xshift=7cm]
+        \draw[fill=violet!20] (0, 0) rectangle (4, -.2);
+        \draw[fill=yellow!20] (0, -.2) rectangle (4, -0.5) node[midway,font=\tiny] { partition table };
+        \draw[fill=violet!20] (0, -.5) rectangle (4, -1.0) node[midway,font=\small] { virus code };
+        \begin{scope}[yshift=-4cm]
+        \draw[fill=green!20] (0, 0) rectangle (4, -.2);
+        \draw[fill=green!20] (0, -.5) rectangle (4, -1.0) node[midway,font=\small] { saved bootloader };
+        \draw[dashed,fill=yellow!20] (0, -.2) rectangle (4, -0.5) node[midway,font=\tiny] { partition table (unused) };
+        \end{scope}
+        \tearBox 
+        \end{scope}
+        \draw[line width=1mm,black!50, -Latex] (4.2, -3) -- (6.8, -3);
+        %
+        \begin{pgfonlayer}{bg}
+            \begin{visibleenv}<2>
+                \path[fill=blue!30] (0, -4) rectangle (4, -5) node[midway] { data here??? };
+            \end{visibleenv}
+        \end{pgfonlayer}
+    \end{tikzpicture}

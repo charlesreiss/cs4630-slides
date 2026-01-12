@@ -1,0 +1,27 @@
+\begin{tikzpicture}
+    \draw[thick] (0, 0) rectangle (4, -6) coordinate (bottomRight) node[midway] { \tt kernel32.dll };
+    \draw[thick,fill=yellow!20] (0, 0) rectangle (4, -0.5) node[midway,font=\small] {header};
+    \draw[thick,fill=blue!20] (0, -0.5) rectangle (4, -2.0);
+    \node[font=\small,anchor=north] at (2, -0.5) {symbol table};
+    \node[anchor=north west,font=\fontsize{9}{10}\selectfont] (GFAName) at (0, -0.9) {
+        \tt GetFileAttributesA
+    };
+    \node[anchor=north west] at (GFAName.south west) {\tt \ldots};
+    \draw[-Latex,thick] ([xshift=.5mm]GFAName.east) coordinate (startArrowA) -- ([xshift=.5cm]GFAName.west -| bottomRight) |- (3, -5);
+    \fill[black] (startArrowA) circle[radius=.5mm];
+    %
+    \draw[line width=2mm,-Latex,black!60] (4.6, -3) -- (6.9, -3);
+    \begin{scope}[xshift=7cm]
+    \draw[thick] (0, 0) rectangle (4, -6) coordinate (bottomRight) node[midway] { \tt kernel32.dll };
+    \draw[thick,fill=yellow!20] (0, 0) rectangle (4, -0.5) node[midway,font=\small] {header};
+    \draw[thick,fill=blue!20] (0, -0.5) rectangle (4, -2.0);
+    \node[font=\small,anchor=north] at (2, -0.5) {symbol table};
+    \draw[thick,fill=red!20] (0, -6) rectangle (4, -7) node[midway,font=\small] {virus code};
+    \node[anchor=north west,font=\fontsize{9}{10}\selectfont] (GFANameB) at (0, -0.9) {
+        \tt GetFileAttributesA
+    };
+    \node[anchor=north west] at (GFANameB.south west) {\tt \ldots};
+    \draw[-Latex,very thick,red] ([xshift=.5mm]GFANameB.east) coordinate (startArrowA) -- ([xshift=.5cm]GFANameB.west -| bottomRight) |- (1, -6.2);
+    \fill[red] (startArrowA) circle[radius=.5mm];
+    \end{scope}
+\end{tikzpicture}

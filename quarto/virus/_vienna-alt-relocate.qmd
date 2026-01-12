@@ -1,0 +1,18 @@
+
+### alternative relocation  {.smaller}
+
+
+
+* could avoid having pointer to update:
+ <pre><code>0000000000000000 &lt;next-0x3&gt;:
+   0:   e8 <em>00 00</em>                call   3 &lt;next&gt;
+    <it>target addresses encoded relatively</it>
+    <it>pushes return address (next) onto stack</it>
+0000000000000003 &lt;next&gt;:
+   3:   59                      pop    %cx
+    <it>cx containts address of the pop instruction</it>
+</code></pre>
+ 
+
+* why didn't Vienna do this?
+

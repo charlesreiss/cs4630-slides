@@ -1,0 +1,44 @@
+
+### flex: state machines  {.smaller}
+
+<!-- \lstset{
+        style=small,
+        language={},
+        moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
+        } -->
+ 
+<pre><code>foo     {...}
+.       {...}
+\\n      {...}
+</code></pre>
+ 
+::: {.r-stack}
+![](texfig/flexSM.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](texfig/flexSM.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+:::
+
+
+### state machine matching 
+
+
+::: {.r-stack .my-full}
+![](texfig/stateMachineMatch.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](texfig/stateMachineMatch.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+![](texfig/stateMachineMatch.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
+![](texfig/stateMachineMatch.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
+
+![](texfig/stateMachineMatch.figure-5.svg){.fragment .fade-in-then-out fragment-index=5}
+
+![](texfig/stateMachineMatch.figure-6.svg){.fragment .fade-in-then-out fragment-index=6}
+
+![](texfig/stateMachineMatch.figure-7.svg){.fragment .fade-in-then-out fragment-index=7}
+
+![](texfig/stateMachineMatch.figure-8.svg){.fragment .fade-in-then-out fragment-index=8}
+
+:::
+

@@ -1,0 +1,18 @@
+
+### function callers? 
+
+
+![](/re-tools/ghidra-symb-refs-ex){}
+
+
+### FUN_12345678  {.smaller}
+
+
+
+* Ghidra names functions without symbols based on address
+* we can adjust that…
+ 
+![](/re-tools/ghidra-edit-func-cut){}
+ 
+![](/re-tools/ghidra-edit-func-dialog){}
+

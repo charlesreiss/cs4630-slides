@@ -1,0 +1,12 @@
+
+### entry point detection difficulty?  {.smaller}
+
+
+* which techniques for starting malware code seem…  easiest to detect? easiest to implement? 
+
+* A. replacing executable + running orig. exec from backup
+* B. changing start address (to point to added code)
+* C. changing dynamic linking info
+* D. changing function call instruction
+* E. changing beginning/end of function
+

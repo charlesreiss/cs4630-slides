@@ -1,0 +1,8 @@
+
+### compressing viruses 
+
+
+
+* file too big? how about <em>compression</em>
+ ![](texfig/where-compress.figure.svg)
+

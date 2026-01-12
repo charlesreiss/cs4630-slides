@@ -1,0 +1,13 @@
+
+### hard for patterns?  {.smaller}
+
+
+* malware makes modificates to evade pattern matching
+* exercise: suppose we have a pattern for a Vienna-like virus, and a new version makes the following change. Which of the following is going to be easiest/hardest to change the pattern for? 
+
+   * A. inserting random number of nops every 8 non-nop instructions of virus code
+   * B. replacing code at random offset in executable instead of appending
+   * C. registers used for temporaries in virus code chosen at random each time the virus copies itself
+   * D. instead of appending all the virus code, virus code now split between cavities with a "loader" appended (the "loader" reforms code from the cavities and jumps to them)
+
+

@@ -1,0 +1,36 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\newsavebox\flexStatesTop
+\newsavebox\flexStatesMiddle
+\newsavebox\flexStatesBottom
+\begin{document}
+\begin{lrbox}{\flexStatesTop}
+\begin{lstlisting}
+%x str
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\flexStatesMiddle}
+\begin{lstlisting}
+\"          { BEGIN(str); }
+<str>\"     { BEGIN(INITIAL); }
+<str>foo    { printf("foo in string\n"); }
+foo         { printf("foo out of string\n"); }
+<INITIAL,str>(.|\n) {}
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\flexStatesBottom}
+\begin{lstlisting}
+int main(void) {
+    yylex();
+}
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{heur-detect/texfig/flexStates.inner.tex}
+\setSlide{2}
+\input{heur-detect/texfig/flexStates.inner.tex}
+\setSlide{3}
+\input{heur-detect/texfig/flexStates.inner.tex}
+\end{document}

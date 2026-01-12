@@ -1,0 +1,23 @@
+
+### patch instruction? 
+
+
+![](/re-tools/ghidra-patch-ex){}
+
+
+### patch instruction? 
+
+
+![](/re-tools/ghidra-patch-ex2){}
+
+
+### why is this useful? 
+
+
+* can export modified version of binary to test
+* ghidra has support for debugging or emulating running program 
+
+   * emulation is another application of PCode representation
+   * debugging requires some work to configure
+
+

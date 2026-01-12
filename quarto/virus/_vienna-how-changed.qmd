@@ -1,0 +1,27 @@
+
+### Vienna: on detection 
+
+
+* special metadata mark could be looked for
+* distinctive pattern, in well known place 
+
+   * future assignment: pattern matching to find known malware
+
+
+
+### Vienna: non-portability  {.smaller}
+
+
+* [relies on very simple executable formats]{.fragment fragment-index=2 .custom .myem-only} 
+
+   * modern (read: anything after DOS) executable formats more complex/featureful
+
+* [relies on self-modifying code]{.fragment fragment-index=2 .custom .myem-only} 
+
+   * often requires extra steps on modern systems
+
+* uses metadata on filesystem 
+
+   * quirk of DOS filesystem timestamp format
+
+

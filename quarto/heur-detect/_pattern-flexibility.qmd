@@ -1,0 +1,14 @@
+
+### regular expressions are flexible  {.smaller}
+
+
+* for Vienna: lots of flex features we didn't need 
+
+   * things being repeated variable number of times
+   * one of list of possible characters (bytes)
+   * …
+ 
+
+* but viruses try to make pattern matching hard
+* good to think about what we can easily match
+

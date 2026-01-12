@@ -1,0 +1,147 @@
+
+### disassembly issues (1)  {.smaller}
+
+
+```
+.global main
+main:
+    call print_hello
+    xorl %eax, %eax
+    ret
+.Lstr:
+    .asciz "Hello!"
+print_hello:
+    leaq .Lstr(%rip), %rdi  // RDI <- .Lstr address
+    jmp puts
+```
+ <hr />
+ <pre><code>0000000000001139 &lt;main&gt;:
+    1139:	e8 0a 00 00 00       	call   1148 &lt;print_hello&gt;
+    113e:	31 c0                	xor    %eax,%eax
+    1140:	c3                   	ret    
+    <em>1141:	48                   	rex.W</em>
+    <em>1142:	65 6c                	gs insb (%dx),%es:(%rdi)</em>
+    <em>1144:	6c                   	insb   (%dx),%es:(%rdi)</em>
+    <em>1145:	6f                   	outsl  %ds:(%rsi),(%dx)</em>
+    <em>1146:	2e                   	cs</em>
+<em>	...</em>
+0000000000001148 &lt;print_hello&gt;:
+    1148:	48 8d 3d f2 ff ff ff 	lea    -0xe(%rip),%rdi        # 1141 &lt;main+0x8&gt;
+    114f:	e9 dc fe ff ff       	jmp    1030 &lt;puts@plt&gt;
+</code></pre>
+
+
+### disassembly issues  {.smaller}
+
+<pre><code>0000000000001139 &lt;main&gt;:
+    1139:	e8 0a 00 00 00       	call   1148 &lt;print_hello&gt;
+    113e:	31 c0                	xor    %eax,%eax
+    1140:	c3                   	ret    
+    <em>1141:	48                   	rex.W</em>
+    <em>1142:	65 6c                	gs insb (%dx),%es:(%rdi)</em>
+    <em>1144:	6c                   	insb   (%dx),%es:(%rdi)</em>
+    <em>1145:	6f                   	outsl  %ds:(%rsi),(%dx)</em>
+    <em>1146:	2e                   	cs</em>
+    <em>	...</em>
+0000000000001148 &lt;print_hello&gt;:
+    1148:	48 8d 3d f2 ff ff ff 	lea    -0xe(%rip),%rdi        # 1141 &lt;main+0x8&gt;
+    114f:	e9 dc fe ff ff       	jmp    1030 &lt;puts@plt&gt;
+</code></pre>
+ <hr />
+ <pre><code>    1139:	e8 0a 00 00 00       	call   1148 &lt;__cxa_finalize@plt+0x108&gt;
+    113e:	31 c0                	xor    %eax,%eax
+    1140:	c3                   	ret    
+    <em>1141:	48                   	rex.W</em>
+    <em>1142:	65 6c                	gs insb (%dx),%es:(%rdi)</em>
+    <em>1144:	6c                   	insb   (%dx),%es:(%rdi)</em>
+    <em>1145:	6f                   	outsl  %ds:(%rsi),(%dx)</em>
+    1146:	<em>2e 00</em> 48 8d          	cs add %cl,-0x73(%rax)
+    114a:	3d f2 ff ff ff       	cmp    $0xfffffff2,%eax
+    114f:	e9 dc fe ff ff       	jmp    1030 &lt;puts@plt&gt;
+</code></pre>
+
+
+### finding assembly heuristics 
+
+
+* objdump strategy, apparently: 
+
+   * disassemble instructions starting at each symbol
+   * skip over strings of zero-bytes just before symbol
+
+* problem: can misidentify jumped to instructions 
+
+   * especially if symbols stripped to save space/hinder reverse engineering
+
+* exercise: algorithm to fix? 
+
+   * (Ghidra does this)
+
+
+
+### some tricky cases (1)  {.smaller}
+
+
+```
+_start:
+    ...
+    movq $main, %rdi
+    ...
+    call __libc_start_main
+    ...
+```
+ <hr />
+ 
+```
+struct DeviceTypeFuncs {
+    void (*Send)(struct DeviceInfo*, char *);
+    void (*Recv)(struct DeviceInfo, char *, size_t);
+};
+void SendToDevice(struct DeviceInfo* info, char *data) {
+    (info->funcs->Send)(data);
+}
+```
+
+
+### some tricky cases (2)  {.smaller}
+
+
+```
+table:
+    .int case1 - table
+    .int case2 - table
+...
+
+    lea table(%rip), %rax
+    addq (%rax, %rdi, 4), %rax
+    jmp *%rax
+```
+ <hr />
+ 
+```
+    movq $function + 0x12340, %rax
+    movq $0x1234, %r9
+    sll $4, %r9
+    addq %r9, %rax
+    call *%rax
+```
+
+
+### some tricky cases (3) 
+
+
+```
+    call complex_func_returning_three
+    lea next2-3(%rax), %rax
+    jmp *%rax
+    .byte 0x39, 0x59, 0x60, 0x89, 0xFF
+next2:
+    addq ...
+```
+
+
+###  
+
+
+![](/re-tools/ghidra-disass-mixed-detail){}
+

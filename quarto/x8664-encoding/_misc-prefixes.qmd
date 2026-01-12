@@ -1,0 +1,11 @@
+
+### instruction prefixes  {.smaller}
+
+
+* REX (64-bit and/or extra register bits)
+* VEX (SSE/AVX instructions; other new instrs.)
+* operand/address-size change (64/32 to 16 or vice-versa)
+* <code>LOCK</code> --- synchronization between processors
+* [<code>REPNE/REPNZ/REP/REPE/REPZ</code> --- turns instruction into loop]{.fragment fragment-index=2 .custom .myem-only}
+* segment overrides
+

@@ -1,0 +1,120 @@
+
+# self-replicating malware, generally {visibility="hidden"}
+
+{{< include /virus/_self-repl-mal.qmd >}}
+
+# virus: hide in existing programs {visibility="hidden"}
+
+## motivation {visibility="hidden"}
+
+{{< include /virus/_hide-existing.qmd >}}
+
+## early prevalance/motivations {visibility="hidden"}
+
+{{< include /virus/_early-prevalence.qmd >}}
+
+# case study: Vienna {visibility="hidden"}
+
+{{< include /virus/_vienna-intro.qmd >}}
+
+## aside: COM files {visibility="hidden"}
+
+{{< include /exec-encoding/_com-files.qmd >}}
+
+## entry/exit {visibility="hidden"}
+
+{{< include /virus/_entry-exit.qmd >}}
+
+## infection outline {visibility="hidden"}
+
+{{< include /virus/_vienna-infect-outline.qmd >}}
+
+## writing your own code? {visibility="hidden"}
+
+### againframe(viennaOutline)
+
+## aside: quines{visibility="hidden"}
+
+{{< include /virus/_quine.qmd >}}
+
+## Vienna replication code{visibility="hidden"}
+
+{{< include /virus/_vienna-replicate.qmd >}}
+
+## Vienan relocation code {visibility="hidden"}
+
+### againframe(viennaOutline)
+
+## Vienna's relocation code{visibility="hidden"}
+
+{{< include /virus/_vienna-relocate.qmd >}}
+
+## alternate: PIC{visibility="hidden"}
+
+{{< include /virus/_vienna-alt-relocate.qmd >}}
+
+## avoiding reinfection {visibility="hidden"}
+
+### againframe(viennaOutline)
+
+{{< include /virus/_vienna-reinfect.qmd >}}
+
+# viruses: where to put code {visibility="hidden"}
+
+{{< include /virus/_where-code-intro.qmd >}}
+
+## replacing executables? {visibility="hidden"}
+
+### againframe(whereCode)
+
+{{< include /virus/_where-code-replace.qmd >}}
+
+## appending/compressing {visibility="hidden"}
+
+### againframe(whereCode)
+
+{{< include /virus/_where-append-compress.qmd >}}
+
+## cavaties {visibility="hidden"}
+
+### againframe(whereCode)
+
+{{< include /virus/_where-cavaties.qmd >}}
+
+## chaining cavaties (CIH case study){visibility="hidden"}
+
+{{< include /virus/_where-cavaties-chain.qmd >}}
+
+## segment rounding{visibility="hidden"}
+
+{{< include /virus/_where-cavaties-rounding.qmd >}}
+
+## boot sector {visibility="hidden"}
+
+### againframe(whereCode)
+
+{{< include /virus/_where-boot-sector.qmd >}}
+
+## memory residence {visibility="hidden"}
+
+{{< include /virus/_residence.qmd >}}
+
+# virus: getting code invoked {visibility="hidden"}
+
+{{< include /virus/_invoke-options.qmd >}}
+
+## changing start location {visibility="hidden"}
+
+{{< include /virus/_invoke-start.qmd >}}
+
+## overwrite existing code {visibility="hidden"}
+
+{{< include /virus/_invoke-overwrite-existing.qmd >}}
+
+## using dynamic linking features {visibility="hidden"}
+
+{{< include /virus/_invoke-dynamic.qmd >}}
+
+# virus summary? {visibility="hidden"}
+
+{{< include /virus/_summary.qmd >}}

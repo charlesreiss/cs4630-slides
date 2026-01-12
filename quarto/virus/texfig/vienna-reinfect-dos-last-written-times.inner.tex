@@ -1,0 +1,41 @@
+\begin{tikzpicture}
+\tikzset{
+    mylabel/.style={anchor=center},
+    bitlabel/.style={font=\scriptsize,anchor=south west,inner sep=.5mm,text depth=.1mm},    
+};
+\begin{scope}[x=1.2cm]
+\begin{scope}[thick]
+    \draw (0, 0) rectangle (4, 1);
+    \draw (0, 0) rectangle (1.75, 1);
+    \node[bitlabel] at (0, 0) {15};
+    \node[bitlabel] at (1.5, 0) {9};
+    \draw (1.75, 0) rectangle (2.75, 1);
+    \node[bitlabel] at (1.75, 0) {8};
+    \node[bitlabel] at (2.5, 0) {5};
+    \draw (2.75, 0) rectangle (4., 1);
+    \node[bitlabel] at (2.75, 0) {4};
+    \node[bitlabel] at (3.75, 0) {0};
+\end{scope}
+\node[mylabel] at (.75, 0.5) {Y-1980};
+\node[mylabel] at (2.25, 0.5) {Mon};
+\node[mylabel] at (3.325, 0.5) {Day};
+\end{scope}
+
+\begin{scope}[x=1.2cm,xshift=6.5cm]
+\begin{scope}[thick]
+    \draw (0, 0) rectangle (4, 1);
+    \draw (0, 0) rectangle (1, 1);
+    \node[bitlabel] at (0, 0) {15};
+    \node[bitlabel] at (.7, 0) {11};
+    \draw (1, 0) rectangle (2.75, 1);
+    \node[bitlabel] at (1.0, 0) {10};
+    \node[bitlabel] at (2.5, 0) {5};
+    \draw (2.75, 0) rectangle (4., 1);
+    \node[bitlabel] at (2.75, 0) {4};
+    \node[bitlabel] at (3.75, 0) {0};
+\end{scope}
+\node[mylabel] at (.325, 0.5) {H};
+\node[mylabel] at (1.75, 0.5) {Min};
+\node[mylabel] at (3.4, 0.5) {Sec/2};
+\end{scope}
+\end{tikzpicture}

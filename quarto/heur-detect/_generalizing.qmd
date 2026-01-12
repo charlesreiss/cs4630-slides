@@ -1,0 +1,38 @@
+
+### avoiding sensitivity: virus patterns  {.smaller}
+
+
+* recall: things viruses <em>can't easily change!</em>
+* example:  
+
+   * inserted jumps to virus codes
+   * code in weird parts of executable file
+   * code that modifies executables
+   * …
+
+
+
+### generic generalizing 
+
+
+* take static parts of virus
+* look for <em>distance to match</em>
+* e.g. <code>foobarbaz</code> is 2 from <code>fooxaxbaz</code>
+* slower than regular-expression-like scanners
+
+
+### pattern cost  {.smaller}
+
+
+* constructed by hand? 
+
+   * question: how could we automate?
+
+* false positives? 
+
+   * push + ret really unused?
+   * jmp at beginning?
+   * what about data bytes?
+   * …
+
+

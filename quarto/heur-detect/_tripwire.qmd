@@ -1,0 +1,31 @@
+
+### tripwire  {.smaller}
+
+
+* open source tool from c. 2000 
+
+   * also company around that tool, but I don't know about it
+
+* ‘‘tool for monitoring and alerting on file &amp; directory changes’’
+* targetted at servers with professional administrators 
+
+* setup: run tool, it records state of system/etc. files (e.g. hashes)
+* later: run tool, it tells you if anything changed
+
+
+### tripwire as antimalware software?  {.smaller}
+
+
+* tripwire idea: detect any changes
+* notify user (administrator) about them 
+
+* what is user supposed to do with this info? 
+
+* what about normal software updates, etc.?
+* can malware hide in files that are supposed to change? 
+
+   * ‘‘data’’ files with other programs, scripts?
+   * …
+
+* what if system compromised before setup?
+

@@ -1,0 +1,19 @@
+\begin{tikzpicture}
+\begin{scope}[every node/.style={font=\tt,thick}]
+\node[initial,state,font=\normalfont\it] (start) {};
+\node[state,right=1cm of start] (f) {f};
+\node[state,right=1cm of f] (fo) {fo};
+\node[state,right=1cm of fo,accepting] (foo) {foo};
+\node[state,below right=2cm of start,accepting] (dot) {.};
+\node[state,below=1.5cm of start,accepting] (newline) {\textbackslash{}n};
+\end{scope}
+\path[-Latex,thick] (start) edge node[above] {\tt f} (f)
+                    (f) edge node[above] {\tt o} (fo)
+                    (fo) edge node[above] {\tt o} (foo)
+                    (start) edge node[sloped,above] {other} (dot)
+                    (start) edge node[left] {\textbackslash{}n} (newline);
+\begin{visibleenv}<2>
+    \path[-Latex,blue,dashed] (f) edge node[right] {(back 1)} (dot);
+    \path[-Latex,blue,dashed] (fo) edge[out=-45,in=-30] node[midway, sloped, below] {(back 2)} (dot);
+\end{visibleenv}
+\end{tikzpicture}

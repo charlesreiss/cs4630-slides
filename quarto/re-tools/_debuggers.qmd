@@ -1,0 +1,98 @@
+
+### debuggers / emulators 
+
+
+* major way to analyzing software --- run it! 
+
+* possibly using debugger to analyze memory/registers/etc.
+* possibly in restricted environment 
+
+   * either limit access to system calls, <it>or</it>
+   * run on virtual (okay-to-lose) hardware
+
+
+
+### selected debugger features (1) 
+
+
+* watchpoint (GDB/LLDB <code>watch</code>) 
+
+   * breakpoint triggered by variable/expression changing
+
+* breakpoints on system calls (GDB <code>catch syscall …</code>)
+* searching memory for strings (GDB <code>find</code>, LLDB <code>memory find</code>)
+
+
+### selected debugger fetures (2) 
+
+
+* saving ‘core’ files (GDB <code>generate-core-file NAME</code>) 
+
+   * full copy of program's memory, can reload in debugger later
+
+* copying memory to/from file (GDB <code>dump</code>/<code>append</code>/<code>restore</code>; LLDB <code>memory read</code>/<code>write</code>)
+* attaching to programs / remote debugging
+* forcing jump to address/return from function (GDB <code>jump</code>/<code>return</code>)
+
+
+### Ghidra debugger integration  {.smaller}
+
+
+![](/re-tools/ghidra-open-debugger.png){}
+ 
+![](/re-tools/ghidra-open-debugger2.png){}
+
+
+### aside: Ghidra debugger installation 
+
+
+* relies on GDB python support + some python packages installed
+* see installation docs
+
+
+### Ghidra traces  {.smaller}
+
+
+![](/re-tools/ghidra-control-target.png){}
+ 
+
+* Ghidra --- debugging session creates a ‘trace’ 
+
+   * can be saved to look at later
+
+* creates a list of ‘snapshots’ for every time debugger stopped 
+
+   * snapshots are <it>incomplete</it>
+   * need to force read of memory/etc. to have info included in snapshot
+
+* can switch between ‘Control Target’ and ‘Control Trace’ modes 
+
+   * Control Trace --- go back to old snapshots, examine state
+   * Control Target --- control live program in debugger
+
+
+
+### Ghidra dynamic view 
+
+
+::: {.r-stack .my-full}
+![](texfig/debuggers-ghidra-dynamic-view.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](texfig/debuggers-ghidra-dynamic-view.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+![](texfig/debuggers-ghidra-dynamic-view.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
+![](texfig/debuggers-ghidra-dynamic-view.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
+
+:::
+
+
+### Ghidra snapshots/saved traces: 
+
+
+![](/re-tools/ghidra-time-trace){}
+ 
+
+* automatic partial snapshots whenever pausing debugger
+* can force read of range of memory to make snapshot contain memory image
+

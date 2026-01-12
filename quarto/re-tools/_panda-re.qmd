@@ -1,0 +1,16 @@
+
+### PANDA.re  {.smaller}
+
+
+* fork of emulator QEMU
+* supports whole-system record+replay 
+
+* idea: run virtual machine with malware
+* replay run with analyses that can look at all instructions run
+* examples: 
+
+   * identify where dat from a specific file was used
+   * search memory for string throughout execution
+   * function call history
+
+

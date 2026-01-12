@@ -1,0 +1,5 @@
+
+### exercise 1 
+
+![](texfig/ex-32.figure.svg)
+

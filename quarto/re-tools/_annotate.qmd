@@ -1,0 +1,12 @@
+
+### annotating decompilation (2) 
+
+
+* can help out decompiler with annotations… 
+
+* rename functions, local variables
+* set data types for variables, parameters, return types, globals 
+
+   * including array, struct types
+
+

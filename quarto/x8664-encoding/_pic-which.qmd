@@ -1,0 +1,13 @@
+
+### position-independence: which to use?  {.smaller}
+
+
+* suppose we're inserting ‘‘evil’’ code <br> at changing addresses in executable's memory
+* which of the following do we want absolute encoding for? <br> (i.e. which would absolute encoding be easier than relative) 
+
+   * A. address of a jump from evil code to function at fixed loc in executable
+   * B. address of a jump in a loop in the ‘‘evil’’ code
+   * C. address of a string in the ‘‘evil’’ code
+   * D. address of a string in the executable
+
+

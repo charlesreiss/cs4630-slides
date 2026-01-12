@@ -1,0 +1,49 @@
+
+### unused code case study: /bin/ls  {.smaller}
+
+
+
+* unreachable no-ops!
+ <pre><code>...
+  403788:	e9 59 0c 00 00       	jmpq   4043e6 &lt;__sprintf_chk@plt+0x1a06&gt;
+  <em>40378d:	0f 1f 00             	nopl   (%rax)</em>
+  403790:	ba 05 00 00 00       	mov    $0x5,%edx
+...
+  403ab9:	eb 4d                	jmp    403b08 &lt;__sprintf_chk@plt+0x1128&gt;
+  <em>403abb:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)</em>
+  403ac0:	4d 8b 7f 08          	mov    0x8(%r15),%r15
+...
+  404a01:	c3                   	retq   
+  <em>404a02:	0f 1f 40 00          	nopl   0x0(%rax)</em>
+  <em>404a06:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)</em>
+  <em>404a0d:	00 00 00 </em>
+  404a10:	be 00 e6 61 00       	mov    $0x61e600,%esi
+...
+</code></pre>
+
+
+### why empty space?  {.smaller}
+
+
+* Intel Optimization Reference Manual: <br> ‘‘<em>Assembly/Compiler Coding Rule 12. (M impact, H generality)</em> <br> All branch targets should be 16-byte aligned.’’ 
+
+   * better for instruction cache [ (and TLB and related caches)]{.my-small}
+   * better for instruction decode logic
+   * function calls, jumps count as branches for this purpose
+
+
+
+### why weird nops  {.smaller}
+
+
+* could fill with <em>anything</em> --- unreachable
+* <code>nop</code>s allow compiler/assembler to align <em>without checking reachability</em>
+* <code>nop</code>s better for <em>disassembly</em> 
+
+   * Intel manual recommends form of <code>nop</code> for different lengths
+
+* possibly <em>better for CPU</em>  
+
+   * ‘‘Placing data immediately following an indirect branch can cause performance problems. If the data consists of all zeros, it looks like a long stream of ADDs to memory destinations, and this can cause resource conflicts…’’
+
+

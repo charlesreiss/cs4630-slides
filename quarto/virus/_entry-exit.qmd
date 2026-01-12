@@ -1,0 +1,56 @@
+
+### Vienna: infection 
+
+![](texfig/viennaInfect.figure.svg)
+
+
+### Vienna: ‘‘fixup’’  {.smaller}
+
+<!-- \lstset{
+    language=myasm,
+    style=small,
+    moredelim={**[is][\btHL<2>]{~hi2~}{~endhi2~}},
+    moredelim={**[is][\btHL<3>]{~hi3~}{~endhi3~}},
+} -->
+ <pre><code>0x0700:
+    push %cx // initial value of %cx matters??
+    mov <span data-fragment-index="3" class="fragment custom myem-only">$0x8fd</span>, %si // %si &lt;- beginning of data
+    mov %si, %dx // save %si
+        // movsb uses %si, so
+        // can't use another register
+    add $0xa, %si // offset of saved code in data
+    mov $0x100, %di // target address
+    mov $3, %cx // bytes changed
+    /* copy %cx bytes from (%si) to (%di) */
+    rep movsb 
+    ...
+...
+// saved copy of original application code
+0x903: <span data-fragment-index="2" class="fragment custom myem-only">.byte 0xb9 .byte 0x28 .byte 0x4f</span>
+</code></pre>
+
+
+### Vienna: return  {.smaller}
+
+<!-- \lstset{language=myasm,style=small} -->
+ 
+```
+0x08e7:
+    pop %cx // restore initial value of %cx, %sp
+    xor %ax, %ax // %ax <- 0
+    xor %bx, %bx
+    xor %dx, %dx
+    xor %si, %si
+    // push 0x0100
+    mov $0x0100, %di
+    push %di 
+    xor %di, %di // %di <- 0
+    // pop 0x0100 from stack
+    // jmp to 0x0100
+    ret 
+
+```
+ 
+
+* question: why not just jmp 0x0100 ?
+

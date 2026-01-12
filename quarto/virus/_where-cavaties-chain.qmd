@@ -1,0 +1,29 @@
+
+### is there enough empty space? 
+
+
+* cavities look awfully small
+* really small viruses?
+* solution: chain cavities tgoether
+
+
+### case study: CIH (1) 
+
+![](texfig/where-cavaties-chain-case-study-cih-1.figure.svg){fig-alt="original excutable is transformed to contain virus startup code followed by a table of virus code locations. Most of the virus code is in the locations pointed to by the table, which were cavaties."}
+
+
+### case study: CIH (2) 
+
+![](texfig/where-cavaties-chain-case-study-cih-2.figure.svg){fig-alt="When the virus runs, the virus code parts are copied into contiguous storage before running. This alllows them to run without dealing worrying about whether instructions were split into two pieces or about inserting jumps between the parts of the virus code."}
+
+
+### CIH cavities 
+
+
+* gaps between sections 
+
+   * common Windows linker aligned sections
+   * (align = start on address multiple of $N$, e.g. $4096$)
+
+* reassembling code avoids worrying about splitting instructions
+

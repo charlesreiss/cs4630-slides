@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+\node (table) {
+\includegraphics[height=0.8\mypaperheight]{../x8664-encoding/32bitmodrm}
+};
+\begin{visibleenv}<2>
+\node[anchor=north west,align=left] at (table.north east) {
+    general pattern for 32-bit x86 register numbering: \\
+    AX = 0, CX, DX, BX, SP, BP, SI, DI = 7 \\
+    ~ \\
+    not all registers treated equally to make space for \\
+    special types of addressing: \\
+    (base + index * scale, constant address)
+};
+\end{visibleenv}
+\end{tikzpicture}

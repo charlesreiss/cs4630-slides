@@ -1,0 +1,27 @@
+
+### self-replicating malware  {.smaller}
+
+
+
+* attacker's problem: <br>getting malware to <em>run where they want</em>
+* some options: 
+
+* connect to machine and install it there
+* send to someone
+* convince someone else to send it to someone
+ ![](texfig/self-repl-mal-self-replicating-malware.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
+![](texfig/self-repl-mal-self-replicating-malware.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
+
+
+### recall: kinds of malware  {.smaller}
+
+
+
+* viruses --- infects <em>other programs</em>
+* [worms]{.fragment fragment-index=3 .custom .myem-only} --- own malicious programs
+* [trojans]{.fragment fragment-index=4 .custom .myem-only} --- useful (looking) program that also is malicious
+* [rootkit]{.fragment fragment-index=2 .custom .myem-only} --- silent control of system
+ ![](texfig/self-repl-mal-recall-kinds-of-malware.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
+![](texfig/self-repl-mal-recall-kinds-of-malware.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
+![](texfig/self-repl-mal-recall-kinds-of-malware.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=3}
+

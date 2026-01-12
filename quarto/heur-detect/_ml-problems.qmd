@@ -1,0 +1,18 @@
+
+### machine learning and adversaries  {.smaller}
+
+
+* I don't like most ML-based approaches to malware detection 
+
+* problem: most machine learning not designed to deal with adversaries
+* attack: find factors used to ID benign programs 
+
+   * do all of them as much as possible
+   * inquiry: what might they be in DREBIN case?
+
+* attack: provide many malware samples with benign weird behavior 
+
+   * machine learning uses weird behavior to identify malware
+   * may lower effectiveness on ‘normal’ malware
+
+

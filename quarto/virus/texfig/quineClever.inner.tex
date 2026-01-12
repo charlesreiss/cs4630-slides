@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+    \begin{visibleenv}<2>
+        \node[fill=white,draw,thick,align=left] at (current page.center) {
+            {\tt printf} to fill template: \\
+            {\tt 10} = newline; {\tt 34} = double-quote; \\
+            {\tt x}, {\tt p} = template/constant strings
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<3>
+        \node[fill=white,draw,thick,align=left] at ([yshift=1cm]current page.center) {
+            template filled by printf
+        };
+    \end{visibleenv}
+\end{scope}
+\end{tikzpicture}

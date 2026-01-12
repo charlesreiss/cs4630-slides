@@ -1,0 +1,20 @@
+
+### summary  {.smaller}
+
+
+* how to hide: 
+
+   * separate executable
+   * append
+   * existing ‘‘unused’’ space
+   * append + compression
+
+* how to run: 
+
+   * change entry point (start address)
+   * change calls
+   * change beginning of function
+   * change dynamic-linking-related pointers
+   * arrange to run as part of OS
+
+

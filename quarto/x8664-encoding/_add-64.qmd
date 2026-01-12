@@ -1,0 +1,17 @@
+
+### what about 64-bit? 
+
+
+* adds 8 more registers --- more bits for reg #?
+* didn't change encoding for existing instructions, so…
+* <em>instruction prefix</em> ‘‘REX’’ 
+
+   * 32-bit x86 already had many prefixes
+
+* also selects 64-bit version of instruction
+
+
+### REX prefix 
+
+![](texfig/add-64-rex-prefix.figure.svg)
+

@@ -1,0 +1,22 @@
+
+### segment rounding  {.smaller}
+
+  objdump -x /bin/ls:  <pre><code>   LOAD off    0x0000000000004000 vaddr 0x0000000000004000 paddr 0x0000000000004000 align 2**12
+        filesz <span data-fragment-index="0" class="fragment custom myem-only">0x0000000000013091</span> memsz 0x0000000000013091 flags r-x
+   LOAD off    <span data-fragment-index="1" class="fragment custom myem-only">0x0000000000018000</span> vaddr 0x0000000000018000 paddr 0x0000000000018000 align 2**12
+        filesz 0x0000000000007458 memsz 0x0000000000007458 flags r--
+</code></pre>
+ running /bin/ls in gdb: <pre><code>(gdb) info proc map
+process 1178818
+Mapped address spaces:
+          Start Addr           End Addr       Size     Offset  Perms  objfile
+      0x555555554000     0x555555558000     0x4000        0x0  r--p   /usr/bin/ls
+      0x555555558000     0x55555556c000    <span data-fragment-index="0" class="fragment custom myem-only">0x14000</span>     0x4000  r-xp   /usr/bin/ls
+      0x55555556c000     0x555555574000     0x8000    0x18000  r--p   /usr/bin/ls
+....
+</code></pre>
+ 
+
+* requested 0x13091 bytes, loaded 0x14000
+* x86-64 Linux: OS allocates only in one page = 4096-byte chunks
+

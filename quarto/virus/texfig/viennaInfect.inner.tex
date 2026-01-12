@@ -1,0 +1,9 @@
+\begin{tikzpicture}
+\tikzset{programBox/.style={draw,thick},every label/.style={inner sep=1mm,outer sep=0mm}}
+\node[programBox,minimum height=3cm,label={north:uninfected},anchor=north west] (uninfect) at (0,0) {
+\usebox{\viennaInfectCodeBefore}
+};
+\node[programBox,anchor=north west,label={[overlay]north:infected}] at ([yshift=.5cm,xshift=1cm]uninfect.north east) {
+\usebox{\viennaInfectCodeAfter}
+};
+\end{tikzpicture}

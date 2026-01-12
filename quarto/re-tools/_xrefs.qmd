@@ -1,0 +1,36 @@
+
+### cross-references (1) 
+
+
+![](/re-tools/ghidra-disass-mixed-w-xref){}
+
+
+### cross-references idea 
+
+
+* cross-reference idea:
+* really useful to know where something is used 
+
+* do-able ‘by hand’ with objdump and friends, but… 
+
+   * lots of bookkeeping, searching in text files, etc.
+
+
+
+### more cross-references 
+
+
+![](/re-tools/ghidra-mystery-xref-many){}
+
+
+### more cross-references (stack) 
+
+
+![](/re-tools/xrefs-func){}
+
+
+### more cross-references (global) 
+
+
+![](/re-tools/xrefs-global){}
+

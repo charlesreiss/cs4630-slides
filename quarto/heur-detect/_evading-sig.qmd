@@ -1,0 +1,11 @@
+
+### evading signatures 
+
+
+* idea for detecting Vienna: 
+
+   * signature = code excluding changing part from relocation
+
+* exercise 1: what are some <em>easy</em> changes to Vienna that would evade this <em>strategy for making signatures</em>?
+* exercise 2: what are some ways of handling those?
+

@@ -1,0 +1,18 @@
+
+### detecting cavity hiding?  {.smaller}
+
+
+* thought for future: detecting cavity hiding? 
+
+* example: filling empty space in header --- what should we look for? 
+
+   * stuff that looks like machine code?
+   * validate matches executable data structure?
+ 
+
+* follow-up: possibility for false positives? 
+
+   * additional executable format features?
+   * values that happen to be same as machine code?
+
+

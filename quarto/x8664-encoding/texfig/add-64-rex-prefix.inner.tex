@@ -1,0 +1,31 @@
+\begin{tikzpicture}
+    \node[draw,rectangle split,rectangle split horizontal, rectangle split parts=5,
+        label={north:REX prefix byte}] (rexbyte) {
+        {\tt 0100}
+        \nodepart{two}
+        w
+        \nodepart{three}
+        r
+        \nodepart{four}
+        x
+        \nodepart{five}
+        b
+    };
+    \node[anchor=north west,align=left] (wExplain) at ([yshift=-5cm,xshift=.5cm]rexbyte.five south) {
+        {\tt 1} if 64-bit values ({\tt \%rax}, etc. or from memory)\\
+        {\tt 0} if 32-bit values ({\tt \%eax}, etc. or from memory)
+    };
+    \draw[thick,-Latex] (rexbyte.two south) |- (wExplain.west);
+    \node[anchor=south west] (rExplain) at ([yshift=1mm]wExplain.north west) {
+        extra bit for ModRM reg field
+    };
+    \draw[thick,-Latex] (rexbyte.three south) |- (rExplain.west);
+    \node[anchor=south west] (sExplain) at ([yshift=1mm]rExplain.north west) {
+        extra bit for SIB byte index reg field
+    };
+    \draw[thick,-Latex] (rexbyte.four south) |- (sExplain.west);
+    \node[anchor=south west, align=left] (bExplain) at ([yshift=1mm]sExplain.north west) {
+        extra bit for ModRM r/m \\ or SIB base reg field
+    };
+    \draw[thick,-Latex] (rexbyte.five south) |- (bExplain.west);
+\end{tikzpicture}

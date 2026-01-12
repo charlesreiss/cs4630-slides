@@ -1,0 +1,22 @@
+
+### virus library calls  {.smaller}
+
+
+* common for viruses to want to call standard library 
+
+* in applications: 
+
+   * just call the stub
+
+* problem: stubs located at different parts of different applications 
+
+   * virus code won't work in every one
+
+* some possible solutions: 
+
+   * hard-code common loaded addresses (hope nothing changes)
+   * rewrite standard library function yourself
+   * scan linker data structures to find
+   * write out new library/executable and run it
+
+

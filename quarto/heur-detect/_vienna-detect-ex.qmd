@@ -1,0 +1,14 @@
+
+### what signature for Vienna?  {.smaller}
+
+
+* Suppose we wanted to detect Vienna in execs.
+* What is best to look for in an exectuable… <br> in terms of performance? false positives? true positives? 
+
+   * A. machine code found in example infected file at the end of the executable
+   * B. machine code found in example infected file at the end of the executable, ignoring parts that change on reinfection
+   * C. portion of virus's machine code that copies itself to a new file anywhere in the executable
+   * D. whether another executable file in same directory changes if we run the executable in a VM
+   * E. for a jump at beginning of the executable to something near the end
+
+

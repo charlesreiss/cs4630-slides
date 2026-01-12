@@ -1,0 +1,13 @@
+
+### Vienna: infection outline  {.smaller}
+
+
+* Vienna <em>appends</em> code to infected application 
+
+* [where does it read the code come from?]{.fragment fragment-index=2 .custom .myem-only}
+* [how is code adjusted for new location in the binary?]{.fragment fragment-index=3 .custom .myem-only} 
+
+   * what linker would do
+
+* [how does it keep files from getting infinitely long?]{.fragment fragment-index=4 .custom .myem-only}
+

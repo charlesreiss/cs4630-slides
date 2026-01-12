@@ -1,0 +1,44 @@
+
+### 64-bit REX exercise (1)  {.smaller}
+
+
+* <code>add %eax, %ecx</code> (Intel: <code>ADD ecx, eax</code>) 
+
+   * <code>01</code> (opcode) <code>c1</code> (MOD: 11 / REG: 000 (eax) / R/M: 001 (ecx))
+
+* exercise 2a: <code>add %eax, %r10d</code> (Intel: <code>ADD r9d, eax</code>) = ??? 
+
+   * REX prefix + <code>01</code> + MOD-REG-R/M byte
+ 
+
+* REX prefix: 
+
+   * <code>0100</code>
+   * w (is 64-bit values?)
+   * r (extra bit for Reg field)
+   * s (extra bit for SIB index reg)
+   * b (extra bit for R/M or SIB base field)
+
+
+
+### 64-bit REX exercise (2)  {.smaller}
+
+
+* <code>add %eax, %ecx</code> (Intel: <code>ADD ecx, eax</code>) 
+
+   * <code>01</code> (opcode) <code>c1</code> (MOD: 11 / REG: 000 (eax) / R/M: 001 (ecx))
+
+* exercise 2b: <code>add %rax, %rcx</code> (Intel: <code>ADD rcx, rax</code>) = ??? 
+
+   * REX prefix + <code>01</code> + MOD-REG-R/M byte
+ 
+
+* REX prefix: 
+
+   * <code>0100</code>
+   * w (is 64-bit values?)
+   * r (extra bit for Reg field)
+   * s (extra bit for SIB index reg)
+   * b (extra bit for R/M or SIB base field)
+
+

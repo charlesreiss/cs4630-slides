@@ -1,0 +1,12 @@
+
+### after scanning --- disinfection 
+
+
+* antivirus software wants to <em>repair</em>
+* requires specialized scanning 
+
+   * no room for errors
+   * need to identify <em>all</em>
+   * need to find relocated bits of code
+
+

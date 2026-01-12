@@ -1,0 +1,12 @@
+
+### generic pattern example  {.smaller}
+
+
+* another possibility: detect writing near <code>0x100</code>
+* <code>0x100</code> was DOS program entry code  --- no program should do this(?)
+* problem: how to represent this? 
+
+   * describe machine code bytes
+   * multiple possibilities
+
+

@@ -1,0 +1,35 @@
+\begin{tikzpicture}
+\tikzset{
+    mybox/.style={draw,rectangle,minimum width=10cm,fill=white},
+}
+\node[mybox] (header) {
+    \textbf{header}: machine type, file type, etc.
+};
+\node[mybox,below=0mm of header,align=center] (pHeader) {
+    \textbf{program header}: ``\myemph{segments}'' to load \\
+        (also, some other information) \\
+    \only<2-3>{\myemph{\textbf{length edited by virus}}}
+    \only<4-6>{\myemph{\textbf{new segment added by virus}}}
+};
+\node[mybox,below=0mm of pHeader,align=center] (seg1) {
+    \textbf{segment 1 data}
+};
+\node[mybox,below=0mm of seg1,align=center] (seg2) {
+    \textbf{segment 2 data} \\
+    \only<2-3>{\myemph{\textbf{virus code + new entry point?}}}
+};
+\node[mybox,visible on=<4-6>,below=0mm of seg2,align=center] (seg3) {
+    \myemph{\textbf{segment 3 data --- virus segment}}
+};
+\coordinate (annotate) at ([yshift=-1.5cm]seg2.south);
+\tikzset{
+    annoBox/.style={draw=red,thick,at=(annotate),font=\small,align=center},
+}
+\begin{visibleenv}<3,5>
+    \node[annoBox] {heuristic 1: is entry point in last segment? \\ (segment usually not code)};
+\end{visibleenv}
+\begin{visibleenv}<6>
+    \node[annoBox] {heuristic 2: did virus mess up header? \\ (e.g. do sizes used by linker but not loader disagree)
+                \\ section names disagree with usage?};
+\end{visibleenv}
+\end{tikzpicture}

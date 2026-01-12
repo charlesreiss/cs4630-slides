@@ -1,0 +1,11 @@
+
+### making scanners efficient 
+
+
+* [lots of viruses!]{.fragment fragment-index=2 .custom .myem-only} 
+
+   * huge number of states, tables
+   * copies of every piece of malware pretty large
+
+* [reading files is slow!]{.fragment fragment-index=3 .custom .myem-only}
+

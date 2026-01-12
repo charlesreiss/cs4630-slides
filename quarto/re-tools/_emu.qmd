@@ -1,0 +1,53 @@
+
+### unicorn as tool 
+
+
+![](/antianti/unicorn-page){}
+
+
+### unicorn example (1)  {.smaller}
+
+
+```
+$ cat test.s
+    mov $10000, %edi
+    imul $2, %rdi, %rdi
+$ gcc -c test.s; objcopy -j .text test.o -O binary test.bin
+```
+ 
+ <hr />
+ 
+ 
+```
+code = Path('test.bin').read_bytes()
+uc = Uc(UC_ARCH_X86, UC_MODE_64)
+uc.mem_map(0x10000, 1024 * 1024)
+uc.mem_write(0x10000, code)
+uc.emu_start(0x10000, 0x10000 + len(code))
+print("RDI",uc.reg_read(UC_X86_REG_RDI))
+```
+ 
+ <hr />
+ 
+ <code>RDI 20000</code>
+
+### unicorn example (2)  {.smaller}
+
+
+```
+...
+uc.hook_add(UC_HOOK_CODE, hook_code_func)
+def hook_code_func(uc, addr, size, user_data):
+    print(f"{addr:x} ({size} byte instruction): "
+          f"{codecs.encode(
+                uc.mem_read(addr, size), 'hex'
+             ).decode()}")
+uc.emu_start(0x10000, 0x10000 + len(code))
+```
+ <hr />
+ 
+```
+10000 (5 byte instruction): bf10270000
+10005 (4 byte instruction): 486bff02
+```
+

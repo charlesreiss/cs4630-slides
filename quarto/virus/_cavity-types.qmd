@@ -1,0 +1,9 @@
+
+### other empty space 
+
+
+* [unused space between segments/sections]{.fragment fragment-index=2 .custom .myem-only}
+* [unreachable bytes added for instruction alignment]{.fragment fragment-index=3 .custom .myem-only}
+* [unused header space]{.fragment fragment-index=4 .custom .myem-only}
+* [unused debugging information?]{.fragment fragment-index=5 .custom .myem-only}
+

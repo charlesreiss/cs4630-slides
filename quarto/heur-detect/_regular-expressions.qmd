@@ -1,0 +1,91 @@
+
+### regular expressions 
+
+
+* one method of representing patterns like this: <br> regular expressions (regexes)
+* restricted language allows very fast implementations 
+
+   * especially when there's a long list of patterns to look for
+
+* upcoming homework assignment
+
+
+### regular expressions: implementations 
+
+
+* multiple implementations of regular expressions
+* we will target: flex, a parser generator
+
+
+### simple patterns  {.smaller}
+
+
+* alphanumeric characters <em>match themselves</em>
+* <code>foo</code>: 
+
+   * matches exactly <code>foo</code> only
+   * does not match <code>Foo</code>
+   * does not match <code>foo\\textvisiblespace{}</code>
+   * does not match <code>foobar</code>
+
+* backslash might be needed for others
+* `C\+\+` 
+
+   * matches exactly <code>C++</code> only
+
+
+
+### metachars (1)  {.smaller}
+
+
+* special ways to match characters 
+
+* `\n`, `\t`, `\x3C`, … --- work like in C
+* `[b-fi]` --- <code>b</code> or <code>c</code> or <code>d</code> or <code>e</code> or <code>f</code> or <code>i</code>
+* `[^b-fi]` --- any character but <code>b</code> or <code>c</code> or …
+* <code>.</code> --- any character except newline
+* `(.|\n)` --- any character
+
+
+### metachars (2)  {.smaller}
+
+
+* `a*` --- zero or more as: 
+
+   * (empty string), <code>a</code>, <code>aa</code>, <code>aaa</code>, …
+
+* `a{3,5}` --- three to five as: 
+
+   * <code>aaa</code>, <code>aaaa</code>, <code>aaaaa</code>
+
+* `(abc){3,5}` --- three to five abcs: (‘‘grouping’’) 
+
+   * <code>abcabcabc</code>, <code>abcabcabcabc</code>, <code>abcabcabcabcabc</code>
+
+* <code>ab|cd</code> 
+
+   * <code>ab</code>, <code>cd</code>
+
+* `(ab|cd){2}` --- two ab-or-cds: 
+
+   * <code>abab</code>, <code>abcd</code>, <code>cdab</code>, <code>cdcd</code>
+
+
+
+### metachars (3) 
+
+
+* `\xAB` --- the byte <code>0xAB</code>
+* `\x00` --- the byte <code>0x00</code> 
+
+   * flex is designed for text, handles binary fine
+
+* `\n` --- newline (and other C string escapes)
+
+
+### example regular expressions 
+
+
+* match words ending with <code>ing</code>: <br> `[a-zA-Z]*ing`
+* match C <code>/* ... */</code> comments: <br> `/\*([^*]|\*[^/])*\*/`
+

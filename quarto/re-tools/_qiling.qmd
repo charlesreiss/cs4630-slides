@@ -1,0 +1,14 @@
+
+### example tool: qiling  {.smaller}
+
+
+* https://qiling.io
+* uses Unicorn emulator but adds…
+* emulation for a lot of system calls 
+
+   * including (hopefully) limiting file accesses to specific ‘‘virtual root’’ directory
+
+* loaders for common executable/bootloader formats 
+
+* idea: get log of malware activity / add custom behaviors
+

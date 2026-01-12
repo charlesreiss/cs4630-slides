@@ -1,0 +1,16 @@
+
+### malware ‘‘signatures’’  {.smaller}
+
+
+* typically can't rely on whitelisting approach 
+
+   * software and related files change legitimately
+   * (note: malware might not be in main executables)
+ 
+
+* antivirus vendor have <em>signatures</em> for known malware
+* many options to represent signatures
+* thought process: <em>signature for Vienna?</em> 
+
+* goals: compact, fast to check, reliable
+

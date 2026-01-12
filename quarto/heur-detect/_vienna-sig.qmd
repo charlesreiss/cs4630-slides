@@ -1,0 +1,111 @@
+
+### exercise: signatures for Vienna 
+
+<!-- \lstset{
+        style=smaller,
+        language=myasm,
+        moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+        moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+        moredelim={**[is][\btHL<3-4|handout:0>]{~34~}{~end~}},
+        moredelim={**[is][\btHL<4|handout:0>]{~4~}{~end~}},
+        } -->
+ <table>
+<tr><td>
+<pre><code><span data-fragment-index="2" class="fragment custom myem-only">jmp 0x0700</span> /* C */
+mov $0x9e4e, %si /* A */
+...              /* A */
+/* more app code */ 
+...              /* A */
+<span data-fragment-index="3" class="fragment custom myem-only">push %cx</span>
+mov $0x8f9, %si /* C */
+...
+mov $0x0100, %di
+mov $3, %cx
+rep movsb
+...
+</code></pre>
+</td><td>
+<pre><code>...
+add $0x2f9, %cx
+mov %si, %di
+sub $0x1f7, %di
+mov %cx, (%di)
+...
+mov $0x288, %cx
+mov $0x40 %ah
+mov $si, $dx
+sub $0x1f9, %dx
+int 0x21
+...
+</code></pre>
+</td><td>
+<pre><code>pop %cx
+xor %ax, %ax
+xor %bx, %bx
+<span data-fragment-index="4" class="fragment custom myem-only">xor %dx, %dx</span>
+<span data-fragment-index="4" class="fragment custom myem-only">mov $0x0100, %di</span>
+<span data-fragment-index="4" class="fragment custom myem-only">push %di</span>
+<span data-fragment-index="4" class="fragment custom myem-only">xor %di, %di</span>
+<span data-fragment-index="34" class="fragment custom myem-only">ret</span>
+/* virus data */
+</code></pre>
+</td></tr>
+</table>
+ `/* C */` = constant changes when Vienna relocated <br> `/* A */` = application code
+
+### simple signature (1) 
+
+
+* all the code Vienna copies
+* … except changed <code>mov</code> to <code>%si</code> 
+
+* virus doesn't change it to relocate
+* includes infection code --- definitely malicious
+
+
+### signature generality 
+
+
+* the Vienna virus was copied a bunch of times
+* small changes, ‘‘payloads’’ added 
+
+   * print messages, do different malicious things, …
+
+* this signature will not detect any variants
+* can we do better?
+
+
+### simple signature (2) 
+
+
+* Vienna start code 
+
+   * weird jump at beginning??
+
+* problem: maybe real applications do this?
+* problem: easy to move jump
+
+
+### simple signature (3) 
+
+
+* Vienna infection code 
+
+   * scans directory, finds files
+
+* likely to stay the same in variants?
+* problem: virus writers <em>react to antivirus</em>
+
+
+### simple signature (4)  {.smaller}
+
+
+* Vienna finish code 
+
+   * push + ret
+
+* very unusual pattern
+* probably(?) not in ‘‘real’’ programs
+* real effort to change to something else?
+* problem: virus writers <em>react to antivirus</em>
+

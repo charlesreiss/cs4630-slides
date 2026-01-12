@@ -1,0 +1,42 @@
+
+# x86-64 encoding {visibility="hidden"}
+
+## basics (8 to 32 bit) {visibility="hidden"}
+
+{{< include /x8664-encoding/_basics.qmd >}}
+
+## exercise {visibility="hidden"}
+
+{{< include /x8664-encoding/_ex-32.qmd >}}
+
+## adding 64-bit {visibility="hidden"}
+
+{{< include /x8664-encoding/_add-64.qmd >}}
+
+## exercise {visibility="hidden"}
+
+{{< include /x8664-encoding/_ex-64.qmd >}}
+
+## encoding overall {visibility="hidden"}
+
+{{< include /x8664-encoding/_overall-encoding-diag.qmd >}}
+
+## misc prefixes {visibility="hidden"}
+
+{{< include /x8664-encoding/_misc-prefixes.qmd >}}
+
+## examples {visibility="hidden"}
+
+{{< include /x8664-encoding/_examples.qmd >}}
+
+## some impossible instructions {visibility="hidden"}
+
+{{< include /x8664-encoding/_impossible.qmd >}}
+
+## position-independence {visibility="hidden"}
+
+{{< include /x8664-encoding/_pic.qmd >}}
+
+## PIC: which should be exercise? {visibility="hidden"}
+
+{{< include /x8664-encoding/_pic-which.qmd >}}

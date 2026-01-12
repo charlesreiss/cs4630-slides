@@ -1,0 +1,35 @@
+
+### unused header space 
+
+
+* often executable metadata has empty space 
+
+* debugging info and info not strictly needed to run program
+* [linker allocated space for $N$ fields, used less]{.fragment fragment-index=2 .custom .myem-only}
+
+
+### dynamic linking cavity  {.smaller}
+
+
+
+* Linux example from my desktop
+* <code>.dynamic</code> section --- data structure used by dynamic linker:
+* format: list of 8-byte type, 8-byte value 
+
+   * terminated by type == 0 entry
+
+ <pre><code>Contents of section .dynamic:
+ 600e28 01000000 00000000 01000000 00000000  ................
+    <it>... several non-empty entries ...</it>
+ 600f88 f0ffff6f 00000000 56034000 00000000  ...o....V.@.....
+    <it>VERSYM (required library version info at) 0x400356</it>
+ 600f98 <it>00000000 00000000 00000000 00000000</it>  ................
+    <it>NULL --- end of linker info</it>
+ 600fa8 <em>00000000 00000000 00000000 00000000</em>  ................
+    <it>unused! (and below)</it>
+ 600fb8 <em>00000000 00000000 00000000 00000000</em>  ................
+ 600fc8 <em>00000000 00000000 00000000 00000000</em>  ................
+ 600fd8 <em>00000000 00000000 00000000 00000000</em>  ................
+ 600fe8 <em>00000000 00000000 00000000 00000000</em>  ................
+</code></pre>
+

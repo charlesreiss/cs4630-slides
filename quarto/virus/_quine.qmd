@@ -1,0 +1,58 @@
+
+### quines 
+
+
+* exercise: write a C program that outputs its source code 
+
+   * (pseudo-code only okay)
+
+* possible in any [ (Turing-complete)]{.my-small} programming language
+* called a ‘‘quine’’
+
+
+### clever quine solution  {.smaller}
+
+<!-- \lstset{language=C,style=small,
+    moredelim={**[is][\btHL<2>]{@hi2@}{@endhi@}},
+    moredelim={**[is][\btHL<3>]{@hi3@}{@endhi@}},
+    showstringspaces=false,
+} -->
+ <pre><code>#include &lt;stdio.h&gt;
+char*x="int main(){
+       printf(p,10,34,x,34,10,34,p,34,10,x,10);
+       }";
+<span data-fragment-index="3" class="fragment custom myem-only">char*p</span>="#include &lt;stdio.h&gt;%c
+    char*x=%c%s%c;%cchar*p=%c%s%c;
+    %c%s%c";
+int main(){
+    <span data-fragment-index="2" class="fragment custom myem-only">printf(p,10,34,x,34,10,34,p,34,10,x,10);</span>
+}
+</code></pre>
+ 
+
+* some line wrapping for readability --- shouldn't be in actual quine
+ ![](texfig/quineClever.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
+![](texfig/quineClever.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
+![](texfig/quineClever.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=3}
+
+
+### dumb quine solution  {.smaller}
+
+
+```
+#include <stdio.h>
+int main(void) {
+    char buffer[1024];
+    FILE *f = fopen("quine.c", "r");
+    size_t bytes = fread(buffer, 1,
+                         sizeof(buffer), f);
+    fwrite(buffer, 1, bytes, stdout);
+    return 0;
+}
+
+```
+ 
+
+* a lot more straightforward!
+* but ‘‘cheating’’
+

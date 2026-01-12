@@ -1,0 +1,12 @@
+
+### memory residence 
+
+
+* malware wants to keep doing stuff
+* one option --- background process (easy on modern OSs)
+* also stealthy options: 
+
+   * insert self into OS code
+   * insert self into other running programs
+
+

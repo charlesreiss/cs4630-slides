@@ -1,0 +1,65 @@
+
+### running example  {.smaller}
+
+
+```
+$ file mystery
+mystery: ELF 64-bit LSB pie executable, x86-64,
+version 1 (SYSV), dynamically linked,
+interpreter /lib64/ld-linux-x86-64.so.2,
+BuildID[sha1]=9819a3cfb39d01ad2a376c54318f104139422a8f,
+for GNU/Linux 3.2.0, stripped
+```
+ 
+
+* LSB = little endian
+* pie = position-independent executable
+* interpreter = program that loads this
+
+
+### aside: file(1)  {.smaller}
+
+
+```
+$ man file
+FILE(1)                      General Commands Manual                    FILE(1)
+
+NAME
+       file — determine file type
+
+....
+```
+ <hr />
+ 
+
+* looks for ‘‘magic numbers’’ near beginning of file data
+* hand-managed database of common patterns
+
+
+### from file's source  {.smaller}
+
+
+```
+0   name        elf-le
+>16 leshort     0       no file type,
+!:mime  application/octet-stream
+>16 leshort     1       relocatable,
+!:mime  application/x-object
+>16 leshort     2       executable,
+!:mime  application/x-executable
+>16 leshort     3       ${x?pie executable:shared object},
+
+...
+0   string      \177ELF     ELF
+!:strength *2
+>4  byte        0       invalid class
+>4  byte        1       32-bit
+>4  byte        2       64-bit
+>5  byte        0       invalid byte order
+>5  byte        1       LSB
+>>0 use     elf-le
+>5  byte        2       MSB
+>>0 use     \^elf-le
+>7  byte        0       (SYSV)
+```
+

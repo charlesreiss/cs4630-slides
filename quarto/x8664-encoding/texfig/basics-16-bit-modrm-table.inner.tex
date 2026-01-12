@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+\node (table) {
+\includegraphics[height=0.8\mypaperheight]{../x8664-encoding/16bitmodrm}
+};
+\begin{visibleenv}<2>
+\node[anchor=north west,align=left] at (table.north east) {
+    e.g. \texttt{add \%bl, \%cl} \\
+    (Intel syntax: \texttt{add CL, BL}) \\
+    Intel manual: \\
+    \texttt{02 /r}: \texttt{ADD r8 {\normalfont(dest)}, r/m8} \\
+    \texttt{/r} means ModRm byte with reg set to reg\# \\
+    ~ \\
+    opcode = \texttt{0x02}
+    ModRM byte = \\
+    \texttt{11} (mod) / \texttt{001} (reg: \%cl) / \texttt{011} (r/m: \%bl) \\
+    or \texttt{1100 1011}
+    ~ \\
+    final encoding: \texttt{02 cb}
+};
+\end{visibleenv}
+\end{tikzpicture}

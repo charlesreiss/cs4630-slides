@@ -1,0 +1,8 @@
+
+### other flex features 
+
+
+* escape hatch --- I/O directly from code
+* including ‘‘unget’’ function (match normally instead)
+* allows extra ad-hoc logic
+

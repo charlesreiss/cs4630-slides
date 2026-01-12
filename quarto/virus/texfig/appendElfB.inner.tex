@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+\draw[thick,fill=blue!40!black] (0, 0) rectangle ++(3, -.4);
+\draw[thick,fill=yellow!40!black] (0, -1) rectangle ++(3, -.9);
+\draw[thick,fill=green!40!black] (0, -2) rectangle ++(3, -0.5);
+\draw[thick,fill=orange!40!black] (0, -2.9) rectangle ++(3, -.2);
+\begin{visibleenv}<1>
+\draw[very thick] (0, 0) rectangle (3, -3.1);
+\end{visibleenv}
+\begin{visibleenv}<2>
+\draw[very thick] (0, 0) rectangle (3, -4.25);
+\end{visibleenv}
+\draw[thick,-Latex] (3.1, 0) -- (3.1, -2.5);
+\begin{visibleenv}<2->
+    \draw[thick,pattern=north west lines,fill=red] (0, -4) rectangle ++(3, -.25);
+    \node[font=\small,anchor=west] at (3.1, -4.1) {virus code};
+\end{visibleenv}
+\end{tikzpicture}

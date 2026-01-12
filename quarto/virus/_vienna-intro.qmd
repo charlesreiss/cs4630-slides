@@ -1,0 +1,8 @@
+
+### Case Study: Vienna Virus 
+
+
+* Vienna: virus from the 1980s
+* This version: published in Ralf Burger, ‘‘Computer Viruses: a high-tech disease’’ (1988)
+* targetted COM-format executables on DOS
+

@@ -1,0 +1,27 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+            \node[at={([xshift=8cm]current page.north east)},anchor=north east,inner sep=0mm] (image under1){
+                \includegraphics[height=\mypaperheight]{../heur-detect/1600x1200-Tom-Jerry-Chase}
+            };
+            \node[at={([xshift=10cm]current page.north east)},anchor=north east,inner sep=0mm] (image under2){
+                \includegraphics[height=\mypaperheight]{../heur-detect/1600x1200-Tom-Jerry-Chase}
+            };
+            \node[at={(current page.north west)},anchor=north west,inner sep=0mm] (image) {
+                \includegraphics[height=\mypaperheight]{../heur-detect/1600x1200-Tom-Jerry-Chase}
+            };
+            \begin{scope}[shift={(image.north west)}]
+                %\draw[help lines] (0, 0) grid (12, -8);
+                \node[cross out,draw,line width=1mm,black,at={(8.7,-5.8)},anchor=center,minimum width=6cm,minimum height=1.25cm] {};
+                \begin{scope}[xshift=1cm]
+                    \node[at={(3,-8.25)},anchor=center,font=\Huge\bfseries,
+                        red!90!black,align=left] {\contour{black}{Anti-\hspace{-.4ex}Virus}};
+                    \node[at={(6.5,-8.25)},anchor=center,font=\large\bfseries,
+                        red!90!black,align=left,rotate=30] {\contour{black}{and}};
+                    \node[at={(8.5,-8.25)},anchor=center,font=\Huge\bfseries,
+                        red!90!black,align=left] {\contour{black}{Virus}};
+                \end{scope}
+            \end{scope}
+        \end{scope}
+\end{tikzpicture}

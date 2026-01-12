@@ -1,0 +1,20 @@
+\begin{tikzpicture}
+\node(matchString) {\large \tt \sout<3->{\myemph<2>{a}}\sout<4->{b}\sout<7->{\myemph<5-6>{f}\myemph<6>{oo}}\myemph<7-8>{f}\myemph<7>{\sout<8>{o}}abffoo};
+
+\begin{scope}[every node/.style={font=\tt,thick}]
+\node[initial, state,below=1cm of matchString,font=\normalfont\it,
+      alt=<2>{red}{}] (start) {};
+\node[state,right=1cm of start,alt={<5,7>{red}{}}] (f) {f};
+\node[state,right=1cm of f,alt={<6,7>{red}{}}] (fo) {fo};
+\node[state,right=1cm of fo,accepting,alt={<6>{red}{}}] (foo) {foo};
+\node[state,below right=2cm of start,accepting,alt={<3,8>{red}{}}] (dot) {.};
+\node[state,below=1.5cm of start,accepting] (newline) {\textbackslash{}n};
+\end{scope}
+\path[-Latex,thick] (start) edge[alt=<5-7>{red}{}] node[above] {\tt f} (f)
+                    (f) edge node[above,alt=<6>{red}{}] {\tt o} (fo)
+                    (fo) edge node[above,alt=<6>{red}{}] {\tt o} (foo)
+                    (start) edge node[sloped,above,alt=<3>{red}{}] {other} (dot)
+                    (start) edge node[left] {\textbackslash{}n} (newline);
+\path[-Latex,blue,dashed] (f) edge node[right] {(back 1)} (dot);
+\path[-Latex,blue,dashed,alt=<8>{red,thick}{}] (fo) edge[out=-45,in=-30] node[midway, sloped, below] {(back 2)} (dot);
+\end{tikzpicture}

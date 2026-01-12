@@ -1,0 +1,24 @@
+
+### replace executable 
+
+![](texfig/where-code-replace-replace-executable.figure.svg){fig-alt="original executable transformed to virus code"}
+
+
+### replace executable?  {.smaller}
+
+
+* seems silly --- not stealthy!
+* has appeared in the wild --- ILOVEYOU
+* 2000 ILOVEYOU Worm 
+
+   * written in Visual Basic (!)
+   * spread via email
+   * replaced lots of files with copies of itself
+
+* huge impact --- because destroying data to copy itself
+
+
+### replace executable --- subtle 
+
+![](texfig/where-code-replace-replace-executable-----subtle.figure.svg){fig-alt="original executable transformed to virus code followed by a copy of the original executable. The virus code writes the copy to a tempfile and runs it."}
+

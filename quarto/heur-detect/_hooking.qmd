@@ -1,0 +1,79 @@
+
+### hooking  {.smaller}
+
+
+* hooking --- getting a ‘hook’ to run on (OS) operations 
+
+   * e.g. creating new files
+   * e.g. modifying executable files
+
+* ideal mechanism: [OS support]{.fragment fragment-index=2 .custom .myem-only}
+* less ideal mechanism: [change library loading]{.fragment fragment-index=3 .custom .myem-only} 
+
+   * e.g. replace ‘open’, ‘fopen’, etc. in libraries
+
+* less ideal mechanism: [replace OS exception]{.fragment fragment-index=4 .custom .myem-only} (system call) handlers 
+
+   * very OS version dependent
+
+* less ideal mechanism: [debugger support]{.fragment fragment-index=5 .custom .myem-only}
+
+
+### againframe(hookingList)
+
+###  
+
+
+![](/heur-detect/filter-driver){}
+
+
+### Linux hooking  {.smaller}
+
+
+* several possible mechanisms
+* tracepoints, kprobes 
+
+   * cause hooking functions to run when kernel functions called or return
+   * hooker function can arrange for logging or other action
+
+* seccomp BPF 
+
+   * allow hooker to write ‘program’ to examine system calls of selected processes
+   * can deny/change/log those system calls
+
+
+
+### aside Linux eBPF 
+
+
+* eBPF = extended Berkeley Packet Filters
+* little programming language originally intended for network filtering
+* 
+
+
+### againframe(hookingList)
+
+### changing library loading 
+
+
+* e.g. install new library --- or edit loader, but … 
+
+* not everything uses library functions
+* what if your wrapper doesn't work exactly the same?
+
+
+### againframe(hookingList)
+
+### changing exception call handlers (1) 
+
+
+* OS data structure tells hardware where program requests go
+* simpliest mechanism: edit that data structure  
+
+   * and save a copy of what was there before
+
+* point to your code 
+
+   * and call what was there before after behavior check
+
+

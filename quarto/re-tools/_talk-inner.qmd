@@ -1,0 +1,72 @@
+
+# running example {visibility="hidden"}
+
+{{< include /re-tools/_run-example.qmd >}}
+
+# finding strings {visibility="hidden"}
+
+{{< include /re-tools/_ex-strings.qmd >}}
+
+# aside Ghidra/etc {visibility="hidden"}
+
+{{< include /re-tools/_ghidra-etc.qmd >}}
+
+# finding strings (Ghidra) {visibility="hidden"}
+
+{{< include /re-tools/_ex-strings-ghidra.qmd >}}
+
+# finding library/system calls {visibility="hidden"}
+
+{{< include /re-tools/_lib-syscall.qmd >}}
+
+# disassembly, need for xrefs {visibility="hidden"}
+
+{{< include /re-tools/_where-is-code.qmd >}}
+
+# cross-references {visibility="hidden"}
+
+{{< include /re-tools/_xrefs.qmd >}}
+
+# high-level overviews {visibility="hidden"}
+
+## function callers/callees {visibility="hidden"}
+
+{{< include /re-tools/_function-call-callee.qmd >}}
+
+## control flow graphs {visibility="hidden"}
+
+{{< include /re-tools/_func-graphs.qmd >}}
+
+## arrows on the side {visibility="hidden"}
+
+{{< include /re-tools/_side-arrows.qmd >}}
+
+# decompiling {visibility="hidden"}
+
+## decompiler {visibility="hidden"}
+
+{{< include /re-tools/_decomp-ex.qmd >}}
+
+## Ghidra: intermediate representation {visibility="hidden"}
+
+{{< include /re-tools/_ghidra-ir.qmd >}}
+
+# patching things {visibility="hidden"}
+
+{{< include /re-tools/_patch.qmd >}}
+
+# on/with debuggers {visibility="hidden"}
+
+{{< include /re-tools/_debuggers.qmd >}}
+
+{{< include /re-tools/_reverse-debug.qmd >}}
+
+# on emulators {visibility="hidden"}
+
+{{< include /re-tools/_emu.qmd >}}
+
+## some higher-level tools {visibility="hidden"}
+
+{{< include /re-tools/_qiling.qmd >}}
+
+{{< include /re-tools/_panda-re.qmd >}}

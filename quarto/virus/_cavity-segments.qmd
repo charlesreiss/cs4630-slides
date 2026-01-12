@@ -1,0 +1,20 @@
+
+### gaps between segments  {.smaller}
+
+<pre><code>LOAD off    0x0000000000000000 ...
+     filesz 0x00000000000036a8 ...
+LOAD off    0x000000000000<em>4000</em> ...
+     filesz 0x0000000000013581 ...
+</code></pre>
+ 
+
+* first LOAD loads <code>0x0-0x36a8</code>
+* second LOAD loads <code>0x4000-0x17358</code> 
+
+   * starts at <em>multiple of <code>0x1000</code></em> b/c that's what OS can handle
+
+* <code>0x4000-0x36a8</code> bytes of file not used 
+
+   * (and loaded on Linux, because Linux rounds up filesz)
+
+

@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+\begin{scope}[every node/.style={font=\tt,thick}]
+\node[initial, state,font=\normalfont\it] (start) {};
+\node[state,right=1cm of start] (f) {f};
+\node[state,right=1cm of f] (fo) {fo};
+\node[state,right=1cm of fo,accepting] (foo) {foo};
+\node[state,below right=2cm of start,accepting] (dot) {.};
+\node[state,below=1.5cm of start,accepting] (newline) {\textbackslash{}n};
+\end{scope}
+\path[-Latex,thick] (start) edge node[above] {\tt f} (f)
+                    (f) edge node[above] {\tt o} (fo)
+                    (fo) edge node[above] {\tt o} (foo)
+                    (start) edge node[sloped,above] {other} (dot)
+                    (start) edge node[right] {\textbackslash{}n} (newline);
+\path[-Latex,red,draw,very thick,dashed] (f) -- node[midway,above,sloped]{other} ++ (3cm, -2cm) node[below,draw,align=left] {match \texttt{.} once \\ for \texttt{f}, \\ goto start};
+\path[-Latex,red,draw,very thick,dashed] (fo) -- node[midway,above,sloped]{other} ++ (4cm, -2cm) node[below,draw,align=left] {match \texttt{.} twice \\ for \texttt{fo}, \\ goto start};
+\end{tikzpicture}

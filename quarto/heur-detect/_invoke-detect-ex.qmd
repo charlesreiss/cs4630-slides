@@ -1,0 +1,13 @@
+
+### virus: easiest code to find?  {.smaller}
+
+
+* what should be easiest/hardest to identify <br> without many false positives?
+* A. replaced start location
+* B. replaced dynamic linker stub
+* C. replaced dynamic library symbol location
+* D. replaced function call
+* E. replaced function return
+* F. replaced bootloader
+* G. new automatically started system program
+

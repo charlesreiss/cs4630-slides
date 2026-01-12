@@ -1,0 +1,48 @@
+
+### virus: easiest code to find?  {.smaller}
+
+
+* what should be easiest/hardest to identify <br> without many false positives? 
+
+* A. replaced executable
+* B. appended to executable w/o compression
+* C. replaced cavities
+* D. replaced bootloader
+* E. new automatically started system program
+
+
+### virus: easiest code to find pro/con  {.smaller}
+
+
+* A. replaced executable 
+
+   * + executable size size change
+   * + could detect write+launch executable
+   * - programs running programs is common (e.g. start browser)
+   * - confused with software updater
+
+* B. appended to executable w/o compression 
+
+   * + executable size change
+   * + unusual segment/section layout
+   * - confused with unusual compilers
+
+* C. replaced cavities 
+
+   * + code outside of segments/sections if virus not careful
+   * + machine code patterns not seen by compilers
+   * - need to search entire exe file
+   * - confused with unusual compilers?
+
+* D. replaced bootloader 
+
+   * + can check versus normal for OS
+   * - need to handle new OS versions, etc.
+
+* E. new automatically started system program 
+
+   * + can check versus normal list for OS
+   * - need to handle new OS versions
+   * - lots of legitimate programs may run at startup
+
+

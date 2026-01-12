@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+        \begin{scope}[start chain=going below,every node/.style={draw,align=center,join,on chain,thick,minimum width=3.5cm},
+                      every join/.style={-Latex,thick}]
+        \node[draw=none] (fixedLoc) { processor reset };
+        \node[alt=<3>{draw=orange,very thick}{}] (bios) {BIOS/EFI \\ \small (chip on motherboard)};
+        \node[alt=<2>{draw=orange,very thick}{}] (bootloader) {bootloader};
+        \node[alt=<4>{draw=orange,very thick}{}] (os) {operating system};
+        \end{scope}
+        \node[left=.5cm of bios,font=\small] (biosLabel) {very CPU/motherboard-specific code};
+        \draw[-Latex,thick] (biosLabel) -- (bios);
+        \node[left=.5cm of bootloader,font=\small,align=right] (bootloaderLabel) {fixed location on disk \\ code that understands files};
+        \draw[-Latex,thick] (bootloaderLabel) -- (bootloader);
+        \node[left=.5cm of os,font=\small] (osLabel) {files in a filesystem};
+        \draw[-Latex,thick] (osLabel) -- (os);
+    \end{tikzpicture}

@@ -1,0 +1,14 @@
+
+### why this?  {.smaller}
+
+
+* one pass matching (except for some backtracking) 
+
+   * can make state machine bigger to avoid some backtracking
+
+* basically speed of file I/O
+* handles multiple patterns well
+* flexible for ‘‘special cases’’ 
+
+* real anti-virus: probably custom pattern ‘‘engine’’
+

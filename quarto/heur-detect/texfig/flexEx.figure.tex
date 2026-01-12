@@ -1,0 +1,44 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{fit}
+\newsavebox\flexExTop
+\newsavebox\flexExMiddle
+\newsavebox\flexExBottom
+\begin{document}
+\begin{lrbox}{\flexExTop}
+\begin{lstlisting}
+        int num_bytes = 0, num_lines = 0;
+        int num_foos = 0;
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\flexExMiddle}
+\begin{lstlisting}
+foo     { 
+          num_bytes += 3;
+          num_foos += 1;
+        }
+.       { num_bytes += 1; }
+\n      { num_lines += 1; num_bytes += 1; }
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\flexExBottom}
+\begin{lstlisting}
+int main(void) {
+    yylex();
+    printf("%d bytes, %d lines, %d foos\n",
+           num_bytes, num_lines, num_foos);
+}
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{heur-detect/texfig/flexEx.inner.tex}
+\setSlide{2}
+\input{heur-detect/texfig/flexEx.inner.tex}
+\setSlide{3}
+\input{heur-detect/texfig/flexEx.inner.tex}
+\setSlide{4}
+\input{heur-detect/texfig/flexEx.inner.tex}
+\setSlide{5}
+\input{heur-detect/texfig/flexEx.inner.tex}
+\end{document}

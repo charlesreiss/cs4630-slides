@@ -1,0 +1,41 @@
+
+### heuristics example: DREBIN paper  {.smaller}
+
+
+* [from 2014 research paper on Android malware: Arp et al, ‘‘DREBIN: Effective and Explainable Detection of Android Malware in Your Pocket’’]{.my-small}
+* primary contribution of paper: big dataset of malware
+* but tried to detect malware, too…
+* features from applications (<em>without running</em>): 
+
+   * hardware requirements
+   * requested permissions
+   * whether it runs in background, with pushed notifications, etc.
+   * what API calls it uses
+   * network addresses
+
+* detect <em>dynamic code generation</em> explicitly
+* statistics (i.e. machine learning) to determine score
+
+
+### heuristics example: DREBIN paper  {.smaller}
+
+
+* advantage: Android uses Dalvik bytecode (Java-like) 
+
+   * high-level ‘‘machine code’’
+   * much easier/more useful to analyze
+
+* accuracy? 
+
+   * tested on 131k apps, $94$% of malware, $1$% false positives
+   * versus best commercial: $96$%, $\<0.3$% false positives 
+
+      * (probably has explicit patterns for many known malware samples)
+
+
+* … but 
+
+   * statistics: training set needs to be typical of malware
+   * cat-and-mouse: what would attackers do in response?
+
+

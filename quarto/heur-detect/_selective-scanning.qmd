@@ -1,0 +1,18 @@
+
+### the I/O problem 
+
+
+* scanning still requires reading the whole file
+* can we do better?
+
+
+### selective scanning 
+
+
+* check entry point and end only 
+
+   * a lot less I/O, maybe
+
+* check known offsets from entry point
+* heuristic: is entry point close to end of file?
+

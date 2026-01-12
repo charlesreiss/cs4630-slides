@@ -1,0 +1,14 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{chains,arrows.meta}
+\newcommand{\tearBox}{
+        \draw[very thick] (0, -6) -- (0, 0) -- (4, 0) -- (4, -6);
+        \draw[thick] (0, -6) -- (1.2, -5.5) -- (2., -6.6) -- (2.6, -5.8) -- (3.5, -6.6) -- (4, -6);
+    }
+\begin{document}
+
+\setSlide{1}
+\input{virus/texfig/where-boot-sector-bootloader-viruses.inner.tex}
+\setSlide{2}
+\input{virus/texfig/where-boot-sector-bootloader-viruses.inner.tex}
+\end{document}

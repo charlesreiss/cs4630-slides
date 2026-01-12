@@ -1,0 +1,78 @@
+
+### x86 encoding example (1)  {.smaller}
+
+
+* `pushq %rax` encoded as <code>50</code> 
+
+   * 5-bit opcode <code>01010</code> plus 3-bit register number <code>000</code> <br> 
+![](/x8664-encoding/intel-manual-push-ex1){}
+
+
+* `pushq %r13` encoded as <code>41 55</code>  
+
+   * <code>41</code>: REX prefix <code>0010</code> (constant), w:<code>0</code>, r:<code>0</code>, s:<code>0</code>, b:<code>\\color{blue!80!black1}</code>
+   * w = <code>0</code> because push is never 32-bit in 64-bit mode
+   * <code>55</code>: 5-bit opcode <code>01010</code>; 3-bit reg # <code>\\color{green!80!black101}</code>
+   * 4-bit reg # <code>\\color{blue!80!black1}\\color{green!80!black101}</code> = 13
+
+
+
+### x86 encoding example (2)  {.smaller}
+
+
+* `addl 0x12345678(%rax,%rbx,2), %ecx`
+* <code>03</code>: opcode --- add r/m32 into r32  
+
+   * 
+![](/x8664-encoding/intel-manual-addl-ex1.png){}
+ 
+![](/x8664-encoding/intel-manual-addl-ex2.png){}
+
+
+* <code>8c</code>: ModRM: mod = <code>10</code>; reg = <code>001</code>, r/m: <code>100</code> 
+
+   * reg = <code>001</code> = <code>%ecx</code> (table)
+   * SIB byte + 32-bit displacement (table)
+
+* <code>58</code>: SIB: scale = <code>01</code>, index = <code>011</code>, base = <code>000</code> 
+
+   * index <code>011</code> = <code>%rbx</code>; base <code>000</code> = <code>%rax</code>;
+
+* <code>78 56 32 12</code>: 32-bit constant <code>0x12345678</code>
+
+
+### x86 encoding example (3)  {.smaller}
+
+
+* `addq 0x12345678(%r10,%r11,2), %rax`
+* <code>4b</code>: REX prefix <code>0100</code>+w:<code>[1]{.fragment fragment-index=2 .custom .myem-only}</code>, r:<code>\\textcolor{violet!80!black[0]{.fragment fragment-index=3 .custom .myem-only}}</code>, s:<code>\\textcolor{blue!80!black[1]{.fragment fragment-index=4 .custom .myem-only}}</code>, b:<code>\\textcolor{green!80!black[1]{.fragment fragment-index=5 .custom .myem-only}}</code>
+* <code>03</code>: opcode --- add r/m64 to r64 (with [REX.w]{.fragment fragment-index=2 .custom .myem-only})
+* <code>84</code>: ModRM: mod = <code>10</code>; reg = <code>000</code>, r/m: <code>100</code> 
+
+   * reg = <code>\\textcolor{violet!80!black[0]{.fragment fragment-index=3 .custom .myem-only}}000</code> = %rax
+   * SIB byte + 32-bit displacement (table)
+
+* <code>5a</code>: SIB: scale = <code>01</code>, index = <code>011</code>, base = <code>010</code> 
+
+   * with REX: index = <code>\\textcolor{blue!80!black[1]{.fragment fragment-index=4 .custom .myem-only}}011</code> (11), base = <code>\\textcolor{green!80!black[1]{.fragment fragment-index=5 .custom .myem-only}}010</code> (10)
+
+* <code>78 56 32 12</code>: 32-bit constant <code>0x12345678</code>
+
+
+### x86 encoding example (4)  {.smaller}
+
+
+* `movq %fs:0x10,%r13`
+* <code>64</code>: FS segment override
+* <code>48</code>: REX: <code>w</code>: 1 (64-bit), <code>r</code>: \\textcolor{violet!80!black<code></code> [1]{.fragment fragment-index=2 .custom .myem-only}}, <code>s</code>: \\textcolor{blue!80!black<code></code> [0]{.fragment fragment-index=3 .custom .myem-only}}, <code>b</code>: \\textcolor{green!80!black<code></code> [0]{.fragment fragment-index=4 .custom .myem-only}}
+* <code>8b</code>: opcode for MOV memory to register
+* <code>2c</code>: ModRM: mod = <code>00</code>, reg = <code>101</code>, r/m: <code>100</code> 
+
+   * with REX: reg = <code>\\textbf{\\textcolor{violet!80!black[1]{.fragment fragment-index=2 .custom .myem-only}}}101</code> [%r12]; r/m = 100 (SIB follows)
+
+* <code>25</code>: SIB: scale = <code>00</code>; index = <code>(\\textcolor{blue!80!black[0]{.fragment fragment-index=3 .custom .myem-only}})100</code>; base = <code>(\\textcolor{green!80!black[0]{.fragment fragment-index=4 .custom .myem-only}})101</code> 
+
+   * no register/no register in table
+
+* <code>10 00 00 00</code>: 4-byte constant <code>0x10</code>
+

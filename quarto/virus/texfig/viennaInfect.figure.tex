@@ -1,0 +1,59 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{calc}
+\newsavebox{\viennaInfectCodeBefore}
+\newsavebox{\viennaInfectCodeAfter}
+\begin{document}
+\begin{lrbox}{\viennaInfectCodeBefore}
+\lstset{
+    language=myasm,
+    style=smaller,
+    moredelim={**[is][\btHL<2>]{~hi2~}{~endhi2~}},
+}
+\begin{lstlisting}
+0x0100:
+    ~hi2~mov $0x4f28, %cx~endhi2~
+    /* b9 28 4f */
+0x0103:
+    mov $0x9e4e, %si
+    /* be 4e 9e */
+    mov %si, %di
+    push %ds
+    /* more normal
+       program
+       code */
+....
+0x0700: /* end */
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\viennaInfectCodeAfter}
+\lstset{
+    language=myasm,
+    style=smaller,
+    moredelim={**[is][\btHL<2>]{~hi2~}{~endhi2~}},
+}
+\begin{lstlisting}
+0x0100: jmp 0x0700
+0x0103: mov $0x9e4e, %si
+...
+0x0700:
+    push %cx
+    ... // %si <- 0x903
+    mov $0x100, %di
+    mov $3, %cx
+    rep movsb
+    ...
+    mov $0x0100, %di
+    push %di
+    xor %di, %di
+    ret
+...
+0x0903:
+    ~hi2~.bytes 0xb9 0x28 0x4f~endhi2~
+...
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{virus/texfig/viennaInfect.inner.tex}
+\end{document}

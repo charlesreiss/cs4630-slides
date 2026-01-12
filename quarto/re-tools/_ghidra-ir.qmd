@@ -1,0 +1,29 @@
+
+### interlude: editing disassembly format 
+
+
+![](/re-tools/ghidra-enable-show-pcode){}
+
+
+### PCode 
+
+
+![](/re-tools/ghidra-pcode-ex){}
+
+
+### Intermediate Representations  {.smaller}
+
+
+* Ghidra converts instructions to this PCode language 
+
+   * describes effects of each instruction for other parts of Ghidra
+   * allows ‘easy’ support for ARM, MIPS, …
+
+* function graph we saw using PCode information, probably
+* decompiler is basically a PCode to C compiler 
+
+   * does the same kind of optimizations/etc. normal compiler does
+   * different output language
+
+* Ghidra has ‘find similar functions’ tool that probably uses this
+

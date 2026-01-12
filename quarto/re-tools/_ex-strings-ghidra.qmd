@@ -1,0 +1,6 @@
+
+### in Ghidra 
+
+[]{.my-small} (after making new project, loading mystery file, Window > Defined Strings) <br> 
+![](/re-tools/ghidra-strings-mystery-ex){}
+

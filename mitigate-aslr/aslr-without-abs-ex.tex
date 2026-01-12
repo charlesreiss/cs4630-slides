@@ -4,8 +4,7 @@
     style=smaller,
     escapeinside=~~,
 }
-\begin{tikzpicture}
-\node[anchor=north east] (code) at (-1, 0) {
+\begin{minipage}{0.5\textwidth}
 \begin{lstlisting}
 foo:
 	movl	$3, %eax
@@ -20,8 +19,8 @@ returnTwo:
 defaultCase:
         ret
 \end{lstlisting}
-};
-\node[anchor=north west] (code2) at (-.5, 0) {
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
 \begin{lstlisting}
 lookupTable:
     .quad returnOne
@@ -31,8 +30,7 @@ lookupTable:
     .quad returnOne
     .quad returnOne
 \end{lstlisting}
-};
-\end{tikzpicture}
+\end{minipage}
 \begin{itemize}
     \item exercise: rewrite this without absolute addresses
     \item but fast

@@ -1,13 +1,15 @@
+\newsavebox{\infoDiscExCodeA}
+\newsavebox{\infoDiscExCodeB}
+
 \begin{frame}[fragile,label=infoDiscEx]{exercise}
-\begin{tikzpicture}
-\node (first) {
+\begin{lrbox}{\infoDiscExCodeA}
 \begin{lstlisting}[language=C,style=size9]
 struct point {
     int x, y, z;
 };
 \end{lstlisting};
-};
-\node[anchor=north west] at (first.north east) {
+\end{lrbox}
+\begin{lrbox}{\infoDiscExCodeB}
 \begin{lstlisting}[language=C,style=size9]
 struct point *p;
 ...
@@ -17,6 +19,13 @@ struct point *p;
     } ...
 ...
 \end{lstlisting}
+\end{lrbox}
+\begin{tikzpicture}
+\node (first) {
+\usebox{\infoDiscExCodeA}
+};
+\node[anchor=north west] at (first.north east) {
+\usebox{\infoDiscExCodeB}
 };
 \end{tikzpicture}
 \vspace{-.25cm}

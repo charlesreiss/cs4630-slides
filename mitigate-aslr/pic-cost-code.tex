@@ -6,8 +6,7 @@
 \newcommand{\antiEmphThree}[1]{{\color<3>{blue}#1}}%
 \newcommand{\antiEmphFour}[1]{{\color<4>{blue}#1}}%
 \begin{frame}[fragile,label=PIEjtasm]{PIE jump-table}
-\begin{tikzpicture}
-\node[anchor=north east] (code) at (-1, 0) {
+\begin{minipage}{0.5\textwidth}
 \lstset{
     language=myasm,
     style=smaller,
@@ -30,8 +29,8 @@ returnOne:
 defaultCase:
   ret
 \end{lstlisting}
-};
-\node[anchor=north west] (code2) at ([xshift=2cm]code.north east) {
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
 \lstset{
     language={},
     style=smaller,
@@ -47,13 +46,10 @@ jumpTable:
   .long	returnOne-jumpTable
   .long	returnOne-jumpTable
 \end{lstlisting}
-};
-\end{tikzpicture}
+\end{minipage}
 \end{frame}
 
 \begin{frame}[fragile,label=PIEjt]{PIE jump-table}
-\begin{tikzpicture}
-\node[anchor=north east] (code) at (-1, 0) {
 \lstset{
     language=myasm,
     style=smaller,
@@ -77,8 +73,6 @@ c3                	retq
 ~\textit{\myemphThree{@ 870}}:~ -162
 ...
 \end{lstlisting}
-};
-\end{tikzpicture}
 \end{frame}
 
 \begin{frame}{added cost}
@@ -91,7 +85,6 @@ c3                	retq
         \item \texttt{add} (add to base)
         \item \texttt{jmp} (to computed base)
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}[fragile,label=x86Worse]{32-bit x86 is worse (1)}

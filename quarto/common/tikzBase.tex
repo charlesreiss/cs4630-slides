@@ -7,6 +7,7 @@
 \usepackage{lmodern}
 \usepackage{listings}
 \usepackage[normalem]{ulem} % for sout
+\usepackage{amsmath}
 \ifluatex
     \def\EmptyMapping{}
 \else
@@ -15,10 +16,10 @@
 
 \newlength{\mypaperwidth}\setlength{\mypaperwidth}{15cm}
 \newlength{\mypaperheight}\setlength{\mypaperheight}{9cm}
-\graphicspath{{.}{common}}
++\graphicspath{{}{./}{../}{../../}{../../common/}}
 \input{common/listingsLib}
 
-\usetikzlibrary{arrows.meta,calc,patterns,positioning,matrix}
+\usetikzlibrary{arrows.meta,calc,patterns,positioning,matrix,shapes.multipart,fit}
 \tikzset{ 
     ampersand replacement=\&,
     tight matrix node/.style={draw,rectangle,inner sep=1pt, outer sep=0pt,text width=1cm,minimum height=.4cm,anchor=center},
@@ -37,6 +38,8 @@
         column sep=-\pgflinewidth,
         nodes={tight matrix node noline},
     },
+    % FIXME: should use argument
+    my callout/.style={draw,fill=blue!20!white,rectangle callout,alias=#1-callout},
 }
 \pgfdeclarelayer{bg}
 \pgfdeclarelayer{fg}
@@ -170,9 +173,22 @@
     \endpgftransparencygroup
     \end{scope}\group_end:
   }
+\NewCommandCopy\originalColor\color
+\RenewDocumentCommand\color{D<>{}m}
+  {
+    \alt<#1>{\originalColor{#2}}{}
+  }
 \NewDocumentCommand\myemph{D<>{}m}
   {
-    \group_begin:\alt<#1>{\color{orange!50!red}\itshape}{}#2\group_end:
+    \group_begin:\alt<#1>{\originalColor{orange!50!red}\itshape}{}#2\group_end:
+  }
+\NewDocumentCommand\maybeEmph{D<>{}m}
+  {
+    \group_begin:\alt<#1>{\originalColor{orange!50!red}\itshape}{}#2\group_end:
+  }
+\RenewDocumentCommand\textbf{D<>{}m}
+  {
+    \group_begin:\alt<#1>{\bfseries}{}#2\group_end:
   }
 \RenewDocumentCommand\textbf{D<>{}m}
   {
@@ -200,3 +216,6 @@
     visible on/.style={slidealt=#1{}{invisible}},%
 }
 \setSlide{1}
+\usepackage{etoolbox}
+\newtoggle{heldback}
+\togglefalse{heldback}

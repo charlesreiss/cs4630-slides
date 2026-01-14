@@ -15,7 +15,7 @@ LATEXRUN = [
 ]
 
 LATEXMK = [
-    Path(__file__).parent / 'latexmk.pl', '-pdflua', '-outdir=latex.out',
+    Path(__file__).parent / 'latexmk.pl', '-g', '-pdflua', '-outdir=latex.out',
 ]
 
 QUARTO = [

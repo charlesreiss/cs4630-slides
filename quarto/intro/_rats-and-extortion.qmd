@@ -1,23 +1,17 @@
 
-### more targetted stealing/extortion 
-
-
-
-<!-- \setbeamertemplate(navigation symbols,) -->
+### individualized stealing/extortion 
 
 ###  
 
-![](/intro/texfig/rats-and-extortion.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+![](/intro/texfig/rats-and-extortion.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center
+    fig-alt="To Catch a Ratter: Monitoring the Behavior of Amatuer DarkComet RAT Operators in the Wild by Fairnholt et al. Abstract--Remote Access Trojans (RATs) give remote attackers interactive control over a compromised machine. Unlike large-scale malware such as botnets, a RAT is controlled individually by a human operator interacting with the compromised machine. Ther versatility of RATs makes them attractive to actors of all levels of sophistication: they've been used for expionage, information theft, voyeurism and extortion." }
 
 
-### to catch ratter results  {.smaller}
-
+### to catch ratter results 
 
 * 2016/7 study
 * 61% attempt to access webcam; 26% microphone 
-
    * (both not present in experimenter's ‘honeypot’)
-
 * 31% enable keylogger (passwords?)
 * approx. 5% harass legit user
 * approx. 2% try to phish legit user

@@ -1,16 +1,13 @@
-
-<!-- \setbeamertemplate(navigation symbols,) -->
-
 ###  
 
 
-![](/intro/ppi-title){}
- [2011, Usenix Security]{.mycredit}
+![](/intro/ppi-title){
+    fig-alt="Measuring Pay-Per-Install: The Commoditization of Malware Distribution by Juan Callebero, Chris Grier, Christian Kreibich, Vern Paxson of IMDEA, UC Berkeley and ICSI"}
 
-<!-- \setbeamertemplate(navigation symbols,) -->
+[2011, Usenix Security]{.mycredit}
 
-###  
+###  {visibility="hidden"}
 
 
-![](/intro/ppi-top-20b){}
+![](/intro/ppi-top-20b){fig-alt="Table of malware families observed being distributed through pay-per-install service honeypots"}
 

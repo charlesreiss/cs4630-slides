@@ -1,16 +1,11 @@
 
-### vulnerabilities  {.smaller}
-
+### vulnerabilities
 
 * for viruses, worms
 * for trojans + PUP that do more than is supposed to do be allowed 
-
    * e.g. getting location information without ‘‘permission’’
- 
-
-* software <em>vulnerability</em> 
-
-* unintended program behavior <br> that can be used by an adversary
+* software _vulnerability_
+* unintended program behavior that can be used by an adversary
 
 
 ### vulnerability example 
@@ -20,40 +15,31 @@
 * <em>not intended</em> behavior of web browser
 
 
-### software vulnerability classes (1)  {.smaller}
-
+### software vulnerability classes (1)
 
 * <em>memory safety</em> bugs 
-
    * problems with pointers
    * big topic in this course
-
-* ‘‘injection’’ bugs --- <em>type confusion</em>  
-
+* "injection" bugs --- <em>type confusion</em>  
    * commands/SQL within name, label, etc.
-
 * integer overflow/underflow
 * …
 
 
-### software vulnerability classes (2)  {.smaller}
-
+### software vulnerability classes (2)
 
 * not checking inputs/permissions 
-
-   * \\url{http://webserver.com/../../../../file-I-shouldn't-get.txt}
-
+   * http://webserver.com/../../../../file-I-shouldn't-get.txt
 * almost any ‘‘undefined behavior’’ in C/C++
 * synchronization bugs: time-to-check to time-of-use
 * … more?
 
-
 ### vulnerability versus exploit 
 
-
-* exploit --- something that uses a vulnerability to do something
-* proof-of-concept --- something = demonstration the exploit is there 
-
+* exploit
+   * something that uses a vulnerability to do something
+* proof-of-concept 
+   * something = demonstration the exploit is there
    * example: open a calculator program
 
 

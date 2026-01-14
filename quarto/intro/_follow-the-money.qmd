@@ -2,14 +2,14 @@
 ### making money from malware  {.smaller}
 
 
-* [adware --- from ad revenue]{.fragment fragment-index=2 .custom .myem-only}
-* [ransomware --- ransom user's files/usability of system]{.fragment fragment-index=3 .custom .myem-only}
-* [steal/resell personal info]{.fragment fragment-index=5 .custom .myem-only} 
+* adware --- from ad revenue
+* ransomware --- ransom user's files/usability of system
+* steal/resell personal info
 
    * identity theft
    * account credneitals / cryptocurrency
 
-* [resell computation/network time]{.fragment fragment-index=4 .custom .myem-only}  
+* resell computation/network time
 
    * advertising fraud
    * distributed denial of service

@@ -1,21 +1,35 @@
 
-### the underground economy (1) 
+### the underground economy (1) {.smaller .nostretch}
 
-![](/intro/texfig/underground1.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+![](/intro/bm-sell-cvv.png){
+    .r-frame
+    fig-alt="<A> Sell Cvv US(1$ each), Uk(2$ each)Cvv with SSN & DL(10$ each)and ePassporte Account with 560$ in acc(50$), Hacked Host(7$), Tut Scam CC Full in VP-ASP Shop (10$).shopadmin with 4100 order(200$), Tool Calculate Drive Licsence Number(10$).... I'm sleeping. MSG me and I will reply U as soon as I can!"
+}
+
+* advertisement for stolen credentials on an IRC (Internet Relay Chat) server
+    * via Team Cymru, ``The underground Economy: Priceless'' (2006, Usenix ;login: magazine)
+* CVV = card verification value --- verification number on back of credit cards
+* DL = driver's license?
+
+### the underground economy (2) {.nostretch}
 
 
-### the underground economy (2) 
-
-
-![advertisements for `drops' (bank accounts for money laundering) and  
-        for `cashiers' (criminals who will clean out accounts)  
-        via Team Cymru, ``The underground Economy: Priceless'' (2006, Usenix ;login: magazine)
-    ](/intro/underground-dropscashiers){}
+![advertisements for 'drops' (bank accounts for money laundering) and 
+for 'cashiers' (criminals who will clean out accounts)  
+via Team Cymru, "The underground Economy: Priceless" (2006, Usenix ;login: magazine)
+](/intro/underground-dropscashiers.png){.r-frame}
 
 
 ### the underground economy (3) 
 
 
-![via Thomas et al, ``Framing Dependencies Introduced by Underground Commoditization'' (2015)
-](/intro/taxonomy-underground){}
+![via Thomas et al, "Framing Dependencies Introduced by Underground Commoditization" (2015)](/intro/taxonomy-underground.png){
+    fig-alt="Taxonomy of underground actors labeled as Figure 2 from a paper.
+        X-axis goes from 'Product' to 'Theft'; Y-axis goes in increasing dependency (going upwards).
+        Items are listed from least to most dependency in four tranches:
+        First, Raw materials (hosting, network, human services); then Traffic acquisition (accounts, SEO, cloaking);
+        Then Malware distribution (Exploit kits; PPI services); Then Specialized paylods
+        (Spambot, Clickbots, Banking trojans).
+    "
+}
 

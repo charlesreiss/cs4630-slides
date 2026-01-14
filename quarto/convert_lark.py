@@ -43,7 +43,7 @@ generic_command: SIMPLE_COMMAND when optional_argument? (_BRACE any_text _END_BR
 item: _ITEM when any_text
     | _ITEM when whitespace? _BRACE _END_BRACE any_text
 
-itemize: _BEGIN_ITEMIZE (whitespace? item)+ _END_ITEMIZE
+itemize: _BEGIN_ITEMIZE whitespace? SIMPLE_COMMAND? (whitespace? item)+ _END_ITEMIZE
 
 tabular_line: (any_text_not_linebreak _NEXT_CELL)* any_text_not_linebreak LINEBREAK
 

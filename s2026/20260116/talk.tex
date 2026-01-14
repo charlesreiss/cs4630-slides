@@ -1,0 +1,59 @@
+\date{}
+\title{}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\input{../common/listingsLib}
+
+\begin{frame}{last time}
+    \begin{itemize}
+    \item motivations for malware
+        \begin{itemize}
+        \item monetization techniques / other motivations
+        \item black markets --- attackers are not vertically integrated
+        \item thinking about attacking/detecting monetization/etc., not just malware itself
+        \end{itemize}
+    \item references for x86-64 instruction set
+    \item AT\&T and Intel syntax
+    \item x86-64 general purpose registers
+    \end{itemize}
+\end{frame}
+
+\section{floating point}
+\input{../asm/floating-point-intro}
+\input{../asm/floating-point-sse-regs}
+\input{../asm/floating-point-vector}
+
+\section{rip addressing}
+\input{../asm/addressing-rip}
+
+\section{string instructions}
+\input{../asm/string-instrs}
+
+\section{endbr64}
+\input{../asm/endbr64}
+
+\section{segmentation}
+\input{../asm/segmentation}
+
+\subsection{thread-local storage example}
+\input{../asm/tls-example}
+
+\section{Linux x86-64 calling conventions}
+\input{../asm/x86-64-linux-cc} % FIXME: note location of definitive reference, move to backup
+\input{../asm/x86-64-linux-cc-callstack}
+
+\input{../exec-encoding/talk-inner}
+
+\input{../re-tools/talk-inner}
+
+\input{../x8664-encoding/talk-inner}
+
+\section{backup slides}
+\begin{frame}{backup slides}
+\end{frame}
+
+\end{document}

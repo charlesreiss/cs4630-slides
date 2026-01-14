@@ -1,0 +1,19 @@
+
+\begin{frame}{XMM registers}
+\begin{itemize}
+\item {\tt \%xmm0} through {\tt \%xmm15} {\small ({\tt \%xmm8} on 32-bit)}
+\item each holds 128-bits ---
+    \begin{itemize}
+    \item 32-bit floating point values ({\tt addps}, etc.)
+    \item 64-bit floating point values ({\tt addpd}, etc.) 
+    \item 64/32/16/8-bit integers ({\tt paddq/d/w/b}, etc.)
+    \item \myemph<2>{a 32-bit floating point value}, 96 unused bits ({\tt addss}, {\tt movss}, etc.)
+    \item \myemph<2>{a 64-bit floating point value}, 64 unused bits ({\tt addsd}, {\tt movsd}, etc.)
+    \end{itemize}
+\vspace{.5cm}
+\item more recently: {\tt \%ymm0} through {\tt \%ymm15} (256-bit, ``AVX'')
+    \begin{itemize}
+    \item overlap with {\tt\%xmm{\it X}} registers
+    \end{itemize}
+\end{itemize}
+\end{frame}

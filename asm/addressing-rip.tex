@@ -1,0 +1,22 @@
+\begin{frame}[fragile,label=addressingRIP]{addressing modes with \%rip}
+    \begin{itemize}
+        \item {\small AT\&T} {\tt 0x1234(\%rip)} \\
+              {\small Intel} {\tt [RIP + 0x1234]}
+            \begin{itemize}
+            \item value in memory 0x1234 bytes after current instruction
+            \end{itemize}
+\begin{lstlisting}
+thing: .quad 42
+...
+movq thing(%rip), %rax
+\end{lstlisting}
+        \begin{itemize}
+        \item \myemph{special case in Linux assembler}
+        \item if movq ends at 0x7000 and thing is at 0x5000, then\ldots
+        \item as \texttt{movq -0x2000(\%rip), \%rax}
+            \begin{itemize}
+            \item \textit{not} movq 0x5000\ldots
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+\end{frame}

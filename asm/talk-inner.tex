@@ -21,37 +21,27 @@
 \section{objdump output}
 \input{../asm/aside-read-objdump}
 
-\section{Linux x86-64 calling conventions}
-
-\input{../asm/x86-64-linux-cc} % FIXME: note location of definitive reference, move to backup
-\input{../asm/x86-64-linux-cc-callstack}
 
 \section{floating point}
+\input{../asm/floating-point-intro}
+\input{../asm/floating-point-sse-regs}
+\input{../asm/floating-point-vector}
 
-% FIXME: examples with C code
-
-\input{../asm/floating-point}
+\section{rip addressing}
+\input{../asm/addressing-modes-rip}
 
 \section{string instructions}
 \input{../asm/string-instrs}
 
-\section{addressing modes} % FIXME: move to backup?
-
-\input{../asm/addressing-modes}
-
-\subsection{where is jump exericse}
-\input{../asm/where-jump-ex}
-
-% FIXME: question on what jmp jumps to
-
 \section{endbr64}
-
 \input{../asm/endbr64}
 
 \section{segmentation}
-% FIXME: example of thread-local storage?
 \input{../asm/segmentation}
 
 \subsection{thread-local storage example}
 \input{../asm/tls-example}
 
+\section{Linux x86-64 calling conventions}
+\input{../asm/x86-64-linux-cc} % FIXME: note location of definitive reference, move to backup
+\input{../asm/x86-64-linux-cc-callstack}

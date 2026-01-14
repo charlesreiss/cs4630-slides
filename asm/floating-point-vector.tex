@@ -1,0 +1,42 @@
+
+
+\begin{frame}[fragile,label=sseRegsVector]{vector instructions}
+    \begin{itemize}
+    \item \%xmm (and related) regisers support \myemph{vector instructions}
+    \end{itemize}
+\lstset{
+    language=myasm,
+    style=small,
+    moredelim={**[is][\btHL<2>]{&2}{&}},
+    moredelim={**[is][\btHL<3>]{&3}{&}},
+    moredelim={**[is][\btHL<4>]{&4}{&}},
+    morekeywords={.float,movps,addps},
+}
+\begin{lstlisting}
+&2numbers: .float 1 .float 2 .float 3. float 4&
+ones:    .float 1 .float 3 .float 5 .float 7
+result:  .float 0 .float 0 .float 0 .float 0
+...
+&3movps& numbers, %xmm0
+movps ones, %xmm1
+&4addps& %xmm1, %xmm0
+movps %xmm0, result
+/* result contains: 1+1=2,2+3=5,3+5=8,4+7=11 */
+\end{lstlisting}
+\begin{tikzpicture}[overlay,remember picture]
+    \coordinate (overlayPlace) at ([xshift=1cm,yshift=.5cm]current page.center);
+    \tikzset{overThing/.style={
+        draw=red,very thick,rectangle,at=(overlayPlace),
+        anchor=west,align=left,fill=white,
+    }}
+    \begin{visibleenv}<2>
+        \node [overThing] {array of 4 floats};
+    \end{visibleenv}
+    \begin{visibleenv}<3>
+        \node [overThing] {move packed single \\ (single-precision float)};
+    \end{visibleenv}
+    \begin{visibleenv}<4>
+        \node [overThing] {add packed single \\ (single-precision float)};
+    \end{visibleenv}
+\end{tikzpicture}
+\end{frame}

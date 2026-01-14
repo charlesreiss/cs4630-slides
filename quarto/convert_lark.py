@@ -1328,6 +1328,7 @@ class Itemize(_MyAstItem):
 
     def __init__(self, *args):
         self.items = []
+        # TODO: ignores optional simple command (e.g. \small) before first \item
         for maybe_item in args:
             if isinstance(maybe_item, Item):
                 self.items.append(maybe_item)

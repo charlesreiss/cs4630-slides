@@ -1152,7 +1152,7 @@ class Tikzpicture(_MyAstItem):
                 if m.group(key):
                     max_slide_number = max(max_slide_number, int(m.group(key)))
         tikz_code = self.contents.value
-        if '(pic cs:' in tikz_code:
+        if 'pic cs:' in tikz_code:
             return '<!--\n```\n' + self.contents.value + '\n```\n-->\n'
         tikz_code = tikz_code.replace(r'\paperwidth', r'\mypaperwidth')
         tikz_code = tikz_code.replace(r'\paperheight', r'\mypaperheight')

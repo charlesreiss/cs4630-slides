@@ -231,7 +231,7 @@ SAVEBOX.0: /
     \}
     /x
 LRBOX.0: /\\begin\{lrbox\}(?s:.*?)\\end\{lrbox\}/
-SIMPLE_ESCAPED.-11: /\\[.&_$%\/#]/
+SIMPLE_ESCAPED.-11: /\\[.&_$%\/#{}]/
 _NEXT_CELL.-20: /&/
 NEWLINE.-20: /\n+/
 WHITESPACE.-20: /[ \t\v]/

@@ -1079,7 +1079,7 @@ class Visibleenv(_MyAstItem):
                     '\n<div class="fragment fade-in-and out" data-fragment-index=' + number +' >\n'
                 )
             result += self.contents.render(context)
-            result += '</div>'
+            result += '\n</div>'
             return result
         else:
             return self.contents.render(context)
@@ -1181,9 +1181,9 @@ class Tikzpicture(_MyAstItem):
         if not is_overlay:
             if max_slide_number > 1:
                 if context.frame_top:
-                    result += '\n::: {.r-stack .my-full}\n'
+                    result += '\n\n::: {.r-stack .my-full}\n'
                 else:
-                    result += '\n::: {.r-stack}\n'
+                    result += '\n\n::: {.r-stack}\n'
         fig_output_tex = fig_output_dir / (
             fig_file_stem + f'.figure.tex'
         )
@@ -1239,7 +1239,7 @@ class Tikzpicture(_MyAstItem):
                 )
         if not is_overlay:
             if max_slide_number > 1:
-                result += ':::\n'
+                result += '\n:::\n'
                 #result += '</div>\n'
         return result
 

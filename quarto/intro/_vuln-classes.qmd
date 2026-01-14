@@ -36,12 +36,12 @@
 * …
 
 
-### software vulnerability classes (2) 
+### software vulnerability classes (2)  {.smaller}
 
 
 * not checking inputs/permissions 
 
-   * \url{http://webserver.com/../../../../file-I-shouldn't-get.txt}
+   * \\url{http://webserver.com/../../../../file-I-shouldn't-get.txt}
 
 * almost any ‘‘undefined behavior’’ in C/C++
 * synchronization bugs: time-to-check to time-of-use

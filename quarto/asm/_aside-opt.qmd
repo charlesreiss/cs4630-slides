@@ -23,6 +23,7 @@
 * compilers do <em>really silly things</em> without optimizations: 
 ```
 int sum(int x, int y) { return x + y; }
+
 ```
  
  
@@ -37,6 +38,7 @@ sum:
     addl    %edx, %eax
     popq    %rbp
     ret
+
 ```
  
 
@@ -46,6 +48,7 @@ sum:
 sum:
     leal (%rdi,%rsi), %eax
     ret
+
 ```
 
 

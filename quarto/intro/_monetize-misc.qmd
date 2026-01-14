@@ -1,5 +1,5 @@
 
-### stealing banking credentials  {.smaller}
+### stealing banking credentials 
 
 
 ![](/intro/all-your-cards-tbl3){}

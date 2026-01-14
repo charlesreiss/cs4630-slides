@@ -41,5 +41,6 @@ other_function:
     ...
     callq foo
     popq %r11
+
 ```
 

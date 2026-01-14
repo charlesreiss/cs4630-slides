@@ -10,6 +10,7 @@ memcpy: // copy %rdx bytes from (%rsi) to (%rdi)
         subq $1, %rdx
         jmp memcpy
 done:   ret
+
 ```
  
 
@@ -26,6 +27,7 @@ done:   ret
 memcpy: // copy %rdx bytes from (%rsi) to (%rdi)
     rep movsb
     ret
+
 ```
  
 
@@ -37,7 +39,7 @@ memcpy: // copy %rdx bytes from (%rsi) to (%rdi)
 * <em>cannot</em> use <code>rep</code> with all instructions
 
 
-### string instructions (3) 
+### string instructions (3)  {.smaller}
 
 
 * <code>lodsb</code>, <code>stosb</code> --- load/store into string

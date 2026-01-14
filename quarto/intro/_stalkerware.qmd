@@ -1,7 +1,7 @@
 
 ###  
 
-![](texfig/stalkerware.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+![](/intro/texfig/stalkerware.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
 
 
 ### dual-use, context-sensitivity  {.smaller}
@@ -20,7 +20,7 @@
 * intentionally ‘evil’ software masquarding as legit 
 
    * remote admin software that's unusually well hidden…
-   * … and marketted on ‘‘how to spy on your \rule{1cm.5pt}’’ blog
+   * … and marketted on ‘‘how to spy on your \\rule{1cm.5pt}’’ blog
 
 * ideally, prevent ‘‘bad’’ use somehow 
 

@@ -3,8 +3,8 @@
 
 ## Morris Worm {visibility="hidden"}
 
-{{< include ../intro/_morris-worm.qmd >}}
+{{< include /intro/_morris-worm.qmd >}}
 
 ## Other monetization strategies {visibility="hidden"}
 
-{{< include ../intro/_monetize-misc.qmd >}}
+{{< include /intro/_monetize-misc.qmd >}}

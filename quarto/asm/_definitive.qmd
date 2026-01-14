@@ -70,7 +70,7 @@
 * compat/leg mode --- in 16-bit/32-bit modes?
 
 
-### instruction listing parts (2) 
+### instruction listing parts (2)  {.smaller}
 
 
 * dscription + operation (later on page) 

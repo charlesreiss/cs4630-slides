@@ -1,5 +1,5 @@
 
-### non-vulnerabilities? 
+### non-vulnerabilities?  {.smaller}
 
 
 * with trojans/potentially unwanted software, problem is subtle 

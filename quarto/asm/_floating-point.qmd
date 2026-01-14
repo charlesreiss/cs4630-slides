@@ -53,7 +53,8 @@
     moredelim={**[is][\btHL<4>]{&4}{&}},
     morekeywords={.float,movps,addps},
 } -->
- <pre><code><span data-fragment-index="2" class="fragment custom myem-only">numbers: .float 1 .float 2 .float 3. float 4</span>
+ 
+<pre><code><span data-fragment-index="2" class="fragment custom myem-only">numbers: .float 1 .float 2 .float 3. float 4</span>
 ones:    .float 1 .float 3 .float 5 .float 7
 result:  .float 0 .float 0 .float 0 .float 0
 ...
@@ -63,10 +64,10 @@ movps ones, %xmm1
 movps %xmm0, result
 /* result contains: 1+1=2,2+3=5,3+5=8,4+7=11 */
 </code></pre>
- ![](texfig/sseRegs.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
-![](texfig/sseRegs.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
-![](texfig/sseRegs.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=3}
-![](texfig/sseRegs.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=4}
+ ![](/asm/texfig/sseRegs.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
+![](/asm/texfig/sseRegs.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
+![](/asm/texfig/sseRegs.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=3}
+![](/asm/texfig/sseRegs.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=4}
 
 
 ### XMM registers  {.smaller}
@@ -105,5 +106,6 @@ loop:   test %rdi, %rdi
         addq $4, %rsi
         jmp loop
 done:   ret
+
 ```
 

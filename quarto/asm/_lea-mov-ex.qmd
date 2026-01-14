@@ -14,6 +14,7 @@ string:
     leal 1(%rbx), %ebx // lea EBX, [RBX+1]
     movb %bl, (%rax)   // mov [RAX], BL
     movq %rdx, 4(%rax) // mov [4+RAX], RDX
+
 ```
  [ What is the final value of string?]{.my-small} <table>
 <tr><td>a. <code>"abcdabcd"</code></td><td>d. <code>"abcdefgh"</code></td></tr>

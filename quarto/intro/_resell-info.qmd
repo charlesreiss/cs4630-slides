@@ -1,5 +1,5 @@
 
 ###  
 
-![](texfig/resell-info.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+![](/intro/texfig/resell-info.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
 

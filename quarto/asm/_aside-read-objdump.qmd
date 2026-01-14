@@ -1,8 +1,4 @@
 
-<!-- \newcommand(\varMark,2,#2) -->
-
-<!-- \newcommand(\varOnly,2,#2) -->
-
 ### reading objdump disassembly  {.smaller}
 
 
@@ -10,7 +6,8 @@
 * often, we'll want to work from binaries to assembly
 * tool we'll use on Linux: <code>objdump</code>
 * example from <it><code></code> objdump --disassemble</it> of hello-world program:
- <pre><code>\\varMark{2}{0000000000001060 &lt;main&gt;}:
+ 
+<pre><code>\\varMark{2}{0000000000001060 &lt;main&gt;}:
   \\varMark{3}{1060}:  \\varMark{4}{f3 0f 1e fa}           endbr64 
   \\varMark{3}{1064}:  \\varMark{4}{50}                    push   %rax
   \\varMark{3}{1065}:  \\varMark{4}{48 8d 3d 98 0f 00 00}  lea    \\varMark{6}{0xf98(%rip)},%rdi \\varMark{6}{# 2004 &lt;_IO_stdin_used+0x4&gt;}
@@ -20,10 +17,10 @@
   \\varMark{3}{1073}:  \\varMark{4}{5a}                    pop    %rdx
   \\varMark{3}{1074}:  \\varMark{4}{c3}                    retq   
 </code></pre>
- ![](texfig/aside-read-objdump.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
-![](texfig/aside-read-objdump.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
-![](texfig/aside-read-objdump.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=3}
-![](texfig/aside-read-objdump.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=4}
-![](texfig/aside-read-objdump.figure-5.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=5}
-![](texfig/aside-read-objdump.figure-6.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=6}
+ ![](/asm/texfig/aside-read-objdump.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
+![](/asm/texfig/aside-read-objdump.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
+![](/asm/texfig/aside-read-objdump.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=3}
+![](/asm/texfig/aside-read-objdump.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=4}
+![](/asm/texfig/aside-read-objdump.figure-5.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=5}
+![](/asm/texfig/aside-read-objdump.figure-6.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=6}
 

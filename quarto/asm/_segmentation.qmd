@@ -4,7 +4,7 @@
 
 
 * illuision of <em>dedicated memory</em>
- ![](texfig/vm.figure.svg)
+ ![](/asm/texfig/vm.figure.svg)
 
 
 ### segmentation 
@@ -13,10 +13,12 @@
 
 * before virtual memory, there was <em>segmentation</em>
  
-::: {.r-stack}
-![](texfig/segmentation.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](texfig/segmentation.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+::: {.r-stack}
+![](/asm/texfig/segmentation.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/asm/texfig/segmentation.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
 
 :::
 
@@ -39,6 +41,7 @@
 movq $42, %fs:100(%rsi)
     // move 42 to segment (# in FS),
     // offset 100 + RSI 
+
 ```
 
 
@@ -47,12 +50,14 @@ movq $42, %fs:100(%rsi)
 
 
   
+
 ::: {.r-stack}
-![](texfig/x86SegPic.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+![](/asm/texfig/x86SegPic.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](texfig/x86SegPic.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/asm/texfig/x86SegPic.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
 
-![](texfig/x86SegPic.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+![](/asm/texfig/x86SegPic.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
 
 :::
  [Figure: Intel manuals, Vol 3A]{.mycredit}
@@ -61,12 +66,14 @@ movq $42, %fs:100(%rsi)
 
 
   
+
 ::: {.r-stack}
-![](texfig/segmentation-x86-segment-descriptor.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+![](/asm/texfig/segmentation-x86-segment-descriptor.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](texfig/segmentation-x86-segment-descriptor.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/asm/texfig/segmentation-x86-segment-descriptor.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
 
-![](texfig/segmentation-x86-segment-descriptor.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+![](/asm/texfig/segmentation-x86-segment-descriptor.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
 
 :::
  [Figure: Intel manuals, Volume 3A]{.mycredit}

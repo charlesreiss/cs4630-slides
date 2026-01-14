@@ -1,5 +1,5 @@
 
-### cryptolockers 
+### cryptolockers  {.smaller}
 
 
 * encrypt files, hold for ‘‘ransom’’
@@ -12,7 +12,7 @@
 
 
 
-{{< include ../intro/_ransom-screen.qmd >}}
+{{< include /intro/_ransom-screen.qmd >}}
 
 ### other ransomware 
 

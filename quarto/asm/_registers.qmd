@@ -20,6 +20,7 @@ xor %eax, %eax
 movl $-1, %ebx
     // Intel: MOV EBX, -1
 // %rbx is 0xFFFFFFFF, not -1 (0xFFFFF...FFF)
+
 ```
  
 
@@ -36,5 +37,6 @@ movl $-1, %ebx
 movq $0x12345789abcdef, %rax
 movw $0xaaaa, %ax
 // %rax is 0x123456789abaaaa
+
 ```
 

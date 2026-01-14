@@ -11,7 +11,7 @@
 ![](/asm/func-call-seq-manual){}
 
 
-### Linux x86-64 calling summary 
+### Linux x86-64 calling summary  {.smaller}
 
 
 * first 6 arguments: %rdi, %rsi, %rdx, %rcx, %r8, %r9 
@@ -33,6 +33,7 @@
 int foo(int a, int b, int c, int d, int e, int f, int g, int h);
 ...
 foo(1, 2, 3, 4, 5, 6, 7, 8);
+
 ```
  
 ```
@@ -46,5 +47,6 @@ movl    $2, %esi
 movl    $1, %edi
 call    foo
 /* return value in %eax */
+
 ```
 

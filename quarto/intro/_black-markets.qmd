@@ -1,7 +1,7 @@
 
 ### the underground economy (1) 
 
-![](texfig/underground1.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+![](/intro/texfig/underground1.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
 
 
 ### the underground economy (2) 

@@ -7,7 +7,7 @@
 
 ###  
 
-![](texfig/rats-and-extortion.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+![](/intro/texfig/rats-and-extortion.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
 
 
 ### to catch ratter results  {.smaller}

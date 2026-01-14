@@ -11,6 +11,7 @@ partial output of <it>objdump --disassemble</it>:
   1071:  31 c0                 xor    %eax,%eax
   1073:  5a                    pop    %rdx
   1074:  c3                    retq   
+
 ```
  <hr />
  

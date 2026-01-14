@@ -23,6 +23,7 @@
 thing: .quad 42
 ...
 movq thing(%rip), %rax
+
 ```
  
 
@@ -37,7 +38,7 @@ movq thing(%rip), %rax
 
 
 
-### addressing modes (3) 
+### addressing modes (3)  {.smaller}
 
 
 * [ AT&amp;T]{.my-small} <code>jmp *%rax</code> <br> [ Intel]{.my-small} <code>jmp RAX</code> 

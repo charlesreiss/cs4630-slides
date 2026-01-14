@@ -4,7 +4,7 @@
 
 * your assignments will use it
 * will have examples with lots of assembly
-* x86-64 \\textbf{machine code} will come up
+* x86-64 <em>machine code</em> will come up
 
 
 ### why asm/machine code?  {.smaller}

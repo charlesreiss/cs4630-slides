@@ -76,6 +76,7 @@ any_text_not_linebreak: any_text_basic*
     | _MYALTTEXTD _BRACE whitespace? TIKZPICTURE whitespace? _END_BRACE _BRACE any_text _END_BRACE _BRACE any_text _END_BRACE _BRACE any_text _END_BRACE _BRACE any_text _END_BRACE -> tikzpicture_with_alt
     | _PDFTOOLTIP _BRACE whitespace? TIKZPICTURE whitespace? _END_BRACE _BRACE any_text _END_BRACE -> tikzpicture_with_alt
     | _BEGIN_VISIBLEENV when any_text _END_VISIBLEENV -> visibleenv
+    | _BEGIN_ONLYENV when any_text _END_ONLYENV -> visibleenv
     | _END_SQUARE_BRACKET -> end_square_bracket
     | _SQUARE_BRACKET -> square_bracket
     | LSTSET -> lstset
@@ -145,14 +146,16 @@ _START_QUOTE: /`/
 _END_QUOTE: /'/
 _BEGIN_VISIBLEENV.10: /\\begin\{visibleenv\}/
 _END_VISIBLEENV.10: /\\end\{visibleenv\}/
+_BEGIN_ONLYENV.10: /\\begin\{onlyenv\}/
+_END_ONLYENV.10: /\\end\{onlyenv\}/
 _BEGIN_TABULAR.10: /\\begin\{tabular\}/
 _END_TABULAR.10: /\\end\{tabular\}/
 _BEGIN_MINIPAGE.10: /\\begin\{minipage\}/
 _END_MINIPAGE.10: /\\end\{minipage\}/
 _BEGIN_DOCUMENT.10: /\\begin\{document\}/
 _END_DOCUMENT.10: /\\end\{document\}/
-BEGIN_GENERIC.0: /\\begin\{(?!minipage|tabular|itemize|Verbatim|visibleenv|frame|FragileFrame|document)\w+\}/
-END_GENERIC.0: /\\end\{(?!minipage|tabular|itemize|Verbatim|visibleenv|frame|FragileFrame|document)\w+\}/
+BEGIN_GENERIC.0: /\\begin\{(?!onlyenv|minipage|tabular|itemize|Verbatim|visibleenv|frame|FragileFrame|document)\w+\}/
+END_GENERIC.0: /\\end\{(?!onlyenv|minipage|tabular|itemize|Verbatim|visibleenv|frame|FragileFrame|document)\w+\}/
 _BRACE.-10: /\{/
 _END_BRACE.-10: /\}/
 _SQUARE_BRACKET: /\[/

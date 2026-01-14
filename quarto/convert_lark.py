@@ -1220,7 +1220,7 @@ class Tikzpicture(_MyAstItem):
                 fig_output_svg = fig_output_tex.with_stem(
                     fig_output_tex.stem + f'-{slide_number}'
                 ).with_suffix('.svg')
-            output_svg_name = fig_output_svg.parent.name + '/' + fig_output_svg.name
+            output_svg_name = '/' + str(fig_output_svg.relative_to(context.base_quarto_path))
             maybe_alt = ''
             if self.alt_texts is not None:
                 if slide_number > len(self.alt_texts):

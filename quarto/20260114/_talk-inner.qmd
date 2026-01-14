@@ -1,0 +1,68 @@
+
+### date()
+
+### title()
+
+### date()
+
+###  
+
+\\titlepage{}
+
+{{< include /common/_listingsLib.qmd >}}
+
+# follow the money {visibility="hidden"}
+
+{{< include /intro/_follow-the-money.qmd >}}
+
+# black markets, generally {visibility="hidden"}
+
+{{< include /intro/_black-markets.qmd >}}
+
+## Pay-Per-Install {visibility="hidden"}
+
+{{< include /intro/_pay-per-install.qmd >}}
+
+## Note on attacking monetization {visibility="hidden"}
+
+{{< include /intro/_monetize-attack.qmd >}}
+
+## espionage {visibility="hidden"}
+
+{{< include /intro/_malware-esp.qmd >}}
+
+# Malware spreading {visibility="hidden"}
+
+{{< include /intro/_malware-spreading.qmd >}}
+
+# Defenses {visibility="hidden"}
+
+{{< include /intro/_malware-defenses.qmd >}}
+
+{{< include /asm/_talk-inner.qmd >}}
+
+{{< include /exec-encoding/_talk-inner.qmd >}}
+
+# backup slides {visibility="hidden"}
+
+### backup slides 
+
+
+
+# Software vulnerabilities, versus exploit {visibility="hidden"}
+
+{{< include /intro/_vuln-classes.qmd >}}
+
+# espionage {visibility="hidden"}
+
+## Stuxnet{visibility="hidden"}
+
+{{< include /intro/_stuxnet.qmd >}}
+
+## SolarWinds{visibility="hidden"}
+
+{{< include /intro/_solarwinds.qmd >}}
+
+{{< include /asm/_talk-backup.qmd >}}
+
+{{< include /exec-encoding/_talk-backup.qmd >}}

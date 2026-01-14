@@ -533,6 +533,8 @@ class When(_MyAstItem):
         if raw_when:
             self.when = raw_when[1:-1]
             self.when = self.when.replace('|handout:0', '')
+            self.when = self.when.replace('|handout:1', '')
+            self.when = self.when.replace('all:', '')
         else:
             self.when = None
 

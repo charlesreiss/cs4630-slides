@@ -189,7 +189,7 @@ TIKZSET.0: /\\tikzset\{
         )*
     \}/x
 NEWSAVEBOX.0: /\\newsavebox\{\\[^}]+\}|\\newsavebox\\[a-zA-Z]+|\\ifdefined\\[a-zA-Z]+\\else\\newsavebox\\[a-zA-Z]+\\fi/
-NEWCOMMAND.0: /\\(?:newcommand|renewcommand|providecommand)\{[^}]+\}(?:
+NEWCOMMAND.0: /\\(?:newcommand|renewcommand|providecommand)(?:<>)?\{[^}]+\}(?:
         \{(?:
             [^{}]+
             |
@@ -472,6 +472,23 @@ class TikzContext(_MyAstItem):
         self.text = ''
         for arg in args:
             self.text += str(arg)
+        if self.text.startswith(r'\newcommand<>'):
+            m = re.search(r'''
+                    \\newcommand<>\{(?P<command>[^}]+)\}\[1\]
+                ''', self.text, re.X)
+            assert m is not None
+            self.text = re.sub(r'''
+                    \\newcommand<>\{(?P<command>[^}]+)\}\[1\]
+                ''',
+                r'\\NewDocumentCommand\g<command>{D<>{} m}',
+                self.text, flags=re.X)
+            logging.debug('self.text = %s', self.text)
+        elif r'\newcommand<' in self.text:
+            assert False
+
+    @property
+    def inner_text(self):
+        return self.text
 
     def render(self, context: RenderContext) -> str:
         context.add_tikz_preamble(self.text + '\n')

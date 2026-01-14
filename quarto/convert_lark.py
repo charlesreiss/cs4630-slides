@@ -1556,13 +1556,13 @@ class GenericEnvironment(_MyAstItem):
     end_generic: lark.Token
 
     def render(self, context: RenderContext) -> str:
-        result = '```\n'
+        result = '\n```\n'
         result += str(self.begin_generic) + '\n'
         with context.inner(pre=True) as inner_context:
             result += self.contents.render(inner_context)
         result += '\n'
         result += str(self.end_generic)
-        result += '```\n'
+        result += '\n```\n'
         return result
 
 @dataclass

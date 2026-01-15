@@ -15,32 +15,6 @@
 ### addressing modes (2)  {.smaller}
 
 
-* [ AT&amp;T]{.my-small} <code>displacement(%rip)</code> <br> [ Intel]{.my-small} <code>[RIP + displacement]</code> 
-
-   * value in memory displacement bytes after current instruction
- 
-```
-thing: .quad 42
-...
-movq thing(%rip), %rax
-
-```
- 
-
-   * Linux assembler: thing(%rip) another way of referencing thing 
-
-      * thing at 0x2000, instr ends at 0x3000 $\\rightarrow{}$ same as <code>movq -0x1000(%rip), %rax</code>
-      * other assemblers may have quite different syntax for this
-
-   * encoded as offset from <em>address of next instruction</em>
-   * (normally: label encoded as 32 or 64-bit address)
-   * helps <em>relocatable code</em>
-
-
-
-### addressing modes (3)  {.smaller}
-
-
 * [ AT&amp;T]{.my-small} <code>jmp *%rax</code> <br> [ Intel]{.my-small} <code>jmp RAX</code> 
 
    * jmp to address specified by RAX

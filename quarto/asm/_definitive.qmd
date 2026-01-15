@@ -32,13 +32,13 @@
 
 * Intel manuals: 
 
-   * []{.my-small} \\url{https://software.intel.com/en-us/articles/intel-sdm}
+   * []{.my-small} [https://software.intel.com/en-us/articles/intel-sdm](https://software.intel.com/en-us/articles/intel-sdm)
    * 25 MB, 5240 pages
    * Volume 2: instruction set reference (2591 pages)
 
 * AMD manuals: 
 
-   * []{.my-small} \\url{https://support.amd.com/en-us/search/tech-docs}
+   * []{.my-small} [https://support.amd.com/en-us/search/tech-docs](https://support.amd.com/en-us/search/tech-docs)
    * ‘‘AMD64 Architecture Programmer's Manual’’
 
 

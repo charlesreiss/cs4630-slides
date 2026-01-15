@@ -3,6 +3,12 @@
 
 {{< include /asm/_floating-point-cc.qmd >}}
 
+# floating point misc {visibility="hidden"}
+
+{{< include /asm/_floating-point-fp-example.qmd >}}
+
+{{< include /asm/_floating-point-x87.qmd >}}
+
 # exploring assembly/optimization effects {visibility="hidden"}
 
 {{< include /asm/_aside-opt.qmd >}}
@@ -10,3 +16,11 @@
 # caller/callee saved {visibility="hidden"}
 
 {{< include /asm/_x86-64-linux-cc-caller-callee.qmd >}}
+
+# addressing modes {visibility="hidden"}
+
+{{< include /asm/_addressing-modes.qmd >}}
+
+## where is jump exericse {visibility="hidden"}
+
+{{< include /asm/_where-jump-ex.qmd >}}

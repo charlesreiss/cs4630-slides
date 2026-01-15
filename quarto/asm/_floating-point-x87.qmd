@@ -1,0 +1,27 @@
+
+### x87 floating point stack  {.smaller}
+
+
+* x87: 8 floating point registers 
+
+   * <code>%st(0)</code> through <code>%st(7)</code>
+
+* arranged as a <em>stack of registers</em>
+* example: `fld 0(%rbx)`  <table>
+   <tr><td>&nbsp;</td><td>before</td><td>after</td></tr>
+<tr><td><code>st(0)</code></td><td>5.0</td><td>(value from memory at <code>%rbx</code>)</td></tr>
+<tr><td><code>st(1)</code></td><td>6.0</td><td>5.0</td></tr>
+<tr><td><code>st(1)</code></td><td>7.0</td><td>6.0</td></tr>
+<tr><td>…</td><td>…</td><td>…</td></tr>
+<tr><td><code>st(6)</code></td><td>10.0</td><td>9.0</td></tr>
+<tr><td><code>st(7)</code></td><td>11.0</td><td>10.0</td></tr>
+</table>
+   
+
+
+### x87 
+
+
+* not going to talk about x87 more in this course
+* essentially obsolete with 64-bit x86
+

@@ -7,7 +7,7 @@
 
    * extra stuff like <code>.cfi</code> directives (for try/catch)
  
-
+<hr class="vspace" />
 * or disassemble:
 * <code>gcc [\textbf{-O}]{.fragment fragment-index=2 .custom .myem-only} -c file.c</code> (or make an executable)
 * <code>objdump -dr file.o</code> (or on an executable)  

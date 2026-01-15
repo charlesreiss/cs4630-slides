@@ -1,0 +1,20 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+    \coordinate (overlayPlace) at ([xshift=1cm,yshift=.5cm]current page.center);
+    \tikzset{overThing/.style={
+        draw=red,very thick,rectangle,at=(overlayPlace),
+        anchor=west,align=left,fill=white,
+    }}
+    \begin{visibleenv}<2>
+        \node [overThing] {array of 4 floats};
+    \end{visibleenv}
+    \begin{visibleenv}<3>
+        \node [overThing] {move packed single \\ (single-precision float)};
+    \end{visibleenv}
+    \begin{visibleenv}<4>
+        \node [overThing] {add packed single \\ (single-precision float)};
+    \end{visibleenv}
+\end{scope}
+\end{tikzpicture}

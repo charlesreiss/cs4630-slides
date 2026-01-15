@@ -13,7 +13,7 @@
    * <code>printf</code>, <code>scanf</code>, …
    * see <code>man stdarg</code>
  
-
+<hr class="vspace" />
 * same as usual
 * … but `%rax` contains number of <code>%xmm</code> used
 

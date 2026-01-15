@@ -3,7 +3,7 @@
 
 
 * functions <em>may</em> freely <em>trash</em> these 
-
+<hr class="vspace" />
 * return value register <code>%rax</code>
 * argument registers: <br> 
 
@@ -19,7 +19,7 @@
 
 
 * functions <em>must preserve</em> these 
-
+<hr class="vspace" />
 * <code>%rsp</code> (stack pointer), <code>%rbp</code> (frame pointer, maybe)
 * <code>%r12-%r15</code>
 

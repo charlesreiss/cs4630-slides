@@ -32,7 +32,7 @@ memcpy: // copy %rdx bytes from (%rsi) to (%rdi)
  
 
 * <code>rep</code> prefix byte 
-
+<hr class="vspace" />
 * repeat instruction until <code>%rdx</code> is 0
 * decrement <code>%rdx</code> each time
 * <em>cannot</em> specify other registers
@@ -45,7 +45,7 @@ memcpy: // copy %rdx bytes from (%rsi) to (%rdi)
 * <code>lodsb</code>, <code>stosb</code> --- load/store into string
 * <code>movsw</code>, <code>movsd</code> --- word/dword versions
 * string comparison instructions 
-
+<hr class="vspace" />
 * <code>rep movsb</code> is still recommended on modern Intel 
 
    * special-cased in processor?

@@ -1,0 +1,24 @@
+
+### addressing modes with %rip  {.smaller}
+
+
+* [ AT&amp;T]{.my-small} <code>0x1234(%rip)</code> <br> [ Intel]{.my-small} <code>[RIP + 0x1234]</code>  
+
+   * value in memory 0x1234 bytes after current instruction
+ 
+```
+thing: .quad 42
+...
+movq thing(%rip), %rax
+
+```
+ 
+
+   * <em>special case in Linux assembler</em>
+   * if movq ends at 0x7000 and thing is at 0x5000, then…
+   * as <code>movq -0x2000(%rip), %rax</code>  
+
+      * <it>not</it> movq 0x5000…
+
+
+

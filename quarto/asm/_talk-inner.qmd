@@ -23,27 +23,21 @@
 
 {{< include /asm/_aside-read-objdump.qmd >}}
 
-# Linux x86-64 calling conventions {visibility="hidden"}
-
-{{< include /asm/_x86-64-linux-cc.qmd >}}
-
-{{< include /asm/_x86-64-linux-cc-callstack.qmd >}}
-
 # floating point {visibility="hidden"}
 
-{{< include /asm/_floating-point.qmd >}}
+{{< include /asm/_floating-point-intro.qmd >}}
+
+{{< include /asm/_floating-point-sse-regs.qmd >}}
+
+{{< include /asm/_floating-point-vector.qmd >}}
+
+# rip addressing {visibility="hidden"}
+
+{{< include /asm/_addressing-modes-rip.qmd >}}
 
 # string instructions {visibility="hidden"}
 
 {{< include /asm/_string-instrs.qmd >}}
-
-# addressing modes {visibility="hidden"}
-
-{{< include /asm/_addressing-modes.qmd >}}
-
-## where is jump exericse {visibility="hidden"}
-
-{{< include /asm/_where-jump-ex.qmd >}}
 
 # endbr64 {visibility="hidden"}
 
@@ -56,3 +50,9 @@
 ## thread-local storage example {visibility="hidden"}
 
 {{< include /asm/_tls-example.qmd >}}
+
+# Linux x86-64 calling conventions {visibility="hidden"}
+
+{{< include /asm/_x86-64-linux-cc.qmd >}}
+
+{{< include /asm/_x86-64-linux-cc-callstack.qmd >}}

@@ -3,7 +3,7 @@
 
 
 * Linux, Windows use %fs, %gs for thread-local storage 
-
+<hr class="vspace" />
 * variables that have different values in each thread
 * e.g. for program using multiple cores <br> to track different values for each core
 

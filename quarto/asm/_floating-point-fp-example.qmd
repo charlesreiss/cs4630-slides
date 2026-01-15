@@ -1,0 +1,21 @@
+
+### FP example  {.smaller}
+
+<!-- \lstset{language=myasm,morekeywords={movss,mulss,subq}} -->
+ 
+```
+multiplyEachElementOfArray:
+/* %rsi = array, %rdi length,
+   %xmm0 multiplier */
+loop:   test %rdi, %rdi
+        je done
+        movss (%rsi), %xmm1
+        mulss %xmm0, %xmm1
+        movss %xmm1, (%rsi)
+        subq $1, %rdi
+        addq $4, %rsi
+        jmp loop
+done:   ret
+
+```
+

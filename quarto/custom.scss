@@ -1,6 +1,7 @@
 /*-- scss:defaults --*/
 
 $presentation-heading-color: #3333b3;
+$code-color: #000000;
 
 /*-- scss:rules --*/
 
@@ -81,6 +82,11 @@ $presentation-heading-color: #3333b3;
 
 section > ul {
     margin: 0 0 0 0;
+}
+
+hr.vspace {
+    margin-top: 1em;
+    border: none;
 }
 
 @media print {

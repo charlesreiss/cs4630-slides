@@ -1536,7 +1536,10 @@ class OutsideCommand(_MyAstItem):
             return ''
         elif self.command == r'\input':
             logging.debug('input %s', self.arguments)
-            input_file = context.base_output_path.parent / self.arguments[0].inner_text
+            filename = self.arguments[0].inner_text
+            if filename in ('../common/listingsLib', '../common/listingsLib.tex'):
+                return '<!-- \input{' + filename + '} -->'
+            input_file = context.base_output_path.parent / filename
             input_file = input_file.with_name(
                 '_' + input_file.name
             )

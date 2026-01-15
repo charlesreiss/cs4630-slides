@@ -18,7 +18,7 @@ def run_logged(command: List[str | Path]):
     logger.info('running %s', command)
     subprocess.check_call(command)
 
-def convert_tex(base_file: Path, output_directory: Path):
+def convert_tex(base_file: Path, output_directory: Path, output_name: str = None):
     file_text = base_file.read_text()
     if r'\documentclass[tikz]{standalone}' in file_text[:500]:
         shutil.copyfile(base_file, output_directory / base_file.name)
@@ -28,10 +28,12 @@ def convert_tex(base_file: Path, output_directory: Path):
             '<!--\n' +  file_text + '\n-->'
         )
     else:
+        if output_name is None:
+            output_name = ('_' + base_file.stem + '.qmd')
         run_logged([
             'python3', 'convert_lark.py',
             '--input', base_file,
-            '--output', output_directory / ('_' + base_file.stem + '.qmd')
+            '--output', output_directory / output_name
         ])
 
 def convert_directory(base_directory: Path, output_directory: Path):
@@ -47,6 +49,8 @@ def convert_directory(base_directory: Path, output_directory: Path):
            item.stem not in EXCLUDED:
            convert_tex(item, output_directory)
 
+    if not (base_directory / 'talk-inner.tex').exists():
+        convert_tex(base_directory / 'talk.tex', output_directory, '_talk-inner.qmd')
     run_logged([
         'python3', 'build.py',
         '--create-top-qmd', output_directory / 'talk.qmd',

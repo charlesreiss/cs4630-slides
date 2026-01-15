@@ -1,16 +1,3 @@
-
-### date()
-
-### title()
-
-### date()
-
-###  
-
-\\titlepage{}
-
-{{< include /common/_listingsLib.qmd >}}
-
 # follow the money {visibility="hidden"}
 
 {{< include /intro/_follow-the-money.qmd >}}

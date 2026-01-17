@@ -1,6 +1,7 @@
 
 ### exercise  {.smaller}
 
+
 <pre><code>LOAD off    0x0000000 vaddr 0x00400000 paddr 0x00400000 align 2**12
      filesz 0x0000518 memsz 0x00000518 flags r--
 LOAD off    0x0001000 vaddr 0x00401000 paddr 0x00401000 align 2**12

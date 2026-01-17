@@ -14,6 +14,7 @@
 
 ### dynamically linked puts (non-lazy)  {.smaller}
 
+
 <pre><code>DYNAMIC RELOCATION RECORDS
 OFFSET           TYPE              VALUE 
 0000000000403ff0 R_X86_64_GLOB_DAT  __libc_start_main@GLIBC_2.34

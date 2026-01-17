@@ -9,17 +9,19 @@ SYMBOL TABLE:
 0000000000000000 l    df *ABS*  0000000000000000 assert.o
 0000000000498530 l     O .rodata        0000000000000013 errstr.0
 0000000000401100 l     F .text  000000000000000f __assert_fail_base.cold
+
 ```
  … 
 
 * by default, symbol information in statically-linked executable
 * … but not actually used to run it! 
-
+<hr class="vspace" />
 * can be stripped (-s linker option or strip command) isntead:
  
 ```
 SYMBOL TABLE:
 no symbols
+
 ```
 
 

@@ -1,5 +1,5 @@
 
 ### adding linker stubs 
 
-![](texfig/dynamic-link-stubs.figure.svg)
+![](/exec-encoding/texfig/dynamic-link-stubs.figure.svg)
 

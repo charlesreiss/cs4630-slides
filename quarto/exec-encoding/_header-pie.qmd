@@ -1,25 +1,9 @@
 
-### providecommand(\myemphTwo,1,#1)
-
-### providecommand(\myemphTwoB,1,#1)
-
-### providecommand(\myemphThree,1,#1)
-
-### providecommand(\myemphFour,1,#1)
-
-### providecommand(\myemphFive,1,#1)
-
-### providecommand(\myemphSix,1)
-
-### myemph(#1)
-
-### providecommand(\myemphSeven,1,#1)
-
-### position-independent executables 
+### position-independent executables  {.smaller}
 
 
 * so far: executables loaded to fixed (virtual) address 
-
+<hr class="vspace" />
 * turns out to be undesirable for easily guessable addresses
 * solution: position independent executables 
 
@@ -33,7 +17,8 @@
 
 * compiled+linked ‘‘Hello, World’’ with <code>gcc -static-pie</code>
 * PIE = position-independent executable
- <pre><code>a.out:     file format elf64-x86-64
+ 
+<pre><code>a.out:     file format elf64-x86-64
 a.out
 architecture: i386:x86-64, flags 0x00000150:
 HAS_SYMS, \\myemphTwo{DYNAMIC}, D_PAGED
@@ -48,6 +33,6 @@ Program Header:
          filesz 0x00000000000001f5 memsz 0x00000000000001f5 flags r-x
 ...
 </code></pre>
- ![](texfig/elfExOverPie1.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
-![](texfig/elfExOverPie1.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
+ ![](/exec-encoding/texfig/elfExOverPie1.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
+![](/exec-encoding/texfig/elfExOverPie1.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
 

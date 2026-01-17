@@ -13,5 +13,5 @@
 
 ### REX prefix 
 
-![](texfig/add-64-rex-prefix.figure.svg)
+![](/x8664-encoding/texfig/add-64-rex-prefix.figure.svg)
 

@@ -1,7 +1,7 @@
 
 ### memory v. disk 
 
-![](texfig/elf-format-memory-v-disk.figure.svg)
+![](/exec-encoding/texfig/elf-format-memory-v-disk.figure.svg)
 
 
 ### ELF (executable and linking format) 
@@ -9,7 +9,7 @@
 
 
 * Linux [ (and some others)]{.my-small} executable/object file format
- ![](texfig/elf-format-elf-executable-and-linking-format.figure.svg)
+ ![](/exec-encoding/texfig/elf-format-elf-executable-and-linking-format.figure.svg)
 
 
 ### segments versus sections?  {.smaller}

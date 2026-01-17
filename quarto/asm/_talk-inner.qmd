@@ -33,7 +33,7 @@
 
 # rip addressing {visibility="hidden"}
 
-{{< include /asm/_addressing-modes-rip.qmd >}}
+{{< include /asm/_addressing-rip.qmd >}}
 
 # string instructions {visibility="hidden"}
 

@@ -1,7 +1,7 @@
 
 {{< include /exec-encoding/_myemph-lib.qmd >}}
 
-### ELF loading: pages 
+### ELF loading: pages  {.smaller}
 
 
 * Linux, most other OSes manage memory/files in <it>pages</it> 
@@ -18,7 +18,8 @@
 
 ### ELF loading: pages example  {.smaller}
 
-program header: <pre><code>LOAD off    0x0000000 vaddr 0x00400000 paddr 0x00400000 align 2**12
+program header: 
+<pre><code>LOAD off    0x0000000 vaddr 0x00400000 paddr 0x00400000 align 2**12
      filesz 0x0000\\myemphTwo{518} memsz 0x00000518 flags r--
 LOAD off    0x0001000 vaddr 0x00401000 paddr 0x00401000 align 2**12
      filesz 0x00\\myemphThree{9352d} memsz 0x0009352d flags r-x
@@ -28,7 +29,8 @@ LOAD off    0x00bc0c0 vaddr 0x004bd0c0 paddr 0x004bd0c0 align 2**12
      filesz 0x000\\myemphFour{6170} memsz 0x000078c0 flags rw-
 </code></pre>
  <hr />
- actually loaded (via Linux <code>/proc/PID/maps</code>): <pre><code>memory address       size        r/w? file offset
+ actually loaded (via Linux <code>/proc/PID/maps</code>): 
+<pre><code>memory address       size        r/w? file offset
 ~~~~~~~~~~~~~~~~~ (~~~~~~~~)     ~~~~ ~~~~~~~~ 
 00400000-00401000 (  \\myemphTwo{0x1000})     r--p 00000000
 00401000-00495000 ( \\myemphThree{0x94000})     r-xp 00001000

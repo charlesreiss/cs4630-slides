@@ -1,5 +1,5 @@
 
-### interlude: strace 
+### interlude: strace  {.smaller}
 
 
 * <code>strace</code> --- system call tracer 
@@ -17,7 +17,8 @@
 
 * [<code></code> gcc -no-pie -static -o hello-static.exe hello.s]{.my-small}
 * [<code></code> strace ./hello-static.exe]{.my-small}:
- <pre><code>execve("./hello-static.exe", \["./hello-static.exe"], \[/* 46 vars */]) = 0
+ 
+<pre><code>execve("./hello-static.exe", \["./hello-static.exe"], \[/* 46 vars */]) = 0
 \\myemphTwo{uname({sysname="Linux", nodename="reiss-lenovo", ...}) = 0}
 \\myemphTwo{brk(NULL)                               = 0x20a5000}
 \\myemphThree{brk(0x20a61c0)                          = 0x20a61c0}
@@ -31,9 +32,9 @@
 \\myemphFive{exit_group(14)}                          = ?
 +++ exited with 14 +++
 </code></pre>
- ![](texfig/staticStrace.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
-![](texfig/staticStrace.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
-![](texfig/staticStrace.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=3}
-![](texfig/staticStrace.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=4}
-![](texfig/staticStrace.figure-5.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=5}
+ ![](/exec-encoding/texfig/staticStrace.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
+![](/exec-encoding/texfig/staticStrace.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
+![](/exec-encoding/texfig/staticStrace.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=3}
+![](/exec-encoding/texfig/staticStrace.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=4}
+![](/exec-encoding/texfig/staticStrace.figure-5.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=5}
 

@@ -1,10 +1,10 @@
 
-### where's the linker 
+### where's the linker  {.smaller}
 
 
 * Where's the code that calls <code>open("...libc.so.6")</code>?
 * Could check <code>hello.exe</code> --- it's not there! 
-
+<hr class="vspace" />
 * instead: ‘‘interpreter’’ <code>/lib64/ld-linux-x86-64.so.2</code>
 * on Linux: contains loading code instead of core OS 
 
@@ -17,7 +17,8 @@
 
 
 * excerpt from <code>objdump -sx hello.exe</code>:
- <pre><code>Program Header:
+ 
+<pre><code>Program Header:
 <it>...</it>
   INTERP off    0x0000238 vaddr 0x0<em>400318</em> paddr 0x0400238 align 2**0
          filesz 0x000001c memsz 0x000001c flags r--

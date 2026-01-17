@@ -11,6 +11,6 @@
 
    * instead of that address being changeable
  
-
+<hr class="vspace" />
 * most common today: <br>dynamically-linked, position-independent executables
 

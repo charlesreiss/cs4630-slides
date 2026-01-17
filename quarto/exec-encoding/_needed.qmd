@@ -4,7 +4,8 @@
 
 
 * excerpt from <code>objdump -sx hello.exe</code>:
- <pre><code>Program Header:
+ 
+<pre><code>Program Header:
 <it>...</it>
  <em>DYNAMIC</em> off    0x0000000000002e20 vaddr 0x0000000000403e20 paddr 0x0000000000403e20 align 2**3
          filesz 0x00000000000001d0 memsz 0x00000000000001d0 flags rw-

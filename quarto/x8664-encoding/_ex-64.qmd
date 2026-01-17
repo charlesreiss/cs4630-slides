@@ -6,11 +6,11 @@
 
    * <code>01</code> (opcode) <code>c1</code> (MOD: 11 / REG: 000 (eax) / R/M: 001 (ecx))
 
-* exercise 2a: <code>add %eax, %r10d</code> (Intel: <code>ADD r9d, eax</code>) = ??? 
+* exercise 2a: <code>add %eax, %r10d</code> (Intel: <code>ADD r10d, eax</code>) = ??? 
 
    * REX prefix + <code>01</code> + MOD-REG-R/M byte
  
-
+<hr class="vspace" />
 * REX prefix: 
 
    * <code>0100</code>
@@ -32,7 +32,7 @@
 
    * REX prefix + <code>01</code> + MOD-REG-R/M byte
  
-
+<hr class="vspace" />
 * REX prefix: 
 
    * <code>0100</code>

@@ -11,10 +11,12 @@ main:
     movq $string, %rdi
     call puts
     ret
+
 ```
 
 
 ### hello.o (pre-static or dynamic linking)  {.smaller}
+
 
 <pre><code>SYMBOL TABLE:
 0000000000000000 l    d  .text  0000000000000000 .text
@@ -29,18 +31,19 @@ OFFSET           TYPE              VALUE
 0000000000000003 \\myemphFive{R_X86_64_32S}      \\myemphFour{.data}
 0000000000000008 \\myemphFive{R_X86_64_PC32}     \\myemphThree{puts}-0x0000000000000004
 </code></pre>
- ![](texfig/linkingExObjRepeat.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
-![](texfig/linkingExObjRepeat.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
-![](texfig/linkingExObjRepeat.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=3}
-![](texfig/linkingExObjRepeat.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=4}
-![](texfig/linkingExObjRepeat.figure-5.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=5}
-![](texfig/linkingExObjRepeat.figure-6.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=6}
-![](texfig/linkingExObjRepeat.figure-7.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=7}
+ ![](/exec-encoding/texfig/linkingExObjRepeat.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
+![](/exec-encoding/texfig/linkingExObjRepeat.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
+![](/exec-encoding/texfig/linkingExObjRepeat.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=3}
+![](/exec-encoding/texfig/linkingExObjRepeat.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=4}
+![](/exec-encoding/texfig/linkingExObjRepeat.figure-5.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=5}
+![](/exec-encoding/texfig/linkingExObjRepeat.figure-6.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=6}
+![](/exec-encoding/texfig/linkingExObjRepeat.figure-7.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=7}
 
 
 ### hello.o / statically linked, no PIE  {.smaller}
 
-hello.o: <pre><code>Disassembly of section .text:
+hello.o: 
+<pre><code>Disassembly of section .text:
 
 0000000000000000 &lt;main&gt;:
    0:   48 c7 c7 00 00 00 00    mov    $0x0,%rdi
@@ -50,7 +53,8 @@ hello.o: <pre><code>Disassembly of section .text:
    c:   c3                      ret    
 </code></pre>
  <hr />
- hello.exe (gcc -static -no-pie): <pre><code>Disassembly of section .text:
+ hello.exe (gcc -static -no-pie): 
+<pre><code>Disassembly of section .text:
 ...
  00000000004016c3 &lt;main&gt;:
    4016c3:▶      48 c7 c7 b5 16 40 00 ▶  mov    $0x4016b5,%rdi

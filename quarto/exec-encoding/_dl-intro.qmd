@@ -1,7 +1,7 @@
 
 ### linking 
 
-![](texfig/dl-intro-linking.figure.svg)
+![](/exec-encoding/texfig/dl-intro-linking.figure.svg)
 
 
 ### static v. dynamic linking  {.smaller}
@@ -9,7 +9,7 @@
 
 * static linking --- linking <em>to create executable</em>
 * dynamic linking --- linking <em>when executable is run</em> 
-
+<hr class="vspace" />
 * conceptually: no difference in how they work
 * reality --- very different mechanisms 
 

@@ -1,20 +1,20 @@
 
 ### linking 
 
-![](texfig/dl-primer-linking.figure.svg)
+![](/exec-encoding/texfig/dl-primer-linking.figure.svg)
 
 
-### static v. dynamic linking 
+### static v. dynamic linking  {.smaller}
 
 
 * static linking --- linking <em>to create executable</em>
 * dynamic linking --- linking <em>when executable is run</em> 
-
+<hr class="vspace" />
 * conceptually: no difference in how they work
 * reality --- very different mechanisms
 
 
-### linking data structures 
+### linking data structures  {.smaller}
 
 
 * symbol table: <code>name</code> $\\Rightarrow{}$ (section, offset) 

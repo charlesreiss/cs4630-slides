@@ -1,12 +1,13 @@
 
 ### lazy binding  {.smaller}
 
+
 <pre><code>0000000000401030 &lt;puts@plt&gt;:
   401030:       ff 25 62 22 00 00       jmp    *0x2262(%rip)        # 403298 &lt;puts@GLIBC_2.2.5&gt;
 ...
 Contents of section .got.plt:
  403280 a0304000 00000000 00000000 00000000  .0@.............
- 403290 00000000 00000000 \\textbf{36104000 00000000}  ........6.@.....
+ 403290 00000000 00000000 <em>36104000 00000000</em>  ........6.@.....
 </code></pre>
  
 
@@ -17,7 +18,8 @@ Contents of section .got.plt:
 * code found at 0x401036 is routine to invoke dynamic linker code:
  
 <div class="fragment fade-in" data-fragment-index=2 >
- <pre><code>  401020:       ff 35 62 22 00 00       push   0x2262(%rip)       
+ 
+<pre><code>  401020:       ff 35 62 22 00 00       push   0x2262(%rip)       
     # 403288 &lt;_GLOBAL_OFFSET_TABLE_+0x8&gt;
   401026:       ff 25 64 22 00 00       jmp    *0x2264(%rip)    
     # 403290 &lt;_GLOBAL_OFFSET_TABLE_+0x10&gt;
@@ -25,13 +27,14 @@ Contents of section .got.plt:
   401036:       68 00 00 00 00          push   $0x0
   40103b:       e9 e0 ff ff ff          jmp    401020 &lt;_init+0x20&gt;
 </code></pre>
- </div>
+ 
+</div>
 
 ### lazy binding  {.smaller}
 
 
 * with lazy binding turned on (not always done) 
-
+<hr class="vspace" />
 * GOT loaded with address of linker routine hard-coded in executable
 * first call to puts: 
 

@@ -1,31 +1,24 @@
 
-### providecommand(\myemphA,1,#1)
-
-### providecommand(\myemphB,1,#1)
-
-### providecommand(\myemphAB,1,#1)
-
-### providecommand(\myemphC,1,#1)
-
 ### dynamic linking: what to load? (2)  {.smaller}
 
 
 
 * excerpt from <code>objdump -sx hello.exe</code>:
- <pre><code>Program Header:
+ 
+<pre><code>Program Header:
 <it>...</it>
  DYNAMIC off    0x0000000000002e20 vaddr <em>0x0000000000403e20</em> paddr 0x0000000000403e20 align 2**3
          filesz 0x00000000000001d0 memsz 0x00000000000001d0 flags rw-
 <it>...</it>
 Dynamic Section:
   \\myemphAB{NEEDED               libc.so.6}
-  \\myemphC{INIT                 0x0000000000401000}
+  <span data-fragment-index="2" class="fragment custom myem-only">INIT                 0x0000000000401000</span>
   ...
-  \\myemphB{STRTAB}               0x0000000000400420
+  <span data-fragment-index="1" class="fragment custom myem-only">STRTAB</span>               0x0000000000400420
   ...
 <it>...</it>
- \\myemphAB{403e20} \\myemphA{01000000 00000000} \\myemphB{01000000 00000000}  ................
- 403e30 \\myemphC{0c000000 00000000 00104000 00000000}  ..........</code></pre>
+ \\myemphAB{403e20} <span data-fragment-index="0" class="fragment custom myem-only">01000000 00000000</span> <span data-fragment-index="1" class="fragment custom myem-only">01000000 00000000</span>  ................
+ 403e30 <span data-fragment-index="2" class="fragment custom myem-only">0c000000 00000000 00104000 00000000</span>  ..........</code></pre>
  <hr />
- type \\myemphA{0x1 = ‘‘DT_NEEDED’’} (from ELF manual)<br> value \\myemphB{0x1 = string table entry 1} <br> <hr />
- type \\myemphC{0xC = ‘‘DT_INIT’’} <br> value \\myemphC{0x401000} <br>
+ type [0x1 = ‘‘DT_NEEDED’’]{.fragment fragment-index=0 .custom .myem-only} (from ELF manual)<br> value [0x1 = string table entry 1]{.fragment fragment-index=1 .custom .myem-only} <br> <hr />
+ type [0xC = ‘‘DT_INIT’’]{.fragment fragment-index=2 .custom .myem-only} <br> value [0x401000]{.fragment fragment-index=2 .custom .myem-only} <br>

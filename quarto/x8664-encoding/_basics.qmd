@@ -4,7 +4,7 @@
 
 * x86-64 encoding is quite complicated
 * reason we don't teach it in CS 2130 
-
+<hr class="vspace" />
 * mostly complicated because of <it>history</it>
 
 
@@ -53,10 +53,12 @@
 ### 16-bit ModRM table 
 
 
-::: {.r-stack .my-full}
-![](texfig/basics-16-bit-modrm-table.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](texfig/basics-16-bit-modrm-table.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+::: {.r-stack .my-full}
+![](/x8664-encoding/texfig/basics-16-bit-modrm-table.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/x8664-encoding/texfig/basics-16-bit-modrm-table.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
 
 :::
 
@@ -85,10 +87,12 @@
 ### 32-bit ModRM table 
 
 
-::: {.r-stack .my-full}
-![](texfig/basics-32-bit-modrm-table.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](texfig/basics-32-bit-modrm-table.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+::: {.r-stack .my-full}
+![](/x8664-encoding/texfig/basics-32-bit-modrm-table.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/x8664-encoding/texfig/basics-32-bit-modrm-table.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
 
 :::
 
@@ -116,7 +120,7 @@
 
 ### basic 32-bit encoding  {.smaller}
 
-![](texfig/basics-basic-32-bit-encoding.figure.svg)
+![](/x8664-encoding/texfig/basics-basic-32-bit-encoding.figure.svg)
  
 
 * dashed: not always present

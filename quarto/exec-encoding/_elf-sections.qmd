@@ -64,10 +64,11 @@ Idx Name          Size      VMA               LMA               File off  Algn
                   CONTENTS, READONLY
  28 .gnu_debuglink 00000034  0000000000000000  0000000000000000  001df0a4  2**0
                   CONTENTS, READONLY
+
 ```
 
 
-### sections 
+### sections  {.smaller}
 
 
 * tons of ‘‘sections’’
@@ -93,4 +94,4 @@ Idx Name          Size      VMA               LMA               File off  Algn
 <tr><td><code>.got</code>/<code>.plt</code></td><td>dynamic linking related</td></tr>
 <tr><td><code>.eh_frame</code></td><td>try/catch related</td></tr>
 </table>
- [based on \\url{http://people.redhat.com/mpolacek/src/devconf2012.pdf}]{.mycredit}
+ [based on [http://people.redhat.com/mpolacek/src/devconf2012.pdf](http://people.redhat.com/mpolacek/src/devconf2012.pdf)]{.mycredit}

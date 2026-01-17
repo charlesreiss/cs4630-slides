@@ -14,6 +14,6 @@
 <hr class="vspace" />
 * more recently: <code>%ymm0</code> through <code>%ymm15</code> (256-bit, ‘‘AVX’’) 
 
-   * overlap with <code>%xmm\\it{ X}</code> registers
+   * overlap with <code>%xmm<it> X</it></code> registers
 
 

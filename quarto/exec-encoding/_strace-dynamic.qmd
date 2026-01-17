@@ -5,7 +5,8 @@
 
 * [<code></code> gcc -no-pie -o hello.exe hello.s]{.my-small}
 * [<code></code> strace ./hello.exe]{.my-small}:
- <pre><code>execve("./hello.exe", \["./hello.exe"], \[/* 46 vars */]) = 0
+ 
+<pre><code>execve("./hello.exe", \["./hello.exe"], \[/* 46 vars */]) = 0
 <it>...</it>
 \\myemphThree{mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)} = 0x7fdfeeb39000
 access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
@@ -25,10 +26,10 @@ write(1, "Hello, World!\\n", 14)         = 14
 exit_group(14)                          = ?
 +++ exited with 14 +++
 </code></pre>
- ![](texfig/strace-dynamic.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
-![](texfig/strace-dynamic.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
-![](texfig/strace-dynamic.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=3}
-![](texfig/strace-dynamic.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=4}
-![](texfig/strace-dynamic.figure-5.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=5}
-![](texfig/strace-dynamic.figure-6.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=6}
+ ![](/exec-encoding/texfig/strace-dynamic.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
+![](/exec-encoding/texfig/strace-dynamic.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
+![](/exec-encoding/texfig/strace-dynamic.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=3}
+![](/exec-encoding/texfig/strace-dynamic.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=4}
+![](/exec-encoding/texfig/strace-dynamic.figure-5.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=5}
+![](/exec-encoding/texfig/strace-dynamic.figure-6.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=6}
 

@@ -10,12 +10,12 @@
 
  <hr />
  
-<code>movb label, %al8a 04 25 \\normalfont{\\it{} label's addr (32 bit)}</code><br />
+<code>movb label, %al8a 04 25 \\normalfont{<it></it> label's addr (32 bit)}</code><br />
 <code>[\\normalfont{ Intel:} mov AL, [label]]{.my-small}</code><br />
-<code>jmp *labelff 24 25 \\normalfont{\\it{} label's addr (32 bit)}</code><br />
+<code>jmp *labelff 24 25 \\normalfont{<it></it> label's addr (32 bit)}</code><br />
 <code>[\\normalfont{ Intel:} jmp [label]]{.my-small}</code><br />
-<code>movb label(%rip), %al8a 05 \\normalfont{\\it{ %rip - label's addr (32 bit)}}</code><br />
+<code>movb label(%rip), %al8a 05 \\normalfont{<it> %rip - label's addr (32 bit)</it>}</code><br />
 <code>[\\normalfont{ Intel NASM:} mov AL, [REL label]]{.my-small}</code><br />
-<code>jmp *label(%rip)e9 \\normalfont{\\it{ %rip - label's addr (32 bit)}}</code><br />
+<code>jmp *label(%rip)e9 \\normalfont{<it> %rip - label's addr (32 bit)</it>}</code><br />
 <code>[\\normalfont{ Intel NASM:} jmp [REL label]]{.my-small}</code>
  how to know which? --- check manual

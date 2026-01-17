@@ -1,25 +1,12 @@
 
-### providecommand(\myemphTwo,1,#1)
-
-### providecommand(\myemphTwoB,1,#1)
-
-### providecommand(\myemphThree,1,#1)
-
-### providecommand(\myemphFour,1,#1)
-
-### providecommand(\myemphFive,1,#1)
-
-### providecommand(\myemphSix,1,#1)
-
-### providecommand(\myemphSeven,1,#1)
-
 ### ELF example  {.smaller}
 
 
 
 * <code>objdump -x /bin/busybox</code> (on my laptop)
 * <code>-x</code>: output all headers
- <pre><code>/bin/busybox:     file format \\myemphTwo{elf64-x86-64}
+ 
+<pre><code>/bin/busybox:     file format \\myemphTwo{elf64-x86-64}
 /bin/busybox
 architecture: i386:x86-64, flags 0x00000102:
 EXEC_P, D_PAGED
@@ -34,6 +21,7 @@ Sections:
 
 
 ### a program header (1)  {.smaller}
+
 
 <pre><code>Program Header:
 \[...]
@@ -60,6 +48,7 @@ LOAD off    0x0207950 vaddr 0x0608950 paddr 0x0608950 align 2**12
 
 
 ### a program header (2)  {.smaller}
+
 
 <pre><code>Program Header:
 \[...]

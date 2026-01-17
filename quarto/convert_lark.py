@@ -619,10 +619,24 @@ class _InlineCommand(_MyAstItem):
             when = When(f'<{index}>')
             assert when.needs_fragment
             command = r'\myemph'
+        if re.match(r'^\\myemph(AB|Two|Three|Four|Five|Six|Seven)$', command) is not None:
+            name = command[len(r'\myemph'):]
+            index = {
+                'AB': '2-3',
+                'Two': 2,
+                'Three': 3,
+                'Four': 4,
+                'Five': 5,
+                'Six': 6,
+                'Seven': 7,
+            }[name]
+            when = When(f'<{index}>')
+            assert when.needs_fragment
+            command = r'\myemph'
         if command == r'\varMark':
             logging.debug('arguments = %s', arguments)
-            index = arguments[0].inner_text
-            when = When(f'<{index}>')
+            index_argument = arguments[0].inner_text
+            when = When(f'<{index_argument}>')
             command = r'\myemph'
             arguments = arguments[1:]
         if when and when.needs_fragment:
@@ -671,7 +685,7 @@ class _InlineCommand(_MyAstItem):
                 strip_ends = True
             elif command in (r'\myemph',r'\btHL',):
                 before, after = '<em>', '</em>'
-            elif command in (r'\textit', r'\itshape'):
+            elif command in (r'\textit', r'\itshape', r'\it'):
                 before, after = '<it>', '</it>'
             elif command in (r'\textbf', r'\bfseries'):
                 before, after = '<em>', '</em>'
@@ -705,6 +719,16 @@ class _InlineCommand(_MyAstItem):
                 before, after = '[', ']{.mycredit}'
             elif command in (r'\url',):
                 before, after = '[', '](' + arguments[0].inner_text + ')'
+            elif command in (r'\titlepage',):
+                return ''
+            elif command in (r'\textcolor',):
+                color_map = {
+                    'violet!80!black': 'darkviolet',
+                    'blue!80!black': 'darkblue',
+                    'green!80!black': 'darkgreen',
+                }
+                color = color_map.get(arguments[0].inner_text, arguments[0].inner_text)
+                before, after = f'<span style="color: {color}">', '</span>'
             else:
                 start_arg = 0
                 before, after = command.replace('\\', '\\\\') + '{', '}'
@@ -1573,7 +1597,8 @@ class OutsideCommand(_MyAstItem):
             return f'\n## {self.arguments[0].inner_text} ' + '{visibility="hidden"}\n'
         elif self.command == r'\subsubsection':
             return f'\n## {self.arguments[0].inner_text}' + '{visibility="hidden"}\n'
-        elif self.command in (r'\iftoggle', r'\setbeamertemplate',):
+        elif self.command in (r'\iftoggle', r'\setbeamertemplate', r'\titlepage',
+                              r'\title', r'\date'):
             result = f'\n<!-- {self.command}('
             result += ','.join(map(attrgetter('inner_text'), self.arguments))
             result += ') -->\n'

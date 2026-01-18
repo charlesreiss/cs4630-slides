@@ -29,7 +29,7 @@
 
 {{< include /asm/_floating-point-sse-regs.qmd >}}
 
-{{< include /asm/_floating-point-vector.qmd >}}
+{{< include /asm/_floating-point-fp-example.qmd >}}
 
 # rip addressing {visibility="hidden"}
 

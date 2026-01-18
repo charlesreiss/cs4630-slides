@@ -2,41 +2,34 @@
 ### Linux x86-64 calling convention (1) 
 
 
-![](/asm/sysv-abi-front){}
+![](/asm/sysv-abi-front){fig-alt="title page of System V Appication Binary Interface, AMD64 Architecture Processor Supplement, Draft Version 0.99.7, edited by Michael Matz, Jan Hubička, dated November 17, 2014"}
 
 
 ### Linux x86-64 calling convention (2) 
 
 
-![](/asm/func-call-seq-manual){}
+![](/asm/func-call-seq-manual){fig-alt="Beginning of section 3.2 of the document from the previous page, which is title 'Function Calling Sequence'. It starts 'This section describes the standard function calling sequence, including stack frame layout, register usage, parameter passing and so on.'"}
 
 
-### Linux x86-64 calling summary  {.smaller}
+### Linux x86-64 calling summary
 
-
-* first 6 arguments: %rdi, %rsi, %rdx, %rcx, %r8, %r9 
-
-   * floating point arguments: %xmm0, %xmm1, etc.
-
+* first 6 arguments: `%rdi`, `%rsi`, `%rdx`, `%rcx`, `%r8`, `%r9`
+   * floating point arguments: `%xmm0`, `%xmm1`, etc.
 * additional arguments: push on stack
 * return address: push on stack 
+   * `call`, `ret` instructions assume this
+* return value: `%rax`
 
-   * <code>call</code>, <code>ret</code> instructions assume this
-
-* return value: %rax
-
-
-### calling convention example  {.smaller}
+### calling convention example
 
 
-```
+```c
 int foo(int a, int b, int c, int d, int e, int f, int g, int h);
 ...
 foo(1, 2, 3, 4, 5, 6, 7, 8);
-
 ```
- 
-```
+<hr />
+```asm
 pushq   $8
 pushq   $7
 movl    $6, %r9d

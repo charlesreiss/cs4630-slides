@@ -23,8 +23,8 @@ movps ones, %xmm1
 movps %xmm0, result
 /* result contains: 1+1=2,2+3=5,3+5=8,4+7=11 */
 </code></pre>
- ![](/asm/texfig/floating-point-vector.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
-![](/asm/texfig/floating-point-vector.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
-![](/asm/texfig/floating-point-vector.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=3}
-![](/asm/texfig/floating-point-vector.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=4}
+ ![](/asm/texfig/floating-point-vector.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index1}
+![](/asm/texfig/floating-point-vector.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index2}
+![](/asm/texfig/floating-point-vector.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index3}
+![](/asm/texfig/floating-point-vector.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index4}
 

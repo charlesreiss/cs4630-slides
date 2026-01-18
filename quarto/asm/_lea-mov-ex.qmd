@@ -1,8 +1,6 @@
 
-### question  {.smaller}
+### question
 
-<!-- \lstset{style=small,language=myasm,deletekeywords=bl} -->
- 
 ```
 .data
 string:
@@ -14,11 +12,15 @@ string:
     leal 1(%rbx), %ebx // lea EBX, [RBX+1]
     movb %bl, (%rax)   // mov [RAX], BL
     movq %rdx, 4(%rax) // mov [4+RAX], RDX
-
 ```
- [ What is the final value of string?]{.my-small} <table>
-<tr><td>a. <code>"abcdabcd"</code></td><td>d. <code>"abcdefgh"</code></td></tr>
-<tr><td>b. <code>"bbcdefgh"</code></td><td>e. something else / not enough info</td></tr>
-<tr><td>c. <code>"bbcdabcd"</code></td><td>&nbsp;</td></tr>
-</table>
+
+What is the final value of string?
+
+::: {.answer-twocol}
+a. `"abcdabcd"`
+b. `"bbcdefgh"`
+c. `"bbcdabcd"`
+d. `"abcdefgh"`
+e. something else / not enough info
+:::
 

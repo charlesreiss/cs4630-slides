@@ -1,8 +1,7 @@
 
 ### XMM registers  {.smaller}
 
-
-* <code>%xmm0</code> through <code>%xmm15</code> [ (<code>%xmm8</code> on 32-bit)]{.my-small}
+* `%xmm0` through `%xmm15` [(<code>%xmm8</code> on 32-bit)]{.my-small}
 * each holds 128-bits --- 
 
    * 32-bit floating point values (<code>addps</code>, etc.)
@@ -10,10 +9,8 @@
    * 64/32/16/8-bit integers (<code>paddq/d/w/b</code>, etc.)
    * [a 32-bit floating point value]{.fragment fragment-index=2 .custom .myem-only}, 96 unused bits (<code>addss</code>, <code>movss</code>, etc.)
    * [a 64-bit floating point value]{.fragment fragment-index=2 .custom .myem-only}, 64 unused bits (<code>addsd</code>, <code>movsd</code>, etc.)
- 
 <hr class="vspace" />
 * more recently: <code>%ymm0</code> through <code>%ymm15</code> (256-bit, ‘‘AVX’’) 
-
    * overlap with <code>%xmm<it> X</it></code> registers
 
 

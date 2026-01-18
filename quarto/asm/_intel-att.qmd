@@ -2,45 +2,36 @@
 ### AT&T versus Intel syntax 
 
 
-* AT&amp;T syntax: <br> <code>movq \$42, 100(%rbx,%rcx,4)</code>
-* Intel syntax: <br> <code>mov QWORD PTR [rbx+rcx*4+100], 42</code>
-* effect (pseudo-C): <br> <code>memory[rbx + rcx * 4 + 100] \<- 42</code>
+* AT&amp;T syntax: <br /> `movq $42, 100(%rbx,%rcx,4)`
+* Intel syntax: <br / > `mov QWORD PTR [rbx+rcx*4+100], 42`
+* effect (pseudo-C): <br /> `memory[rbx + rcx * 4 + 100] <- 42`
 
 
 ### AT&T syntax (1) 
 
 
-```
-movq $42, 100(%rbx,%rcx,4)
-
-```
- 
+`movq $42, 100(%rbx,%rcx,4)`
 
 * destination <em>last</em>
 * constants start with <code>\$</code>
 * registers start with <code>%</code>
 
 
-### AT&T syntax (2)  {.smaller}
+### AT&T syntax (2) 
 
 
-```
-movq $42, 100(%rbx,%rcx,4)
-
-```
- 
+`movq $42, 100(%rbx,%rcx,4)`
 
 * operand length: <code>q</code> 
-
    * <code>l</code> = 4; <code>w</code> = 2; <code>b</code> = 1
    * can be omitted when implied by context
-
 * <code>100(%rbx,%rcx,4)</code>: <br> <code>memory[100 + rbx + rcx * 4]</code>
-* <code>sub %rax, %rbx</code>: <code>rbx $\\leftarrow{}$ rbx - rax</code>
+* <code>sub %rax, %rbx</code>: <code>rbx ← rbx - rax</code>
 
 
-### Intel syntax  {.smaller}
+### Intel syntax
 
+`mov QWORD PTR [RBX + RCX * 4 + 100], 42`
 
 * destination <em>first</em>
 * <code>[...]</code> indicates location in memory

@@ -2,16 +2,13 @@
 ### recall: x86-64 general purpose registers 
 
 
-![](/asm/x86-gprs){}
- [Immae via Wikipedia]{.mycredit}
+![](/asm/x86-gprs){fig-alt="Diagram of x86-64 general purpose registers, showing the 64-bit registers RAX, RBX, RCX, RDX, RBP, RSI, RDI, RSP, RIP, and R8-R15. Names for parts of the 64-bit registers are shown: 32-bit parts called EAX, EBX, etc. (for the unnumbered registers) and R8D, R9D, etc. (for the numbered registers); 16-bit parts called AX, BX, etc. and R8W, R9W, etc.; 8-bit parts containing the least significant 8 bits called AL, BL, CL, DL, BPL, SIL, DIL, SPL, R8B, R(D, etc. (and nother for RIP); and parts containing the second least significant 8 bits for RAX, RBX, RCX, and RDX called AH, BH, CH, and DH."}
+[diagram from Immae via Wikipedia]{.mycredit}
 
-### overlapping registers (1)  {.smaller}
-
-
+### overlapping registers (1)
 
 * setting 32-bit registers sets <em>whole</em> 64-bit register
 * extra bits are always zeroes
- 
 ```
 movq $0x123456789abcdef, %rax
     // Intel: MOVABS RAX, 0x123456789abcdef
@@ -22,21 +19,17 @@ movl $-1, %ebx
 // %rbx is 0xFFFFFFFF, not -1 (0xFFFFF...FFF)
 
 ```
- 
-
-* 32-bit instructions are often shorter than 64-bit ones, <br> so compilers will prefer <code>mov \$1234, %ecx</code> to <code>mov \$1234, %rcx</code>
+* 32-bit instructions are often shorter than 64-bit ones, <br />
+  so compilers will prefer `mov $1234, %ecx` to `mov $1234, %rcx`
 
 
 ### overlapping registers (2) 
 
-
-
 * setting <em>8/16-bit registers</em> doesn't change rest of 64-bit register:
- 
+
 ```
 movq $0x12345789abcdef, %rax
 movw $0xaaaa, %ax
 // %rax is 0x123456789abaaaa
-
 ```
 

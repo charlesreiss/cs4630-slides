@@ -1,10 +1,9 @@
 
 ### recall(?): virtual memory 
 
+* illuision of <em>dedicated memory</em>:
 
-
-* illuision of <em>dedicated memory</em>
- ![](/asm/texfig/vm.figure.svg)
+![](/asm/texfig/vm.figure.svg){width="100%" fig-alt="Diagram showing with program A and program B addresses represented on the left; then passed through separate mappings set by the OS which point to 'real memory'. The real memory separates the pogram A and program B code. Some of the arrows are dotted, which a legend indicates means 'kernel-mode only', and some go to 'trigger error' instead of a part of 'real memory'."}
 
 
 ### segmentation 
@@ -14,11 +13,11 @@
 * before virtual memory, there was <em>segmentation</em>
  
 
-::: {.r-stack}
+::: {.r-stack .my-full}
+
 ![](/asm/texfig/segmentation.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
 ![](/asm/texfig/segmentation.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
-
 
 :::
 
@@ -28,7 +27,8 @@
 
 * addresses you've seen are the <em>offsets</em>
 * but every access uses a segment number!
-* segment numbers come from registers 
+* segment numbers come from registers
+* default segment regsiter based on instruction type
 
    * CS --- code segment number (jump, call, etc.)
    * SS --- stack segment number (push, pop, etc.)
@@ -37,56 +37,46 @@
    * FS, GS --- extra segments (never default)
 
 * instructions can have a <em>segment override</em>: 
-```
-movq $42, %fs:100(%rsi)
-    // move 42 to segment (# in FS),
-    // offset 100 + RSI 
-
-```
+    * `movq $42, %fs:100(%rsi)` = move 42 to {segment \# in FS:offset 100 + RSI}
 
 
 
 ###  
 
 
-  
+::: {.r-stack .my-full}
 
-::: {.r-stack}
 ![](/asm/texfig/x86SegPic.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
 ![](/asm/texfig/x86SegPic.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
 
 ![](/asm/texfig/x86SegPic.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
 
-
 :::
- [Figure: Intel manuals, Vol 3A]{.mycredit}
+
+[Figure from Intel manuals, Vol 3A]{.mycredit}
 
 ### x86 segment descriptor 
 
+::: {.r-stack .my-full}
 
-  
-
-::: {.r-stack}
-![](/asm/texfig/segmentation-x86-segment-descriptor.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+![](/asm/texfig/segmentation-x86-segment-descriptor.figure-1.svg){.fragment .fade-out fragment-index=1}
 
 ![](/asm/texfig/segmentation-x86-segment-descriptor.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
 
 ![](/asm/texfig/segmentation-x86-segment-descriptor.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
 
-
 :::
- [Figure: Intel manuals, Volume 3A]{.mycredit}
 
-### 64-bit segmentation  {.smaller}
+[Figure from Intel manuals, Volume 3A]{.mycredit}
+
+### 64-bit segmentation
 
 
 * in 64-bit mode:
 * limits are ignored
 * base addresses are ignored
-* … except for <code>%fs</code>, <code>%gs</code> 
-
+* … except for <code>%fs</code>, <code>%gs</code>
    * when explicit segment override is used
-
 * effectively: extra pointer register
 

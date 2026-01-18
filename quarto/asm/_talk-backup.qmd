@@ -5,7 +5,7 @@
 
 # floating point misc {visibility="hidden"}
 
-{{< include /asm/_floating-point-fp-example.qmd >}}
+{{< include /asm/_floating-point-vector.qmd >}}
 
 {{< include /asm/_floating-point-x87.qmd >}}
 

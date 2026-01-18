@@ -1,8 +1,5 @@
+### FP example
 
-### FP example  {.smaller}
-
-<!-- \lstset{language=myasm,morekeywords={movss,mulss,subq}} -->
- 
 ```
 multiplyEachElementOfArray:
 /* %rsi = array, %rdi length,
@@ -16,6 +13,5 @@ loop:   test %rdi, %rdi
         addq $4, %rsi
         jmp loop
 done:   ret
-
 ```
 

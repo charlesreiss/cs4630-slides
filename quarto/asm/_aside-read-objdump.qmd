@@ -1,26 +1,40 @@
 
-### reading objdump disassembly  {.smaller}
-
-
+### reading objdump disassembly
 
 * often, we'll want to work from binaries to assembly
-* tool we'll use on Linux: <code>objdump</code>
-* example from <it><code></code> objdump --disassemble</it> of hello-world program:
- 
-<pre><code><span data-fragment-index="2" class="fragment custom myem-only">0000000000001060 &lt;main&gt;</span>:
+* tool we'll use on Linux: `objdump`
+* from `objdump --disassemble`:
+
+<pre style="font-size: 18px"><code><span data-fragment-index="2" class="fragment custom myem-only">0000000000001060 &lt;main&gt;</span>:
   <span data-fragment-index="3" class="fragment custom myem-only">1060</span>:  <span data-fragment-index="4" class="fragment custom myem-only">f3 0f 1e fa</span>           endbr64 
   <span data-fragment-index="3" class="fragment custom myem-only">1064</span>:  <span data-fragment-index="4" class="fragment custom myem-only">50</span>                    push   %rax
   <span data-fragment-index="3" class="fragment custom myem-only">1065</span>:  <span data-fragment-index="4" class="fragment custom myem-only">48 8d 3d 98 0f 00 00</span>  lea    <span data-fragment-index="6" class="fragment custom myem-only">0xf98(%rip)</span>,%rdi <span data-fragment-index="6" class="fragment custom myem-only"># 2004 &lt;_IO_stdin_used+0x4&gt;</span>
-          \\varOnly{6\myemph{# 2004 &lt;_IO_stdin_used+0x4&gt;}}
   <span data-fragment-index="3" class="fragment custom myem-only">106c</span>:  <span data-fragment-index="4" class="fragment custom myem-only">e8 df ff ff ff</span>        <span data-fragment-index="5" class="fragment custom myem-only">callq  1050 &lt;puts@plt&gt;</span>
   <span data-fragment-index="3" class="fragment custom myem-only">1071</span>:  <span data-fragment-index="4" class="fragment custom myem-only">31 c0</span>                 xor    %eax,%eax
   <span data-fragment-index="3" class="fragment custom myem-only">1073</span>:  <span data-fragment-index="4" class="fragment custom myem-only">5a</span>                    pop    %rdx
   <span data-fragment-index="3" class="fragment custom myem-only">1074</span>:  <span data-fragment-index="4" class="fragment custom myem-only">c3</span>                    retq   
 </code></pre>
- ![](/asm/texfig/aside-read-objdump.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
-![](/asm/texfig/aside-read-objdump.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
-![](/asm/texfig/aside-read-objdump.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=3}
-![](/asm/texfig/aside-read-objdump.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=4}
-![](/asm/texfig/aside-read-objdump.figure-5.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=5}
-![](/asm/texfig/aside-read-objdump.figure-6.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=6}
+
+::: {.myoverbox .fragment .fade-in-then-out fragment-index=2}
+symbol main at address 0x1060
+:::
+
+::: {.myoverbox .fragment .fade-in-then-out fragment-index=3}
+first column: instruction addresses in hexadecimal<br />
+(if executable/library has fixed address, <br/> these are the addresses they'll be loaded in memory)
+:::
+
+::: {.myoverbox .fragment .fade-in-then-out fragment-index=4}
+after instruction addresses: <br />machine code as list of byte values in hexadecimal
+:::
+
+::: {.myoverbox .fragment .fade-in-then-out fragment-index=5}
+`callq 1050 <puts@plt>` = call to address `0x1050`<br/>
+`puts@plt` is the label of that address
+:::
+
+::: {.myoverbox .fragment .fade-in-then-out fragment-index=6}
+comment after `lea` annotates instruction computed:<br />
+`0xf98(%rip)`=`0x2004` (0x4 bytes after the label `_IO_stdin_used`)
+:::
 

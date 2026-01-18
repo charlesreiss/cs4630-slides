@@ -1,14 +1,7 @@
-
-### floating point operations 
-
+### floating point operations
 
 * x86 has two ways to do floating point
 * method one --- legacy: x87 floating point instructions 
-
    * still common in 32-bit x86
-
 * method two --- SSE instructions 
-
    * work more like what you expect
-
-

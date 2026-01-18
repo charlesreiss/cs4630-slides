@@ -1,44 +1,36 @@
-<!-- \lstset{language=myasm} -->
-
 # definitive sources {visibility="hidden"}
 
-### x86-64 assembly  {.smaller}
+### x86-64 assembly 
 
 
 * history: AMD constructed 64-bit extension to x86 first 
-
    * marketing term: AMD64
-
 * Intel first tried a new ISA (Itanium), which failed
 * Then Intel copied AMD64 
-
    * marketing term: EM64T 
-
       * Extended Memory 64 Technology
-
    * later marketing term: Intel 64
-
 * both Intel and AMD have manuals --- definitive reference
 
 
 ###  
 
 
-![](/asm/manual-screenshot){}
+![](/asm/manual-screenshot){fig-alt="Title page for Intel 64 and IA-32 Architectures Software Developer's Manual; Combined Volumes 1, 2A, 2B, 2C, 2D, 3A, 3B, 3C, and 3D"}
 
 
-### x86-64 manuals  {.smaller}
+### x86-64 manuals
 
 
 * Intel manuals: 
 
-   * []{.my-small} [https://software.intel.com/en-us/articles/intel-sdm](https://software.intel.com/en-us/articles/intel-sdm)
+   * [https://software.intel.com/en-us/articles/intel-sdm](https://software.intel.com/en-us/articles/intel-sdm)
    * 25 MB, 5240 pages
    * Volume 2: instruction set reference (2591 pages)
 
 * AMD manuals: 
 
-   * []{.my-small} [https://support.amd.com/en-us/search/tech-docs](https://support.amd.com/en-us/search/tech-docs)
+   * [https://support.amd.com/en-us/search/tech-docs](https://support.amd.com/en-us/search/tech-docs)
    * ‘‘AMD64 Architecture Programmer's Manual’’
 
 
@@ -46,16 +38,16 @@
 ### example manual page (1) 
 
 
-![](/asm/example-manual){}
+![](/asm/example-manual.png){fig-alt="Top of the Intel Instruction set reference page for INC. Includes information about all the forms of the instruction (with different size register, memory operands), how they are encoded (with information about the opcode and how the argument is represented), and what modes (e.g. 32- v 64-bit) they are encoded in."}
 
 
 ### example manual page (2) 
 
 
-![](/asm/example-manual2){}
+![](/asm/example-manual2.png){fig-alt="Second part of the Intel intsruction set. Includes a text description of the isntruction and its operation, what flags are affected, and what exceptions are possible."}
 
 
-### instruction listing parts (1)  {.smaller}
+### instruction listing parts (1)
 
 
 * opcode --- first part of instruction encoding 
@@ -65,15 +57,15 @@
    * more later (Friday or next week)
 
 * instruction --- Intel assembly skeleton
-* <code>r/m32</code> --- 32-bit memory or register value
+* `r/m32` = 32-bit memory or register value
 * 64-bit mode --- does instruction exist in 64-bit mode?
 * compat/leg mode --- in 16-bit/32-bit modes?
 
 
-### instruction listing parts (2)  {.smaller}
+### instruction listing parts (2)
 
 
-* dscription + operation (later on page) 
+* description + operation (later on page) 
 
    * text and pseudocode description
 

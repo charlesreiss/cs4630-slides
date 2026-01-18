@@ -1,10 +1,7 @@
 
 ### the call stack 
 
+`foo(a,b,c,d,e,f,g,h);`
 
-```
-foo(a,b,c,d,e,f,g,h);
-
-```
- ![](/asm/texfig/x86-64-linux-cc-callstack.figure.svg)
+![](/asm/texfig/x86-64-linux-cc-callstack.figure.svg){fig-alt="Diagram of stack contents, with addresses decreasing from top to bottom. In order from the top: ..., stack allocations in caller, saved registers (if any), h, g, return address, first stack allocation in foo, ..."}
 

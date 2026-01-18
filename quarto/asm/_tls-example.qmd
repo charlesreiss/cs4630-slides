@@ -1,4 +1,3 @@
-
 ### thread-local storage 
 
 
@@ -8,10 +7,10 @@
 * e.g. for program using multiple cores <br> to track different values for each core
 
 
-### TLS example (read) (C)  {.smaller}
+### TLS example (read) (C)
 
 
-```
+```c
 #include <threads.h>
 thread_local int thread_local_value = 0;
 int get_thread_local() {
@@ -34,16 +33,16 @@ int get_thread_local() {
  <hr />
  
 ```
-TLS off    0x0000000000002df0 vaddr 0x0000000000003df0 paddr 0x0000000000003df0 align 2**2
-    filesz 0x0000000000000000 memsz 0x0000000000000004 flags r--
+TLS off    0x0000002df0 vaddr 0x0000003df0 paddr 0x0000003df0 align 2**2
+    filesz 0x0000000000 memsz 0x0000000004 flags r--
 
 ```
 
 
-### TLS example (write) (C)  {.smaller}
+### TLS example (write) (C)
 
 
-```
+```c
 #include <threads.h>
 thread_local int thread_local_value = 0;
 void set_thread_local(int new_value) {

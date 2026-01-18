@@ -1,6 +1,5 @@
 
-### string instructions (1)  {.smaller}
-
+### string instructions (1) 
 
 ```
 memcpy: // copy %rdx bytes from (%rsi) to (%rdi)
@@ -10,9 +9,7 @@ memcpy: // copy %rdx bytes from (%rsi) to (%rdi)
         subq $1, %rdx
         jmp memcpy
 done:   ret
-
 ```
- 
 
 * <code>movsb</code> (move data from string to string, byte)
 * mov one byte from <code>(%rsi)</code> to <code>(%rdi)</code>
@@ -20,7 +17,7 @@ done:   ret
 * <em>cannot</em> specify other registers
 
 
-### string instructions (2)  {.smaller}
+### string instructions (2)
 
 
 ```
@@ -39,7 +36,7 @@ memcpy: // copy %rdx bytes from (%rsi) to (%rdi)
 * <em>cannot</em> use <code>rep</code> with all instructions
 
 
-### string instructions (3)  {.smaller}
+### string instructions (3)
 
 
 * <code>lodsb</code>, <code>stosb</code> --- load/store into string

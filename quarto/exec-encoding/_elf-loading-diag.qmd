@@ -5,7 +5,7 @@
 
 ::: {.r-stack .my-full}
 
-![](/exec-encoding/texfig/elf-loading-diag.figure-1.svg){.fragment .fade-in-then-out fragment-index=1 fig-alt="on left, a box labeled program on disk, with offset 0 at the bottom; and on right a larger box labeled program in memory with addr 0 on bottom"}
+![](/exec-encoding/texfig/elf-loading-diag.figure-1.svg){.fragment .fade-out fragment-index=2 fig-alt="on left, a box labeled program on disk, with offset 0 at the bottom; and on right a larger box labeled program in memory with addr 0 on bottom"}
 
 ![](/exec-encoding/texfig/elf-loading-diag.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 fig-alt="the beginning of the box labeled program on disk is highlighted, and inset reveals 'LOAD off 0x1000 vaddrr 0x4000 filesz 0x1544 memsz 0x2644', a directive in the program header."}
 

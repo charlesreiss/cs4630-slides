@@ -726,7 +726,7 @@ class _InlineCommand(_MyAstItem):
                 return ''
             elif command in (r'\normalfont',):
                 before, after = '<span class="normal">', ''
-            elif command in (r'\textcolor','\color'):
+            elif command in (r'\textcolor',r'\color'):
                 color_map = {
                     'violet!80!black': 'darkviolet',
                     'blue!80!black': 'darkblue',
@@ -1585,7 +1585,7 @@ class OutsideCommand(_MyAstItem):
             logging.debug('input %s', self.arguments)
             filename = self.arguments[0].inner_text
             if filename in ('../common/listingsLib', '../common/listingsLib.tex'):
-                return '<!-- \input{' + filename + '} -->'
+                return '<!-- \\input{' + filename + '} -->'
             input_file = context.base_output_path.parent / filename
             input_file = input_file.with_name(
                 '_' + input_file.name

@@ -47,7 +47,10 @@ itemize: _BEGIN_ITEMIZE whitespace? SIMPLE_COMMAND? (whitespace? item)+ _END_ITE
 
 tabular_line: (any_text_not_linebreak _NEXT_CELL)* any_text_not_linebreak LINEBREAK
 
+tabular_line_nonl: (any_text_not_linebreak _NEXT_CELL)* any_text_not_linebreak -> tabular_line
+
 tabular: _BEGIN_TABULAR _BRACE any_text_not_linebreak _END_BRACE tabular_line+ any_text_not_linebreak _END_TABULAR
+       | _BEGIN_TABULAR _BRACE any_text_not_linebreak _END_BRACE tabular_line_nonl _END_TABULAR
 
 frametitle: _BEGIN_FRAMETITLE _BRACE any_text _END_BRACE
 
@@ -686,7 +689,7 @@ class _InlineCommand(_MyAstItem):
             elif command in (r'\myemph',r'\btHL',):
                 before, after = '<em>', '</em>'
             elif command in (r'\textit', r'\itshape', r'\it'):
-                before, after = '<it>', '</it>'
+                before, after = '<i>', '</i>'
             elif command in (r'\textbf', r'\bfseries'):
                 before, after = '<em>', '</em>'
             elif command in (r'\small',r'\scriptsize'):
@@ -721,7 +724,9 @@ class _InlineCommand(_MyAstItem):
                 before, after = '[', '](' + arguments[0].inner_text + ')'
             elif command in (r'\titlepage',):
                 return ''
-            elif command in (r'\textcolor',):
+            elif command in (r'\normalfont',):
+                before, after = '<span class="normal">', ''
+            elif command in (r'\textcolor','\color'):
                 color_map = {
                     'violet!80!black': 'darkviolet',
                     'blue!80!black': 'darkblue',

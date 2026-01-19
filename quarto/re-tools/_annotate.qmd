@@ -1,9 +1,9 @@
 
-### annotating decompilation (2) 
+### annotating decompilation (2)  {.smaller}
 
 
 * can help out decompiler with annotations… 
-
+<hr class="vspace" />
 * rename functions, local variables
 * set data types for variables, parameters, return types, globals 
 

@@ -5,12 +5,12 @@
 ![](/re-tools/ghidra-disass-mixed-w-xref){}
 
 
-### cross-references idea 
+### cross-references idea  {.smaller}
 
 
 * cross-reference idea:
 * really useful to know where something is used 
-
+<hr class="vspace" />
 * do-able ‘by hand’ with objdump and friends, but… 
 
    * lots of bookkeeping, searching in text files, etc.

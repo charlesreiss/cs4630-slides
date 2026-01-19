@@ -4,6 +4,7 @@
 
 ```
 $ objdump --all-headers mystery
+
 ```
  … 
 ```
@@ -11,6 +12,7 @@ Dynamic Section:
   NEEDED               libncurses.so.6
   NEEDED               libtinfo.so.6
   NEEDED               libc.so.6
+
 ```
  …
 
@@ -48,10 +50,12 @@ DYNAMIC SYMBOL TABLE:
 0000000000000000      DF *UND*  0000000000000000 (NCURSES6_TINFO_5.0.19991023) flushinp
 0000000000000000      DF *UND*  0000000000000000 (GLIBC_2.2.5) localtime
 0000000000000000      DF *UND*  0000000000000000 (GLIBC_2.34) __libc_start_main
+
 ```
  … 
 ```
 0000000000000000      DF *UND*  0000000000000000 (GLIBC_2.2.5) setuid
+
 ```
  …
 
@@ -70,6 +74,7 @@ DYNAMIC SYMBOL TABLE:
     5b04:▶      f2 ff 25 fd d3 02 00 ▶  bnd jmp *0x2d3fd(%rip) 
 			# 32f08 <setuid@GLIBC_2.2.5>
     5b0b:▶      0f 1f 44 00 00       ▶  nopl   0x0(%rax,%rax,1)
+
 ```
  … 
 ```
@@ -83,5 +88,6 @@ DYNAMIC SYMBOL TABLE:
    2766a:▶      31 c0                ▶  xor    %eax,%eax
    2766c:▶      e8 cf e2 fd ff       ▶  call   5940 <getgid@plt>
    27671:▶      48 83 c4 08          ▶  add    $0x8,%rsp
+
 ```
 

@@ -1,13 +1,13 @@
 
-### debuggers / emulators 
+### debuggers / emulators  {.smaller}
 
 
 * major way to analyzing software --- run it! 
-
+<hr class="vspace" />
 * possibly using debugger to analyze memory/registers/etc.
 * possibly in restricted environment 
 
-   * either limit access to system calls, <it>or</it>
+   * either limit access to system calls, <i>or</i>
    * run on virtual (okay-to-lose) hardware
 
 
@@ -23,7 +23,7 @@
 * searching memory for strings (GDB <code>find</code>, LLDB <code>memory find</code>)
 
 
-### selected debugger fetures (2) 
+### selected debugger fetures (2)  {.smaller}
 
 
 * saving ‘core’ files (GDB <code>generate-core-file NAME</code>) 
@@ -62,7 +62,7 @@
 
 * creates a list of ‘snapshots’ for every time debugger stopped 
 
-   * snapshots are <it>incomplete</it>
+   * snapshots are <i>incomplete</i>
    * need to force read of memory/etc. to have info included in snapshot
 
 * can switch between ‘Control Target’ and ‘Control Trace’ modes 
@@ -75,19 +75,21 @@
 ### Ghidra dynamic view 
 
 
+
 ::: {.r-stack .my-full}
-![](texfig/debuggers-ghidra-dynamic-view.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+![](/re-tools/texfig/debuggers-ghidra-dynamic-view.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](texfig/debuggers-ghidra-dynamic-view.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/re-tools/texfig/debuggers-ghidra-dynamic-view.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
 
-![](texfig/debuggers-ghidra-dynamic-view.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+![](/re-tools/texfig/debuggers-ghidra-dynamic-view.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
 
-![](texfig/debuggers-ghidra-dynamic-view.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
+![](/re-tools/texfig/debuggers-ghidra-dynamic-view.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
+
 
 :::
 
 
-### Ghidra snapshots/saved traces: 
+### Ghidra snapshots/saved traces:  {.smaller}
 
 
 ![](/re-tools/ghidra-time-trace){}

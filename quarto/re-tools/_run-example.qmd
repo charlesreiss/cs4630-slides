@@ -9,6 +9,7 @@ version 1 (SYSV), dynamically linked,
 interpreter /lib64/ld-linux-x86-64.so.2,
 BuildID[sha1]=9819a3cfb39d01ad2a376c54318f104139422a8f,
 for GNU/Linux 3.2.0, stripped
+
 ```
  
 
@@ -28,6 +29,7 @@ NAME
        file — determine file type
 
 ....
+
 ```
  <hr />
  
@@ -61,5 +63,6 @@ NAME
 >5  byte        2       MSB
 >>0 use     \^elf-le
 >7  byte        0       (SYSV)
+
 ```
 

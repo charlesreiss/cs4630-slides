@@ -13,7 +13,7 @@
 ![](/re-tools/ghidra-edit-var-decomp){}
 
 
-### refining decompile (2) 
+### refining decompile (2)  {.smaller}
 
 
 * can setup names, types for functions
@@ -21,7 +21,7 @@
 
    * Ghidra doesn't seem great at inferring this all the time
  
-
+<hr class="vspace" />
 * also for local/global variables 
 
    * for globals, can right-click in listing view too

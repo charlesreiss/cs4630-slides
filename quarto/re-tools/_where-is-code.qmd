@@ -13,9 +13,11 @@ main:
 print_hello:
     leaq .Lstr(%rip), %rdi  // RDI <- .Lstr address
     jmp puts
+
 ```
  <hr />
- <pre><code>0000000000001139 &lt;main&gt;:
+ 
+<pre><code>0000000000001139 &lt;main&gt;:
     1139:	e8 0a 00 00 00       	call   1148 &lt;print_hello&gt;
     113e:	31 c0                	xor    %eax,%eax
     1140:	c3                   	ret    
@@ -33,6 +35,7 @@ print_hello:
 
 ### disassembly issues  {.smaller}
 
+
 <pre><code>0000000000001139 &lt;main&gt;:
     1139:	e8 0a 00 00 00       	call   1148 &lt;print_hello&gt;
     113e:	31 c0                	xor    %eax,%eax
@@ -48,7 +51,8 @@ print_hello:
     114f:	e9 dc fe ff ff       	jmp    1030 &lt;puts@plt&gt;
 </code></pre>
  <hr />
- <pre><code>    1139:	e8 0a 00 00 00       	call   1148 &lt;__cxa_finalize@plt+0x108&gt;
+ 
+<pre><code>    1139:	e8 0a 00 00 00       	call   1148 &lt;__cxa_finalize@plt+0x108&gt;
     113e:	31 c0                	xor    %eax,%eax
     1140:	c3                   	ret    
     <em>1141:	48                   	rex.W</em>
@@ -61,7 +65,7 @@ print_hello:
 </code></pre>
 
 
-### finding assembly heuristics 
+### finding assembly heuristics  {.smaller}
 
 
 * objdump strategy, apparently: 
@@ -89,6 +93,7 @@ _start:
     ...
     call __libc_start_main
     ...
+
 ```
  <hr />
  
@@ -100,6 +105,7 @@ struct DeviceTypeFuncs {
 void SendToDevice(struct DeviceInfo* info, char *data) {
     (info->funcs->Send)(data);
 }
+
 ```
 
 
@@ -115,6 +121,7 @@ table:
     lea table(%rip), %rax
     addq (%rax, %rdi, 4), %rax
     jmp *%rax
+
 ```
  <hr />
  
@@ -124,6 +131,7 @@ table:
     sll $4, %r9
     addq %r9, %rax
     call *%rax
+
 ```
 
 
@@ -137,6 +145,7 @@ table:
     .byte 0x39, 0x59, 0x60, 0x89, 0xFF
 next2:
     addq ...
+
 ```
 
 

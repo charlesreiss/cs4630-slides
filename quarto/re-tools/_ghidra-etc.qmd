@@ -4,14 +4,14 @@
 
 * specialized toolkits for specifically reverse engineering
 * more complex analyses than objdump/strings 
-
+<hr class="vspace" />
 * primary example I'll look at: Ghidra 
 
    * open source, developed by National Security Agency
 
 * has some commercial competitors 
 
-   * Binary Ninja (\\url{https://binary.ninja}), IDA Pro (\\url{https://hex-rays.com/ida-pro})
+   * Binary Ninja ([https://binary.ninja](https://binary.ninja)), IDA Pro ([https://hex-rays.com/ida-pro](https://hex-rays.com/ida-pro))
    * sometimes free/cheap for educational use
    * very expensive for full/commercial licenses
 

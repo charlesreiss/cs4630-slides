@@ -9,6 +9,6 @@
    * including (hopefully) limiting file accesses to specific ‘‘virtual root’’ directory
 
 * loaders for common executable/bootloader formats 
-
+<hr class="vspace" />
 * idea: get log of malware activity / add custom behaviors
 

@@ -5,10 +5,10 @@
 * old idea: ‘reverse debugging’
 * in addition to <code>step</code>/<code>continue</code>, <br> debugger could have <code>reverse-step</code>/<code>reverse-continue</code>
 * typically implemented by recording ‘trace’ of execution 
-
+<hr class="vspace" />
 * some implementations (with varyingly middling performance 
 
-   * \\url{https://rr-project.org} for x86-64 Linux (needs sysadmin to set some things)
+   * [https://rr-project.org](https://rr-project.org) for x86-64 Linux (needs sysadmin to set some things)
    * QEMU for full virtual machines (not just one program)
    * built-in to GDB, but not maintained/possibly broken with modern systems
 

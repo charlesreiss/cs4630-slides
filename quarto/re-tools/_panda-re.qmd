@@ -4,7 +4,7 @@
 
 * fork of emulator QEMU
 * supports whole-system record+replay 
-
+<hr class="vspace" />
 * idea: run virtual machine with malware
 * replay run with analyses that can look at all instructions run
 * examples: 

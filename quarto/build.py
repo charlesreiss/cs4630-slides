@@ -129,6 +129,7 @@ format:
     width: 1050
     height: 600
     code-line-numbers: false
+    self-contained-math: true
 ---
 ''' + '{{< include ../' + str(include_path.relative_to(path.parent.parent)) + ' >}}\n')
 

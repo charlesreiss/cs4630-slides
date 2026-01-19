@@ -10,10 +10,10 @@
 
 * `pushq %r13` encoded as <code>41 55</code>  
 
-   * <code>41</code>: REX prefix <code>0010</code> (constant), w:<code>0</code>, r:<code>0</code>, s:<code>0</code>, b:<code>\\color{blue!80!black1}</code>
+   * <code>41</code>: REX prefix <code>0010</code> (constant), w:<code>0</code>, r:<code>0</code>, s:<code>0</code>, b:<code><span style="color: darkblue">1</span></code>
    * w = <code>0</code> because push is never 32-bit in 64-bit mode
-   * <code>55</code>: 5-bit opcode <code>01010</code>; 3-bit reg # <code>\\color{green!80!black101}</code>
-   * 4-bit reg # <code>\\color{blue!80!black1}\\color{green!80!black101}</code> = 13
+   * <code>55</code>: 5-bit opcode <code>01010</code>; 3-bit reg # <code><span style="color: darkgreen">101</span></code>
+   * 4-bit reg # <code><span style="color: darkblue">1</span><span style="color: darkgreen">101</span></code> = 13
 
 
 

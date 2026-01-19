@@ -1,21 +1,15 @@
 
 ### position dependence  {.smaller}
 
-
-
 * two ways of encoding addresses in x86-64 assembly: 
-
    * address in little endian (typically 32-bits --- limit on executable size)
-   * difference between address and %rip (next instruction address)
+   * (usually 32-bit) difference between address and %rip (next instruction address)
 
- <hr />
- 
-<code>movb label, %al8a 04 25 \\normalfont{<it></it> label's addr (32 bit)}</code><br />
-<code>[\\normalfont{ Intel:} mov AL, [label]]{.my-small}</code><br />
-<code>jmp *labelff 24 25 \\normalfont{<it></it> label's addr (32 bit)}</code><br />
-<code>[\\normalfont{ Intel:} jmp [label]]{.my-small}</code><br />
-<code>movb label(%rip), %al8a 05 \\normalfont{<it> %rip - label's addr (32 bit)</it>}</code><br />
-<code>[\\normalfont{ Intel NASM:} mov AL, [REL label]]{.my-small}</code><br />
-<code>jmp *label(%rip)e9 \\normalfont{<it> %rip - label's addr (32 bit)</it>}</code><br />
-<code>[\\normalfont{ Intel NASM:} jmp [REL label]]{.my-small}</code>
- how to know which? --- check manual
+<hr />
+<table style="width:100%">
+<tr><th>assembly</th><th> encoding</th></tr>
+<tr><td>`movq label, %al`<br />[or Intel: `mov AL, [label]`]{.my-small}</td><td>`8a 04 25`&nbsp;<i>label addr</i></td></tr>
+<tr><td>`jmp *label`<br />[or Intel: `jmp [label]`]{.my-small}</td><td>`ff 24 25`&nbsp;<i>label addr</i></td></tr>
+<tr><td>`mov label(%rip), %al`<br />[or Intel NASM: `mov AL, [REL label]`]{.my-small}</td><td>`8a 05`&nbsp;<i>%rip - label addr</i></td></tr>
+<tr><td>`jmp *label(%rip), %al`<br />[or Intel NASM: `jmp [REL label]`]{.my-small}</td><td>`e9`&nbsp;<i>%rip - label addr</i></td></tr>
+</table>

@@ -2,6 +2,9 @@
 
 $presentation-heading-color: #3333b3;
 $code-color: #000000;
+$myoverbox-color: #ff6000;
+$myem-color: #ff6000;
+$font-family-monospace: "Source Code Pro","Courier New",monospace;
 
 /*-- scss:rules --*/
 
@@ -17,25 +20,41 @@ $code-color: #000000;
     font-size: 90%;
 }
 
+.reveal .slide ul li ul li ul li {
+    margin-top: 0em;
+    margin-bottom: 0.05em;
+    font-size: 80%;
+}
+
 .reveal .slide > ul {
     margin-left: 0em;
+}
+
+.reveal .slide h3:empty { display: none; }
+
+.my-full {
+    max-height: calc(var(--slide-height) * 0.8);
+    max-width: 100%;
+    height: 100%;
+    width: 100%;
 }
 
 .my-full > p {
     width: 100%;
     height: 100%;
-    max-height: 90%;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 .my-full > p img {
     width: 100%;
     height: 100%;
     max-width: 100%;
-    max-height: calc(var(--slide-height) * var(--slide-scale) - 2em);
+    max-height: 100%;
 }
 
-.my-small, .my-small p {
-    font-size: 90%;
+.my-small, .my-small p, .mysmall, .mysmall p {
+    font-size: 75%;
     line-height: 1.0;
 }
 
@@ -50,7 +69,7 @@ $code-color: #000000;
 }
 
 .reveal .fragment.myem-only.current-fragment{
-    color: #ff6000;
+    color: $myem-color;
     font-style: italic;
 }
 
@@ -73,21 +92,68 @@ $code-color: #000000;
 }
 
 
-.mycredit {
-    font-size: 9pt;
+p:has(> .mycredit:only-child), .mycredit:not(:only-child) {
     position: absolute;
     bottom: 0pt;
     right: 0pt;
+    font-size: 0.5em;
 }
+
+.altem {
+    color: green;
+    font-style: oblique;
+}
+
+code span { color: inherit; }
+
+div.myoverbox {
+    position: absolute;
+    font-size: 30px;
+    background-color: $body-bg;
+    top: 20%;
+    left: 50%;
+    max-width: 95%;
+    width: max-content;
+    transform: translate(-50%, 0%);
+    border: $myoverbox-color 5px solid;
+    padding: 3px 3px 3px 3px;
+} 
+
+div.myoverbox.low {
+    top: auto;
+    bottom: 20%;
+}
+
+div.myoverbox.vlow {
+    top: auto;
+    bottom: 5%;
+}
+
+.reveal .slide .answer-twocol ol {
+    column-count: 2;
+    column-fill: balance;
+}
+
+.reveal .slide .answer-twocol ol li {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.myoverbox > p { margin: 0 0 0 0 }
 
 section > ul {
     margin: 0 0 0 0;
 }
 
-hr.vspace {
-    margin-top: 1em;
+.reveal .slide ul li > hr.vspace, hr.vspace {
+    margin-top: 0.75em;
     border: none;
 }
+
+.reveal div.sourceCode { border: none; }
+
+.transparent-code pre { width: auto }
+.transparent-code code { width: auto }
 
 @media print {
     .slide-chalkboard-buttons {

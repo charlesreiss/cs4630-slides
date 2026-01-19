@@ -114,15 +114,15 @@ def build_figures(base_directory, incremental):
 def render_qmd(path):
     run_logged(QUARTO + [path])
 
-def create_top_qmd(path, include_path):
-    path.write_text(f'---\ntitle: "{path.parent.name}"\n' +
+def create_top_qmd(path, include_path=None, backup_include_path=None, empty=False):
+    qmd = f'---\ntitle: "{path.parent.name}"\n' + \
 '''
 format:
   revealjs:
     theme: [simple, ../custom.scss]
     slide-level: 3
     navigation-mode: linear
-    scrollable: true
+    scrollable: false
     chalkboard: true
     progress: false
     margin: 0.02
@@ -131,7 +131,16 @@ format:
     code-line-numbers: false
     self-contained-math: true
 ---
-''' + '{{< include ../' + str(include_path.relative_to(path.parent.parent)) + ' >}}\n')
+'''
+    if empty:
+        qmd += '### last time\n\n# backup slides\n'
+    else:
+        qmd += '\n{{< include ../' + str(include_path.relative_to(path.parent.parent)) + ' >}}\n'
+        if backup_include_path is not None and backup_include_path.exists():
+            qmd += '\n# Backup slides\n'
+            qmd += '\n{{< include ../' + str(backup_include_path.relative_to(path.parent.parent)) + ' >}}\n'
+    path.parent.mkdir(exist_ok=True)
+    path.write_text(qmd)
 
 def render_html(path):
     run_logged(DECKTAPE + [path, path.with_suffix('.pdf')])
@@ -143,6 +152,8 @@ def main():
     parser.add_argument('--render-html', type=Path)
     parser.add_argument('--figures', type=Path)
     parser.add_argument('--include', type=Path)
+    parser.add_argument('--empty', action='store_true', default=False)
+    parser.add_argument('--backup-include', type=Path)
     parser.add_argument('--directory', type=Path)
     parser.add_argument('--incremental', action='store_true', default=True)
     parser.add_argument('--force', action='store_false', dest='incremental')
@@ -152,7 +163,7 @@ def main():
         args.render_qmd = args.directory / 'talk.qmd'
         args.render_html = args.directory / 'talk.html'
     if args.create_top_qmd:
-        create_top_qmd(args.create_top_qmd, args.include)
+        create_top_qmd(args.create_top_qmd, include_path=args.include, backup_include_path=args.backup_include, empty=args.empty)
     if args.figures:
         build_figures(args.figures, incremental=args.incremental)
     if args.render_qmd:

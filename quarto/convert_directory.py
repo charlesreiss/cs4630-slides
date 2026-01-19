@@ -55,14 +55,23 @@ def convert_directory(base_directory: Path, output_directory: Path):
         'python3', 'build.py',
         '--create-top-qmd', output_directory / 'talk.qmd',
         '--include', output_directory / '_talk-inner.qmd',
+        '--backup-include', output_directory / '_talk-backup.qmd',
     ])
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
     parser = argparse.ArgumentParser()
+    parser.add_argument('--new', action='store_true', default=False)
     parser.add_argument('directory', type=Path, nargs='+', default=[])
-
     args = parser.parse_args()
     for directory in args.directory:
-        convert_directory(directory, Path.cwd() / directory.name)
+        if args.new:
+            inner_dir = directory / '_talk-inner.qmd',
+            run_logged([
+                'python3', 'build.py',
+                '--create-top-qmd', directory / 'talk.qmd',
+                '--empty',
+            ])
+        else:
+            convert_directory(directory, Path.cwd() / directory.name)
 

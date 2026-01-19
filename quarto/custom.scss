@@ -73,8 +73,22 @@ $font-family-monospace: "Source Code Pro","Courier New",monospace;
     font-style: italic;
 }
 
+
+.reveal .fragment.myem-fade-in.current-fragment{
+    color: $myem-color;
+    font-style: italic;
+}
+.reveal .fragment.myem-fade-in.visible{
+    visibility: visible;
+}
+
+.reveal .fragment.myem-fade-in {
+    visibility: hidden;
+}
+
+
 .reveal .fragment.myem.visible {
-    color: #ff6000;
+    color: $myem-color;
     font-style: italic;
 }
 
@@ -119,6 +133,12 @@ div.myoverbox {
     padding: 3px 3px 3px 3px;
 } 
 
+div.myoverbox.big {
+    font-size: 40px;
+    padding: 5px 5px 5px 5px;
+    border: $myoverbox-color 8px solid;
+}
+
 div.myoverbox.low {
     top: auto;
     bottom: 20%;
@@ -154,6 +174,24 @@ section > ul {
 
 .transparent-code pre { width: auto }
 .transparent-code code { width: auto }
+
+code > i {
+    font-style: oblique;
+    color: #550;
+}
+
+.reveal .slide.compacttwo > ul li ul li {
+    line-height: 1;
+}
+
+.reveal code .highlight-line {
+    background-color: #4f4;
+
+}
+
+.reveal code .highlight-line a:first-child::before {
+    background-color: white;
+}
 
 @media print {
     .slide-chalkboard-buttons {

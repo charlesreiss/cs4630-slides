@@ -13,4 +13,4 @@ format:
     width: 1050
     height: 600
 ---
-{{< include ../20260116/_talk-inner.qmd >}}
+<!-- {{< include ../20260116/_talk-inner.qmd >}} -->

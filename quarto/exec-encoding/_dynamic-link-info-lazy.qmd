@@ -1,9 +1,9 @@
 
-### lazy binding  {.smaller}
+### lazy binding {.smaller}
 
 
 <pre><code>0000000000401030 &lt;puts@plt&gt;:
-  401030:       ff 25 62 22 00 00       jmp    *0x2262(%rip)        # 403298 &lt;puts@GLIBC_2.2.5&gt;
+  401030:   ff 25 62 22 00 00  jmp *0x2262(%rip)  # 403298 &lt;puts@GLIBC_2.2.5&gt;
 ...
 Contents of section .got.plt:
  403280 a0304000 00000000 00000000 00000000  .0@.............
@@ -12,12 +12,9 @@ Contents of section .got.plt:
  
 
 * initial contents of <code>0x403298</code> = <code>0x401036</code> (in .got.plt) 
+   * not part of standard library
 
-   * not part of standard library????
-
-* code found at 0x401036 is routine to invoke dynamic linker code:
- 
-<div class="fragment fade-in" data-fragment-index=2 >
+* code found at 0x401036 invokes dynamic linker code:
  
 <pre><code>  401020:       ff 35 62 22 00 00       push   0x2262(%rip)       
     # 403288 &lt;_GLOBAL_OFFSET_TABLE_+0x8&gt;
@@ -27,39 +24,19 @@ Contents of section .got.plt:
   401036:       68 00 00 00 00          push   $0x0
   40103b:       e9 e0 ff ff ff          jmp    401020 &lt;_init+0x20&gt;
 </code></pre>
- 
-</div>
 
-### lazy binding  {.smaller}
+### lazy binding {.smaller}
 
 
 * with lazy binding turned on (not always done) 
 <hr class="vspace" />
 * GOT loaded with address of linker routine hard-coded in executable
 * first call to puts: 
-
    * invoke dynamic linker routine pointed to by GOT
    * linker routine fills in puts address in <code>0x404018</code>
    * then jumps to puts
 
 * second (and later) call to puts 
-
    * 0x404018 contains real address of puts, no indirection
-
-
-
-### lazy binding pro/con  {.smaller}
-
-
-* advantages: 
-
-   * faster program loading
-   * no overhead for unused code (often a lot of stuff)
-
-* disadvantages: 
-
-   * can move errors (missing functions, etc.) to runtime
-   * possibly more total overhead
-   * means global offset table needs to be writable?
 
 

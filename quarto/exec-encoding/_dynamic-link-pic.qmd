@@ -1,12 +1,11 @@
 
-### dynamic puts (picture) 
-
-
+### dynamic puts (picture; no lazy) 
 
 ::: {.r-stack .my-full}
-![](/exec-encoding/texfig/dynamic-link-pic.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](/exec-encoding/texfig/dynamic-link-pic.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/exec-encoding/texfig/dynamic-link-pic.figure-1.svg){.fragment .fade-out fragment-index=1 fig-alt="diagram with GOT (global offset table) in executable and in memory; showing that puts stub called by executable code uses the global offset table entry"}
+
+![](/exec-encoding/texfig/dynamic-link-pic.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 fig-alt="same diagram as before showing the global offset table entry being filled in to point to somewhere in loaded libc.so"}
 
 ![](/exec-encoding/texfig/dynamic-link-pic.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
 

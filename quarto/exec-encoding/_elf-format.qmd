@@ -1,7 +1,7 @@
 
 ### memory v. disk 
 
-![](/exec-encoding/texfig/elf-format-memory-v-disk.figure.svg){fig-alt="Diagram showing the contents of (virtual) memory on the right, arranged with higher addresses on top. Inset on the left is a similar subdiagram labeled 'program on disk'. The contents of memory (from the top) read 'used by OS', then an empty region, then 'stack', then an empty region, then 'heap / other dynamic', then 'writable data', then 'code + constants'. The contents of the inset diagram read '.bss (zeroes; not stored)', then '.data', then '.rodata (read-only data)', then '.text (code)', then (in faded text) 'program header'). There are arrows from '.bss' and '.data' to 'writeable data' and from '.rodata' and '.text' to 'code + constants'.}
+![](/exec-encoding/texfig/elf-format-memory-v-disk.figure.svg){fig-alt="Diagram showing the contents of (virtual) memory on the right, arranged with higher addresses on top. Inset on the left is a similar subdiagram labeled 'program on disk'. The contents of memory (from the top) read 'used by OS', then an empty region, then 'stack', then an empty region, then 'heap / other dynamic', then 'writable data', then 'code + constants'. The contents of the inset diagram read '.bss (zeroes; not stored)', then '.data', then '.rodata (read-only data)', then '.text (code)', then (in faded text) 'program header'). There are arrows from '.bss' and '.data' to 'writeable data' and from '.rodata' and '.text' to 'code + constants'."}
 
 ### ELF (executable and linking format) 
 

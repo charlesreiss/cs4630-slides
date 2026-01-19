@@ -11,7 +11,6 @@ main:
     movq $string, %rdi
     call puts
     ret
-
 ```
 
 
@@ -54,7 +53,7 @@ insert address of string at byte 3 of .text (code)<br />
 
 :::
 
-::: {.myoverbox .vlow fragment-index=3 .fragment .fade-in-then-out}
+::: {.myoverbox fragment-index=3 .fragment .fade-in-then-out}
 
 different ways to represent address<br />
 32S = signed 32-bit value<br />
@@ -66,12 +65,6 @@ PC32 = 32-bit different from current address<br />
 ::: {.myoverbox .vlow fragment-index=4 .fragment .fade-in-then-out}
 
 `g` = global (used by other files) <br /> `l` = local
-
-:::
-
-::: {.myoverbox .vlow fragment-index=5 .fragment .fade-in-then-out}
-
-`main` at `.text` segments beginning + 0 bytes
 
 :::
 

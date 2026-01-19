@@ -6,7 +6,6 @@
 
 ### static v. dynamic linking
 
-
 * static linking --- linking <em>to create executable</em>
 * dynamic linking --- linking <em>when executable is run</em> 
 <hr class="vspace" />

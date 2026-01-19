@@ -1,0 +1,12 @@
+
+### lazy binding pro/con
+
+* advantages: 
+   * faster program loading
+   * no overhead for unused code (often a lot of stuff)
+
+* disadvantages: 
+   * can move errors (missing functions, etc.) to runtime
+   * possibly more total overhead
+   * means global offset table needs to be writable?
+

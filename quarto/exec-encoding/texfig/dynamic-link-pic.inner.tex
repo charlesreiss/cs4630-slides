@@ -1,5 +1,5 @@
 \begin{tikzpicture}
-\fill[blue!20] (0, 0) rectangle (4, -2);
+\fill[color=blue!20!white] (0, 0) rectangle (4, -2);
 \node[anchor=north,font=\small] at (2, 0) {headers};
 \node[align=left,font=\fontsize{8}{9}\selectfont,anchor=north west] (dyn reloc) at (0, -0.7) {
     dynamic relocation table: \\
@@ -18,8 +18,8 @@
 \node[font=\fontsize{9}{10}\tt] (puts stub call) at (3, -4.25) {jmp \ldots};
 \node[anchor=west,font=\small] (puts stub) at (0, -4) {puts stub};
 
-\fill[violet!20] (0, -4.5) rectangle (4, -6);
-\node [anchor=center,font=\fontsize{9}{10}\tt] (exe call puts) at (3, -5) {call puts};
+\fill[color=violet!20] (0, -4.5) rectangle (4, -6);
+\node[anchor=center,font=\fontsize{9}{10}\tt] (exe call puts) at (3, -5) {call puts};
 \draw[thick,-Latex] (exe call puts.east) -- ++(0.5cm, 0cm) -- ++(0cm, 0.25cm) -| (puts stub call.south west) --
     ++(0cm,.3cm) -- ++(.1cm,0cm);
 
@@ -30,10 +30,10 @@
     executable
 };
 
-\draw[alt=<2>{red, very thick},thick,-Latex] ([yshift=.3cm,xshift=1cm]dyn reloc.south west) -- ++(3.5cm, 0cm) |- (4, -2.875);
+\draw[alt=<2>{red,very thick},thick,-Latex] ([yshift=.3cm,xshift=1cm]dyn reloc.south west) -- ++(3.5cm, 0cm) |- (4, -2.875);
 
 \begin{visibleenv}<4>
-    \draw[alt=<4>{red},thick,-Latex] (1, -2.875) -- ++(-1.25cm, 0cm) |- (link call stub.west);
+    \draw[red,thick,-Latex] (1, -2.875) -- ++(-1.25cm, 0cm) |- (link call stub.west);
 \end{visibleenv}
 
 \begin{scope}[xshift=7cm,yshift=1cm]
@@ -49,7 +49,7 @@
 \node[font=\fontsize{9}{10}\tt] (puts stub call) at (3, -4.25) {jmp \ldots};
 \node[anchor=west,font=\small] (puts stub) at (0, -4) {puts stub};
 
-\fill[violet!20] (0, -4.5) rectangle (4, -6);
+\fill[color=violet!20] (0, -4.5) rectangle (4, -6);
 \node [anchor=center,font=\fontsize{9}{10}\tt] (exe call puts) at (3, -5) {call puts};
 \draw[thick,-Latex] (exe call puts.east) -- ++(0.5cm, 0cm) -- ++(0cm, 0.25cm) -| (puts stub call.south west) --
     ++(0cm,.3cm) -- ++(.1cm,0cm);

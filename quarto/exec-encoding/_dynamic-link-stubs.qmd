@@ -1,5 +1,42 @@
 
 ### adding linker stubs 
 
-![](/exec-encoding/texfig/dynamic-link-stubs.figure.svg)
+:::: {.columns}
+
+::: {.column style="width: 20%; border: 3px solid; margin-top: 0"}
+program.s:
+```
+main:
+    ...
+    call puts
+    ...
+```
+:::
+
+::: {.column style="width: 10%; max-width: 10%; font-size: 50pt; margin-top: 1em;"}
+
+$\Rightarrow$
+
+:::
+
+::: {.column style="width: 60%; border: 3px solid; margin-top: 0" .transparent-code}
+program.exe (psuedo-assembly):
+```
+GLOBAL_LOOKUP_TABLE:
+    ... // placeholders
+
+puts@plt:
+    jmp *GLOBAL_LOOKUP_TABLE[index]
+    ...
+    ...
+
+main:
+    ...
+    call puts@plt
+    ...
+```
+<small>+ annotation where to fill `puts` address in lookup table</small>
+:::
+
+::::
 

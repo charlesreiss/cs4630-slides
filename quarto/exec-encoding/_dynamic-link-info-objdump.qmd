@@ -10,6 +10,8 @@
 
    * with locations (probably in lookup table) to fill in
 
+*  separate symbol/relocation tables for dynamic linking than static
+
 
 
 ### dynamically linked puts (non-lazy)  {.smaller}

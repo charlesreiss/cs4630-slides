@@ -13,6 +13,7 @@ format:
     width: 1050
     height: 600
     code-line-numbers: false
+    show-slide-numbers: all
 ---
 {{< include ../exec-encoding/_talk-inner.qmd >}}
 

@@ -1,5 +1,5 @@
 
-## stubs {visibility="hidden"}
+## stubs (basics) {visibility="hidden"}
 
 {{< include /exec-encoding/_dynamic-link-stubs.qmd >}}
 
@@ -13,15 +13,17 @@
 
 {{< include /exec-encoding/_dynamic-link-pic.qmd >}}
 
-### againframe(dynamicPutsPic)
-
 ## lazy binding {visibility="hidden"}
 
-### againframe(dynamicPutsPic)
-
-### againframe(dynamicPutsPic)
-
 {{< include /exec-encoding/_dynamic-link-info-lazy.qmd >}}
+
+## picture (part 2) {visibility="hidden"}
+
+{{< include /exec-encoding/_dynamic-link-pic-lazy.qmd >}}
+
+## lazy --- why {visibility="hidden"}
+
+{{< include /exec-encoding/_lazy-bind-why.qmd >}}
 
 # preview: exploits and dynamic linking {visibility="hidden"}
 

@@ -1,7 +1,7 @@
 \begin{tikzpicture}[y=0.9cm]
 \begin{pgfonlayer}{fg}
 \draw[very thick] (0, 0) rectangle (4, 6);
-\node[font=\huge,black!25,align=center] at (2, 3) {
+\node[font=\huge,color=black!25,align=center] at (2, 3) {
     program \\ on\\ disk
 };
 \end{pgfonlayer}
@@ -15,7 +15,7 @@
     \begin{pgfonlayer}{fg}
         \draw[overlay,very thick] (0, 7) -- (0, 0) -- (4, 0) -- (4, 7);
         \draw[overlay,very thick,decorate,decoration={zigzag,segment length=2.5mm}] (0, 7) -- (4, 7);
-    \node[font=\huge,black!25,align=center] at (2, 3) {
+    \node[font=\huge,color=black!25,align=center] at (2, 3) {
         program \\ in\\ memory
     };
     \end{pgfonlayer}
@@ -25,7 +25,7 @@
 \draw[thick,Latex-,font=\small] (4, 0) -- ++(.5, 0) node[right,align=left] {addr {\tt 0}};
 \end{scope}
 \begin{visibleenv}<2->
-    \fill[blue!30] (header tl) rectangle (header br);
+    \fill[color=blue!30] (header tl) rectangle (header br);
     \node[align=left,font=\small\tt,anchor=north west,draw] (load) at (1, -.25) {
         LOAD off {\color{green!50!black}0x1000} vaddr {\color{violet!70}0x4000} \ldots \\
         \hspace{1cm} filesz 0x1544 memsz 0x2644 \ldots
@@ -42,8 +42,8 @@
         node[midway,font=\small,right] {\tt 0x1544};
     \draw[overlay,thick,Latex-Latex] ([xshift=-4.15cm]vaddr off) -- ([xshift=-4.15cm]vaddr end all)
         node[midway,font=\small,left] {\tt 0x2644};
-    \fill[red!20] (load off) rectangle ([xshift=4cm]load end);
-    \fill[red!20] (vaddr off) rectangle ([xshift=-4cm]vaddr end copy);
+    \fill[color=red!20] (load off) rectangle ([xshift=4cm]load end);
+    \fill[color=red!20] (vaddr off) rectangle ([xshift=-4cm]vaddr end copy);
     \fill[pattern=north west lines] (vaddr end copy) rectangle ([xshift=-4cm]vaddr end all);
 \end{visibleenv}
 \end{tikzpicture}

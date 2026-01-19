@@ -22,10 +22,36 @@
     \end{itemize}
 \end{frame}
 
+\section{homework/objdump output note}
+\begin{frame}[fragile]{objdump --file-offset}
+    \begin{itemize}
+    \item objdump --file-offset shows file offset next to addresses
+    \end{itemize}
+\begin{Verbatim}[fontsize=\fontsize{9}{10}\selectfont]
+0000000000401775 <main> (File Offset: 0x1775):
+  401775:       f3 0f 1e fa             endbr64 
+  401779:       55                      push   %rbp
+  40177a:       48 89 e5                mov    %rsp,%rbp
+  40177d:       48 8d 05 80 68 09 00    lea    0x96880(%rip),%rax  
+      # 498004 <_IO_stdin_used+0x4> (File Offset: 0x98004)
+\end{Verbatim}
+    \begin{itemize}
+    \item main is stored 0x1775 bytes into file, so 
+    \item lea instruction is therefore 0x177d bytes into file
+    \item 0x498004 (referenced by lea) is stored 0x98004 bytes into file
+        \begin{itemize}
+        \item (shown as two lines above, but really one very long line)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{RE assignment}
+\end{frame}
+
 \section{floating point}
 \input{../asm/floating-point-intro}
 \input{../asm/floating-point-sse-regs}
-\input{../asm/floating-point-vector}
+\input{../asm/floating-point-fp-example}
 
 \section{rip addressing}
 \input{../asm/addressing-rip}
@@ -55,5 +81,9 @@
 \section{backup slides}
 \begin{frame}{backup slides}
 \end{frame}
+\input{../asm/floating-point-vector}
+
+\input{../exec-encoding/talk-backup}
+%\input{../x8664-encoding/talk-backup}
 
 \end{document}

@@ -1,0 +1,14 @@
+
+### on goats  {.smaller}
+
+
+* analysis and maybe detection uses <i>goat files</i>
+* ‘‘<em>sacrificial goat</em>’’ to get changed by malware
+* heuristics can avoid simple goat files, e.g.: 
+
+   * don't infect small programs
+   * don't infect huge programs
+   * don't infect programs with huge amounts of <code>nop</code>s
+   * …
+
+

@@ -1,0 +1,16 @@
+
+### more advanced changes?  {.smaller}
+
+
+* Szor calls W95/Memorial <em>oligomoprhic</em> 
+
+   * ‘‘encrypted’’ code
+   * plus <em>small</em> changes to decrypter
+
+* What about doing more changes to decrypter? 
+
+   * many, many variations
+
+* Szor calls doing this <em>polymorphic</em>
+* polymorphic example: 1260
+

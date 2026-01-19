@@ -1,0 +1,17 @@
+
+### example: 1260 (virus) 
+
+<!-- \lstset{
+    style=small,
+    language=myasm,
+    moredelim={**[is][\btHL<2-3|handout:0>]{@hi2@}{@endhi@}},
+    moredelim={**[is][\btHL<4-5|handout:0>]{@hi3@}{@endhi@}},
+} -->
+<!-- FIXME: adapt Listing 7.5 --><table>
+</table>
+ [adapted from Szor, Listing 7.5]{.mycredit} ![](/antianti/texfig/1260.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/antianti/texfig/1260.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+![](/antianti/texfig/1260.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=3}
+![](/antianti/texfig/1260.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=4}
+![](/antianti/texfig/1260.figure-5.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=5}
+

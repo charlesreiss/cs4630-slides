@@ -1,0 +1,225 @@
+
+# anti-anti-virus {visibility="hidden"}
+
+{{< include /antianti/_intro.qmd >}}
+
+{{< include /antianti/_intro-terms.qmd >}}
+
+# other obfuscation {visibility="hidden"}
+
+## why obfuscation, generally {visibility="hidden"}
+
+{{< include /antianti/_other-obfuscate.qmd >}}
+
+# Tigress and its transformations {visibility="hidden"}
+
+{{< include /antianti/_tigress-xforms-example.qmd >}}
+
+# obfuscation utility? {visibility="hidden"}
+
+{{< include /antianti/_obfus-not-good-ex.qmd >}}
+
+# packers {visibility="hidden"}
+
+## hashed data {visibility="hidden"}
+
+{{< include /antianti/_hashed-data.qmd >}}
+
+## encrypted data {visibility="hidden"}
+
+{{< include /antianti/_encrypted-data.qmd >}}
+
+## encrypted data and signatures {visibility="hidden"}
+
+{{< include /antianti/_encrypted-and-sigs.qmd >}}
+
+## encrypted code {visibility="hidden"}
+
+{{< include /antianti/_encrypted-code.qmd >}}
+
+## case study: Cascade {visibility="hidden"}
+
+{{< include /antianti/_cascade-decrypter.qmd >}}
+
+# exercise: handling decrypter {visibility="hidden"}
+
+{{< include /antianti/_ex-handling-decrypter.qmd >}}
+
+## decrypter variations {visibility="hidden"}
+
+{{< include /antianti/_decrypter-variants.qmd >}}
+
+# metamorphic, etc. idea {visibility="hidden"}
+
+{{< include /antianti/_metamorphic-play-mouse.qmd >}}
+
+# oligomorphic viruses {visibility="hidden"}
+
+### againframe(playMouse)
+
+{{< include /antianti/_olig.qmd >}}
+
+## case study: W95/Memorial {visibility="hidden"}
+
+{{< include /antianti/_w95memorial.qmd >}}
+
+# polymorphic viruses {visibility="hidden"}
+
+{{< include /antianti/_poly-intro.qmd >}}
+
+## case study: 1260 {visibility="hidden"}
+
+{{< include /antianti/_1260.qmd >}}
+
+## more generic mutation {visibility="hidden"}
+
+{{< include /antianti/_mutation-engine-generic.qmd >}}
+
+# terminology: packers {visibility="hidden"}
+
+{{< include /antianti/_packers.qmd >}}
+
+# anti-packer strategies {visibility="hidden"}
+
+## generic anti-packers {visibility="hidden"}
+
+{{< include /antianti/_packer-detect.qmd >}}
+
+# emulators {visibility="hidden"}
+
+## example: unicorn {visibility="hidden"}
+
+{{< include /re-tools/_emu.qmd >}}
+
+## unipacker pseudcode {visibility="hidden"}
+
+{{< include /antianti/_unipacker-pseudo.qmd >}}
+
+## example: Qiling {visibility="hidden"}
+
+{{< include /re-tools/_qiling.qmd >}}
+
+## example: PANDA-RE {visibility="hidden"}
+
+{{< include /re-tools/_panda-re.qmd >}}
+
+## aside: instruction traces {visibility="hidden"}
+
+{{< include /antianti/_instr-traces.qmd >}}
+
+# anti-virtualization strategies {visibility="hidden"}
+
+## basic issues {visibility="hidden"}
+
+{{< include /antianti/_antivm-intro.qmd >}}
+
+## automated analysis: lack of patience? {visibility="hidden"}
+
+{{< include /antianti/_antivm-patience.qmd >}}
+
+# packer issues {visibility="hidden"}
+
+## packers and W xor X/DEP {visibility="hidden"}
+
+{{< include /antianti/_packers-and-depwx.qmd >}}
+
+# aside: future assignment {visibility="hidden"}
+
+### OBFUSCATE assignment  {.smaller}
+
+
+* modifying ‘password-protected’ tic-tac-toe game not to be 
+<hr class="vspace" />
+* three versions: 
+
+   * just stripped
+   * some Tigress transformations
+   * ‘encrypted’ code
+
+
+
+## exercise: limitations of generic anti-packer {visibility="hidden"}
+
+{{< include /antianti/_packer-detect-limit-ex.qmd >}}
+
+# metamorphic viruses {visibility="hidden"}
+
+{{< include /antianti/_meta-intro.qmd >}}
+
+## example: changing bodies {visibility="hidden"}
+
+{{< include /antianti/_meta-body-change-example.qmd >}}
+
+## case study: Evol {visibility="hidden"}
+
+{{< include /antianti/_evol.qmd >}}
+
+## handling relocation with mutation {visibility="hidden"}
+
+{{< include /antianti/_mutate-reloc.qmd >}}
+
+## fancy mutation engines {visibility="hidden"}
+
+{{< include /antianti/_fancy-mutation-engine.qmd >}}
+
+# goats and anti-goat {visibility="hidden"}
+
+{{< include /antianti/_goat.qmd >}}
+
+# anti-debugging {visibility="hidden"}
+
+{{< include /antianti/_antidebug-intro.qmd >}}
+
+## breaking breakpoints {visibility="hidden"}
+
+### againframe(debuggerThings)
+
+{{< include /antianti/_antidebug-breakpt-int3.qmd >}}
+
+## aside: modern breakpoints{visibility="hidden"}
+
+{{< include /antianti/_debug-modern-breakpt.qmd >}}
+
+## breaking single-stepping (short) {visibility="hidden"}
+
+### againframe(debuggerThings)
+
+{{< include /antianti/_antidebug-ss.qmd >}}
+
+# emulation-based obfuscation {visibility="hidden"}
+
+{{< include /antianti/_emulate-obfuscate.qmd >}}
+
+# retroviruses / direct antiantivirus {visibility="hidden"}
+
+{{< include /antianti/_retro.qmd >}}
+
+## hiding {visibility="hidden"}
+
+{{< include /antianti/_stealth.qmd >}}
+
+## chkrootkit {visibility="hidden"}
+
+{{< include /antianti/_chkrootkit.qmd >}}
+
+# backup slides {visibility="hidden"}
+
+### backup slides 
+
+
+
+## heuristics to find packers {visibility="hidden"}
+
+{{< include /antianti/_packer-detect.qmd >}}
+
+## rootkits and chkrootkit {visibility="hidden"}
+
+{{< include /antianti/_chkrootkit.qmd >}}
+
+## aside: disinfection {visibility="hidden"}
+
+{{< include /heur-detect/_aside-disinfect.qmd >}}
+
+## signatures and extracting encryptd code? {visibility="hidden"}
+
+{{< include /antianti/_encrypted-code-sigs-analyze.qmd >}}

@@ -1,0 +1,21 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\newsavebox{\relocCode}
+\begin{document}
+\begin{lrbox}{\relocCode}
+\lstset{language=myasm,style=small}
+\begin{lstlisting}
+    mov ...
+    mov ...
+decrypt:
+    xor %rax, (%rbx)
+    inc %rbx
+    dec %rcx
+    jne decrypt
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{antianti/texfig/relocEx.inner.tex}
+\end{document}

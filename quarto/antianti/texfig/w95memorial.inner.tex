@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+    \begin{visibleenv}<2>
+    \node[anchor=center,draw=red,ultra thick,fill=white] at (current page.center) {
+        change instruction order; location of decryption key/etc.
+    };
+    \end{visibleenv}
+    \begin{visibleenv}<3>
+    \node[anchor=center,draw=red,ultra thick,fill=white] at (current page.center) {
+        variable choices of loop instructions
+    };
+    \end{visibleenv}
+    \begin{visibleenv}<4>
+    \node[anchor=center,draw=red,ultra thick,fill=white] at (current page.center) {
+        Szor: ``96 different decryptor patterns''
+    };
+    \end{visibleenv}
+\end{scope}
+\end{tikzpicture}

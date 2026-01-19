@@ -1,0 +1,19 @@
+
+### modern debuggers  {.smaller}
+
+
+* <code>int 3</code> is the oldest x86 debugging mechanism
+* modern x86: 4 ‘‘breakpoint’’ registers (<em>DR0--DR3</em>) 
+
+   * contain address of program instructions
+   * need more than 4? probably fallback to <code>int 3</code>
+
+* processor triggers exception when address reached 
+
+   * 4 extra registers + comparators in CPU?
+
+* flag to invoke debugger if debugging registers used 
+
+   * enables nested debugging
+
+

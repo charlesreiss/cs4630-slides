@@ -1,0 +1,26 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{calc,arrows.meta,patterns,positioning,matrix}
+\newsavebox{\evolXExStart}
+\newsavebox{\evolXExExpand}
+\begin{document}
+\begin{lrbox}{\evolXExStart}
+\lstset{language=myasm,style=small}
+\begin{lstlisting}
+mov %eax, 8(%ebp)
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\evolXExStart}
+\lstset{language=myasm,style=small}
+\begin{lstlisting}
+push %ecx
+mov %ebp, %ecx
+add $0x12, %ecx
+mov %eax, -0xa(%ecx)
+pop %ecx
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{antianti/texfig/evolXform.inner.tex}
+\end{document}

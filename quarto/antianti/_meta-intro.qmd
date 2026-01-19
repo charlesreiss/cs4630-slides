@@ -1,0 +1,17 @@
+
+### changing bodies  {.smaller}
+
+
+* ‘‘decrypting’’ a malware body gives body for ‘‘signature’’ 
+
+   * ‘‘just’’ need to run decrypter
+
+* how about avoiding static signatures entirely  
+
+   * despite being self-replicating
+
+* called <em>metamorphic</em>  
+
+   * versus <em>polymorphic</em> --- only change ‘‘decrypter’’
+
+

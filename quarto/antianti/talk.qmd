@@ -1,0 +1,18 @@
+---
+title: "antianti"
+
+format:
+  revealjs:
+    theme: [simple, ../custom.scss]
+    slide-level: 3
+    navigation-mode: linear
+    scrollable: true
+    chalkboard: true
+    progress: false
+    margin: 0.02
+    width: 1050
+    height: 600
+    code-line-numbers: false
+    self-contained-math: true
+---
+{{< include ../antianti/_talk-inner.qmd >}}

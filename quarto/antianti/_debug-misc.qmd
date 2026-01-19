@@ -1,0 +1,26 @@
+
+### unstealthy debuggers 
+
+
+* is a debugger installed? 
+
+   * unlikely on Windows, maybe ignore those machines
+
+* is a debugger process running (don't check if it's tracing you)
+* …
+
+
+### confusing debuggers  {.smaller}
+
+
+* ‘‘broken’’ executable formats 
+
+   * e.g., recall ELF: segments and sections
+   * corrupt sections --- program still works
+   * overlapping segments/sections --- program still works
+
+* use the stack pointer not for the stack 
+
+   * stack trace?
+
+

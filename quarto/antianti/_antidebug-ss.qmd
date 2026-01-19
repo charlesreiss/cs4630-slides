@@ -1,0 +1,16 @@
+
+### anti-single-step  {.smaller}
+
+
+* x86: single-stepping implemented with processor flag 
+
+   * causes OS to run after every instruction
+
+* can read flag normally with common debugger configurations 
+
+   * more modern systems may support hiding better
+ 
+<hr class="vspace" />
+* could also check timing
+* could also try to replace OS's single-step handler
+

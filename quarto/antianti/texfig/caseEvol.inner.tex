@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+        \tikzset{
+            every node/.style={font=\small,align=center},
+            hiOn/.style={alt=<#1>{red,ultra thick}{}},
+        }
+        \path node[draw,hiOn=2] (disasm) {disassemble} -- ++(2.5cm,0) node (lens) {instr. \\ lengths} -- ++(2cm,0) node[draw,hiOn=3] (xform) {transform}
+              -- ++(2cm,0) node[draw,hiOn=4] (reloc) {relocate};
+        \node (origCode) at ([xshift=-2cm,yshift=1cm]disasm.north) {code};
+        \node (finalCode) at ([xshift=2cm,yshift=-1cm]reloc.south) {code};
+        \begin{scope}[thick,-Latex]
+        \draw (origCode) |- (disasm);
+        \draw (disasm) -- (lens);
+        \draw (lens) -- (xform);
+        \draw (xform) -- (reloc);
+        \end{scope}
+    \end{tikzpicture}

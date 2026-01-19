@@ -1,0 +1,9 @@
+
+### legitimate ‘‘packers’’ 
+
+
+* some commercial software is packaged in this way
+* … including <em>antidebugging</em> stuff 
+<hr class="vspace" />
+* why? intended to be copy/reverse engineering protection
+

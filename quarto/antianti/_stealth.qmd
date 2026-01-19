@@ -1,0 +1,29 @@
+
+### stealth  {.smaller}
+
+<!-- \lstset{language=C,style=small} -->
+ 
+```
+/* in virus: */
+int OpenFile(const char *filename, ...) {
+    if (strcmp(filename, "infected.exe") == 0) {
+        return RealOpenFile("clean.exe", ...);
+    } else {
+        return RealOpenFile(filename, ...);
+    }
+}
+
+```
+
+
+### other stealth ideas  {.smaller}
+
+
+* override ‘‘get file modification time’’ (infected files)
+* override ‘‘get files in directory’’ (infected files)
+* override ‘‘read file’’ (infected files) 
+
+   * but not ‘‘execute file’’
+
+* override ‘‘get running processes’’
+

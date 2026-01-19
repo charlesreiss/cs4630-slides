@@ -1,0 +1,21 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{patterns}
+\newsavebox{\decryptGenCode}
+\begin{document}
+\begin{lrbox}{\decryptGenCode}
+\begin{lstlisting}
+int KEY = RAND();
+write(MOV_OPCODE, ...);
+...
+for (int i = RAND(); i > 0; --i) 
+    write(NOP_OPCODE);
+...
+write(XOR_OPCODE, KEY, ...);
+...
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{antianti/texfig/olig.inner.tex}
+\end{document}

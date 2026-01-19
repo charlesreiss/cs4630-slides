@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+        %FIXME
+        \coordinate (overlayLoc) at ([yshift=-2cm]current page.center);
+        \begin{visibleenv}<2>
+        \node [my callout=constant,align=left,anchor=center] at (overlayLoc) { change some trivial part of virus --- \\  e.g. add nops somewhere };
+        \end{visibleenv}
+        \begin{visibleenv}<3>
+        \node [my callout=fixed,align=left,anchor=center] at (overlayLoc) { insert nops everywhere; \\ split any big strings };
+        \end{visibleenv}
+        \begin{visibleenv}<4>
+        \node [my callout=topBottom,align=left,anchor=center] at (overlayLoc) { insert jump in middle \\ keep code out of end of file };
+        \end{visibleenv}
+    \end{scope}
+\end{tikzpicture}

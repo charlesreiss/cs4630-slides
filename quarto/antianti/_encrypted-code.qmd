@@ -1,0 +1,21 @@
+
+### encrypted(?) viruses  {.smaller}
+
+<!-- \lstset{language=C,style=small} -->
+ 
+```
+char encrypted[] = "\x12\x45...";
+char key[] = "...";
+virusEntryPoint() {
+    decrypt(encrypted, key);
+    goto encrypted;
+}
+decrypt(char *buffer, char *key) {...}
+
+```
+ 
+
+* choose a new key each time!
+* not good encryption --- <em>key is there</em>
+* sometimes mixed with <em>compression</em>
+

@@ -1,0 +1,18 @@
+
+### anti-anti-virus  {.smaller}
+
+
+* defeating signatures: 
+<hr class="vspace" />
+* avoid things compilers/linkers never do
+* make analysis harder 
+
+   * takes longer to produce signatures
+   * takes longer to produce ‘‘repair’’ program
+   * may evade attempts to automate analysis
+
+* make changing viruses 
+
+   * make signatures less effective
+
+

@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+\begin{scope}[every node/.style={very thick}]
+    \node[draw,minimum height=2cm,minimum width=4cm,align=center] (orig) at (0, 3) {original\\application};
+    \node[draw] (virus) at (0, -3) {virus code};
+    \node[draw,fill=yellow!10] (mutate) at (5, 0) {mutation engine};
+    \node[draw,minimum height=2cm,minimum width=4cm,pattern=north west lines,label={[align=center,fill=white]center:infected\\application},align=center] (infect) at (10, 0) {
+            infected\\application
+        };
+\end{scope}
+\begin{scope}[line width=1mm]
+    \draw[-Latex] (orig) -- (mutate.west);
+    \draw[-Latex] (virus) -- (mutate.west);
+    \draw[-Latex] (mutate.east) -- (infect);
+\end{scope}
+\end{tikzpicture}

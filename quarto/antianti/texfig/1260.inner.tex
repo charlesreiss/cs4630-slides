@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+    \begin{visibleenv}<3>
+    \node[anchor=center,draw=red,ultra thick,fill=white] at (current page.center) {
+        do-nothing instructions
+    };
+    \end{visibleenv}
+
+    \begin{visibleenv}<5>
+    \node[anchor=center,draw=red,ultra thick,fill=white] at (current page.center) {
+        different decryption ``key''
+    };
+    \end{visibleenv}
+\end{scope}
+\end{tikzpicture}

@@ -1,0 +1,117 @@
+
+### emulation based obfuscation  {.smaller}
+
+
+* so far: always producing machine code and running it
+* analyzing machine code with virtual machine, debugger, etc. 
+<hr class="vspace" />
+* alternate idea: invent a new instruction set
+* convert program to that instruction set
+* include interpreter for that instruction set
+
+
+### example: Tigress Virtualize transform (1)  {.smaller}
+
+input: 
+```
+int example(int x) {
+    if (x > 10) {
+        printf("Yes!\n");
+    }   
+}
+
+```
+ 
+
+* Tigress generates instruction set for stack-based machine 
+
+   * uses little stack instad of registers for most instructions
+   * same design used by, e.g., Java VM
+
+* instructions can pop+push from stack for temporaries
+
+
+### example: Tigress Virtualize transform (2)  {.smaller}
+
+
+* instruction set for example 
+
+   * call OPERAND=funcId with arguments LOCALS[1]
+   * pop t1, pop t2, push t1>t2
+   * push OPERAND
+   * push table[OPERAND] 
+
+      * different variants for int, string, …
+
+   * pop t1, LOCALS[OPERAND] = t1
+   * pop t1, if (t1) goto OPERAND
+   * return
+
+* customized for this function
+* each instruction has opcode, variable length (if operands)
+
+
+### example: Tigress Virtualize transform (3)  {.smaller}
+
+
+```
+int example(int x) {
+    if (x > 10) {
+        printf("Yes!\n");
+    }   
+}
+
+```
+ 
+
+* each line below one ‘‘instruction’’ 
+
+   * (actually encoded as part of array of bytes)
+ 
+
+   * push OPERAND=10
+   * push table[OPERAND=…] (argument <code>x</code>)
+   * pop t1 pop t2 push t1>t2
+   * pop t1, if (t1) goto OPERAND=OUT
+   * push table[OPERAND=…] (string <code>"Yes!"</code>)
+   * pop t1, LOCALS[OPERAND=1] = t1
+   * call OPERAND=… (printf) with arguments LOCAL1
+   * OUT: …
+
+
+
+### example: Tigress emulator  {.smaller}
+
+
+```
+  _1_example_$sp[0] = _1_example_$stack[0];
+  _1_example_$pc[0] = _1_example_$array[0];
+  while (1) {
+    switch (*(_1_example_$pc[0])) {
+    ...
+    }
+  }
+
+```
+ 
+
+* pc variable representing emulated stack 
+
+   * switch statement based on opcode
+
+* sp variable representing emulated stack
+
+
+### effectiveness of this transformation? 
+
+
+* huge performance impact
+* can do analysis on new instruction set 
+
+   * how much more difficult than working with original machine code?
+
+* instruction traces still helpful 
+
+   * about as easy to get record of everything done
+
+

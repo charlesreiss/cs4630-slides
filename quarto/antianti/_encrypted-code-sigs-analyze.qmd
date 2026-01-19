@@ -1,0 +1,26 @@
+
+### encrypted viruses: no signature? 
+
+
+* <code>decrypt</code> is a pretty good signature
+* still need to a way to disguise that code 
+<hr class="vspace" />
+* how about analysis? how does one analyze this?
+
+
+### encrypted virus: getting the code?  {.smaller}
+
+
+* ‘‘encrypted’’ body
+* just running objdump not enough…
+* instead --- run debugger, set <em>breakpoint</em> after ‘‘decryption’’
+* <em>dump decrypted memory</em> afterwords 
+<hr class="vspace" />
+* observation: can even automate this: 
+
+   * run program in emulator
+   * have emulator look for jump to previously written code
+   * (or jump after certain point, etc.)
+   * example implementation: unipacker (<code>https://github.com/unipacker/unipacker</code>)
+
+

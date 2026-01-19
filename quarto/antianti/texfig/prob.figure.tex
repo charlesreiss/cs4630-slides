@@ -1,0 +1,17 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{arrows.meta}
+\newsavebox{\randomRun}
+\begin{document}
+\begin{lrbox}{\randomRun}
+\lstset{language=C,style=smaller}
+\begin{lstlisting}
+if (randomNumber() == 4) {
+    unpackAndRunEvilCode();
+}
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{antianti/texfig/prob.inner.tex}
+\end{document}

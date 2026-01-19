@@ -1,0 +1,27 @@
+
+### Emeric Nasi article  {.smaller}
+
+
+* Emeric Nasi, ‘‘Bypass Antivirus Dynamic Analysis: Limitations of the AV model and how to exploit them’’, 2014
+* terminology ‘‘FUD = Fully UnDetectable’’
+* NB --- not a peer-reviewed article 
+
+   * ‘‘non-traditional literature’’
+
+* wrote programs, submitted to <em>VirusTotal</em> 
+
+   * aggregator of antivirus software
+
+* looking at detection of <em>new malware</em>
+
+
+### techniques in Nasi that worked  {.smaller}
+
+
+* things 2014 Antivirus VM's couldn't handle: 
+<hr class="vspace" />
+* allocate 100 MB
+* 100M increments
+* un/misimplemented system calls (NUMA, mutex)
+* check executable name
+

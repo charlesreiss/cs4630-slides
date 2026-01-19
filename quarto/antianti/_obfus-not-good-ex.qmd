@@ -1,0 +1,11 @@
+
+### obfuscation versus analysis  {.smaller}
+
+
+* which of these does obfuscation seem most/least likely to hamper doing? 
+<hr class="vspace" />
+* A. determining what remote servers some malware contacts
+* B. determining a password the malware requires to access extra functionality
+* C. accessing extra functionality in the malware protected by a password
+* D. determining whether the malware will behave differently based on the time
+

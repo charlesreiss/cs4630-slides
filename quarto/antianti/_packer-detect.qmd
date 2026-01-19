@@ -1,0 +1,33 @@
+
+### handling packers 
+
+
+* easiest way to decrypt self-decrypting code --- run it!
+* solution: [virtual machine/emulator/debugger]{.fragment fragment-index=1 .custom .myem-only} in antivirus software
+
+
+### handling packers with debugger/emulator/VM  {.smaller}
+
+
+* run program in debugger/emulator/VM for a while 
+
+   * one heuristic: until it jumps to written data
+
+* example implementation: unipacker (<code>https://github.com/unipacker/unipacker</code>) 
+<hr class="vspace" />
+* then dump memory to get decrypted machine code
+* and/or obtain trace of instructions run
+
+
+### unneeded steps 
+
+
+* understanding the ‘‘encryption’’ algorithm 
+
+   * more complex encryption algorithm won't help
+
+* extracting the key and encrypted data 
+
+   * making key less obvious won't help
+
+

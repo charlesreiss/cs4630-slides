@@ -1,0 +1,16 @@
+
+### exercise: generic detection limits?  {.smaller}
+
+
+* consider strategy of running executable in virtual machine, <br> waiting until it jumps to code it wrote out <br> then matching patterns against code it's about to run
+* which of these would cause problems with this technique?
+* which are easiest/hardest to workaround? 
+<hr class="vspace" />  
+
+   * A. code decrypter and malicious code run at program exit, not startup
+   * B. code decrypter and malicious code run when user clicks button in program, not at startup
+   * C. code decrypter allocates random address to write decrypted code to
+   * D. code decrypter exits (without running malicious code) if processor seems too slow
+   * E. code decrypter decrypts another code decrypter
+
+

@@ -1,0 +1,14 @@
+
+### some terms 
+
+
+* <em>armored</em> viruses 
+
+   * viruses designed to make analysis harder
+
+* <em>metamorphic</em>/<em>polymorphic</em>/<em>oligomorphic</em> viruses 
+
+   * viruses that change their code each time
+   * different terms --- different types of changes (later)
+
+

@@ -1,0 +1,15 @@
+
+### diversion: debuggers  {.smaller}
+
+
+* we'll care about two pieces of functionality: 
+<hr class="vspace" />
+* [breakpoints]{.fragment fragment-index=2 .custom .myem-only} 
+
+   * debugger gets control when certain code is reached
+
+* [single-step]{.fragment fragment-index=3 .custom .myem-only}  
+
+   * debugger gets control after a single instruction runs
+
+

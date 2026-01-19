@@ -1,0 +1,22 @@
+
+### example: Cascade decrypter  {.smaller}
+
+<!-- \lstset{
+    style=small,
+    language=myasm,
+    moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
+    moredelim={**[is][\btHL<3|handout:0>]{@hi3@}{@endhi@}},
+} -->
+ 
+<pre><code>    lea encrypted_code, %si
+decrypt:
+    mov $0x682, <span data-fragment-index="3" class="fragment custom myem-only">%sp</span> // length of body
+    <span data-fragment-index="2" class="fragment custom myem-only">xor %si, (%si)</span>
+    <span data-fragment-index="2" class="fragment custom myem-only">xor %sp, (%si)</span>
+    inc %si
+    dec <span data-fragment-index="3" class="fragment custom myem-only">%sp</span>
+    jnz decrypt
+encrypted_code:
+    ...
+</code></pre>
+ [Szor Listing 7.1]{.mycredit}

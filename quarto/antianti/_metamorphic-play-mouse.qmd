@@ -1,0 +1,7 @@
+
+### playing mouse 
+
+
+* encrypted code? probably still have fast signature from decrypter
+* goal: make signatures not work <i>or</i> really slow
+

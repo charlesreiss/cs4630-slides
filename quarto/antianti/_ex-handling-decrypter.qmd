@@ -1,0 +1,13 @@
+
+### exercise: some ideas for handling decrypters?  {.smaller}
+
+
+* thinking of some anti-decrypter strategies for Cascade
+* which of the following strategies most practical? least practical? 
+<hr class="vspace" />
+* A. matching patterns of decrypted malware code in memory while executables are running
+* B. marking executables with too much random-looking data in them
+* C. matching the decrypter in a normal signature scan
+* D. trying every possible ‘key’ for decryption on every executable and matching decrypted malware code against it
+* E. detecting sequence of file operations Cascade makes instead of its code
+

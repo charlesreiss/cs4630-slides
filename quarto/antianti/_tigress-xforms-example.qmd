@@ -1,0 +1,170 @@
+
+### Tigress as example of obfuscation  {.smaller}
+
+
+* Tigress --- researcher developer obfuscation tool
+* <code>https://tigress.wtf</code>
+* includes many <i>transformations</i> typical of real-world obfuscation 
+
+   * we'll talk about the ideas behind many of them
+ 
+<hr class="vspace" />
+* future assignment involving code obfuscated with Tigress
+
+
+### example Tigress transformations 
+
+
+* we'll look at some simple ones Tigress provides
+* I'm showing you the pattern, <br> not the actual code Tigress generates
+
+
+### Tigress: provided transform: EncodeLiterals  {.smaller}
+
+
+```
+void Print() { printf("Hello!"); printf("World!"); }
+
+```
+ <hr />
+ 
+```
+void GetString(int x, char *buffer) {
+    switch (x) {
+    case 0:
+        buffer[0] = 'H'; buffer[1] = 'e'; buffer[2] = 'l'; ...;
+        break;
+    case 1:
+        buffer[0] = 'W'; buffer[1] = 'o'; buffer[2] = 'r'; ...;
+        break;
+    case 2:
+    ...
+    }
+}
+void Print() { char buf[100];
+    GetString(0, buf); printf(buf);
+    GetString(1, buf); printf(buf);
+}
+
+```
+
+
+### Tigress: provided transform: Merge  {.smaller}
+
+
+```
+void foo(int a) { code for foo }
+void bar(int a) { code for bar }
+
+... foo(x) + bar(y) ...
+
+```
+ <hr />
+ 
+```
+void foo_bar(int s, int a) {
+    if (s == 0) {
+        code for foo
+    } else {
+        code for bar
+    }
+}
+
+... foo_bar(0, x) + foo_bar(1, y) ...
+
+```
+
+
+### Tigress: provided transform: Split  {.smaller}
+
+
+```
+void foo(int a, int b) {
+    int x = ...;
+    code for foo part 1
+    code for foo part 2
+}
+
+```
+ <hr />
+ 
+```
+void foo1(int *a, int *b, int *x) {
+    code for foo part 1
+}
+void foo2(int *a, int *b, int *x) {
+    code for foo part 2
+}
+void foo(int a, int b) {
+    int x;
+    foo1(&a,&b,&x); foo2(&a,&b,&x);
+}
+
+```
+
+
+### Tigress: example transform: Flatten  {.smaller}
+
+
+```
+void foo() {
+    A;
+    if (X) {
+        B;
+    } else {
+        C;
+    }
+    D;
+}
+
+```
+ <hr />
+ 
+```
+void foo() {
+    int s = 0;
+    while (1) { 
+        switch(s) {
+        case 0: A; s = X ? 1 : 2; break;
+        case 1: B; s = 3; break;
+        case 2: C; s = 3; break;
+        case 3: D; return;
+        }
+    }
+}
+
+```
+
+
+### some other xforms  {.smaller}
+
+
+* add useless conditionals, etc.
+* encode constants like strings
+* generate machine code at runtime and jump to it
+* turn function into custom bytecode interpreter 
+
+   * data array holding effective function code
+
+* add checks that machine code hasn't changed
+
+
+### transformations so far?  {.smaller}
+
+
+* all can be combined!
+* annoying for analysis
+* hard to do without unobfuscated code 
+
+   * can't easily be redone/changed by self-replicating malware
+
+* probably more distinctive than original code for signatures 
+
+   * (just match the transformed version since it won't change often)
+ 
+<hr class="vspace" />
+* next topic: transformations to avoid signatures 
+
+   * (Tigress supports those, but not our primary examples)
+
+

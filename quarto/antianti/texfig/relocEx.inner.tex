@@ -1,0 +1,30 @@
+\begin{tikzpicture}
+\node (code) {
+\usebox{\relocCode}
+};
+\matrix[tight matrix,nodes={font=\small},anchor=north west,
+    nodes={font=\tt,text width=2cm,text depth=.1mm,minimum height=.4cm},
+    row 1/.style={nodes={font=\small\bfseries,minimum height=1cm}},
+    column 1/.style={text=blue!60!black,nodes={text width=1.75cm}},
+    column 2/.style={text=green!60!black},
+    column 3/.style={nodes={text width=1.5cm,font=\small\tt}},
+] (lensTable) at ([xshift=1cm]code.north east) {
+    orig. len \& new len \& instr \\
+    5 \& 10 \& mov1 \\
+    2 \& 3 \& mov2 \\
+    2 \& 7 \& xor1 \\
+    1 \& 1 \& inc1 \\
+    1 \& 5 \& dec1 \\
+    3 \& 3 \& jne1 \\
+};
+\matrix[tight matrix,nodes={font=\fontsize{9}{10}\selectfont,minimum height=1.2cm},anchor=north west,
+    nodes={font=\tt,text width=4cm},
+    row 1/.style={nodes={font=\small\bfseries,minimum height=1cm}},
+    column 2/.style={text=blue!60!black},
+    column 1/.style={text=green!60!black},
+    column 3/.style={text=green!60!black},
+] (relocTable) at ([yshift=-.5cm,xshift=-6.5cm]lensTable.south west) {
+    address loc \& orig. target \& new target \\
+    $10+3+7+1+5+1$ (jne1+1) \& xor1 ($5+2$)\& xor1 ($10+3$)\\ 
+};
+\end{tikzpicture}

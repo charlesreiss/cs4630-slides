@@ -1,0 +1,63 @@
+
+### stopping packers  {.smaller}
+
+
+
+* it's [unusual]{.fragment fragment-index=2 .custom .myem-only} to jump to code you wrote
+* modern OSs/compilers: memory not writeable and executable
+ 
+<hr class="vspace" /> 
+<div class="fragment fade-in" data-fragment-index=2 >
+ 
+<pre><code>LOAD off    0x00000000 vaddr 0x00000000 paddr 0x00000000 align 2**12
+     filesz 0x00003458 memsz 0x00003458 flags <em>r--</em>
+LOAD off    0x00004000 vaddr 0x00004000 paddr 0x00004000 align 2**12
+     filesz 0x00013091 memsz 0x00013091 flags <em>r-x</em>
+LOAD off    0x00018000 vaddr 0x00018000 paddr 0x00018000 align 2**12
+     filesz 0x00007458 memsz 0x00007458 flags <em>r--</em>
+LOAD off    0x0001ffd0 vaddr 0x00020fd0 paddr 0x00020fd0 align 2**12
+     filesz 0x000012a8 memsz 0x00002570 flags <em>rw-</em>
+</code></pre>
+ 
+</div>
+
+### diversion: DEP/W\textasciicircum X  {.smaller}
+
+
+* memory executable or writeable --- but not both
+* exists for <em>exploits</em> (later in course), not packers
+* requires hardware support to be fast (<em>early 2000s+</em>)
+* various names for this feature: 
+
+   * Data Execution Prevention (DEP) (Windows)
+   * <code>W^ X</code> (‘‘write XOR execute’’)
+   * NX/XD/XN bit  (underlying hardware support) 
+
+      * (No Execute/eXecute Disable/eXecute Never)
+
+
+* usually <em>special system call</em> to switch modes 
+
+   * Linux: <code>mprotect</code>
+
+
+
+### unusual, but\ldots  {.smaller}
+
+
+* binary translation 
+
+   * convert machine code to new machine code at runtime
+
+* Java virtual machine, JavaScript implementations 
+
+   * ‘‘just-in-time’’ compilers
+
+* dynamic linkers 
+
+   * load new code from a file --- same as writing code?
+
+* those packed commercial programs 
+<hr class="vspace" />
+* programs need to <em>explicitly</em> ask for write+exec
+

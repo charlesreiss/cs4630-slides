@@ -1,0 +1,16 @@
+
+### example: W95/Memorial 
+
+<!-- \lstset{
+    style=small,
+    language=myasm,
+    moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
+    moredelim={**[is][\btHL<3|handout:0>]{@hi3@}{@endhi@}},
+} -->
+ <table>
+</table>
+ [Szor, Listsings 7.3 and 7.4]{.mycredit} ![](/antianti/texfig/w95memorial.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/antianti/texfig/w95memorial.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+![](/antianti/texfig/w95memorial.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=3}
+![](/antianti/texfig/w95memorial.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=4}
+

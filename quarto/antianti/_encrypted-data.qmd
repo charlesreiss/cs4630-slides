@@ -1,0 +1,19 @@
+
+### encrypted(?) data  {.smaller}
+
+<!-- \lstset{language=C,style=small} -->
+ 
+```
+char obviousString[] =
+    "Please open this 100%"
+    " safe attachment";
+char lessObviousString[] = 
+    "oSZ^LZ\037POZQ\037KWVL\037\016\017"
+    "\017\032\037L^YZ\037^KK^\\WRZQK";
+for (int i = 0; i < sizeof(lessObviousString) - 1; ++i) {
+    lessObviousString[i] =
+        lessObviousString[i] ^ '?';
+}
+
+```
+

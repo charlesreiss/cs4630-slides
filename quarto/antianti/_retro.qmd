@@ -1,0 +1,14 @@
+
+### attacking antivirus (1)  {.smaller}
+
+
+* one common virus idea: interfere directly with antivirus 
+<hr class="vspace" />
+* just modify antivirus software databases, etc.
+* preserve file checksums 
+
+   * so some AV software thinks file is unchanged
+   * (doesn't work with cryptographic hashes, but…)
+
+* [register own handlers to filter antivirus/sysadmin calls]{.fragment fragment-index=2 .custom .myem-only}
+

@@ -1,0 +1,47 @@
+
+### recall: library calls in viruses  {.smaller}
+
+
+
+* viruses making library calls 
+
+   * can't use normal dynamic linker stuff
+
+* common solution: search by name:
+ 
+```
+char *names[] = GetFunctionNamesFrom("kernel32.dll");
+for (int i = 0; i < numFunctions; ++i) {
+    if (strcmp(names[i], "GetFileAttributesA") == 0) {
+        return functions[i];
+    }
+}
+
+```
+ 
+
+* problem: legit application code won't do this
+* easy to look for string ‘GetFileAttributesA’
+
+
+### searching for hashes  {.smaller}
+
+<!-- \lstset{language=C,style=small} -->
+ 
+```
+char *functionNames[] = GetFunctionsFromStandardLibrary();
+/* 0xd7c9e758 = hash("GetFileAttributesA") */
+unsigned hashOfString = 0xd7c9e758; 
+for (int i = 0; i < num_functions; ++i) {
+    unsigned functionHash = 0; 
+    for (int j = 0; j < strlen(functionNames[i]); ++j) {
+        functionHash = (functionHash * 7 +
+                        functionNames[i][j]);
+    }
+    if (functionHash == hashOfString) {
+        return functions[i];
+    }
+}
+
+```
+

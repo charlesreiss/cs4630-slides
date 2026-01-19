@@ -1,0 +1,16 @@
+
+### example: changing bodies 
+
+<!-- \lstset{language=myasm,style=smaller} -->
+ <table>
+</table>
+ 
+
+* code above: after decryption
+* <em>every instruction</em> changes
+* still has good signatures 
+
+   * with <em>alternatives</em> for each possible register selection
+
+* but harder to write/slower to match
+

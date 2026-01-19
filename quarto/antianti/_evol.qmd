@@ -1,0 +1,43 @@
+
+### case study: Evol  {.smaller}
+
+
+
+* via Lakhatia et al, ‘‘Are metamorphic viruses really invincible?’’, Virus Bulletin, Jan 2005.
+* ‘‘<em>mutation engine</em>’’ 
+
+   * run as part of propagating the virus
+
+ ![](/antianti/texfig/caseEvol.figure.svg)
+
+
+### againframe(caseEvol)
+
+### Evol instruction lengths  {.smaller}
+
+
+* sounds really complicated?
+* virus only handles instructions it has: 
+
+   * about 61 opcodes, 32 of them identified by first four bits 
+
+      * e.g. opcode <code>0x7<i>x</i></code> -- conditional jump
+
+
+* no prefixes, no floating point
+* only <code>%reg</code> or <code>\$constant</code> or <code>offset(%reg)</code>
+
+
+### againframe(caseEvol)
+
+### Evol transformations  {.smaller}
+
+
+
+* some stuff left alone
+* static or random one of $N$ transformations
+* example:
+ ![](/antianti/texfig/evolXform.figure.svg)
+ [Lakhotia et al., ‘‘Are metamorphic viruses really invincible?’’, Virus Bulletin, Jan 2005]{.mycredit}
+
+### againframe(caseEvol)

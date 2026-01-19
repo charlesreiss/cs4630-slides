@@ -1,0 +1,14 @@
+
+### decrypter  {.smaller}
+
+
+
+* more variations: 
+
+   * nested decrypters, different orders, etc.
+
+* still problem: <em>decrypter code is signature</em>
+* … but [harder to distinguish\\tikzmark{distinguish} different malware]{.fragment fragment-index=2 .custom .myem-only}
+   ![](/antianti/texfig/decrypter-variants.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/antianti/texfig/decrypter-variants.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+

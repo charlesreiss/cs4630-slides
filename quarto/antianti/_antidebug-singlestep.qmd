@@ -1,0 +1,57 @@
+
+### implementing single-stepping (1)  {.smaller}
+
+<!-- \lstset{language=myasm,style=small} -->
+ 
+
+* set a breakpoint on the following instruction? 
+```
+movq %rax, %rdx
+addq %rbx, %rdx // <-- STOPPED HERE
+subq 0(%rsp), %r8 // <-- SINGLE STEP TO HERE
+subq 8(%rsp), %r8
+...
+
+```
+ transformed to 
+```
+movq %rax, %rdx
+addq %rbx, %rdx // <-- STOPPED HERE
+int 3 // <-- SINGLE STEP TO HERE
+subq 8(%rsp), %
+...
+
+```
+ then <code>jmp</code> to <code>addq</code>
+* but what about 
+```
+jmpq *0x1234(%rax,%rbx,8) // <-- STOPPED HERE
+
+```
+
+
+
+### implementing single-stepping (2) 
+
+<!-- \lstset{language=myasm,style=small} -->
+ 
+
+* typically <em>hardware support</em> for single stepping
+* x86:<code>int 1</code> handler (second entry in table)
+* x86: <code>TF</code> flag: execute handler after every instruction
+* … except during handler (whew!)
+
+
+### Defeating single-stepping 
+
+
+* try to install your own <code>int 1</code> handler 
+
+   * (if OS allows)
+
+* try to clear TF? 
+
+   * would take effect on <em>following</em> instruction
+   * … if debugger doesn't reset it
+
+

@@ -1,0 +1,10 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+        \node[my callout=OS,align=center,anchor=center] at ([yshift=-3cm]current page.center) {
+            antivirus not running system VM to do decryption \\
+            needs to emulate lots of the OS itself
+        };
+    \end{scope}
+\end{tikzpicture}

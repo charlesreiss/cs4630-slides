@@ -1,0 +1,31 @@
+
+### playing mouse  {.smaller}
+
+
+
+* techniques so far: 
+
+   * [scan for pattern of constant\\tikzmark{constant} part of virus]{.fragment fragment-index=2 .custom .myem-only}
+   * [scan for strings, approx. \\tikzmark{fixed}16-bytes long]{.fragment fragment-index=3 .custom .myem-only}
+   * [scan \\tikzmark{topBottom}top and bottom]{.fragment fragment-index=4 .custom .myem-only}
+
+* virus-writer hat: how can you defeat these?
+ ![](/antianti/texfig/playMouse.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/antianti/texfig/playMouse.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+![](/antianti/texfig/playMouse.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=3}
+![](/antianti/texfig/playMouse.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=4}
+
+
+### playing mouse: preview 
+
+
+* later: metamorphic/polymorphic viruses 
+
+   * signature resistent
+   * change every time
+
+* anti-analysis techniques 
+
+   * make reverse engineering harder
+
+

@@ -25,13 +25,14 @@
 
 {{< include /virus/_entry-exit.qmd >}}
 
-## infection outline {visibility="hidden"}
+### Vienna: infection outline
 
-{{< include /virus/_vienna-infect-outline.qmd >}}
-
-## writing your own code? {visibility="hidden"}
-
-### againframe(viennaOutline)
+* Vienna appends code to infected application 
+<hr class="vspace" />
+* <em>where does it read the code come from?</em>
+* how is code adjusted for new location in the binary?
+   * what linker would do
+* how does it keep files from getting infinitely long?
 
 ## aside: quines{visibility="hidden"}
 
@@ -43,7 +44,14 @@
 
 ## Vienan relocation code {visibility="hidden"}
 
-### againframe(viennaOutline)
+### Vienna: infection outline
+
+* Vienna appends code to infected application 
+<hr class="vspace" />
+* where does it read the code come from?
+* <em>how is code adjusted for new location in the binary?</em>
+   * what linker would do
+* how does it keep files from getting infinitely long?
 
 ## Vienna's relocation code{visibility="hidden"}
 
@@ -55,7 +63,14 @@
 
 ## avoiding reinfection {visibility="hidden"}
 
-### againframe(viennaOutline)
+### Vienna: infection outline
+
+* Vienna appends code to infected application 
+<hr class="vspace" />
+* where does it read the code come from?
+* how is code adjusted for new location in the binary?
+   * what linker would do
+* <em>how does it keep files from getting infinitely long?</em>
 
 {{< include /virus/_vienna-reinfect.qmd >}}
 
@@ -65,21 +80,59 @@
 
 ## replacing executables? {visibility="hidden"}
 
-### againframe(whereCode)
+### where to put code: options 
+
+* one <i>or more</i> of:
+* <em>replacing executable code</em>
+* after executable code (Vienna)
+* in unused executable code
+* inside OS code
+* in memory
+* replace existing code
 
 {{< include /virus/_where-code-replace.qmd >}}
 
 ## appending/compressing {visibility="hidden"}
 
-### againframe(whereCode)
-
 {{< include /virus/_where-append-compress.qmd >}}
 
 ## cavaties {visibility="hidden"}
 
-### againframe(whereCode)
+### where to put code: options
+
+* one <i>or more</i> of:
+* replacing executable code
+* after executable code (Vienna)
+* <em>in unused executable code</em>
+* inside OS code
+* in memory
+* replace existing code
 
 {{< include /virus/_where-cavaties.qmd >}}
+
+### other empty space
+
+* unused dynamic linking structure
+* unused space between segments
+* unused debugging/symbol table information?
+* unused header space  
+   * file offsets of segments can be in middle of header
+   * loader doesn't care what segments ‘‘mean’’
+
+## dynamic linking cavaities {visibility="hidden"}
+
+### other empty space
+
+* <em>unused dynamic linking structure</em>
+* unused space between segments
+* unused debugging/symbol table information?
+* unused header space
+   * file offsets of segments can be in middle of header
+   * loader doesn't care what segments "mean"
+
+
+{{< include /virus/_where-cavaties-dynamic.qmd >}}
+
 
 ## chaining cavaties (CIH case study){visibility="hidden"}
 
@@ -87,31 +140,93 @@
 
 ## segment rounding{visibility="hidden"}
 
+### other empty space
+
+* unused dynamic linking structure
+* <em>unused space between segments</em>
+* unused debugging/symbol table information?
+* unused header space  
+   * file offsets of segments can be in middle of header
+   * loader doesn't care what segments "mean"
+
 {{< include /virus/_where-cavaties-rounding.qmd >}}
 
 ## boot sector {visibility="hidden"}
 
-### againframe(whereCode)
+### where to put code: options
+
+* one <i>or more</i> of:
+* replacing executable code
+* after executable code (Vienna)
+* in unused executable code
+* <em>inside OS code</em>
+* in memory
+* replace existing code
 
 {{< include /virus/_where-boot-sector.qmd >}}
 
 ## memory residence {visibility="hidden"}
 
+### where to put code: options
+
+* one <i>or more</i> of:
+* replacing executable code
+* after executable code (Vienna)
+* in unused executable code
+* inside OS code
+* <em>in memory</em>
+* replace existing code
+
 {{< include /virus/_residence.qmd >}}
 
 # virus: getting code invoked {visibility="hidden"}
 
-{{< include /virus/_invoke-options.qmd >}}
+### invoking virus code: options
+
+
+* boot loader
+* change starting location
+* alternative approaches: "entry point obscuring"
+* edit code that's going to run anyways
+* replace a function pointer
+* …
 
 ## changing start location {visibility="hidden"}
+
+### invoking virus code: options
+
+* boot loader
+* <em>change starting location</em>
+* alternative approaches: "entry point obscuring"
+* edit code that's going to run anyways
+* replace a function pointer
+* …
 
 {{< include /virus/_invoke-start.qmd >}}
 
 ## overwrite existing code {visibility="hidden"}
 
+### invoking virus code: options
+
+* boot loader
+* change starting location
+* alternative approaches: "entry point obscuring"
+* <em>edit code that's going to run anyways</em>
+* replace a function pointer
+* …
+
 {{< include /virus/_invoke-overwrite-existing.qmd >}}
 
 ## using dynamic linking features {visibility="hidden"}
+
+### invoking virus code: options
+
+* boot loader
+* change starting location
+* alternative approaches: "entry point obscuring"
+* edit code that's going to run anyways
+* <em>replace a function pointer</em>
+* …
 
 {{< include /virus/_invoke-dynamic.qmd >}}
 

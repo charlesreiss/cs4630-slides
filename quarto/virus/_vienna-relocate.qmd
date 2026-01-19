@@ -1,14 +1,6 @@
 
-### Vienna relocation  {.smaller}
+### Vienna relocation
 
-<!-- \lstset{
-    style=small,
-    language=myasm,
-    moredelim={**[is][\btHL<1|handout:0>]{@hi1@}{@endhi@}},
-    moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
-    moredelim={**[is][\btHL<3|handout:0>]{@hi3@}{@endhi@}},
-} -->
- 
 <pre><code>// set virus data address:
 0x700: <span data-fragment-index="1" class="fragment custom myem-only">mov $0x8f9, %si</span>
        // machine code: be f9 08
@@ -18,49 +10,53 @@
 // %ax contains file length (of file to infect)
 mov %ax, %cx
 ...
-<span data-fragment-index="3" class="fragment custom myem-only">add $0x2f9, %cx</span>
+add $0x2f9, %cx
 mov %si, %di   
 sub $0x1f7, %di // %di &lt;- 0x701
 <span data-fragment-index="2" class="fragment custom myem-only">mov %cx, (%di)</span>  // update mov instruction
 ...
 </code></pre>
- ![](/virus/texfig/virusReloc2.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+
+::: {.myoverbox .low .fragment .fade-in-then-out fragment-index=1}
+
+Vienna design: `%si` contains "base address" <br />
+problem: adjusting it when infecting
+
+:::
+
+::: {.myoverbox .vlow .fragment .fade-in-then-out fragment-index=2}
+
+solution: overwrite immediate value in instruction that sets `%si`<br />
+new value will be written to infected executable
+
+:::
+
 
 
 ### Vienna relocation 
 
-
-* edit actual code for <code>mov</code>
+* edits actual code for <code>mov</code> in memory
 * why doesn't this disrupt virus execution? 
-
    * already ran that instruction
+<hr class="vspace" />
+* [still need to explain how correct `jmp` at top is generated]{.fragment .custom .myem-only .fade-in}
 
+### Vienna relocation
 
-
-### Vienna relocation  {.smaller}
-
-<!-- \lstset{
-    style=smaller,
-    language=myasm,
-    moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
-    moredelim={**[is][\btHL<3|handout:0>]{@hi3@}{@endhi@}},
-} -->
- 
-<pre><code>0x700: mov $0x8f9, %si
+<pre style="font-size: 60%; max-height: fit-content"><code style="max-height: fit-content">0x700: mov $0x8f9, %si
 ...
-// %ax contains file length
-//     (of file to infect)
+; %ax contains file length (of file to infect)
 mov %ax, %cx
 sub $3, %ax
-// update template jmp instruction
-mov %ax, <span data-fragment-index="2" class="fragment custom myem-only">0xe(%si)</span> // 0xe + %si = 0x907
+; update template jmp instruction
+mov %ax, <span data-fragment-index="2" class="fragment custom myem-only">0xe(%si)</span> ; 0xe + %si = 0x907
 ...
 mov $40, %ah
 mov $3, %cx
 mov %si, %dx  
-add $0xD, <span data-fragment-index="3" class="fragment custom myem-only">%dx</span> // dx &lt;- 0x906
+add $0xD, <span data-fragment-index="3" class="fragment custom myem-only">%dx</span> ; dx &lt;- 0x906
 int 0x21 // system call: write 3 bytes from 0x906
 ...
-0x906: <span data-fragment-index="2" class="fragment custom myem-only">e9 fd 05</span> // jmp PC+FD 05
+0x906: <span data-fragment-index="2" class="fragment custom myem-only">e9 fd 05</span> ; jmp PC+FD 05
 </code></pre>
 

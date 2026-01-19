@@ -1,34 +1,26 @@
 
 ### boot process 
 
-
-
 ::: {.r-stack .my-full}
-![](/virus/texfig/bootProc.figure-1.svg){.fragment .fade-in-then-out fragment-index=1 fig-alt="Boot process, starting from processor reset. First, the BIOS of EFI is loadeed from a chip on the motherboard.  Then, a bootloader in a fixed location on disk runs, which has the code to figure out where individual files are on disk. This finally loads the operating system code from its files."}
 
-![](/virus/texfig/bootProc.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 fig-alt="Boot process, starting from processor reset. First, the BIOS of EFI is loadeed from a chip on the motherboard.  Then, a bootloader in a fixed location on disk runs, which has the code to figure out where individual files are on disk. This finally loads the operating system code from its files."}
+![](/virus/texfig/bootProc.figure-1.svg){.fragment .fade-out fragment-index=1 fig-alt="Boot process, starting from processor reset. First, the BIOS of EFI is loadeed from a chip on the motherboard.  Then, a bootloader in a fixed location on disk runs, which has the code to figure out where individual files are on disk. This finally loads the operating system code from its files."}
 
-![](/virus/texfig/bootProc.figure-3.svg){.fragment .fade-in-then-out fragment-index=3 fig-alt="Boot process, starting from processor reset. First, the BIOS of EFI is loadeed from a chip on the motherboard.  Then, a bootloader in a fixed location on disk runs, which has the code to figure out where individual files are on disk. This finally loads the operating system code from its files."}
-
-![](/virus/texfig/bootProc.figure-4.svg){.fragment .fade-in-then-out fragment-index=4 fig-alt="Boot process, starting from processor reset. First, the BIOS of EFI is loadeed from a chip on the motherboard.  Then, a bootloader in a fixed location on disk runs, which has the code to figure out where individual files are on disk. This finally loads the operating system code from its files."}
-
+![](/virus/texfig/bootProc.figure-2.svg){.fragment .fade-in-then-out fragment-index=1 fig-alt="Same diagram as before, with the bootloader highlighted"}
 
 :::
 
 
-### bootloaders in the DOS era  {.smaller}
+### bootloaders in the DOS era
 
 
 * used to be common to boot from floppies
 * <em>default to booting from floppy</em> if present 
-
    * even if hard drive to boot from
-
 * applications distributed as bootable floppies
 * so bootloaders on all devices were a target for viruses
 
 
-### historic bootloader layout  {.smaller}
+### historic bootloader layout
 
 
 * bootloader in <em>first sector</em> (512 bytes) of device
@@ -40,36 +32,26 @@
 
 
 
-### bootloader viruses 
+### bootloader viruses example: Stoned
 
- 
+::: {.r-stack .my-full}
+![](/virus/texfig/where-boot-sector-bootloader-viruses.figure-1.svg){.fragment .fade-out fragment-index=1 fig-alt="The original contents of disk shows a bootloader at the beginning with a partition table in the middle of it. This is transformed to the bootloader being replaced by the virus code (but the partition table is preserved). So the virus can run the original bootloader after it finishes, a copy of the original bootloader is saved elsewhere on disk"}
 
-* example: Stoned
- 
-
-::: {.r-stack}
-![](/virus/texfig/where-boot-sector-bootloader-viruses.figure-1.svg){.fragment .fade-in-then-out fragment-index=1 fig-alt="The original contents of disk shows a bootloader at the beginning with a partition table in the middle of it. This is transformed to the bootloader being replaced by the virus code (but the partition table is preserved). So the virus can run the original bootloader after it finishes, a copy of the original bootloader is saved elsewhere on disk"}
-
-![](/virus/texfig/where-boot-sector-bootloader-viruses.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 fig-alt="The original contents of disk shows a bootloader at the beginning with a partition table in the middle of it. This is transformed to the bootloader being replaced by the virus code (but the partition table is preserved). So the virus can run the original bootloader after it finishes, a copy of the original bootloader is saved elsewhere on disk"}
-
+![](/virus/texfig/where-boot-sector-bootloader-viruses.figure-2.svg){.fragment .fade-in-then-out fragment-index=1 fig-alt="Same diagram as before but 'data here???' is marked where the bootlaoder was saved, pointing out that the saved bootloader could be overwritten accidentally."}
 
 :::
 
 
 ### data here???  {.smaller}
 
-
 * might be data there --- risk
 * some unused space after partition table/boot loader common 
-
    * (allegedly)
-
 * also be filesystem metadata not used on smaller floppies/disks 
 <hr class="vspace" />
 * but could be wrong --- oops
 
-
-### modern bootloaders --- UEFI  {.smaller}
+### modern bootloaders --- UEFI
 
 
 * BIOS-based boot is going away (slowly)
@@ -84,35 +66,33 @@
    * much more understanding of file systems
    * much more modern set of library calls
 
+### boot process 
+
+![](/virus/texfig/bootProc.figure-3.svg){fig-alt="Boot process diagram with BIOS/UEFI highlighted"}
 
 
-### againframe(bootProc)
-
-### BIOS/UEFI implants  {.smaller}
+### BIOS/UEFI implants .smaller}
 
 
 * infrequent
 * BIOS/UEFI code is <em>very non-portable</em>
 * BIOS/UEFI update may require physical access
 * BIOS/UEFI code may require cryptographic signatures
-* … but <em>very hard to remove</em> --- ‘‘persist’’ other malware
-* reports of BIOS/UEFI-infecting ‘‘implants’’ 
-
+* … but <em>very hard to remove</em> --- "persist" other malware
+* reports of BIOS/UEFI-infecting "implants"
    * sold by Hacking Team (Milan-based malware company)
    * listed in leaked NSA Tailored Access Group catalog
 
 
+### boot process 
 
-### againframe(bootProc)
+![](/virus/texfig/bootProc.figure-4.svg){fig-alt="Boot process diagram with operating system highlighted"}
 
-### system files  {.smaller}
-
+### system files
 
 * simpliest strategy: stuff that runs when you start your computer
 * add a new startup program, run in the background 
-
    * easy to blend in
- 
 <hr class="vspace" />
 * alternatively, infect one of many system programs automatically run
 

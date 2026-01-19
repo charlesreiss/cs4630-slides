@@ -1,5 +1,5 @@
 
-### self-replicating malware  {.smaller}
+### self-replicating malware
 
 
 
@@ -9,19 +9,15 @@
 * connect to machine and install it there
 * send to someone
 * convince someone else to send it to someone
- ![](/virus/texfig/self-repl-mal-self-replicating-malware.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/virus/texfig/self-repl-mal-self-replicating-malware.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
 
+::: {.myoverbox .big}
 
-### recall: kinds of malware  {.smaller}
+all these options --- automatable
 
+:::
 
+### kinds of self-replicating malware
 
-* viruses --- infects <em>other programs</em>
-* [worms]{.fragment fragment-index=3 .custom .myem-only} --- own malicious programs
-* [trojans]{.fragment fragment-index=4 .custom .myem-only} --- useful (looking) program that also is malicious
-* [rootkit]{.fragment fragment-index=2 .custom .myem-only} --- silent control of system
- ![](/virus/texfig/self-repl-mal-recall-kinds-of-malware.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/virus/texfig/self-repl-mal-recall-kinds-of-malware.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
-![](/virus/texfig/self-repl-mal-recall-kinds-of-malware.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=3}
-
+* [viruses --- hides in <em>other programs</em> (or libraries)]{.fragment .custom .myem-only fragment-index=2}
+* worms --- self-replicating malicious programs
+* trojans --- useful-looking program that also is malicious

@@ -1,26 +1,18 @@
 
 ### Vienna: avoiding reinfection 
 
-
 * scans through active directories for executables
-* ‘‘marks’’ infected executables in <em>file metadata</em> 
-
+* "marks" infected executables in <em>file metadata</em> 
    * could have checked for virus code --- but slow
 
-
-
-### DOS last-written times  {.smaller}
-
-
+### DOS last-written times
 
 * 16-bit number for date; 16-bit number for time
- ![](/virus/texfig/vienna-reinfect-dos-last-written-times.figure.svg)
- 
+
+![](/virus/texfig/vienna-reinfect-dos-last-written-times.figure.svg){width=100% fig-alt="two 16-bit integers; one with Y-1980 in bits 15-9 inclusive, Mon in bits 8-5 and Day in 4-0; another with H in 15-11, Min in 10-5, Sec/2 in 4 to 0"}
 
 * Sec/2: 5 bits: range from 0--31 
-
    * corresponds to 0 to <em>62</em> seconds
-
 * Vienna trick: set infected file times to <em>62</em> seconds
 * need to update times anyways --- hide tracks
 

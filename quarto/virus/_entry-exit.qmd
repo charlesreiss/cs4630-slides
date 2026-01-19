@@ -1,55 +1,99 @@
 
 ### Vienna: infection 
 
-![](/virus/texfig/viennaInfect.figure.svg)
+<!-- ![](/virus/texfig/viennaInfect.figure.svg) -->
 
+:::: {.columns}
 
-### Vienna: ‘‘fixup’’  {.smaller}
+::: {.column width=30%}
+uninfected code:
+<pre style="border: 3px solid black; width: auto"><code>0x0100:
+    <span class="fragment custom myem-only" data-fragment-index="2">mov $0x4f28, %cx</span>
+    <span class="fragment custom myem-only" data-fragment-index="2">/* b9 28 4f */</span>
+0x0103:
+    mov $0x9e4e, %si
+    /* be 4e 9e */
+    mov %si, %di
+    push %ds
+    /* more normal
+       program
+       code */
+....
+<span class="fragment custom myem-only" data-fragment-index="1">0x0700: /* end */</span>
+</pre></code>
+:::
 
-<!-- \lstset{
-    language=myasm,
-    style=small,
-    moredelim={**[is][\btHL<2>]{~hi2~}{~endhi2~}},
-    moredelim={**[is][\btHL<3>]{~hi3~}{~endhi3~}},
-} -->
- 
-<pre><code>0x0700:
-    push %cx // initial value of %cx matters??
-    mov <span data-fragment-index="3" class="fragment custom myem-only">$0x8fd</span>, %si // %si &lt;- beginning of data
-    mov %si, %dx // save %si
-        // movsb uses %si, so
-        // can't use another register
-    add $0xa, %si // offset of saved code in data
-    mov $0x100, %di // target address
-    mov $3, %cx // bytes changed
-    /* copy %cx bytes from (%si) to (%di) */
-    rep movsb 
+::: {.column style="width: 20%; margin-top: 3em; text-align:center; font-size: 50px"}
+$\Rightarrow$
+:::
+
+::: {.column style="width: 40%; text-align:center; position: relative; top: -10%; max-height: 80%; overflow-y: visible"}
+infected code:
+<pre style="border: 3px solid black; width: auto; font-size: 50%; overflow: visible;"><code style="width: auto; max-height: 95%;">0x0100: <span class="fragment custom myem-only" data-fragment-index="1">jmp 0x0700</span>
+0x0103: mov $0x9e4e, %si
+...
+<span class="fragment custom myem-only" data-fragment-index="1">0x0700:</span>
+    push %cx
+    ... // %si &lt;- 0x903
+    mov $0x100, %di
+    mov $3, %cx
+    rep movsb
+    ...
+    mov $0x0100, %di
+    push %di
+    xor %di, %di
+    ret
+...
+0x0903:
+   <span class="fragment custom myem-only" data-fragment-index="2">.bytes 0xb9 0x28 0x4f</span>
+...
+</code></pre>
+:::
+
+::::
+
+### Vienna: "fixup"
+
+<pre><code style="max-height: 100%; overflow-y: visible; font-size: 80%">  // start of virus code
+0x0700:
+    push %cx ; initial value of %cx matters??
+    mov <span data-fragment-index="1" class="fragment custom myem-only">$0x8fd</span>, %si // %si &lt;- beginning of data 
+        <span data-fragment-index="1" class="fragment custom myem-only">// address 0x8fd computed during infection</span>
+    mov %si, %dx ; save %si
+        ; movsb uses %si, so
+        ; can't use another register
+    <span data-fragment-index="2" class="fragment custom myem-only">add $0xa, %si   // offset of saved code in data</span>
+    mov $0x100, %di ; target address
+    <span data-fragment-index="3" class="fragment custom myem-only">mov $3, %cx     // bytes changed
+    ; copy %cx bytes from (%si) to (%di) 
+    ;  = 3 bytes from 0x903 to 0x100
+    rep movsb</span>
     ...
 ...
-// saved copy of original application code
-0x903: <span data-fragment-index="2" class="fragment custom myem-only">.byte 0xb9 .byte 0x28 .byte 0x4f</span>
+    <span data-fragment-index="1" class="fragment custom myem-only">// start of virus data</span>
+<span data-fragment-index="1" class="fragment custom myem-only">0x8fd</span>: 
+    ... 
+<span data-fragment-index="2" class="fragment custom myem-only">    // saved copy of original application start code</span>
+<span data-fragment-index="2">0x903:</span> <span data-fragment-index="3" class="fragment custom myem-only">.byte 0xb9 .byte 0x28 .byte 0x4f</span>
 </code></pre>
 
 
-### Vienna: return  {.smaller}
+### Vienna: return 
 
-<!-- \lstset{language=myasm,style=small} -->
- 
-```
+```nasm
 0x08e7:
-    pop %cx // restore initial value of %cx, %sp
-    xor %ax, %ax // %ax <- 0
-    xor %bx, %bx
-    xor %dx, %dx
-    xor %si, %si
-    // push 0x0100
+    pop %cx ; restore initial value of %cx, %sp
+    xor %ax, %ax ; %ax <- 0
+    xor %bx, %bx ; %bx <- 0
+    xor %dx, %dx ; %cx <- 0
+    xor %si, %si ; %si <- 0
+
+    ; push 0x0100
     mov $0x0100, %di
     push %di 
-    xor %di, %di // %di <- 0
-    // pop 0x0100 from stack
-    // jmp to 0x0100
-    ret 
+    xor %di, %di
 
+    ret ; pop 0x0100 from stack and jmp to 0x0100
 ```
  
 

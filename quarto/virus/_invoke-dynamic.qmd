@@ -4,22 +4,14 @@
 ![](/virus/texfig/invoke-dynamic-infecting-shared-libraries-via-relocatio.figure.svg){fig-alt="kernel32.dll (an important shared library on Windows) is shown with a symbol table that has an entry for function GetFileAttributesA (a Windows function for getting basic information about a file, like whether or not it is a directory). That symbol table entry points somewhere in the middle of the .dll file.\textLF\textLF  This is transformed into a version where virus code is appended to the .dll file, and the symbol table entry for GetFileAttributes now points to the virus code."}
 
 
-### other dynamic-linking-based infections  {.smaller}
+### other dynamic-linking-based infections
 
 
 * could also modify 
 <hr class="vspace" />
 * relocations on executable 
-
    * this isn't the global offset table entry for <code>puts</code>, <br> it's the one for <code>evilvirus</code>
-
 * list of needed libraries? 
-
    * the C standard library and virus.so
    * ‘init’ code run when shared libraries loaded
-
 * stubs and calls to stub 
-
-   * very regular and easy to locate
-
-

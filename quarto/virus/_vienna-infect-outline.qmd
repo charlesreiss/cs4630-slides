@@ -1,5 +1,5 @@
 
-### Vienna: infection outline  {.smaller}
+### Vienna: infection outline
 
 
 * Vienna <em>appends</em> code to infected application 

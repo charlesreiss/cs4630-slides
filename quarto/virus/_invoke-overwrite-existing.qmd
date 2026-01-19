@@ -3,28 +3,24 @@
 
 
 * add code at start of program (Vienna) 
-
-   * [plus restore replaced code after running malware code]{.fragment fragment-index=2 .custom .myem-only}
-
-* return with padding after it: 
-<pre><code>  404a01:       c3                      <em>retq</em>
-  404a02:       0f 1f 40 00             nopl   0x0(%rax)
-                <i>replace with</i>
-  404a01:       e9 XX XX XX XX          <em>jmpq    YYYYYYY</em>
-</code></pre>
+   * plus restore replaced code after running malware code
+u
+* return with padding after it:<br/>
+<pre><code>404a01:       c3                      <em>retq</em>
+404a02:       0f 1f 40 00             nopl   0x0(%rax)</code></pre>
+  becomes
+<pre><code>404a01:       e9 XX XX XX XX          <em>jmpq    YYYYYYY</em></code></pre>
  
 
    * plus return after running malware code
 
 * any random place in program? 
-
    * just not in the <em>middle of instruction</em>
-   * and [replace orignal code after running malware code]{.fragment fragment-index=2 .custom .myem-only}
+   * and replace original code after running malware code
 
 
 
-### challenge: valid locations  {.smaller}
-
+### challenge: valid locations {.smaller}
 
 * x86: probably don't want a full instruction parser
 * x86: might be non-instruction stuff mixed in with code: 
@@ -36,10 +32,9 @@ do_some_floating_point_stuff:
 float_one: .float 1
 
 ```
- 
-
    * floating point value one (<code>00 00 80 3f</code>) is not valid machine code
    * disassembler might lose track of instruction boundaries
+   * (but most compilers put data in other segment)
 
 
 
@@ -47,8 +42,9 @@ float_one: .float 1
 
 
 * one idea: replace calls
-* normal x86 call FOO: <code>E8 <i>(32-bit value: PC - address of foo)</i></code>
-* could look for E8 in code --- <em>lots of false positives</em>  
+* normal x86 call FOO:
+  *  <code>E8 <i>(32-bit value: PC - address of foo)</i></code>
+* could look for `E8` in code --- <em>lots of false positives</em>  
 
    * probably even if one excludes out-of-range addresses
 
@@ -56,51 +52,37 @@ float_one: .float 1
 
 ### really finding function calls (1)  {.smaller}
 
-<!-- \lstset{language=myasm,style=small} -->
- 
-
-* e.g. some popular compilers started x86-32 functions with 
+* some popular compilers started x86-32 functions with 
 ```
 foo:
     push %ebp       // push old frame pointer
     // 0x55
     mov %esp, %ebp  // set frame pointer to stack pointer
     // 0x89 0xec
-
 ```
-
 * use to identify when <code>e8</code> refers to real function 
-
    * (full version: also have some other function start patterns)
 
+* but frame pointers not really a thing anymore
 
 
-### really finding function calls (2)  {.smaller}
+### really finding function calls (2)
 
 
-* x86-64 assembly seen a lot of ENDBR64 (hex <code>f3 0f 1e fa</code>)
+* x86-64: `ENDBR64` (hex <code>f3 0f 1e fa</code>)
 * marker for valid locations to jump to 
-
    * intention: part of possible defense against return-oriented-programming-style attacks
    * (we'll talk about what this means later)
-
 * likely only seen at beginning of functions, switch statement cases, etc.
 
 
-### againframe(runAnyways)
+### restoring replaced code?
 
-### restoring replaced code?  {.smaller}
-
-
-* Vienna: just write to memory addres 
+* Vienna: just write to memory address
 <hr class="vspace" />
 * modern OS: segfault/general protection fault 
-
    * code loaded read-only
-
 * easy solution: make library call to make it writable 
-
    * Linux: <code>mprotect</code>
-   * functionality exists to, e.g., allow compiling code at runtime
-
-
+   * Windows: <code>VirtualProtect</code>
+   * functionality exists to, for example, allow compiling code at runtime

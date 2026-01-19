@@ -1,12 +1,8 @@
-
 ### unused code??? 
-
 
 * why would a program have unused code????
 
-
-### unused code case study: /bin/ls  {.smaller}
-
+### unused code case study: /bin/ls 
 
 
 * unreachable no-ops!
@@ -24,7 +20,6 @@
   <em>404a02:	0f 1f 40 00          	nopl   0x0(%rax)</em>
   <em>404a06:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)</em>
   <em>404a0d:	00 00 00 </em>
-  404a10:	be 00 e6 61 00       	mov    $0x61e600,%esi
 ...
 </code></pre>
 
@@ -32,7 +27,7 @@
 ### why empty space?  {.smaller}
 
 
-* Intel Optimization Reference Manual: <br> ‘‘<em>Assembly/Compiler Coding Rule 12. (M impact, H generality)</em> <br>All branch targets should be 16-byte aligned.’’ 
+* Intel Optimization Reference Manual: <br> "<em>Assembly/Compiler Coding Rule 12. (M impact, H generality)</em> <br>All branch targets should be 16-byte aligned."
 <hr class="vspace" />
 * better for instruction cache [ (and TLB and related caches)]{.my-small}
 * better for instruction decode logic
@@ -55,44 +50,4 @@
    * ‘‘Placing data immediately following an indirect branch can cause performance problems. If the data consists of all zeros, it looks like a long stream of ADDs to memory destinations, and this can cause resource conflicts…’’
 
 
-
-### other empty space  {.smaller}
-
-
-* [unused dynamic linking structure]{.fragment fragment-index=2 .custom .myem-only}
-* [unused space between segments]{.fragment fragment-index=3 .custom .myem-only}
-* unused debugging/symbol table information?
-* unused header space  
-
-   * file offsets of segments can be in middle of header
-   * loader doesn't care what segments ‘‘mean’’
-
-
-
-### againframe(otherSpace)
-
-### dynamic linking cavity  {.smaller}
-
-
-
-* <code>.dynamic</code> section --- data structure used by dynamic linker:
-* format: list of 8-byte type, 8-byte value 
-
-   * terminated by type == 0 entry
-
- 
-<pre><code>Contents of section .dynamic:
- 600e28 01000000 00000000 01000000 00000000  ................
-    <i>... several non-empty entries ...</i>
- 600f88 f0ffff6f 00000000 56034000 00000000  ...o....V.@.....
-    <i>VERSYM (required library version info at) 0x400356</i>
- 600f98 <i>00000000 00000000 00000000 00000000</i>  ................
-    <i>NULL --- end of linker info</i>
- 600fa8 <em>00000000 00000000 00000000 00000000</em>  ................
-    <i>unused! (and below)</i>
- 600fb8 <em>00000000 00000000 00000000 00000000</em>  ................
- 600fc8 <em>00000000 00000000 00000000 00000000</em>  ................
- 600fd8 <em>00000000 00000000 00000000 00000000</em>  ................
- 600fe8 <em>00000000 00000000 00000000 00000000</em>  ................
-</code></pre>
 

@@ -23,10 +23,10 @@
 
 
 * one <i>or more</i> of:
-* [replacing executable code]{.fragment fragment-index=2 .custom .myem-only}
-* [after executable code (Vienna)]{.fragment fragment-index=3 .custom .myem-only}
-* [in unused executable code]{.fragment fragment-index=4 .custom .myem-only}
-* [inside OS code]{.fragment fragment-index=5 .custom .myem-only}
-* [in memory]{.fragment fragment-index=6 .custom .myem-only}
-* [replace existing code]{.fragment fragment-index=7 .custom .myem-only}
+* replacing executable code
+* after executable code (Vienna)
+* in unused executable code
+* inside OS code
+* in memory
+* replace existing code
 

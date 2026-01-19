@@ -1,5 +1,5 @@
 
-### starting locations  {.smaller}
+### starting locations
 
 
 <pre><code>/bin/ls:     file format elf64-x86-64

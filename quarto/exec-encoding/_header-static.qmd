@@ -1,40 +1,36 @@
 
-### ELF example  {.smaller}
-
-
+### ELF example
 
 * <code>objdump -x /bin/busybox</code> (on my laptop)
 * <code>-x</code>: output all headers
  
-<pre><code>/bin/busybox:     file format \\myemphTwo{elf64-x86-64}
+<pre><code>/bin/busybox:     file format <span data-fragment-index="2" class="fragment custom myem-only">elf64-x86-64</span>
 /bin/busybox
 architecture: i386:x86-64, flags 0x00000102:
 EXEC_P, D_PAGED
-start address \\myemphThree{0x0000000000402170}
+start address <span data-fragment-index="3" class="fragment custom myem-only">0x0000000000402170</span>
 
 Program Header:
-\[...]
+[...]
 
 Sections:
-\[...]
+[...]
 </code></pre>
 
 
 ### a program header (1)  {.smaller}
 
-
 <pre><code>Program Header:
-\[...]
+[...]
 LOAD off    0x0001000 vaddr 0x0401000 paddr 0x0401000 align 2**12
-     filesz \\myemphTwo{0x01b04ed} memsz 0x01b04ed flags \\myemphThree{r-x}
-\[...]
+     filesz <span data-fragment-index="2" class="fragment custom myem-only">0x01b04ed</span> memsz 0x01b04ed flags <span data-fragment-index="3" class="fragment custom myem-only">r-x</span>
+[...]
 LOAD off    0x0207950 vaddr 0x0608950 paddr 0x0608950 align 2**12
-     filesz \\myemphFour{0x0008f40} memsz \\myemphFour{0x000c718} flags rw-
-
+     filesz <span data-fragment-index="4" class="fragment custom myem-only">0x0008f40</span> memsz <span data-fragment-index="4" class="fragment custom myem-only">0x000c718</span> flags rw-
 </code></pre>
  
 
-* load <code>[0x1bd04ed]{.fragment fragment-index=2 .custom .myem-only}</code> bytes ([read+executable]{.fragment fragment-index=3 .custom .myem-only}): 
+* load [`0x1bd04ed`]{.fragment fragment-index=2 .custom .myem-only}</code> bytes ([read+executable]{.fragment fragment-index=3 .custom .myem-only}): 
 
    * from <code>0x1000</code> bytes into the file
    * to memory at <code>0x401000</code> <br>
@@ -51,7 +47,7 @@ LOAD off    0x0207950 vaddr 0x0608950 paddr 0x0608950 align 2**12
 
 
 <pre><code>Program Header:
-\[...]
+[...]
     NOTE off    0x0000290 vaddr 0x0400290 paddr 0x0400290 align 2**2
          filesz 0x0000044 memsz 0x0000044 flags r--
      TLS off    0x0207950 vaddr 0x0608950 paddr 0x0608950 align 2**3
@@ -62,7 +58,7 @@ LOAD off    0x0207950 vaddr 0x0608950 paddr 0x0608950 align 2**12
          filesz 0x0000000 memsz 0x0000000 flags rw-
    RELRO off    0x0207950 vaddr 0x0608950 paddr 0x0608950 align 2**0
          filesz 0x00066b0 memsz 0x00066b0 flags r--
-\[...]
+[...]
 </code></pre>
  
 

@@ -1,5 +1,5 @@
 
-### symbols in executable  {.smaller}
+### symbols in executable
 
 
 ```
@@ -13,7 +13,7 @@ SYMBOL TABLE:
 ```
  … 
 
-* by default, symbol information in statically-linked executable
+* by default, non-dynamic symbol information in executables
 * … but not actually used to run it! 
 <hr class="vspace" />
 * can be stripped (-s linker option or strip command) isntead:
@@ -29,5 +29,5 @@ no symbols
 
 
 * how can I find where functions are without symbols?
-* ideally: some <it>automated</it> way to do this?
+* ideally: some <em>automated</em> way to do this?
 

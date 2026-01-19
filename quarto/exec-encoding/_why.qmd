@@ -1,6 +1,4 @@
-
 ### executable encoding: security issues  {.smaller}
-
 
 * malware wants to modify executables 
 

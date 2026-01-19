@@ -1,9 +1,7 @@
 
 ### dynamic linking: what to load? (1)  {.smaller}
 
-
-
-* excerpt from <code>objdump -sx hello.exe</code>:
+* excerpt from `objdump -sx hello.exe`:
  
 <pre><code>Program Header:
 <it>...</it>

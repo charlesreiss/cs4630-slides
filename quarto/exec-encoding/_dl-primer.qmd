@@ -1,10 +1,10 @@
 
 ### linking 
 
-![](/exec-encoding/texfig/dl-primer-linking.figure.svg)
+![](/exec-encoding/texfig/dl-primer-linking.figure.svg){fig-alt="Converting `callq printf` to `callq 0x458F0`"}
 
 
-### static v. dynamic linking  {.smaller}
+### static v. dynamic linking
 
 
 * static linking --- linking <em>to create executable</em>
@@ -14,14 +14,14 @@
 * reality --- very different mechanisms
 
 
-### linking data structures  {.smaller}
+### linking data structures
 
 
-* symbol table: <code>name</code> $\\Rightarrow{}$ (section, offset) 
+* symbol table: <code>name</code> $\Rightarrow$ (section, offset) 
 
    * example: <code>main:</code> in assembly adds symbol table entry for <code>main</code>
 
-* relocation table: offset $\\Rightarrow{}$ (name, kind) 
+* relocation table: offset $\Rightarrow$ (name, kind) 
 
    * example: <code>call printf</code> adds relocation for name <code>printf</code>
    * kind depends on how instruction encodes address

@@ -4,12 +4,12 @@
 
 
 ::: {.r-stack .my-full}
-![](/exec-encoding/texfig/elf-loading-diag.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](/exec-encoding/texfig/elf-loading-diag.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/exec-encoding/texfig/elf-loading-diag.figure-1.svg){.fragment .fade-in-then-out fragment-index=1 fig-alt="on left, a box labeled program on disk, with offset 0 at the bottom; and on right a larger box labeled program in memory with addr 0 on bottom"}
 
-![](/exec-encoding/texfig/elf-loading-diag.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+![](/exec-encoding/texfig/elf-loading-diag.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 fig-alt="the beginning of the box labeled program on disk is highlighted, and inset reveals 'LOAD off 0x1000 vaddrr 0x4000 filesz 0x1544 memsz 0x2644', a directive in the program header."}
 
+![](/exec-encoding/texfig/elf-loading-diag.figure-3.svg){.fragment .fade-in-then-out fragment-index=3 fig-alt="based on the LOAD directive from the previous slide, a shaded box is starting at offset 0x1000 in the program on disk, and measuring 0x1544 bytes from that. In the program on memory, the address 0x4000 is highlighted and 0x2644 bytes and 0x1544 bytes from that are both measured. A shaded box that matches the box from the program on disk is drawn from 0x4000 and 0x1544 bytes onward. Hatchmarks show the additional bytes from 0x1544 to 0x2644 bytes from 0x4000 in the program in memory. Color highlighting shows that the start locations (0x1000 on disk, 0x4000 in memory) match the LOAD directive in the program header."}
 
 :::
 

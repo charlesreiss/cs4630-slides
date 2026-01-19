@@ -1,18 +1,17 @@
 
-### where's the linker  {.smaller}
+### where's the linker
 
 
-* Where's the code that calls <code>open("...libc.so.6")</code>?
-* Could check <code>hello.exe</code> --- it's not there! 
+* where's the code that calls `open("...libc.so.6")`?
+* could check `hello.exe` --- it's not there! 
 <hr class="vspace" />
-* instead: ‘‘interpreter’’ <code>/lib64/ld-linux-x86-64.so.2</code>
+* instead: "interpreter" `/lib64/ld-linux-x86-64.so.2`
 * on Linux: contains loading code instead of core OS 
-
    * OS loads it instead of program
 
 
 
-### objdump --- the interpreter  {.smaller}
+### objdump --- the interpreter
 
 
 

@@ -9,13 +9,13 @@
 <pre><code>a.out:     file format elf64-x86-64
 a.out
 architecture: i386:x86-64, flags 0x00000150:
-HAS_SYMS, \\myemphTwo{DYNAMIC}, D_PAGED
+HAS_SYMS, <span data-fragment-index="2" class="fragment custom myem-only">DYNAMIC</span>, D_PAGED
 start address 0x0000000000009f90
 
 Program Header:
 ...
 
-\\myemphTwo{Dynamic Section:}
+<span data-fragment-index="2" class="fragment custom myem-only">Dynamic Section:</span>
 ...
 
 Sections:

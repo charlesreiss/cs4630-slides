@@ -1,8 +1,6 @@
 
 ### section headers  {.smaller}
 
-
- 
 ```
 Sections:
 Idx Name          Size      VMA               LMA               File off  Algn
@@ -70,20 +68,14 @@ Idx Name          Size      VMA               LMA               File off  Algn
 
 ### sections  {.smaller}
 
-
-* tons of ‘‘sections’’
+* tons of "sections"
 * not actually needed/used to run program
 * size, file offset, flags (code/data/etc.) 
-
    * location in executable <it>and</it> in memory
-
-* some sections aren't stored (no ‘‘CONTENTS’’ flag)  
-
+* some sections aren't stored (no "CONTENTS" flag)  
    * just all zeroes
 
-
-
-### selected sections  {.smaller}
+### selected sections
 
 <table>
 <tr><td><code>.text</code></td><td>program code</td></tr>

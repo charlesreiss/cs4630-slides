@@ -19,7 +19,7 @@
 
 {{< include /exec-encoding/_elf-loading-diag.qmd >}}
 
-## position independent executables {visibility="hidden"}
+## position independent files {visibility="hidden"}
 
 {{< include /exec-encoding/_pic-exec.qmd >}}
 

@@ -21,18 +21,18 @@
 <pre><code>a.out:     file format elf64-x86-64
 a.out
 architecture: i386:x86-64, flags 0x00000150:
-HAS_SYMS, \\myemphTwo{DYNAMIC}, D_PAGED
+HAS_SYMS, <span data-fragment-index="2" class="fragment custom myem-only">DYNAMIC</span>, D_PAGED
 
 start address 0x0000000000001080
 
 Program Header:
 ...
-    LOAD off    0x0000000000000000 vaddr \\myemphThree{0x0000000000000000} paddr 0x0000000000000000 align 2**12
+    LOAD off    0x0000000000000000 vaddr <span data-fragment-index="3" class="fragment custom myem-only">0x0000000000000000</span> paddr 0x0000000000000000 align 2**12
          filesz 0x00000000000005f8 memsz 0x00000000000005f8 flags r--
     LOAD off    0x0000000000001000 vaddr 0x0000000000001000 paddr 0x0000000000001000 align 2**12
          filesz 0x00000000000001f5 memsz 0x00000000000001f5 flags r-x
 ...
 </code></pre>
- ![](/exec-encoding/texfig/elfExOverPie1.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
-![](/exec-encoding/texfig/elfExOverPie1.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
+ ![](/exec-encoding/texfig/elfExOverPie1.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/exec-encoding/texfig/elfExOverPie1.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
 

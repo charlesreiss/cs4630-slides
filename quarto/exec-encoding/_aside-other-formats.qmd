@@ -1,5 +1,5 @@
 
-### other executable formats  {.smaller}
+### other executable formats
 
 
 * PE (Portable Executable) --- Windows

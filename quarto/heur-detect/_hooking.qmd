@@ -57,7 +57,7 @@
 
 
 * e.g. install new library --- or edit loader, but … 
-
+<hr class="vspace" />
 * not everything uses library functions
 * what if your wrapper doesn't work exactly the same?
 

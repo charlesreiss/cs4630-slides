@@ -14,7 +14,7 @@
 
 
 * 16-bit number for date; 16-bit number for time
- ![](texfig/vienna-reinfect-dos-last-written-times.figure.svg)
+ ![](/virus/texfig/vienna-reinfect-dos-last-written-times.figure.svg)
  
 
 * Sec/2: 5 bits: range from 0--31 

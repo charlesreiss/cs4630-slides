@@ -4,13 +4,14 @@
 
 
 * could avoid having pointer to update:
- <pre><code>0000000000000000 &lt;next-0x3&gt;:
+ 
+<pre><code>0000000000000000 &lt;next-0x3&gt;:
    0:   e8 <em>00 00</em>                call   3 &lt;next&gt;
-    <it>target addresses encoded relatively</it>
-    <it>pushes return address (next) onto stack</it>
+    <i>target addresses encoded relatively</i>
+    <i>pushes return address (next) onto stack</i>
 0000000000000003 &lt;next&gt;:
    3:   59                      pop    %cx
-    <it>cx containts address of the pop instruction</it>
+    <i>cx containts address of the pop instruction</i>
 </code></pre>
  
 

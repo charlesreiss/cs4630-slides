@@ -9,7 +9,7 @@
 
 * not uncommon in corporate environments:
  
- 
+<hr class="vspace" /> 
 ![](/heur-detect/applocker-manual){}
 
 

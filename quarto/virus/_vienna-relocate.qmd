@@ -8,7 +8,8 @@
     moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
     moredelim={**[is][\btHL<3|handout:0>]{@hi3@}{@endhi@}},
 } -->
- <pre><code>// set virus data address:
+ 
+<pre><code>// set virus data address:
 0x700: <span data-fragment-index="1" class="fragment custom myem-only">mov $0x8f9, %si</span>
        // machine code: be f9 08
        // be: opcode
@@ -23,7 +24,7 @@ sub $0x1f7, %di // %di &lt;- 0x701
 <span data-fragment-index="2" class="fragment custom myem-only">mov %cx, (%di)</span>  // update mov instruction
 ...
 </code></pre>
- ![](texfig/virusReloc2.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+ ![](/virus/texfig/virusReloc2.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
 
 
 ### Vienna relocation 
@@ -44,7 +45,8 @@ sub $0x1f7, %di // %di &lt;- 0x701
     moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
     moredelim={**[is][\btHL<3|handout:0>]{@hi3@}{@endhi@}},
 } -->
- <pre><code>0x700: mov $0x8f9, %si
+ 
+<pre><code>0x700: mov $0x8f9, %si
 ...
 // %ax contains file length
 //     (of file to infect)

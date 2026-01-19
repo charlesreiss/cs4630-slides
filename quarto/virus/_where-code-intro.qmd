@@ -5,7 +5,7 @@
 * viruses insert code in other programs
 * Vienna's choice: end of executables
 * search for <code>.COM</code> executables on system 
-
+<hr class="vspace" />
 * considerations for other options:
 * spreading: identifying useful files to infect 
 
@@ -22,7 +22,7 @@
 ### where to put code: options  {.smaller}
 
 
-* one <it>or more</it> of:
+* one <i>or more</i> of:
 * [replacing executable code]{.fragment fragment-index=2 .custom .myem-only}
 * [after executable code (Vienna)]{.fragment fragment-index=3 .custom .myem-only}
 * [in unused executable code]{.fragment fragment-index=4 .custom .myem-only}

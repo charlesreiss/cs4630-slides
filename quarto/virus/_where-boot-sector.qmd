@@ -2,14 +2,16 @@
 ### boot process 
 
 
+
 ::: {.r-stack .my-full}
-![](texfig/bootProc.figure-1.svg){.fragment .fade-in-then-out fragment-index=1 fig-alt="Boot process, starting from processor reset. First, the BIOS of EFI is loadeed from a chip on the motherboard.  Then, a bootloader in a fixed location on disk runs, which has the code to figure out where individual files are on disk. This finally loads the operating system code from its files."}
+![](/virus/texfig/bootProc.figure-1.svg){.fragment .fade-in-then-out fragment-index=1 fig-alt="Boot process, starting from processor reset. First, the BIOS of EFI is loadeed from a chip on the motherboard.  Then, a bootloader in a fixed location on disk runs, which has the code to figure out where individual files are on disk. This finally loads the operating system code from its files."}
 
-![](texfig/bootProc.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 fig-alt="Boot process, starting from processor reset. First, the BIOS of EFI is loadeed from a chip on the motherboard.  Then, a bootloader in a fixed location on disk runs, which has the code to figure out where individual files are on disk. This finally loads the operating system code from its files."}
+![](/virus/texfig/bootProc.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 fig-alt="Boot process, starting from processor reset. First, the BIOS of EFI is loadeed from a chip on the motherboard.  Then, a bootloader in a fixed location on disk runs, which has the code to figure out where individual files are on disk. This finally loads the operating system code from its files."}
 
-![](texfig/bootProc.figure-3.svg){.fragment .fade-in-then-out fragment-index=3 fig-alt="Boot process, starting from processor reset. First, the BIOS of EFI is loadeed from a chip on the motherboard.  Then, a bootloader in a fixed location on disk runs, which has the code to figure out where individual files are on disk. This finally loads the operating system code from its files."}
+![](/virus/texfig/bootProc.figure-3.svg){.fragment .fade-in-then-out fragment-index=3 fig-alt="Boot process, starting from processor reset. First, the BIOS of EFI is loadeed from a chip on the motherboard.  Then, a bootloader in a fixed location on disk runs, which has the code to figure out where individual files are on disk. This finally loads the operating system code from its files."}
 
-![](texfig/bootProc.figure-4.svg){.fragment .fade-in-then-out fragment-index=4 fig-alt="Boot process, starting from processor reset. First, the BIOS of EFI is loadeed from a chip on the motherboard.  Then, a bootloader in a fixed location on disk runs, which has the code to figure out where individual files are on disk. This finally loads the operating system code from its files."}
+![](/virus/texfig/bootProc.figure-4.svg){.fragment .fade-in-then-out fragment-index=4 fig-alt="Boot process, starting from processor reset. First, the BIOS of EFI is loadeed from a chip on the motherboard.  Then, a bootloader in a fixed location on disk runs, which has the code to figure out where individual files are on disk. This finally loads the operating system code from its files."}
+
 
 :::
 
@@ -44,10 +46,12 @@
 
 * example: Stoned
  
-::: {.r-stack}
-![](texfig/where-boot-sector-bootloader-viruses.figure-1.svg){.fragment .fade-in-then-out fragment-index=1 fig-alt="The original contents of disk shows a bootloader at the beginning with a partition table in the middle of it. This is transformed to the bootloader being replaced by the virus code (but the partition table is preserved). So the virus can run the original bootloader after it finishes, a copy of the original bootloader is saved elsewhere on disk"}
 
-![](texfig/where-boot-sector-bootloader-viruses.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 fig-alt="The original contents of disk shows a bootloader at the beginning with a partition table in the middle of it. This is transformed to the bootloader being replaced by the virus code (but the partition table is preserved). So the virus can run the original bootloader after it finishes, a copy of the original bootloader is saved elsewhere on disk"}
+::: {.r-stack}
+![](/virus/texfig/where-boot-sector-bootloader-viruses.figure-1.svg){.fragment .fade-in-then-out fragment-index=1 fig-alt="The original contents of disk shows a bootloader at the beginning with a partition table in the middle of it. This is transformed to the bootloader being replaced by the virus code (but the partition table is preserved). So the virus can run the original bootloader after it finishes, a copy of the original bootloader is saved elsewhere on disk"}
+
+![](/virus/texfig/where-boot-sector-bootloader-viruses.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 fig-alt="The original contents of disk shows a bootloader at the beginning with a partition table in the middle of it. This is transformed to the bootloader being replaced by the virus code (but the partition table is preserved). So the virus can run the original bootloader after it finishes, a copy of the original bootloader is saved elsewhere on disk"}
+
 
 :::
 
@@ -61,7 +65,7 @@
    * (allegedly)
 
 * also be filesystem metadata not used on smaller floppies/disks 
-
+<hr class="vspace" />
 * but could be wrong --- oops
 
 
@@ -109,6 +113,6 @@
 
    * easy to blend in
  
-
+<hr class="vspace" />
 * alternatively, infect one of many system programs automatically run
 

@@ -1,7 +1,7 @@
 
 ### Vienna: infection 
 
-![](texfig/viennaInfect.figure.svg)
+![](/virus/texfig/viennaInfect.figure.svg)
 
 
 ### Vienna: ‘‘fixup’’  {.smaller}
@@ -12,7 +12,8 @@
     moredelim={**[is][\btHL<2>]{~hi2~}{~endhi2~}},
     moredelim={**[is][\btHL<3>]{~hi3~}{~endhi3~}},
 } -->
- <pre><code>0x0700:
+ 
+<pre><code>0x0700:
     push %cx // initial value of %cx matters??
     mov <span data-fragment-index="3" class="fragment custom myem-only">$0x8fd</span>, %si // %si &lt;- beginning of data
     mov %si, %dx // save %si

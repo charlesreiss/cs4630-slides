@@ -8,7 +8,7 @@
    * one of list of possible characters (bytes)
    * …
  
-
+<hr class="vspace" />
 * but viruses try to make pattern matching hard
 * good to think about what we can easily match
 

@@ -2,18 +2,20 @@
 ### viruses and executable formats 
 
 
+
 ::: {.r-stack .my-full}
-![](texfig/exec-lib-regularity-viruses-and-executable-formats.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+![](/heur-detect/texfig/exec-lib-regularity-viruses-and-executable-formats.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](texfig/exec-lib-regularity-viruses-and-executable-formats.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/heur-detect/texfig/exec-lib-regularity-viruses-and-executable-formats.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
 
-![](texfig/exec-lib-regularity-viruses-and-executable-formats.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+![](/heur-detect/texfig/exec-lib-regularity-viruses-and-executable-formats.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
 
-![](texfig/exec-lib-regularity-viruses-and-executable-formats.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
+![](/heur-detect/texfig/exec-lib-regularity-viruses-and-executable-formats.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
 
-![](texfig/exec-lib-regularity-viruses-and-executable-formats.figure-5.svg){.fragment .fade-in-then-out fragment-index=5}
+![](/heur-detect/texfig/exec-lib-regularity-viruses-and-executable-formats.figure-5.svg){.fragment .fade-in-then-out fragment-index=5}
 
-![](texfig/exec-lib-regularity-viruses-and-executable-formats.figure-6.svg){.fragment .fade-in-then-out fragment-index=6}
+![](/heur-detect/texfig/exec-lib-regularity-viruses-and-executable-formats.figure-6.svg){.fragment .fade-in-then-out fragment-index=6}
+
 
 :::
 
@@ -25,10 +27,12 @@
 * [insert jump in normal code section, set as entry-point]{.fragment fragment-index=2 .custom .myem-only}
 * add code to first section instead (perhaps insert new section at beginning)
  
-::: {.r-stack}
-![](texfig/exec-lib-regularity-defeating-entry-point-checking.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](texfig/exec-lib-regularity-defeating-entry-point-checking.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+::: {.r-stack}
+![](/heur-detect/texfig/exec-lib-regularity-defeating-entry-point-checking.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/heur-detect/texfig/exec-lib-regularity-defeating-entry-point-checking.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
 
 :::
 
@@ -43,7 +47,7 @@
    * often don't! --- instead dynamically look-up functions
    * if do --- could mess that up/lots of code
 
-   ![](texfig/exec-lib-regularity-heuristics-library-calls.figure.svg)
+   ![](/heur-detect/texfig/exec-lib-regularity-heuristics-library-calls.figure.svg)
 
 
 ### evading library call checking 
@@ -65,6 +69,6 @@
 
 * common approach: store <em>hash of name</em>
 * runtime: read library, scan list of functions for name 
-
+<hr class="vspace" />
 * bonus: makes analysis harder
 

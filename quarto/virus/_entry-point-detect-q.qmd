@@ -3,7 +3,7 @@
 
 
 * which techniques for starting malware code seem…  easiest to detect? easiest to implement? 
-
+<hr class="vspace" />
 * A. replacing executable + running orig. exec from backup
 * B. changing start address (to point to added code)
 * C. changing dynamic linking info

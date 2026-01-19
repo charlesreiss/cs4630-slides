@@ -4,10 +4,10 @@
 
 * get someone run your malware?
 * program <em>they already want to run</em> 
-
+<hr class="vspace" />
 * to spread your malware?
 * program [they already want to copy]{.fragment fragment-index=12 .custom .myem-only} 
-
+<hr class="vspace" />
 * trojan approach: create/modify new program
 * simpler: modify already used/shared program
 
@@ -19,7 +19,7 @@
 
    * (but hard to get good statistics…)
  
-
+<hr class="vspace" />
 * but producing infected versions of legitimate software is common 
 
    * e.g. fake download site

@@ -9,6 +9,6 @@
 * basically speed of file I/O
 * handles multiple patterns well
 * flexible for ‘‘special cases’’ 
-
+<hr class="vspace" />
 * real anti-virus: probably custom pattern ‘‘engine’’
 

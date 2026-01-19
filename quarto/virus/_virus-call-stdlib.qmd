@@ -3,7 +3,7 @@
 
 
 * common for viruses to want to call standard library 
-
+<hr class="vspace" />
 * in applications: 
 
    * just call the stub

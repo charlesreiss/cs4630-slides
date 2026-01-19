@@ -58,7 +58,7 @@ xor %bx, %bx
 
 * all the code Vienna copies
 * … except changed <code>mov</code> to <code>%si</code> 
-
+<hr class="vspace" />
 * virus doesn't change it to relocate
 * includes infection code --- definitely malicious
 

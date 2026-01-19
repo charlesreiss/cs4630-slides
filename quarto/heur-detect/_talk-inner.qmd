@@ -39,7 +39,7 @@
    * examine code+data
 
 * our first topic 
-
+<hr class="vspace" />
 * alternate idea: detect running malware 
 
    * examine operations performed by software

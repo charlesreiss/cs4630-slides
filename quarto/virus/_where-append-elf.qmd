@@ -1,103 +1,107 @@
 
-### appending to ELF file (v1) 
+### appending to ELF file (v1)  {.smaller}
 
-```
-\begin{onlyenv}
-\<1> <pre><code>Program Header:
+
+<div class="fragment fade-in-and out" data-fragment-index=1 >
+ 
+<pre><code>Program Header:
 ...
-\\colorbox{blue!40!black}{ }LOAD off    0x00000 vaddr 0x10000 paddr 0x10000 align 2**12
+\\colorbox{blue!40!black }LOAD off    0x00000 vaddr 0x10000 paddr 0x10000 align 2**12
        filesz 0x005f8 memsz 0x005f8 flags r--
-\\colorbox{yellow!40!black}{ }LOAD off    0x01000 vaddr 0x11000 paddr 0x11000 align 2**12
+\\colorbox{yellow!40!black }LOAD off    0x01000 vaddr 0x11000 paddr 0x11000 align 2**12
        filesz 0x00ef5 memsz 0x00ef5 flags r-x
-\\colorbox{green!40!black}{ }LOAD off    0x02000 vaddr 0x12000 paddr 0x12000 align 2**12
+\\colorbox{green!40!black }LOAD off    0x02000 vaddr 0x12000 paddr 0x12000 align 2**12
        filesz 0x00858 memsz 0x00858 flags r--
-\\colorbox{orange!40!black}{ }LOAD off    0x02db8 vaddr 0x13db8 paddr 0x13db8 align 2**12
+\\colorbox{orange!40!black }LOAD off    0x02db8 vaddr 0x13db8 paddr 0x13db8 align 2**12
        filesz 0x00258 memsz 0x00360 flags rw-
 </code></pre>
  
-\end{onlyenv}```
- ```
-\begin{onlyenv}
-\<2> <pre><code>Program Header:
+</div> 
+<div class="fragment fade-in-and out" data-fragment-index=2 >
+ 
+<pre><code>Program Header:
 ...
-\\colorbox{blue!40!black}{ }LOAD off    0x00000 vaddr 0x10000 paddr 0x10000 align 2**12
+\\colorbox{blue!40!black }LOAD off    0x00000 vaddr 0x10000 paddr 0x10000 align 2**12
        filesz 0x005f8 memsz 0x005f8 flags r--
-\\colorbox{yellow!40!black}{ }LOAD off    0x01000 vaddr 0x11000 paddr 0x11000 align 2**12
+\\colorbox{yellow!40!black }LOAD off    0x01000 vaddr 0x11000 paddr 0x11000 align 2**12
        filesz 0x00ef5 memsz 0x00ef5 flags r-x
-\\colorbox{green!40!black}{ }LOAD off    0x02000 vaddr 0x12000 paddr 0x12000 align 2**12
+\\colorbox{green!40!black }LOAD off    0x02000 vaddr 0x12000 paddr 0x12000 align 2**12
        filesz 0x00858 memsz 0x00858 flags r--
-\\colorbox{red}{ }LOAD off    0x02db8 vaddr 0x13db8 paddr 0x13db8 align 2**12
+\\colorbox{red }LOAD off    0x02db8 vaddr 0x13db8 paddr 0x13db8 align 2**12
        filesz ~~0x00258~~<em>0x00860</em> memsz 0x00860 flags rw-
 </code></pre>
  
-\end{onlyenv}```
- ```
-\begin{onlyenv}
-\<3> <pre><code>Program Header:
+</div> 
+<div class="fragment fade-in-and out" data-fragment-index=3 >
+ 
+<pre><code>Program Header:
 ...
-\\colorbox{blue!40!black}{ }LOAD off    0x00000 vaddr 0x10000 paddr 0x10000 align 2**12
+\\colorbox{blue!40!black }LOAD off    0x00000 vaddr 0x10000 paddr 0x10000 align 2**12
        filesz 0x005f8 memsz 0x005f8 flags r--
-\\colorbox{yellow!40!black}{ }LOAD off    0x01000 vaddr 0x11000 paddr 0x11000 align 2**12
+\\colorbox{yellow!40!black }LOAD off    0x01000 vaddr 0x11000 paddr 0x11000 align 2**12
        filesz 0x00ef5 memsz 0x00ef5 flags r-x
-\\colorbox{green!40!black}{ }LOAD off    0x02000 vaddr 0x12000 paddr 0x12000 align 2**12
+\\colorbox{green!40!black }LOAD off    0x02000 vaddr 0x12000 paddr 0x12000 align 2**12
        filesz 0x00858 memsz 0x00858 flags r--
-\\colorbox{red}{ }LOAD off    0x02db8 vaddr 0x13db8 paddr 0x13db8 align 2**12
+\\colorbox{red }LOAD off    0x02db8 vaddr 0x13db8 paddr 0x13db8 align 2**12
        filesz ~~0x00860~~<em>0x01058</em> memsz ~~0x00860~~<em>0x01058</em> flags ~~rw-~~<em>rwx</em>
 </code></pre>
  
-\end{onlyenv}```
- 
+</div> 
+
 ::: {.r-stack}
-![](texfig/appendElfA.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+![](/virus/texfig/appendElfA.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](texfig/appendElfA.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/virus/texfig/appendElfA.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
 
-![](texfig/appendElfA.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+![](/virus/texfig/appendElfA.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
 
 :::
 
 
-### appending to ELF file (v2) 
+### appending to ELF file (v2)  {.smaller}
 
-```
-\begin{onlyenv}
-\<1> <pre><code>Program Header:
+
+<div class="fragment fade-in-and out" data-fragment-index=1 >
+ 
+<pre><code>Program Header:
 ...
-\\colorbox{blue!40!black}{ }LOAD off    0x00000 vaddr 0x10000 paddr 0x10000 align 2**12
+\\colorbox{blue!40!black }LOAD off    0x00000 vaddr 0x10000 paddr 0x10000 align 2**12
        filesz 0x005f8 memsz 0x005f8 flags r--
-\\colorbox{yellow!40!black}{ }LOAD off    0x01000 vaddr 0x11000 paddr 0x11000 align 2**12
+\\colorbox{yellow!40!black }LOAD off    0x01000 vaddr 0x11000 paddr 0x11000 align 2**12
        filesz 0x00ef5 memsz 0x00ef5 flags r-x
-\\colorbox{green!40!black}{ }LOAD off    0x02000 vaddr 0x12000 paddr 0x12000 align 2**12
+\\colorbox{green!40!black }LOAD off    0x02000 vaddr 0x12000 paddr 0x12000 align 2**12
        filesz 0x00858 memsz 0x00858 flags r--
-\\colorbox{orange!40!black}{ }LOAD off    0x02db8 vaddr 0x13db8 paddr 0x13db8 align 2**12
+\\colorbox{orange!40!black }LOAD off    0x02db8 vaddr 0x13db8 paddr 0x13db8 align 2**12
        filesz 0x00258 memsz 0x00360 flags rw-
 .
 .
 </code></pre>
  
-\end{onlyenv}```
- ```
-\begin{onlyenv}
-\<2> <pre><code>Program Header:
+</div> 
+<div class="fragment fade-in-and out" data-fragment-index=2 >
+ 
+<pre><code>Program Header:
 ...
-\\colorbox{blue!40!black}{ }LOAD off    0x00000 vaddr 0x10000 paddr 0x10000 align 2**12
+\\colorbox{blue!40!black }LOAD off    0x00000 vaddr 0x10000 paddr 0x10000 align 2**12
        filesz 0x005f8 memsz 0x005f8 flags r--
-\\colorbox{yellow!40!black}{ }LOAD off    0x01000 vaddr 0x11000 paddr 0x11000 align 2**12
+\\colorbox{yellow!40!black }LOAD off    0x01000 vaddr 0x11000 paddr 0x11000 align 2**12
        filesz 0x00ef5 memsz 0x00ef5 flags r-x
-\\colorbox{green!40!black}{ }LOAD off    0x02000 vaddr 0x12000 paddr 0x12000 align 2**12
+\\colorbox{green!40!black }LOAD off    0x02000 vaddr 0x12000 paddr 0x12000 align 2**12
        filesz 0x00858 memsz 0x00858 flags r--
-\\colorbox{orange!40!black}{ }LOAD off    0x02db8 vaddr 0x13db8 paddr 0x13db8 align 2**12
+\\colorbox{orange!40!black }LOAD off    0x02db8 vaddr 0x13db8 paddr 0x13db8 align 2**12
        filesz 0x00258 memsz 0x00360 flags rw-
-\\colorbox{red}{ }<em>LOAD off    0x04000 vaddr 0x20000 paddr 0x20000 align 2**12</em>
+\\colorbox{red }<em>LOAD off    0x04000 vaddr 0x20000 paddr 0x20000 align 2**12</em>
        <em>filesz 0x00400 memsz 0x00400 flags rwx</em>
 </code></pre>
  
-\end{onlyenv}```
- 
-::: {.r-stack}
-![](texfig/appendElfB.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+</div> 
 
-![](texfig/appendElfB.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+::: {.r-stack}
+![](/virus/texfig/appendElfB.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/virus/texfig/appendElfB.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
 
 :::
 

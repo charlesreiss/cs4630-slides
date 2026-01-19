@@ -1,7 +1,7 @@
 
 ### replace executable 
 
-![](texfig/where-code-replace-replace-executable.figure.svg){fig-alt="original executable transformed to virus code"}
+![](/virus/texfig/where-code-replace-replace-executable.figure.svg){fig-alt="original executable transformed to virus code"}
 
 
 ### replace executable?  {.smaller}
@@ -20,5 +20,5 @@
 
 ### replace executable --- subtle 
 
-![](texfig/where-code-replace-replace-executable-----subtle.figure.svg){fig-alt="original executable transformed to virus code followed by a copy of the original executable. The virus code writes the copy to a tempfile and runs it."}
+![](/virus/texfig/where-code-replace-replace-executable-----subtle.figure.svg){fig-alt="original executable transformed to virus code followed by a copy of the original executable. The virus code writes the copy to a tempfile and runs it."}
 

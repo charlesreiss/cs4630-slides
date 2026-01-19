@@ -3,7 +3,7 @@
 
 
 * often executable metadata has empty space 
-
+<hr class="vspace" />
 * debugging info and info not strictly needed to run program
 * [linker allocated space for $N$ fields, used less]{.fragment fragment-index=2 .custom .myem-only}
 
@@ -18,15 +18,16 @@
 
    * terminated by type == 0 entry
 
- <pre><code>Contents of section .dynamic:
+ 
+<pre><code>Contents of section .dynamic:
  600e28 01000000 00000000 01000000 00000000  ................
-    <it>... several non-empty entries ...</it>
+    <i>... several non-empty entries ...</i>
  600f88 f0ffff6f 00000000 56034000 00000000  ...o....V.@.....
-    <it>VERSYM (required library version info at) 0x400356</it>
- 600f98 <it>00000000 00000000 00000000 00000000</it>  ................
-    <it>NULL --- end of linker info</it>
+    <i>VERSYM (required library version info at) 0x400356</i>
+ 600f98 <i>00000000 00000000 00000000 00000000</i>  ................
+    <i>NULL --- end of linker info</i>
  600fa8 <em>00000000 00000000 00000000 00000000</em>  ................
-    <it>unused! (and below)</it>
+    <i>unused! (and below)</i>
  600fb8 <em>00000000 00000000 00000000 00000000</em>  ................
  600fc8 <em>00000000 00000000 00000000 00000000</em>  ................
  600fd8 <em>00000000 00000000 00000000 00000000</em>  ................

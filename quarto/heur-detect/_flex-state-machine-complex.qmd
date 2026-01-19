@@ -12,5 +12,5 @@ foo  {...}
 off  {...}
 .|\\n {/* do nothing */}
 </code></pre>
- ![](texfig/flex-state-machine-complex.figure.svg)
+ ![](/heur-detect/texfig/flex-state-machine-complex.figure.svg)
 

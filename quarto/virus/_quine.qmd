@@ -17,7 +17,8 @@
     moredelim={**[is][\btHL<3>]{@hi3@}{@endhi@}},
     showstringspaces=false,
 } -->
- <pre><code>#include &lt;stdio.h&gt;
+ 
+<pre><code>#include &lt;stdio.h&gt;
 char*x="int main(){
        printf(p,10,34,x,34,10,34,p,34,10,x,10);
        }";
@@ -31,9 +32,9 @@ int main(){
  
 
 * some line wrapping for readability --- shouldn't be in actual quine
- ![](texfig/quineClever.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=1}
-![](texfig/quineClever.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=2}
-![](texfig/quineClever.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment=index=3}
+ ![](/virus/texfig/quineClever.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/virus/texfig/quineClever.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+![](/virus/texfig/quineClever.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=3}
 
 
 ### dumb quine solution  {.smaller}

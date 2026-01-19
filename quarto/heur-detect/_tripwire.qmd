@@ -8,7 +8,7 @@
 
 * ‘‘tool for monitoring and alerting on file &amp; directory changes’’
 * targetted at servers with professional administrators 
-
+<hr class="vspace" />
 * setup: run tool, it records state of system/etc. files (e.g. hashes)
 * later: run tool, it tells you if anything changed
 
@@ -18,9 +18,9 @@
 
 * tripwire idea: detect any changes
 * notify user (administrator) about them 
-
+<hr class="vspace" />
 * what is user supposed to do with this info? 
-
+<hr class="vspace" />
 * what about normal software updates, etc.?
 * can malware hide in files that are supposed to change? 
 

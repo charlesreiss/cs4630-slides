@@ -12,16 +12,18 @@
 ### flex example 
 
 
+
 ::: {.r-stack .my-full}
-![](texfig/flexEx.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+![](/heur-detect/texfig/flexEx.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](texfig/flexEx.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/heur-detect/texfig/flexEx.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
 
-![](texfig/flexEx.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+![](/heur-detect/texfig/flexEx.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
 
-![](texfig/flexEx.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
+![](/heur-detect/texfig/flexEx.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
 
-![](texfig/flexEx.figure-5.svg){.fragment .fade-in-then-out fragment-index=5}
+![](/heur-detect/texfig/flexEx.figure-5.svg){.fragment .fade-in-then-out fragment-index=5}
+
 
 :::
 
@@ -34,10 +36,12 @@
         moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
         } -->
  
-::: {.r-stack}
-![](texfig/flexMatched.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](texfig/flexMatched.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+::: {.r-stack}
+![](/heur-detect/texfig/flexMatched.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/heur-detect/texfig/flexMatched.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
 
 :::
 
@@ -50,10 +54,12 @@
         moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
         } -->
  
-::: {.r-stack}
-![](texfig/flexDef.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](texfig/flexDef.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+::: {.r-stack}
+![](/heur-detect/texfig/flexDef.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/heur-detect/texfig/flexDef.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
 
 :::
 

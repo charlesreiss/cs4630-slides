@@ -11,5 +11,5 @@
 .       {...}
 \\n      {...}
 </code></pre>
- ![](texfig/flex-opt-btp.figure.svg)
+ ![](/heur-detect/texfig/flex-opt-btp.figure.svg)
 

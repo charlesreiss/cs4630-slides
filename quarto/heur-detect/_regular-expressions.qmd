@@ -39,7 +39,7 @@
 
 
 * special ways to match characters 
-
+<hr class="vspace" />
 * `\n`, `\t`, `\x3C`, … --- work like in C
 * `[b-fi]` --- <code>b</code> or <code>c</code> or <code>d</code> or <code>e</code> or <code>f</code> or <code>i</code>
 * `[^b-fi]` --- any character but <code>b</code> or <code>c</code> or …

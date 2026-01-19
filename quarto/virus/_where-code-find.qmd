@@ -3,7 +3,7 @@
 
 
 * what should be easiest/hardest to identify <br> without many false positives? 
-
+<hr class="vspace" />
 * A. replaced executable
 * B. appended to executable w/o compression
 * C. replaced cavities

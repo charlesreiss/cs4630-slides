@@ -3,7 +3,7 @@
 
 
 * Vienna <em>appends</em> code to infected application 
-
+<hr class="vspace" />
 * [where does it read the code come from?]{.fragment fragment-index=2 .custom .myem-only}
 * [how is code adjusted for new location in the binary?]{.fragment fragment-index=3 .custom .myem-only} 
 

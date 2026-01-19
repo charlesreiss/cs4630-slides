@@ -5,6 +5,6 @@
 * prevent malware from running
 * prevent malware from spreading
 * undo the effects of malware 
-
+<hr class="vspace" />
 * key subproblem: detect malware
 

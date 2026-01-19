@@ -6,11 +6,10 @@
 
    * [plus restore replaced code after running malware code]{.fragment fragment-index=2 .custom .myem-only}
 
-* return with padding after it:
-
+* return with padding after it: 
 <pre><code>  404a01:       c3                      <em>retq</em>
   404a02:       0f 1f 40 00             nopl   0x0(%rax)
-                <it>replace with</it>
+                <i>replace with</i>
   404a01:       e9 XX XX XX XX          <em>jmpq    YYYYYYY</em>
 </code></pre>
  
@@ -48,7 +47,7 @@ float_one: .float 1
 
 
 * one idea: replace calls
-* normal x86 call FOO: <code>E8 <it>(32-bit value: PC - address of foo)</it></code>
+* normal x86 call FOO: <code>E8 <i>(32-bit value: PC - address of foo)</i></code>
 * could look for E8 in code --- <em>lots of false positives</em>  
 
    * probably even if one excludes out-of-range addresses
@@ -94,7 +93,7 @@ foo:
 
 
 * Vienna: just write to memory addres 
-
+<hr class="vspace" />
 * modern OS: segfault/general protection fault 
 
    * code loaded read-only

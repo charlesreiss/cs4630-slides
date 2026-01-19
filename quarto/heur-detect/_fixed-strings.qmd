@@ -4,23 +4,25 @@
 
 * storing signature strings is non-trivial
 * tens of thousands of states??? 
-
+<hr class="vspace" />
 * observation: fixed strings dominate
 
 
 ### scanning for fixed strings 
 
 
+
 ::: {.r-stack .my-full}
-![](texfig/fixedScan.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+![](/heur-detect/texfig/fixedScan.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](texfig/fixedScan.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/heur-detect/texfig/fixedScan.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
 
-![](texfig/fixedScan.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+![](/heur-detect/texfig/fixedScan.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
 
-![](texfig/fixedScan.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
+![](/heur-detect/texfig/fixedScan.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
 
-![](texfig/fixedScan.figure-5.svg){.fragment .fade-in-then-out fragment-index=5}
+![](/heur-detect/texfig/fixedScan.figure-5.svg){.fragment .fade-in-then-out fragment-index=5}
+
 
 :::
 

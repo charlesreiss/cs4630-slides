@@ -6,7 +6,8 @@
     language=myasm,
     moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
 } -->
- <pre><code><span data-fragment-index="2" class="fragment custom myem-only">mov $0x8f9, %si</span> // %si = beginning of virus data
+ 
+<pre><code><span data-fragment-index="2" class="fragment custom myem-only">mov $0x8f9, %si</span> // %si = beginning of virus data
 ...
 mov $0x288, %cx // length of virus
 mov $0x40, %ah  // system call # for write

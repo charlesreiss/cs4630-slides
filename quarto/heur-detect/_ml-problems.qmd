@@ -3,7 +3,7 @@
 
 
 * I don't like most ML-based approaches to malware detection 
-
+<hr class="vspace" />
 * problem: most machine learning not designed to deal with adversaries
 * attack: find factors used to ID benign programs 
 

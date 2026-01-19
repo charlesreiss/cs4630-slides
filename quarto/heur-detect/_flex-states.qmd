@@ -8,12 +8,14 @@
         moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
         } -->
  
+
 ::: {.r-stack}
-![](texfig/flexStates.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+![](/heur-detect/texfig/flexStates.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](texfig/flexStates.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/heur-detect/texfig/flexStates.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
 
-![](texfig/flexStates.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+![](/heur-detect/texfig/flexStates.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
 
 :::
 
@@ -21,10 +23,12 @@
 ### flex states (2) 
 
 
-::: {.r-stack .my-full}
-![](texfig/flexStates2.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](texfig/flexStates2.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+::: {.r-stack .my-full}
+![](/heur-detect/texfig/flexStates2.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/heur-detect/texfig/flexStates2.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
 
 :::
 

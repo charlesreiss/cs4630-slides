@@ -1,6 +1,7 @@
 
 ### starting locations  {.smaller}
 
+
 <pre><code>/bin/ls:     file format elf64-x86-64
 /bin/ls
 architecture: i386:x86-64, flags 0x00000112:

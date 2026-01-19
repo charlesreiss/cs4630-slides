@@ -4,7 +4,8 @@
 
 
 * unreachable no-ops!
- <pre><code>...
+ 
+<pre><code>...
   403788:	e9 59 0c 00 00       	jmpq   4043e6 &lt;__sprintf_chk@plt+0x1a06&gt;
   <em>40378d:	0f 1f 00             	nopl   (%rax)</em>
   403790:	ba 05 00 00 00       	mov    $0x5,%edx

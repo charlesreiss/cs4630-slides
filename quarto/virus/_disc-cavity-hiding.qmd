@@ -3,13 +3,13 @@
 
 
 * thought for future: detecting cavity hiding? 
-
+<hr class="vspace" />
 * example: filling empty space in header --- what should we look for? 
 
    * stuff that looks like machine code?
    * validate matches executable data structure?
  
-
+<hr class="vspace" />
 * follow-up: possibility for false positives? 
 
    * additional executable format features?

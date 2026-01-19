@@ -1,7 +1,7 @@
 
 ### appending 
 
-![](texfig/where-append-compress-appending.figure.svg){fig-alt="executable transformed by replacing some of the original code with jmp + appending virus"}
+![](/virus/texfig/where-append-compress-appending.figure.svg){fig-alt="executable transformed by replacing some of the original code with jmp + appending virus"}
 
 
 ### appending and executable formats  {.smaller}
@@ -9,7 +9,7 @@
 
 * COM files are very simple --- no metadata
 * modern executable formats have length information to update: 
-
+<hr class="vspace" />
 * option 1: add segment (ELF LOAD) to program header 
 
    * (often a little extra space after program header, due to page-alignment)

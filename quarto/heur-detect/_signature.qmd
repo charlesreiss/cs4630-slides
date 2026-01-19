@@ -7,10 +7,10 @@
    * software and related files change legitimately
    * (note: malware might not be in main executables)
  
-
+<hr class="vspace" />
 * antivirus vendor have <em>signatures</em> for known malware
 * many options to represent signatures
 * thought process: <em>signature for Vienna?</em> 
-
+<hr class="vspace" />
 * goals: compact, fast to check, reliable
 

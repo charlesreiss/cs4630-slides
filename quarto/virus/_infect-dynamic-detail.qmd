@@ -1,6 +1,7 @@
 
 ### stubs  {.smaller}
 
+
 <pre><code>0000000000001050 &lt;puts@plt&gt;:
     1050:       f3 0f 1e fa             endbr64 
     1054:       f2 ff 25 75 2f 00 00    bnd jmpq *0x2f75(%rip)        # 3fd0 &lt;puts@GLIBC_2.2.5&gt;
@@ -17,6 +18,7 @@
 
 ### stubs again  {.smaller}
 
+
 <pre><code>0000000000001050 &lt;puts@plt&gt;:
     1050:       f3 0f 1e fa             endbr64 
     1054:       f2 ff 25 75 2f 00 00    bnd jmpq *0x2f75(%rip)        # 3fd0 &lt;puts@GLIBC_2.2.5&gt;
@@ -28,9 +30,9 @@
    * stored in data section of executable
 
 * originally: pointer to lazy linking code 
-
+<hr class="vspace" />
 * malware code can jump to original lazy linking code after 
-
+<hr class="vspace" />
 * preview of future topics: also can be changed by exploits 
 
    * commonly involved in memory-error exploits (buffer overflow, etc.)
@@ -39,14 +41,15 @@
 
 ### relocations?  {.smaller}
 
-on executable: <pre><code>hello.exe:     file format elf64-x86-64
+on executable: 
+<pre><code>hello.exe:     file format elf64-x86-64
 
 DYNAMIC RELOCATION RECORDS
 OFFSET           TYPE              VALUE 
 ...
-0000000000003fd0 R_X86_64_JUMP_SLOT  <it>puts@GLIBC_2.2.5</it>
+0000000000003fd0 R_X86_64_JUMP_SLOT  <i>puts@GLIBC_2.2.5</i>
     <em>replace with:</em>
-0000000000003fd0 R_X86_64_JUMP_SLOT  <it>*ABS*+virus_code_address</it>
+0000000000003fd0 R_X86_64_JUMP_SLOT  <i>*ABS*+virus_code_address</i>
 ...
 </code></pre>
  
@@ -56,13 +59,14 @@ OFFSET           TYPE              VALUE
 
 ### symbols?  {.smaller}
 
-on library: <pre><code>/lib/x86_64-linux-gnu/libc.so.6:     file format elf64-x86-64
+on library: 
+<pre><code>/lib/x86_64-linux-gnu/libc.so.6:     file format elf64-x86-64
 
 DYNAMIC SYMBOL TABLE:
 ...
-00000000000875a0  w   DF .text  <it>00000000000001dc</it>  GLIBC_2.2.5 puts
+00000000000875a0  w   DF .text  <i>00000000000001dc</i>  GLIBC_2.2.5 puts
     <em>replace with:</em>
-00000000000875a0  w   DF .text  <it>(virus code off)</it>  GLIBC_2.2.5 puts
+00000000000875a0  w   DF .text  <i>(virus code off)</i>  GLIBC_2.2.5 puts
 </code></pre>
  
 

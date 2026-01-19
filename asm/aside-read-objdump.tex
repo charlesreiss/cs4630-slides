@@ -56,3 +56,25 @@
 \end{visibleenv}
 \end{tikzpicture}
 \end{frame}
+
+\begin{frame}[fragile]{objdump --file-offset}
+    \begin{itemize}
+    \item objdump --file-offset shows file offset next to addresses
+    \end{itemize}
+\begin{Verbatim}[fontsize=\fontsize{10}{11}\selectfont]
+0000000000401775 <main> (File Offset: 0x1775):
+  401775:       f3 0f 1e fa             endbr64 
+  401779:       55                      push   %rbp
+  40177a:       48 89 e5                mov    %rsp,%rbp
+  40177d:       48 8d 05 80 68 09 00    lea    0x96880(%rip),%rax   
+          # 498004 <_IO_stdin_used+0x4> (File Offset: 0x98004)
+\end{Verbatim}
+    \begin{itemize}
+    \item main is stored 0x1775 bytes into file, so 
+    \item lea instruction is therefore 0x177d bytes into file
+    \item 0x498004 (referenced by lea) is stored 0x98004 bytes into file
+        \begin{itemize}
+        \item (shown as two lines above, but really one very long line)
+        \end{itemize}
+    \end{itemize}
+\end{frame}

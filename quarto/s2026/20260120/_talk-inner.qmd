@@ -91,6 +91,8 @@
 
 {{< include /re-tools/_talk-inner.qmd >}}
 
+{{< include /x8664-encoding/_talk-inner.qmd >}}
+
 # backup slides {visibility="hidden"}
 
 ### backup slides 

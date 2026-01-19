@@ -1282,7 +1282,7 @@ class Tikzpicture(_MyAstItem):
                 result += f'![]({output_svg_name})' + \
                     '{.absolute top="0%" left="0%" width=1050 height=600 .my-center ' + maybe_alt
                 if max_slide_number > 1:
-                    result += ' .fragment .fade-in-then-out fragment=index='+str(slide_number)
+                    result += ' .fragment .fade-in-then-out fragment-index='+str(slide_number)
                 result += '}\n'
             elif max_slide_number == 1:
                 result += f'![]({output_svg_name})'

@@ -2,7 +2,6 @@
 **/*.quarto_ipynb
 *.pdf
 **/latex.out/*.pdf
-**/texfig/*.svg
 !**/figures/*.pdf
 **/*.html
 .venv

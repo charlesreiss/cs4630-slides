@@ -1,23 +1,23 @@
 
-### flex: state machines  {.smaller}
+### flex: state machines 
 
 <!-- \lstset{
         style=small,
         language={},
         moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
         } -->
- 
-<pre><code>foo     {...}
+```flex 
+%%
+foo     {...}
 .       {...}
-\\n      {...}
-</code></pre>
- 
+\n      {...}
+``` 
 
 ::: {.r-stack}
-![](/heur-detect/texfig/flexSM.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](/heur-detect/texfig/flexSM.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/heur-detect/texfig/flexSM.figure-1.svg){.fragment .fade-out fragment-index=1 width=1000px}
 
+![](/heur-detect/texfig/flexSM.figure-2.svg){.fragment .fade-in-then-out fragment-index=1 width=1000px}
 
 :::
 

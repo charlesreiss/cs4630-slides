@@ -1,11 +1,8 @@
 
-### why this?  {.smaller}
-
+### why this?
 
 * one pass matching (except for some backtracking) 
-
    * can make state machine bigger to avoid some backtracking
-
 * basically speed of file I/O
 * handles multiple patterns well
 * flexible for ‘‘special cases’’ 

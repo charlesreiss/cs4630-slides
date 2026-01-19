@@ -7,59 +7,115 @@
 * generates <em>C code</em>
 * parser function called <code>yylex</code>
 
-<!-- \lstset{style=small,language={}} -->
-
 ### flex example 
 
+```{.flex code-line-numbers=true}
+{{< include /heur-detect/flex-example1.l >}}
+```
+<!-- not using code-line-numbers=|..|.. -->
+
+### flex example
 
 
-::: {.r-stack .my-full}
-![](/heur-detect/texfig/flexEx.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+```{.flex code-line-numbers="3,10"}
+{{< include /heur-detect/flex-example1.l >}}
+```
 
-![](/heur-detect/texfig/flexEx.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
-
-![](/heur-detect/texfig/flexEx.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
-
-![](/heur-detect/texfig/flexEx.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
-
-![](/heur-detect/texfig/flexEx.figure-5.svg){.fragment .fade-in-then-out fragment-index=5}
-
-
+::: {.myoverbox}
+three sections separated by `%%`
 :::
+
+### flex example
+
+
+```{.flex code-line-numbers="1-2"}
+{{< include /heur-detect/flex-example1.l >}}
+```
+
+::: {.myoverbox style="top: 30%"}
+first --- declarations for later C code in output file
+:::
+
+### flex example
+
+```{.flex code-line-numbers="4-9"}
+{{< include /heur-detect/flex-example1.l >}}
+```
+
+::: {.myoverbox style="top: 10%"}
+patterns, code to run on match <br />
+(when flex is used as parser would return "token" here)
+:::
+
+### flex example
+
+```{.flex code-line-numbers="11-16"}
+{{< include /heur-detect/flex-example1.l >}}
+```
+
+::: {.myoverbox}
+extra C code to include
+:::
+
 
 
 ### flex: matched text 
 
-<!-- \lstset{
-        style=small,
-        language={},
-        moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
-        } -->
- 
 
-::: {.r-stack}
-![](/heur-detect/texfig/flexMatched.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](/heur-detect/texfig/flexMatched.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+```{.flex code-line-numbers=3}
+[aA][a-z]* {
+               printf("found a-word '%s'\n", yytext);
+           }
+(.|\n)     {} /* default rule: would output text */
+```
 
+::: {.myoverbox}
+
+`yytext` contains contents of currently matched thing
 
 :::
-
 
 ### flex: definitions 
 
-<!-- \lstset{
-        style=small,
-        language={},
-        moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
-        } -->
- 
+```{.flex code-line-numbers=true}
+A        [aA]
+LOWERS   [a-z]
+ANY      (.|\n)
+%%
+{A}{LOWERS}* {
+                printf("found a-word '%s'\n",
+                       yytext);
+             }
+{ANY}        {} /* default rule would
+                   output text */
+%%
+int main(void) {
+    yylex();
+}
+```
 
-::: {.r-stack}
-![](/heur-detect/texfig/flexDef.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+### flex: definitions 
 
-![](/heur-detect/texfig/flexDef.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+```{.flex code-line-numbers=1-3}
+A        [aA]
+LOWERS   [a-z]
+ANY      (.|\n)
+%%
+{A}{LOWERS}* {
+                printf("found a-word '%s'\n",
+                       yytext);
+             }
+{ANY}        {} /* default rule would
+                   output text */
+%%
+int main(void) {
+    yylex();
+}
+```
 
+::: {.myoverbox .low}
+
+definitions of common patterns included later
 
 :::
-

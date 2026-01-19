@@ -1,28 +1,20 @@
 
 ### modern bootloaders --- secure boot 
 
-
 * ‘‘Secure Boot’’ is a common feature of modern bootloaders
 * idea: UEFI/BIOS code checks bootloader code, fails if not okay 
-
    * requires user intervention to use not-okay code
 
 
-
-### Secure Boot and keys  {.smaller}
+### Secure Boot and keys
 
 
 * Secure Boot relies on cryptographic signatures 
-
    * idea: accept only ‘‘legitimate’’ bootloaders
    * legitimate: known authority vouched for them
-
 * user control of their own systems? 
-
    * in theory: can add own keys
-
 * what about changing OS instead of bootloader? 
-
    * bootloader could check cryptographic signature or hash of kernel being loaded
 
 

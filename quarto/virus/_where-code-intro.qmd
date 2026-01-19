@@ -18,15 +18,3 @@
    * Vienna: weird modification time --- easy to find?
 
 
-
-### where to put code: options  {.smaller}
-
-
-* one <i>or more</i> of:
-* replacing executable code
-* after executable code (Vienna)
-* in unused executable code
-* inside OS code
-* in memory
-* replace existing code
-

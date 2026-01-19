@@ -1,13 +1,13 @@
 
-### behavior-based detection  {.smaller}
+### behavior-based detection
 
 
 * things malware does that other programs don't? 
-<hr class="vspace" />
 * modify system files
 * modifying existing executables
 * open network connections to lots of random places
-* … 
+* etc.
 <hr class="vspace" />
-* basic idea: run in virtual machine; and/or monitor all programs
+* [idea: monitor for "bad" behavior]{.fragment .custom .myem-fade-in fragment-index=0}
+  *  [maybe run in VM and look for bad behavior]{.fragment .fade-in fragment-index=0}
 

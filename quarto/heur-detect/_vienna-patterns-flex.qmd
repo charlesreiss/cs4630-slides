@@ -12,32 +12,24 @@
 * simple Vienna patterns:
  
 <pre><code>/* bytes of fixed part of Vienna sample */
-\\xFC\\x89\\xD6\\x83\\xC6\\x81\\xc7\\x00\\x01\\x83`\\textit{(etc)}` {
-        printf("found Vienna code\\n");
+\xFC\x89\xD6\x83\xC6\x81\xc7\x00\x01\x83<i>(etc.)</i> {
+        printf("found Vienna code\n");
     }
 </code></pre>
 
 
-### Vienna patterns (2)  {.smaller}
-
-<!-- \lstset{
-        style=small,
-        language={},
-        moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
-        escapechar=`,
-        } -->
- 
+### Vienna patterns (2)
 
 * simple Vienna patterns:
  
 <pre><code>/* Vienna sample with wildcards for
    changing bytes: */
 /* push %CX; mov ???, %dx; cld; ... */
-\\x51\\xBA<span data-fragment-index="2" class="fragment custom myem-only">(.|\n)(.|\n)</span>\\xFC\\x89`\\textit{(etc)}` {
-        printf("found Vienna code w/placeholder\\n");
+\x51\xBA<span data-fragment-index="2" class="fragment custom myem-only">(.|\n)(.|\n)</span>\xFC\x89<i>(etc.)</i> {
+        printf("found Vienna code w/placeholder\n");
     }
 /* mov $0x100, %di; push %di; xor %di, %di; ret */
-\\xBF\\x00\\x01\\x57\\x31\\xFF\\xC3 {
+\xBF\x00\x01\x57\x31\xFF\xC3 {
         printf("found Vienna return code\\n");
     }
 </code></pre>

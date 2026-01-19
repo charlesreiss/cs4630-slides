@@ -8,6 +8,7 @@
 \usepackage{listings}
 \usepackage[normalem]{ulem} % for sout
 \usepackage{amsmath}
+\usepackage{contour}
 \ifluatex
     \def\EmptyMapping{}
 \else
@@ -19,7 +20,7 @@
 \graphicspath{{}{./}{../}{../../}{../../common/}}
 \input{common/listingsLib}
 
-\usetikzlibrary{arrows.meta,calc,patterns,positioning,matrix,shapes.multipart,fit}
+\usetikzlibrary{arrows.meta,calc,patterns,positioning,matrix,shapes.multipart,fit,shapes.misc}
 \tikzset{ 
     ampersand replacement=\&,
     tight matrix node/.style={draw,rectangle,inner sep=1pt, outer sep=0pt,text width=1cm,minimum height=.4cm,anchor=center},
@@ -174,25 +175,26 @@
     \end{scope}\group_end:
   }
 \NewCommandCopy\originalColor\color
-\RenewDocumentCommand\color{D<>{}m}
+\NewCommandCopy\originalSout\sout
+\RenewDocumentCommand\color{D<>{1-}m}
   {
     \alt<#1>{\originalColor{#2}}{}
   }
-\NewDocumentCommand\myemph{D<>{}m}
+\NewDocumentCommand\myemph{D<>{1-}m}
   {
     \group_begin:\alt<#1>{\originalColor{orange!50!red}\itshape}{}#2\group_end:
   }
-\NewDocumentCommand\maybeEmph{D<>{}m}
+\NewDocumentCommand\maybeEmph{D<>{1-}m}
   {
     \group_begin:\alt<#1>{\originalColor{orange!50!red}\itshape}{}#2\group_end:
   }
-\RenewDocumentCommand\textbf{D<>{}m}
+\RenewDocumentCommand\textbf{D<>{1-}m}
   {
     \group_begin:\alt<#1>{\bfseries}{}#2\group_end:
   }
-\RenewDocumentCommand\textbf{D<>{}m}
+\RenewDocumentCommand\sout{D<>{1-}m}
   {
-    \group_begin:\alt<#1>{\bfseries}{}#2\group_end:
+     \alt<#1>{\originalSout{#2}}{#2}
   }
 
 \NewDocumentCommand{\setSlide}{m}{

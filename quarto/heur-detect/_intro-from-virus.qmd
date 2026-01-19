@@ -1,18 +1,14 @@
 
-### virus choices?  {.smaller}
+### virus choices?
 
-
-
-* why don't viruses always append/replace\\tikzmark{append}?
-* why don't viruses always change start location\\tikzmark{start}?
+* why don't viruses always append/replace
+  * ["head/tail" scanning]{.fragment .custom .myem-fade-in fragment-index=1}
+* why don't viruses always change start location
+  * [checking for suspicious start location]{.fragment .custom .myem-fade-in fragment-index=2}
 * why did I bother talking about all these strategies?
- ![](/heur-detect/texfig/whyChoices.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/heur-detect/texfig/whyChoices.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
-![](/heur-detect/texfig/whyChoices.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=3}
 
 
 ### more on virus strategies 
-
 
 * after we talk about anti-virus strategies some
 

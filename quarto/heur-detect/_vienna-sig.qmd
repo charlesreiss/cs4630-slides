@@ -67,45 +67,34 @@ xor %bx, %bx
 
 
 * the Vienna virus was copied a bunch of times
-* small changes, ‘‘payloads’’ added 
-
+* small changes, "payloads" added 
    * print messages, do different malicious things, …
-
 * this signature will not detect any variants
 * can we do better?
 
 
 ### simple signature (2) 
 
-
 * Vienna start code 
-
    * weird jump at beginning??
-
 * problem: maybe real applications do this?
 * problem: easy to move jump
 
 
 ### simple signature (3) 
 
-
 * Vienna infection code 
-
    * scans directory, finds files
-
 * likely to stay the same in variants?
-* problem: virus writers <em>react to antivirus</em>
 
-
-### simple signature (4)  {.smaller}
-
+### simple signature (4) 
 
 * Vienna finish code 
-
    * push + ret
-
 * very unusual pattern
 * probably(?) not in ‘‘real’’ programs
 * real effort to change to something else?
-* problem: virus writers <em>react to antivirus</em>
 
+### simple signature problems
+
+* how hard is it for virus author to break signature?

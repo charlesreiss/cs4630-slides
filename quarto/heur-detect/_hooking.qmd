@@ -1,25 +1,20 @@
-
-### hooking  {.smaller}
-
+### hooking 
 
 * hooking --- getting a ‘hook’ to run on (OS) operations 
+   * examples: creating new files, modifying executables
+* ideal mechanism: OS support
+* less ideal mechanism: change library loading
+* less ideal mechanism: replace OS handlers
+* less ideal mechanism: debugger support
 
-   * e.g. creating new files
-   * e.g. modifying executable files
+### hooking 
 
-* ideal mechanism: [OS support]{.fragment fragment-index=2 .custom .myem-only}
-* less ideal mechanism: [change library loading]{.fragment fragment-index=3 .custom .myem-only} 
-
-   * e.g. replace ‘open’, ‘fopen’, etc. in libraries
-
-* less ideal mechanism: [replace OS exception]{.fragment fragment-index=4 .custom .myem-only} (system call) handlers 
-
-   * very OS version dependent
-
-* less ideal mechanism: [debugger support]{.fragment fragment-index=5 .custom .myem-only}
-
-
-### againframe(hookingList)
+* hooking --- getting a ‘hook’ to run on (OS) operations 
+   * examples: creating new files, modifying executables
+* ideal mechanism: <em>OS support</em>
+* less ideal mechanism: change library loading
+* less ideal mechanism: replace OS handlers
+* less ideal mechanism: debugger support
 
 ###  
 
@@ -27,17 +22,13 @@
 ![](/heur-detect/filter-driver){}
 
 
-### Linux hooking  {.smaller}
-
+### Linux hooking
 
 * several possible mechanisms
 * tracepoints, kprobes 
-
    * cause hooking functions to run when kernel functions called or return
    * hooker function can arrange for logging or other action
-
 * seccomp BPF 
-
    * allow hooker to write ‘program’ to examine system calls of selected processes
    * can deny/change/log those system calls
 
@@ -45,16 +36,20 @@
 
 ### aside Linux eBPF 
 
-
 * eBPF = extended Berkeley Packet Filters
 * little programming language originally intended for network filtering
-* 
 
 
-### againframe(hookingList)
+### hooking 
+
+* hooking --- getting a ‘hook’ to run on (OS) operations 
+   * examples: creating new files, modifying executables
+* ideal mechanism: OS support
+* less ideal mechanism: <em>change library loading</em>
+* less ideal mechanism: replace OS handlers
+* less ideal mechanism: debugger support
 
 ### changing library loading 
-
 
 * e.g. install new library --- or edit loader, but … 
 <hr class="vspace" />
@@ -62,7 +57,14 @@
 * what if your wrapper doesn't work exactly the same?
 
 
-### againframe(hookingList)
+### hooking 
+
+* hooking --- getting a ‘hook’ to run on (OS) operations 
+   * examples: creating new files, modifying executables
+* ideal mechanism: OS support
+* less ideal mechanism: change library loading<
+* less ideal mechanism: <Em>replace OS handlers</em>
+* less ideal mechanism: debugger support
 
 ### changing exception call handlers (1) 
 

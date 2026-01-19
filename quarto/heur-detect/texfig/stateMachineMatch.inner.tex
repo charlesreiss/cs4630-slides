@@ -1,5 +1,5 @@
 \begin{tikzpicture}
-\node(matchString) {\large \tt \sout<3->{\myemph<2>{a}}\sout<4->{b}\sout<7->{\myemph<5-6>{f}\myemph<6>{oo}}\myemph<7-8>{f}\myemph<7>{\sout<8>{o}}abffoo};
+\node(matchString) {\large \tt \sout<3-8>{\myemph<2>{a}}\sout<4-8>{b}\sout<7-8>{\myemph<5-6>{f}\myemph<6>{oo}}\myemph<7-8>{f}\myemph<7>{\sout<8>{o}}abffoo};
 
 \begin{scope}[every node/.style={font=\tt,thick}]
 \node[initial, state,below=1cm of matchString,font=\normalfont\it,

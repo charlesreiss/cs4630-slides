@@ -2,65 +2,70 @@
 ### viruses and executable formats 
 
 
-
 ::: {.r-stack .my-full}
-![](/heur-detect/texfig/exec-lib-regularity-viruses-and-executable-formats.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](/heur-detect/texfig/exec-lib-regularity-viruses-and-executable-formats.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/heur-detect/texfig/exec-lib-regularity-viruses-and-executable-formats.figure-1.svg){.fragment .fade-in-then-out fragment-index=1 fig-alt="unmodified executable: header, program header (segments to load); segment 1 data; segment 2 data"}
 
-![](/heur-detect/texfig/exec-lib-regularity-viruses-and-executable-formats.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
-
-![](/heur-detect/texfig/exec-lib-regularity-viruses-and-executable-formats.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
-
-![](/heur-detect/texfig/exec-lib-regularity-viruses-and-executable-formats.figure-5.svg){.fragment .fade-in-then-out fragment-index=5}
-
-![](/heur-detect/texfig/exec-lib-regularity-viruses-and-executable-formats.figure-6.svg){.fragment .fade-in-then-out fragment-index=6}
+![](/heur-detect/texfig/exec-lib-regularity-viruses-and-executable-formats.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 fig-alt="same as before, but with length of segment edited by virus and virus code added to segment 2"}
 
 
-:::
+<!--![](/heur-detect/texfig/exec-lib-regularity-viruses-and-executable-formats.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}-->
 
+![](/heur-detect/texfig/exec-lib-regularity-viruses-and-executable-formats.figure-4.svg){.fragment .fade-in-then-out fragment-index=3 fig-alt="same as before, but new segment added by virus instead of segment 2 being modified"}
 
-### defeating entry point checking  {.smaller}
-
-
-
-* [insert jump in normal code section, set as entry-point]{.fragment fragment-index=2 .custom .myem-only}
-* add code to first section instead (perhaps insert new section at beginning)
- 
-
-::: {.r-stack}
-![](/heur-detect/texfig/exec-lib-regularity-defeating-entry-point-checking.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
-
-![](/heur-detect/texfig/exec-lib-regularity-defeating-entry-point-checking.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/heur-detect/texfig/exec-lib-regularity-viruses-and-executable-formats.figure-4.svg){.fragment .fade-in-then-out fragment-index=4 fig-alt="same as before, but new segment added by virus instead of segment 2 being modified"}
 
 
 :::
 
+::: {.myoverbox .low .fragment .fade-in-and-out fragment-index=2}
 
-### heuristics: library calls  {.smaller}
+heuristic 1: is entry in last segment?
+
+:::
+
+::: {.myoverbox .low .fragment .fade-in-and-out fragment-index=3}
+
+heuristic 1: is entry in last segment?
+
+:::
+
+::: {.myoverbox .low .fragment .fade-in-and-out fragment-index=4}
+
+heuristic 2: did virus mess up header?
+
+:::
+
+### defeating entry point checking
+
+
+
+* insert jump in normal code section, set as entry-point 
+    *  [potential counter-heuristic: run in VM, see if switches section]{.fragment fragment-index=1 .custom .myem-fade-in}
+
+* add code to first section instead 
+    *  perhaps insert new section at beginning
+
+
+### heuristics: library calls
 
 
 
 * dynamic linking --- functions called <em>by name</em>
 * how do viruses add to dynamic linking tables? 
-
    * often don't! --- instead dynamically look-up functions
    * if do --- could mess that up/lots of code
 
-   ![](/heur-detect/texfig/exec-lib-regularity-heuristics-library-calls.figure.svg)
-
+* [possible heuristic: look for API function name strings]{.fragment  fragment-index=1 .custom .myem-fade-in}
 
 ### evading library call checking 
 
-
+* if anti-virus software looking for function name strings:
+<hr class="vspace"/>
 * modify dynamic linking tables 
-
    * probably tricky to add new entry
-
 * reimplement library call manually 
-
    * Windows system calls not well documented, change
-
 * [hide names]{.fragment fragment-index=2 .custom .myem-only}
 
 

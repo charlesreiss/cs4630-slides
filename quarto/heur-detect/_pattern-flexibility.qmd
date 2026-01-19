@@ -1,6 +1,5 @@
 
-### regular expressions are flexible  {.smaller}
-
+### regular expressions are flexible
 
 * for Vienna: lots of flex features we didn't need 
 

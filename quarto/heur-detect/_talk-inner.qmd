@@ -3,7 +3,7 @@
 
 {{< include /heur-detect/_invoke-detect-ex.qmd >}}
 
-# why don't viruses\ldots {visibility="hidden"}
+# why don't viruses... {visibility="hidden"}
 
 {{< include /heur-detect/_intro-from-virus.qmd >}}
 
@@ -31,19 +31,14 @@
 
 {{< include /heur-detect/_signature.qmd >}}
 
-### aside: signature types  {.smaller}
-
+### aside: signature types
 
 * one goal: detect malware without it running 
-
    * examine code+data
-
 * our first topic 
 <hr class="vspace" />
 * alternate idea: detect running malware 
-
    * examine operations performed by software
-
 * we'll revisit later
 
 
@@ -77,12 +72,6 @@
 
 {{< include /heur-detect/_why-state-machine.qmd >}}
 
-## backtracking problems? {visibility="hidden"}
-
-{{< include /heur-detect/_flex-opt-btp.qmd >}}
-
-{{< include /heur-detect/_flex-state-machine-complex.qmd >}}
-
 ## flex: Vienna example {visibility="hidden"}
 
 {{< include /heur-detect/_vienna-patterns-flex.qmd >}}
@@ -97,17 +86,32 @@
 
 # making scanners more efficient {visibility="hidden"}
 
-{{< include /heur-detect/_making-efficient.qmd >}}
+### making scanners efficient 
+
+* lots of viruses!
+   * huge number of states, tables
+   * copies of every piece of malware pretty large
+* reading files is slow!
 
 ## fixed strings {visibility="hidden"}
 
-### againframe(effScanners)
+### making scanners efficient 
+
+* <em>lots of viruses!</em>
+   * huge number of states, tables
+   * copies of every piece of malware pretty large
+* reading files is slow!
 
 {{< include /heur-detect/_fixed-strings.qmd >}}
 
 ## selective scanning {visibility="hidden"}
 
-### againframe(effScanners)
+### making scanners efficient 
+
+* lots of viruses!
+   * huge number of states, tables
+   * copies of every piece of malware pretty large
+* <em>reading files is slow!</em>
 
 {{< include /heur-detect/_selective-scanning.qmd >}}
 

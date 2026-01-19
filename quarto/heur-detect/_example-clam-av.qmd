@@ -24,7 +24,7 @@
 
 
 
-### example ClamAV signatures (1)  {.smaller}
+### example ClamAV signatures (1) 
 
 
 
@@ -39,11 +39,10 @@ e4b8442638b3948ab0291447affa6790:293376:Win.Trojan.Sality-93161:73
 df36dc207b689a73ab9cf45a06fb71b0:232448:Win.Trojan.Sality-93162:73
 baaeeabc7f4be3199af3d82d10c6b39f:293376:Win.Trojan.Sality-93163:73
 ...
-
 ```
 
 
-### example ClamAV signatures (2)  {.smaller}
+### example ClamAV signatures (2)
 
 
 
@@ -52,16 +51,15 @@ baaeeabc7f4be3199af3d82d10c6b39f:293376:Win.Trojan.Sality-93163:73
 ```
 Win.Trojan.Vienna-1:0:*:5051e8??00{1-255}5b83eb??fc8d37bf0001b90300f3a48bf3558bec83ec7cb430cd21
 Win.Trojan.Vienna-2:0:*:be000356c3*50be????8bd6fcb90500bf0001f3a48bfab430cd21
-Win.Trojan.Vienna-3:0:*:50ba????8bf283c60090bf0001b90300fcf3a48bfab430cd213c02                     
+Win.Trojan.Vienna-3:0:*:50ba????8bf283c60090bf0001b90300fcf3a48bfab430cd213c02
 Win.Trojan.Vienna-4:0:*:b440b900048bd681eac102cd21721f3d
 Win.Trojan.Vienna-5:0:*:b904048bd681ea130352515350b4
 ...
 Win.Trojan.Vienna-129:0:*:51b89b03cd213d01017503e9????ba6d03fc8bf283c60a90b90300bf0001f3a4
-
 ```
 
 
-### example ClamAV signatures (3)  {.smaller}
+### example ClamAV signatures (3)
 
 
 
@@ -78,6 +76,5 @@ Andr.Trojan.Pjapps-58;Engine:51-255,
     4e6f6b69614e373631302d31; // pattern 4
     336c676f6167646d66656a656b67666f733974313563686f6a6d; // pattern 5
     0:646578 // pattern 6: "0:" means must be found at beginning of file
-
 ```
 

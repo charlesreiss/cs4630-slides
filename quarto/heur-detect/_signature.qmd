@@ -1,12 +1,9 @@
 
-### malware ‘‘signatures’’  {.smaller}
-
+### malware "signatures"
 
 * typically can't rely on whitelisting approach 
-
    * software and related files change legitimately
-   * (note: malware might not be in main executables)
- 
+   * and malware might not be in main executables
 <hr class="vspace" />
 * antivirus vendor have <em>signatures</em> for known malware
 * many options to represent signatures

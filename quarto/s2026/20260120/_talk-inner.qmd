@@ -1,0 +1,98 @@
+### last time (1) {.smaller}
+
+* 128-bit `%xmm`<i>X</i> registers 
+   * addss = add scalar single (precision floating point)
+   * might also be used for non-floating-point
+* `label(%rip)` = `label-currentAddr(%rip)`
+* segmentation and thread-local storage 
+   * historical alternative to virtual memory
+   * (segment number):(offset) $\rightarrow$ "linear address"
+   * x86: segment number from segment register based on instruction 
+      * example: data accesses use number from %ds
+   * current use: psuedo-pointer for thread local storage
+
+### last time (2) 
+
+* ELF files: header / program headers / segments / section list
+* sections = for linker to produce executable 
+   * indicate purpose of region of memory
+   * not actually used to run program  
+      * can be ‘stripped’ out and program will still run
+* segments = for loading program 
+   * for ‘dumb’ program loader
+   * don't have information about purpose of program
+
+
+## ELF sections {visibility="hidden"}
+
+{{< include /exec-encoding/_elf-sections.qmd >}}
+
+## program headers: example static ELF binary {visibility="hidden"}
+
+{{< include /exec-encoding/_header-static.qmd >}}
+
+## ELF LOAD {visibility="hidden"}
+
+{{< include /exec-encoding/_elf-loading-diag.qmd >}}
+
+## position independent executables {visibility="hidden"}
+
+{{< include /exec-encoding/_pic-exec.qmd >}}
+
+# aside: other formats {visibility="hidden"}
+
+{{< include /exec-encoding/_aside-other-formats.qmd >}}
+
+# executable startup {visibility="hidden"}
+
+{{< include /exec-encoding/_startup.qmd >}}
+
+# dynamic linking {visibility="hidden"}
+
+## linking primer {visibility="hidden"}
+
+{{< include /exec-encoding/_dl-primer.qmd >}}
+
+## in objdump, static{visibility="hidden"}
+
+{{< include /exec-encoding/_static-symreloc.qmd >}}
+
+## aside: symbols in statically linked helo {visibility="hidden"}
+
+{{< include /exec-encoding/_static-sym-strip.qmd >}}
+
+## aside: strace, statically linked strace {visibility="hidden"}
+
+{{< include /exec-encoding/_aside-strace.qmd >}}
+
+## example: strace hello.exe dynamic {visibility="hidden"}
+
+{{< include /exec-encoding/_strace-dynamic.qmd >}}
+
+## where's the linker {visibility="hidden"}
+
+{{< include /exec-encoding/_wheres-the-linker.qmd >}}
+
+## knowing what to load? {visibility="hidden"}
+
+{{< include /exec-encoding/_needed.qmd >}}
+
+{{< include /exec-encoding/_needed-decode.qmd >}}
+
+# reverse engineering tools {visibility="hidden"}
+
+## RE2 part b note
+
+*  modified sqlite3 (database), with "backdoor" function
+   *  your job --- find input to trigger it
+*  I've arranged that relevant functions should be run by sample input in assignment
+*  You can often use constants/etc. to find corresponding function
+   *  `grep -r string directory` = search entire directory for string
+
+{{< include /re-tools/_talk-inner.qmd >}}
+
+# backup slides {visibility="hidden"}
+
+### backup slides 
+
+{{< include /exec-encoding/_talk-backup.qmd >}}

@@ -1,17 +1,11 @@
 
-### making things hard for the mouse  {.smaller}
-
+### making things hard for the mouse
 
 * don't want <em>trivial changes</em> to break detection
 * want to detect <em>strategies</em> 
-
-   * e.g. require changing relocation logic
+   * example: require changing relocation logic
    * … not just reordering instructions, adding nops
-
 * need to detect signatures in real time 
-
    * don't want interrupt user (much)
-
 * want to avoid false positive
 * goals: compact, fast to check, reliable, <em>general?</em>
-

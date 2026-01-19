@@ -1,52 +1,34 @@
 
 ### application whitelisting  {.smaller}
 
-
-
 * how about we only let standard applications run, unmodified? 
-
    * AppStore-based strategy?
-
 * not uncommon in corporate environments:
- 
-<hr class="vspace" /> 
-![](/heur-detect/applocker-manual){}
+
+![](/heur-detect/applocker-manual){fig-alt="top of 2017 Microsoft documentation page about AppLocker, swhich states 'This topic provides a description of AppLocker and can help you decide if your organization can benefit from deploying AppLocker application control policies. AppLocker helps control which apps and files users can run. These include executable files, scripts, Windows Installer files, dynamic-link libraries (DLLs), packaged apps, and packaged app installers."}
 
 
 ### case study: Microsoft AppLocker  {.smaller}
 
-
 * AppLocker is Windows 7+ feature for limiting what can run 
-
    * successor(?) feature App Control for Business (Windows 10+)
-
 * adminstrator sets rules about…
 * what publisher is allowed 
-
    * publisher cryptographically signs applications
    * allows easy upgrades! (publisher signs new version)
    * virus-like techniques break signatures
-
 * what file hashes are allowed 
-
    * requires manual update each time software updates
-
 * what locations are allowed 
-
    * presumably for administrator-only directories
 
 
-
-### problems with whitelisting  {.smaller}
-
+### problems with whitelisting  {.compacttwo}
 
 * programs with features/bugs malware could exploit 
-
-   * ‘‘AppLocker does not control the behavior of applications after they are launched. Applications could contain flags passed to functions that signal AppLocker to circumvent the rules and allow another .exe or .dll to be loaded.’’
-
+   * "AppLocker does not control the behavior of applications after they are launched. Applications could contain flags passed to functions that signal AppLocker to circumvent the rules and allow another .exe or .dll to be loaded."
 * users might want to install/develop other software
 * scripting (Python, server-side JavaScript, …): 
-
-   * ‘‘Not all host processes call into AppLocker and, therefore, AppLocker cannot control every kind of interpreted code’’
+   * "Not all host processes call into AppLocker and, therefore, AppLocker cannot control every kind of interpreted code"
 
 

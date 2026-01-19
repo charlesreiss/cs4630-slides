@@ -7,6 +7,13 @@
 
 {{< include /heur-detect/_flex-states.qmd >}}
 
+## backtracking problems? {visibility="hidden"}
+
+{{< include /heur-detect/_flex-opt-btp.qmd >}}
+
+{{< include /heur-detect/_flex-state-machine-complex.qmd >}}
+
+
 ## heuristics to find packers {visibility="hidden"}
 
 {{< include /antianti/_packer-detect.qmd >}}

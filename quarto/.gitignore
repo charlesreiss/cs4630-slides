@@ -8,3 +8,6 @@
 talk.html
 talk.pdf
 talk_files
+package.json
+package-lock.json
+node_modules

@@ -48,9 +48,9 @@ itemize: _BEGIN_ITEMIZE whitespace? SIMPLE_COMMAND? (whitespace? item)+ _END_ITE
 
 tabular_line: (any_text_not_linebreak _NEXT_CELL)* any_text_not_linebreak LINEBREAK
 
-tabular_line_nonl: (any_text_not_linebreak _NEXT_CELL)* any_text_not_linebreak -> tabular_line
+tabular_line_nonl: (any_text_not_linebreak _NEXT_CELL)* any_text_not_linebreak 
 
-tabular: _BEGIN_TABULAR _BRACE any_text_not_linebreak _END_BRACE tabular_line+ any_text_not_linebreak _END_TABULAR
+tabular: _BEGIN_TABULAR _BRACE any_text_not_linebreak _END_BRACE tabular_line+ tabular_line_nonl whitespace? _END_TABULAR
        | _BEGIN_TABULAR _BRACE any_text_not_linebreak _END_BRACE tabular_line_nonl _END_TABULAR
 
 frametitle: _BEGIN_FRAMETITLE _BRACE any_text _END_BRACE
@@ -1421,6 +1421,11 @@ class TabularLine(_MyAstItem):
     def __init__(self, *args):
         self.linebreak = args[-1]
         self.cells = args[:-1]
+        logging.debug('linebreak = %s', self.linebreak)
+        if isinstance(self.linebreak, AnyText):
+            self.cells += (self.linebreak,)
+            logging.debug('cells = %s', self.cells)
+            self.linebreak = None
 
     @property
     def inner_text(self) -> str:
@@ -1438,6 +1443,8 @@ class TabularLine(_MyAstItem):
         result += '</tr>\n'
         return result
 
+TabularLineNonl = TabularLine
+
 @dataclass
 class Tabular(_MyAstItem):
     column_types: object
@@ -1448,6 +1455,11 @@ class Tabular(_MyAstItem):
         self.column_types = column_types
         self.lines = rest[:-1]
         self.end = rest[-1]
+        if isinstance(self.end, TabularLine):
+            self.lines += (self.end,)
+        elif not self.end.is_whitespace:
+            self.lines += (TabularLine(self.end),)
+            self.end = None
     
     @property
     def estimated_lines(self) -> float:
@@ -1462,6 +1474,7 @@ class Tabular(_MyAstItem):
         return '\n'.join(map(attrgetter('inner_text'), self.lines))
 
     def render(self, context: RenderContext) -> str:
+        logging.debug('lines = %s', self.lines)
         if context.tt:
             result = context.indented('\n')
             for index, line in enumerate(self.lines):

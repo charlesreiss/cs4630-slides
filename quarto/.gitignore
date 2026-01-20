@@ -3,6 +3,7 @@
 *.pdf
 **/latex.out/*.pdf
 !**/figures/*.pdf
+**/texfig/*.svg
 **/*.html
 .venv
 talk.html

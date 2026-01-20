@@ -1,3 +1,14 @@
 project:
   title: "CS4630 slides"
-
+format:
+  revealjs:
+    theme: [simple, ../custom.scss]
+    slide-level: 3
+    navigation-mode: linear
+    scrollable: true
+    progress: false
+    margin: 0.02
+    width: 1050
+    height: 600
+    code-line-numbers: false
+    chalkboard: true

@@ -1,16 +1,4 @@
 ---
 title: "intro"
-
-format:
-  revealjs:
-    theme: [simple, ../custom.scss]
-    slide-level: 3
-    navigation-mode: linear
-    scrollable: true
-    chalkboard: true
-    progress: false
-    margin: 0.02
-    width: 1050
-    height: 600
 ---
 {{< include ../intro/_talk-inner.qmd >}}

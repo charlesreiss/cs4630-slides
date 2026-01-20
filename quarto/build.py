@@ -117,19 +117,6 @@ def render_qmd(path):
 def create_top_qmd(path, include_path=None, backup_include_path=None, empty=False):
     qmd = f'---\ntitle: "{path.parent.name}"\n' + \
 '''
-format:
-  revealjs:
-    theme: [simple, ../custom.scss]
-    slide-level: 3
-    navigation-mode: linear
-    scrollable: false
-    chalkboard: true
-    progress: false
-    margin: 0.02
-    width: 1050
-    height: 600
-    code-line-numbers: false
-    self-contained-math: true
 ---
 '''
     if empty:

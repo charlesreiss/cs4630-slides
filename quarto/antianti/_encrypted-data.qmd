@@ -1,9 +1,7 @@
 
-### encrypted(?) data  {.smaller}
+### encrypted(?) data
 
-<!-- \lstset{language=C,style=small} -->
- 
-```
+```c
 char obviousString[] =
     "Please open this 100%"
     " safe attachment";

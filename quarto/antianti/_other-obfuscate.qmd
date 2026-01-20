@@ -1,17 +1,13 @@
 
-### obfuscation, generally  {.smaller}
-
+### obfuscation, generally
 
 * malware often <i>obfuscates</i> (obscures) its code
 * several reasons for this 
-
    * prevent their from being signatures
    * make analysis more difficult
    * prevent others from modifying+copying
- 
 <hr class="vspace" />
-* note: many of these technique sometimes employed by commercial software 
-
+* note: many of these technique sometimes employed by commercial software
    * intended to prevent copying/reverse-engineering
 
 

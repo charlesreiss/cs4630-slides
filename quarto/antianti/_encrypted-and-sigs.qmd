@@ -1,15 +1,9 @@
-
-### encrypted data and signatures  {.smaller}
-
+### encrypted data and signatures
 
 * get rid of some easy signatures 
-
    * especially if ‘key’ changes or hashes used
-
 * but not enough: 
-
    * decryption code is very distinctive
- 
 <hr class="vspace" />
-* can we do better with this ‘‘encryption’’ idea?
+* can we do better with this "encryption" idea?
 

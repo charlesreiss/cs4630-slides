@@ -19,7 +19,7 @@ $ gcc -c test.s; objcopy -j .text test.o -O binary test.bin
 <hr class="vspace" /> <hr />
  
 <hr class="vspace" /> 
-```
+```python
 code = Path('test.bin').read_bytes()
 uc = Uc(UC_ARCH_X86, UC_MODE_64)
 uc.mem_map(0x10000, 1024 * 1024)
@@ -36,7 +36,7 @@ print("RDI",uc.reg_read(UC_X86_REG_RDI))
 ### unicorn example (2)  {.smaller}
 
 
-```
+```python
 ...
 uc.hook_add(UC_HOOK_CODE, hook_code_func)
 def hook_code_func(uc, addr, size, user_data):

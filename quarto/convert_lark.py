@@ -42,6 +42,7 @@ generic_command: SIMPLE_COMMAND when optional_argument? (_BRACE any_text _END_BR
 
 item: _ITEM when any_text
     | _ITEM when whitespace? _BRACE _END_BRACE any_text
+    | _ITEM when whitespace? _BRACE any_text _END_BRACE whitespace?
 
 itemize: _BEGIN_ITEMIZE whitespace? SIMPLE_COMMAND? (whitespace? item)+ _END_ITEMIZE
 
@@ -62,12 +63,14 @@ any_text_not_linebreak: any_text_basic*
     | any_text_basic* inline_command generic_command* any_text_basic any_text_not_linebreak
     | any_text_basic* inline_command generic_command*
 
+fontsize: _FONTSIZE _BRACE any_text _END_BRACE _BRACE any_text _END_BRACE -> fontsize
+
 ?any_text_basic: _START_QUOTE any_text _END_QUOTE -> squote
     | _START_DQUOTE any_text _END_DQUOTE -> dquote
     | BEGIN_GENERIC any_text END_GENERIC -> generic_environment
     | itemize
     | tabular
-    | _FONTSIZE _BRACE any_text _END_BRACE _BRACE any_text _END_BRACE -> fontsize
+    | fontsize
     | whitespace
     | columns
     | VERBATIM -> verbatim
@@ -124,11 +127,11 @@ VERBATIM.10: /\\begin\{(?:Verbatim|lstlisting)\}\s*(?:\[[^]]+\])?
 INLINE_VERBATIM.10: /
         \\lstinline\|[^|]+\|
         |
-        \\verb\|[^|]+\|
+        \\verb\*?\|[^|]+\|
         |
         \\lstinline![^!]+\!
         |
-        \\verb![^!]+\!
+        \\verb\*?![^!]+\!
     /x
 TIKZPICTURE.10: /\\begin\{tikzpicture\}\s*(?:\[[^]]+\])?\s*\n
                  (?s:.)*?
@@ -171,7 +174,13 @@ LSTSET.0: /\\lstset\{
             |
             \{
                 (?:
-                    \{[^}]*\}
+                    \{
+                        (?:
+                            \{[^}]*\}
+                        |
+                            [^{}]+
+                        )*
+                    \}
                 |
                     [^{}]+
                 )*
@@ -551,8 +560,7 @@ class When(_MyAstItem):
     def __post_init__(self, raw_when):
         if raw_when:
             self.when = raw_when[1:-1]
-            self.when = self.when.replace('|handout:0', '')
-            self.when = self.when.replace('|handout:1', '')
+            self.when = re.sub(r'\|handout:\d+', '', self.when)
             self.when = self.when.replace('all:', '')
         else:
             self.when = None
@@ -960,7 +968,7 @@ class InlineVerbatim(_MyAstItem):
 
     def __init__(self, token):
         value = token.value
-        for prefix in (r'\lstinline', r'\verb'):
+        for prefix in (r'\lstinline', r'\verb*', r'\verb'):
             if value.startswith(prefix):
                 value = value[len(prefix):]
                 break 

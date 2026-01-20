@@ -1,26 +1,16 @@
 
-### attacking emulation patience  {.smaller}
-
+### attacking emulation patience
 
 * looking for unpacked virus in VM
 * … or other malicious activity
 * when are you done looking? 
 <hr class="vspace" />
 * malware solution: [take too long]{.fragment fragment-index=2 .custom .myem-only} 
-
-   * not hard if emulator uses ‘‘slow’’ implementation
-
+   * not hard if emulator uses "slow" implementation
 * malware solution: [don't infect consistently]{.fragment fragment-index=3 .custom .myem-only}
 * malware solution: [use more memory, etc.]{.fragment fragment-index=4 .custom .myem-only}
-
-
-### againframe(attackPat)
-
-### againframe(attackPat)
 
 ### probability 
 
 ![](/antianti/texfig/prob.figure.svg)
 
-
-### againframe(attackPat)

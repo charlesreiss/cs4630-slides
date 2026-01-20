@@ -1,6 +1,5 @@
 
-### attacking antivirus (1)  {.smaller}
-
+### attacking antivirus (1) 
 
 * one common virus idea: interfere directly with antivirus 
 <hr class="vspace" />

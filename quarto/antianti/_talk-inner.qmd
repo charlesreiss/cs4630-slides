@@ -55,8 +55,6 @@
 
 # oligomorphic viruses {visibility="hidden"}
 
-### againframe(playMouse)
-
 {{< include /antianti/_olig.qmd >}}
 
 ## case study: W95/Memorial {visibility="hidden"}
@@ -70,10 +68,6 @@
 ## case study: 1260 {visibility="hidden"}
 
 {{< include /antianti/_1260.qmd >}}
-
-## more generic mutation {visibility="hidden"}
-
-{{< include /antianti/_mutation-engine-generic.qmd >}}
 
 # terminology: packers {visibility="hidden"}
 
@@ -89,13 +83,13 @@
 
 ## example: unicorn {visibility="hidden"}
 
-{{< include /re-tools/_emu.qmd >}}
+{{< include /re-tools/_emu.qmd >}} <!-- FIXME: more selective include -->
 
-## unipacker pseudcode {visibility="hidden"}
+## unipacker pseudocode {visibility="hidden"}
 
 {{< include /antianti/_unipacker-pseudo.qmd >}}
 
-## example: Qiling {visibility="hidden"}
+## example: Qiling {visibility="hidden"} <!-- FIXME in re-tools -->
 
 {{< include /re-tools/_qiling.qmd >}}
 
@@ -125,22 +119,22 @@
 
 # aside: future assignment {visibility="hidden"}
 
-### OBFUSCATE assignment  {.smaller}
+### OBFUSCATE assignment
 
-
-* modifying ‘password-protected’ tic-tac-toe game not to be 
+* modifying 'password-protected' tic-tac-toe game not to be 
 <hr class="vspace" />
 * three versions: 
-
    * just stripped
    * some Tigress transformations
-   * ‘encrypted’ code
-
-
+   * 'encrypted' code
 
 ## exercise: limitations of generic anti-packer {visibility="hidden"}
 
 {{< include /antianti/_packer-detect-limit-ex.qmd >}}
+
+## more generic mutation {visibility="hidden"}
+
+{{< include /antianti/_mutation-engine-generic.qmd >}}
 
 # metamorphic viruses {visibility="hidden"}
 
@@ -172,8 +166,6 @@
 
 ## breaking breakpoints {visibility="hidden"}
 
-### againframe(debuggerThings)
-
 {{< include /antianti/_antidebug-breakpt-int3.qmd >}}
 
 ## aside: modern breakpoints{visibility="hidden"}
@@ -181,8 +173,6 @@
 {{< include /antianti/_debug-modern-breakpt.qmd >}}
 
 ## breaking single-stepping (short) {visibility="hidden"}
-
-### againframe(debuggerThings)
 
 {{< include /antianti/_antidebug-ss.qmd >}}
 
@@ -205,16 +195,6 @@
 # backup slides {visibility="hidden"}
 
 ### backup slides 
-
-
-
-## heuristics to find packers {visibility="hidden"}
-
-{{< include /antianti/_packer-detect.qmd >}}
-
-## rootkits and chkrootkit {visibility="hidden"}
-
-{{< include /antianti/_chkrootkit.qmd >}}
 
 ## aside: disinfection {visibility="hidden"}
 

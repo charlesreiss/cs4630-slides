@@ -6,7 +6,7 @@
 * same ideas as these anti-anti-virus techniques
 
 
-### rootkits and whitelisting  {.smaller}
+### rootkits and whitelisting
 
 
 * talked about application whitelisting 
@@ -19,44 +19,35 @@
 * users less likely to run software that needs access to ‘hook’ OS
 
 
-### Windows driver signing  {.smaller}
+### Windows driver signing
 
-\\pdftooltip{
-![](/antianti/window-driver-sign){}
-Note: \\textLF{}  Starting with Windows 10, version 1607, Windows will not load any new kernel-mode drivers which are not signed by the Dev Portal. To get your driver signed, first Register for the Windows Hardware Dev Center program. Note that an EV code signing certificate is required to establish a dashboard account. \\textLF{}\\textLF{}  There are many different ways to submit drivers to the portal. For production drivers, you should submit HLK/HCK test logs, as described below. For testing on Windows 10 client only systems, you can submit your drivers for attestation signing, which does not require HLK testing. Or, you can submit your driver for Test signing as described on the Create a new hardware submission page.}
+![](/antianti/window-driver-sign){fig-alt="Note: Starting with Windows 10, version 1607, Windows will not load any new kernel-mode drivers which are not signed by the Dev Portal. To get your driver signed, first Register for the Windows Hardware Dev Center program. Note that an EV code signing certificate is required to establish a dashboard account. There are many different ways to submit drivers to the portal. For production drivers, you should submit HLK/HCK test logs, as described below. For testing on Windows 10 client only systems, you can submit your drivers for attestation signing, which does not require HLK testing. Or, you can submit your driver for Test signing as described on the Create a new hardware submission page."}
 
-### Window driver key stealing  {.smaller}
+### Window driver key stealing
 
-\\pdftooltip{
-![](/antianti/window-driver-sign-steal){}
-Headline on ArsTechnica dated Aug 25, 2023  with byline by Dan Goodin.\\textLF{}\\textLF{} Microsoft singing keys keep getting hijacked, to the delight of Chinese threat actors\\textLF{} What's the point of locks when hackers can easily get the keys to unlock them?}
+![](/antianti/window-driver-sign-steal){fig-alt="Headline on ArsTechnica dated Aug 25, 2023  with byline by Dan Goodin. Microsoft singing keys keep getting hijacked, to the delight of Chinese threat actors\\textLF{} What's the point of locks when hackers can easily get the keys to unlock them?"}
 
-### aside: driver or not driver?  {.smaller}
+### aside: driver or not driver?
 
 
 * why does random device driver have permission to do all these ‘hiding’ operations? 
 <hr class="vspace" />
-* (if you've taken CSO2) kernel mode $\\rightarrow{}$ full hardware access
-* there are OS designs where drivers don't run with full access 
-
+* kernel mode $\rightarrow{}$ full hardware access
+* there are OS designs where drivers don't run with full access
+   * (just access to specific device, etc.)
    * but real performance/complexity costs
 
-
-
-### chkrootkit  {.smaller}
+### chkrootkit {.smaller}
 
 
 * <code>chkrootkit</code> --- Unix program that looks for rootkit signs 
 <hr class="vspace" />
 * tell-tale strings in system programs 
-
    * e.g. file, process, network connection listing programs changed
-
 * disagreement between process list, other ways of detecting processes
 * disagreement between file lists, other ways of counting files
 * overwritten entries in system login records
 * known suspicious filenames 
-
    * hidden exes in temporary, data directories, etc.
 
 

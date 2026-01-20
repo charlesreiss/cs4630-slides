@@ -1,24 +1,15 @@
 
 ### oligomorphic virus/worm 
 
-![](/antianti/texfig/olig.figure.svg)
+![](/antianti/texfig/olig.figure.svg){fig-alt="malware starting with a code 'decrypter', then a large block of 'encrypted' code; inside the encrypted code is an encryptor generator with 'int KEY = RAND(); write(MOV_OPCODE, ...); for (int i = RAND(); i > 0; --i) write(NOP_OPCODE); ... write(XOR_OPCODE, key, ...); ...'"}
 
+### producing changing malware
 
-### producing changing malware  {.smaller}
-
-
-* ‘encrypted’ code can generate new decrypter
+* "encrypted" code can generate random new decrypter
 * not just <code>nop</code>: 
 <hr class="vspace" />
 * switch between synonym instructions 
-
-   * <code>add \$4, ...</code>, <code>sub \$-4, ...</code>
-
+   * `add $4, ...` versus `sub $-4, ...`, etc.
 * swap registers
 * random instructions that manipulate ‘unused’ registers
 * …
-* template to generate a bunch of decrypters 
-
-   * Szor calls such malware ‘‘oligomorphic’’
-
-

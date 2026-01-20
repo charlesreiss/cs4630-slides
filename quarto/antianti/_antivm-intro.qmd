@@ -1,35 +1,31 @@
 
-### antivirtualization  {.smaller}
-
+### antivirtualization
 
 * a lot of malware tries to behave different in a VM 
 <hr class="vspace" />
 * why? 
-
    * used by antivirus software to handle packers
    * used to analyze malware
    * …
 
 
+### antivirtualization techniques
 
-### antivirtualization techniques  {.smaller}
-
-
-* [query virtual devices]{.fragment fragment-index=23 .custom .myem-only} 
-
+* query virtual devices
    * solution: mirror devices of some real machine
-
-* [time operations that are slower in VM/emulation]{.fragment fragment-index=45 .custom .myem-only} 
-
+* time operations that are slower in VM/emulation
    * solution: virtual clock
-
-* [use operations not supported by VM]{.fragment fragment-index=67 .custom .myem-only}  
-
+* use operations not supported by VM
    * solution: support everything
 
+### antivirtualization techniques
 
-
-### againframe(antivirtIndex)
+* *query virtual devices*
+   * solution: mirror devices of some real machine
+* time operations that are slower in VM/emulation
+   * solution: virtual clock
+* use operations not supported by VM
+   * solution: support everything
 
 ### virtual devices 
 
@@ -38,42 +34,49 @@
 * VMware-brand ethernet device?
 * …
 
+### antivirtualization techniques
 
-### againframe(antivirtIndex)
+* query virtual devices
+   * solution: mirror devices of some real machine
+* *time operations that are slower in VM/emulation*
+   * solution: virtual clock
+* use operations not supported by VM
+   * solution: support everything
 
-### slower operations  {.smaller}
+### slower operations
 
-
-* not-‘‘native’’ VM: 
-
+* not-"native" VM: 
    * everything is really slow
-
 * otherwise --- trigger ‘‘callbacks’’ to VM implementation: 
-
    * system calls?
    * allocating and accessing memory?
-
 * … and hope it's reliably slow enough
 
+### antivirtualization techniques
 
-### againframe(antivirtIndex)
+* query virtual devices
+   * solution: mirror devices of some real machine
+* time operations that are slower in VM/emulation
+   * solution: virtual clock
+* *use operations not supported by VM*
+   * solution: support everything
 
-### operations not supported  {.smaller}
-
-
+### operations not supported
 
 * missing instructions kinds? 
-
    * FPU instructions
    * MMX/SSE instructions
    * undocumented (!) CPU instructions
 
-* not handling OS\\tikzmark{OS} features? 
-
+* [not handling OS features?]{.fragment .myem .custom fragment-index=1}
    * setting up special handlers for segfault
    * multithreading
    * system calls that make callbacks
    * …
 
- ![](/antianti/texfig/antivm-intro-operations-not-supported.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+::: {.myoverbox .fragment fragment-index=1}
 
+often want to use virtual machine not running real operating system<br />
+means we'll almost certainly miss OS features
+
+:::

@@ -1,17 +1,168 @@
+### example: 1260 (virus)
 
-### example: 1260 (virus) 
+:::: {.columns}
 
-<!-- \lstset{
-    style=small,
-    language=myasm,
-    moredelim={**[is][\btHL<2-3|handout:0>]{@hi2@}{@endhi@}},
-    moredelim={**[is][\btHL<4-5|handout:0>]{@hi3@}{@endhi@}},
-} -->
-<!-- FIXME: adapt Listing 7.5 --><table>
-</table>
- [adapted from Szor, Listing 7.5]{.mycredit} ![](/antianti/texfig/1260.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/antianti/texfig/1260.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
-![](/antianti/texfig/1260.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=3}
-![](/antianti/texfig/1260.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=4}
-![](/antianti/texfig/1260.figure-5.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=5}
+::: {.column}
+
+```{.gnuassembler code-line-numbers=true}
+    inc %si
+    mov $0x0e9b, %ax
+    clc
+    mov $0x12a, %di
+    nop
+    mov $0x571, %cx
+decrypt:
+    xor %cx, (%di)
+    sub %dx, %bx
+    sub %cx, %bx
+    sub %ax, %bx
+    nop
+    xor %cx, %dx
+    xor %ax, (%di)
+    ...
+```
+
+:::
+
+::: {.column}
+
+```{.gnuassembler code-line-numbers=true}
+    mov $0x0a43, %ax
+    nop
+    mov $0x15a, %di
+    sub %dx, %bx
+    sub %cx, %bx
+    mov $0x571, %cx
+    clc
+decrypt:
+    xor %cx, (%di)
+    xor %cx, %dx
+    sub %cx, %bx
+    nop
+    xor %cx, %bx
+    xor %ax, (%di)
+    ...
+```
+
+:::
+
+::::
+
+[adapted from Szor, Listing 7.5]{.mycredit}
+
+### example: 1260 (virus)
+
+:::: {.columns}
+
+::: {.column}
+
+```{.gnuassembler code-line-numbers='1,3,5,8-12'}
+    inc %si
+    mov $0x0e9b, %ax
+    clc
+    mov $0x12a, %di
+    nop
+    mov $0x571, %cx
+decrypt:
+    xor %cx, (%di)
+    sub %dx, %bx
+    sub %cx, %bx
+    sub %ax, %bx
+    nop
+    xor %cx, %dx
+    xor %ax, (%di)
+    ...
+```
+
+:::
+
+::: {.column}
+
+```{.gnuassembler code-line-numbers='2,4,5,7,10-13'}
+    mov $0x0a43, %ax
+    nop
+    mov $0x15a, %di
+    sub %dx, %bx
+    sub %cx, %bx
+    mov $0x571, %cx
+    clc
+decrypt:
+    xor %cx, (%di)
+    xor %cx, %dx
+    sub %cx, %bx
+    nop
+    xor %cx, %bx
+    xor %ax, (%di)
+    ...
+```
+
+:::
+
+::::
+
+[adapted from Szor, Listing 7.5]{.mycredit}
+
+::: {.myoverbox .fragment}
+
+do-nothing instructions
+
+:::
+
+### example: 1260 (virus)
+
+:::: {.columns}
+
+::: {.column}
+
+```{.gnuassembler code-line-numbers='2'}
+    inc %si
+    mov $0x0e9b, %ax
+    clc
+    mov $0x12a, %di
+    nop
+    mov $0x571, %cx
+decrypt:
+    xor %cx, (%di)
+    sub %dx, %bx
+    sub %cx, %bx
+    sub %ax, %bx
+    nop
+    xor %cx, %dx
+    xor %ax, (%di)
+    ...
+```
+
+:::
+
+::: {.column}
+
+```{.gnuassembler code-line-numbers='1'}
+    mov $0x0a43, %ax
+    nop
+    mov $0x15a, %di
+    sub %dx, %bx
+    sub %cx, %bx
+    mov $0x571, %cx
+    clc
+decrypt:
+    xor %cx, (%di)
+    xor %cx, %dx
+    sub %cx, %bx
+    nop
+    xor %cx, %bx
+    xor %ax, (%di)
+    ...
+```
+
+:::
+
+::::
+
+[adapted from Szor, Listing 7.5]{.mycredit}
+
+::: {.myoverbox .fragment}
+
+different "decryption" key
+
+:::
 

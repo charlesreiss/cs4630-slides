@@ -1,9 +1,8 @@
 
-### on goats  {.smaller}
-
+### on goats
 
 * analysis and maybe detection uses <i>goat files</i>
-* ‘‘<em>sacrificial goat</em>’’ to get changed by malware
+* "<em>sacrificial goat</em>" to get changed by malware
 * heuristics can avoid simple goat files, e.g.: 
 
    * don't infect small programs

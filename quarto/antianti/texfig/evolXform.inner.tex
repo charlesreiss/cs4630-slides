@@ -5,10 +5,10 @@
 \node[draw] (movebpEight) {
 \usebox{\evolXExStart}
 };
-
 \node[draw,right=2cm of movebpEight] (movebpExpand) {
 \usebox{\evolXExExpand}
 };
+    \draw[ultra thick,-Latex] (movebpEight) -- (movebpExpand);
 \node[anchor=north east] at ([yshift=-.25cm]movebpExpand.south east) {
     uses more stack space --- save temporary \\
     code gets bigger each time

@@ -8,36 +8,41 @@
 
    * run as part of propagating the virus
 
- ![](/antianti/texfig/caseEvol.figure.svg)
+![](/antianti/texfig/caseEvol.figure-1.svg){width=800px fig-alt="code is disassembled, giving instructions and their lengths, then transformed, relocated, producing new code"}
 
 
-### againframe(caseEvol)
 
-### Evol instruction lengths  {.smaller}
+### Evol pipeline
 
+![](/antianti/texfig/caseEvol.figure-2.svg){fig-alt="highlighting the disassembly step"}
 
-* sounds really complicated?
-* virus only handles instructions it has: 
+### Evol disassembly / instruction lengths
 
+* disassembling to get instruction lengths sounds really complicated
+* Evol virus only handles instructions it has: 
    * about 61 opcodes, 32 of them identified by first four bits 
-
       * e.g. opcode <code>0x7<i>x</i></code> -- conditional jump
 
-
 * no prefixes, no floating point
-* only <code>%reg</code> or <code>\$constant</code> or <code>offset(%reg)</code>
+* only <code>%reg</code> or <code>$constant</code> or <code>offset(%reg)</code>
 
 
-### againframe(caseEvol)
+### Evol pipeline
 
-### Evol transformations  {.smaller}
+![](/antianti/texfig/caseEvol.figure-3.svg)
 
-
+### Evol transformations
 
 * some stuff left alone
 * static or random one of $N$ transformations
 * example:
- ![](/antianti/texfig/evolXform.figure.svg)
- [Lakhotia et al., ‘‘Are metamorphic viruses really invincible?’’, Virus Bulletin, Jan 2005]{.mycredit}
 
-### againframe(caseEvol)
+![](/antianti/texfig/evolXform.figure.svg){width=800px}
+
+[Lakhotia et al., ‘‘Are metamorphic viruses really invincible?’’, Virus Bulletin, Jan 2005]{.mycredit}
+
+### Evol pipeline
+
+![](/antianti/texfig/caseEvol.figure-4.svg)
+
+

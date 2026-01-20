@@ -1,21 +1,16 @@
 
-### mutation engines  {.smaller}
-
+### mutation engines
 
 * tools for writing polymorphic viruses
 * best: <em>no</em> constant bytes, <em>no</em> ‘‘no-op’’ instructions
 * tedious work to build state-machine-based detector 
-
    * ((almost) a regular expression to match it)
    * apparently done manually
    * automatable?
-
 * (but probably can…)
 * pattern: used until reliably detected
 
-
-### fancier mutation  {.smaller}
-
+### fancier mutation {.smaller}
 
 ```
 Mutate(original_machine_code, new_machine_code) {
@@ -26,7 +21,6 @@ Mutate(original_machine_code, new_machine_code) {
 }
 
 ```
- 
 
 * can do mutation on <em>generic machine code</em> 
 <hr class="vspace" />
@@ -36,23 +30,18 @@ Mutate(original_machine_code, new_machine_code) {
 * hope to identify <em>tables of function pointers</em>, etc.
 
 
-### mutation as infection technique 
+### mutation as infection technique
 
-![](/antianti/texfig/fancy-mutation-engine-mutation-as-infection-technique.figure.svg)
-
-
-### fancier mutation  {.smaller}
+![](/antianti/texfig/fancy-mutation-engine-mutation-as-infection-technique.figure.svg){fig-alt="the original application and virus code is combined through a mutation engine into an infected application, which mixes mutated application code and mutated virus code"}
 
 
-* no ‘‘cavity’’ needed --- create one 
+### fancier mutation
 
-   * insert virus code by adjusting surrounding cod
-
+* no "cavity" needed --- create one 
+   * insert virus code by adjusting surrounding code
 * obviously tricky to implement 
-
    * need to fix all executable headers
    * what if you misparse assembly?
    * what if you miss a function pointer?
-
 * example: Simile virus
 

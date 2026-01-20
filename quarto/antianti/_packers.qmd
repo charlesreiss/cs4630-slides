@@ -1,23 +1,15 @@
 
 ### terminology: packers 
 
-
 * programs that decode and run code at runtime called <i>packers</i>
 * packers exist to do this for non-malware reasons
 * example motivations: 
-
    * compression
    * packaging libraries + executable together
 
 
-
 ### from UPX documentation  {.smaller}
 
-\\pdftooltip{
-![](/antianti/upx-intro){}
- UPX is an advanced executable file compressor. UPX will typically reduce the file size of programs and DLLs by around 50%-70%, thus reducing disk space, network load times, download times and other distribution and storage costs.\\textLF{}\\textLF{} Programs and libraries compressed by UPX are completely self-contained and run exactly as before, with no runtime or memory penalty for most of the supported formats. } 
-<hr class="vspace" /> <hr />
- 
-<hr class="vspace" /> \\pdftooltip{
-![](/antianti/upx-not-prot){}
- We will *NOT* add any sort of protection and/or encryption. This only gives people a false feeling of security because all "protectors" can be broken by definition.  }
+![](/antianti/upx-intro){fig-alt="UPX is an advanced executable file compressor. UPX will typically reduce the file size of programs and DLLs by around 50%-70%, thus reducing disk space, network load times, download times and other distribution and storage costs. Programs and libraries compressed by UPX are completely self-contained and run exactly as before, with no runtime or memory penalty for most of the supported formats."}
+<hr />
+![](/antianti/upx-not-prot){fig-alt="We will *NOT* add any sort of protection and/or encryption. This only gives people a false feeling of security because all &quot;protectors&quot; can be broken by definition."}

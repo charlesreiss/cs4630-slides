@@ -1,14 +1,13 @@
 
-### ‘mutation engine’ 
+### 'mutation engine'
 
 
-```
+```c
 CopyDecrypter(original_code, new_code) {
     for (each instruction in original_code) {
         new_code += RandomNumberOfNops();
         new_code += PossiblyChooseVariant(instruction)
     }
 }
-
 ```
 

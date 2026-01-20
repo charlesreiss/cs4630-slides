@@ -1,16 +1,180 @@
 
 ### example: W95/Memorial 
 
-<!-- \lstset{
-    style=small,
-    language=myasm,
-    moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
-    moredelim={**[is][\btHL<3|handout:0>]{@hi3@}{@endhi@}},
-} -->
- <table>
-</table>
- [Szor, Listsings 7.3 and 7.4]{.mycredit} ![](/antianti/texfig/w95memorial.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/antianti/texfig/w95memorial.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
-![](/antianti/texfig/w95memorial.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=3}
-![](/antianti/texfig/w95memorial.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=4}
+:::: {.columns}
+
+::: {.column}
+
+```gnuassembler
+  mov $0x405000, %ebp
+  mov $0x550, %ecx
+  lea 0x2e(%ebp), %esi
+  add 0x29(%ebp), %ecx
+  mov 0x2d(%ebp), %al
+
+decrypt:
+  nop
+  nop
+  xor %al, (%esi)
+  inc %esi
+  nop
+  inc %al
+  dec %ecx
+  jnz decrypt
+```
+
+:::
+
+::: {.column}
+
+```gnuassembler
+  mov $0x550, %ecx
+  mov $0x13bc000, %ebp
+  lea 0x2e(%ebp), %esi
+  add 0x29(%ebp), %ecx
+  mov 0x2d(%ebp), %al
+
+decrypt:
+  nop
+  nop
+  xor %al, (%esi)
+  inc %esi
+  nop
+  inc %al
+  loop decrypt
+  ...
+  ...
+```
+
+:::
+
+::::
+
+::: {.myoverbox .vlow .fragment}
+
+Szor: "96 different decryptor patterns"
+
+:::
+
+[from Szor, Listings 7.3 and 7.4]{.mycredit}
+
+
+### example: W95/Memorial 
+
+:::: {.columns}
+
+::: {.column}
+
+```{.gnuassembler code-line-numbers=1-2}
+  mov $0x405000, %ebp
+  mov $0x550, %ecx
+  lea 0x2e(%ebp), %esi
+  add 0x29(%ebp), %ecx
+  mov 0x2d(%ebp), %al
+
+decrypt:
+  nop
+  nop
+  xor %al, (%esi)
+  inc %esi
+  nop
+  inc %al
+  dec %ecx
+  jnz decrypt
+```
+
+:::
+
+::: {.column}
+
+```{.gnuassembler code-line-numbers=1-2}
+  mov $0x550, %ecx
+  mov $0x13bc000, %ebp
+  lea 0x2e(%ebp), %esi
+  add 0x29(%ebp), %ecx
+  mov 0x2d(%ebp), %al
+
+decrypt:
+  nop
+  nop
+  xor %al, (%esi)
+  inc %esi
+  nop
+  inc %al
+  loop decrypt
+  ...
+  ...
+```
+
+:::
+
+::::
+
+::: {.myoverbox .low}
+
+change instruction order; location of decryption key
+
+:::
+
+[from Szor, Listings 7.3 and 7.4]{.mycredit}
+
+
+### example: W95/Memorial 
+
+:::: {.columns}
+
+::: {.column}
+
+```{.gnuassembler code-line-numbers=14-15}
+  mov $0x405000, %ebp
+  mov $0x550, %ecx
+  lea 0x2e(%ebp), %esi
+  add 0x29(%ebp), %ecx
+  mov 0x2d(%ebp), %al
+
+decrypt:
+  nop
+  nop
+  xor %al, (%esi)
+  inc %esi
+  nop
+  inc %al
+  dec %ecx
+  jnz decrypt
+```
+
+:::
+
+::: {.column}
+
+```{.gnuassembler code-line-numbers=14}
+  mov $0x550, %ecx
+  mov $0x13bc000, %ebp
+  lea 0x2e(%ebp), %esi
+  add 0x29(%ebp), %ecx
+  mov 0x2d(%ebp), %al
+
+decrypt:
+  nop
+  nop
+  xor %al, (%esi)
+  inc %esi
+  nop
+  inc %al
+  loop decrypt
+  ...
+  ...
+```
+
+:::
+
+::::
+
+::: {.myoverbox}
+
+different variations for loop instructions
+
+:::
+
+[from Szor, Listings 7.3 and 7.4]{.mycredit}
 

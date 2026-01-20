@@ -1,9 +1,7 @@
 
-### stealth  {.smaller}
+### stealth 
 
-<!-- \lstset{language=C,style=small} -->
- 
-```
+```c
 /* in virus: */
 int OpenFile(const char *filename, ...) {
     if (strcmp(filename, "infected.exe") == 0) {
@@ -16,14 +14,12 @@ int OpenFile(const char *filename, ...) {
 ```
 
 
-### other stealth ideas  {.smaller}
+### other stealth ideas 
 
 
-* override ‘‘get file modification time’’ (infected files)
-* override ‘‘get files in directory’’ (infected files)
-* override ‘‘read file’’ (infected files) 
-
-   * but not ‘‘execute file’’
-
-* override ‘‘get running processes’’
+* override "get file modification time" (infected files)
+* override "get files in directory" (infected files)
+* override "read file" (infected files) 
+   * but not "execute file"
+* override "get running processes"
 

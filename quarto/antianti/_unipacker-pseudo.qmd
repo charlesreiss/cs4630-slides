@@ -2,7 +2,7 @@
 ### unipacker psuedocode  {.smaller}
 
 
-```
+```python
 data, size = parse_executable()
 uc.mem_map(BASE_ADDR, size)
 uc.mem_write(BASE_ADDR, data)

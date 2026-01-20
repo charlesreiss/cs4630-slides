@@ -1,6 +1,5 @@
 
-### emulation based obfuscation  {.smaller}
-
+### emulation based obfuscation 
 
 * so far: always producing machine code and running it
 * analyzing machine code with virtual machine, debugger, etc. 
@@ -9,27 +8,33 @@
 * convert program to that instruction set
 * include interpreter for that instruction set
 
+### example: Tigress Virtualize transform 
 
-### example: Tigress Virtualize transform (1)  {.smaller}
+* Tigress generates instruction set for stack-based machine 
+   * uses little stack instad of registers for most instructions
+   * same design used by, e.g., Java VM
+* instructions can pop+push from stack for temporaries
 
-input: 
-```
+
+### example: Tigress Virtualize transform (1)
+
+example input: 
+```c
 int example(int x) {
     if (x > 10) {
         printf("Yes!\n");
     }   
 }
-
 ```
- 
 
-* Tigress generates instruction set for stack-based machine 
-
-   * uses little stack instad of registers for most instructions
-   * same design used by, e.g., Java VM
-
-* instructions can pop+push from stack for temporaries
-
+output sketch:
+```c
+long code[] = {...};
+long pc = 0;
+while (pc != -1) {
+  pc = runInstruction(code[pc]);
+}
+```
 
 ### example: Tigress Virtualize transform (2)  {.smaller}
 
@@ -40,9 +45,7 @@ int example(int x) {
    * pop t1, pop t2, push t1>t2
    * push OPERAND
    * push table[OPERAND] 
-
       * different variants for int, string, …
-
    * pop t1, LOCALS[OPERAND] = t1
    * pop t1, if (t1) goto OPERAND
    * return
@@ -54,13 +57,12 @@ int example(int x) {
 ### example: Tigress Virtualize transform (3)  {.smaller}
 
 
-```
+```c
 int example(int x) {
     if (x > 10) {
         printf("Yes!\n");
     }   
 }
-
 ```
  
 
@@ -80,10 +82,10 @@ int example(int x) {
 
 
 
-### example: Tigress emulator  {.smaller}
+### example: Tigress emulator
 
 
-```
+```c
   _1_example_$sp[0] = _1_example_$stack[0];
   _1_example_$pc[0] = _1_example_$array[0];
   while (1) {
@@ -93,12 +95,9 @@ int example(int x) {
   }
 
 ```
- 
 
 * pc variable representing emulated stack 
-
    * switch statement based on opcode
-
 * sp variable representing emulated stack
 
 

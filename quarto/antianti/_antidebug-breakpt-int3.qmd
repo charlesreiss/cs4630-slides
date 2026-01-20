@@ -1,64 +1,47 @@
 
-### implementing breakpoints  {.smaller}
-
-<!-- \lstset{language=myasm,style=small} -->
- 
+### implementing breakpoints
 
 * idea: change 
-```
+```gnuassembler
 movq %rax, %rdx
 addq %rbx, %rdx // BREAKPOINT HERE
 subq 0(%rsp), %r8
 ...
-
 ```
  into 
-```
+```gnuassembler
 movq %rax, %rdx
 jmp debugger_code 
 subq 0(%rsp), %r8
 ...
-
 ```
 
 * problem: <code>jmp</code> might be bigger than <code>addq</code>?
 
 
-### int 3  {.smaller}
-
+### int 3
 
 * x86 breakpoint instruction: <code><em>int</em> 3</code>
 * <em>one byte</em> instruction encoding: <code>CC</code>
 * debugger <em>modifies code to insert breakpoint</em> 
-
    * has copy of original somewhere
-
 * invokes handler setup by OS 
-
    * debugger can ask OS to be run by handler
    * or changes pointer to handler directly on old OSes
 
 
-
 ### int 3 handler 
 
-
 * kind of exception handler 
-
    * exception handler = way for CPU to run OS code <br> (despite no actual normal jmp/etc. to OS code)
-
 * x86 CPU saves registers, PC for debugger
 * x86 CPU has easy to way to resume debugged code from handler
 
+### detecting int 3 directly (1)
 
-### detecting int 3 directly (1)  {.smaller}
-
-<!-- \lstset{language=myasm,style=small} -->
+* checksum running code:
  
-
-* checksum running code
- 
-```
+```gnuassmebler
 mycode:                     
     ...
         /* RBX = current sum; RAX = pointer to code */
@@ -72,31 +55,21 @@ loop:
     jl loop
     cmpq %rbx, $EXPECTED_VALUE 
     jne debugger_found   // if sum wrong, panic
-    ...
-endcode:
-
 ```
 
 
-### detecting int 3 directly (2)  {.smaller}
+### detecting int 3 directly (2)
 
-<!-- \lstset{language=C,style=small} -->
- 
-
-* query the ‘‘handler’’ for int 3 
-
+* query the "handler" for int 3 
    * old OSs only; today: cannot set directly
-
 * modern OSs: ask if there's a debugger attached
 * … or try to attach as debugger yourself 
-
    * doesn't work --- debugger present, probably
    * does work --- broke any debugger?
 
- 
-```
- // Windows API function!
+::: {.largecode}
+```c
+// Windows API function!
 if (IsDebuggerPresent()) { ... }
-
 ```
-
+:::

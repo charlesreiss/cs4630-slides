@@ -193,6 +193,10 @@ code > i {
     background-color: white;
 }
 
+.largecode pre {
+    font-size: 100%;
+}
+
 @media print {
     .slide-chalkboard-buttons {
         display: none ! important

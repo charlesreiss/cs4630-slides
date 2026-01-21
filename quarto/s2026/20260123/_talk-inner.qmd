@@ -1,0 +1,88 @@
+### last time {.smaller}
+
+*  executable format
+   *  directives about what to load + start location
+   *  dynamic linker "interpreter" in other file
+*  linking
+    *  symbol table
+*  started: reverse engineering tools
+    *  finding strings
+    *  looking at libraries
+    *  mess-ups with missing symbols
+
+### missing piece
+
+*  talked about execution-generation-time linking
+*  mentioned dynamic linking had some extra stuff going on
+*  saw example last time --- let's do more detail
+
+# finding library/system calls {visibility="hidden"}
+
+{{< include /re-tools/_lib-syscall.qmd >}}
+
+
+{{< include /exec-encoding/_talk-dl-extra.qmd >}}
+
+# disassembly, need for xrefs {visibility="hidden"}
+
+{{< include /re-tools/_where-is-code.qmd >}}
+
+# cross-references {visibility="hidden"}
+
+{{< include /re-tools/_xrefs.qmd >}}
+
+# high-level overviews {visibility="hidden"}
+
+## function callers/callees {visibility="hidden"}
+
+{{< include /re-tools/_function-call-callee.qmd >}}
+
+## control flow graphs {visibility="hidden"}
+
+{{< include /re-tools/_func-graphs.qmd >}}
+
+## arrows on the side {visibility="hidden"}
+
+{{< include /re-tools/_side-arrows.qmd >}}
+
+# decompiling {visibility="hidden"}
+
+## decompiler {visibility="hidden"}
+
+{{< include /re-tools/_decomp-ex.qmd >}}
+
+## Ghidra: intermediate representation {visibility="hidden"}
+
+{{< include /re-tools/_ghidra-ir.qmd >}}
+
+# patching things {visibility="hidden"}
+
+{{< include /re-tools/_patch.qmd >}}
+
+# on/with debuggers {visibility="hidden"}
+
+{{< include /re-tools/_debuggers.qmd >}}
+
+{{< include /re-tools/_reverse-debug.qmd >}}
+
+# on emulators {visibility="hidden"}
+
+{{< include /re-tools/_emu.qmd >}}
+
+## some higher-level tools {visibility="hidden"}
+
+{{< include /re-tools/_qiling.qmd >}}
+
+{{< include /re-tools/_panda-re.qmd >}}
+
+# reverse engineering tools {visibility="hidden"}
+
+{{< include /x8664-encoding/_talk-inner.qmd >}}
+
+{{< include /virus/_talk-inner.qmd >}}
+
+# backup slides {visibility="hidden"}
+
+### backup slides 
+
+{{< include /exec-encoding/_talk-backup.qmd >}}

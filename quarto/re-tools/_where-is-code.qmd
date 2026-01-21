@@ -65,25 +65,20 @@ print_hello:
 </code></pre>
 
 
-### finding assembly heuristics  {.smaller}
+### finding assembly heuristics
 
 
 * objdump strategy, apparently: 
-
    * disassemble instructions starting at each symbol
    * skip over strings of zero-bytes just before symbol
-
 * problem: can misidentify jumped to instructions 
-
    * especially if symbols stripped to save space/hinder reverse engineering
-
 * exercise: algorithm to fix? 
-
    * (Ghidra does this)
 
 
 
-### some tricky cases (1)  {.smaller}
+### some tricky cases (1)
 
 
 ```
@@ -109,7 +104,7 @@ void SendToDevice(struct DeviceInfo* info, char *data) {
 ```
 
 
-### some tricky cases (2)  {.smaller}
+### some tricky cases (2)
 
 
 ```
@@ -152,5 +147,5 @@ next2:
 ###  
 
 
-![](/re-tools/ghidra-disass-mixed-detail){}
+![](/re-tools/ghidra-disass-mixed-detail){title="Ghidra screenshot shows correct disassembly of the code (albeit in Intel syntax)" fig-alt="Ghidra screenshot showing CALL FUN_001011148; XOR EAX, EAX; RET; s_Hello._001141: ds 'Hello'; FUN_0101148: LEA RDI,[s_Hello._00101141]..."}
 

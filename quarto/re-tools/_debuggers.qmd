@@ -1,12 +1,11 @@
 
-### debuggers / emulators  {.smaller}
-
+### debuggers / emulators
 
 * major way to analyzing software --- run it! 
+  * believe most of you did this in CSO1
 <hr class="vspace" />
 * possibly using debugger to analyze memory/registers/etc.
 * possibly in restricted environment 
-
    * either limit access to system calls, <i>or</i>
    * run on virtual (okay-to-lose) hardware
 
@@ -14,33 +13,37 @@
 
 ### selected debugger features (1) 
 
-
-* watchpoint (GDB/LLDB <code>watch</code>) 
-
+* watchpoint 
+   * GDB/LLDB <code>watch</code>
    * breakpoint triggered by variable/expression changing
-
-* breakpoints on system calls (GDB <code>catch syscall …</code>)
-* searching memory for strings (GDB <code>find</code>, LLDB <code>memory find</code>)
-
-
-### selected debugger fetures (2)  {.smaller}
+* breakpoints on system calls
+   * GDB <code>catch syscall …</code>
+* searching memory for strings
+   * GDB <code>find</code>, LLDB <code>memory find</code>
 
 
-* saving ‘core’ files (GDB <code>generate-core-file NAME</code>) 
+### selected debugger fetures (2) 
 
+
+* saving ‘core’ files 
    * full copy of program's memory, can reload in debugger later
-
-* copying memory to/from file (GDB <code>dump</code>/<code>append</code>/<code>restore</code>; LLDB <code>memory read</code>/<code>write</code>)
+   * GDB <code>generate-core-file <i>NAME</i></code>
+* copying memory to/from file 
+    * GDB <code>dump</code>/<code>append</code>/<code>restore</code>; LLDB <code>memory read</code>/<code>write</code>
 * attaching to programs / remote debugging
-* forcing jump to address/return from function (GDB <code>jump</code>/<code>return</code>)
+* forcing jump to address/return from function 
+   * GDB <code>jump</code>/<code>return</code>
 
 
-### Ghidra debugger integration  {.smaller}
+### Ghidra debugger integration
 
+::: {layout-ncol=2}
 
-![](/re-tools/ghidra-open-debugger.png){}
+![](/re-tools/ghidra-open-debugger.png){style="height: 500px"}
  
 ![](/re-tools/ghidra-open-debugger2.png){}
+
+:::
 
 
 ### aside: Ghidra debugger installation 
@@ -77,7 +80,7 @@
 
 
 ::: {.r-stack .my-full}
-![](/re-tools/texfig/debuggers-ghidra-dynamic-view.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+![](/re-tools/texfig/debuggers-ghidra-dynamic-view.figure-1.svg){.fragment .fade-out fragment-index=2}
 
 ![](/re-tools/texfig/debuggers-ghidra-dynamic-view.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
 

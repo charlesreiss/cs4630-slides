@@ -2,25 +2,22 @@
 ### cross-references (1) 
 
 
-![](/re-tools/ghidra-disass-mixed-w-xref){}
+![](/re-tools/ghidra-disass-mixed-w-xref){fig-alt="Ghidra screenshot showing 'XREF's on right; for the string hello has a XREF labelling the instruction that uses it in RDI, and each function has a XREF for where the function is called or a pointer to the function is used."}
 
 
-### cross-references idea  {.smaller}
+### cross-references idea
 
 
 * cross-reference idea:
 * really useful to know where something is used 
 <hr class="vspace" />
 * do-able ‘by hand’ with objdump and friends, but… 
-
    * lots of bookkeeping, searching in text files, etc.
-
-
 
 ### more cross-references 
 
 
-![](/re-tools/ghidra-mystery-xref-many){}
+![](/re-tools/ghidra-mystery-xref-many){fig-alt="Ghidra screenshot showing a large number of cross-references at the beginning of a function. The first few are for a stack-based local variable (marked W (for write) or R (for read). Then there are large collection representing calls to this function (marked C)."}
 
 
 ### more cross-references (stack) 
@@ -29,8 +26,6 @@
 ![](/re-tools/xrefs-func){}
 
 
-### more cross-references (global) 
+### more cross-references (global)
 
-
-![](/re-tools/xrefs-global){}
-
+![](/re-tools/xrefs-global)

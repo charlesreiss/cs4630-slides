@@ -13,17 +13,15 @@
 ![](/re-tools/ghidra-edit-var-decomp){}
 
 
-### refining decompile (2)  {.smaller}
+### refining decompile (2)
 
 
 * can setup names, types for functions
-* types can include marking array 
-
-   * Ghidra doesn't seem great at inferring this all the time
- 
+* types can include marking arrays, structs
+   * Ghidra doesn't seem great at inferring this itself
 <hr class="vspace" />
 * also for local/global variables 
-
    * for globals, can right-click in listing view too
+   * [right-click "Create Array..." to say a global variable is an array]{.fragment .myem-only .custom}
 
 

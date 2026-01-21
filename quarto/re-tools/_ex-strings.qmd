@@ -1,5 +1,5 @@
 
-### finding strings  {.smaller}
+### finding strings
 
 
 <pre><code>$ hexdump -c mystery
@@ -42,7 +42,6 @@ waddch
 clearok
 
 ```
- 
  … 
 ```
         prints help
@@ -50,18 +49,15 @@ clearok
         left
         down
         right
-
 ```
- 
  … 
 ```
         save game
         quit
-
 ```
 
 
-### strings utility (2)  {.smaller}
+### strings utility (2) 
 
 
 ```
@@ -76,6 +72,5 @@ Hello %s, just a moment while I dig the dungeon...
 orry, but your terminal window has too few columns.
 Sorry, but your terminal window has too few lines.
 please specifiy a letter between 'A' and 'Z'
-
 ```
  …

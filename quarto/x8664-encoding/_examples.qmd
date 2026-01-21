@@ -22,22 +22,13 @@
 
 * `addl 0x12345678(%rax,%rbx,2), %ecx`
 * <code>03</code>: opcode --- add r/m32 into r32  
-
-   * 
 ![](/x8664-encoding/intel-manual-addl-ex1.png){}
- 
 ![](/x8664-encoding/intel-manual-addl-ex2.png){}
-
-
 * <code>8c</code>: ModRM: mod = <code>10</code>; reg = <code>001</code>, r/m: <code>100</code> 
-
    * reg = <code>001</code> = <code>%ecx</code> (table)
    * SIB byte + 32-bit displacement (table)
-
 * <code>58</code>: SIB: scale = <code>01</code>, index = <code>011</code>, base = <code>000</code> 
-
    * index <code>011</code> = <code>%rbx</code>; base <code>000</code> = <code>%rax</code>;
-
 * <code>78 56 32 12</code>: 32-bit constant <code>0x12345678</code>
 
 

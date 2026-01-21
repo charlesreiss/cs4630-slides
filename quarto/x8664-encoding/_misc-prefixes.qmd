@@ -1,6 +1,5 @@
 
-### instruction prefixes  {.smaller}
-
+### instruction prefixes
 
 * REX (64-bit and/or extra register bits)
 * VEX (SSE/AVX instructions; other new instrs.)

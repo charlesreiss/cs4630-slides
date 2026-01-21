@@ -1,33 +1,17 @@
 
 ### x86-64 impossibilities  {.smaller}
 
-<!-- \lstset{
-    language=myasm,
-    style=small,
-    moredelim={**[is][\sout<all:1>]{~sout~}{~endsout~}},
-} -->
- 
-
-* <em>illegal</em>: `~sout~movq 0x12345678ab(%rax), %rax~endsout~` 
-
+* <em>illegal</em>: `movq 0x12345678ab(%rax), %rax` 
    * maximum 32-bit displacement
    * `movq 0x12345678ab, %rax` okay 
-
       * extra <code>mov</code> opcode for <code>%rax</code> only
-
-
-* <em>illegal</em>: `~sout~movq $0x12345678ab, %rbx~endsout~` 
-
+* <em>illegal</em>: `movq $0x12345678ab, %rbx` 
    * maximum 32-bit constant
    * `movq $0x12345678ab, %rax` okay
-
-* <em>illegal</em>: `~sout~pushl %eax~endsout~` 
-
+* <em>illegal</em>: `pushl %eax` 
    * no 32-bit push/pop in 64-bit mode
    * but 16-bit allowed (operand size prefix byte <code>66</code>)
-
-* <em>illegal</em>: `~sout~movq (%rax, %rsp), %rax~endsout~` 
-
+* <em>illegal</em>: `movq (%rax, %rsp), %rax` 
    * cannot use `%rsp` as index register
    * `movq (%rsp, %rax), %rax` okay
 

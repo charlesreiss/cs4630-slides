@@ -1,18 +1,4 @@
 ---
 title: "x8664-encoding"
-
-format:
-  revealjs:
-    theme: [simple, ../custom.scss]
-    slide-level: 3
-    navigation-mode: linear
-    scrollable: true
-    chalkboard: true
-    progress: false
-    margin: 0.02
-    width: 1050
-    height: 600
-    code-line-numbers: false
-    self-contained-math: true
 ---
 {{< include ../x8664-encoding/_talk-inner.qmd >}}

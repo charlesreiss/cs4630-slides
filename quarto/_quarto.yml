@@ -2,7 +2,7 @@ project:
   title: "CS4630 slides"
 format:
   revealjs:
-    theme: [simple, ../custom.scss]
+    theme: [simple, ./custom.scss]
     slide-level: 3
     navigation-mode: linear
     scrollable: true

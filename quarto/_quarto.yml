@@ -12,3 +12,6 @@ format:
     height: 600
     code-line-numbers: false
     chalkboard: true
+    self-contained-math: true
+    slide-number: "c"
+mermaid-format: svg

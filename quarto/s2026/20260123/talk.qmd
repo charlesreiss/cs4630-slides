@@ -1,5 +1,5 @@
 ---
-title: "20260121"
+title: "20260123"
 ---
 
-{{< include /s2026/20260121/_talk-inner.qmd >}}
+{{< include /s2026/20260123/_talk-inner.qmd >}}

@@ -16,9 +16,31 @@
 *  mentioned dynamic linking had some extra stuff going on
 *  saw example last time --- let's do more detail
 
-# finding library/system calls {visibility="hidden"}
+### finding library call uses  {.smaller}
 
-{{< include /re-tools/_lib-syscall.qmd >}}
+[ <code>objdump --disassemble --dyanmic-reloc:</code>]{.my-small} 
+```
+0000000000005b00 <setuid@plt>:
+    5b00:▶      f3 0f 1e fa          ▶  endbr64␣
+    5b04:▶      f2 ff 25 fd d3 02 00 ▶  bnd jmp *0x2d3fd(%rip) 
+			# 32f08 <setuid@GLIBC_2.2.5>
+    5b0b:▶      0f 1f 44 00 00       ▶  nopl   0x0(%rax,%rax,1)
+
+```
+ … 
+```
+   2764f:▶      e8 ec e3 fd ff       ▶  call   5a40 <open@plt>
+   27654:▶      89 05 fe 48 01 00    ▶  mov    %eax,0x148fe(%rip)        # 3bf58 <LINES@NCURSES6_TINFO_5.0.19991023+0x5244>
+   2765a:▶      31 c0                ▶  xor    %eax,%eax
+   2765c:▶      e8 2f e1 fd ff       ▶  call   5790 <getuid@plt>
+   27661:▶      89 c7                ▶  mov    %eax,%edi
+   27663:▶      31 c0                ▶  xor    %eax,%eax
+   27665:▶      e8 96 e4 fd ff       ▶  call   5b00 <setuid@plt>
+   2766a:▶      31 c0                ▶  xor    %eax,%eax
+   2766c:▶      e8 cf e2 fd ff       ▶  call   5940 <getgid@plt>
+   27671:▶      48 83 c4 08          ▶  add    $0x8,%rsp
+
+```
 
 
 {{< include /exec-encoding/_talk-dl-extra.qmd >}}

@@ -20,7 +20,7 @@
 \graphicspath{{}{./}{../}{../../}{../../common/}}
 \input{common/listingsLib}
 
-\usetikzlibrary{arrows.meta,calc,patterns,positioning,matrix,shapes.multipart,fit,shapes.misc,shapes.callouts}
+\usetikzlibrary{arrows.meta,calc,patterns,positioning,matrix,shapes.multipart,fit,decorations.pathreplacing,shapes.misc,shapes.callouts}
 \tikzset{ 
     ampersand replacement=\&,
     tight matrix node/.style={draw,rectangle,inner sep=1pt, outer sep=0pt,text width=1cm,minimum height=.4cm,anchor=center},
@@ -39,8 +39,10 @@
         column sep=-\pgflinewidth,
         nodes={tight matrix node noline},
     },
+    tight matrix noline/.style={tight matrix no line},
     % FIXME: should use argument
     my callout/.style={draw,fill=blue!20!white,rectangle callout,alias=#1-callout},
+    my callout2/.style={draw,fill=blue!20!white,rectangle callout,callout absolute pointer=(#1),below right=5pt of {#1}},
 }
 \pgfdeclarelayer{bg}
 \pgfdeclarelayer{fg}
@@ -135,7 +137,7 @@
   }
 
 
-\NewDocumentCommand\alt{D<>{}mm}{%
+\NewDocumentCommand\alt{D<>{}+m+m}{%
   \overlay_parse:n {#1}
   %\bool_log:N \l_overlay_is_correct_bool
   %\str_log:N \l_overlay_current_spec_str
@@ -144,7 +146,15 @@
     {#3}
 }
 
-\NewDocumentCommand\only{D<>{}m}{%
+\NewDocumentCommand\only{D<>{}+m}{%
+  \overlay_parse:n {#1}
+  %\bool_log:N \l_overlay_is_correct_bool
+  %\str_log:N \l_overlay_current_spec_str
+  \bool_if:NT \l_overlay_is_correct_bool
+    {#2}
+}
+
+\NewDocumentCommand\onslide{D<>{}+m}{%
   \overlay_parse:n {#1}
   %\bool_log:N \l_overlay_is_correct_bool
   %\str_log:N \l_overlay_current_spec_str
@@ -175,27 +185,36 @@
     \end{scope}\group_end:
   }
 \NewCommandCopy\originalColor\color
-\NewCommandCopy\originalSout\sout
 \RenewDocumentCommand\color{D<>{1-}m}
   {
     \alt<#1>{\originalColor{#2}}{}
   }
+\NewCommandCopy\originalSout\sout
+\RenewDocumentCommand\sout{D<>{1-}m}
+  {
+    \alt<#1>{\originalSout{#2}}{#2}
+  }
 \NewDocumentCommand\myemph{D<>{1-}m}
   {
-    \group_begin:\alt<#1>{\originalColor{orange!50!red}\itshape}{}#2\group_end:
+    \if_mode_math:
+      \group_begin:\alt<#1>{\originalColor{orange!50!red}\mathit{#2}}{#2}\group_end:
+    \else:
+      \group_begin:\alt<#1>{\originalColor{orange!50!red}\itshape}{}#2\group_end:
+    \fi
   }
 \NewDocumentCommand\maybeEmph{D<>{1-}m}
   {
-    \group_begin:\alt<#1>{\originalColor{orange!50!red}\itshape}{}#2\group_end:
+    \if_mode_math:
+      \group_begin:\alt<#1>{\originalColor{orange!50!red}\mathit{#2}}{#2}\group_end:
+    \else:
+      \group_begin:\alt<#1>{\originalColor{orange!50!red}\itshape}{}#2\group_end:
+    \fi
   }
 \RenewDocumentCommand\textbf{D<>{1-}m}
   {
     \group_begin:\alt<#1>{\bfseries}{}#2\group_end:
   }
-\RenewDocumentCommand\sout{D<>{1-}m}
-  {
-     \alt<#1>{\originalSout{#2}}{#2}
-  }
+
 
 \NewDocumentCommand{\setSlide}{m}{
   \bool_gset_false:N \g_overlay_need_continue_bool

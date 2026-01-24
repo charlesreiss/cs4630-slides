@@ -199,7 +199,7 @@
 
 \NewDocumentCommand{\setSlide}{m}{
   \bool_gset_false:N \g_overlay_need_continue_bool
-  \int_gset:Nn \g_overlay_current_slide_int #1
+  \int_gset:Nn \g_overlay_current_slide_int {#1}
 }
 
 \ExplSyntaxOff

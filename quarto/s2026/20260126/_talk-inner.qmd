@@ -15,6 +15,39 @@
     *  2 byte: opcode | Mod / Reg / r/m
        *  table of what values are
 
+## on the quiz
+
+### quiz Q1
+
+*  calling convention --- 7+ argument on stack
+   *  starting just below return address
+*  no stack allocation (adjustment of `%rsp`), so stack array seems unlikely
+   *  same problem with uninit. local variable
+
+### quiz Q2 {.smaller}
+
+*  offset `0x2016` is part of read-only/non-executable segment loaded from executable into mmeory
+*  but we have information that it's part of `EH_FRAME`
+   *  try/catch-like support
+*  I didn't notice the EH_FRAME info when writing the question
+
+### quiz Q3
+
+*  intended you to count total filesz bytes of r-x LOAD directives
+
+### quiz Q4
+
+*  `add %edi,0x2e90(%rip) # 404030 <g1>`
+    *  memory[0x2e90 + RIP] $\leftarrow$ memory[0x2e90 + RIP] + EDI
+    *  0x2e90 + RIP is address 0x404030, which has the label `g1`
+*  the initial value at address 0x404030 is setup by
+
+```
+LOAD off    0x000002e0c vaddr 0x000403e0c paddr 0x00403e0c align 2**12
+     filesz 0x000000228 memsz 0x00000022c flags rw-
+```
+
+
 ### note on recordings
 
 ### assignment Q+A

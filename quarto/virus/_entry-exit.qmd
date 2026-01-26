@@ -80,7 +80,7 @@ infected code:
 
 ### Vienna: return 
 
-```nasm
+```
 0x08e7:
     pop %cx ; restore initial value of %cx, %sp
     xor %ax, %ax ; %ax <- 0
@@ -89,7 +89,7 @@ infected code:
     xor %si, %si ; %si <- 0
 
     ; push 0x0100
-    mov $0x0100, %di
+    movw $0x0100, %di
     push %di 
     xor %di, %di
 

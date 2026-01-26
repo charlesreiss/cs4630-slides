@@ -10,7 +10,7 @@
 * send to someone
 * convince someone else to send it to someone
 
-::: {.myoverbox .big}
+::: {.myoverbox .big .fragment}
 
 all these options --- automatable
 

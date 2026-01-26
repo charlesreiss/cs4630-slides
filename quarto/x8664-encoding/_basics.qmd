@@ -35,13 +35,10 @@
 
 * 1-byte opcode
 * sometimes <code>ModRM</code> byte: 
-
    * 2-bit ‘‘mod’’ and
    * 3-bit register number (source or dest, depends on opcode) and
    * 3-bit ‘‘r/m’’ (register or memory)
-
 * ‘‘mod’’ + ‘‘r/m’’ specify one of: 
-
    * <code>%reg</code> (mod = <code>11</code>)
    * <code>(%bx/%bp, %si/%di)</code>
    * <code>(%bx/%si/%di)</code>
@@ -53,12 +50,11 @@
 ### 16-bit ModRM table 
 
 
-
 ::: {.r-stack .my-full}
-![](/x8664-encoding/texfig/basics-16-bit-modrm-table.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](/x8664-encoding/texfig/basics-16-bit-modrm-table.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/x8664-encoding/texfig/basics-16-bit-modrm-table.figure-1.svg){.fragment .fade-out fragment-index=1}
 
+![](/x8664-encoding/texfig/basics-16-bit-modrm-table.figure-2.svg){.fragment .fade-in-then-out fragment-index=1}
 
 :::
 
@@ -89,9 +85,10 @@
 
 
 ::: {.r-stack .my-full}
-![](/x8664-encoding/texfig/basics-32-bit-modrm-table.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](/x8664-encoding/texfig/basics-32-bit-modrm-table.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/x8664-encoding/texfig/basics-32-bit-modrm-table.figure-1.svg){.fragment .fade-out fragment-index=1}
+
+![](/x8664-encoding/texfig/basics-32-bit-modrm-table.figure-2.svg){.fragment .fade-in-then-out fragment-index=1}
 
 
 :::
@@ -118,20 +115,17 @@
 ![](/x8664-encoding/32bitsib){}
 
 
-### basic 32-bit encoding  {.smaller}
+### basic 32-bit encoding
 
-![](/x8664-encoding/texfig/basics-basic-32-bit-encoding.figure.svg)
- 
+![](/x8664-encoding/texfig/basics-basic-32-bit-encoding.figure.svg){style="width: 1000px"}
 
 * dashed: not always present
 * opcodes: 1-3 bytes 
-
-   * some 5-bit opcodes, with 3-bit register field
-   * (alternate view: 8-bit opcode with fixed register)
-   * sometimes Reg part of ModRM used as add'tl part of opcode
-
+   * [some 5-bit opcodes, with 3-bit register field]{.fragment fragment-index=1 .myem-only .custom}
+       * (alternate view: 8-bit opcode with fixed register)
+   * [sometimes Reg part of ModRM used as add'tl part of opcode]{.fragment fragment-index=2 .myem-only .custom}
+       * in Intel manual: `/1` == ModRM byte with reg=1
 * displacement, immediate: 1, 2, or 4 bytes 
-
    * or, rarely, 8 bytes
 
 

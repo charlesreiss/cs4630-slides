@@ -3,3 +3,14 @@
 
 ![](/x8664-encoding/texfig/ex-32.figure.svg)
 
+### exercise 1 solution {.smaller}
+
+*  `btsl $7, 4(%rax)` / `BTS DWORD PTR [RAX + 4], 7`
+*  from ISA reference entry:
+    *  `0F BA /5 ib` -- `BTS r/m32, imm8` --- MI
+      *  `0F BA` + ModRM byte with reg=5 + immediate byte
+    *  MI: operand 1 in ModRM byte r/m field; operand 2 in immediate byte
+*  from table:
+    *  [EAX]+disp8: mod 01, R/M 000; [EAX]+disp32: mod 10 R/M 000;
+*  `0F BA` `0b01_101_000` `04 07` = `0F BA 68 04 07`
+*  `0F BA` `0b10_101_000` `04 00 00 00 07` = `0F BA A8 04 00 00 00 07`

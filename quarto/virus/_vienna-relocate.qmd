@@ -57,6 +57,6 @@ mov %si, %dx
 add $0xD, <span data-fragment-index="3" class="fragment custom myem-only">%dx</span> ; dx &lt;- 0x906
 int 0x21 // system call: write 3 bytes from 0x906
 ...
-0x906: <span data-fragment-index="2" class="fragment custom myem-only">e9 fd 05</span> ; jmp PC+FD 05
+0x906: <span data-fragment-index="2" class="fragment custom myem-only">e9 fd 05</span> ; jmp PC+0x05FD
 </code></pre>
 

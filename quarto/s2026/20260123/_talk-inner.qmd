@@ -10,6 +10,8 @@
     *  looking at libraries
     *  mess-ups with missing symbols
 
+### assignment Q+A
+
 ### missing piece
 
 *  talked about execution-generation-time linking

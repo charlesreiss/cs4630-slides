@@ -1,0 +1,30 @@
+### last time {.smaller}
+
+*  dynamic linking tables on Linux
+    *  global offset table (pointers to functions, filled in)
+    *  "stubs" that do table lookup
+    *  function calls in program call stub
+*  reverse engeineering tool misc
+    *  cross-references
+    *  debugger features
+    *  emulation
+*  started: x86-64 encoding
+    *  history: 16-bit to 32-bit to 64-bit
+*  16-bit encoding
+    *  special cases: 1 byte: opcode \[+ register number\]
+    *  2 byte: opcode | Mod / Reg / r/m
+       *  table of what values are
+
+### note on recordings
+
+### assignment Q+A
+
+{{< include /x8664-encoding/_talk-inner.qmd >}}
+
+{{< include /virus/_talk-inner.qmd >}}
+
+# backup slides {visibility="hidden"}
+
+### backup slides 
+
+{{< include /exec-encoding/_talk-backup.qmd >}}

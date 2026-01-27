@@ -10,10 +10,10 @@
 
 * `pushq %r13` encoded as <code>41 55</code>  
 
-   * <code>41</code>: REX prefix <code>0010</code> (constant), w:<code>0</code>, r:<code>0</code>, s:<code>0</code>, b:<code><span style="color: darkblue">1</span></code>
+   * <code>41</code>: REX prefix <code>0010</code> (constant), w:<code>0</code>, r:<code>0</code>, s:<code>0</code>, b:<code><span style="color: blue">1</span></code>
    * w = <code>0</code> because push is never 32-bit in 64-bit mode
    * <code>55</code>: 5-bit opcode <code>01010</code>; 3-bit reg # <code><span style="color: darkgreen">101</span></code>
-   * 4-bit reg # <code><span style="color: darkblue">1</span><span style="color: darkgreen">101</span></code> = 13
+   * 4-bit reg # <code><span style="color: blue">1</span><span style="color: darkgreen">101</span></code> = 13
 
 
 
@@ -36,7 +36,7 @@
 
 
 * `addq 0x12345678(%r10,%r11,2), %rax`
-* <code>4b</code>: REX prefix <code>0100</code>+w:<code>[1]{.fragment fragment-index=2 .custom .myem-only}</code>, r:<code><span style="color: darkviolet">[0]{.fragment fragment-index=3 .custom .myem-only}</span></code>, s:<code><span style="color: darkblue">[1]{.fragment fragment-index=4 .custom .myem-only}</span></code>, b:<code><span style="color: darkgreen">[1]{.fragment fragment-index=5 .custom .myem-only}</span></code>
+* <code>4b</code>: REX prefix <code>0100</code>+w:<code>[1]{.fragment fragment-index=2 .custom .myem-only}</code>, r:<code><span style="color: darkviolet">[0]{.fragment fragment-index=3 .custom .myem-only}</span></code>, s:<code><span style="color: blue">[1]{.fragment fragment-index=4 .custom .myem-only}</span></code>, b:<code><span style="color: darkgreen">[1]{.fragment fragment-index=5 .custom .myem-only}</span></code>
 * <code>03</code>: opcode --- add r/m64 to r64 (with [REX.w]{.fragment fragment-index=2 .custom .myem-only})
 * <code>84</code>: ModRM: mod = <code>10</code>; reg = <code>000</code>, r/m: <code>100</code> 
 
@@ -45,7 +45,7 @@
 
 * <code>5a</code>: SIB: scale = <code>01</code>, index = <code>011</code>, base = <code>010</code> 
 
-   * with REX: index = <code><span style="color: darkblue">[1]{.fragment fragment-index=4 .custom .myem-only}</span>011</code> (11), base = <code><span style="color: darkgreen">[1]{.fragment fragment-index=5 .custom .myem-only}</span>010</code> (10)
+   * with REX: index = <code><span style="color: blue">[1]{.fragment fragment-index=4 .custom .myem-only}</span>011</code> (11), base = <code><span style="color: darkgreen">[1]{.fragment fragment-index=5 .custom .myem-only}</span>010</code> (10)
 
 * <code>78 56 32 12</code>: 32-bit constant <code>0x12345678</code>
 
@@ -55,13 +55,13 @@
 
 * `movq %fs:0x10,%r13`
 * <code>64</code>: FS segment override
-* <code>48</code>: REX: <code>w</code>: 1 (64-bit), <code>r</code>: <span style="color: darkviolet"><code></code> [1]{.fragment fragment-index=2 .custom .myem-only}</span>, <code>s</code>: <span style="color: darkblue"><code></code> [0]{.fragment fragment-index=3 .custom .myem-only}</span>, <code>b</code>: <span style="color: darkgreen"><code></code> [0]{.fragment fragment-index=4 .custom .myem-only}</span>
+* <code>48</code>: REX: <code>w</code>: 1 (64-bit), <code>r</code>: <span style="color: darkviolet"><code></code> [1]{.fragment fragment-index=2 .custom .myem-only}</span>, <code>s</code>: <span style="color: blue"><code></code> [0]{.fragment fragment-index=3 .custom .myem-only}</span>, <code>b</code>: <span style="color: darkgreen"><code></code> [0]{.fragment fragment-index=4 .custom .myem-only}</span>
 * <code>8b</code>: opcode for MOV memory to register
 * <code>2c</code>: ModRM: mod = <code>00</code>, reg = <code>101</code>, r/m: <code>100</code> 
 
-   * with REX: reg = <code><em><span style="color: darkviolet">[1]{.fragment fragment-index=2 .custom .myem-only}</span></em>101</code> [%r12]; r/m = 100 (SIB follows)
+   * with REX: reg = <code><em><span style="color: darkviolet">[1]{.fragment fragment-index=2 .custom .myem-only}</span></em>101</code> [%r13]; r/m = 100 (SIB follows)
 
-* <code>25</code>: SIB: scale = <code>00</code>; index = <code>(<span style="color: darkblue">[0]{.fragment fragment-index=3 .custom .myem-only}</span>)100</code>; base = <code>(<span style="color: darkgreen">[0]{.fragment fragment-index=4 .custom .myem-only}</span>)101</code> 
+* <code>25</code>: SIB: scale = <code>00</code>; index = <code>(<span style="color: blue">[0]{.fragment fragment-index=3 .custom .myem-only}</span>)100</code>; base = <code>(<span style="color: darkgreen">[0]{.fragment fragment-index=4 .custom .myem-only}</span>)101</code> 
 
    * no register/no register in table
 

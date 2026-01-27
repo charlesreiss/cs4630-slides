@@ -56,6 +56,8 @@ LOAD off    0x000002e0c vaddr 0x000403e0c paddr 0x00403e0c align 2**12
 
 {{< include /virus/_talk-inner.qmd >}}
 
+{{< include /heur-detect/_talk-inner.qmd >}}
+
 # backup slides {visibility="hidden"}
 
 ### backup slides 

@@ -4,16 +4,15 @@
 
 * add code at start of program (Vienna) 
    * plus restore replaced code after running malware code
-u
+<hr class="vspace">
 * return with padding after it:<br/>
 <pre><code>404a01:       c3                      <em>retq</em>
 404a02:       0f 1f 40 00             nopl   0x0(%rax)</code></pre>
   becomes
 <pre><code>404a01:       e9 XX XX XX XX          <em>jmpq    YYYYYYY</em></code></pre>
  
-
    * plus return after running malware code
-
+<hr class="vspace">
 * any random place in program? 
    * just not in the <em>middle of instruction</em>
    * and replace original code after running malware code
@@ -61,9 +60,9 @@ foo:
     // 0x89 0xec
 ```
 * use to identify when <code>e8</code> refers to real function 
-   * (full version: also have some other function start patterns)
-
-* but frame pointers not really a thing anymore
+<hr class="vspace">
+* modern compilers don't start functions so consistently...
+* but probably similar patterns to look for
 
 
 ### really finding function calls (2)
@@ -82,7 +81,7 @@ foo:
 <hr class="vspace" />
 * modern OS: segfault/general protection fault 
    * code loaded read-only
-* easy solution: make library call to make it writable 
-   * Linux: <code>mprotect</code>
-   * Windows: <code>VirtualProtect</code>
-   * functionality exists to, for example, allow compiling code at runtime
+* easy solution: request to make it writable 
+   * Linux: <code>mprotect</code>, Windows: <code>VirtualProtect</code>
+   * functions commonly used by programs that compile code at runtime
+     *  example: Java and JavaScript implementations

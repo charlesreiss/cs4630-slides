@@ -70,7 +70,7 @@ extra C code to include
 (.|\n)     {} /* default rule: would output text */
 ```
 
-::: {.myoverbox}
+::: {.myoverbox .low}
 
 `yytext` contains contents of currently matched thing
 

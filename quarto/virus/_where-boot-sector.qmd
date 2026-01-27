@@ -71,7 +71,7 @@
 ![](/virus/texfig/bootProc.figure-3.svg){fig-alt="Boot process diagram with BIOS/UEFI highlighted"}
 
 
-### BIOS/UEFI implants .smaller}
+### BIOS/UEFI implants
 
 
 * infrequent

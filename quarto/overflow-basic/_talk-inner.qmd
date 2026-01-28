@@ -1,0 +1,12 @@
+
+# buffer overflows, generally {visibility="hidden"}
+
+{{< include /overflow-basic/_generally.qmd >}}
+
+# simple overflow {visibility="hidden"}
+
+{{< include /overflow-basic/_simple-overflow.qmd >}}
+
+## exercise {visibility="hidden"}
+
+{{< include /overflow-basic/_simple-overflow-exer.qmd >}}

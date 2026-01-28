@@ -1,0 +1,26 @@
+
+### exercise: stack layout 
+
+
+
+::: {.r-stack .my-full}
+![](/overflow-basic/texfig/simpleOverStackLayout1.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/overflow-basic/texfig/simpleOverStackLayout1.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+
+:::
+
+
+### exercise: overflow? 
+
+
+
+::: {.r-stack .my-full}
+![](/overflow-basic/texfig/simpleOverStackLayout2.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/overflow-basic/texfig/simpleOverStackLayout2.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+
+:::
+

@@ -1,0 +1,8 @@
+
+# command injection {visibility="hidden"}
+
+{{< include /command-inj/_intro.qmd >}}
+
+# type confusion {visibility="hidden"}
+
+{{< include /command-inj/_as-type-conf.qmd >}}

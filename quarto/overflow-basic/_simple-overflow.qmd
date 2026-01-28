@@ -1,0 +1,36 @@
+
+### simpler overflow  {.smaller}
+
+<!-- \lstset{
+    language=C,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
+} -->
+ 
+<pre><code>struct QuizQuestion questions\[NUM_QUESTIONS];
+int giveQuiz() {
+    int <span data-fragment-index="2" class="fragment custom myem-only">score</span> = 0;
+    char <span data-fragment-index="2" class="fragment custom myem-only">buffer</span>\[100];
+    for (int i = 0; i &lt; NUM_QUESTIONS; ++i) {
+        gets(buffer);
+        if (checkAnswer(buffer, &amp;questions\[i])) {
+            score += 1;
+        }
+    }
+    return score;
+}
+</code></pre>
+
+
+### simpler overflow: stack 
+
+
+
+::: {.r-stack .my-full}
+![](/overflow-basic/texfig/overwriteLocalStack2.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/overflow-basic/texfig/overwriteLocalStack2.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+
+:::
+

@@ -1,0 +1,48 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\newsavebox{\GradeAssignmentCA}
+\newsavebox{\GradeAssignmentAsmA}
+\begin{document}
+\begin{lrbox}{\GradeAssignmentCA}
+\begin{lstlisting}[language=C++,style=smaller]
+int GradeAssignment(FILE *in) {
+  int scores[10]; char buffer[16];
+  for (int i = 0; i < 10; ++i) {
+    gets(buffer);
+    scores[i] =
+        GradeAnswer(buffer, i);
+  }
+  Process(scores);
+}
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\GradeAssignmentAsmA}
+\begin{lstlisting}[language=myasm,style=smaller,morekeywords=incl]
+GradeAssignment:
+  pushq   %rbp
+  pushq   %rbx
+  xorl    %ebx, %ebx
+  subq    $72, %rsp
+  leaq    8(%rsp), %rbp
+for_loop:
+  movq    %rbp, %rdi
+  call    gets
+  movl    %ebx, %esi
+  movq    %rbp, %rdi
+  call    GradeAnswer
+  leaq    24(%rsp), %rdi
+  movl    %eax, (%rdi,%rbx,4)
+  incq    %rbx
+  cmpq    $10, %rbx
+  jne     for_loop
+  call    Process
+  ...
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{overflow-basic/texfig/simpleOverStackLayout2.inner.tex}
+\setSlide{2}
+\input{overflow-basic/texfig/simpleOverStackLayout2.inner.tex}
+\end{document}

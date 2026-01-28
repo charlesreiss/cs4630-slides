@@ -1,0 +1,14 @@
+
+### input as wrong thing pattern  {.smaller}
+
+
+* with command injection: input interpreted for wrong purpose
+* supposed to be label/string to match/etc.
+* actually interpreted as part of command 
+<hr class="vspace" />
+* same pattern for a bunch of memory vulnerabilities we'll look at 
+
+   * input supposed be part of buffer
+   * overflow or similar makes part of it interpreted as something else
+
+

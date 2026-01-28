@@ -1,0 +1,31 @@
+
+### command injection (review?) 
+
+```
+name = UNTRUSTED_INPUT
+subprocess.check_call(
+    "write_report_for '" + name + "' output.pdf"
+)
+
+```
+ <hr />
+ 
+
+* name = `'; malicious_command; /bin/true '`
+
+
+### command injection (review?)  {.smaller}
+
+
+```
+name = UNTRUSTED_INPUT
+result = db_connection.execute(
+    "SELECT a, b, c FROM items WHERE name = '" + name + "'"
+)
+
+```
+ <hr />
+ 
+
+* name = `'; SELECT password FROM users WHERE name = 'foo`
+

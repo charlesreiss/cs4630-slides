@@ -1,0 +1,6 @@
+---
+title: "command-inj"
+
+---
+
+{{< include ../command-inj/_talk-inner.qmd >}}

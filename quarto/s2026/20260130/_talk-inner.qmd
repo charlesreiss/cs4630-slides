@@ -1,0 +1,78 @@
+### last time
+
+*  self-replicating malware copying
+    *  need for relocation (adjusting pointers/etc. in machine code)
+    *  avoiding re-infection (Vienna trick: modification time)
+*  other places to put code
+    *  replacing
+    *  cavaties --- padding between segments, after jumps/rets/etc.
+    *  appending
+    *  in UEFI/bootloader (start up process)
+    *  in OS files (startup apps; libraries)
+
+### assignment Q+A
+
+
+# virus: getting code invoked {visibility="hidden"}
+
+### invoking virus code: options
+
+
+* boot loader
+* change starting location
+* alternative approaches: "entry point obscuring"
+* edit code that's going to run anyways
+* replace a function pointer
+* …
+
+## changing start location {visibility="hidden"}
+
+### invoking virus code: options
+
+* boot loader
+* <em>change starting location</em>
+* alternative approaches: "entry point obscuring"
+* edit code that's going to run anyways
+* replace a function pointer
+* …
+
+{{< include /virus/_invoke-start.qmd >}}
+
+## overwrite existing code {visibility="hidden"}
+
+### invoking virus code: options
+
+* boot loader
+* change starting location
+* alternative approaches: "entry point obscuring"
+* <em>edit code that's going to run anyways</em>
+* replace a function pointer
+* …
+
+{{< include /virus/_invoke-overwrite-existing.qmd >}}
+
+## using dynamic linking features {visibility="hidden"}
+
+### invoking virus code: options
+
+* boot loader
+* change starting location
+* alternative approaches: "entry point obscuring"
+* edit code that's going to run anyways
+* <em>replace a function pointer</em>
+* …
+
+{{< include /virus/_invoke-dynamic.qmd >}}
+
+# virus summary? {visibility="hidden"}
+
+{{< include /virus/_summary.qmd >}}
+
+{{< include /heur-detect/_talk-inner.qmd >}}
+
+# backup slides {visibility="hidden"}
+
+### backup slides 
+
+
+<!-- {{< include /virus/_talk-backup.qmd >}} -->

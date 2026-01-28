@@ -1,5 +1,5 @@
 
-### simpler overflow  {.smaller}
+### simpler overflow
 
 <!-- \lstset{
     language=C,
@@ -7,19 +7,25 @@
     moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
 } -->
  
-<pre><code>struct QuizQuestion questions\[NUM_QUESTIONS];
+<pre><code>struct QuizQuestion questions[NUM_QUESTIONS];
 int giveQuiz() {
     int <span data-fragment-index="2" class="fragment custom myem-only">score</span> = 0;
-    char <span data-fragment-index="2" class="fragment custom myem-only">buffer</span>\[100];
+    char <span data-fragment-index="2" class="fragment custom myem-only">buffer</span>[100];
     for (int i = 0; i &lt; NUM_QUESTIONS; ++i) {
         gets(buffer);
-        if (checkAnswer(buffer, &amp;questions\[i])) {
+        if (checkAnswer(buffer, &amp;questions[i])) {
             score += 1;
         }
     }
     return score;
 }
 </code></pre>
+
+::: {.myoverbox .vlow .fragment fragment-index=2}
+
+going out of bounds of buffer might modify score
+
+:::
 
 
 ### simpler overflow: stack 

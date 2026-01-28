@@ -1,41 +1,30 @@
 
 ### typical buffer overflow pattern 
 
-
 * cause program to write past the end of a buffer
 * that somehow causes different code to run
 * (usually code the attacker wrote)
 
-
-### why buffer overflows?  {.smaller}
-
+### why buffer overflows?
 
 * for a long time, most common vulnerability
 * common results in arbitrary code execution 
 <hr class="vspace" />
 * related to other memory-management vulnerabilities 
-
    * which usually also result in arbitrary code execution
 
-
-
-### network worms and overflows  {.smaller}
-
+### network worms and overflows
 
 * worms that connect to vulnerable servers: 
 <hr class="vspace" />
 * Morris worm included some buffer overflow exploits 
-
    * Morris worm: first self-replicating malware
    * in mail servers, user info servers
-
 * 2001: Code Red worm that spread to web servers (running Microsoft IIS)
-
 
 ### overflows without servers  {.smaller}
 
-
-* bugs dealing with corrupt files: 
+* bugs dealing with corrupt files:
 <hr class="vspace" />
 * Adobe Flash (web browser plugin)
 * PDF readers

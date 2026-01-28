@@ -124,7 +124,7 @@ void foo() {
 ### some other xforms
 
 * add useless conditionals, etc.
-* encode constants like strings
+* compute non-string constant values (so they can't be searched for)
 * generate machine code at runtime and jump to it
 * turn function into custom bytecode interpreter
    * data array holding effective function code

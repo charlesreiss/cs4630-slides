@@ -11,11 +11,11 @@
 
 * run program in debugger/emulator/VM for a while 
    * one heuristic: until it jumps to written data
-* example implementation: unipacker
-   * <a href="https://github.com/unipacker/unipacker">https://github.com/unipacker/unipacker</a>
-<hr class="vspace" />
 * then dump memory to get decrypted machine code
 * and/or obtain trace of instructions run
+<hr class="vspace" />
+* example implementation: unipacker
+   * <a href="https://github.com/unipacker/unipacker">https://github.com/unipacker/unipacker</a>
 
 
 ### unneeded steps 

@@ -10,6 +10,6 @@
 
 ### from UPX documentation  {.smaller}
 
-![](/antianti/upx-intro){fig-alt="UPX is an advanced executable file compressor. UPX will typically reduce the file size of programs and DLLs by around 50%-70%, thus reducing disk space, network load times, download times and other distribution and storage costs. Programs and libraries compressed by UPX are completely self-contained and run exactly as before, with no runtime or memory penalty for most of the supported formats."}
+![](/antianti/upx-intro){fig-alt="UPX is an advanced executable file compressor. UPX will typically reduce the file size of programs and DLLs by around 50%-70%, thus reducing disk space, network load times, download times and other distribution and storage costs. Programs and libraries compressed by UPX are completely self-contained and run exactly as before, with no runtime or memory penalty for most of the supported formats." width=1000px}
 <hr />
-![](/antianti/upx-not-prot){fig-alt="We will *NOT* add any sort of protection and/or encryption. This only gives people a false feeling of security because all &quot;protectors&quot; can be broken by definition."}
+![](/antianti/upx-not-prot){fig-alt="We will *NOT* add any sort of protection and/or encryption. This only gives people a false feeling of security because all &quot;protectors&quot; can be broken by definition." width=1000px}

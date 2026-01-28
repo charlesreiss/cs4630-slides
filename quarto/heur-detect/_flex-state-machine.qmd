@@ -28,21 +28,21 @@ foo     {...}
 
 ::: {.r-stack .my-full}
 
-![](/heur-detect/texfig/stateMachineMatch.figure-1.svg){.fragment .fade-in-then-out fragment-index=1 style="height: 500px"}
+![](/heur-detect/texfig/stateMachineMatch.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](/heur-detect/texfig/stateMachineMatch.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 style="height: 500px"}
+![](/heur-detect/texfig/stateMachineMatch.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
 
-![](/heur-detect/texfig/stateMachineMatch.figure-3.svg){.fragment .fade-in-then-out fragment-index=3 style="height: 500px"}
+![](/heur-detect/texfig/stateMachineMatch.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
 
-![](/heur-detect/texfig/stateMachineMatch.figure-4.svg){.fragment .fade-in-then-out fragment-index=4 style="height: 500px"}
+![](/heur-detect/texfig/stateMachineMatch.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
 
-![](/heur-detect/texfig/stateMachineMatch.figure-5.svg){.fragment .fade-in-then-out fragment-index=5 style="height: 500px"}
+![](/heur-detect/texfig/stateMachineMatch.figure-5.svg){.fragment .fade-in-then-out fragment-index=5}
 
-![](/heur-detect/texfig/stateMachineMatch.figure-6.svg){.fragment .fade-in-then-out fragment-index=6 style="height: 500px"}
+![](/heur-detect/texfig/stateMachineMatch.figure-6.svg){.fragment .fade-in-then-out fragment-index=6}
 
-![](/heur-detect/texfig/stateMachineMatch.figure-7.svg){.fragment .fade-in-then-out fragment-index=7 style="height: 500px"}
+![](/heur-detect/texfig/stateMachineMatch.figure-7.svg){.fragment .fade-in-then-out fragment-index=7}
 
-![](/heur-detect/texfig/stateMachineMatch.figure-8.svg){.fragment .fade-in-then-out fragment-index=8 style="height: 500px"}
+![](/heur-detect/texfig/stateMachineMatch.figure-8.svg){.fragment .fade-in-then-out fragment-index=8}
 
 
 :::

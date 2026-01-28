@@ -62,20 +62,18 @@
 * hooking --- getting a ‘hook’ to run on (OS) operations 
    * examples: creating new files, modifying executables
 * ideal mechanism: OS support
-* less ideal mechanism: change library loading<
-* less ideal mechanism: <Em>replace OS handlers</em>
+* less ideal mechanism: change library loading
+* less ideal mechanism: <em>replace OS handlers</em>
 * less ideal mechanism: debugger support
 
 ### changing exception call handlers (1) 
 
-
-* OS data structure tells hardware where program requests go
+* data structure tells hardware where program requests go
+   * typically array with one entry per request type
+   * usually set to point to OS routines
 * simpliest mechanism: edit that data structure  
-
    * and save a copy of what was there before
-
-* point to your code 
-
+* point to your "hook" code 
    * and call what was there before after behavior check
 
 

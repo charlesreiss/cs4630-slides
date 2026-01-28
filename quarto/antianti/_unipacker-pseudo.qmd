@@ -1,6 +1,5 @@
 
-### unipacker psuedocode  {.smaller}
-
+### unipacker psuedocode
 
 ```python
 data, size = parse_executable()

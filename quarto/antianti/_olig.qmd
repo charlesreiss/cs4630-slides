@@ -6,7 +6,7 @@
 ### producing changing malware
 
 * "encrypted" code can generate random new decrypter
-* not just <code>nop</code>: 
+* inserting random `nop`s and oter changes, such as:
 <hr class="vspace" />
 * switch between synonym instructions 
    * `add $4, ...` versus `sub $-4, ...`, etc.

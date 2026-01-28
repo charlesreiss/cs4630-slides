@@ -89,14 +89,6 @@
 
 {{< include /antianti/_unipacker-pseudo.qmd >}}
 
-## example: Qiling {visibility="hidden"} <!-- FIXME in re-tools -->
-
-{{< include /re-tools/_qiling.qmd >}}
-
-## example: PANDA-RE {visibility="hidden"}
-
-{{< include /re-tools/_panda-re.qmd >}}
-
 ## aside: instruction traces {visibility="hidden"}
 
 {{< include /antianti/_instr-traces.qmd >}}
@@ -160,9 +152,17 @@
 
 {{< include /antianti/_goat.qmd >}}
 
+
 # anti-debugging {visibility="hidden"}
 
-{{< include /antianti/_antidebug-intro.qmd >}}
+### diversion: debuggers
+
+* we'll care about two pieces of functionality: 
+<hr class="vspace" />
+* <em>breakpoints</em>
+   * debugger gets control when certain code is reached
+* single-step
+   * debugger gets control after a single instruction runs
 
 ## breaking breakpoints {visibility="hidden"}
 
@@ -171,6 +171,16 @@
 ## aside: modern breakpoints{visibility="hidden"}
 
 {{< include /antianti/_debug-modern-breakpt.qmd >}}
+
+### diversion: debuggers
+
+* we'll care about two pieces of functionality: 
+<hr class="vspace" />
+* breakpoints
+   * debugger gets control when certain code is reached
+* <em>single-step</em>
+   * debugger gets control after a single instruction runs
+
 
 ## breaking single-stepping (short) {visibility="hidden"}
 

@@ -14,6 +14,7 @@ for (int i = 0; i < numFunctions; ++i) {
 ```
 * problem: legit application code won't do this
 * easy to look for string "`GetFileAttributesA`"
+  * string "encoding" transformation (shown earlier) makes more work, but still straightforward
 
 ### searching for hashes
 

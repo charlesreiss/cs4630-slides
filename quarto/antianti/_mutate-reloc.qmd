@@ -7,7 +7,7 @@
 ### mutation with relocation
 
 * problem: mutations mess up jumps/calls 
-   * change were targets of jumps/calls are
+   * change where targets of jumps/calls are
 * possible solution strategy:
 <hr class="vspace" />
 * table mapping old to new locations 

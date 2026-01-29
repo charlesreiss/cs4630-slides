@@ -12,7 +12,6 @@
 
 ### assignment Q+A
 
-
 # virus: getting code invoked {visibility="hidden"}
 
 ### invoking virus code: options
@@ -51,6 +50,12 @@
 
 {{< include /virus/_invoke-overwrite-existing.qmd >}}
 
+### TRICKY assignment
+
+*  insert "virus code" into executable
+*  probably finding cavity to put it in
+*  probably replacing return
+
 ## using dynamic linking features {visibility="hidden"}
 
 ### invoking virus code: options
@@ -67,6 +72,7 @@
 # virus summary? {visibility="hidden"}
 
 {{< include /virus/_summary.qmd >}}
+
 
 {{< include /heur-detect/_talk-inner.qmd >}}
 

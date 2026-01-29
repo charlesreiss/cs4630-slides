@@ -34,7 +34,7 @@ $1 = (void *) 0x7fffffffdff8
 ```
 
 
-### trigger segfault --- stripped  {.smaller}
+### trigger segfault --- stripped
 
 
 ```
@@ -51,21 +51,7 @@ No function contains program counter for selected frame.
 (gdb)
 
 ```
-
-
-### stripping 
-
-
-* you can remove debugging information from executables
-* Linux command: <code>strip</code>
-* GCC option <code>-s</code>
-* <code>disassemble</code> can't tell where function starts
-
-
-# aside: strip {visibility="hidden"}
-
 ### disassembly attempts  {.smaller}
-
 
 ```
 gdb ./a.out
@@ -89,16 +75,11 @@ End of assembler dump.
 
 ```
 
-
 ### other notable debugger commands 
 
-
 * <code>b *0x12345</code> --- set breakpoint at address 
-
    * can set breakpoint on machine code on stack
-
 * watchpoints --- like breakpoints but trigger on change to/read from value 
-
    * ‘‘when is return address overwritten’’
 
 

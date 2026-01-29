@@ -5,7 +5,7 @@
 
 ::: {.r-stack .my-full}
 
-![](/overflow-smash/texfig/smash-set-ret.figure-1.svg){.fragment .fade-out fragment-index=1 fig-alt="The stack layout has the initial stack pointer with main's stuff on top, then usage by other functions, then the 'vulnerable' function return addr, then the 'vulnerable' function buffer, then other variables in the vulnerable function, then scanf's stuff"}
+![](/overflow-smash/texfig/smash-set-ret.figure-1.svg){.fragment .fade-out fragment-index=2 fig-alt="The stack layout has the initial stack pointer with main's stuff on top, then usage by other functions, then the 'vulnerable' function return addr, then the 'vulnerable' function buffer, then other variables in the vulnerable function, then scanf's stuff"}
 
 ![](/overflow-smash/texfig/smash-set-ret.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 fig-alt="for now, the assumption is the initial stack pointer is fixed."}
 
@@ -17,7 +17,7 @@
 
 ![](/overflow-smash/texfig/smash-set-ret.figure-6.svg){.fragment .fade-in-then-out fragment-index=6 fig-alt="we can compute the distance from vulnerable's return address to the beginning of the buffer by reading vulnerable's assembly"}
 
-![](/overflow-smash/texfig/smash-set-ret.figure-7.svg){.fragment .fade-in-then-out fragment-index=7 fig-alt="in gdb we use 'b vulnerable', then 'run', then 'info registers' to see the value of the stack pointer (rsp) when vulnerable starts, which will point to vulnerable's return address}
+![](/overflow-smash/texfig/smash-set-ret.figure-7.svg){.fragment .fade-in-then-out fragment-index=7 fig-alt="in gdb we use 'b vulnerable', then 'run', then 'info registers' to see the value of the stack pointer (rsp) when vulnerable starts, which will point to vulnerable's return address"}
 
 :::
 

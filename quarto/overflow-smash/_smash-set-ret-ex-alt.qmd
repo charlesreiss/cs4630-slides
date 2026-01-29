@@ -1,13 +1,58 @@
 
 ### exercise: shellcode location (2) 
 
+:::: {.columns}
 
+::: {.column width=60%}
 
-::: {.r-stack .my-full}
-![](/overflow-smash/texfig/smash-set-ret-ex-alt.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+```{.c style="font-size: 85%"}
+void getInitials(char *init) {
+    char first[50]; char second[50];
+    scanf("%s%s", first, second);
+    init[0] = first[0];
+    init[1] = second[0];
+}
+```
+<hr />
+```{style="font-size: 40%; border: 2px solid red"}
+(gdb) b __isoc99_scanf@plt
+Breakpoint 1 at 0x1040
+(gdb) run
+Starting program: example
 
-![](/overflow-smash/texfig/smash-set-ret-ex-alt.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+Breakpoint 1, 0x0000555555555040 in __isoc99_scanf@plt ()
+(gdb) info registers rsp
+rsp            0x7fffffffdc88      0x7fffffffdc88
+```
+:::
 
+::: {.column width=39%}
+
+```{.gnuassembler style="font-size: 80%"}
+0x1189: push %rbx
+xor    %eax,%eax
+mov    %rdi,%rbx
+/* lea "%s%s" -> %rdi */
+lea    0xe6e(%rip),%rdi 
+sub    $0xa0,%rsp
+/* &second[0] -> %rdx */
+lea    0x50(%rsp),%rdx 
+/* &first[0] -> %rsi */
+mov    %rsp,%rsi
+call   __isoc99_scanf@plt
+mov    (%rsp),%al
+mov    %al,(%rbx)
+mov    0x50(%rsp),%al
+mov    %al,0x1(%rbx)
+add    $0xa0,%rsp
+pop    %rbx
+ret
+```
 
 :::
 
+::::
+
+<hr />
+
+<em>if shellcode at beginning of `first`, its address = `_________`</em>

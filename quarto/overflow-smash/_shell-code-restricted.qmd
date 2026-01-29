@@ -8,17 +8,17 @@
 ### scanf accepted characters  {.smaller}
 
 
-* <code>%s</code> --- ‘‘Matches a sequence of non-white-space characters’’
+* <code>%s</code> --- "Matches a sequence of non-white-space characters"
 * can't use: 
 
-   * <code>\\textvisiblespace{}</code>
-   * <code>\\textbackslash{} t</code>
-   * <code>\\textbackslash{} v</code> (‘‘vertical tab’’)
-   * <code>\\textbackslash{r}</code> (‘‘carriage return’’)
-   * <code>\\textbackslash{n}</code>
+   * `␣`
+   * `\t`
+   * `\v` ("vertical tab")
+   * `\r` ("carriage return")
+   * `\n`
 
 * not actually that much of a restriction
-* what about <code>\\textbackslash{} 0</code> --- we used a lot of those
+* what about `\0` --- we used a lot of those
 
 
 ### why did we have zeroes?  {.smaller}
@@ -26,7 +26,14 @@
 
 
 * previous machine code:
- <code>48 8d 35 <span style="color: red!70!black15 00 00 00">red!70!black15 00 00 00</span></code>  (lea <span style="color: red!70!blackstring">red!70!blackstring</span>(%rip), %rsi) <br> <code>b8 <span style="color: red!70!black01 00 00 00">red!70!black01 00 00 00</span></code> (mov \$<span style="color: red!70!black1">red!70!black1</span>, %eax) <br> <code>bf <span style="color: red!70!black25 00 00 00">red!70!black25 00 00 00</span></code> (mov \$<span style="color: red!70!black37">red!70!black37</span>, %edi) <br> <code>0f 05</code> (syscall) <br> <code>b8 <span style="color: red!70!blacke7 00 00 00">red!70!blacke7 00 00 00</span></code> (mov \$<span style="color: red!70!black231">red!70!black231</span>, %eax) <br> <code>31 ff</code> (xor %edi, %edi) <br> <code>0f 05</code> (syscall) 
+
+<code>48 8d 35 <span style="color: red">15 00 00 00</span></code>  (lea <span style="color: red">string</span>(%rip), %rsi) <br>
+<code>b8 <span style="color: red">01 00 00 00</span></code> (mov \$<span style="color: red">1</span>, %eax) <br>
+<code>bf <span style="color: red">25 00 00 00</span></code> (mov \$<span style="color: red">37</span>, %edi) <br>
+<code>0f 05</code> (syscall) <br>
+<code>b8 <span style="color: red">e7 00 00 00</span></code> (mov \$<span style="color: red">231</span>, %eax) <br>
+<code>31 ff</code> (xor %edi, %edi) <br>
+<code>0f 05</code> (syscall) 
 
 * problem: happened to be encoding of constants
 
@@ -40,17 +47,80 @@
     moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
 } -->
   
+```{.gnuassembler code-line-numbers=true}
+shellcode:
+    jmp afterString
+string:
+    .ascii "You have been..."
+afterString:
+    leaq string(%rip), %rsi
+    xor %eax, %eax
+    xor %edi, %edi
+    movb $1, %al
+    movb $37, %dl
+    syscall
+    movb $231, %al
+    xor %edi, %edi
+    syscall
+```
 
-::: {.r-stack}
-![](/overflow-smash/texfig/virusNoZeroes.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+### shellcode without 0s 
 
-![](/overflow-smash/texfig/virusNoZeroes.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+  
+```{.gnuassembler code-line-numbers="2,9,10,12"}
+shellcode:
+    jmp afterString
+string:
+    .ascii "You have been..."
+afterString:
+    leaq string(%rip), %rsi
+    xor %eax, %eax
+    xor %edi, %edi
+    movb $1, %al
+    movb $37, %dl
+    syscall
+    movb $231, %al
+    xor %edi, %edi
+    syscall
+```
 
-![](/overflow-smash/texfig/virusNoZeroes.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+::: {.myoverbox .right}
 
+one-byte constants/offsets, <br />
+so no leading zero bytes <br />
+`jmp afterString` is `eb 25` <br />
+&nbsp;&nbsp;&nbsp;(jump forward 0x25 bytes) <br />
+`movb $1, %al` is `b0 01`
 
 :::
 
+### shellcode without 0s 
+
+  
+```{.gnuassembler code-line-numbers="6"}
+shellcode:
+    jmp afterString
+string:
+    .ascii "You have been..."
+afterString:
+    leaq string(%rip), %rsi
+    xor %eax, %eax
+    xor %edi, %edi
+    movb $1, %al
+    movb $37, %dl
+    syscall
+    movb $231, %al
+    xor %edi, %edi
+    syscall
+```
+
+::: {.myoverbox .right}
+
+leaq still uses four-byte offset <br />
+but now it's negative <br />
+`d4 ff ff ff` (-44)
+
+:::
 
 ### shellcode without 0s  {.smaller}
 
@@ -96,7 +166,7 @@
 
    * various forms of <code>xor</code>
 
-* <code>@</code>, <code>A</code>--<code>Z</code>, <code>[</code>, <code>\\textbackslash{}</code>, <code>]</code>, <code>^</code>, <code>_</code> 
+* <code>@</code>, <code>A</code>--<code>Z</code>, <code>[</code>, <code>\\</code>, <code>]</code>, <code>^</code>, <code>_</code> 
 
    * <code>inc</code>, <code>dec</code>, <code>push</code>, <code>pop</code> with first eight 32-bit registers
 
@@ -108,7 +178,7 @@
 * note: can <em>write machine code on stack, then run it</em>
 
 
-### some alphanumeric shellcode patterns  {.smaller}
+### some alphanumeric shellcode patterns  
 
 
 ```
@@ -124,7 +194,7 @@ xor $0x41, %ax
 ```
 
 
-### falling through to written code  {.smaller}
+### falling through to written code 
 
 
 ```

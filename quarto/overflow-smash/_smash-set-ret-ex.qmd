@@ -15,7 +15,7 @@ void getInitials(char *init) {
 }
 ```
 <hr />
-```{style="font-size: 40%"}
+```{style="font-size: 40%; border: 2px solid red;"}
 (gdb) b getInitials
 Breakpoint 1 at 0x1189
 (gdb) run

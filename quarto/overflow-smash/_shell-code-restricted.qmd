@@ -213,9 +213,7 @@ push %rax
 ### actual limitation 
 
 
-* overwriting with address?  
-
+* overwriting with address?
    * probably can't make sure that's all normal ASCII chars
-
 * (but could leave most significant bits of existing address unchanged)
 

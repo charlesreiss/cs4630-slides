@@ -1,0 +1,141 @@
+
+## pointer subterfuge {visibility="hidden"}
+
+{{< include /overflow-subterfuge/_subterfuge.qmd >}}
+
+### arbitrary write
+
+* bunch of scenarios that lead to <em>single arbitrary memory write</em>
+* typical result: arbitrary code execution
+* how? ...
+
+### using arbitrary write
+
+* overwrite existing machine code (insert jump?)
+   * problem: usually not writable
+* overwrite return address directly
+   * observation: don't care about stack canaries --- skip them
+* overwrite other function pointer?
+* overwrite another data pointer --- copy more?
+
+## example: return address overwrite {visibility="hidden"}
+
+### using arbitrary write
+
+* overwrite existing machine code (insert jump?)
+   * problem: usually not writable
+* <em>overwrite return address directly</em>
+   * observation: don't care about stack canaries --- skip them
+* overwrite other function pointer?
+* overwrite another data pointer --- copy more?
+
+
+{{< include /overflow-subterfuge/_write-ra-subter.qmd >}}
+
+## exercise {visibility="hidden"}
+
+{{< include /overflow-subterfuge/_simple-subter-ex.qmd >}}
+
+## careful stack layout?{visibility="hidden"}
+
+{{< include /overflow-subterfuge/_subterfuge-better-canary.qmd >}}
+
+## structs containing pointers{visibility="hidden"}
+
+{{< include /overflow-subterfuge/_subterfuge-structs-globals.qmd >}}
+
+# beyond stack smashing {visibility="hidden"}
+
+{{< include /overflow-subterfuge/_beyond-stack-smash.qmd >}}
+
+# write targets, continued {visibility="hidden"}
+
+## example: GOT overwrite {visibility="hidden"}
+
+### using arbitrary write
+
+* overwrite existing machine code (insert jump?)
+   * problem: usually not writable
+* overwrite return address directly
+   * observation: don't care about stack canaries --- skip them
+* <em>overwrite other function pointer?</em>
+* overwrite another data pointer --- copy more?
+
+{{< include /overflow-subterfuge/_write-got-subter.qmd >}}
+
+## C++ inheritence {visibility="hidden"}
+
+### using arbitrary write
+
+* overwrite existing machine code (insert jump?)
+   * problem: usually not writable
+* overwrite return address directly
+   * observation: don't care about stack canaries --- skip them
+* <em>overwrite other function pointer?</em>
+* overwrite another data pointer --- copy more?
+
+{{< include /overflow-subterfuge/_fp-cpp.qmd >}}
+
+## in real assembly{visibility="hidden"}
+
+{{< include /overflow-subterfuge/_fp-cpp-asm.qmd >}}
+
+## options for attacking function pointer tables {visibility="hidden"}
+
+{{< include /overflow-subterfuge/_fp-table-attack.qmd >}}
+
+## vtable overwrite exercise {visibility="hidden"}
+
+{{< include /overflow-subterfuge/_fp-vtable-over-exer.qmd >}}
+
+# one write into another {visibility="hidden"}
+
+### using arbitrary write
+
+* overwrite existing machine code (insert jump?)
+   * problem: usually not writable
+* overwrite return address directly
+   * observation: don't care about stack canaries --- skip them
+* overwrite other function pointer?
+* <em>overwrite another data pointer --- copy more?</em>
+
+### write to write  {.smaller}
+
+
+```
+struct A {
+    char name[100];
+    long irrelevant;
+    ...
+    struct B* other_thing;
+    ...
+};
+struct B {
+    char name[100];
+    ...
+}
+...
+    gets(a_object->name);
+    gets(a_object->other_thing->name);
+...
+
+```
+
+
+# arc injection {visibility="hidden"}
+
+### so far overwrites 
+
+* once we found a way to overwrite function pointer<br> easiest solution seems to be: direct to our code
+* … but alterante places to direct it to
+
+
+{{< include /overflow-subterfuge/_arc-injection.qmd >}}
+
+# case study: NTP exploit {visibility="hidden"}
+
+{{< include /overflow-subterfuge/_ntp-case-study.qmd >}}
+
+## subterfuge exercise {visibility="hidden"}
+
+{{< include /overflow-subterfuge/_subterfuge-exer.qmd >}}

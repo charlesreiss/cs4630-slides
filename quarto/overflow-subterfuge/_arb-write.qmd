@@ -1,0 +1,19 @@
+
+### arbitrary memory write  {.smaller}
+
+
+* bunch of scenarios that lead to <em>single arbitrary memory write</em>
+* typical result: arbitrary code execution
+* how? 
+<hr class="vspace" />
+* [overwrite existing machine code (insert jump?)]{.fragment fragment-index=3 .custom .myem-only} 
+
+   * problem: usually not writable
+
+* [overwrite return address directly]{.fragment fragment-index=4 .custom .myem-only} 
+
+   * observation: don't care about stack canaries --- skip them
+
+* [overwrite other function pointer?]{.fragment fragment-index=5 .custom .myem-only}
+* [overwrite another data pointer --- copy more?]{.fragment fragment-index=6 .custom .myem-only}
+

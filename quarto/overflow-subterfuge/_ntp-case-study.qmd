@@ -1,0 +1,107 @@
+
+### case study (simplified)  {.smaller}
+
+
+
+* bug in NTPd (Network Time Protocol Daemon)
+* via Stephen Röttger, ‘‘Finding and exploiting ntpd vulnerabilities’’ 
+
+   * [https://googleprojectzero.blogspot.com/2015/01/finding-and-exploiting-ntpd.html](https://googleprojectzero.blogspot.com/2015/01/finding-and-exploiting-ntpd.html)
+
+ <!-- \lstset{
+    language=C,
+    style=small,
+    moredelim={**[is][\btHL<1|handout:0>]{~1~}{~end~}},
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+} -->
+ 
+<pre><code>static void
+ctl_putdata(
+  const char *dp,
+  unsigned int dlen,
+  int bin   /* set to 1 when data is binary */
+  ) {
+    ...
+    <span data-fragment-index="1" class="fragment custom myem-only">memmove((char *)datapt, dp, (unsigned)dlen);</span>
+    datapt += dlen;
+    datalinelen += dlen;
+}
+</code></pre>
+
+
+### the target 
+
+<!-- \lstset{
+    language=C,
+    style=small,
+    moredelim={**[is][\btHL<1|handout:0>]{~1~}{~end~}},
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+} -->
+ 
+<pre><code>    memmove((char *)<em>datapt</em>, dp, (unsigned)dlen);
+</code></pre>
+ 
+
+![](/overflow-subterfuge/texfig/target.figure-1.svg){width=1000px}
+
+
+### more context 
+
+<pre><code>    memmove((char *)datapt, dp, (unsigned)dlen);
+    ...
+    ...
+    strlen(some_user_supplied_string)
+    /* calls strlen@plt
+       looks up global offset table entry! */
+</code></pre>
+
+::: {.r-stack}
+
+![](/overflow-subterfuge/texfig/target.figure-2.svg){width=1000px .fragment .fade-out fragment-index=1}
+
+![](/overflow-subterfuge/texfig/target.figure-3.svg){width=1000px .fragment .fade-in fragment-index=2}
+
+:::
+
+
+### overall exploit 
+
+
+* overwrite <code>datapt</code> to point to strlen GOT entry
+* overwrite value of strlen GOT entry
+* example target: <code>system</code> function 
+
+   * executes command-line command specified by argument
+
+* supply string to provide argument to ‘‘<code>strlen</code>’’
+
+### more context 
+
+<pre><code>    memmove((char *)datapt, dp, (unsigned)dlen);
+    ...
+    ...
+    strlen(some_user_supplied_string)
+    /* calls strlen@plt
+       looks up global offset table entry! */
+</code></pre>
+
+::: {.r-stack}
+
+![](/overflow-subterfuge/texfig/target.figure-4.svg){width=1000px .fragment .fade-out fragment-index=1}
+
+![](/overflow-subterfuge/texfig/target.figure-5.svg){width=1000px .fragment .fade-in fragment-index=2}
+
+:::
+
+
+### overall exploit: reality  {.smaller}
+
+
+* real exploit was more complicated
+* needed to defeat more mitigations
+* needed to deal with not being able to write <code>\0</code>
+* actually tricky to send things that trigger buffer write 
+
+   * (meant to be local-only)
+
+

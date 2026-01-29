@@ -1,0 +1,66 @@
+
+### return-to-somewhere  {.smaller}
+
+
+
+::: {.my-full}
+
+![](/overflow-subterfuge/texfig/returnToSomewhere.figure-1.svg)
+
+:::
+
+![](/overflow-subterfuge/texfig/returnToSomewhere.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+
+::: {.myoverbox .fragment}
+
+code is _already in program_??? <br />
+how often does this happen??? <br />
+turns out --- usually
+
+:::
+
+### example: system()
+
+
+```
+NAME
+       system - execute a shell command
+
+SYNOPSIS
+       #include <stdlib.h>
+
+       int system(const char *command);
+
+```
+ 
+
+* part of C standard library
+* in any program that dynamically links to libc
+* challenge: need to hope argument register (rdi) set usefully
+
+
+### locating system() Linux  {.smaller}
+
+
+<pre><code>$ ldd /bin/ls
+        linux-vdso.so.1 (0x00002aaaaaade000)
+        libselinux.so.1 =&gt; /lib/x86_64-linux-gnu/libselinux.so.1 (0x00002aaaaab3a000)
+        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (<span data-fragment-index="1" class="fragment custom myem-only">0x00002aaaaab65000</span>)
+        libpcre2-8.so.0 =&gt; /usr/lib/x86_64-linux-gnu/libpcre2-8.so.0 (0x00002aaaaad57000)
+        libdl.so.2 =&gt; /lib/x86_64-linux-gnu/libdl.so.2 (0x00002aaaaade7000)
+        /lib64/ld-linux-x86-64.so.2 (0x00002aaaaaaab000)
+        libpthread.so.0 =&gt; /lib/x86_64-linux-gnu/libpthread.so.0 (0x00002aaaaaded000)
+$ objdump --dynamic-syms /lib/x86_64-linux-gnu/libc.so.6 | grep system
+0000000000156a80 g    DF .text  0000000000000067  GLIBC_2.2.5 svcerr_systemerr
+0000000000055410 g    DF .text  000000000000002d  GLIBC_PRIVATE __libc_system
+<span data-fragment-index="1" class="fragment custom myem-only">0000000000055410</span>  w   DF .text  000000000000002d  GLIBC_2.2.5 system
+</code></pre>
+ 
+
+* if address randomization disabled: <br> address should be `0x00002aaaaab650 + 0x55410`
+<hr class="vspace" />
+* <code>ldd</code> --- ‘‘what libraries does this load and where?’’ 
+   * similar tools for other OSes
+
+

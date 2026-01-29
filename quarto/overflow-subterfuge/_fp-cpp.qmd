@@ -1,0 +1,104 @@
+
+### C++ inheritence  {.smaller}
+
+<!-- \lstset{
+    language=C++,style=smaller,
+} -->
+ 
+```cpp
+class InputStream {
+public:
+    virtual int get() = 0;
+    // Java: abstract int get();
+    ...
+};
+class SeekableInputStream : public InputStream {
+public:
+    virtual void seek(int offset) = 0;
+    virtual int tell() = 0;
+};
+class FileInputStream : public SeekableInputStream {
+public:
+    virtual int get();
+    virtual void seek(int offset);
+    virtual int tell();
+    ...
+};
+
+```
+
+
+### C++ inheritence: approx memory layout 
+
+![](/overflow-subterfuge/texfig/inheritMemLay.figure.svg)
+
+
+### C++ implementation (pseudo-code)
+
+<!-- \lstset{
+    language=C,style=smaller,
+} -->
+ 
+```cpp
+struct InputStream_vtable {
+    int (*get)(InputStream* this);
+};
+
+struct InputStream {
+    InputStream_vtable *vtable;
+};
+
+...
+
+    InputStream *s = ...;
+    int c = (s->vtable->get)(s);
+
+```
+
+
+### C++ implementation (pseudo-code)
+
+<!-- \lstset{
+    language=C,style=smaller,
+} -->
+ 
+```cpp
+struct SeekableInputStream_vtable {
+    struct InputStream_vtable as_InputStream;
+    void (*seek)(SeekableInputStream* this, int offset);
+    int (*tell)(SeekableInputStream* this);
+};
+
+struct FileInputStream {
+    SeekableInputStream_vtable *vtable;
+    FILE *file_pointer;
+};
+
+...
+
+    FileInputStream file_in = { the_FileInputStream_vtable,  ... };
+    InputStream *s = (InputStream*) &file_in;
+
+```
+
+
+### C++ implementation (pseudo-code)
+
+<!-- \lstset{
+    language=C,style=smaller,
+} -->
+ 
+```cpp
+SeekableInputStream_vtable the_FileInputStream_vtable = {
+    &FileInputStream_get,
+    &FileInputStream_seek,
+    &FileInputStream_tell,
+};
+
+...
+
+    FileInputStream file_in = { the_FileInputStream_vtable,  ... };
+    InputStream *s = (InputStream*) &file_in;
+
+```
+

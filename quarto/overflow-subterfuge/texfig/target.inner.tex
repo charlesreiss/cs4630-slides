@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+\tikzset{box/.style={thick}}
+\draw[box,fill=blue!20] (0, 0) rectangle (10, -0.5) node[midway] (datapt) {datapt (global variable)};
+\draw[box,fill=green!20] (0, -0.5) rectangle (10, -1.5) node[midway] {(other global variables)};
+\draw[box,fill=red!20] (0, -1.5) rectangle (10, -2.5) node[midway] (buffer) {buffer (global array)};
+\begin{visibleenv}<1-2>
+    \draw[very thick,violet!70!black,-Latex] (datapt.west) -- ++(-.5cm,0cm) -| (0.5, -1.75);
+\end{visibleenv}
+\begin{visibleenv}<2->
+    \draw[box,fill=orange!20] (11, -1) rectangle (15, -1.5) node[midway] (strlen) {strlen GOT entry};
+\end{visibleenv}
+\begin{visibleenv}<3->
+    \fill[pattern=north west lines,pattern color=red,opacity=0.4] (0, -2.5) rectangle (10, 0);
+    \draw[-Latex,very thick,dashed,red] (datapt) -| ([xshift=-0.5cm]strlen.west) -- (strlen.west);
+\end{visibleenv}
+\begin{visibleenv}<4->
+    \draw[box,fill=violet!20] (11, -3) rectangle (15, -3.5) node[midway] (system) {{\tt system()} stub};
+    \fill[pattern=north west lines,pattern color=red,opacity=0.4] (11, -1) rectangle (15, -1.5);
+    \draw[-Latex,very thick,dashed,red] (strlen.south) -- (system.north);
+\end{visibleenv}
+\end{tikzpicture}

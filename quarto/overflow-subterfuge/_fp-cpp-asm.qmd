@@ -1,0 +1,46 @@
+
+### calling virtual method  {.smaller}
+
+
+<pre><code>SeekableInputStream *in = ...;  // 8(%rsp)
+in-&gt;get();
+in-&gt;seek(10);
+</code></pre>
+ <hr />
+ 
+<pre><code><i># in-&gt;get();</i>
+movq    8(%rsp), %rdi // rdi &lt;- in
+movq    (%rdi), %rax  // rax &lt;- vtable
+call    *(%rax)       // call vtable[0]
+
+<i># in-&gt;seek(10);</i>
+movq    8(%rsp), %rdi // rdi &lt;- in
+movl    $10, %esi     // esi &lt;- 10
+movq    (%rdi), %rax  // rax &lt;- vtable
+call    *8(%rax)      // call vtable[1]
+</code></pre>
+
+
+### FileInputStream assembly (1)  {.smaller}
+
+
+<pre><code>_ZN15FileInputStreamC2Ev: <i>// constructor</i>
+   <i># rdi == this</i>
+   movq    $_ZTV15FileInputStream+16, (%rdi)
+   ...
+   ret
+<i># VTable for FileInputStream</i>
+_ZTV15FileInputStream:
+    <i># offset (for multiple inheritence)</i>
+    .quad   0 
+    <i># info for typeid() operator</i>
+    .quad   _ZTI15FileInputStream
+    <i># VTable pointer points here</i>
+    <i># FileInputStream::get</i>
+    .quad   _ZN15FileInputStream3getEv
+    <i># FileInputStream::seek</i>
+    .quad   _ZN15FileInputStream4seekEi
+    <i># FileInputStream::tell</i>
+    .quad   _ZN15FileInputStream4tellEv
+</code></pre>
+

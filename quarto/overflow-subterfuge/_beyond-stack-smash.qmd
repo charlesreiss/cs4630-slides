@@ -1,0 +1,9 @@
+
+### beyond return addresses 
+
+
+* pointer subterfuge let us overwrite anything
+* my example: showed return address
+* but return address is tricky to locate exactly
+* but there are usually <em>much easier options!</em>
+

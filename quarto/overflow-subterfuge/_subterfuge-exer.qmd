@@ -1,0 +1,51 @@
+
+### subterfuge exercise  {.smaller}
+
+
+```
+struct Student {
+    char email[128];
+    struct Assignment *assignments[16];
+    ...
+};
+struct Assignment {
+    char submission_file[128];
+    char regrade_request[1024];
+    ...
+};
+void SetEmail(Student *s, char *new_email) { strcpy(s->email, new_email); }
+void AddRegradeRequest(Student *s, int index, char *request) {
+    strcpy(s->assignments[index]->regrade_request, request);
+}
+void vulnerable(char *STRING1, char *STRING2) {
+    SetEmail(s, STRING1); AddRegradeRequest(s, 0, STRING2);
+}
+
+```
+ 
+
+* exercise: to set <code>0x1020304050</code> to <code>0xAABBCCDD</code>, what should STRING1, STRING2 be? 
+
+   * (assume 64-bit pointers, no padding in structs, little-endian)
+
+
+
+### subterfuge exercise solution  {.smaller}
+
+
+```
+struct Student { char email[128]; struct Assignment *assignments[16]; ...  };
+struct Assignment { char submission_file[128]; char regrade_request[1024]; ...  };
+
+```
+ 
+
+* STRING1 (email) controls <i>what address to overwrite</i> (want <code>0x1020304050</code>) 
+
+   * `&s->assignments[0] == &email[128]`
+   * make bytes 128--128+8 be pointer to fake assignment
+   * want fake assignment`->regrade_request` address to be 0x1020304050
+   * fake assignment address needs to be at 0x1020304050 -  128
+
+* STRING2 (regrade_reqest) controls <i>what value to set</i> (want <code>0xAABBCCDD</code>)
+

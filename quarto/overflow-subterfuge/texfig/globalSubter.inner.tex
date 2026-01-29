@@ -1,0 +1,24 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+% FIXME:
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+}
+\coordinate (my anchor) at ([xshift=-9cm,yshift=-2cm]current page.north east);
+\begin{scope}[shift={(my anchor)},xscale=0.8]
+\draw[stackBox] (0, 0) rectangle (10, -6);
+\draw[thick,-Latex] (10.25,-5) -- (10.25, -1) node [midway, below, sloped] {increasing addresses};
+\node[at={(5, 0.1)},anchor=south] { highest address };
+\node[at={(5, -6.1)},anchor=north] { lowest address };
+
+\draw[onStack] (0, -.25) rectangle (10, -2.25) node[midway,align=center,font=\small] (stackAddr)
+     {more globals};
+\draw[onStack,fill=green!20] (0, -2.25) rectangle (10, -2.75) node[midway,align=center,font=\small] (ptr) {current\_command};
+\draw[onStack,fill=blue!20] (0, -2.75) rectangle (10, -5.25) node[midway,align=center,font=\small] {input\_buffer};
+\draw[onStack] (0, -5.25) rectangle (10, -5.75) node[midway,align=center,font=\small] {more globals};
+\end{scope}
+\end{scope}
+\end{tikzpicture}

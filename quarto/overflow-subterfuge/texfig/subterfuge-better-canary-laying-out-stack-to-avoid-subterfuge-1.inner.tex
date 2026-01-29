@@ -1,0 +1,23 @@
+\begin{tikzpicture}
+% FIXME:
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+}
+\begin{scope}[xscale=1.2]
+\draw[stackBox] (0, 0) rectangle (10, -6);
+\draw[thick,-Latex] (10.25,-5) -- (10.25, -1) node [midway, below, sloped] {increasing addresses};
+\node[at={(5, 0.1)},anchor=south] { highest address (stack started here)};
+\node[at={(5, -6.1)},anchor=north] { lowest address (stack grows here)};
+
+\draw[onStack] (0, -.25) rectangle (10, -1.25) node[midway,align=center,font=\small] (stackAddr)
+     {return address for {\tt vulnerable} };
+\draw[onStack,fill=red!20] (0, -1.25) rectangle (10, -2.25) node[midway,align=center,font=\small] (canaryAddr)
+     {stack canary};
+\draw[onStack,fill=blue!20] (0, -2.25) rectangle (10, -4.25) node[midway,align=center,font=\small] {buffer (100 bytes)};
+
+\draw[onStack,fill=green!20] (0, -4.25) rectangle (10, -4.75) node[midway,align=center,font=\small] (ptr) {array (8 bytes)};
+\draw[onStack] (0, -4.75) rectangle (10, -5.5) node[midway,align=center,font=\small] {return address for {\tt gets}};
+
+\end{scope}
+\end{tikzpicture}

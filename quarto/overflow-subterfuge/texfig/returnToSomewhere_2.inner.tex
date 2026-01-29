@@ -1,0 +1,13 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+\begin{visibleenv}<2>
+\node[fill=white,draw,ultra thick,align=center,anchor=center] at (current page.center) {
+    code is \myemph{already in program}??? \\
+    how often does this happen??? \\
+    \ldots turns out ``\myemph{usually}'' --- more later in semester
+};
+\end{visibleenv}
+\end{scope}
+\end{tikzpicture}

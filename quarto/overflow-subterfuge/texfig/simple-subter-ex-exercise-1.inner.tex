@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+\node (left) {
+\usebox{\subterExAC}
+};
+\node[anchor=north west] at ([xshift=4cm]left.north east) {
+\usebox{\subterExAAsm}
+};
+\node[align=left,draw,very thick,anchor=north west] at (left.south west) {
+If return address is at 0x12345, \\
+where/how to place 0x12345 in input?  \\
+{\fontsize{9}{10}\selectfont\begin{tabular}{l}
+A. beginning, as ASCII base-10 number \\
+B. beginning, as ASCII base-16 number \\
+C. 100 bytes into buffer, as bytes \\
+D. 104 bytes into buffer, as bytes \\
+E. 120 bytes into buffer, as bytes \\
+F. 136 bytes into buffer, as bytes \\
+G. none of these \\
+\end{tabular}}
+};
+\end{tikzpicture}

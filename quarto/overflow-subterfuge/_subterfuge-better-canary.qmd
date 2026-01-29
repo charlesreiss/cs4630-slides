@@ -1,0 +1,10 @@
+
+### laying out stack to avoid subterfuge (1) 
+
+![](/overflow-subterfuge/texfig/subterfuge-better-canary-laying-out-stack-to-avoid-subterfuge-1.figure.svg)
+
+
+### laying out stack to avoid subterfuge (2) 
+
+![](/overflow-subterfuge/texfig/subterfuge-better-canary-laying-out-stack-to-avoid-subterfuge-2.figure.svg)
+

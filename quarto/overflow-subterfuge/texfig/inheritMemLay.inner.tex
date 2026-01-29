@@ -1,0 +1,34 @@
+\begin{tikzpicture}
+    \tikzset{
+        vt/.style={fill=blue!30},
+    }
+    \matrix[tight matrix,nodes={text width=3.8cm,text depth=.1ex,font=\small\tt},
+            label={north:InputStream},anchor=north west] (inputStream)  at (0, 0) {
+        |[vt]| vtable pointer \\
+    };
+    \matrix[tight matrix,nodes={text width=3.8cm,text depth=.1ex,font=\small\tt},
+            label={north:SeekableInputStream},anchor=north west] (seekableStream) at (4.5, 0) {
+        |[vt]| vtable pointer \\
+    };
+    \matrix[tight matrix,nodes={text width=6cm,text depth=.1ex,font=\small\tt},
+            label={north:FileInputStream},anchor=north west] (fileStream) at (9, 0) {
+        |[vt]| vtable pointer \\
+        file\_pointer \\
+    };
+    \matrix[tight matrix,nodes={text width=3.8cm,text depth=.1ex,font=\small\tt},anchor=north west] (isVT) at (0, -2) {
+        \tt slot for get\\
+    };
+    \matrix[tight matrix,nodes={text width=3.8cm,text depth=.1ex,font=\small\tt},anchor=north west] (seekVT) at (4.5, -2){
+        \tt slot for get \\
+        \tt slot for seek \\
+        \tt slot for tell \\
+    };
+    \matrix[tight matrix,nodes={text width=6cm,text depth=.1ex,font=\small\tt},anchor=north west] (fileVT) at (9, -2){
+        FileInputStream::get \\
+        FileinputStream::seek \\
+        FileInputStream::tell \\
+    };
+    \draw[thick,-Latex] (inputStream-1-1.east) -- ++(.35cm,0cm) |- (isVT-1-1.east);
+    \draw[thick,-Latex] (seekableStream-1-1.east) -- ++(.35cm,0cm) |- (seekVT-1-1.east);
+    \draw[thick,-Latex] (fileStream-1-1.east) -- ++(.35cm,0cm) |- (fileVT-1-1.east);
+\end{tikzpicture}

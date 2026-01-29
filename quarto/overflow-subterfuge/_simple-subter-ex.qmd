@@ -1,0 +1,10 @@
+
+### exercise (1) 
+
+![](/overflow-subterfuge/texfig/simple-subter-ex-exercise-1.figure.svg)
+
+
+### exercise (2) 
+
+![](/overflow-subterfuge/texfig/simple-subter-ex-exercise-2.figure.svg)
+

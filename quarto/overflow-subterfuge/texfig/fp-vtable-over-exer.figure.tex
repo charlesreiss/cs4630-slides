@@ -1,0 +1,20 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{decorations.pathmorphing,matrix,arrows.meta}
+\newsavebox{\vtExerCode}
+\begin{document}
+\begin{lrbox}{\vtExerCode}
+\begin{lstlisting}[language=C++,style=smaller]
+class VulnerableClass {
+public:
+    char buffer[100];
+    virtual void foo();
+    virtual void bar();
+};
+VulnerableClass objs[10];
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{overflow-subterfuge/texfig/fp-vtable-over-exer.inner.tex}
+\end{document}

@@ -1,0 +1,19 @@
+
+### pointer subterfuge  {.smaller}
+
+<!-- \lstset{
+    language=C,
+    style=small,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    morekeywords={size_t},
+} -->
+ 
+<pre><code>void f2b(void *arg, size_t len) {
+    char buffer[100];
+    long val = ...; /* assume on stack */
+    long *ptr = ...; /* assume on stack */
+    memcpy(buff, arg, len); /* overwrite ptr? */
+    <span data-fragment-index="2" class="fragment custom myem-only">*ptr = val</span>; /* arbitrary memory write! */
+}
+</code></pre>
+ [adapted from Pincus and Baker, Figure 2]{.mycredit}

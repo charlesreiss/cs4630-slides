@@ -149,6 +149,13 @@ div.myoverbox.vlow {
     bottom: 5%;
 }
 
+div.myoverbox.right {
+    left: auto;
+    right: 10%;
+    transform: none;
+}
+
+
 .reveal .slide .answer-twocol ol {
     column-count: 2;
     column-fill: balance;

@@ -1,0 +1,66 @@
+
+### Linux stack randomization (x86-64)  {.smaller}
+
+
+
+* 1. choose random number between <code>0</code> and \\tikzmark{range}[<code>0x3F FFFF</code>]{.fragment fragment-index=2 .custom .myem-only}
+* 2. stack starts at <code>0x7FFF FFFF FFFF</code> - <i>random number</i> $\\times{}$ <code>0x1000</code>  
+
+   * randomization disabled? <i>random number</i> $= 0$
+   * times <code>0x1000</code> because OS has to allocate whole pages (0x1000 bytes)
+
+ ![](/mitigate-aslr/texfig/aslr-entropy-linux-stack-randomization-x86-64.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+
+
+### program memory (x86-64 Linux; ASLR) 
+
+
+
+::: {.r-stack .my-full}
+![](/mitigate-aslr/texfig/aslr64.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/mitigate-aslr/texfig/aslr64.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+![](/mitigate-aslr/texfig/aslr64.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
+
+:::
+
+
+### program memory (x86-32 Linux; ASLR) 
+
+![](/mitigate-aslr/texfig/aslr-entropy-program-memory-x86-32-linux-aslr.figure.svg)
+
+
+### how much guessing?  {.smaller}
+
+
+* gaps change by multiples of page size (4KB) 
+
+   * lower 12 bits are <em>fixed</em>
+
+* 64-bit: <em>huge</em> ranges --- need millions of guesses 
+
+   * about <em>30 randomized bits</em> in addresses
+
+* 32-bit: <em>smaller</em> ranges --- hundreds of guesses 
+
+   * only about <em>8 randomized bits</em> in addresses
+   * why? only 4 GB to work with!
+   * can be configured higher --- but larger gaps
+
+
+
+### why do we get multiple guesses?  {.smaller}
+
+
+* why do we get multiple guesses? 
+<hr class="vspace" />
+* wrong guess might not crash
+* wrong guess might not crash whole application 
+
+   * e.g. server that uses multiple processes
+
+* local programs we can repeatedly run
+* servers that are automatically restarted
+

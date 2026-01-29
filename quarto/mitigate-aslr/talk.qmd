@@ -1,0 +1,10 @@
+---
+title: "mitigate-aslr"
+
+---
+
+{{< include ../mitigate-aslr/_talk-inner.qmd >}}
+
+# Backup slides
+
+{{< include ../mitigate-aslr/_talk-backup.qmd >}}

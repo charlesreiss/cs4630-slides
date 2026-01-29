@@ -1,0 +1,45 @@
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1, 0) {
+\begin{lstlisting}
+int foo(long n) {
+    switch (n) {
+    case 0: 
+    case 2:
+    case 4:
+    case 5:
+        return 1;
+    case 1:
+    case 3:
+        return 2;
+    default:
+        return 3;
+    }
+}
+\end{lstlisting}
+};
+\draw[thick] (-.75, 0) -- (-.75,-7);
+\node[anchor=north west,align=left] (disasm) at (-.5, 0) {
+\lstset{
+    language=myasm,
+    style=smaller,
+    escapeinside=~~,
+}
+\begin{lstlisting}
+foo:
+	movl	$3, %eax
+	cmpq	$5, %rdi
+	ja	defaultCase
+	jmp	*lookupTable(,%rdi,8)
+        /* code for defaultCase, returnOne, returnTwo */
+        ...
+	.section	.rodata
+lookupTable: /* read-only pointers: */
+	.quad	returnOne
+	.quad	returnTwo
+	.quad	returnOne
+	.quad	returnTwo
+	.quad	returnOne
+	.quad	returnOne
+\end{lstlisting}
+};
+\end{tikzpicture}

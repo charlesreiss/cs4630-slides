@@ -1,0 +1,25 @@
+
+### relocating: Windows  {.smaller}
+
+
+* Windows will <em>edit code</em> to relocate 
+
+   * not everything uses a GOT-like lookup table
+
+* typically one fixed location per program/library <em>per boot</em> 
+
+   * same address used across all instances of program/library
+   * still allows sharing memory
+
+* fixup once per program/library per boot 
+
+   * before ASLR: code could [be pre-relocated]{.fragment fragment-index=2 .custom .myem-only} (lower runtime cost)
+
+* Windows + Visual Studio had ‘full’ ASLR by default since 2010
+
+
+### Windows ASLR limitation 
+
+
+* same address in all programs --- not very useful against local exploits
+

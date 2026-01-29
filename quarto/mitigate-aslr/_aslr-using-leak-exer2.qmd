@@ -1,0 +1,42 @@
+
+### ex: using information leak (2)  {.smaller}
+
+
+```
+printf("buffer = %p", buffer)
+
+```
+ --- <br> [ <code>buffer = 0x646d06d15040</code>]{.my-small} <br> --- <br> 
+```
+$ objdump -tR a.out
+...
+0000000000004040 g     O .bss   0000000000000400              buffer
+...
+0000000000003fb0 R_X86_64_JUMP_SLOT  strlen@GLIBC_2.2.5
+$ objdump -d a.out
+...
+0000000000001090 <strlen@plt>:
+    1090:       f3 0f 1e fa             endbr64
+    1094:       ff 25 16 2f 00 00       jmp    *0x2f16(%rip)        # 3fb0 <strlen@GLIBC_2.2.5>
+    109a:       66 0f 1f 44 00 00       nopw   0x0(%rax,%rax,1)
+...
+
+```
+ 
+
+* exercise: address to overwrite to make strlen(X) run other code?
+
+
+### ex: using information leak (2) soln  {.smaller}
+
+
+* buffer address = 0x646d06d15040 - offset = 0x4040 
+
+   * printed out actual value
+
+* offset = 0x646d06d11000
+* GOT entry address = 0x3fb0 + offset = 0x646d06d14fb0 
+
+   * 0x3fb0 = jump slot location
+
+

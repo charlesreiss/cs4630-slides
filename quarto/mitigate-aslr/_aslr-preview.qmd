@@ -1,0 +1,9 @@
+
+### address space layout randomization (ASLR) 
+
+
+* vary the location of things in memory
+* including the stack
+* designed to make exploiting memory errors harder
+* will talk more about later
+

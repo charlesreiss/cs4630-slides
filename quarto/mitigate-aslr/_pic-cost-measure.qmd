@@ -1,0 +1,42 @@
+
+### position independence cost (32-bit) 
+
+
+![](/mitigate/pie-cost){}
+ [Payer, ‘‘Too much PIE is bad for performance’’, ETH Zurich Tech Report]{.mycredit}
+
+### position independence cost: Linux  {.smaller}
+
+
+* geometric mean of SPECcpu2006 benchmarks on x86 Linux 
+
+   * with particular version of GCC, etc., etc.
+
+* 64-bit: 2-3% (???) 
+
+   * ‘‘preliminary result'’; couldn’t find reliable published data
+
+* 32-bit: 9-10%
+* depends on compiler, …
+
+
+### position independence: deployment  {.smaller}
+
+
+* common for a very long time in dynamic libraries
+* default for all executables in… 
+<hr class="vspace" />
+* Microsoft Visual Studio 2010 and later 
+
+   * <code>DYNAMICBASE</code> linker option
+
+* OS since 10.7 (2011)
+* Fedora 23 (2015) and Red Hat Enterprise Linux 8 (2019) and later 
+
+   * default for ‘‘sensitive’’ programs earlier
+
+* Ubuntu 16.10 (2016) and later (for 64-bit), 17.10 (2017) and later (for 32-bit) 
+
+   * default for ‘‘sensitive’’ programs earlier
+
+

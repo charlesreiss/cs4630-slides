@@ -1,0 +1,71 @@
+
+### exericse: using a leak (1)  {.smaller}
+
+
+```
+class Foo {
+    virtual const char *bar() { ... }
+};
+...
+Foo *f = new Foo;
+printf("%s\n", f);
+
+```
+ 
+
+* Part 1: What address is most likely leaked by the above? 
+
+   * A. the location of the Foo object allocated on the heap
+   * B. the location of the first entry in Foo's VTable
+   * C. the location of the first instruction of Foo::Foo() (Foo's compiler-generated constructor)
+   * D. the location of the stack pointer
+
+
+
+### using a leak (1) answer 
+
+
+* printing out beginning of C++ object = VTable pointer
+
+
+### exercise: using a leak (2)  {.smaller}
+
+
+```
+class Foo { virtual const char *bar() { ... } };
+...
+Foo *f = new Foo;
+char *p = new char[1024];
+printf("%s\n", f);
+
+```
+ 
+
+* if leaked value was 0x822003 and in a debugger (with <em>different randomization</em>): 
+
+   * stack pointer was 0x7ffff000
+   * Foo::bar's address was 0x400000
+   * f's address was 0x900000
+   * f's Vtable's address was 0x403000
+   * a ‘‘gadget’’ address from the main executable was 0x401034
+   * a ‘‘gadget’’ address from the C library was 0x2aaaa40034
+   * p's address was 0x901000
+
+* which of the above can I compute based on the leak?
+
+
+### using a leak (2) answer  {.smaller}
+
+
+* VTable pointer part of same object/library containing class Foo definition
+* so can use its location to find code/data from same executable 
+
+   * gadget in main executable
+   * Foo::bar definition
+   * global variables (not listed)
+
+* can't use it to find things on heap, stack, in C library 
+
+   * those are separately randomized
+
+

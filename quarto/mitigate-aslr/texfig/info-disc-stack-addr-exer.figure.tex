@@ -1,0 +1,28 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\newsavebox{\infoDiscExCodeA}
+\newsavebox{\infoDiscExCodeB}
+\begin{document}
+\begin{lrbox}{\infoDiscExCodeA}
+\begin{lstlisting}[language=C,style=size9]
+struct point {
+    int x, y, z;
+};
+\end{lstlisting};
+\end{lrbox}
+\begin{lrbox}{\infoDiscExCodeB}
+\begin{lstlisting}[language=C,style=size9]
+struct point *p;
+...
+    if (command == "get") { 
+        /* 'p' could be uninitialized */
+        printf("%d,%d,%d\n", p->x, p->y, p->z);
+    } ...
+...
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{mitigate-aslr/texfig/info-disc-stack-addr-exer.inner.tex}
+\end{document}

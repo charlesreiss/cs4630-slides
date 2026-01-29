@@ -1,0 +1,11 @@
+
+### PIC: Linux, OS X  {.smaller}
+
+
+* Linux, OS X: position-independent code
+* allows code memory to be shared
+* … even if loaded at different addresses 
+<hr class="vspace" />
+* avoids per-boot randomization of Windows, but…
+* means code might be slower
+

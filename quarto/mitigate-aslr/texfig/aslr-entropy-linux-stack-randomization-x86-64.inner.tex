@@ -1,0 +1,9 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+\node[my callout=range] at ([yshift=-1cm]current page.center) {
+    16 GB range!
+};
+\end{scope}
+\end{tikzpicture}

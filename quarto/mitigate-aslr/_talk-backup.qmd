@@ -1,0 +1,4 @@
+
+## position-independent cost {visibility="hidden"}
+
+{{< include /mitigate-aslr/_pic-switch-example.qmd >}}

@@ -1,0 +1,76 @@
+
+# ASLR {visibility="hidden"}
+
+{{< include /mitigate-aslr/_aslr-preview.qmd >}}
+
+## what it is {visibility="hidden"}
+
+{{< include /mitigate-aslr/_aslr.qmd >}}
+
+## how much entropy {visibility="hidden"}
+
+{{< include /mitigate-aslr/_aslr-entropy.qmd >}}
+
+## entropy exercise? {visibility="hidden"}
+
+{{< include /mitigate-aslr/_entropy-exer.qmd >}}
+
+## info leak {visibility="hidden"}
+
+{{< include /mitigate-aslr/_info-disc-stack-addr-exer.qmd >}}
+
+## kept together: danger of leaks {visibility="hidden"}
+
+{{< include /mitigate-aslr/_aslr-entropy-together.qmd >}}
+
+{{< include /mitigate-aslr/_aslr-leaks.qmd >}}
+
+## exercise: using a leak {visibility="hidden"}
+
+{{< include /mitigate-aslr/_aslr-using-leak-exer.qmd >}}
+
+## exercise: using a leak (2) {visibility="hidden"}
+
+{{< include /mitigate-aslr/_aslr-using-leak-exer2.qmd >}}
+
+# ASLR cost/history {visibility="hidden"}
+
+### why not always ASLR? 
+
+
+* ASLR seems like no-brainer 
+
+   * have to choose address anyway
+   * why not choose at random?
+
+* big problem: performance/code size impacts
+* (smaller problem: inconsistent behavior when bugs)
+
+
+## Unix PIC history {visibility="hidden"}
+
+{{< include /mitigate-aslr/_unix-pic-history.qmd >}}
+
+## alternate approach: Windows {visibility="hidden"}
+
+{{< include /mitigate-aslr/_aslr-windows-pic.qmd >}}
+
+## exercise: without absolute addresses? {visibility="hidden"}
+
+{{< include /mitigate-aslr/_aslr-without-abs-ex.qmd >}}
+
+## changes with position-independent code{visibility="hidden"}
+
+{{< include /mitigate-aslr/_pic-cost-code.qmd >}}
+
+## recall: vtable pointers?{visibility="hidden"}
+
+{{< include /mitigate-aslr/_reloc-vtable.qmd >}}
+
+## PIE / PIC {visibility="hidden"}
+
+{{< include /mitigate-aslr/_aslr-pie.qmd >}}
+
+## PIC cost measurements {visibility="hidden"}
+
+{{< include /mitigate-aslr/_pic-cost-measure.qmd >}}

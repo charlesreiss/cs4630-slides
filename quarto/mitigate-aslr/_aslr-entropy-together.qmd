@@ -1,0 +1,5 @@
+
+### exes, libraries stay together 
+
+![](/mitigate-aslr/texfig/aslr-entropy-together.figure.svg)
+

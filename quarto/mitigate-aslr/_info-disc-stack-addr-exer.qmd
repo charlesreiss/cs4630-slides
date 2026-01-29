@@ -1,0 +1,16 @@
+
+### exercise  {.smaller}
+
+  ![](/mitigate-aslr/texfig/info-disc-stack-addr-exer.figure.svg)
+ 
+ 
+
+* Which initial value for <code>p</code> (‘‘left over’’ from prior use of register, etc.) would be  most useful for a later buffer overflow attack? 
+
+   * A. <code>p</code> is an invalid pointer and accessing it will crash the program
+   * B. <code>p</code> points to global variable
+   * C. <code>p</code> points to space on the stack that is currently unallocated, but last contained an input buffer
+   * D. <code>p</code> points to space on the stack that currently holds a return address
+   * E. <code>p</code> points to space on the stack that is currently unallocated, but last contained a pointer to the last used byte of an array on the stack
+
+

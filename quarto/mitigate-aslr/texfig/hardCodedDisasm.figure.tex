@@ -1,0 +1,13 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\providecommand{\myemphTwo}[1]{\myemph<2>{#1}}
+\providecommand{\myemphThree}[1]{\myemph<3>{#1}}
+\providecommand{\myemphFour}[1]{\myemph<{#1}}
+\providecommand{\antiEmphThree}[1]{{\color<3>{blue}#1}}
+\providecommand{\antiEmphFour}[1]{{\color<4>{blue}#1}}
+\begin{document}
+
+\setSlide{1}
+\input{mitigate-aslr/texfig/hardCodedDisasm.inner.tex}
+\end{document}

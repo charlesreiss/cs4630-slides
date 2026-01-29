@@ -1,0 +1,17 @@
+
+### position-independent code  {.smaller}
+
+
+* position-independent code = code that can be loaded anywhere 
+
+   * no hard-coded addresses
+
+* necessary prerequisite for most of ASLR 
+<hr class="vspace" />
+* Unix did this for libraries for non-security reasons 
+
+   * share memory between multiple programs loading same library
+   * allow programs to load libraries at any location
+
+* but not other programs, probably because of overheads
+

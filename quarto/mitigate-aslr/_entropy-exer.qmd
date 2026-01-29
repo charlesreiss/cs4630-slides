@@ -1,0 +1,14 @@
+
+### entropy exercise  {.smaller}
+
+
+* suppose we have 32-bit Linux server vulnerable to stack smashing
+* … but stack address randomized with 256 possible starting locations 
+
+   * +/- 0x80 in increments of 0x1000
+
+* server is automatically restarted after unsuccessful attack
+* suppose stack layout is 8KB buffer + return address + 12KB other stuff
+* what should attacker do to maximize chance of success?
+* about how many tries needed for successful attack?
+

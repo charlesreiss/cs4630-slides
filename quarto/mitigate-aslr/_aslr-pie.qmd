@@ -1,0 +1,66 @@
+
+### GCC/Clang options  {.smaller}
+
+
+* -fPIC: generate position-independent code for library 
+
+   * -fpic --- possibly less flexible/faster version on some platforms
+
+* -fPIE, -fpie: generate position-independent code for executable
+* -pie: link position-independent executable 
+
+   * -no-pie: don't (where -pie is default)
+
+* -shared: link shared library
+
+
+### -fPIC/-fPIE differences  {.smaller}
+
+
+```
+extern int foo;
+int example() {return foo;}
+
+```
+ with -fPIC: 
+```
+0000000000000000 <example>:
+   0:   48 8b 05 00 00 00 00    mov    0x0(%rip),%rax        # 7 <example+0x7>
+              3: R_X86_64_REX_GOTPCRELX       foo-0x4
+   7:   8b 00                   mov    (%rax),%eax
+   9:   c3                      ret
+
+```
+ with -fPIE: 
+```
+0000000000000000 <example>: 
+   0:   8b 05 00 00 00 00       mov    0x0(%rip),%eax        # 6 <example+0x6>
+              2: R_X86_64_PC32        foo-0x4
+   6:   c3                      ret
+
+```
+
+
+### GOTPCREL  {.smaller}
+
+
+* saw two different relocations for global <code>int foo</code>:
+* <code>R_X86_64_PC32</code> relocation = 32-bit offset to variable 
+
+   * okay in executable: we'll figure out where <code>foo</code> is
+   * will redirect libraries to use exectuable version
+
+* <code>R_X86_64_REX_GOTPCRELX</code> relocation = 32-bit offset to global offset table entry containing address 
+
+   * <code>foo</code>'s location decided at runtime by linker
+   * runtime linker writes pointer to library's global offset table
+   * (‘REX’ part says where instruction starts relative to constant, for fancy linkers)
+
+
+
+### global offset tableS? 
+
+
+* executable and library loaded at different addresses
+* each has own global offset table loaded next to it
+

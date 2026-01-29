@@ -201,6 +201,10 @@ i {
     font-size: 100%;
 }
 
+.longcode pre code {
+    max-height: inherit;
+}
+
 @media print {
     .slide-chalkboard-buttons {
         display: none ! important

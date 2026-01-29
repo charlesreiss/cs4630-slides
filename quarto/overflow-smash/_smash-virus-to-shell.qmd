@@ -1,0 +1,109 @@
+
+### virus code to shell-code (1)
+
+<!-- \lstset{
+    language=myasm,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+} -->
+ 
+<pre><code>    /* Linux system call (OS request):
+       write(1, string, length)
+     */
+    leaq string(%rip), %rsi
+    movl $1, %eax
+    movl $37, %edi
+    /* "request to OS" instruction */
+    syscall
+    <span data-fragment-index="2" class="fragment custom myem-only">ret</span>
+string: 
+    .asciz "You have been infected with a virus!\n"
+</code></pre>
+ 
+
+* [problem: after syscall --- crash!]{.fragment fragment-index=2 .custom .myem-only}
+
+
+### virus code to shell-code (2) 
+
+<!-- \lstset{
+    language=myasm,
+    style=smaller,
+    basicstyle=\tt\fontsize{9}{10}\selectfont,
+    keywordstyle=\tt\fontsize{9}{10}\selectfont\keywordstyle,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+} -->
+   
+```{code-line-numbers="|9-13"}
+    /* Linux system call (OS request):
+       write(1, string, length)
+     */
+    leaq string(%rip), %rsi
+    movl $1, %eax
+    movl $37, %edi
+    syscall
+    /* Linux system call:
+       exit_group(0)
+     */
+    movl $231, %eax
+    xor %edi, %edi
+    syscall
+string: 
+    .asciz "You have been infected with a virus!\n"
+```
+
+### virus code to shell-code (3) 
+
+:::: {.columns}
+
+::: {.column .longcode width=70%}
+
+[assembly:]{.my-small}
+```
+    /* Linux system call (OS request):
+       write(1, string, length)
+     */
+    leaq string(%rip), %rsi
+    movl $1, %eax
+    movl $37, %edi
+    syscall
+    /* Linux system call:
+       exit_group(0)
+     */
+    movl $231, %eax
+    xor %edi, %edi
+    syscall
+string: 
+    .asciz "You have been infected with a virus!\n"
+```
+
+:::
+
+::: {.column .longcode width=28%}
+
+[as machine code:]{.my-small}
+```
+
+
+
+48 8d 35 15 00 00 00
+b8 01 00 00 00
+bf 25 00 00 00
+0f 05
+
+
+
+b8 e7 00 00 00
+31 ff
+0f 05
+
+59 6f ....
+```
+
+:::
+
+
+::::
+

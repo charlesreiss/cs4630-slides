@@ -1,0 +1,18 @@
+
+### stack smashing: the tricky parts  {.smaller}
+
+
+* [construct machine code that works in any executable]{.fragment fragment-index=2 .custom .myem-only} 
+
+   * same tricks as writing relocatable virus code
+
+* [construct machine code that's valid input]{.fragment fragment-index=3 .custom .myem-only} 
+
+   * machine code usually flexible enough
+
+* [finding location of return address]{.fragment fragment-index=4 .custom .myem-only} 
+
+   * fixed offset from buffer
+
+* [finding location of inserted machine code]{.fragment fragment-index=5 .custom .myem-only}
+

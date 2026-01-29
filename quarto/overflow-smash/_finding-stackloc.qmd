@@ -1,0 +1,16 @@
+
+### finding stack location  {.smaller}
+
+
+* run program in a debugger (e.g., GDB)
+* set breakpoint at relevant location  
+
+   * <code>b functionName</code>
+   * <code>b *0x12345678</code> (by address)
+
+* output %rsp 
+
+   * <code>p \$rsp</code>
+   * <code>info registers</code>
+
+

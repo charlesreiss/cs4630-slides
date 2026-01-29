@@ -1,0 +1,19 @@
+
+### vulnerable code --- stack usage 
+
+
+
+::: {.r-stack .my-full}
+![](/overflow-smash/texfig/smash-oflow-stack.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/overflow-smash/texfig/smash-oflow-stack.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+![](/overflow-smash/texfig/smash-oflow-stack.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
+![](/overflow-smash/texfig/smash-oflow-stack.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
+
+![](/overflow-smash/texfig/smash-oflow-stack.figure-5.svg){.fragment .fade-in-then-out fragment-index=5}
+
+
+:::
+

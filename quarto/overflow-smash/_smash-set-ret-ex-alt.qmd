@@ -1,0 +1,13 @@
+
+### exercise: shellcode location (2) 
+
+
+
+::: {.r-stack .my-full}
+![](/overflow-smash/texfig/smash-set-ret-ex-alt.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/overflow-smash/texfig/smash-set-ret-ex-alt.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+
+:::
+

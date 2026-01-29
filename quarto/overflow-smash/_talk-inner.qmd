@@ -1,0 +1,128 @@
+
+# stack smashing, high-level {visibility="hidden"}
+
+{{< include /overflow-smash/_smash-context.qmd >}}
+
+## example of overflow {visibility="hidden"}
+
+{{< include /overflow-smash/_smash-oflow-ex.qmd >}}
+
+## exercise: stack layout{visibility="hidden"}
+
+{{< include /overflow-smash/_smash-oflow-ex-stack-layout-exer.qmd >}}
+
+## exercise answer: stack layout{visibility="hidden"}
+
+{{< include /overflow-smash/_smash-oflow-stack.qmd >}}
+
+## crash, revisited{visibility="hidden"}
+
+{{< include /overflow-smash/_smash-oflow-crash.qmd >}}
+
+## return-to-stack {visibility="hidden"}
+
+{{< include /overflow-smash/_return-to-stack.qmd >}}
+
+# constructing return-to-stack {visibility="hidden"}
+
+### constructing the attack 
+
+* write "shellcode" --- machine code to execute
+   * often called "shellcode" because often intended to get login shell
+   * (when in a remote application)
+* identify memory address of shellcode in buffer
+* insert overwritten return address value
+
+## writing shellcode {visibility="hidden"}
+
+* <em>write "shellcode" --- machine code to execute</em>
+   * often called "shellcode" because often intended to get login shell
+   * (when in a remote application)
+* identify memory address of shellcode in buffer
+* insert overwritten return address value
+
+{{< include /overflow-smash/_smash-shellcode.qmd >}}
+
+{{< include /overflow-smash/_smash-recall-virus.qmd >}}
+
+{{< include /overflow-smash/_smash-virus-to-shell.qmd >}}
+
+# locating the stack {visibility="hidden"}
+
+* write "shellcode" --- machine code to execute
+   * often called "shellcode" because often intended to get login shell
+   * (when in a remote application)
+* <em>identify memory address of shellcode in buffer</em>
+* insert overwritten return address value
+
+## actual stack location {visibility="hidden"}
+
+{{< include /overflow-smash/_actual-stackloc.qmd >}}
+
+## without ASLR {visibility="hidden"}
+
+{{< include /overflow-smash/_stackloc-no-aslr.qmd >}}
+
+## ASLR preview {visibility="hidden"}
+
+{{< include /mitigate-aslr/_aslr-preview.qmd >}}
+
+## still varies without ASLR? {visibility="hidden"}
+
+{{< include /overflow-smash/_stackloc-vary.qmd >}}
+
+## setting return address {visibility="hidden"}
+
+{{< include /overflow-smash/_smash-set-ret.qmd >}}
+
+## exercise{visibility="hidden"}
+
+{{< include /overflow-smash/_smash-set-ret-ex.qmd >}}
+
+## exercise (alt){visibility="hidden"}
+
+{{< include /overflow-smash/_smash-set-ret-ex-alt.qmd >}}
+
+## still varies without ASLR? {visibility="hidden"}
+
+{{< include /overflow-smash/_stackloc-vary.qmd >}}
+
+## how the stack starts on Linux {visibility="hidden"}
+
+{{< include /overflow-smash/_linux-initial-stack.qmd >}}
+
+## nop sleds{visibility="hidden"}
+
+{{< include /overflow-smash/_nop-sled.qmd >}}
+
+{{< include /overflow-smash/_nop-sled-use.qmd >}}
+
+## finding where return address is{visibility="hidden"}
+
+* write "shellcode" --- machine code to execute
+   * often called "shellcode" because often intended to get login shell
+   * (when in a remote application)
+* identify memory address of shellcode in buffer
+* <em>insert overwritten return address value</em>
+
+{{< include /overflow-smash/_ret-addr-guess.qmd >}}
+
+# stack smashing demo / debugger tutorial? {visibility="hidden"}
+
+{{< include /overflow-smash/_gdb-tut.qmd >}}
+
+# example: Morris worm stack smashing {visibility="hidden"}
+
+{{< include /overflow-smash/_morris-worm-smash.qmd >}}
+
+# restricted characters in shell code {visibility="hidden"}
+
+{{< include /overflow-smash/_shell-code-restricted.qmd >}}
+
+# restricted characters in pointers {visibility="hidden"}
+
+{{< include /overflow-smash/_pointer-restricted.qmd >}}
+
+# review: tricky parts of stack smashing {visibility="hidden"}
+
+{{< include /overflow-smash/_stack-smash-tricky.qmd >}}

@@ -1,0 +1,34 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{decorations.pathmorphing,arrows.meta,patterns,decorations.pathreplacing}
+\newsavebox{\setRetAddrDebugger}
+\begin{document}
+\begin{lrbox}{\setRetAddrDebugger}
+\begin{lstlisting}[language={},basicstyle=\fontsize{9}{10}\selectfont]
+(gdb) b vulnerable
+Breakpoint 1 at 0x1169
+(gdb) run
+...
+Breakpoint 1, vulnerable ()
+(gdb) info registers
+...
+rsp            0x7fffffffddc8      0x7fffffffddc8
+...
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{overflow-smash/texfig/smash-set-ret.inner.tex}
+\setSlide{2}
+\input{overflow-smash/texfig/smash-set-ret.inner.tex}
+\setSlide{3}
+\input{overflow-smash/texfig/smash-set-ret.inner.tex}
+\setSlide{4}
+\input{overflow-smash/texfig/smash-set-ret.inner.tex}
+\setSlide{5}
+\input{overflow-smash/texfig/smash-set-ret.inner.tex}
+\setSlide{6}
+\input{overflow-smash/texfig/smash-set-ret.inner.tex}
+\setSlide{7}
+\input{overflow-smash/texfig/smash-set-ret.inner.tex}
+\end{document}

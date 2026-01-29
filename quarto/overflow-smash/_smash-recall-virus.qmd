@@ -1,0 +1,24 @@
+
+### recall: virus code (from TRICKY)
+
+<!-- \lstset{
+    language=myasm,
+    style=small,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+} -->
+ 
+<pre><code>    /* Linux system call
+        write(1, "You have been infected with a virus!\n", 37)
+     */
+virus:
+    movl $1, %eax  // 1 = SYS_write
+    movl $1, %edi  // system call first argument = stdout
+    leal string(%rip), %esi // system call second argument = string
+    movl $37, %edx // system call third argument = length of string
+    syscall
+    retq
+string: 
+    .asciz "You have been infected with a virus!\n"
+</code></pre>
+

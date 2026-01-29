@@ -1,0 +1,11 @@
+
+### shellcode challenges 
+
+
+* ideal is like virus code: works in any executable
+* no linking --- no library functions by name
+* probably exit application --- can't return normally 
+
+   * (or a bunch more work to restore original return value)
+
+

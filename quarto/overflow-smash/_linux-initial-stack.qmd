@@ -1,0 +1,6 @@
+
+### Linux, initial stack 
+
+![](/overflow-smash/texfig/linux-initial-stack.figure.svg)
+
+[See also [https://lwn.net/Articles/631631/](https://lwn.net/Articles/631631/)]{.mycredit}

@@ -1,0 +1,151 @@
+
+### some logistical issues 
+
+
+* Sure, 1000 <code>a</code>'s can be read by <code>scanf</code> with <code>%s</code>, but machine code?
+
+
+### scanf accepted characters  {.smaller}
+
+
+* <code>%s</code> --- ‘‘Matches a sequence of non-white-space characters’’
+* can't use: 
+
+   * <code>\\textvisiblespace{}</code>
+   * <code>\\textbackslash{} t</code>
+   * <code>\\textbackslash{} v</code> (‘‘vertical tab’’)
+   * <code>\\textbackslash{r}</code> (‘‘carriage return’’)
+   * <code>\\textbackslash{n}</code>
+
+* not actually that much of a restriction
+* what about <code>\\textbackslash{} 0</code> --- we used a lot of those
+
+
+### why did we have zeroes?  {.smaller}
+
+
+
+* previous machine code:
+ <code>48 8d 35 <span style="color: red!70!black15 00 00 00">red!70!black15 00 00 00</span></code>  (lea <span style="color: red!70!blackstring">red!70!blackstring</span>(%rip), %rsi) <br> <code>b8 <span style="color: red!70!black01 00 00 00">red!70!black01 00 00 00</span></code> (mov \$<span style="color: red!70!black1">red!70!black1</span>, %eax) <br> <code>bf <span style="color: red!70!black25 00 00 00">red!70!black25 00 00 00</span></code> (mov \$<span style="color: red!70!black37">red!70!black37</span>, %edi) <br> <code>0f 05</code> (syscall) <br> <code>b8 <span style="color: red!70!blacke7 00 00 00">red!70!blacke7 00 00 00</span></code> (mov \$<span style="color: red!70!black231">red!70!black231</span>, %eax) <br> <code>31 ff</code> (xor %edi, %edi) <br> <code>0f 05</code> (syscall) 
+
+* problem: happened to be encoding of constants
+
+
+### shellcode without 0s 
+
+<!-- \lstset{
+    language=myasm,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+} -->
+  
+
+::: {.r-stack}
+![](/overflow-smash/texfig/virusNoZeroes.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/overflow-smash/texfig/virusNoZeroes.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+![](/overflow-smash/texfig/virusNoZeroes.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
+
+:::
+
+
+### shellcode without 0s  {.smaller}
+
+
+```
+0000000000000000 <shellcode>:
+   0:   eb 25                   jmp    27 <afterString>
+
+0000000000000002 <string>:
+    ...
+
+0000000000000027 <afterString>:
+  27:   48 8d 35 d4 ff ff ff    lea    -0x2c(%rip),%rsi        # 2 <string>
+  2e:   31 c0                   xor    %eax,%eax
+  30:   31 ff                   xor    %edi,%edi
+  32:   b0 01                   mov    $0x1,%al
+  34:   b2 25                   mov    $0x25,%dl
+  36:   0f 05                   syscall 
+  38:   b0 e7                   mov    $0xe7,%al
+  3a:   31 ff                   xor    %edi,%edi
+  3c:   0f 05                   syscall 
+
+```
+
+
+### what about other funny characters?  {.smaller}
+
+
+* suppose we can't use ASCII newlines in machine code
+* what if we need to move 0xA (= newline character) into a register 
+<hr class="vspace" />
+* cannot do <code>movb \$10, %al</code> --- contains 0x0a byte
+* can do: <code>xor %eax, %eax; inc %eax; inc %eax, ...</code> 
+<hr class="vspace" />
+* similar patterns for lots of operations
+
+
+### x86 flexibility  {.smaller}
+
+
+* x86 opcodes that are normal ASCII chars are pretty flexibile
+* <code>0</code>--<code>5</code> 
+
+   * various forms of <code>xor</code>
+
+* <code>@</code>, <code>A</code>--<code>Z</code>, <code>[</code>, <code>\\textbackslash{}</code>, <code>]</code>, <code>^</code>, <code>_</code> 
+
+   * <code>inc</code>, <code>dec</code>, <code>push</code>, <code>pop</code> with first eight 32-bit registers
+
+* <code>h</code> --- push one-byte constant
+* <code>i</code> --- <code>imul</code> constant, reg, reg
+* <code>H</code> --- REX prefix with 'W' set
+* <code>p</code>--<code>z</code> --- conditional jumps to 1-byte offset 
+<hr class="vspace" />
+* note: can <em>write machine code on stack, then run it</em>
+
+
+### some alphanumeric shellcode patterns  {.smaller}
+
+
+```
+// mov %rax, %rcx
+push %rax
+pop %rcx
+
+// %rax = 0
+pushb $0x41
+pop %rax
+xor $0x41, %ax
+
+```
+
+
+### falling through to written code  {.smaller}
+
+
+```
+[start of shellcode]
+... set %rax to `syscall' machine code
+push %rax
+...
+...
+[stack pointer starts here]
+...
+[return address was here]
+
+```
+
+
+### actual limitation 
+
+
+* overwriting with address?  
+
+   * probably can't make sure that's all normal ASCII chars
+
+* (but could leave most significant bits of existing address unchanged)
+

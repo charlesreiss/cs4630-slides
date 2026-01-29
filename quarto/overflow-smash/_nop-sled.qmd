@@ -1,0 +1,46 @@
+
+### making guessing easier (1)  {.smaller}
+
+<!-- \lstset{language=myasm,style=smaller} -->
+ 
+:::: {.columns}
+
+::: {.column width="50%"}
+ normal shellcode: <br> 
+```
+xor %eax, %eax
+leaq command(%rip), %rbx
+/* setup "exec" system call */
+...
+...
+mov $11, %al
+syscall
+
+command: .ascii "/bin/sh"
+
+```
+ 
+:::
+
+::: {.column width="50%"}
+ easier to ‘guess’ shellcode: <br> 
+```
+nop /* one-byte nop */
+nop
+nop
+nop
+nop
+nop
+nop
+xor %eax, %eax
+lea command(%rip), %rbx
+...
+...
+command: .ascii "/bin/sh"
+
+```
+ 
+:::
+
+::::
+

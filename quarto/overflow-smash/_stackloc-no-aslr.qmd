@@ -1,0 +1,23 @@
+
+### disabling ASLR {.longcode}
+
+
+```
+$ cat stackloc.c
+#include <stdio.h>
+int main(void) {
+    int x;
+    printf("%p\n", &x);
+}
+$ setarch -vRL bash
+Switching on ADDR_NO_RANDOMIZE.
+Switching on ADDR_COMPAT_LAYOUT.
+$ ./stackloc.exe 
+0x7fffffffde2c
+$ ./stackloc.exe 
+0x7fffffffde2c
+$ ./stackloc.exe 
+0x7fffffffde2c
+
+```
+

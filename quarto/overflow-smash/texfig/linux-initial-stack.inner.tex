@@ -1,0 +1,58 @@
+\begin{tikzpicture}
+\tikzset{
+    stackMark/.style={draw=none,font=\it},
+    envVar/.style={fill=blue!20},
+    envVarP/.style={fill=violet!20},
+    arg/.style={fill=green!20},
+    argP/.style={fill=yellow!20},
+    auxv/.style={fill=orange!20},
+}
+\matrix[tight matrix,nodes={text width=7cm,align=center,font=\small}] (theStack){
+    |[stackMark]| top of stack at {\tt 0x7ffffffff000} \\
+    |[envVar]| \tt "HOME=/home/cr4bd" \\
+    |[envVar]| \tt "PATH=/usr/bin:/bin" \\
+    |[arg]| \tt "bar" \\
+    |[arg]| \tt "foo" \\
+    |[arg]| \tt "./test.exe" \\
+    |[auxv]| \tt AT\_UID=100 \\
+    |[auxv]| \ldots \\
+    |[envVarP]| NULL pointer (end of list) \\
+    |[envVarP]| pointer to HOME env. var. \\
+    |[envVarP]| pointer to PATH env. var. \\
+    |[argP]| NULL pointer (end of list) \\
+    |[argP]| pointer to bar \\
+    |[argP]| pointer to foo \\
+    |[argP]| pointer to ./test.exe \\
+    |[stackMark]| actual initial stack pointer \\
+};
+\node[right=1cm of theStack-1-1] (cmd) {
+    {\tt ./test.exe foo bar}
+};
+\node[draw,envVar,right=1cm of theStack-2-1] (envVarLabel) {
+    environment variables
+};
+\draw[thick] (theStack-2-1.north east) -- (envVarLabel.north west);
+\draw[thick] (theStack-3-1.south east) -- (envVarLabel.south west);
+\node[draw,arg,right=1cm of theStack-5-1] (argLabel) {
+    command-line arguments
+};
+\draw[thick] (theStack-4-1.north east) -- (argLabel.north west);
+\draw[thick] (theStack-6-1.south east) -- (argLabel.south west);
+
+\node[draw,auxv,right=1cm of theStack-7-1] (auxLabel) {
+     auxillary vector (see \texttt{man getauxval})
+};
+\draw[thick] (theStack-7-1.north east) -- (auxLabel.north west);
+\draw[thick] (theStack-8-1.south east) -- (auxLabel.south west);
+
+\node[draw,envVarP,right=1cm of theStack-10-1] (envVarPLabel) {
+    array of pointers to env. vars.
+};
+\draw[thick] (theStack-9-1.north east) -- (envVarPLabel.north west);
+\draw[thick] (theStack-11-1.south east) -- (envVarPLabel.south west);
+\node[draw,argP,right=1cm of theStack-13-1] (argPLabel) {
+    array of pointers to args (argv)
+};
+\draw[thick] (theStack-12-1.north east) -- (argPLabel.north west);
+\draw[thick] (theStack-15-1.south east) -- (argPLabel.south west);
+\end{tikzpicture}

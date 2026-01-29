@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+\node (code) {
+\usebox{\setRetExBC}
+};
+\node[anchor=north west] (asm) at ([xshift=.2cm]code.north east) {
+\usebox{\setRetExBAsm}
+};
+\node[anchor=north west] (debug) at (code.south west) {
+\usebox{\setRetExBDbg}
+};
+\begin{visibleenv}<2>
+\node[draw=red,thick,anchor=north west,align=left] at (debug.south west) {
+exercise: if shellcode at beginning of `first' \\
+what is its address going to be? 
+};
+\end{visibleenv}
+\end{tikzpicture}

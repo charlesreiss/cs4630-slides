@@ -1,0 +1,45 @@
+
+### restricted characters in pointers?  {.smaller}
+
+
+* recall: put pointer to buffer in stack pointer
+* example buffer pointer: <code>0x7fffffffde2c</code>
+* as bytes (little endian, loweset address first): <br> <code>2C DE FF FF FF 7F 00 00</code> 
+<hr class="vspace" />
+* what if <code>00</code> bytes aren't allowed in input? 
+
+   * no problem: prior value of return address probably has 0s already
+
+* what if <code>2C</code> or <code>DE</code> not allowed in input? 
+
+   * can probably find other location on stack writen by overflow
+   * NB: could place code after overwritten return address
+
+* [what if <code>7F</code> or <code>FF</code> not allowed in input?]{.fragment fragment-index=2 .custom .myem-only}
+
+
+### alternate places for shellcode?  {.smaller}
+
+
+```
+...
+char current_student[1000];
+...
+int GetAndCompareAnswer(char *question,
+                        char *expected_answer) {
+    char answer[1000];
+    // "1.2 seconds"
+    scanf("%[a-zA-Z0-9. ]", answer);
+    return CompareStrings(answer, expected_answer);
+}
+
+```
+ 
+
+* suppose <code>current_student</code> at <code>0x404580</code>
+* then <code>current_student[180]</code> at <code>0x404640</code>  
+
+   * bytes 40 (ASCII space) 46 (ASCII <code>.</code> (period)) 40 (ASCII space)
+   * (and hope return address already has zeroes)
+
+

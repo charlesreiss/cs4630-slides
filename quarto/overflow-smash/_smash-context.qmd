@@ -1,0 +1,36 @@
+
+### stack smashing  {.smaller}
+
+
+* previous buffer overflow: very context dependent
+* … turns out there are common, more useful patterns 
+<hr class="vspace" />
+* original, most common buffer overflow <em>exploit</em>
+* worked for most buffers on the stack 
+   * (‘‘work<em>ed</em>'’? we’ll talk later)
+
+### Aleph1, Smashing the Stack for Fun and Profit  {.smaller}
+
+
+
+* ‘‘non-traditional literature’’; released 1996
+* by Aleph1 AKA Elias Levy
+```
+                               .oO Phrack 49 Oo.
+
+                          Volume Seven, Issue Forty-Nine
+                                     
+                                  File 14 of 16
+
+                      BugTraq, r00t, and Underground.Org
+                                   bring you
+
+                     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                     Smashing The Stack For Fun And Profit
+                     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+                                 by Aleph One
+                             aleph1@underground.org
+
+```
+

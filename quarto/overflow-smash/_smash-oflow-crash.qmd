@@ -1,0 +1,18 @@
+
+### the crash
+
+
+<pre><code>   0x0000000000400548 &lt;+0&gt;:     sub    $0x78,%rsp
+   0x000000000040054c &lt;+4&gt;:     mov    %rsp,%rsi
+   0x000000000040054f &lt;+7&gt;:     mov    $0x400604,%edi
+   0x0000000000400554 &lt;+12&gt;:    mov    $0x0,%eax
+   0x0000000000400559 &lt;+17&gt;:    callq  0x400430 &lt;__isoc99_scanf@plt&gt;
+   0x000000000040055e &lt;+22&gt;:    add    $0x78,%rsp
+=&gt; 0x0000000000400562 &lt;+26&gt;:    retq   
+</code></pre>
+ 
+
+* <code>retq</code> tried to jump to <code>0x61616161 61616161</code>
+* … but there was nothing there
+* what if it wasn't invalid?
+

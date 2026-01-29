@@ -1,0 +1,31 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{positioning}
+\newsavebox{\virusNoZeroesA}
+\begin{document}
+\begin{lrbox}{\virusNoZeroesA}
+\begin{lstlisting}
+shellcode:
+    ~2~jmp afterString~end~
+string:
+    .ascii "You have been..."
+afterString:
+    ~3~leaq string(%rip), %rsi~end~
+    xor %eax, %eax
+    xor %edi, %edi
+    ~2~movb $1, %al~end~
+    ~2~movb $37, %dl~end~
+    syscall
+    ~2~movb $231, %al~end~
+    xor %edi, %edi
+    syscall
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{overflow-smash/texfig/virusNoZeroes.inner.tex}
+\setSlide{2}
+\input{overflow-smash/texfig/virusNoZeroes.inner.tex}
+\setSlide{3}
+\input{overflow-smash/texfig/virusNoZeroes.inner.tex}
+\end{document}

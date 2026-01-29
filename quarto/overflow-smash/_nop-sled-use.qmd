@@ -1,0 +1,5 @@
+
+### guessed return-to-stack 
+
+![](/overflow-smash/texfig/nop-sled-use.figure.svg)
+

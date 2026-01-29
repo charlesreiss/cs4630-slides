@@ -1,0 +1,11 @@
+
+### making guessing easier (2) 
+
+
+* knowing where return address is stored is easier
+* based on buffer length + number of locals + compiler 
+
+   * small variation between platforms for an application
+
+* easy to guess --- but can try multiple at once
+

@@ -1,0 +1,74 @@
+
+### stack location? (take 2a)
+
+
+```
+$ ./stackloc.exe 
+0x7fffffffde2c
+$ gdb ./stackloc.exe
+...
+(gdb) run
+Starting program: .../stackloc.exe 
+0x7fffffffdd9c
+[Inferior 1 (process 833005) exited normally]
+
+```
+
+
+### stack location? (take 2b)
+
+
+```
+$ ./stackloc.exe 
+0x7fffffffde2c
+$ ./stackloc.exe 
+0x7fffffffde2c
+$ ./stackloc.exe test
+0x7fffffffde1c
+$ ./stackloc.exe test
+0x7fffffffde1c
+$ $(pwd)/stackloc.exe
+0x7fffffffdd8c
+$ $(pwd)/stackloc.exe
+0x7fffffffdd8c
+
+```
+
+
+### stack location? (take 2c)
+
+```
+$ ./stackloc.exe
+0x7fffffffe464
+$ ./stackloc.exe
+0x7fffffffe464
+$ env - ./stackloc.exe
+0x7fffffffed24
+$ export FOO=1
+$ ./stackloc.exe
+0x7fffffffe454
+$ ./stackloc.exe
+0x7fffffffe454
+$ env - ./stackloc.exe
+0x7fffffffed24
+```
+
+### stack location? (take 2d)
+
+```
+$ setarch -vRL env - ./stackloc.exe
+Switching on ADDR_NO_RANDOMIZE.
+Switching on ADDR_COMPAT_LAYOUT.
+Execute command `env'.
+0x7fffffffed24
+$ uname --kernel-release
+5.15.0-141-generic
+Linux reiss-t3620 5.15.0-141-generic #151-Ubuntu SMP Sun May 18 21:35:19 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+$ ssh kytos02 setarch -vRL env - ./stackloc.exe
+Switching on ADDR_NO_RANDOMIZE.
+Switching on ADDR_COMPAT_LAYOUT.
+Execute command `env'.
+0x7fffffffed04
+$ ssh kytos02 uname --kernel-release
+6.8.0-90-generic
+```

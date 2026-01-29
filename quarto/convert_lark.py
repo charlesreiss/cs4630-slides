@@ -6,6 +6,7 @@ import lark
 import logging
 import re
 import sys
+import unicodedata
 
 
 from dataclasses import dataclass, field, InitVar
@@ -107,6 +108,7 @@ whitespace: whitespace_item+
     | NBSP | SIMPLE_ESCAPED
     | TIKZPICTURE | VERBATIM
     | DISPLAYMATH
+    | UMLAT
 
 any_empty_item: whitespace
     | SIMPLE_COMMAND when (_BRACE any_text _END_BRACE | _SQUARE_BRACKET any_text _END_SQUARE_BRACKET)* -> outside_command
@@ -154,6 +156,7 @@ _MYALTTEXTB.10: /\\myalttextB/
 _MYALTTEXTC.10: /\\myalttextC/
 _MYALTTEXTD.10: /\\myalttextD/
 _PDFTOOLTIP.10: /\\pdftooltip/
+UMLAT.10: /\\\"./
 DISPLAYMATH: /\\\[(?s:[^\]])*\\\]/
 LINEBREAK: /\\\\(?:\[[^]]+\])?/
 NBSP: /~/
@@ -1861,6 +1864,11 @@ class ToAST(lark.Transformer):
 
     def DISPLAYMATH(self, args):
         return _RawString(args, args)
+
+    def UMLAT(self, args):
+        base_str = args[-1] + "\N{COMBINING DIAERESIS}"
+        base_str = unicodedata.normalize('NFC', base_str)
+        return _RawString(base_str, base_str)
 
     def dquote(self, args):
         new_args = [_RawString('\N{left double quotation mark}')] + \

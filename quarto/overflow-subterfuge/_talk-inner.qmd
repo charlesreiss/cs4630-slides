@@ -5,8 +5,12 @@
 
 ### arbitrary write
 
-* bunch of scenarios that lead to <em>single arbitrary memory write</em>
-* typical result: arbitrary code execution
+* pattern results in "arbitrary memory write"
+    *  attacker chooses address to write to
+    *  attacker chooses value to write there
+* obvious this allows modifying data...
+<hr class="vspace" />
+* less obvious: usually gives arbitrary code execution
 * how? ...
 
 ### using arbitrary write

@@ -217,6 +217,15 @@ i {
     overflow-y: visible ! important;
 }
 
+.tightbox {
+    width: min-content;
+    height: min-content;
+}
+
+.tightbox > p {
+    margin: .5rem;
+}
+
 @media print {
     .slide-chalkboard-buttons {
         display: none ! important

@@ -1,5 +1,6 @@
 
-### 
+### {.noscroll}
+<!-- FIXME: path resolutiopn does not work here -->
 
-![](/heur-detect/texfig/cat-and-mouse_2.figure.svg){fig-alt="Promotional image of the Tom and Jerry cartoon with a Tom the cat chasing a Jerry the mouse. The Tom and Jerry title is crossed out and Anti-Virus and Virus is written below."}
+![](/heur-detect/texfig/cat-and-mouse_2.figure.svg){fig-alt="Promotional image of the Tom and Jerry cartoon with a Tom the cat chasing a Jerry the mouse. The Tom and Jerry title is crossed out and Anti-Virus and Virus is written below." .absolute top=-18% left=-23% width=1550px height=700px style="max-width: 150%; max-height: 150%; overflow: visible;"}
 

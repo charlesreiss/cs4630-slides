@@ -101,7 +101,4 @@ ctl_putdata(
 * needed to defeat more mitigations
 * needed to deal with not being able to write <code>\0</code>
 * actually tricky to send things that trigger buffer write 
-
    * (meant to be local-only)
-
-

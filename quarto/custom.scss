@@ -212,6 +212,11 @@ i {
     max-height: inherit;
 }
 
+.reveal .slide.noscroll {
+    overflow-x: visible;
+    overflow-y: visible ! important;
+}
+
 @media print {
     .slide-chalkboard-buttons {
         display: none ! important

@@ -1,0 +1,97 @@
+### last time
+
+### assignment Q+A
+
+# regular expressions {visibility="hidden"}
+
+{{< include /heur-detect/_regular-expressions.qmd >}}
+
+## flex example {visibility="hidden"}
+
+{{< include /heur-detect/_flex-example.qmd >}}
+
+## flex state machines {visibility="hidden"}
+
+{{< include /heur-detect/_flex-state-machine.qmd >}}
+
+{{< include /heur-detect/_why-state-machine.qmd >}}
+
+## flex: Vienna example {visibility="hidden"}
+
+{{< include /heur-detect/_vienna-patterns-flex.qmd >}}
+
+## why the flexibility? {visibility="hidden"}
+
+{{< include /heur-detect/_pattern-flexibility.qmd >}}
+
+## exercise: what's easy/hard for patterns {visibility="hidden"}
+
+{{< include /heur-detect/_hard-for-patternsp.qmd >}}
+
+# making scanners more efficient {visibility="hidden"}
+
+### making scanners efficient 
+
+* lots of viruses!
+   * huge number of states, tables
+   * copies of every piece of malware pretty large
+* reading files is slow!
+
+## fixed strings {visibility="hidden"}
+
+### making scanners efficient 
+
+* <em>lots of viruses!</em>
+   * huge number of states, tables
+   * copies of every piece of malware pretty large
+* reading files is slow!
+
+{{< include /heur-detect/_fixed-strings.qmd >}}
+
+## selective scanning {visibility="hidden"}
+
+### making scanners efficient 
+
+* lots of viruses!
+   * huge number of states, tables
+   * copies of every piece of malware pretty large
+* <em>reading files is slow!</em>
+
+{{< include /heur-detect/_selective-scanning.qmd >}}
+
+# example: ClamAV {visibility="hidden"}
+
+{{< include /heur-detect/_example-clam-av.qmd >}}
+
+# new malware detection? avoiding evasion? {visibility="hidden"}
+
+{{< include /heur-detect/_new-malwarep.qmd >}}
+
+# heuristics based on executable/library regularity {visibility="hidden"}
+
+{{< include /heur-detect/_exec-lib-regularity.qmd >}}
+
+# behavior based detection {visibility="hidden"}
+
+{{< include /heur-detect/_behavior.qmd >}}
+
+## instrumenting programs {visibility="hidden"}
+
+{{< include /heur-detect/_hooking.qmd >}}
+
+# AI heuristic case study: DREBIN {visibility="hidden"}
+
+{{< include /heur-detect/_case-study-android.qmd >}}
+
+## machine learning and adversaries {visibility="hidden"}
+
+{{< include /heur-detect/_ml-problems.qmd >}}
+
+{{< include /antianti/_talk-inner.qmd >}}
+
+# backup slides {visibility="hidden"}
+
+### backup slides 
+
+
+<!-- {{< include /virus/_talk-backup.qmd >}} -->

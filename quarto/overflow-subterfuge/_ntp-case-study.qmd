@@ -87,7 +87,7 @@ ctl_putdata(
 
 ::: {.r-stack}
 
-![](/overflow-subterfuge/texfig/target.figure-4.svg){width=1000px .fragment .fade-out fragment-index=2}
+![](/overflow-subterfuge/texfig/target.figure-4.svg){width=1000px .fragment .fade-out fragment-index=1}
 
 ![](/overflow-subterfuge/texfig/target.figure-5.svg){width=1000px .fragment .fade-in fragment-index=2}
 

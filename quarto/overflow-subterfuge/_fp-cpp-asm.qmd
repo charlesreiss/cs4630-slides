@@ -1,46 +1,49 @@
 
-### calling virtual method  {.smaller}
+### calling virtual method  
 
 
-<pre><code>SeekableInputStream *in = ...;  // 8(%rsp)
-in-&gt;get();
-in-&gt;seek(10);
-</code></pre>
- <hr />
- 
-<pre><code><i># in-&gt;get();</i>
-movq    8(%rsp), %rdi // rdi &lt;- in
-movq    (%rdi), %rax  // rax &lt;- vtable
+```cpp
+SeekableInputStream *in = ...;  // 8(%rsp)
+in->get();
+in->seek(10);
+```
+
+<hr />
+
+```gnuassembler
+/* in->get(); */
+movq    8(%rsp), %rdi // rdi <- in
+movq    (%rdi), %rax  // rax <- vtable
 call    *(%rax)       // call vtable[0]
 
-<i># in-&gt;seek(10);</i>
-movq    8(%rsp), %rdi // rdi &lt;- in
-movl    $10, %esi     // esi &lt;- 10
-movq    (%rdi), %rax  // rax &lt;- vtable
+/* in->seek(10); */
+movq    8(%rsp), %rdi // rdi <- in
+movl    $10, %esi     // esi <- 10
+movq    (%rdi), %rax  // rax <- vtable
 call    *8(%rax)      // call vtable[1]
-</code></pre>
+```
 
 
-### FileInputStream assembly (1)  {.smaller}
+### FileInputStream assembly (1) {.smaller}
 
-
-<pre><code>_ZN15FileInputStreamC2Ev: <i>// constructor</i>
-   <i># rdi == this</i>
+```gnuassembler
+_ZN15FileInputStreamC2Ev: // constructor
+   # rdi == this
    movq    $_ZTV15FileInputStream+16, (%rdi)
    ...
    ret
-<i># VTable for FileInputStream</i>
+# VTable for FileInputStream
 _ZTV15FileInputStream:
-    <i># offset (for multiple inheritence)</i>
+    # offset (for multiple inheritence)
     .quad   0 
-    <i># info for typeid() operator</i>
+    # info for typeid() operator
     .quad   _ZTI15FileInputStream
-    <i># VTable pointer points here</i>
-    <i># FileInputStream::get</i>
+    # VTable pointer points here
+    # FileInputStream::get
     .quad   _ZN15FileInputStream3getEv
-    <i># FileInputStream::seek</i>
+    # FileInputStream::seek
     .quad   _ZN15FileInputStream4seekEi
-    <i># FileInputStream::tell</i>
+    # FileInputStream::tell
     .quad   _ZN15FileInputStream4tellEv
-</code></pre>
+```
 

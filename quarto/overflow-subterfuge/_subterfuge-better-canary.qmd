@@ -1,10 +1,10 @@
 
 ### laying out stack to avoid subterfuge (1) 
 
-![](/overflow-subterfuge/texfig/subterfuge-better-canary-laying-out-stack-to-avoid-subterfuge-1.figure.svg)
+![](/overflow-subterfuge/texfig/subterfuge-better-canary-laying-out-stack-to-avoid-subterfuge-1.figure.svg){fig-alt="stack layout for function vulnerable, with (starting at highest address where stack starts): return address for vulnerable; stack canary; 100 byte bufferr; 8 byte pointer array; return address for gets"}
 
 
 ### laying out stack to avoid subterfuge (2) 
 
-![](/overflow-subterfuge/texfig/subterfuge-better-canary-laying-out-stack-to-avoid-subterfuge-2.figure.svg)
+![](/overflow-subterfuge/texfig/subterfuge-better-canary-laying-out-stack-to-avoid-subterfuge-2.figure.svg){fig-alt="stack layout for function f2b, with (starting at highest address where stack starts): return address of f2b; stack canary; 100 byte buffer; 8-byte value ptr; 8-byte value val; return address for scanf"}
 

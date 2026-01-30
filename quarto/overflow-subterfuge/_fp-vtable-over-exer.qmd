@@ -2,11 +2,12 @@
 ### exercise  {.smaller}
 
 
- ![](/overflow-subterfuge/texfig/fp-vtable-over-exer.figure.svg)
+<!-- FIXME: split into picture + layout diagram -->
+![](/overflow-subterfuge/texfig/fp-vtable-over-exer.figure.svg)
  
 
 * Assume `gets(objs[0].buffer)` is run and eventually `ptr->foo()` will be run where `ptr == &objs[1]`.
- []{.my-small} <table>
+<table>
 <tr><td>input start: `_____________`  </td><td>A. shellcode   B. address of objs[0].buffer[0]</td></tr>
 <tr><td>input+50 bytes: `_____________`  </td><td>C. address of objs[0].buffer[50]</td></tr>
 <tr><td>input+100 bytes: `_____________`  </td><td>D. address of original vtable</td></tr>

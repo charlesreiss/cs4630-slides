@@ -1,10 +1,129 @@
+### exercise (1) {.smaller}
 
-### exercise (1) 
+::::: {.columns}
 
-![](/overflow-subterfuge/texfig/simple-subter-ex-exercise-1.figure.svg)
+:::: {.column}
+
+```c
+void vulnerable() {
+    int *array;
+    char buffer[100];
+    if (!Allocate(&array))
+        abort();
+    gets(buffer);
+    array[0] = atoi(buffer);
+    ...
+}
+```
+
+::: {style="border: 2px solid black; font-size: 80%" .answer-onecol}
+
+If return address is at 0x12345,
+where/how to place 0x12345 in input?
+
+a. beginning, as ASCII base-10 number
+b. beginning, as ASCII base-16 number
+c. 100 bytes into buffer, as bytes
+d. 104 bytes into buffer, as bytes
+e. 120 bytes into buffer, as bytes
+f. 136 bytes into buffer, as bytes
+g. none of these
+
+:::
+
+::::
 
 
-### exercise (2) 
+:::: {.column}
 
-![](/overflow-subterfuge/texfig/simple-subter-ex-exercise-2.figure.svg)
+```gnuassembler
+vulnerable:
+    pushq %rbp
+    pushq %rbx
+    subq  $136, %rsp
+    movq  %fs:40, %rax
+    movq  %rax, 120(%rsp)
+    xorl  %eax, %eax
+    leaq  104(%rsp), %rdi
+    call  Allocate
+    testl %eax, %eax
+    je    call_abort
+    movq  %rsp, %rdi
+    call  gets
+    movq  104(%rsp), %rbp
+    movl  $10, %edx
+    movl  $0, %esi
+    movq  %rsp, %rdi
+    call  strtol
+    movl  %eax, 0(%rbp)
+    ...
+```
+
+::::
+
+:::::
+
+### exercise (2) {.smaller}
+
+::::: {.columns}
+
+:::: {.column}
+
+```c
+void vulnerable() {
+    int *array;
+    char buffer[100];
+    if (!Allocate(&array))
+        abort();
+    gets(buffer);
+    array[0] = atoi(buffer);
+    ...
+}
+```
+
+::: {style="border: 2px solid black; font-size: 80%" .answer-onecol}
+
+If we want to overwrite return address with 0x5678, where/how to place 0x5678 in input?
+
+a. beginning, as ASCII base-10 number
+b. beginning, as ASCII base-16 number
+c. 100 bytes into buffer, as bytes
+d. 104 bytes into buffer, as bytes
+e. 120 bytes into buffer, as bytes
+f. 136 bytes into buffer, as bytes
+g. none of these
+
+:::
+
+::::
+
+
+:::: {.column}
+
+```gnuassembler
+vulnerable:
+    pushq %rbp
+    pushq %rbx
+    subq  $136, %rsp
+    movq  %fs:40, %rax
+    movq  %rax, 120(%rsp)
+    xorl  %eax, %eax
+    leaq  104(%rsp), %rdi
+    call  Allocate
+    testl %eax, %eax
+    je    call_abort
+    movq  %rsp, %rdi
+    call  gets
+    movq  104(%rsp), %rbp
+    movl  $10, %edx
+    movl  $0, %esi
+    movq  %rsp, %rdi
+    call  strtol
+    movl  %eax, 0(%rbp)
+    ...
+```
+
+::::
+
+:::::
 

@@ -3,13 +3,8 @@
 
 
 
-::: {.my-full}
 
-![](/overflow-subterfuge/texfig/returnToSomewhere.figure-1.svg)
-
-:::
-
-![](/overflow-subterfuge/texfig/returnToSomewhere.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/overflow-subterfuge/texfig/returnToSomewhere.figure.svg)
 
 
 ::: {.myoverbox .fragment}

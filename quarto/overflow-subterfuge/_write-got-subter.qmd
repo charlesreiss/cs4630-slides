@@ -4,11 +4,11 @@
 
 
 ::: {.r-stack .my-full}
-![](/overflow-subterfuge/texfig/write-got-subter.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+![](/overflow-subterfuge/texfig/write-got-subter.figure-1.svg){.fragment .fade-out fragment-index=2 fig-alt="stack has (from highest address to lowest): return address for f2b, stack canary, 8-byte pointer, 8-byte val, 100-byte buffer, return address for scanf. Elsewhere, the global offset table has entries for printf, fopen, and exit"}
 
-![](/overflow-subterfuge/texfig/write-got-subter.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/overflow-subterfuge/texfig/write-got-subter.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 fig-alt="ptr is modified to point to the global offset table entry for printf, val is modified to point to buffer (on the stack)"}
 
-![](/overflow-subterfuge/texfig/write-got-subter.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+![](/overflow-subterfuge/texfig/write-got-subter.figure-3.svg){.fragment .fade-in-then-out fragment-index=3 fig-alt="after f2b's code using ptr and val runs, the global offset table entry for printf now points to the buffer, which presumably contains machine code for the attacker to run"}
 
 
 :::

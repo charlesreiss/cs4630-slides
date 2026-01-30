@@ -4,7 +4,7 @@
 
 
 ::: {.r-stack .my-full}
-![](/overflow-subterfuge/texfig/write-ra-subter.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+![](/overflow-subterfuge/texfig/write-ra-subter.figure-1.svg){.fragment .fade-out fragment-index=2}
 
 ![](/overflow-subterfuge/texfig/write-ra-subter.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
 

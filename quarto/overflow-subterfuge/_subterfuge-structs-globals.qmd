@@ -1,23 +1,37 @@
 
-### other subterfuge cases (1)  {.smaller}
+### other subterfuge cases (1)
 
+::::: {.columns}
 
-```
+:::: {.column width="40%"}
+
+```c
 struct Command {
   CommandType type;
   int values[MAX_VALUES];
   int *active_value;
   ...
 };
-
 ```
- ![](/overflow-subterfuge/texfig/structSubter.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+
+::::
+
+:::: {.column width="59%"}
+
+![](/overflow-subterfuge/texfig/structSubter.figure.svg){width="100%"}
+
+::::
+
+:::::
 
 
-### other subterfuge cases (2)  {.smaller}
+### other subterfuge cases (2)
 
+::::: {.columns}
 
-```
+:::: {.column width="40%"}
+
+```c
 Command *current_command;
 char input_buffer[4096];
 
@@ -29,7 +43,14 @@ void run_next_command() {
   current_command-> ...
   ...
 }
-
 ```
- ![](/overflow-subterfuge/texfig/globalSubter.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
 
+::::
+
+:::: {.column width="59%"}
+
+![](/overflow-subterfuge/texfig/globalSubter.figure.svg){width="100%"}
+
+::::
+
+:::::

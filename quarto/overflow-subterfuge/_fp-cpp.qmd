@@ -1,10 +1,6 @@
 
-### C++ inheritence  {.smaller}
+### C++ inheritence
 
-<!-- \lstset{
-    language=C++,style=smaller,
-} -->
- 
 ```cpp
 class InputStream {
 public:
@@ -24,21 +20,17 @@ public:
     virtual int tell();
     ...
 };
-
 ```
 
 
 ### C++ inheritence: approx memory layout 
 
-![](/overflow-subterfuge/texfig/inheritMemLay.figure.svg)
+![](/overflow-subterfuge/texfig/inheritMemLay.figure.svg){fig-alt="Memory layouts for InputStream, SeekableInputStream, FileInputStream. All start with a vtable pointer; in the case of FileInputStream that vtable pointer is followed by `file_pointer`. Each vtable pointer points to array with slots for function. InputStream just has one slot for get; SeekableInputStream has three slots for get, seek, tell. FIleInputStream has the same slots as SeekableInputStream, but they are filled with pointers to the methods FileInputStream::get, FileInputStream::seek, FileInputStream::tell."}
 
 
 ### C++ implementation (pseudo-code)
 
-<!-- \lstset{
-    language=C,style=smaller,
-} -->
- 
+
 ```cpp
 struct InputStream_vtable {
     int (*get)(InputStream* this);
@@ -58,9 +50,6 @@ struct InputStream {
 
 ### C++ implementation (pseudo-code)
 
-<!-- \lstset{
-    language=C,style=smaller,
-} -->
  
 ```cpp
 struct SeekableInputStream_vtable {
@@ -84,10 +73,6 @@ struct FileInputStream {
 
 ### C++ implementation (pseudo-code)
 
-<!-- \lstset{
-    language=C,style=smaller,
-} -->
- 
 ```cpp
 SeekableInputStream_vtable the_FileInputStream_vtable = {
     &FileInputStream_get,
@@ -99,6 +84,5 @@ SeekableInputStream_vtable the_FileInputStream_vtable = {
 
     FileInputStream file_in = { the_FileInputStream_vtable,  ... };
     InputStream *s = (InputStream*) &file_in;
-
 ```
 

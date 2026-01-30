@@ -1,9 +1,6 @@
 
 ### return-to-somewhere  {.smaller}
 
-
-
-
 ![](/overflow-subterfuge/texfig/returnToSomewhere.figure.svg)
 
 

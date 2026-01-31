@@ -1,16 +1,10 @@
 
 ### simpler overflow
 
-<!-- \lstset{
-    language=C,
-    style=smaller,
-    moredelim={**[is][\btHL<2|handout:0>]{@hi2@}{@endhi@}},
-} -->
- 
-<pre><code>struct QuizQuestion questions[NUM_QUESTIONS];
+```c
 int giveQuiz() {
-    int <span data-fragment-index="2" class="fragment custom myem-only">score</span> = 0;
-    char <span data-fragment-index="2" class="fragment custom myem-only">buffer</span>[100];
+    int score = 0;
+    char buffer[100];
     for (int i = 0; i &lt; NUM_QUESTIONS; ++i) {
         gets(buffer);
         if (checkAnswer(buffer, &amp;questions[i])) {
@@ -19,7 +13,7 @@ int giveQuiz() {
     }
     return score;
 }
-</code></pre>
+```
 
 ::: {.myoverbox .vlow .fragment fragment-index=2}
 
@@ -31,11 +25,11 @@ going out of bounds of buffer might modify score
 ### simpler overflow: stack 
 
 
-
 ::: {.r-stack .my-full}
-![](/overflow-basic/texfig/overwriteLocalStack2.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](/overflow-basic/texfig/overwriteLocalStack2.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/overflow-basic/texfig/overwriteLocalStack2.figure-1.svg){.fragment .fade-out fragment-index=2 fig-alt="the stack has (value at highest address first): return address for giveQuiz, 4-byte score (initially 0); 100-byte buffer; return address for gets"}
+
+![](/overflow-basic/texfig/overwriteLocalStack2.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 fig-alt="after 103 as are input, the buffer contains 100 of the a's, and the score contains the bytes (in hex) 61 61 61 00."}
 
 
 :::

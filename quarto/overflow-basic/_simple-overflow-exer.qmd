@@ -1,26 +1,106 @@
 
 ### exercise: stack layout 
 
+::::: {.columns}
 
+:::: {.column .longcode}
 
-::: {.r-stack .my-full}
-![](/overflow-basic/texfig/simpleOverStackLayout1.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+```{.gnuassembler style="border: 2px solid black; font-size: 90%"}
+GradeAssignment:
+  pushq   %rbp
+  pushq   %rbx
+  xorl    %ebx, %ebx
+  subq    $72, %rsp
+  leaq    8(%rsp), %rbp
+for_loop:
+  movq    %rbp, %rdi
+  call    gets
+  movl    %ebx, %esi
+  movq    %rbp, %rdi
+  call    GradeAnswer
+  leaq    24(%rsp), %rdi
+  movl    %eax, (%rdi,%rbx,4)
+  incq    %rbx
+  cmpq    $10, %rbx
+  jne     for_loop
+  call    Process
+  ...
+```
 
-![](/overflow-basic/texfig/simpleOverStackLayout1.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+::::
 
+:::: {.column}
 
-:::
+```{.c style="border: 2px solid black"}
+int GradeAssignment(FILE *in) {
+  int scores[10]; char buffer[16];
+  for (int i = 0; i < 10; ++i) {
+    gets(buffer);
+    scores[i] =
+        GradeAnswer(buffer, i);
+  }
+  Process(scores);
+}
+```
 
+[<em>how many bytes after `buffer[0]` is first byte of `scores[0]`?</em>]{.my-small}
 
-### exercise: overflow? 
+[16]{.fragment}
 
+::::
 
+:::::
 
-::: {.r-stack .my-full}
-![](/overflow-basic/texfig/simpleOverStackLayout2.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+### exercise: overflow?
 
-![](/overflow-basic/texfig/simpleOverStackLayout2.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+::::: {.columns}
 
+:::: {.column .longcode}
 
-:::
+```{.gnuassembler style="border: 2px solid black; font-size: 90%"}
+GradeAssignment:
+  pushq   %rbp
+  pushq   %rbx
+  xorl    %ebx, %ebx
+  subq    $72, %rsp
+  leaq    8(%rsp), %rbp
+for_loop:
+  movq    %rbp, %rdi
+  call    gets
+  movl    %ebx, %esi
+  movq    %rbp, %rdi
+  call    GradeAnswer
+  leaq    24(%rsp), %rdi
+  movl    %eax, (%rdi,%rbx,4)
+  incq    %rbx
+  cmpq    $10, %rbx
+  jne     for_loop
+  call    Process
+  ...
+```
+
+::::
+
+:::: {.column}
+
+```{.c style="border: 2px solid black"}
+int GradeAssignment(FILE *in) {
+  int scores[10]; char buffer[16];
+  for (int i = 0; i < 10; ++i) {
+    gets(buffer);
+    scores[i] =
+        GradeAnswer(buffer, i);
+  }
+  Process(scores);
+}
+```
+
+[<em>if input into buffer is 50 copies of the character '1', then scores[0] will be ___?</em>]{.my-small}
+
+[0x31313131]{.fragment}
+
+::::
+
+:::::
+
 

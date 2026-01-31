@@ -1,5 +1,5 @@
 
-### extra relocations  {.smaller}
+### extra relocations
 
 
 ```

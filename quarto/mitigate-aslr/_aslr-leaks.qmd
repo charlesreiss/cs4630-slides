@@ -17,7 +17,7 @@ LOAD off    0x0000000000002db8 vaddr 0x0000000000003db8 paddr 0x0000000000003db8
 ```
  
 
-* 4 seperately loaded segments: can we choose random addresses for each?
+* 4 seperately loaded segments, but cannot be indepenedntly randomized
 
 
 ### dependencies between segments (2)  {.smaller}
@@ -57,7 +57,9 @@ LOAD off    0x0000000000002db8 vaddr 0x0000000000003db8 paddr 0x0000000000003db8
 
 * Linux made a choice: <br> no editing code when loading programs, libraries 
 <hr class="vspace" />
-* allows same code to be loaded in multiple processes
+* simplifies application loading code
+* allows same code to loaded in multiple processes
+   *  but limits practical randomization
 
 
 ### danger of leaking pointers 

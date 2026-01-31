@@ -6,7 +6,52 @@
 \providecommand{\myemphFour}[1]{\myemph<{#1}}
 \providecommand{\antiEmphThree}[1]{{\color<3>{blue}#1}}
 \providecommand{\antiEmphFour}[1]{{\color<4>{blue}#1}}
+\newsavebox{\switchCCodeA}
+\newsavebox{\switchAsmCodeA}
 \begin{document}
+\begin{lrbox}{\switchCCodeA}
+\lstset{language=C,style=small}
+\begin{lstlisting}
+int foo(long n) {
+    switch (n) {
+    case 0: 
+    case 2:
+    case 4:
+    case 5:
+        return 1;
+    case 1:
+    case 3:
+        return 2;
+    default:
+        return 3;
+    }
+}
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\switchAsmCodeA}
+\lstset{
+    language=myasm,
+    style=smaller,
+    escapeinside=~~,
+}
+\begin{lstlisting}
+foo:
+	movl	$3, %eax
+	cmpq	$5, %rdi
+	ja	defaultCase
+	jmp	*lookupTable(,%rdi,8)
+        /* code for defaultCase, returnOne, returnTwo */
+        ...
+	.section	.rodata
+lookupTable: /* read-only pointers: */
+	.quad	returnOne
+	.quad	returnTwo
+	.quad	returnOne
+	.quad	returnTwo
+	.quad	returnOne
+	.quad	returnOne
+\end{lstlisting}
+\end{lrbox}
 
 \setSlide{1}
 \input{mitigate-aslr/texfig/hardCodedAsm.inner.tex}

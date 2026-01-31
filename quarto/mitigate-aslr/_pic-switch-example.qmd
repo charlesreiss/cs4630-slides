@@ -7,6 +7,5 @@
 
 ### hard-coded addresses? (64-bit) 
 
-<!-- \lstset{language=C,style=small} -->
- ![](/mitigate-aslr/texfig/hardCodedDisasm.figure.svg)
+![](/mitigate-aslr/texfig/hardCodedDisasm.figure.svg)
 

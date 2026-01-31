@@ -11,11 +11,11 @@
 \end{pgfonlayer}
 \node[mybox, minimum height=.5cm, below=.45cm of kernel] (stack) {Stack};
 \begin{pgfonlayer}{bg}
-    \node[right=1mm of stack.north east,mylabel] {\myemph<1>{$\pm$ 0x004 0000 0000}};
+    \node[right=1mm of stack.north east,mylabel] {$\pm$ 0x004 0000 0000};
 \end{pgfonlayer}
 \node[mybox, minimum height=.5cm, below=0.5cm of stack] (heapB) {mmap/non-fixed exe/libs};
 \begin{pgfonlayer}{bg}
-    \node[right=1mm of heapB.north east,mylabel] (heapBLabel) {\myemph<1>{$\pm$ 0x100 0000 0000}};
+    \node[right=1mm of heapB.north east,mylabel] (heapBLabel) {$\pm$ 0x100 0000 0000};
     \node[below=0mm of heapBLabel,font=\small,inner sep=0mm] {(filled from top with ASLR)};
 \end{pgfonlayer}
 %\begin{pgfonlayer}{bg}
@@ -23,29 +23,20 @@
 %\end{pgfonlayer}
 \node[mybox, minimum height=.5cm, below=0.5cm of heapB] (heap) {Heap (brk/sbrk)};
 \begin{pgfonlayer}{bg}
-\node[right=1mm of heap.south east,mylabel] (heapBLabel) {\myemph<1>{$\pm$ 0x200 0000}};
+\node[right=1mm of heap.south east,mylabel] (heapBLabel) {$\pm$ 0x200 0000};
 \end{pgfonlayer}
 \node[mybox, minimum height=.5cm, below=0.2mm of heap] (data) {fixed exe writeable (sometimes)};
 \begin{pgfonlayer}{bg}
-\node[right=1mm of data.south east,mylabel] (bottomLabel) {\myemph<2-3>{0x0000 0000 0060 0000}*};
+\node[right=1mm of data.south east,mylabel] (bottomLabel) {0x0000 0000 0060 0000*};
 \node[below=0mm of bottomLabel,font=\small,inner sep=0mm] {(constants + 2MB alignment)};
 \end{pgfonlayer}
 \node[mybox, minimum height=.5cm, below=0.6cm of data] (sdata) {fixed exe code/data};
 \begin{pgfonlayer}{bg}
-\node[right=1mm of sdata.south east,mylabel] (sbottomLabel) {\myemph<2-3>{0x0000 0000 0040 0000}};
+\node[right=1mm of sdata.south east,mylabel] (sbottomLabel) {0x0000 0000 0040 0000};
 \end{pgfonlayer}
 \coordinate (memBottom) at ($(sdata.south east) + (0mm, -2mm)$);
 \begin{pgfonlayer}{bg}
 \draw[pattern=north west lines, pattern color=black!40!white] (kernel.north west) rectangle (memBottom);
 \end{pgfonlayer}
-
-\begin{visibleenv}<3>
-    \begin{scope}[overlay]
-    \node[draw=red,ultra thick,fill=white,anchor=center,
-          inner sep=.5cm,font=\Large] at (current page.center) {
-        why are these addresses fixed?
-    }; 
-    \end{scope}
-\end{visibleenv}
 
 \end{tikzpicture}

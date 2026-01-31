@@ -1,8 +1,8 @@
 
-### exericse: using a leak (1)  {.smaller}
+### exericse: using a leak (1)
 
 
-```
+```cpp
 class Foo {
     virtual const char *bar() { ... }
 };

@@ -1,5 +1,5 @@
 
 ### exes, libraries stay together 
 
-![](/mitigate-aslr/texfig/aslr-entropy-together.figure.svg)
+![](/mitigate-aslr/texfig/aslr-entropy-together.figure.svg){fig-alt="foo.exe's globals, code, and constants (likely including VTables are stored in separate regions. But those regions must stay together because the cod euses offset(%rip) to access the globals and constants. The starting address for this group of items, however, can be randomized."}
 

@@ -1,8 +1,34 @@
 
 ### exercise  {.smaller}
 
-  ![](/mitigate-aslr/texfig/info-disc-stack-addr-exer.figure.svg)
- 
+
+::::: {.columns}
+
+:::: {.column}
+
+```c
+struct point {
+    int x, y, z;
+};
+```
+
+::::
+
+:::: {.column}
+
+```c
+struct point *p;
+...
+    if (command == GET) { 
+        /* 'p' could be uninitialized */
+        printf("%d,%d,%d\n", p->x, p->y, p->z);
+    } ...
+...
+```
+
+::::
+
+:::::
  
 
 * Which initial value for <code>p</code> (‘‘left over’’ from prior use of register, etc.) would be  most useful for a later buffer overflow attack? 

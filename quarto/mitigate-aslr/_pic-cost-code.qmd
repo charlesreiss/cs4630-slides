@@ -1,5 +1,5 @@
 
-### PIE jump-table  {.smaller}
+### PIE jump-table  
 
 
 :::: {.columns}
@@ -11,15 +11,15 @@
     escapeinside=~~,
 } -->
  
-```
+```{.gnuassembler code-line-numbers="|5-8"}
 foo:
   movl	 $3, %eax
   cmpq	 $5, %rdi
   ja	 retDefault
-  leaq	 ~\myemphTwo{jumpTable(\%rip)},~%rax
-  movslq ~\myemphTwo{(\%rax,\%rdi,4)},~%rdx
+  leaq	 jumpTable(%rip), %rax
+  movslq (%rax,%rdi,4), %rdx
   addq	 %rdx, %rax
-  ~\myemphTwo{\bfseries jmp}~   ~\myemphTwo{*\%rax}~
+  jmp    *%rax
 returnTwo:
   movl  $2, %eax
   ret
@@ -39,7 +39,7 @@ defaultCase:
     escapeinside=~~,
 } -->
  
-```
+```gnuassembler
   .section	.rodata
 jumpTable:
   .long	returnOne-jumpTable
@@ -56,7 +56,7 @@ jumpTable:
 ::::
 
 
-### PIE jump-table  {.smaller}
+### PIE jump-table
 
 <!-- \lstset{
     language=myasm,
@@ -65,21 +65,21 @@ jumpTable:
 } -->
  
 ```
-~\myemphTwo{00000000000007ab}~ <foo>:
+00000000000007ab <foo>:
 b8 03 00 00 00       	mov    $0x3,%eax
 48 83 ff 05             cmp    $0x5,%rdi
 77 1b                	ja     7d0 <foo+0x25>
-48 8d 05 ab 00 00 00 	lea    ~\myemphThree{0xab(\%rip),}~%rax        # 868
-48 63 14 b8          	movslq ~\myemphThree{(\%rax,\%rdi,4),}~%rdx
+48 8d 05 ab 00 00 00 	lea    0xab(%rip), %rax        # 868
+48 63 14 b8          	movslq (%rax,%rdi,4), %rdx
 48 01 d0             	add    %rdx,%rax
 ff e0                	jmpq   *%rax
 b8 02 00 00 00       	mov    $0x2,%eax
 c3                   	retq   
 b8 01 00 00 00       	mov    $0x1,%eax
-c3                	retq
+c3                   	retq
 ...
-~\textit{\myemphThree{@ 868}}:~ -156 /* offset */
-~\textit{\myemphThree{@ 870}}:~ -162
+@ 868: -156 /* offset */
+@ 870: -162
 ...
 
 ```
@@ -97,7 +97,7 @@ c3                	retq
 * <code>jmp</code> (to computed base)
 
 
-### 32-bit x86 is worse (1)  {.smaller}
+### 32-bit x86 is worse (1) 
 
 
 
@@ -112,55 +112,20 @@ c3                	retq
 ```
 // BEFORE: (fixed addresses)
 08048310 <__printf_chk@plt>:
- 8048310: ff 25 ~\myemphTwo{10 a0 04 08}~  jmp    *0x804a010
+ 8048310: ff 25 10 a0 04 08  jmp    *0x804a010
     /* 0x804a010 == global offset table entry */
 
 // AFTER: (position-independent)
 00000490 <__printf_chk@plt>:
- 490:	ff a3 10 00 00 00    jmp    *0x10~\myemphThree{(\%ebx)}~
+ 490:	ff a3 10 00 00 00    jmp    *0x10(%ebx)
     /* %ebx --- address of global offset table */
     /* needs to be set by caller */
 
 ```
 
-
-### 32-bit x86 is worse (1)  {.smaller}
-
+### 32-bit x86 is worse (2) 
 
 
-* no relative addressing for <code>mov</code>, <code>lea</code>, …
-* even changes ‘‘stubs’’ for printf:
- <!-- \lstset{
-    language=myasm,
-    style=smaller,
-    escapeinside=~~,
-} -->
- 
-```
-// BEFORE: (fixed addresses)
-08049040 <puts@plt>:
- 8049040:       ff 25 04 c0 04 08       jmp    *0x804c004
-
-// AFTER: (position-independent)
-00000490 <puts@plt>:
- 490:	ff a3 10 00 00 00    jmp    *0x10~\myemphThree{(\%ebx)}~
-    /* %ebx --- address of global offset table */
-    /* needs to be set by caller */
-
-```
-
-
-### 32-bit x86 is worse (2)  {.smaller}
-
-
-
-* changes to call
- <!-- \lstset{
-    language=myasm,
-    style=smaller,
-    escapeinside=~~,
-} -->
- 
 ```
 // BEFORE: (fixed addresses)
  8049061:  68 08 a0 04 08      push   $0x804a008

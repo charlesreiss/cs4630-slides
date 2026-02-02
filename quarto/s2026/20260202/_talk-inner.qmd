@@ -1,5 +1,15 @@
 ### last time
 
+*  ways to invoke virus code
+   *  start locations, replacing returns/calls
+   *  editing linker information
+*  whitelisting applications, bootloaders
+   *  limits with scripts, ability to use new apps/OSes
+*  heuristic detection
+   *  for now: looking at machine code
+   *  understanding what does/does not change in malware code
+   *  started: fast pattern matching
+
 ### assignment Q+A
 
 # regular expressions {visibility="hidden"}
@@ -67,9 +77,28 @@
 
 {{< include /heur-detect/_new-malwarep.qmd >}}
 
+### detecting new malware 
+
+* look for anomalies
+   * patterns of code that real executables ‘‘won't’’ have
+* identify bad behavior
+
+### detecting new malware 
+
+* _look for anomalies_
+   * patterns of code that real executables ‘‘won't’’ have
+* identify bad behavior
+
+
 # heuristics based on executable/library regularity {visibility="hidden"}
 
 {{< include /heur-detect/_exec-lib-regularity.qmd >}}
+
+### detecting new malware 
+
+* look for anomalies
+   * patterns of code that real executables ‘‘won't’’ have
+* _identify bad behavior_
 
 # behavior based detection {visibility="hidden"}
 

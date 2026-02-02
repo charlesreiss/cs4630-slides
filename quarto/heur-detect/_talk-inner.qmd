@@ -123,9 +123,28 @@
 
 {{< include /heur-detect/_new-malwarep.qmd >}}
 
+### detecting new malware 
+
+* look for anomalies
+   * patterns of code that real executables ‘‘won't’’ have
+* identify bad behavior
+
+### detecting new malware 
+
+* **look for anomalies**
+   * patterns of code that real executables ‘‘won't’’ have
+* identify bad behavior
+
+
 # heuristics based on executable/library regularity {visibility="hidden"}
 
 {{< include /heur-detect/_exec-lib-regularity.qmd >}}
+
+### detecting new malware 
+
+* look for anomalies
+   * patterns of code that real executables ‘‘won't’’ have
+* **identify bad behavior**
 
 # behavior based detection {visibility="hidden"}
 

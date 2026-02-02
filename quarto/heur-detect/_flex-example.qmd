@@ -63,7 +63,7 @@ extra C code to include
 
 
 
-```{.flex code-line-numbers=3}
+```{.flex code-line-numbers=2}
 [aA][a-z]* {
                printf("found a-word '%s'\n", yytext);
            }

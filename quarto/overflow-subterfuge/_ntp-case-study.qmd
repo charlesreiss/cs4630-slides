@@ -85,13 +85,8 @@ ctl_putdata(
        looks up global offset table entry! */
 </code></pre>
 
-::: {.r-stack}
+![](/overflow-subterfuge/texfig/target.figure-4.svg){width=1000px}
 
-![](/overflow-subterfuge/texfig/target.figure-4.svg){width=1000px .fragment .fade-out fragment-index=1}
-
-![](/overflow-subterfuge/texfig/target.figure-5.svg){width=1000px .fragment .fade-in fragment-index=2}
-
-:::
 
 
 ### overall exploit: reality  {.smaller}

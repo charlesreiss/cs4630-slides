@@ -1,0 +1,17 @@
+
+### taint tracking implementations  {.smaller}
+
+
+* for the programmer: 
+
+   * supported as optional langauge feature --- Perl, Ruby
+   * doesn't seem to have gotten wide adoption?
+ 
+<hr class="vspace" />
+* for the malware analyst/user 
+
+   * as part of a custom x86 VM (whole system, on machine code)
+   * as part of a custom Android system
+   * …
+
+

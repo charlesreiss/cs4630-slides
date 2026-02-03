@@ -1,0 +1,17 @@
+
+### static or dynamic  {.smaller}
+
+
+* taint tracking as static analysis (don't run program) 
+
+   * track values as tainted/not tainted
+   * look for <i>possible</i> uses of tainted value
+   * will be imprecise (like use-after-free analysis)
+
+* taint tracking as dynamic analysis 
+
+   * modify program to add ‘‘tainted’’ field to every variable
+   * make assignment copy that field
+   * check tainted field before dangerous call
+
+

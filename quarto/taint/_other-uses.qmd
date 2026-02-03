@@ -1,0 +1,16 @@
+
+### taint tracking generally  {.smaller}
+
+
+* taint tracking for other security issues is a big research area
+* often by implementing taint tracking for assembly 
+
+   * much, much higher overhead than implementing for Perl or Ruby
+ \only{\\hrulefill{}}
+* example: detect private information leaks 
+
+   * taint personal information
+   * error if tainted info goes to network
+
+* example: check if <em>return addresses</em> are tainted before using
+

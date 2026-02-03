@@ -1,0 +1,6 @@
+---
+title: "taint"
+
+---
+
+{{< include ../taint/_talk-inner.qmd >}}

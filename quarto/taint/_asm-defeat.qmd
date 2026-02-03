@@ -1,0 +1,12 @@
+
+### defeating ASM-based checking  {.smaller}
+
+
+* if a malware author wanted to defeat this taint checking, what ideas seem promising for confusing the analysis? 
+
+   * A. timing arithmetic operations to see if the machine is unusually slow
+   * B. computing the hash of the malware's machine code and comparing it to a known value
+   * C. changing `x = y` to <br> `switch (x) { case 1: y = 1; break; case 2: ...}`
+   * D. changing `x = y` to `x = z + y; x = x - z;`
+
+

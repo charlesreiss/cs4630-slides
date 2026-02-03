@@ -1,0 +1,17 @@
+
+### taint tracking rules (for injection)  {.smaller}
+
+
+* sources are <i>tainted</i>
+* <em>transitive</em> values computed using tainted values are tainted 
+
+   * except for <em>explicit</em> ‘‘sanitization’’ operations
+
+* what about control flow? (multiple options)
+* error if tainted values are passed to ‘‘sensitive’’ operations 
+
+   * shell command
+   * SQL command
+   * …
+
+

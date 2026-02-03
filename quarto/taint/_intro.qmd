@@ -1,0 +1,11 @@
+
+### taint tracking idea  {.smaller}
+
+
+* a lot of attacks --- user data ends up in bad place 
+<hr class="vspace" />
+* one way to diagnose/mitigate --- track flow of user data
+* one possibility: <i>dynamic taint tracking</i>
+* some values ‘tainted’
+* using them to compute other values ‘taints’ them, too
+

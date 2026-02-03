@@ -1,0 +1,18 @@
+
+### example: TaintDroid 
+
+
+![](/taint/taintdroid){}
+
+
+### TaintDroid instrumentation 
+
+
+![](/taint/taintdroid-fig1){}
+
+
+### TaintDroid results 
+
+
+![](/taint/taintdroid-tbl3){}
+

@@ -1,14 +1,13 @@
-
 {
 \providecommand{\myemphTwo}[1]{\myemph<2>{#1}}%
 \providecommand{\myemphThree}[1]{\myemph<3>{#1}}%
 \providecommand{\myemphFour}[1]{\myemph<{#1}}%
 \providecommand{\antiEmphThree}[1]{{\color<3>{blue}#1}}%
 \providecommand{\antiEmphFour}[1]{{\color<4>{blue}#1}}%
-\begin{frame}[fragile,label=hardCodedAsm]{hard-coded addresses? (64-bit)}
+
+\newsavebox{\switchCCodeA}
+\begin{lrbox}{\switchCCodeA}
 \lstset{language=C,style=small}
-\begin{tikzpicture}
-\node[anchor=north east] (code) at (-1, 0) {
 \begin{lstlisting}
 int foo(long n) {
     switch (n) {
@@ -25,9 +24,10 @@ int foo(long n) {
     }
 }
 \end{lstlisting}
-};
-\draw[thick] (-.75, 0) -- (-.75,-7);
-\node[anchor=north west,align=left] (disasm) at (-.5, 0) {
+\end{lrbox}
+
+\newsavebox{\switchAsmCodeA}
+\begin{lrbox}{\switchAsmCodeA}
 \lstset{
     language=myasm,
     style=smaller,
@@ -50,19 +50,28 @@ lookupTable: /* read-only pointers: */
 	.quad	returnOne
 	.quad	returnOne
 \end{lstlisting}
+\end{lrbox}
+
+\begin{frame}[fragile,label=hardCodedAsm]{hard-coded addresses? (64-bit)}
+\lstset{language=C,style=small}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1, 0) {
+\usebox{\switchCCodeA}
+};
+\draw[thick] (-.75, 0) -- (-.75,-7);
+\node[anchor=north west,align=left] (disasm) at (-.5, 0) {
+\usebox{\switchAsmCodeA}
 };
 \end{tikzpicture}
 \end{frame}
 
-
-\begin{frame}[fragile,label=hardCodedDisasm]{hard-coded addresses? (64-bit)}
+\newsavebox{\switchCCodeB}
+\begin{lrbox}{\switchCCodeB}
 \lstset{language=C,style=small}
-\begin{tikzpicture}
-\node[anchor=north east] (code) at (-1, 0) {
 \begin{lstlisting}
 int foo(long n) {
     switch (n) {
-    case 0: 
+    case 0:
     case 2:
     case 4:
     case 5:
@@ -75,9 +84,10 @@ int foo(long n) {
     }
 }
 \end{lstlisting}
-};
-\draw[thick] (-.75, 0) -- (-.75,-7);
-\node[anchor=north west,align=left] (disasm) at (-.5, 0) {
+\end{lrbox}
+
+\newsavebox{\switchAsmCodeB}
+\begin{lrbox}{\switchAsmCodeB}
 \lstset{
     language=myasm,
     style=smaller,
@@ -99,6 +109,16 @@ ff 24 fd
 ~\textit{@ 400628:} \myemphTwo{0x400588}~
 ~\textit{@ 400630:} \myemphTwo{0x400582}~
 \end{lstlisting}
+\end{lrbox}
+
+\begin{frame}[fragile,label=hardCodedDisasm]{hard-coded addresses? (64-bit)}
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1, 0) {
+\usebox{\switchCCodeB}
+};
+\draw[thick] (-.75, 0) -- (-.75,-7);
+\node[anchor=north west,align=left] (disasm) at (-.5, 0) {
+\usebox{\switchAsmCodeB}
 };
 \end{tikzpicture}
 \end{frame}

@@ -24,8 +24,6 @@ void vulnerable(struct Example *e) {
 \end{itemize}
 \end{frame}
 
-\iftoggle{heldback}{\excludecomment{soln}}{\includecomment{soln}}
-\begin{soln}
 \begin{frame}[fragile,label=useFPtrOverwrite1Explain]{explanation}
 \begin{lstlisting}[language=C++,style=script]
 gets(e->input); /* can overwrite process_function */
@@ -48,7 +46,6 @@ sscanf(e->input, "%ld,%s", &index, &name[0]); /* expects <decimal number>,<strin
     \end{itemize}
 \end{itemize}
 \end{frame}
-\end{soln}
 
 \begin{frame}[fragile,label=useFPtrOverwrite2]{using function pointer overwrite (2)}
 \begin{lstlisting}[language=C,style=script]
@@ -76,7 +73,6 @@ void vulnerable(struct Example *e) {
 \end{itemize}
 \end{frame}
 
-\begin{soln}
 \begin{frame}[fragile,label=useFPtrOverwrite1Explain]{explanation (one option)}
 \begin{lstlisting}[language=C++,style=script]
 gets(e->input); /* can overwrite process_function */
@@ -122,4 +118,3 @@ sscanf(e->input, "%ld,%s", &index, &name[0]); /* expects <decimal number>,<strin
     \end{itemize}
 \end{itemize}
 \end{frame}
-\end{soln}

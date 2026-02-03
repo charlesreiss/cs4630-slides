@@ -1,0 +1,42 @@
+
+# memory protection {visibility="hidden"}
+
+## generally {visibility="hidden"}
+
+{{< include /mitigate-memprotect/_mem-protect.qmd >}}
+
+## page-level permissions {visibility="hidden"}
+
+{{< include /mitigate-memprotect/_page-protect.qmd >}}
+
+## guard pages {visibility="hidden"}
+
+{{< include /mitigate-memprotect/_guard-pages.qmd >}}
+
+## exercise: guard page overhead {visibility="hidden"}
+
+{{< include /mitigate-memprotect/_guard-page-overhead.qmd >}}
+
+## guard pages elsewhere? {visibility="hidden"}
+
+{{< include /mitigate-memprotect/_guard-page-elsewhere.qmd >}}
+
+## read-only pages {visibility="hidden"}
+
+{{< include /mitigate-memprotect/_ro-pages.qmd >}}
+
+## relocation read-only {visibility="hidden"}
+
+{{< include /mitigate-memprotect/_relro.qmd >}}
+
+## non-executable pages {visibility="hidden"}
+
+{{< include /mitigate-memprotect/_write-xor-exec.qmd >}}
+
+## unfortunate history of HW/SW support{visibility="hidden"}
+
+{{< include /mitigate-memprotect/_wx-hw-support.qmd >}}
+
+## if you can't write machine code{visibility="hidden"}
+
+{{< include /mitigate-memprotect/_wx-incomplete.qmd >}}

@@ -1,0 +1,50 @@
+
+### relocation data  {.smaller}
+
+
+* addresses filled in by dynamic linker big target 
+
+   * global offset table
+   * function pointers in vtables
+   * …
+
+* would like them to be read-only
+* … but they can't be read-only when initially loaded
+
+
+### RELRO  {.smaller}
+
+
+* <em>REL</em>ocation <em>R</em>ead-<em>O</em>nly
+* Linux option: make dynamic linker structures read-only after startup
+* partial RELRO: everything but GOT pointers to library functions 
+
+   * notably includes C++ virtual function tables
+
+* full RELRO: everything including GOT pointers 
+
+   * requires disabling ‘‘lazy binding’’ (filling in GOT as functions called)
+
+* appears as ELF program header entry
+
+
+### RELRO/non-lazy-binding in practice  {.smaller}
+
+
+
+* linker/compiler options on Linux:
+* <code>-z relro</code>/<code>-z norerlo</code>: enable/disable relocation read-only
+* <code>-z now</code>: disable lazy binding (fill in whole GOT immediately)
+* in <code>objdump</code> (RELRO header; bit 3 of Dynamic Section FLAGS):
+ 
+<pre><code>Program Headers:
+...
+   RELRO off    0x0000020f30 vaddr 0x0000021f30 paddr 0x0000021f30 align 2**0
+         filesz 0x00000010d0 memsz 0x00000010d0 flags r--
+...
+Dynamic Section:
+...
+   FLAGS                0x000000000000000<em>8</em>
+...
+</code></pre>
+

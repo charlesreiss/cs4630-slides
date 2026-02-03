@@ -1,0 +1,13 @@
+\begin{tikzpicture}
+    \draw[thick,-Latex] (-0.25,-5) -- (-0.25, -1) node [midway, above, sloped] {increasing addresses};
+    \node[anchor=south] at (3, 0) {the heap};
+    \draw[stackBox] (0, 0) rectangle (6, -6);
+    \draw[onStack,fill=blue!20] (0, -2) rectangle (6, -3.5)
+        node[midway,align=center] {\texttt{malloc(6000)} \\ (or \texttt{new char[6000]}) };
+    \draw[onStack,pattern=north west lines,pattern color=red] (0, -1) rectangle (6, -2)
+        node[midway,fill=white] {guard page};
+    \draw[onStack,pattern=north west lines,pattern color=red] (0, -4) rectangle (6, -5)
+        node[midway,fill=white] {guard page};
+    \draw[onStack,fill=black!20] (0, -3.5) rectangle (6, -4)
+        node[midway] {unused space};
+\end{tikzpicture}

@@ -1,0 +1,35 @@
+
+### recall: relocation  {.smaller}
+
+<!-- \lstset{
+    language=myasm,
+    style=small,
+    moredelim={**[is][\btHL<1>]{~1~}{~end~}},
+    moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+} -->
+ 
+<pre><code>.data
+string: .asciz "Hello, World!"
+.text
+main:
+    movq $<span data-fragment-index="1" class="fragment custom myem-only">string</span>, %rdi /* NOT PC/RIP-relative mov */
+</code></pre>
+ generates: (<code>objdump --disassemble --reloc</code>) <!-- \lstset{
+    language={},
+    style=small,
+    moredelim={**[is][\btHL<1>]{~1~}{~end~}},
+    moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+} -->
+ 
+<pre><code>   0:   48 c7 c7 00 00 00 00    mov    $0x0,%rdi
+                        <span data-fragment-index="1" class="fragment custom myem-only">3: R_X86_64_32S .data</span>
+</code></pre>
+ 
+
+* <em>relocation record</em> says how to fix <code>0x0</code> in <code>mov</code>  
+
+   * 3: location in machine code
+   * <code>R_X86_64_32S</code>: 32-bit signed integer
+   * <code>.data</code>: address to insert
+
+

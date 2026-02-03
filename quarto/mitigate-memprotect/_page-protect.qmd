@@ -1,0 +1,26 @@
+
+### the mapping (set by OS) 
+
+
+
+::: {.r-stack .my-full}
+![](/mitigate-memprotect/texfig/mappingList.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/mitigate-memprotect/texfig/mappingList.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+
+:::
+
+
+### Virtual Memory  {.smaller}
+
+
+* modern <em>hardware-supported</em> memory protection mechanism
+* via <em>table</em>: OS decides <em>what memory program sees</em> 
+
+   * whether it's read-only or not
+
+* granularity of <em>pages</em> --- typically 4KB 
+<hr class="vspace" />
+* not in table --- segfault (OS gets control)
+

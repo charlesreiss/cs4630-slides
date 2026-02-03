@@ -1,0 +1,27 @@
+
+### a thought on permissions 
+
+
+* if we can set memory non-writeable
+* how about non-executable? 
+<hr class="vspace" />
+* we never want to execute things on the stack anyways, right?
+
+
+### write XOR execute  {.smaller}
+
+
+* many names: 
+
+   * `W^X` (write XOR execute)
+   * DEP (Data Execution Prevention)
+   * NX bit (No-eXecute) (hardware support)
+   * XD bit (eXecute Disable) (hardware support)
+
+* mark writeable memory as executable
+* how will users insert their machine code? 
+
+   * can only code in application + libraries
+   * a problem, right?
+
+

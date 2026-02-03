@@ -1,0 +1,83 @@
+
+### making things read-only  {.smaller}
+
+
+* would really like to have things that shouldn't change be read-only 
+<hr class="vspace" />
+* simple cases:
+* machine code
+* constants
+
+
+### separate sections  {.smaller}
+
+
+```
+char *foo = "Hello";
+char bar[] = "Hello";
+
+```
+ turns into: 
+<pre><code><em>.data</em>
+bar:
+    .string "Hello"
+...
+foo:
+    .quad .LC0
+.section <em>.rodata.str1.1,"aMS",@progbits</em>
+# aMS = allocatable,mergeable,strings, @progbits = data
+.LC0:
+    .string "Hello"
+</code></pre>
+
+
+### separate segments (1) 
+
+
+<pre><code>LOAD off    0x0018000 vaddr 0x0018000 paddr 0x0018000 align 2**12
+     filesz 0x0007458 memsz 0x0007458 flags <em>r--</em>
+LOAD off    0x001ffd0 vaddr 0x0020fd0 paddr 0x0020fd0 align 2**12
+     filesz 0x00012a8 memsz 0x0002570 flags <em>rw-</em>
+</code></pre>
+
+
+### separate segments (2)  {.smaller}
+
+
+* compiler needs to separate constants/code/data into different segments
+* linker uses this info to make LOAD directives 
+
+   * can mark some LOAD directives as read-only
+
+* need to add padding to make sure segments start at beginning of page  
+
+   * one reason for rounding we saw in TRICKY
+
+* usually compiler writes <i>linker script</i> specifying order of sections + padding + how many LOAD directives
+
+
+### recall: function pointer targets  {.smaller}
+
+
+* wanted to overwrite special pointer: 
+<hr class="vspace" />
+* return addresses on stack
+* function pointers on in local variables
+* tables of function pointers used for inheritence
+* global offset table 
+<hr class="vspace" />
+* can't realistically make first two read-only
+
+
+### read-only problems  {.smaller}
+
+
+* global offset table and vtable entries produced at runtime
+* addresses of functions, etc. not chosen until program loaded
+* … or later with ‘‘lazy’’ linking 
+
+   * recall: filling in global offset tables as functions called
+ 
+<hr class="vspace" />
+* if we just set these as read-only, loading code will break
+

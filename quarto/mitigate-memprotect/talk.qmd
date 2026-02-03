@@ -1,0 +1,6 @@
+---
+title: "mitigate-memprotect"
+
+---
+
+{{< include ../mitigate-memprotect/_talk-inner.qmd >}}

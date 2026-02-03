@@ -1,0 +1,8 @@
+
+### recall(?): virtual memory 
+
+
+
+* illuision of <em>dedicated memory</em>
+ ![](/mitigate-memprotect/texfig/mem-protect.figure.svg)
+

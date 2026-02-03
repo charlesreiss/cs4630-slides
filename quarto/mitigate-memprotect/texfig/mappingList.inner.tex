@@ -1,0 +1,27 @@
+\begin{tikzpicture}
+\tikzset{
+    dot/.style={draw=none}
+}
+\matrix[tight matrix,nodes={minimum height=.525cm,text width=3cm,font=\small\tt},
+    row 1/.style={nodes={font=\bfseries\small\normalfont}},
+    column 1/.style={nodes={draw=none,text width=6cm}},
+    column 2/.style={nodes={text width=1cm}},
+    column 3/.style={nodes={text width=1cm}},
+    column 4/.style={nodes={alt=<2>{opacity=1.0,red}{opacity=0.0},text width=1cm}},
+] {
+program address range \& read? \& write? \& exec? \& real address\\
+0x0000 --- 0x0FFF \& no \& no \& no \& --- \\
+0x1000 --- 0x1FFF \& no \& no \& no \& --- \\
+|[dot]| \ldots \\
+0x40 0000 --- 0x40 0FFF \& yes \& no \& yes \& 0x... \\
+0x40 1000 --- 0x40 1FFF \& yes \& no \& yes \& 0x... \\
+0x40 2000 --- 0x40 2FFF \& yes \& no \& yes \& 0x... \\
+|[dot]| \ldots \\
+0x60 0000 --- 0x60 0FFF \& yes \& yes \& no\& 0x... \\
+0x60 1000 --- 0x60 1FFF \& yes \& yes \& no\& 0x... \\
+|[dot]| \ldots \\
+|[font=\scriptsize]| 0x7FFF FF00 0000 --- 0x7FFF FF00 0FFF \& yes \& yes \& no\& 0x... \\
+|[font=\scriptsize]| 0x7FFF FF00 1000 --- 0x7FFF FF00 1FFF \& yes \& yes \& no\& 0x... \\
+|[dot]| \ldots \\
+};
+\end{tikzpicture}

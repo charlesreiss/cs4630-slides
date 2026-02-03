@@ -1,0 +1,19 @@
+
+### why doesn't W xor X solve the problem?  {.smaller}
+
+
+* W xor X is ‘‘almost free’’, keeps attacker from writing code?
+* problem: useful machine code is in program already 
+
+   * just need to find writable function pointer
+
+* saw special case: arc injection 
+
+   * use address of <code>system</code> function to replace <code>strlen</code>
+   * idea: find useful code already in application/library
+
+* turns out: almost always useful code 
+
+   * trick: chaining together multiple pieces of machine code
+
+

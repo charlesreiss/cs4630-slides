@@ -1,0 +1,24 @@
+
+### hardware support for write XOR execute 
+
+
+* everywhere today
+* not historically common
+* early x86: execute implied by read
+* NX support added with x86-64 and around 2000 for x86-32
+
+
+### deliberate use of writeable code  {.smaller}
+
+
+* ‘‘just-in-time’’ (JIT) compilers 
+
+   * fast virtual machine/language implementations
+
+* some weird GCC features
+* older ‘‘signals’’ on Linux 
+
+   * OS wrote machine code on stack for program to run
+
+* couldn't even disable executable stacks without breaking applications
+

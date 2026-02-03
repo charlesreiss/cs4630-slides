@@ -1,0 +1,26 @@
+\begin{tikzpicture}
+\draw[stackBox] (0, 0) rectangle (6, -6);
+\draw[thick,-Latex] (-.25,-5) -- (-.25, -1) node [midway, above, sloped] {increasing addresses};
+\node[at={(4, 0.1)},anchor=south] { highest address (stack started here)};
+\node[at={(4, -6.1)},anchor=north] { lowest address (stack grows here)};
+\draw[onStack] (0, -.25) rectangle (6, -1.25) node[midway,align=center,font=\small] (stackAddr)
+     {return address for {\tt vulnerable}: \\
+     {\fontsize{10}{11}\selectfont\tt\color{black}0x40fd37}
+     };
+\draw[onStack,pattern=north west lines,pattern color=black!50] (0, -1.25) rectangle (6, -2.25) node[midway,align=center,font=\small,fill=white] {unused space};
+\draw[onStack,fill=blue!20] (0, -2.25) rectangle (6, -4.25) node[midway,align=center,font=\small] {buffer};
+\begin{visibleenv}<2->
+\draw[black,Latex-] (6.1, -.25) -- ++(.5cm, 0cm) node[right,font=\small\tt] {0x7FFFF 2000};
+\draw[black,Latex-] (6.1, -2.25) -- ++(.5cm, 0cm) node[right,font=\small\tt] {0x7FFFF 1000};
+\matrix[tight matrix,
+    column 1/.style={nodes={text width=2.25cm,minimum height=1cm,font=\fontsize{9}{10}\selectfont\tt}},
+    column 2/.style={nodes={minimum height=1cm}},
+    column 3/.style={nodes={minimum height=1cm}},
+    ] at (12.3, -1) {
+        address \& read \& write\\
+    0x7FFFF2000- 0x7FFFF2FFF \& yes \& yes \\
+    0x7FFFF1000- 0x7FFFF1FFF \& yes \& \myemph<2>{no} \\
+    0x7FFFF0000- 0x7FFFF0FFF \& yes \& yes \\
+};
+\end{visibleenv}
+\end{tikzpicture}

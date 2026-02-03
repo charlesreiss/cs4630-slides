@@ -1,0 +1,35 @@
+
+### guard pages elsewhere? 
+
+
+* could potentially add guard pages between big global variables
+* could potentailly add guard pages after arrays on the stack 
+<hr class="vspace" />
+* I don't know any systems that do this
+
+
+### stack canary alternative 
+
+
+
+::: {.r-stack .my-full}
+![](/mitigate-memprotect/texfig/stackGuard.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/mitigate-memprotect/texfig/stackGuard.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+
+:::
+
+
+### stack canary alternative 2 
+
+
+
+::: {.r-stack .my-full}
+![](/mitigate-memprotect/texfig/stackGuardB.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/mitigate-memprotect/texfig/stackGuardB.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+
+:::
+

@@ -1,0 +1,47 @@
+
+### malloc/new guard pages 
+
+![](/mitigate-memprotect/texfig/guard-pages-mallocnew-guard-pages.figure.svg)
+
+
+### guard pages 
+
+
+* deliberate holes
+* accessing --- segfualt
+* call to OS to allocate (not very fast)
+* likely to ‘waste’ memory 
+
+   * guard around object? minimum 4KB object
+
+
+
+### guard pages for malloc/new  {.smaller}
+
+
+* can implement malloc/new by placing guard pages around allocations 
+
+   * commonly done by real malloc/new's for <em>large allocations</em>
+
+* problem: minimum actual allocation 4KB
+* problem: substantially slower
+* example: ‘‘Electric Fence’’ allocator for Linux (early 1990s)
+
+
+### guard pages and arrays/structs  {.smaller}
+
+
+```
+struct foo {
+    char buffer[10000];
+    /* can't really put guard page here */
+    int *ptr;
+};
+
+```
+ 
+
+* C compiler expects buffer and ptr to be adjacent
+* can't add guard page without changing all code that accesses <code>struct foo</code>
+* similar problem with separating elements of arrays
+

@@ -108,6 +108,7 @@ whitespace: whitespace_item+
     | NBSP | SIMPLE_ESCAPED
     | TIKZPICTURE | VERBATIM
     | DISPLAYMATH
+    | INLINEMATH
     | UMLAT
 
 any_empty_item: whitespace
@@ -295,6 +296,7 @@ SAVEBOX.0: /
     \}
     /x
 LRBOX.0: /\\begin\{lrbox\}(?s:.*?)\\end\{lrbox\}/
+INLINEMATH.-10: /\$[^$]+\$/
 SIMPLE_ESCAPED.-11: /\\[.&_$%\/#{}]/
 _NEXT_CELL.-20: /&/
 NEWLINE.-20: /\n+/
@@ -1863,6 +1865,9 @@ class ToAST(lark.Transformer):
         return _RawString(' ', '&nbsp;')
 
     def DISPLAYMATH(self, args):
+        return _RawString(args, args)
+
+    def INLINEMATH(self, args):
         return _RawString(args, args)
 
     def UMLAT(self, args):

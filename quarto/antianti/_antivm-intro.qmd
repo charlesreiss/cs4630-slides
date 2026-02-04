@@ -68,6 +68,8 @@
    * MMX/SSE instructions
    * undocumented (!) CPU instructions
 
+* network access
+
 * [not handling OS features?]{.fragment .myem .custom fragment-index=1}
    * setting up special handlers for segfault
    * multithreading
@@ -77,6 +79,7 @@
 ::: {.myoverbox .fragment fragment-index=1}
 
 often want to use virtual machine not running real operating system<br />
+and/or without access to normal set of files<br />
 means we'll almost certainly miss OS features
 
 :::

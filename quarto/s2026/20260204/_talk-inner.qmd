@@ -3,22 +3,12 @@
 *  flex regular expression syntax
 *  what viruses might do to evade patterns
 *  heuristics to detect malware strategies
-    *  detect strategies, not specific malware
+    *  **detect strategies, not specific malware**
     *  robust enough to detect "new" malware?
     *  example: detecting appending malware
        *  because code typically not at end of executable
 
 ### assignment Q+A
-
-# new malware detection? avoiding evasion? {visibility="hidden"}
-
-{{< include /heur-detect/_new-malwarep.qmd >}}
-
-### detecting new malware 
-
-* look for anomalies
-   * patterns of code that real executables ‘‘won't’’ have
-* identify bad behavior
 
 ### detecting new malware 
 
@@ -46,6 +36,13 @@
 {{< include /heur-detect/_hooking.qmd >}}
 
 # AI heuristic case study: DREBIN {visibility="hidden"}
+
+### combining heuristics?
+
+*  one idea: look for a lot of factors about behavior/etc.
+*  combine to get "is malware" detector that doesn't just match "known" samples
+
+### example of heuristics
 
 {{< include /heur-detect/_case-study-android.qmd >}}
 

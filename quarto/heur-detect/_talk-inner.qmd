@@ -156,6 +156,11 @@
 
 # AI heuristic case study: DREBIN {visibility="hidden"}
 
+### combining heuristics?
+
+*  one idea: look for a lot of factors about behavior/etc.
+*  combine to get "is malware" detector
+
 {{< include /heur-detect/_case-study-android.qmd >}}
 
 ## machine learning and adversaries {visibility="hidden"}

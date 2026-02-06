@@ -1,0 +1,205 @@
+### last time
+
+### assignment Q+A
+
+# packers {visibility="hidden"}
+
+## hashed data {visibility="hidden"}
+
+{{< include /antianti/_hashed-data.qmd >}}
+
+## encrypted data {visibility="hidden"}
+
+{{< include /antianti/_encrypted-data.qmd >}}
+
+## encrypted data and signatures {visibility="hidden"}
+
+{{< include /antianti/_encrypted-and-sigs.qmd >}}
+
+## encrypted code {visibility="hidden"}
+
+{{< include /antianti/_encrypted-code.qmd >}}
+
+## case study: Cascade {visibility="hidden"}
+
+{{< include /antianti/_cascade-decrypter.qmd >}}
+
+# exercise: handling decrypter {visibility="hidden"}
+
+{{< include /antianti/_ex-handling-decrypter.qmd >}}
+
+## decrypter variations {visibility="hidden"}
+
+{{< include /antianti/_decrypter-variants.qmd >}}
+
+# metamorphic, etc. idea {visibility="hidden"}
+
+{{< include /antianti/_metamorphic-play-mouse.qmd >}}
+
+# oligomorphic viruses {visibility="hidden"}
+
+{{< include /antianti/_olig.qmd >}}
+
+## case study: W95/Memorial {visibility="hidden"}
+
+{{< include /antianti/_w95memorial.qmd >}}
+
+# polymorphic viruses {visibility="hidden"}
+
+{{< include /antianti/_poly-intro.qmd >}}
+
+## case study: 1260 {visibility="hidden"}
+
+{{< include /antianti/_1260.qmd >}}
+
+# terminology: packers {visibility="hidden"}
+
+{{< include /antianti/_packers.qmd >}}
+
+# anti-packer strategies {visibility="hidden"}
+
+## generic anti-packers {visibility="hidden"}
+
+{{< include /antianti/_packer-detect.qmd >}}
+
+# emulators {visibility="hidden"}
+
+## example: unicorn {visibility="hidden"}
+
+{{< include /re-tools/_emu.qmd >}} <!-- FIXME: more selective include -->
+
+## unipacker pseudocode {visibility="hidden"}
+
+{{< include /antianti/_unipacker-pseudo.qmd >}}
+
+## aside: instruction traces {visibility="hidden"}
+
+{{< include /antianti/_instr-traces.qmd >}}
+
+# anti-virtualization strategies {visibility="hidden"}
+
+## basic issues {visibility="hidden"}
+
+{{< include /antianti/_antivm-intro.qmd >}}
+
+## automated analysis: lack of patience? {visibility="hidden"}
+
+{{< include /antianti/_antivm-patience.qmd >}}
+
+# packer issues {visibility="hidden"}
+
+## packers and W xor X/DEP {visibility="hidden"}
+
+{{< include /antianti/_packers-and-depwx.qmd >}}
+
+# aside: future assignment {visibility="hidden"}
+
+### OBFUSCATE assignment
+
+* modifying 'password-protected' tic-tac-toe game not to be 
+<hr class="vspace" />
+* three versions: 
+   * just stripped
+   * some Tigress transformations
+   * 'encrypted' code
+
+## exercise: limitations of generic anti-packer {visibility="hidden"}
+
+{{< include /antianti/_packer-detect-limit-ex.qmd >}}
+
+## more generic mutation {visibility="hidden"}
+
+{{< include /antianti/_mutation-engine-generic.qmd >}}
+
+# metamorphic viruses {visibility="hidden"}
+
+{{< include /antianti/_meta-intro.qmd >}}
+
+## example: changing bodies {visibility="hidden"}
+
+{{< include /antianti/_meta-body-change-example.qmd >}}
+
+## case study: Evol {visibility="hidden"}
+
+{{< include /antianti/_evol.qmd >}}
+
+## handling relocation with mutation {visibility="hidden"}
+
+{{< include /antianti/_mutate-reloc.qmd >}}
+
+## fancy mutation engines {visibility="hidden"}
+
+{{< include /antianti/_fancy-mutation-engine.qmd >}}
+
+# goats and anti-goat {visibility="hidden"}
+
+{{< include /antianti/_goat.qmd >}}
+
+
+# anti-debugging {visibility="hidden"}
+
+### diversion: debuggers
+
+* we'll care about two pieces of functionality: 
+<hr class="vspace" />
+* <em>breakpoints</em>
+   * debugger gets control when certain code is reached
+* single-step
+   * debugger gets control after a single instruction runs
+
+## breaking breakpoints {visibility="hidden"}
+
+{{< include /antianti/_antidebug-breakpt-int3.qmd >}}
+
+## aside: modern breakpoints{visibility="hidden"}
+
+{{< include /antianti/_debug-modern-breakpt.qmd >}}
+
+### diversion: debuggers
+
+* we'll care about two pieces of functionality: 
+<hr class="vspace" />
+* breakpoints
+   * debugger gets control when certain code is reached
+* <em>single-step</em>
+   * debugger gets control after a single instruction runs
+
+
+## breaking single-stepping (short) {visibility="hidden"}
+
+{{< include /antianti/_antidebug-ss.qmd >}}
+
+# emulation-based obfuscation {visibility="hidden"}
+
+{{< include /antianti/_emulate-obfuscate.qmd >}}
+
+# retroviruses / direct antiantivirus {visibility="hidden"}
+
+{{< include /antianti/_retro.qmd >}}
+
+## hiding {visibility="hidden"}
+
+{{< include /antianti/_stealth.qmd >}}
+
+## chkrootkit {visibility="hidden"}
+
+{{< include /antianti/_chkrootkit.qmd >}}
+
+# backup slides {visibility="hidden"}
+
+### backup slides 
+
+## aside: disinfection {visibility="hidden"}
+
+{{< include /heur-detect/_aside-disinfect.qmd >}}
+
+## signatures and extracting encryptd code? {visibility="hidden"}
+
+{{< include /antianti/_encrypted-code-sigs-analyze.qmd >}}
+
+# backup slides {visibility="hidden"}
+
+### backup slides 
+
+
+<!-- {{< include /virus/_talk-backup.qmd >}} -->

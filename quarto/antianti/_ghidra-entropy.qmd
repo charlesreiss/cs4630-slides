@@ -1,0 +1,17 @@
+### Ghidra entropy view
+
+:::: {.columns}
+
+::: {.column}
+
+![](/antianti/ghidra-entropy-example.png){height="80%"}
+
+:::
+
+::: {.column}
+
+![](/antianti/ghidra-entropy-legend.png){height="90%"}
+
+:::
+
+::::

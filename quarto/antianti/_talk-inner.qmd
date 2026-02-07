@@ -45,6 +45,10 @@
 
 {{< include /antianti/_ex-handling-decrypter.qmd >}}
 
+## aside: Ghidra entropy view
+
+{{< include /antianti/_ghidra-entropy.qmd >}}
+
 ## decrypter variations {visibility="hidden"}
 
 {{< include /antianti/_decrypter-variants.qmd >}}

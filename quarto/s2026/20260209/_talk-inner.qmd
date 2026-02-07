@@ -1,46 +1,16 @@
 ### last time
 
 *  "packer" / "encrypted code" idea
-*  "decrypter" templates with multiple choices
-   *  idea of lots of random no-operations
 *  handling packers via virtualization/emuatlion/scanning memory
 *  malware detecting virtualization
    *  weird devices / unimplemented behavior
    *  exceeding resources in virtual enviornment
    *  only doing malicious thing rarely
+*  "decrypter" templates with multiple choices
+   *  idea of lots of random no-operations
+
 
 ### assignment Q+A
-
-## aside: instruction traces {visibility="hidden"}
-
-{{< include /antianti/_instr-traces.qmd >}}
-
-# anti-virtualization strategies {visibility="hidden"}
-
-## basic issues {visibility="hidden"}
-
-{{< include /antianti/_antivm-intro.qmd >}}
-
-## automated analysis: lack of patience? {visibility="hidden"}
-
-{{< include /antianti/_antivm-patience.qmd >}}
-
-# packer issues {visibility="hidden"}
-
-## packers and W xor X/DEP {visibility="hidden"}
-
-{{< include /antianti/_packers-and-depwx.qmd >}}
-
-# aside: future assignment {visibility="hidden"}
-
-### OBFUSCATE assignment
-
-* modifying 'password-protected' tic-tac-toe game not to be 
-<hr class="vspace" />
-* three versions: 
-   * just stripped
-   * some Tigress transformations
-   * 'encrypted' code
 
 ## exercise: limitations of generic anti-packer {visibility="hidden"}
 

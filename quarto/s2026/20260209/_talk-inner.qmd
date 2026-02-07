@@ -1,0 +1,148 @@
+### last time
+
+*  "packer" / "encrypted code" idea
+*  "decrypter" templates with multiple choices
+   *  idea of lots of random no-operations
+*  handling packers via virtualization/emuatlion/scanning memory
+*  malware detecting virtualization
+   *  weird devices / unimplemented behavior
+   *  exceeding resources in virtual enviornment
+   *  only doing malicious thing rarely
+
+### assignment Q+A
+
+## aside: instruction traces {visibility="hidden"}
+
+{{< include /antianti/_instr-traces.qmd >}}
+
+# anti-virtualization strategies {visibility="hidden"}
+
+## basic issues {visibility="hidden"}
+
+{{< include /antianti/_antivm-intro.qmd >}}
+
+## automated analysis: lack of patience? {visibility="hidden"}
+
+{{< include /antianti/_antivm-patience.qmd >}}
+
+# packer issues {visibility="hidden"}
+
+## packers and W xor X/DEP {visibility="hidden"}
+
+{{< include /antianti/_packers-and-depwx.qmd >}}
+
+# aside: future assignment {visibility="hidden"}
+
+### OBFUSCATE assignment
+
+* modifying 'password-protected' tic-tac-toe game not to be 
+<hr class="vspace" />
+* three versions: 
+   * just stripped
+   * some Tigress transformations
+   * 'encrypted' code
+
+## exercise: limitations of generic anti-packer {visibility="hidden"}
+
+{{< include /antianti/_packer-detect-limit-ex.qmd >}}
+
+## more generic mutation {visibility="hidden"}
+
+{{< include /antianti/_mutation-engine-generic.qmd >}}
+
+# metamorphic viruses {visibility="hidden"}
+
+{{< include /antianti/_meta-intro.qmd >}}
+
+## example: changing bodies {visibility="hidden"}
+
+{{< include /antianti/_meta-body-change-example.qmd >}}
+
+## case study: Evol {visibility="hidden"}
+
+{{< include /antianti/_evol.qmd >}}
+
+## handling relocation with mutation {visibility="hidden"}
+
+{{< include /antianti/_mutate-reloc.qmd >}}
+
+## fancy mutation engines {visibility="hidden"}
+
+{{< include /antianti/_fancy-mutation-engine.qmd >}}
+
+# goats and anti-goat {visibility="hidden"}
+
+{{< include /antianti/_goat.qmd >}}
+
+
+# anti-debugging {visibility="hidden"}
+
+### diversion: debuggers
+
+* we'll care about two pieces of functionality: 
+<hr class="vspace" />
+* <em>breakpoints</em>
+   * debugger gets control when certain code is reached
+* single-step
+   * debugger gets control after a single instruction runs
+
+## breaking breakpoints {visibility="hidden"}
+
+{{< include /antianti/_antidebug-breakpt-int3.qmd >}}
+
+## aside: modern breakpoints{visibility="hidden"}
+
+{{< include /antianti/_debug-modern-breakpt.qmd >}}
+
+### diversion: debuggers
+
+* we'll care about two pieces of functionality: 
+<hr class="vspace" />
+* breakpoints
+   * debugger gets control when certain code is reached
+* <em>single-step</em>
+   * debugger gets control after a single instruction runs
+
+
+## breaking single-stepping (short) {visibility="hidden"}
+
+{{< include /antianti/_antidebug-ss.qmd >}}
+
+# emulation-based obfuscation {visibility="hidden"}
+
+{{< include /antianti/_emulate-obfuscate.qmd >}}
+
+# retroviruses / direct antiantivirus {visibility="hidden"}
+
+{{< include /antianti/_retro.qmd >}}
+
+## hiding {visibility="hidden"}
+
+{{< include /antianti/_stealth.qmd >}}
+
+## chkrootkit {visibility="hidden"}
+
+{{< include /antianti/_chkrootkit.qmd >}}
+
+{{< include /command-inj/_talk-inner.qmd >}}
+
+{{< include /taint/_talk-inner.qmd >}}
+
+# backup slides {visibility="hidden"}
+
+### backup slides 
+
+## aside: disinfection {visibility="hidden"}
+
+{{< include /heur-detect/_aside-disinfect.qmd >}}
+
+## signatures and extracting encryptd code? {visibility="hidden"}
+
+{{< include /antianti/_encrypted-code-sigs-analyze.qmd >}}
+
+# backup slides {visibility="hidden"}
+
+### backup slides 
+
+
+<!-- {{< include /virus/_talk-backup.qmd >}} -->

@@ -185,6 +185,10 @@
 
 {{< include /antianti/_chkrootkit.qmd >}}
 
+{{< include /command-inj/_talk-inner.qmd >}}
+
+{{< include /taint/_talk-inner.qmd >}}
+
 # backup slides {visibility="hidden"}
 
 ### backup slides 

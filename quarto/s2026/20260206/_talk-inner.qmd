@@ -1,4 +1,16 @@
-### last time
+### last time {.smaller}
+
+*  "hooking" idea
+   *  intercepting application requests to operating system
+   *  can have "signatures" based on behavior
+   *  can check in virtual machine or real environment
+*  heuristic detection of new malware
+   *  executable format, what library calls are made, behavior
+*  obfusction to evade anaylsis
+   *  hiding flow-control
+   *  hiding strings with code that generates string
+*  started: hashing / "encrypting" code/data
+   *  include decoder to unscramble
 
 ### assignment Q+A
 
@@ -27,6 +39,10 @@
 # exercise: handling decrypter {visibility="hidden"}
 
 {{< include /antianti/_ex-handling-decrypter.qmd >}}
+
+## aside: Ghidra entropy view {visibility="hidden"}
+
+{{< include /antianti/_ghidra-entropy.qmd >}}
 
 ## decrypter variations {visibility="hidden"}
 

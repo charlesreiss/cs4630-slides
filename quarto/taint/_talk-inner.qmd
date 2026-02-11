@@ -27,6 +27,3 @@
 
 {{< include /taint/_anti-tigress.qmd >}}
 
-## taint for finding mobile leaks {visibility="hidden"}
-
-{{< include /taint/_taintdroid.qmd >}}

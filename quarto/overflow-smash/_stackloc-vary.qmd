@@ -53,7 +53,7 @@ $ env - ./stackloc.exe
 0x7fffffffed24
 ```
 
-### stack location? (take 2d)
+### stack location? (take 2d) {.longcode}
 
 ```
 $ setarch -vRL env - ./stackloc.exe

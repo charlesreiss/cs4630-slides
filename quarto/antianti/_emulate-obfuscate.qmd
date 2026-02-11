@@ -11,12 +11,13 @@
 ### example: Tigress Virtualize transform 
 
 * Tigress generates instruction set for stack-based machine 
-   * uses little stack instad of registers for most instructions
-   * same design used by, e.g., Java VM
-* instructions can pop+push from stack for temporaries
+   * opcodes for each math operation/function original code calls
+   * opcodes to copy to/from array of local variables
+* instructions can pop+push from a stack for temporaries
+   * similar to postfix calculator in usage
 
 
-### example: Tigress Virtualize transform (1)
+### example: Tigress Virtualize transform
 
 example input: 
 ```c
@@ -35,52 +36,6 @@ while (pc != -1) {
   pc = runInstruction(code[pc]);
 }
 ```
-
-### example: Tigress Virtualize transform (2)  {.smaller}
-
-
-* instruction set for example 
-
-   * call OPERAND=funcId with arguments LOCALS[1]
-   * pop t1, pop t2, push t1>t2
-   * push OPERAND
-   * push table[OPERAND] 
-      * different variants for int, string, …
-   * pop t1, LOCALS[OPERAND] = t1
-   * pop t1, if (t1) goto OPERAND
-   * return
-
-* customized for this function
-* each instruction has opcode, variable length (if operands)
-
-
-### example: Tigress Virtualize transform (3)  {.smaller}
-
-
-```c
-int example(int x) {
-    if (x > 10) {
-        printf("Yes!\n");
-    }   
-}
-```
- 
-
-* each line below one ‘‘instruction’’ 
-
-   * (actually encoded as part of array of bytes)
- 
-
-   * push OPERAND=10
-   * push table[OPERAND=…] (argument <code>x</code>)
-   * pop t1 pop t2 push t1>t2
-   * pop t1, if (t1) goto OPERAND=OUT
-   * push table[OPERAND=…] (string <code>"Yes!"</code>)
-   * pop t1, LOCALS[OPERAND=1] = t1
-   * call OPERAND=… (printf) with arguments LOCAL1
-   * OUT: …
-
-
 
 ### example: Tigress emulator
 
@@ -105,12 +60,9 @@ int example(int x) {
 
 
 * huge performance impact
-* can do analysis on new instruction set 
-
+* can do analysis on new instruction set
    * how much more difficult than working with original machine code?
-
-* instruction traces still helpful 
-
+* instruction traces still helpful
    * about as easy to get record of everything done
 
 

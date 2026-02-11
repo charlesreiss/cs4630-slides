@@ -3,15 +3,12 @@
 
 
 * ‘‘decrypting’’ a malware body gives body for ‘‘signature’’ 
-
    * ‘‘just’’ need to run decrypter
-
 * how about avoiding static signatures entirely  
-
-   * despite being self-replicating
-
+   *  despite being self-replicating
+* instructions in body are randomized
+* requires changes to copying strategy
+   *  can't just copy + "encrypt" code
 * called <em>metamorphic</em>  
-
    * versus <em>polymorphic</em> --- only change ‘‘decrypter’’
-
 

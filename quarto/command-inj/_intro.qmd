@@ -14,7 +14,7 @@ subprocess.check_call(
 * name = `'; malicious_command; /bin/true '`
 
 
-### command injection (review?)  {.smaller}
+### command injection (review?)
 
 
 ```
@@ -24,8 +24,11 @@ result = db_connection.execute(
 )
 
 ```
- <hr />
- 
+<hr />
+
+::: {style="font-size: 90%"}
 
 * name = `'; SELECT password FROM users WHERE name = 'foo`
+
+:::
 

@@ -1,12 +1,14 @@
 
 ### example: changing bodies  {.smaller}
 
+*  one idea: randomize _body_ (not decrypter!) code
+
 <!-- \lstset{language=myasm,style=smaller} -->
  <table>
 <tr><td>
 ```
 pop %edx
-mov $0x4h, %edi
+mov $0x4, %edi
 mov %ebp, %esi
 mov $0xC, %eax
 add $0x88, %edx
@@ -17,7 +19,7 @@ mov %ebx, 0x1118(%esi,%eax,4)
 </td><td>
 ```
 pop %eax
-mov $0x4h, %ebx
+mov $0x4, %ebx
 mov %ebp, %esi
 mov $0xC, %edi
 add $0x88, %eax
@@ -27,13 +29,11 @@ mov %esi, 0x1118(%esi,%eax,4)
 ```
 </td></tr>
 </table>
- 
 
-* code above: after decryption
-* <em>every instruction</em> changes
-* still has good signatures 
-
-   * with <em>alternatives</em> for each possible register selection
-
-* but harder to write/slower to match
+* challenge: can't use "fill in template" strategy
+* instead: copy-instruction routine modifies instructions
+   * this example: parses instructions, changes register fields
+* note: still has good signatures 
+   * alternatives for each possible register selection
+   * harder to write/slower to match
 

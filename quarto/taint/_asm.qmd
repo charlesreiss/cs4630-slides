@@ -1,33 +1,27 @@
 
 ### taint tracking assembly  {.smaller}
 
-
 * taint-tracking often proposed at <i>assembly</i> level
 * examples: 
 <hr class="vspace" />
 * Panda.RE (2013--??) 
-
    * along with virtual machine record+replay
-
 * Panaroma (Yin and Song, UC Berkeley, CCS '07)
 
 
-### high-level overview  {.smaller}
-
+### high-level overview 
 
 * lookup table for each register and byte of memory: 
-
    * where did this value come from?
-
-* <code>add %r9, (%r8)</code>: <br> <code>memory-taint-table[register-values[R8]] =</code> <br>   <code>register-taint-table[R9]</code>
+* `add %r9, (%r8)`: <br>
+```
+memory-taint-table[register-values[R8]] |= register-taint-table[R9]
+```
 * also similar for virtual disk, network, …
 * custom VM: all applications and the OS run with taint tracking 
-
    * tracks data moving between programs ‘‘for free’’
 
-
-
-### Panaroma special cases  {.smaller}
+### Panaroma special cases
 
 
 * <code>xor %eax, %eax</code>: special case: remove taint from %eax

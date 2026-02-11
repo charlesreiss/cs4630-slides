@@ -25,7 +25,7 @@ string:
 * [problem: after syscall --- crash!]{.fragment fragment-index=2 .custom .myem-only}
 
 
-### virus code to shell-code (2) 
+### virus code to shell-code (2)  {.longcode}
 
 <!-- \lstset{
     language=myasm,

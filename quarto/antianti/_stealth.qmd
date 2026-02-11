@@ -1,5 +1,5 @@
 
-### stealth 
+### stealth  {.mediumcode}
 
 ```c
 /* in virus: */

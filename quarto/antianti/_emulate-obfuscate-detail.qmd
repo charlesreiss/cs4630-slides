@@ -1,0 +1,47 @@
+
+
+### example: Tigress Virtualize transform (2)  {.smaller}
+
+
+* instruction set for example 
+
+   * call OPERAND=funcId with arguments LOCALS[1]
+   * pop t1, pop t2, push t1>t2
+   * push OPERAND
+   * push table[OPERAND] 
+      * different variants for int, string, …
+   * pop t1, LOCALS[OPERAND] = t1
+   * pop t1, if (t1) goto OPERAND
+   * return
+
+* customized for this function
+* each instruction has opcode, variable length (if operands)
+
+### example: Tigress Virtualize transform (3)  {.smaller}
+
+
+```c
+int example(int x) {
+    if (x > 10) {
+        printf("Yes!\n");
+    }   
+}
+```
+ 
+
+* each line below one ‘‘instruction’’ 
+
+   * (actually encoded as part of array of bytes)
+ 
+
+   * push OPERAND=10
+   * push table[OPERAND=…] (argument <code>x</code>)
+   * pop t1 pop t2 push t1>t2
+   * pop t1, if (t1) goto OPERAND=OUT
+   * push table[OPERAND=…] (string <code>"Yes!"</code>)
+   * pop t1, LOCALS[OPERAND=1] = t1
+   * call OPERAND=… (printf) with arguments LOCAL1
+   * OUT: …
+
+
+

@@ -45,7 +45,7 @@
 
 {{< include /antianti/_ex-handling-decrypter.qmd >}}
 
-## aside: Ghidra entropy view
+## aside: Ghidra entropy view {visibility="hidden"}
 
 {{< include /antianti/_ghidra-entropy.qmd >}}
 
@@ -136,7 +136,7 @@
 
 {{< include /antianti/_meta-intro.qmd >}}
 
-## example: changing bodies {visibility="hidden"}
+## example: changing bodies poorly {visibility="hidden"}
 
 {{< include /antianti/_meta-body-change-example.qmd >}}
 

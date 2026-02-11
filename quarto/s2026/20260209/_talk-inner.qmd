@@ -9,6 +9,27 @@
 *  "decrypter" templates with multiple choices
    *  idea of lots of random no-operations
 
+### quiz Q1 (1)
+
+*  idea: instead of doing call to printf, run virus code elsewhere
+*  for program to work the same, virus code needs to run printf
+<hr />
+*  printf address is in the global offset table
+*  want to read global offset table entry and call it
+*  `jmp *GOT_ENTRY`
+   *  `jmp *X(%rip)`  --- `X` needs to be selected based on where jmp is
+
+### quiz Q1 (2)
+
+*  `push $0x404018; ret` --- returns to 0x404018
+   *  tries to run function pointer as machine code
+*  `mov 0x404018, %rax; jmp *%rax`; loads memory[0x404018] into `%rax`
+
+### quiz Q4
+
+*  option 1 was grammatically poor (so dropped), but...
+*  obfuscated machine code is still fixed
+   *  can have new pattern that matches it, using only fixed string matching
 
 ### assignment Q+A
 
@@ -97,6 +118,10 @@
 {{< include /command-inj/_talk-inner.qmd >}}
 
 {{< include /taint/_talk-inner.qmd >}}
+
+{{< include /overflow-basic/_talk-inner.qmd >}}
+
+<!-- {{< include /overflow-smash/_talk-inner.qmd >}} -->
 
 # backup slides {visibility="hidden"}
 

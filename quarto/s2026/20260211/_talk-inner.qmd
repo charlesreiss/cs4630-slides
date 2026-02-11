@@ -1,0 +1,80 @@
+### last time
+
+*  mutation engines
+   *  machine code $\rightarrow$ new machine code
+   *  need to fixup addresses
+   *  table: old length $\rightarrow$ new length
+   *  use table to convert old to new address
+*  anti-debugging
+   *  breakpoints via overwriting machine code
+   *  checking that machine code hasn't changed
+      *  example: compute hash/see if it's different)
+
+### assignment Q+A
+
+
+## aside: modern breakpoints{visibility="hidden"}
+
+{{< include /antianti/_debug-modern-breakpt.qmd >}}
+
+### diversion: debuggers
+
+* we'll care about two pieces of functionality: 
+<hr class="vspace" />
+* breakpoints
+   * debugger gets control when certain code is reached
+* <em>single-step</em>
+   * debugger gets control after a single instruction runs
+
+
+## breaking single-stepping (short) {visibility="hidden"}
+
+{{< include /antianti/_antidebug-ss.qmd >}}
+
+# emulation-based obfuscation {visibility="hidden"}
+
+{{< include /antianti/_emulate-obfuscate.qmd >}}
+
+# retroviruses / direct antiantivirus {visibility="hidden"}
+
+{{< include /antianti/_retro.qmd >}}
+
+## hiding {visibility="hidden"}
+
+{{< include /antianti/_stealth.qmd >}}
+
+## chkrootkit {visibility="hidden"}
+
+{{< include /antianti/_chkrootkit.qmd >}}
+
+## exploit review?: command injection
+
+{{< include /command-inj/_talk-inner.qmd >}}
+
+## countermesasure: taint tracking
+
+{{< include /taint/_talk-inner.qmd >}}
+
+## exploit: buffer overflow
+
+{{< include /overflow-basic/_talk-inner.qmd >}}
+
+{{< include /overflow-smash/_talk-inner.qmd >}}
+
+# backup slides {visibility="hidden"}
+
+### backup slides 
+
+## aside: disinfection {visibility="hidden"}
+
+{{< include /heur-detect/_aside-disinfect.qmd >}}
+
+## signatures and extracting encryptd code? {visibility="hidden"}
+
+{{< include /antianti/_encrypted-code-sigs-analyze.qmd >}}
+
+# backup slides {visibility="hidden"}
+
+### backup slides 
+
+{{< include /antianti/_talk-backup.qmd >}}

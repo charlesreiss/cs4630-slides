@@ -1,0 +1,54 @@
+### last time
+
+*  anti-single-step
+    *  detect single-step flag; register own handler
+*  "emulation" obfuscation
+    *  convert code to use interpreter
+*  command injection
+*  taint tracking
+    *  mark inputs as "tainted"
+    *  track taintedness as value used
+    *  trigger error if tainted value passed to sensitive function
+
+### assignment Q+A
+
+
+## taint tracking as program analysis {visibility="hidden"}
+
+{{< include /taint/_taint-malware.qmd >}}
+
+## taint tracking asm / Panorama example {visibility="hidden"}
+
+{{< include /taint/_asm.qmd >}}
+
+## exercise: defeating {visibility="hidden"}
+
+{{< include /taint/_asm-defeat.qmd >}}
+
+## obfuscation to defeat taint-tracking {visibility="hidden"}
+
+{{< include /taint/_anti-tigress.qmd >}}
+
+## exploit: buffer overflow
+
+{{< include /overflow-basic/_talk-inner.qmd >}}
+
+{{< include /overflow-smash/_talk-inner.qmd >}}
+
+# backup slides {visibility="hidden"}
+
+### backup slides 
+
+## aside: disinfection {visibility="hidden"}
+
+{{< include /heur-detect/_aside-disinfect.qmd >}}
+
+## signatures and extracting encryptd code? {visibility="hidden"}
+
+{{< include /antianti/_encrypted-code-sigs-analyze.qmd >}}
+
+# backup slides {visibility="hidden"}
+
+### backup slides 
+
+{{< include /antianti/_talk-backup.qmd >}}

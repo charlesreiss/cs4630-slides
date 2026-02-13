@@ -1,5 +1,5 @@
 
-### making guessing easier (1)  {.smaller}
+### making guessing easier (1)
 
 <!-- \lstset{language=myasm,style=smaller} -->
  
@@ -7,13 +7,12 @@
 
 ::: {.column width="50%"}
  normal shellcode: <br> 
-```
+```gnuassembler
 xor %eax, %eax
 leaq command(%rip), %rbx
 /* setup "exec" system call */
 ...
 ...
-mov $11, %al
 syscall
 
 command: .ascii "/bin/sh"
@@ -24,7 +23,7 @@ command: .ascii "/bin/sh"
 
 ::: {.column width="50%"}
  easier to ‘guess’ shellcode: <br> 
-```
+```gnuassembler
 nop /* one-byte nop */
 nop
 nop
@@ -33,9 +32,11 @@ nop
 nop
 nop
 xor %eax, %eax
-lea command(%rip), %rbx
+leaq command(%rip), %rbx
 ...
 ...
+syscall
+
 command: .ascii "/bin/sh"
 
 ```

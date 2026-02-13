@@ -8,7 +8,8 @@
     moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
 } -->
  
-<pre><code>    /* Linux system call (OS request):
+```{.gnuassembler}
+    /* Linux system call (OS request):
        write(1, string, length)
      */
     leaq string(%rip), %rsi
@@ -16,13 +17,38 @@
     movl $37, %edi
     /* "request to OS" instruction */
     syscall
-    <span data-fragment-index="2" class="fragment custom myem-only">ret</span>
+    ret
 string: 
     .asciz "You have been infected with a virus!\n"
-</code></pre>
- 
+``` 
 
-* [problem: after syscall --- crash!]{.fragment fragment-index=2 .custom .myem-only}
+* problem: after syscall --- crash!
+
+### virus code to shell-code (1)
+
+<!-- \lstset{
+    language=myasm,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+} -->
+ 
+```{.gnuassembler code-line-numbers="9"}
+    /* Linux system call (OS request):
+       write(1, string, length)
+     */
+    leaq string(%rip), %rsi
+    movl $1, %eax
+    movl $37, %edi
+    /* "request to OS" instruction */
+    syscall
+    ret
+string: 
+    .asciz "You have been infected with a virus!\n"
+``` 
+
+* <em>problem: after syscall --- crash!</em>
+
 
 
 ### virus code to shell-code (2)  {.longcode}
@@ -36,7 +62,7 @@ string:
     moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
 } -->
    
-```{code-line-numbers="|9-13"}
+```{.gnuassembler code-line-numbers="|8-13"}
     /* Linux system call (OS request):
        write(1, string, length)
      */
@@ -61,7 +87,7 @@ string:
 ::: {.column .longcode width=70%}
 
 [assembly:]{.my-small}
-```
+```gnuassembler
     /* Linux system call (OS request):
        write(1, string, length)
      */

@@ -1,14 +1,8 @@
 
 ### recall: virus code (from TRICKY)
 
-<!-- \lstset{
-    language=myasm,
-    style=small,
-    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
-    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
-} -->
- 
-<pre><code>    /* Linux system call
+```gnuassembler
+    /* Linux system call
         write(1, "You have been infected with a virus!\n", 37)
      */
 virus:
@@ -20,5 +14,4 @@ virus:
     retq
 string: 
     .asciz "You have been infected with a virus!\n"
-</code></pre>
-
+```

@@ -1,6 +1,6 @@
 
-### Linux, initial stack 
+### Linux, initial stack for `./test.exe foo bar`
 
-![](/overflow-smash/texfig/linux-initial-stack.figure.svg)
+![](/overflow-smash/texfig/linux-initial-stack.figure.svg){fig-alt="Diagram of stack showing the top of the stack at 0x7ffffffff000, followed by enviornment variables (strings &quot;HOME=/home/cr4bd&quot;, &quot;PATH=/usr/bin:/bin&quot;), then command-line arguments (strings &quot;bar&quot;, &quot;foo&quot;, &quot;./text.exe&quot;), then an auxilary vector (described in 'man auxgetval', starting with AT_UID=100 in this example), then an array of pointers to env variables (starting with a NULL pointer, then pointers for HOME, PATH); then the array of pointers to arguments that make argv (a NULL pointer, a pointer to bar, to foo, and to ./test.exe), then the actual initial stack pointer."}
 
 [See also [https://lwn.net/Articles/631631/](https://lwn.net/Articles/631631/)]{.mycredit}

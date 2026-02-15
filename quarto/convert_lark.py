@@ -26,7 +26,9 @@ document: any_empty_item* (frame any_empty_item*)*
 
 frame: _BEGIN_FRAME when? optional_argument? argument? whitespace? frametitle? any_text _END_FRAME
      |  _IFNOTHELDBACK document _END_BRACE -> heldback_frames
+     |  _BEGIN_ISHELDBACK document _END_ISHELDBACK -> heldback_frames
      |  _BRACE document _END_BRACE -> scoped_document
+     |  _BEGINGROUP document _ENDGROUP -> scoped_document
      |  _BEGIN_DOCUMENT document _END_DOCUMENT -> scoped_document
 
 optional_argument: _SQUARE_BRACKET any_text _END_SQUARE_BRACKET
@@ -77,6 +79,7 @@ fontsize_group: _BRACE fontsize any_text _END_BRACE
     | fontsize_group
     | whitespace
     | columns
+    | _BEGINGROUP any_text_basic _ENDGROUP -> any_text
     | VERBATIM -> verbatim
     | INLINE_VERBATIM -> inline_verbatim
     | TIKZPICTURE -> tikzpicture
@@ -127,6 +130,8 @@ COMMENT.5: /
         \\begin\{comment\}(?s:.*?)\n\s*\\end\{comment\}
     /x
 _IFNOTHELDBACK.10: /\\iftoggle\{heldback\}\{\}\{/
+_BEGIN_ISHELDBACK.10: /\\begin\{isheldback\}/
+_END_ISHELDBACK.10: /\\end\{isheldback\}/
 _BEGIN_FRAMETITLE.10: /\\frametitle/
 _BEGIN_ITEMIZE.10: /\\begin\{itemize\}/
 _END_ITEMIZE.10: /\\end\{itemize\}/
@@ -167,6 +172,8 @@ _START_QUOTE: /`/
 _END_QUOTE: /'/
 _BEGIN_VISIBLEENV.10: /\\begin\{visibleenv\}/
 _END_VISIBLEENV.10: /\\end\{visibleenv\}/
+_BEGINGROUP.10: /\\begingroup/
+_ENDGROUP.10: /\\endgroup/
 _BEGIN_ONLYENV.10: /\\begin\{onlyenv\}/
 _END_ONLYENV.10: /\\end\{onlyenv\}/
 _BEGIN_TABULAR.10: /\\begin\{tabular\}/
@@ -175,7 +182,7 @@ _BEGIN_MINIPAGE.10: /\\begin\{minipage\}/
 _END_MINIPAGE.10: /\\end\{minipage\}/
 _BEGIN_DOCUMENT.10: /\\begin\{document\}/
 _END_DOCUMENT.10: /\\end\{document\}/
-BEGIN_GENERIC.0: /\\begin\{(?!lrbox|comment|onlyenv|minipage|tabular|itemize|Verbatim|visibleenv|frame|FragileFrame|document|tikzpicture)\w+\}/
+BEGIN_GENERIC.0: /\\begin\{(?!isheldback|lrbox|comment|onlyenv|minipage|tabular|itemize|Verbatim|visibleenv|frame|FragileFrame|document|tikzpicture)\w+\}/
 END_GENERIC.0: /\\end\{(?!lrbox|comment|onlyenv|minipage|tabular|itemize|Verbatim|visibleenv|frame|FragileFrame|document|tikzpicture)\w+\}/
 _BRACE.-10: /\{/
 _END_BRACE.-10: /\}/
@@ -301,11 +308,12 @@ SIMPLE_ESCAPED.-11: /\\[.&_$%\/#{}]/
 _NEXT_CELL.-20: /&/
 NEWLINE.-20: /\n+/
 WHITESPACE.-20: /[ \t\v]/
-ANY.-30: /[^\\{}]/
+ANY.-30: /[^\\{}$]/
 '''
 
 FIGURE_COUNT: Dict[str, int] = {}
 SEEN_TIKZ_LIBRARIES: set[str] = set()
+SEEN_GD_LIBRARIES: set[str] = set()
 
 def _title_to_filename(title: str) -> str:
     result = title.replace(' ', '-')
@@ -401,6 +409,14 @@ class RenderContext:
     def add_tikz_libraries(self, libs: list[str]):
         global SEEN_TIKZ_LIBRARIES
         SEEN_TIKZ_LIBRARIES |= set(libs)
+ 
+    def get_gd_libraries(self) -> set[str]:
+        global SEEN_GD_LIBRARIES
+        return SEEN_GD_LIBRARIES
+
+    def add_gd_libraries(self, libs: list[str]):
+        global SEEN_GD_LIBRARIES
+        SEEN_GD_LIBRARIES |= set(libs)
 
     def add_tikz_preamble(self, tikz_preamble: str):
         self.tikz_preamble += tikz_preamble
@@ -409,6 +425,7 @@ class RenderContext:
         self.tikz_begin_document += tikz_begin_document
 
     def add_lstset(self, setting: str):
+        logging.debug('add_lstset: %s', setting)
         self.lstset = self.lstset + [setting]
 
     def indented(self, markdown: str):
@@ -790,6 +807,9 @@ class _InlineCommand(_MyAstItem):
             elif command in (r'\hrule',):
                 start_arg = None
                 before, after = '<hr />', '\n'
+            elif command in (r'\hline',):
+                start_arg = None
+                before, after = '<!-- \hline -->', ''
             elif command in (r'\vspace',):
                 start_arg = None
                 if arguments[0].inner_text.startswith('-'):
@@ -893,6 +913,7 @@ class Lstinputlisting(_MyAstItem):
             result += f'\n<!-- lsting options: {self.options} -->'
         result += '\n```\n{{< include /' + str(
             output_path.relative_to(context.base_quarto_path)) + ' >}}\n```\n'
+        return result
 
 @dataclass
 class Fontsize(_MyAstItem):
@@ -1275,24 +1296,29 @@ class Visibleenv(_MyAstItem):
     def render(self, context: RenderContext) -> str:
         when = self.when
         if when.needs_fragment:
-            if when.is_multiple:
-                raise NotImplemented
-            elif when.is_after_fragment:
+            before, after = '', ''
+            if when.is_after_fragment:
                 number = str(when.after_index)
+                before += '\n<div class="fragment fade-in" data-fragment-index=' + number + ' >'
+                after += '\n</div>'
                 result = context.indented(
                     '\n<div class="fragment fade-in" data-fragment-index=' + number + ' >\n'
                 )
-            elif when.is_before_fragment:
+            if when.is_before_fragment:
+                assert when.before_index is not None
                 number_plus_1 = str(when.before_index + 1)
-                result = context.indented(
-                    '\n<div class="fragment fade-out" data-fragment-index=' + number_plus_1 + ' >\n')
-            else:
-                number = str(when.middle_indices[0])
-                result = context.indented(
-                    '\n<div class="fragment fade-in-and out" data-fragment-index=' + number +' >\n'
-                )
+                before += context.indented('\n<div class="fragment fade-out" data-fragment-index=' + number_plus_1 + ' >')
+                after += context.indented('\n</div>')
+            for number_int in when.middle_indices:
+                number = str(number_int)
+                before += context.indented('\n<div class="fragment fade-in-and out" data-fragment-index=' + number +' >')
+                after += context.indented('\n</div>')
+            if before != '':
+                before += '\n'
+                after += '\n'
+            result = before
             result += self.contents.render(context)
-            result += '\n</div>'
+            result += after
             return result
         else:
             return self.contents.render(context)
@@ -1352,11 +1378,16 @@ class Tikzpicture(_MyAstItem):
         if real_figure is not None:
             return real_figure.render(context)
         max_slide_number = 1
-        for m in re.finditer(r'<(?P<n1>\d+)?-?(?P<n2>\d+)?>', self.contents.value):
+        tikz_code = self.contents.value
+        tikz_code = tikz_code.replace('|handout:0>','>')
+        tikz_code = tikz_code.replace('|handout:1>','>')
+        tikz_code = tikz_code.replace('|handout:2>','>')
+        tikz_code = tikz_code.replace('|handout:3>','>')
+        tikz_code = tikz_code.replace('<all:','<')
+        for m in re.finditer(r'<(?P<n1>\d+)?-?(?P<n2>\d+)?>', tikz_code):
             for key in ('n1', 'n2'):
                 if m.group(key):
                     max_slide_number = max(max_slide_number, int(m.group(key)))
-        tikz_code = self.contents.value
         if 'pic cs:' in tikz_code:
             return '<!--\n```\n' + self.contents.value + '\n```\n-->\n'
         tikz_code = tikz_code.replace(r'\paperwidth', r'\mypaperwidth')
@@ -1405,6 +1436,10 @@ class Tikzpicture(_MyAstItem):
             out_fh.write(r'\documentclass[tikz]{standalone}' + '\n')
             out_fh.write(r'\input{common/tikzBase}' + '\n')
             out_fh.write('\\usetikzlibrary{' + (','.join(list(context.get_tikz_libraries()))) + '}\n')
+            if len(context.get_gd_libraries()) > 0:
+                out_fh.write('\\usegdlibrary{' + (','.join(list(context.get_gd_libraries()))) + '}\n')
+            for lstset in context.lstset:
+                out_fh.write('\\lstset{' + lstset + '}\n')
             out_fh.write(context.tikz_preamble)
             out_fh.write(r'''\begin{document}''' + '\n')
             out_fh.write(context.tikz_begin_document)
@@ -1744,6 +1779,9 @@ class OutsideCommand(_MyAstItem):
         if self.command == r'\usetikzlibrary':
             context.add_tikz_libraries(self.arguments[0].inner_text.split(','))
             return ''
+        elif self.command == r'\usegdlibrary':
+            context.add_gd_libraries(self.arguments[0].inner_text.split(','))
+            return ''
         elif self.command == r'\input':
             logging.debug('input %s', self.arguments)
             filename = self.arguments[0].inner_text
@@ -1868,6 +1906,7 @@ class ToAST(lark.Transformer):
         return _RawString(args, args)
 
     def INLINEMATH(self, args):
+        logging.debug('INLINEMATH on %s', args)
         return _RawString(args, args)
 
     def UMLAT(self, args):

@@ -175,8 +175,8 @@ _BEGIN_MINIPAGE.10: /\\begin\{minipage\}/
 _END_MINIPAGE.10: /\\end\{minipage\}/
 _BEGIN_DOCUMENT.10: /\\begin\{document\}/
 _END_DOCUMENT.10: /\\end\{document\}/
-BEGIN_GENERIC.0: /\\begin\{(?!lrbox|comment|onlyenv|minipage|tabular|itemize|Verbatim|visibleenv|frame|FragileFrame|document)\w+\}/
-END_GENERIC.0: /\\end\{(?!lrbox|comment|onlyenv|minipage|tabular|itemize|Verbatim|visibleenv|frame|FragileFrame|document)\w+\}/
+BEGIN_GENERIC.0: /\\begin\{(?!lrbox|comment|onlyenv|minipage|tabular|itemize|Verbatim|visibleenv|frame|FragileFrame|document|tikzpicture)\w+\}/
+END_GENERIC.0: /\\end\{(?!lrbox|comment|onlyenv|minipage|tabular|itemize|Verbatim|visibleenv|frame|FragileFrame|document|tikzpicture)\w+\}/
 _BRACE.-10: /\{/
 _END_BRACE.-10: /\}/
 _SQUARE_BRACKET: /\[/
@@ -186,7 +186,7 @@ SIMPLE_COMMAND.-10: /\\(?!begin|end|fontsize|_|lstset|tikzset|newsavebox|savebox
 LSTINPUTLISTING.-10: /\\lstinputlisting
         (?:\[
             (?:
-                [^{}]+
+                [^{}\]]
                 |
                 \{
                     (?:
@@ -194,11 +194,11 @@ LSTINPUTLISTING.-10: /\\lstinputlisting
                             (?:
                                 \{[^}]*\}
                             |
-                                [^{}]+
+                                [^{}]
                             )*
                         \}
                     |
-                        [^{}]+
+                        [^{}]
                     )*
                 \}
             )*
@@ -857,7 +857,7 @@ class Lstinputlisting(_MyAstItem):
         m = re.match(r'''\\lstinputlisting
                 (?:\[(?P<options>
                     (?:
-                        [^{}]+
+                        [^{}\]]
                         |
                         \{
                             (?:
@@ -878,7 +878,7 @@ class Lstinputlisting(_MyAstItem):
             ''', str(raw_input), re.X)
         assert m is not None, raw_input
         self.options = m.group('options')
-        self.filename = m.group('filename')
+        self.file_name = m.group('filename')
 
     @property
     def estimated_lines(self) -> int:

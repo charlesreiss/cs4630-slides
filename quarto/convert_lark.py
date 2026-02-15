@@ -135,7 +135,7 @@ _END_ISHELDBACK.10: /\\end\{isheldback\}/
 _BEGIN_FRAMETITLE.10: /\\frametitle/
 _BEGIN_ITEMIZE.10: /\\begin\{itemize\}/
 _END_ITEMIZE.10: /\\end\{itemize\}/
-_ITEM.10: /\\item/
+_ITEM.10: /\\item(?:\[\])?/
 _FONTSIZE.10: /\\fontsize/
 WHEN: /<[^>]+>/
 VERBATIM.10: /\\begin\{(?:Verbatim|lstlisting)\}\s*(?:\[[^]]+\])?
@@ -764,6 +764,23 @@ class _InlineCommand(_MyAstItem):
                 for index in when.middle_indices:
                     before += '['
                     after += ']{.fragment fragment-index=' + str(index) + ' .custom .myem-only}'
+            elif command in (r'\only',):
+                before = ''
+                after = ''
+                if when.is_after_fragment:
+                    assert not when.is_multiple
+                    before += '['
+                    after += ']{.fragment fragment-index=' + str(when.after_index) + '}'
+                elif when.is_before_fragment:
+                    assert not when.is_multiple
+                    before += '['
+                    after += ']{.fragment fragment-index=' + str(when.before_index+1) + 'until}'
+                else:
+                    start = min(when.middle_indices)
+                    end = max(when.middle_indices)
+                    before += '[['
+                    after += ']{.fragment fragment-index=' + str(start) + ' .fade-in}'
+                    after += ']{.fragment fragment-index=' + str(end+1) + ' .fade-out}'
             else:
                 when_str = ''
                 if when.raw_when is not None:
@@ -810,6 +827,9 @@ class _InlineCommand(_MyAstItem):
             elif command in (r'\hline',):
                 start_arg = None
                 before, after = '<!-- \hline -->', ''
+            elif command in (r'\textbackslash',):
+                start_arg = None
+                before, after = '\\', ''
             elif command in (r'\vspace',):
                 start_arg = None
                 if arguments[0].inner_text.startswith('-'):

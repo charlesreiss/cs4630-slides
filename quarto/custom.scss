@@ -234,6 +234,14 @@ i {
     margin: .5rem;
 }
 
+div.myoverbox.highright {
+    bottom: auto;
+    top: 5%;
+    left: auto;
+    right: 5%;
+    transform: translate(0%, 0%);
+}
+
 @media print {
     .slide-chalkboard-buttons {
         display: none ! important

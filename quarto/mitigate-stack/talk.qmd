@@ -1,0 +1,10 @@
+---
+title: "mitigate-stack"
+
+---
+
+{{< include ../mitigate-stack/_talk-inner.qmd >}}
+
+# Backup slides
+
+{{< include ../mitigate-stack/_talk-backup.qmd >}}

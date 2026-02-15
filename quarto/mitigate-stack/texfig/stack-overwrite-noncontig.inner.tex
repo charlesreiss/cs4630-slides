@@ -1,0 +1,26 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+\begin{pgfonlayer}{fg}
+\coordinate (stack tl) at ([xshift=-4cm,yshift=-1cm]current page.north east);
+\coordinate (stack tr) at ([xshift=-.5cm,yshift=-1cm]current page.north east);
+\draw[very thick] (stack tl) -- ++(0, -6) coordinate (stack bl);
+\draw[very thick] (stack tr) -- ++(0, -6) coordinate (stack br);
+\draw[very thick,decorate,decoration={zigzag}] (stack tl) -- (stack tr);
+\draw[very thick,decorate,decoration={zigzag}] (stack bl) -- (stack br);
+\end{pgfonlayer}
+\path[draw,thick,fill=yellow!20] (stack tl) ++(0cm, -1cm) coordinate (ra tl) rectangle ++(3.5, -.5) coordinate (ra br)
+    node [midway] {return address};
+\coordinate (ra bl) at (ra tl |- ra br);
+\path[draw,thick,fill=red!20] (ra bl) rectangle ++(3.5, -.5) coordinate (can br)
+    node [midway] {stack canary};
+\coordinate (can bl) at (ra tl |- can br);
+\foreach \x/\idx in {0/7, 1/6, 2/5, 3/4, 4/3, 5/2, 6/1, 7/0} {
+    \path[draw,thick,fill=green!20,align=center,font=\small] (can bl) ++ (0, -\x * 0.25)
+        rectangle ++(3.5, -0.25)  node[midway,font=\tt\fontsize{9}{10}\selectfont]{scores[\idx]};
+}
+\path[fill=violet!30,opacity=0.5] (can bl) ++ (0, -8 * 0.25) rectangle ++(3.5, -1.5) 
+    node[midway,font=\fontsize{9}{10}\selectfont,align=center] {stack grows here for \\ calls to cin/cout \\ methods};
+\end{scope}
+\end{tikzpicture}

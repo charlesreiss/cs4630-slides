@@ -1,0 +1,19 @@
+
+### preventing shadow stack writes?  {.smaller}
+
+
+* ARM64 scheme: prevent writes if 
+
+   * shadow stack pointer is never leaked (dedicated register)
+   * shadow stack random location can't be guessed (or queried otherwise)
+
+* Intel CET: prevent writes unless 
+
+   * OS (priviliged/kernel mode) instructions to setup shadow stack used
+ 
+<hr class="vspace" />
+* can we prevent writes without relying on avoiding info leaks… <br> and without special hardware support? 
+
+   * well, yes, but …
+
+

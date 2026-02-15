@@ -1,0 +1,177 @@
+
+### compiler generated code  {.smaller}
+
+:::: {.columns}
+
+::: {.column width=65%}
+
+```{.gnuassembler code-line-numbers=true}
+    pushq %rbx
+    sub $0x20,%rsp
+/* copy value from thread-local storage */
+    mov %fs:40,%rax
+/* onto the stack */
+    mov %rax,0x18(%rsp)
+/* clear register holding value */
+    xor %eax, %eax
+    ...
+    ...
+/* copy value back from stack */
+    mov 0x18(%rsp),%rax
+/* xor to compare */
+    xor %fs:40,%rax
+/* if result non-zero, do not return */
+    jne call_stack_chk_fail
+    ret
+call_stack_chk_fail:
+    call __stack_chk_fail
+```
+
+:::
+
+::: {.column width=33%}
+
+![](/mitigate-stack/texfig/stack-can-ex.figure.svg){fig-alt="stack layout: return address, followed by stack canary, followed by function's arrays and other temporaries" width=100%}
+
+:::
+
+::::
+
+### compiler generated code  {.smaller}
+
+:::: {.columns}
+
+::: {.column width=65%}
+
+```{.gnuassembler code-line-numbers="3-4,13-14"}
+    pushq %rbx
+    sub $0x20,%rsp
+/* copy value from thread-local storage */
+    mov %fs:40,%rax
+/* onto the stack */
+    mov %rax,0x18(%rsp)
+/* clear register holding value */
+    xor %eax, %eax
+    ...
+    ...
+/* copy value back from stack */
+    mov 0x18(%rsp),%rax
+/* xor to compare */
+    xor %fs:40,%rax
+/* if result non-zero, do not return */
+    jne call_stack_chk_fail
+    ret
+call_stack_chk_fail:
+    call __stack_chk_fail
+```
+
+:::
+
+::: {.column width=33%}
+
+![](/mitigate-stack/texfig/stack-can-ex.figure.svg){fig-alt="stack layout: return address, followed by stack canary, followed by function's arrays and other temporaries" width=100%}
+
+:::
+
+::::
+
+::: {.myoverbox .right}
+
+`%fs:40` loaded with "canary" value <br />
+setup at program start
+
+:::
+
+
+### compiler generated code  {.smaller}
+
+:::: {.columns}
+
+::: {.column width=65%}
+
+```{.gnuassembler code-line-numbers="5-6,11-12"}
+    pushq %rbx
+    sub $0x20,%rsp
+/* copy value from thread-local storage */
+    mov %fs:40,%rax
+/* onto the stack */
+    mov %rax,0x18(%rsp)
+/* clear register holding value */
+    xor %eax, %eax
+    ...
+    ...
+/* copy value back from stack */
+    mov 0x18(%rsp),%rax
+/* xor to compare */
+    xor %fs:40,%rax
+/* if result non-zero, do not return */
+    jne call_stack_chk_fail
+    ret
+call_stack_chk_fail:
+    call __stack_chk_fail
+```
+
+:::
+
+::: {.column width=33%}
+
+![](/mitigate-stack/texfig/stack-can-ex.figure.svg){fig-alt="stack layout: return address, followed by stack canary, followed by function's arrays and other temporaries" width=100%}
+
+:::
+
+::::
+
+::: {.myoverbox .right}
+
+value copied to stack just below return address
+
+:::
+
+
+
+### compiler generated code  {.smaller}
+
+:::: {.columns}
+
+::: {.column width=65%}
+
+```{.gnuassembler code-line-numbers="7-8,13-14"}
+    pushq %rbx
+    sub $0x20,%rsp
+/* copy value from thread-local storage */
+    mov %fs:40,%rax
+/* onto the stack */
+    mov %rax,0x18(%rsp)
+/* clear register holding value */
+    xor %eax, %eax
+    ...
+    ...
+/* copy value back from stack */
+    mov 0x18(%rsp),%rax
+/* xor to compare */
+    xor %fs:40,%rax
+/* if result non-zero, do not return */
+    jne call_stack_chk_fail
+    ret
+call_stack_chk_fail:
+    call __stack_chk_fail
+```
+
+:::
+
+::: {.column width=33%}
+
+![](/mitigate-stack/texfig/stack-can-ex.figure.svg){fig-alt="stack layout: return address, followed by stack canary, followed by function's arrays and other temporaries" width=100%}
+
+:::
+
+::::
+
+
+::: {.myoverbox .right}
+
+trying to avoid info disclosure: <br />
+get canary value out of %rax <br />
+as soon as possible
+
+:::

@@ -1,0 +1,12 @@
+
+### stack canary 
+
+
+::: {.r-stack .my-full}
+![](/mitigate-stack/texfig/stack-can-pic.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/mitigate-stack/texfig/stack-can-pic.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+
+:::
+

@@ -1,0 +1,19 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+\coordinate (top) at ([xshift=-5cm,yshift=-2.5cm]current page.north east);
+\draw[very thick] (top) rectangle ++(4cm, -7cm);
+\draw[thick,pattern=north west lines] (top) ++(0cm, -1cm) rectangle ++(4cm, -2cm) node[yshift=-0.5cm,midway,fill=white] {shadow stack};
+\draw[thick,pattern=north west lines] (top) ++(0cm, -4cm) rectangle ++(4cm, -2cm) node[yshift=-0.5cm,midway,fill=white] {normal stack};
+\draw[thick,fill=blue!20] (top) ++(0cm, -1.4cm) rectangle  ++(4cm, -0.1cm) coordinate (after shadow ra);
+\draw[thick,fill=blue!20] (top) ++(0cm, -4.4cm) rectangle  ++(4cm, -0.1cm) coordinate (after ra);
+\draw[thick,fill=blue!20] (top) ++(0cm, -1.1cm) rectangle  ++(4cm, -0.1cm);
+\draw[thick,fill=blue!20] (top) ++(0cm, -4.1cm) rectangle  ++(4cm, -0.1cm);
+\draw[thick,fill=orange!20] (top) ++(0cm, -4.2cm) rectangle  ++(4cm, -0.2cm);
+\draw[thick,fill=orange!20] (top) ++(0cm, -4cm) rectangle  ++(4cm, -0.1cm);
+\node[anchor=north,font=\small,fill=white] at ([xshift=-2cm]after shadow ra) {shadow RA};
+\node[anchor=north,font=\small,fill=white] at ([xshift=-2cm]after ra) {return addr};
+\path[draw,very thick,-Latex] (after ra) -- ++(.25cm,0cm) |- (after shadow ra);
+\end{scope}
+\end{tikzpicture}

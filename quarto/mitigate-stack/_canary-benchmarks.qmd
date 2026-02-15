@@ -1,0 +1,6 @@
+
+### some early stack canary benchmarks 
+
+[ from Chiueh and Hsu, ‘‘RAD: A Compile-Time Solution to Buffer Overflow Attacks’’ (2001)]{.my-small} 
+![](/mitigate-stack/rad-results){}
+

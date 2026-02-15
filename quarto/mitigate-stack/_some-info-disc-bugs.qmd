@@ -1,0 +1,116 @@
+
+### information disclosure (1a)  {.smaller}
+
+```c
+void vulnerable() {
+    int value;
+    for (;;) {
+        command = ReadInput();
+        if (command == "set") {
+            value = ReadIntInput();
+        } else if (command == "get") {
+            printf("%d\n", value);
+        } else if ...
+    }
+}
+```
+
+* ‘‘get’’ command: can read <em>uninitialized value</em>
+* example: when I compiled this, <code>value</code> was stored on the stack
+
+
+### information disclosure (1b)  {.smaller}
+
+:::: {.columns}
+
+::: {.column}
+
+```c
+void vulnerable() {
+    int value;
+    ...
+        } else if (command == "get") {
+            printf("%d\n", value);
+        }
+    ...
+}
+void leak() {
+    int secrets[] = { 
+        12345678, 23456789, 34567890,
+        45678901, 56789012, 67890123,
+    };  
+    do_something_with(secrets);
+}
+int main() {leak(); vulnerable();}
+```
+
+:::
+
+::: {.column}
+
+running this program (input in **bold**):
+
+::: {.tightbox style="border: 2px solid black"}
+<code>**get**</code><br />
+<code>67890123</code>
+:::
+
+:::
+
+::::
+
+
+
+### information disclosure (2)  {.smaller}
+
+<!-- \lstset{
+    language=C,
+    style=smaller
+} -->
+ 
+```c
+void process() {
+    char buffer[8] = "\0\0\0\0\0\0\0\0";
+    char c = ' ';
+    for (int i = 0; c != '\n' && i < 8; ++i) {
+        c = getchar();
+        buffer[i] = c;
+    }
+    printf("You input %s\n", buffer);
+}
+
+```
+ 
+
+* input `aaaaaaaa`
+* output `You input aaaaaaaa`<em>whatever was on stack</em>
+
+
+### information disclosure (3)  {.smaller}
+
+<!-- \lstset{
+    language=C,
+    style=smaller,
+} -->
+ 
+```
+struct foo {
+    char buffer[8];
+    long *numbers;
+};
+
+void process(struct foo* thing) {
+    ...
+    scanf("%s", thing->buffer);
+    ...
+    printf("first number: %ld\n", thing->numbers[0]);
+}
+
+```
+ 
+
+* input: <code>aaaaaaaa</code><i>(address of canary)</i>  
+
+   * address on stack <i>or</i> where canary is read from in thread-local storage
+
+

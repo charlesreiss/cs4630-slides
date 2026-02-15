@@ -1,0 +1,8 @@
+
+## can we prevent writes now? {visibility="hidden"}
+
+{{< include /mitigate-stack/_prevent-writes-now.qmd >}}
+
+## exercise: shadow stacks stop {visibility="hidden"}
+
+{{< include /mitigate-stack/_shadow-stacks-stop-ex.qmd >}}

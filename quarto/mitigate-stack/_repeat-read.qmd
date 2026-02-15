@@ -1,0 +1,14 @@
+
+### read gadgets {.smaller}
+
+* so far: getting "lucky" with accidentally disclosed values
+* ... but often have control
+<hr class="vspace" />
+* sometimes find "read gadgets"
+   * example: buffer overflow into pointer used for read
+* often reusable (e.g. input in loop in server)
+* can find value with multiple steps 
+   * read global pointer that points in middle of array on stack, then
+   * then read that pointer + 8, pointer + 16, etc. until finding stack canary
+* can leak 8+ bytes with repeated 1-byte leak
+

@@ -1,0 +1,19 @@
+\begin{tikzpicture}
+
+\begin{pgfonlayer}{fg}
+    \coordinate (stack tl) at (0, 0);
+    \coordinate (stack tr) at (3.5, 0);
+    \draw[very thick] (stack tl) -- ++(0, -5) coordinate (stack bl);
+    \draw[very thick] (stack tr) -- ++(0, -5) coordinate (stack br);
+    \draw[very thick,decorate,decoration={zigzag}] (stack tl) -- (stack tr);
+    \draw[very thick,decorate,decoration={zigzag}] (stack bl) -- (stack br);
+\end{pgfonlayer}
+\path[draw,thick,fill=yellow!20] (stack tl) ++(0cm, -1cm) coordinate (ra tl) rectangle ++(3.5, -.5) coordinate (ra br)
+    node [midway] {return address};
+\coordinate (ra bl) at (ra tl |- ra br);
+\path[draw,thick,fill=red!20] (ra bl) rectangle ++(3.5, -.5) coordinate (can br)
+    node [midway] {stack canary};
+\coordinate (can bl) at (ra tl |- can br);
+\path[draw,thick,fill=green!20,align=center,font=\small] (can bl) rectangle ++(3.5, -2) 
+    node [midway] {function's \\ arrays \\ and other \\ temporaries};
+\end{tikzpicture}

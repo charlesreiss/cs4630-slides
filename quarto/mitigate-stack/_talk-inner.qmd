@@ -1,0 +1,97 @@
+
+# stack canaries {visibility="hidden"}
+
+## in code {visibility="hidden"}
+
+{{< include /mitigate-stack/_stack-can-ex.qmd >}}
+
+## general operation {visibility="hidden"}
+
+{{< include /mitigate-stack/_stack-can-pic.qmd >}}
+
+## requirements and how they can fail to be met {visibility="hidden"}
+
+### stack canary hopes 
+
+* overwrite return address $\implies$ overwrite canary
+* canary is secret
+
+## how glibc generates canaries {visibility="hidden"}
+
+{{< include /mitigate-stack/_gcc-canary-gen.qmd >}}
+
+## GCC and canaries {visibility="hidden"}
+
+{{< include /mitigate-stack/_gcc-canary-opts.qmd >}}
+
+## canary costs {visibility="hidden"}
+
+{{< include /mitigate-stack/_canary-overhead.qmd >}}
+
+## overall pros/cons {visibility="hidden"}
+
+{{< include /mitigate-stack/_canary-pros-cons.qmd >}}
+
+## stack canary summary {visibility="hidden"}
+
+{{< include /mitigate-stack/_canary-summary.qmd >}}
+
+## noncontiguous overwrites {visibility="hidden"}
+
+### stack canary hopes 
+
+* <em>overwrite return address $\implies$ overwrite canary</em>
+* canary is secret
+
+{{< include /mitigate-stack/_stack-overwrite-noncontig.qmd >}}
+
+{{< include /mitigate-stack/_stack-overwrite-noncontig-exer.qmd >}}
+
+## information disclosure {visibility="hidden"}
+
+### stack canary hopes 
+
+* overwrite return address $\implies$ overwrite canary
+* <em>canary is secret</em>
+
+## examples{visibility="hidden"}
+
+{{< include /mitigate-stack/_some-info-disc-bugs.qmd >}}
+
+
+### recall: compiler register clearing
+
+*  compiler clearing out registers of stack canary
+    *  prevents leaks from reuse of register for variable
+    *  or register being pushed to stack or similar
+*  stack canary stored in separate memory regoin
+    *  won't find next to global variable or similar
+    *  ... but it's still next to stack arrays
+
+## exercise{visibility="hidden"}
+
+{{< include /mitigate-stack/_info-disc-stack-addr-exer.qmd >}}
+
+## more advanced info disclosure {visibility="hidden"}
+
+{{< include /mitigate-stack/_repeat-read.qmd >}} <!-- FIXME example -->
+
+# canary efficiency {visibility="hidden"}
+
+{{< include /mitigate-stack/_canary-benchmarks.qmd >}}
+
+# shadow stacks {visibility="hidden"}
+
+{{< include /mitigate-stack/_shadow-stack.qmd >}}
+
+## Intel's hardware support? {visibility="hidden"}
+
+{{< include /mitigate-stack/_shadow-stack-cet.qmd >}}
+
+## exceptions, setjmp, etc. {visibility="hidden"}
+
+{{< include /mitigate-stack/_shadow-stack-except.qmd >}}
+
+## exceptions and CET {visibility="hidden"}
+
+{{< include /mitigate-stack/_shadow-stack-except-cet.qmd >}}

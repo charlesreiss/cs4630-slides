@@ -1,0 +1,85 @@
+
+### automatic shadow stacks?  {.smaller}
+
+
+* if we change how CALL/RET works…
+* … maybe we can add shadow stack support to existing programs? 
+
+   * either with hardware support, or
+   * in software with emulation techniques?
+ 
+<hr class="vspace" />
+* well, there's a problem…
+
+
+### the problem in C++  {.smaller}
+
+
+```
+void Foo() {
+    try {
+        ... Bar() ...
+    } except (std::runtime_error &error) {
+        ...
+    }
+}
+
+void Bar() {
+    ... Quux() ...
+}
+void Quux() {
+    ...
+    throw std::runtime_error("...");
+    ...
+}
+
+```
+
+
+### the problem in C  {.smaller}
+
+
+```
+jmp_buf env;
+const char *error;
+void Foo() {
+    if (0 == setjmp(env)) {
+        Bar();
+    } else {
+        ...
+    }
+}
+
+void Bar() {
+    ... Quux() ...
+}
+void Quux() {
+    ...
+    error = "...";
+    longjmp(env, 1);
+    ...
+}
+
+```
+
+
+### shadow stacks and non-lcoal returns 
+
+
+* need to modify these functions to support shadow stacks, it seems?
+* violates idea of hardware extension that modifies CALL/RET operation
+
+
+### one way: dealing with non-local returns  {.smaller}
+
+
+
+* exceptions and setjmp/longjmp deliberately skip return calls
+* one solution: ‘‘direct’’ shadow stack
+* fixed (possibly secret) offset from normal stack
+* shadow stack only stores return addreses 
+
+   * space in between return addresses left as nulls
+
+ ![](/mitigate-stack/texfig/shadow-stack-except-one-way-dealing-with-non-local-returns.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+

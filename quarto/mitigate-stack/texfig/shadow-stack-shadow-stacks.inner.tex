@@ -1,0 +1,24 @@
+\begin{tikzpicture}
+    \tikzset{
+        mainSt/.style={fill=blue!20},
+        otherSt/.style={fill=yellow!20},
+        every node/.style={font=\small,align=center},
+    }
+    \draw[stackBox,mainSt] (0, 0) rectangle (5, -6);
+    \node[anchor=south] at (2.5, 0) { main stack @ \\ \texttt{0x7 0000 0000}};
+    \begin{scope}[yshift=-.25cm]
+    \draw[onStack] (0, 0) rectangle (5, -1.5) node[midway] {local variables for \texttt{foo}};
+    \draw[onStack] (0, -1.5) rectangle (5, -2) node[midway] {arguments for \texttt{bar}};
+    \draw[onStack] (0, -2) rectangle (5, -3.5) node[midway] {local variables for \texttt{bar}};
+    \draw[onStack] (0, -3.5) rectangle (5, -4.0) node[midway] {arguments for \texttt{baz}};
+    \draw[red,very thick,Latex-] (5.25, -4.0) -- ++(.5, 0) node[right] {stack pointer};
+    \end{scope}
+    \node[anchor=south] at (9, 0) { `shadow' stack @ \\ \texttt{0x8 0000 0000}};
+    \draw[stackBox,otherSt] (6.5, 0) rectangle (11.5, -3);
+    \begin{scope}[yshift=-.25cm,xshift=6.5cm]
+    \draw[onStack] (0, 0) rectangle (5, -0.5) node[midway] {return address for \texttt{foo}};
+    \draw[onStack] (0, -0.5) rectangle (5, -1) node[midway] {return address for \texttt{bar}};
+    \draw[onStack] (0, -1) rectangle (5, -1.5) node[midway] {return address for \texttt{baz}};
+    \draw[red,very thick,Latex-] (5.25, -1.5) -- ++(.5, 0) node[right] {shadow \\stack pointer};
+    \end{scope}
+    \end{tikzpicture}

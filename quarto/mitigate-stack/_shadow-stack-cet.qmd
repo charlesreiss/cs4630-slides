@@ -1,0 +1,17 @@
+
+### Intel CET shadow stacks  {.smaller}
+
+
+* recent Intel processor extension adds shadow stacks 
+
+   * ‘‘Control-flow Enforcement Technology’’
+ 
+<hr class="vspace" />
+* new shadow stack pointer
+* CALL/RET: push/pop from BOTH stacks
+* shadow stack also protected from writes by hardware + OS 
+
+   * cannot be written through normal instructions
+   * modification to page table structures
+
+

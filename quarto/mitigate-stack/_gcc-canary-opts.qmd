@@ -1,0 +1,18 @@
+
+### stack canaries implementation  {.smaller}
+
+
+* ‘‘StackGuard’’ --- 1998 paper proposing strategy
+* GCC: command-line options 
+
+   * <code>-fstack-protector</code>
+   * <code>-fstack-protector-strong</code>
+   * <code>-fstack-protector-all</code>
+   * one of these often default
+   * three differ in how many functions are ‘protected’
+
+* Microsoft C/C++ compiler: <code>/GS</code>  
+
+   * on by default
+
+

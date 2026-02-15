@@ -1,0 +1,16 @@
+
+### good choices of canary  {.smaller}
+
+
+* <em>random</em> --- guessing should not be practical 
+   * not always achieved--- sometimes static or only $2^{15}$ possiblities
+* GNU libc: canary contains random data and:
+<hr class="vspace" />
+* leading `\0` (string terminator)
+   * printf with `%s` won't print it
+   * copying a C-style string won't write it
+* a newline 
+   * read line functions can't input it
+* `\xFF`
+   * hard to input?
+

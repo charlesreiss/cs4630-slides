@@ -1,0 +1,19 @@
+
+### stack canary overheads  {.smaller}
+
+
+* less than 1% runtime if added to ‘‘risky’’ functions 
+
+   * functions with character arrays, etc.
+
+* large overhead if added to all functions 
+
+   * StackGuard paper: 5--20%?
+
+* similar space overheads 
+<hr class="vspace" />
+* (for typical applications) 
+
+   * could be much worse: tons of ‘risky’ function calls
+
+

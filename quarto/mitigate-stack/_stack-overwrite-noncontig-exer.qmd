@@ -1,0 +1,53 @@
+
+### exercise: non-contiguous overwrites  {.smaller}
+
+:::: {.columns}
+
+::: {.column width=65%}
+
+```c
+void vulnerable() {
+  int scores[8]; bool done = false;
+  while (!done) {
+    printf("Edit which score? (0 to 7) ");
+    int i;
+    scanf("%d\n", &i);
+    /* Oops!
+       sizeof(scores) is 4 * sizeof(int) */
+    if (i < 0 || i >= sizeof(scores))
+      continue;
+    printf("Set to what value? ");
+    scanf("%d", &scores[i]);
+    ...
+  }
+  ...
+}
+```
+
+<em>to set return address to `0x123456789`, set what scores to what values?</em>
+
+:::
+
+::: {.column width=33%}
+
+![](/mitigate-stack/texfig/stackNonContigEx.figure.svg){width=80%}
+
+:::
+
+::::
+
+
+
+
+###  exercise solution
+
+<table>
+<tr><td><code>0x123456789</code> = </td></tr>
+<tr><td><code>0x0000 0001 2345 6789</code> as little-endian bytes =</td></tr>
+<tr><td><code>89 67 45 23 01 00 00 00</code></td></tr>
+<tr><td><code>[89 67 45 23] [01 00 00 00]</code></td></tr>
+<tr><td><code>0x2345678 0x1</code></td></tr>
+</table>
+
+*  set score 8 to 36984440 (`0x2345678`), score 9 to 1
+

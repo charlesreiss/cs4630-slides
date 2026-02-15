@@ -1,0 +1,14 @@
+
+### stack canary summary  {.smaller}
+
+
+* stack canary --- simplest of many <em>mitigations</em>
+* key idea: detect corruption of return address
+* assumption: if return address changed, so is adjacent token
+* assumption: attacker can't learn true value of token 
+
+   * often possible with memory bug
+ 
+<hr class="vspace" />
+* later: workarounds to break these assumptions
+

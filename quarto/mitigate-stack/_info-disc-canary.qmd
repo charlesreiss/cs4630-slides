@@ -1,0 +1,24 @@
+
+### canary disclosure (1)  {.smaller}
+
+
+```
+long get_number() {
+    long value;
+    bool done = false;
+    for (int i = 0; i < max_attempts; i += 1) {
+        if (try_read_into(&value)) break;
+    }
+    return value;
+}
+
+long get_string() {
+    for (int i = 0; i < max_attempts; i += 1) {
+        char buffer[4000];
+        gets(buffer);
+        if (process_string(buffer)) break;
+    }
+}
+
+```
+

@@ -1,0 +1,123 @@
+
+### intuition: shadow stacks  {.smaller}
+
+
+* problem with stack: easy to leak address/values because used for lots of data 
+<hr class="vspace" />
+* goal: keep sensitive data in <em>separate region</em> 
+
+   * easier to kepe address secret?
+ 
+<hr class="vspace" />
+* can use this for (stronger?) alternative to stack canaries
+
+
+### shadow stacks 
+
+![](/mitigate-stack/texfig/shadow-stack-shadow-stacks.figure.svg)
+
+
+### implementing shadow stacks 
+
+
+* bigger changes to compiler than canaries
+* more overhead to call/return from function
+* most commonly: store return address twice
+
+
+### shadow stacks on x86-64 (1)  {.smaller}
+
+
+
+* idea 1: dedicate %r15 as shadow stack pointer, <br> copy RA to shadow stack pointer in function prologue
+ 
+```
+function:
+    movq (%rsp), %rax    // RAX <- return address
+    addq $-8, %r15       // R15 <- R15 - 8
+    movq %rax, (%r15)    // M[R15] <- RAX
+    ...
+    movq (%rsp), %rdx     // RDX <- return address
+    cmpq %rdx, (%r15)    
+    jne CRASH_THE_PROGRAM // if RDX != M[R15] goto CRASH_THE_PROGRAM
+    add $8, %r15          // R15 <- R15 - 8
+    ret
+
+```
+
+
+### shadow stacks on x86-64 (2)  {.smaller}
+
+
+
+* idea 2: dedicate %r15 as shadow stack pointer, <br> avoid normal call/return instruction
+ 
+```
+    addq $-8, %r15
+    leaq after_call(%rip), %rax
+    movq %rax, (%r15)
+    jmp function
+after_call:
+
+function:
+    ...
+    addq $8, %r15        // R15 <- R15 + 8
+    jmp *-8(%r15)        // jmp M[R15-8]
+
+```
+
+
+### Android/AArch64 shadow stacks (1)  {.smaller}
+
+
+
+* \\tiny{via [https://clang.llvm.org/docs/ShadowCallStack.html](https://clang.llvm.org/docs/ShadowCallStack.html) (see also [https://security.googleblog.com/2019/10/protecting-against-code-reuse-in-linux_30.html](https://security.googleblog.com/2019/10/protecting-against-code-reuse-in-linux_30.html))}
+* dedicate register <code>x18</code> to shadow stack pointer 
+
+   * x30 = return address (after ARM's call instruction (bl))
+
+* ARM call instruction saves return address in register…
+ 
+:::: {.columns}
+
+::: {.column width="50%"}
+ 
+```
+str     x30, [x18], #8      
+stp     x29, x30, [sp, #-16]!
+mov     x29, sp
+bl      bar
+add     w0, w0, #1
+ldp     x29, x30, [sp], #16
+ldr     x30, [x18, #-8]!
+ret
+
+```
+ 
+:::
+
+::: {.column width="50%"}
+ 
+```
+stp     x29, x30, [sp, #-16]!
+mov     x29, sp
+bl      bar
+add     w0, w0, #1
+ldp     x29, x30, [sp], #16
+ret
+
+```
+ 
+:::
+
+::::
+
+
+### Android/AArch64 shadow stacks (2)  {.smaller}
+
+
+* <code>-fsanitize=shadowcallstack</code>
+* supported on 64-bit ARM and RISC V only 
+<hr class="vspace" />
+* ‘‘An x86_64 implementation was evaluated using Chromium and was found to have critical performance and security deficiencies’’
+

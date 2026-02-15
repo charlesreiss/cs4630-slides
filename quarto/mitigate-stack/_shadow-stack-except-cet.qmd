@@ -1,0 +1,16 @@
+
+### CET and shadow-stack manipulation  {.smaller}
+
+
+* Intel CET has instructions to manipulate shadow stack pointer
+* RDSSP (read shadow stck pointer) 
+
+   * used by glibc setjmp
+
+* INCSSP (increment shadow stack pointer) 
+
+   * apparently used by glibc longjmp in common case
+ 
+<hr class="vspace" />
+* also some functionality for switching shadow stacks
+

@@ -1,0 +1,10 @@
+
+### stack canaries pro/con  {.smaller}
+
+
+* pro: no change to calling convention
+* pro: recompile only --- no extra work
+* con: can't protect existing executable/library files (without recompile)
+* con: [doesn't protect against many ways of exploiting buffer overflows]{.fragment fragment-index=2 .custom .myem-only}
+* con: [vulnerable to information leaks]{.fragment fragment-index=3 .custom .myem-only}
+

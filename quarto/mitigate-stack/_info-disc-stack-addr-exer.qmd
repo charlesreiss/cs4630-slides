@@ -1,0 +1,37 @@
+
+### exercise (1)
+
+
+:::: {.columns}
+
+::: {.column width="30%"}
+ 
+```c
+struct point {
+    int x, y, z;
+};
+```
+
+:::
+
+::: {.column width="69%"}
+ 
+```c
+struct point p;
+...
+    if (command == "get") { 
+        /* 'p' could be uninitialized */
+        printf("%d,%d,%d\n", p.x, p.y, p.z);
+    } ...
+...
+
+```
+ 
+:::
+
+::::
+
+ 
+
+* Suppose <code>p</code> (‘‘left over’’ from prior use of register, etc.) is stored at the same address of an ‘leftover’ copy of the 8-byte stack canary. If 999999,44444,333333 is output, how do we compute the stack canary value?
+

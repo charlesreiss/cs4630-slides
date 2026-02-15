@@ -1,0 +1,38 @@
+
+### non-contiguous overwrites
+
+:::: {.columns}
+
+::: {.column width=65%}
+
+```c
+void vulnerable() {
+  int scores[8]; bool done = false;
+  while (!done) {
+    printf("Edit which score? (0 to 7) ");
+    int i;
+    scanf("%d\n", &i);
+    /* Oops!
+       sizeof(scores) is 4 * sizeof(int) */
+    if (i < 0 || i >= sizeof(scores))
+      continue;
+    printf("Set to what value? ");
+    scanf("%d", &scores[i]);
+    ...
+  }
+  ...
+}
+```
+
+:::
+
+::: {.column width=33%}
+
+![](/mitigate-stack/texfig/stackNonContigEx.figure.svg){width=80%}
+
+:::
+
+::::
+
+
+

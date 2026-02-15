@@ -1,6 +1,11 @@
 
-### how did I find that? 
+### how did I find ...
 
+<pre><code>2aaaaad06543:       e8 <span style="color: red"><em>58 c3</em></span> fe ff          callq  2aaaaaaf48a0
+</code></pre>
+* <code>58 c3</code> = `popq %rax; ret`
+
+<hr class="vspace"/>
 
 * no, I am not really good at looking at <code>objdump</code> output
 * tools scan binaries for <i>gadgets</i>

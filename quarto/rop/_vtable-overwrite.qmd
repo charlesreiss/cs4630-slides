@@ -1,10 +1,9 @@
 
 ### VTable overwrite with gadget 
 
-<!-- \lstset{language=C++,style=small} -->
-  
+<!-- FIXME: separate out overflow diagrams from code -->
 
-::: {.r-stack}
+::: {.r-stack .my-full}
 ![](/rop/texfig/vtable-overwrite.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
 ![](/rop/texfig/vtable-overwrite.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}

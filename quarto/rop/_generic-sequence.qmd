@@ -5,7 +5,7 @@
 * most common idea: run a shell (command prompt) 
 
    * same thing ‘shellcode is named after’
-   * <code>ROPchain --binary example --ropchain</code> tries to do this
+   * `ROPchain --binary example --ropchain` tries to do this
 
 * another possibilities: make memory executable + jump 
 

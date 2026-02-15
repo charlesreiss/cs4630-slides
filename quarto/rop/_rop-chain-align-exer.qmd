@@ -17,7 +17,7 @@
 ### solution  {.smaller}
 
 
-* [C. <i>[168 As] X </i><i>[ROP chain]</i> X or E. X <i>[88 As]</i><i>[ROP chain]</i>]{.my-small}
+* C. <i>\[168 As] X </i><i>\[ROP chain]</i> X or E. X <i>\[88 As]</i><i>\[ROP chain]</i>
 * stack layout:  
 
    * &nbsp;[first (80 bytes)][second (80 bytes)][saved RBX][return address]

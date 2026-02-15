@@ -47,9 +47,7 @@ int main(void) {
 
 * buffer at <code>0xC</code> + stack pointer
 * return address at <code>0x78</code> + stack pointer 
-
    * = <code>0x6c</code> + buffer
-
 
 
 ### memory layout 
@@ -62,9 +60,7 @@ int main(void) {
  
 
 * going to look for interesting code to run in libc.so 
-
    * implements gets, printf, etc.
-
 * loaded at address <code>0x2aaaaacd3000</code>
 
 

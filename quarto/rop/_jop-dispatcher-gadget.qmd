@@ -3,8 +3,8 @@
 
   
 
-::: {.r-stack}
-![](/rop/texfig/jopdispatch1.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+::: {.r-stack .my-full style="height: 70%"}
+![](/rop/texfig/jopdispatch1.figure-1.svg){.fragment .fade-out fragment-index=2}
 
 ![](/rop/texfig/jopdispatch1.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
 

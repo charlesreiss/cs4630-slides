@@ -1,0 +1,18 @@
+
+### programs as weird machines  {.smaller}
+
+
+* ROP, format strings: mini machine language
+* set of instructions including: 
+
+   * reading/writing values from memory
+   * flow control
+   * make system calls (requests to operating system)
+
+* can be viewed as virtual machine with unusual instruction set 
+<hr class="vspace" />
+* can be analyzed using DMT2 techniques 
+
+   * what can it compute?
+
+

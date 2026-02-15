@@ -1,0 +1,47 @@
+
+### utility gadgets  {.smaller}
+
+
+* once we find return address through leak…
+* look for nearby address with particular behavior: 
+<hr class="vspace" />
+* ‘stop’ gadget --- hang program
+* ‘crash’ gadget --- close connection prematurely
+
+
+### looking for pops  {.smaller}
+
+
+* common form for gadget is <code>pop XXX; ret</code>
+* how can we tell if we might have that?
+* write to stack:  
+
+   * gadget being tested address, followed by
+   * stop gadget address, followed by
+   * crash gadget address
+
+* <code>pop XXX; ret</code> gadget will crash 
+
+   * XXX becomes stop address; then ret to crash
+
+* <code>...; ret</code> gadget will hang 
+
+   * ret to stop
+
+
+
+### blind ROP outline  {.smaller}
+
+
+* look for gadget that pops a lot from the stack 
+
+   * likely allows setting lots of registers
+
+* look for strcmp() function 
+
+   * should crash/not crash based on whether two registers are valid pointers
+   * use to set RDX (consequence of Linux libc implementation)
+
+* look for write() function
+* use write() function to output program machine code to network
+

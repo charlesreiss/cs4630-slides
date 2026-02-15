@@ -1,0 +1,11 @@
+
+### failure of automated chain finding?  {.smaller}
+
+
+* automated chain finding fails? 
+<hr class="vspace" />
+* ROPgadget has very particular patterns it looks for
+* you can be more creative than it can 
+<hr class="vspace" />
+* also some other tools (e.g. angrop) might handle more cases
+

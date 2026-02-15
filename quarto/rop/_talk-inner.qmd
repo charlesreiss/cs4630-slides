@@ -1,0 +1,74 @@
+
+# ROP {visibility="hidden"}
+
+{{< include /rop/_name.qmd >}}
+
+## case study: F5 exploit {visibility="hidden"}
+
+{{< include /rop/_f5-exploit.qmd >}}
+
+## case study: calling puts {visibility="hidden"}
+
+{{< include /rop/_case-study.qmd >}}
+
+## weird machines {visibility="hidden"}
+
+{{< include /rop/_weird-machines.qmd >}}
+
+## ROP: exercise 0 {visibility="hidden"}
+
+{{< include /rop/_make-chain-ex0.qmd >}}
+
+## ROP: exercise 1 {visibility="hidden"}
+
+{{< include /rop/_make-chain-ex1.qmd >}}
+
+## finding gadgets (take 1) {visibility="hidden"}
+
+### againframe(loadRAXCode)
+
+{{< include /rop/_find-gadgets.qmd >}}
+
+## finding gadgets, generally {visibility="hidden"}
+
+{{< include /rop/_finding-gadgets-general.qmd >}}
+
+## aligning chains {visibility="hidden"}
+
+{{< include /rop/_rop-chain-align-exer.qmd >}}
+
+## reusable sequence {visibility="hidden"}
+
+{{< include /rop/_generic-sequence.qmd >}}
+
+## dealing without generic sequence {visibility="hidden"}
+
+{{< include /rop/_no-generic-sequence.qmd >}}
+
+## example: VTable overwrite {visibility="hidden"}
+
+{{< include /rop/_not-just-ret.qmd >}}
+
+{{< include /rop/_vtable-overwrite.qmd >}}
+
+## definition: JOP {visibility="hidden"}
+
+{{< include /rop/_jop.qmd >}}
+
+{{< include /rop/_jop-dispatcher-gadget.qmd >}}
+
+## exercise: using function pointer overwrite {visibility="hidden"}
+
+{{< include /rop/_use-fptr-overwrite-exer.qmd >}}
+
+## just get rid of rets? {visibility="hidden"}
+
+{{< include /rop/_get-rid-of-ret.qmd >}}
+
+## other defenses? {visibility="hidden"}
+
+{{< include /rop/_other-defense.qmd >}}
+
+## blind ROP {visibility="hidden"}
+
+{{< include /rop/_blind-rop.qmd >}}

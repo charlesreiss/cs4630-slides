@@ -1,0 +1,19 @@
+
+### how did I find that? 
+
+
+* no, I am not really good at looking at <code>objdump</code> output
+* tools scan binaries for <i>gadgets</i>
+* one you'll use in upcoming homework
+
+
+### gadgets generally 
+
+
+* bits of machine code that do work, then return or jump
+* ‘‘chain’’ together, by having them jump to each other
+* most common: find gadget ending with <code>ret</code>  
+
+   * pops address of next gadget offs tack
+
+

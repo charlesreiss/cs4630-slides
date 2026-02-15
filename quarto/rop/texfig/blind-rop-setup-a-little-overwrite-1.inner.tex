@@ -1,0 +1,40 @@
+\begin{tikzpicture}
+\coordinate (stack tl) at (0, 0);
+\path[draw,thick,fill=yellow!20] (stack tl) ++(0cm, -1cm) coordinate (ra tl) rectangle ++(3.5, -.5)
+    coordinate (ra br)
+    node [midway] {return address};
+\coordinate (ra bl) at (ra tl |- ra br);
+\path[draw,thick,fill=violet!20,pattern=north east lines,pattern color=black!20] (ra bl) rectangle ++(3.5, -.5) coordinate (can br)
+    node [midway] {stack canary};
+\coordinate (can bl) at (ra tl |- can br);
+\path[draw,thick,fill=green!20,align=center] (can bl) rectangle ++(3.5, -2)  coordinate (buf br)
+    node [midway] {buffer};
+\begin{visibleenv}<2->
+    \draw[orange,very thick](ra bl) -- ++ (.5cm,0) |- (can br) -- (buf br) -| cycle;
+\end{visibleenv}
+\begin{scope}[shift={([xshift=1cm,yshift=1cm]ra br)}]
+    \begin{visibleenv}<2->
+        \node[align=left,anchor=north west] (before-after) at (0, 0) {
+            \begin{tabular}{ll}%
+            original canary & \tt AB CD EF 01 23 45 67 89 \\%
+            after overwrite & \tt ?? CD EF 01 23 45 67 89 \\
+            \end{tabular}
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<3->
+        \node[align=left,anchor=north west] (outcomes) at (before-after.south west) {
+            if {\tt ??}~is {\tt AB}: program works normally \\
+            \hspace{.5cm} $\rightarrow$ server gives response \\
+            if {\tt ??}~not {\tt AB}: program crashes \\
+            \hspace{.5cm} $\rightarrow$ connection closes prematurely  \\
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<4->
+        \node[align=left,anchor=north west] (repeat) at ([xshift=-2cm]outcomes.south west) {
+            idea: \myemph<4>{keep trying values until it doesn't crash} \\
+            if canary not rerandomzied, will find first byte after 256 tries \\
+            then \myemph<5>{repeat for every other byte of canary}
+        };
+    \end{visibleenv}
+\end{scope}
+\end{tikzpicture}

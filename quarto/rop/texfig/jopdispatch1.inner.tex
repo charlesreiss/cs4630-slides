@@ -1,0 +1,23 @@
+\begin{tikzpicture}
+\node[draw,label={north:``dispatcher'' gadget}]  (code) {
+\usebox{\jopGadgetDispatcher}
+};
+\begin{visibleenv}<2->
+\matrix[tight matrix,anchor=north west,nodes={font=\small,text width=4cm}] (gadget list) at ([xshift=1cm]code.north east) {
+    pointer to gadget1 \\
+    pointer to gadget2 \\
+    pointer to gadget3 \\
+    \ldots \\
+};
+\path[draw,very thick,Latex-] (gadget list-1-1.east) -- ++(1cm,0cm) node[right] {initial \%rcx};
+\path[draw,very thick,Latex-] ([yshift=-.5cm]code.north west) -- ++(-1cm,0cm) node[left] {\%rdx};
+\path[draw,very thick,Latex-] ([yshift=-.5cm]code.north west) -- ++(-.5cm, -.5cm) node[draw,very thick,fill=yellow!20,below left] (ptr) {};
+\path[draw,very thick,Latex-] (ptr.south) -- ++(0cm, -.5cm) node[below] {\%rdi};
+\path[draw,thick,dotted,-Latex] ([xshift=-.1cm]gadget list-1-1.north west) -- ++(0cm, -1cm);
+\end{visibleenv}
+\begin{visibleenv}<3->
+\node[draw,label={north:template for other gadgets}] (code 2) at ([xshift=1cm,yshift=-3cm]code.south east) {
+\usebox{\jopGadgetOther}
+};
+\end{visibleenv}
+\end{tikzpicture}

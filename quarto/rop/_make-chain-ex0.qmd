@@ -1,0 +1,48 @@
+
+### making an ROP chain (0)  {.smaller}
+
+
+
+* goal: run ‘‘<code>example(0)</code>’’
+* known info:
+ <div class="my-small"> <code></code> <table>
+<tr><td><span class="normal"> address</td><td><span class="normal"> instructions</td></tr>
+<tr><td>0x100000</td><td>(example function)</td></tr>
+<tr><td>0x100100</td><td>pop %rdi; ret</td></tr>
+<tr><td>0x100200</td><td>xor %eax, %eax; ret</td></tr>
+<tr><td>0x100300</td><td>xor %edi, %edi; ret</td></tr>
+<tr><td></td></tr>
+</table>
+ </div>
+ 
+
+* exercise: what can be written at return address + after to do this? 
+
+   * just putting 0x100000: runs example function with wrong argument
+
+
+
+### making an ROP chain --- one solution  {.smaller}
+
+
+* [[0x100100]{.fragment fragment-index=4 .custom .myem-only}: [pop %rdi]{.fragment fragment-index=2 .custom .myem-only}; [ret]{.fragment fragment-index=3 .custom .myem-only}]
+* [[0x0]{.fragment fragment-index=5 .custom .myem-only}]{.fragment fragment-index=2 .custom .myem-only}
+* [[[0x100000]{.fragment fragment-index=6 .custom .myem-only}]{.fragment fragment-index=3 .custom .myem-only}: example] 
+<hr class="vspace" />
+* as bytes (to put in buffer overflow): 
+
+   * <code>[00 01 10 00 00 00 00 00]{.fragment fragment-index=4 .custom .myem-only} [00 00 00 00 00 00 00 00]{.fragment fragment-index=5 .custom .myem-only} [00 00 10 00 00 00 00 00]{.fragment fragment-index=6 .custom .myem-only}</code>
+
+
+
+### making an ROP chain --- another solution 
+
+
+* [[0x100200]{.fragment fragment-index=4 .custom .myem-only}: [xor %edi, %edi]{.fragment fragment-index=2 .custom .myem-only}; [ret]{.fragment fragment-index=3 .custom .myem-only}]
+* [[[0x100000]{.fragment fragment-index=5 .custom .myem-only}]{.fragment fragment-index=3 .custom .myem-only}: example] 
+<hr class="vspace" />
+* as bytes (to put in buffer overflow): 
+
+   * <code>[00 02 10 00 00 00 00 00]{.fragment fragment-index=4 .custom .myem-only} [00 00 10 00 00 00 00 00]{.fragment fragment-index=5 .custom .myem-only}</code>
+
+

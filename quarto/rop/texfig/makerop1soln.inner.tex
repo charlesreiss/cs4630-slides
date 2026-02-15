@@ -1,0 +1,10 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+\node[anchor=north east,draw,very thick,align=left] at ([xshift=-.5cm,yshift=-.5cm]current page.north east) {
+    \%rax = \alt<2->{\myemph<2>{\texttt{0x200000}}}{???} \\
+    \%rdi = \alt<8->{\myemph<8>{0x200000}}{\alt<4->{\myemph<4>{\texttt{"/bin/sh\textbackslash 0"} as int}}{???}}
+};
+\end{scope}
+\end{tikzpicture}

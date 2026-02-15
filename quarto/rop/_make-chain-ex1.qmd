@@ -1,0 +1,118 @@
+
+### making an ROP chain (1)  {.smaller}
+
+
+
+* goal: run ‘‘<code>system("/bin/sh")</code>’’
+* known info:
+ <div class="my-small"> <code></code> <table>
+<tr><td><span class="normal"> address</td><td><span class="normal"> instructions</td></tr>
+<tr><td>0x100000</td><td>(system function)</td></tr>
+<tr><td>0x100100</td><td>mov %rdi, (%rax); ret</td></tr>
+<tr><td>0x100200</td><td>pop %rax; ret</td></tr>
+<tr><td>0x100300</td><td>pop %rdi; ret</td></tr>
+<tr><td>0x200000</td><td>(some global variable)</td></tr>
+<tr><td></td></tr>
+</table>
+ </div>
+ 
+
+* exercise: what can be written at return address + after to do this?
+
+
+### one solution  {.smaller}
+
+
+* [%rsp->]{.fragment fragment-index=2 .fade-out}[0x100200: [pop %rax]{.fragment fragment-index=2 .custom .myem-only}; [ret]{.fragment fragment-index=3 .custom .myem-only}]
+* [[%rsp->]{.fragment fragment-index=2 .fade-in}]{.fragment fragment-index=3 .fade-out}[[0x200000]{.fragment fragment-index=2 .custom .myem-only}]
+* [[%rsp->]{.fragment fragment-index=3 .fade-in}]{.fragment fragment-index=4 .fade-out}[[0x100300]{.fragment fragment-index=3 .custom .myem-only}: [pop %rdi]{.fragment fragment-index=4 .custom .myem-only}; [ret]{.fragment fragment-index=5 .custom .myem-only}]
+* [[%rsp->]{.fragment fragment-index=4 .fade-in}]{.fragment fragment-index=5 .fade-out}[`"/bin/sh\0"`]
+* [[%rsp->]{.fragment fragment-index=5 .fade-in}]{.fragment fragment-index=6 .fade-out}[[0x100100]{.fragment fragment-index=5 .custom .myem-only}: [mov %rdi, (%rax)]{.fragment fragment-index=6 .custom .myem-only}; [ret]{.fragment fragment-index=7 .custom .myem-only}]
+* [[%rsp->]{.fragment fragment-index=6 .fade-in}]{.fragment fragment-index=8 .fade-out}[[0x100300]{.fragment fragment-index=7 .custom .myem-only}: [pop %rdi]{.fragment fragment-index=8 .custom .myem-only}; [ret]{.fragment fragment-index=9 .custom .myem-only}]
+* [[%rsp->]{.fragment fragment-index=8 .fade-in}]{.fragment fragment-index=9 .fade-out}[[0x200000]{.fragment fragment-index=8 .custom .myem-only}]
+* [[%rsp->]{.fragment fragment-index=9 .fade-in}]{.fragment fragment-index=10 .fade-out}[[0x100000]{.fragment fragment-index=9 .custom .myem-only}: system()]
+
+::::: {style="font-size: 70%"}
+
+::: {.myoverbox .highright .fragment .fade-out fragment-index=2}
+
+just before `ret` to start "chain": <br/>
+`%rax` = `???` <br/>
+`%rdi` = `???` <br/>
+`%rsp` = (address of 1st 0x100200) <br/>
+
+:::
+
+::: {.myoverbox .highright .fragment .fade-in-then-out fragment-index=2}
+
+before `pop %rax` at 0x100200: <br/>
+`%rax` = `???` <br/>
+`%rdi` = `???` <br/>
+`%rsp` = (address of 1st 0x200000) <br/>
+
+:::
+
+::: {.myoverbox .highright .fragment .fade-in-then-out fragment-index=3}
+
+before `ret` after `pop %rax`: <br/>
+`%rax` = <em>`0x200000`</em> <br/>
+`%rdi` = `???` <br/>
+`%rsp` = (address of 1st 0x100300) <br/>
+
+:::
+
+::: {.myoverbox .highright .fragment .fade-in-then-out fragment-index=4}
+
+before `pop %rdi` at 0x100300: <br/>
+`%rax` = `0x200000` <br/>
+`%rdi` = `???` <br/>
+`%rsp` = (address of `"/bin/sh\0"`)<br/>
+
+:::
+
+::: {.myoverbox .highright .fragment .fade-in-then-out fragment-index=5}
+
+before `ret` after `pop %rdi`: <br/>
+`%rax` = `0x200000` <br/>
+`%rdi` = <em>`"/bin/sh\0"` as integer</em><br/>
+`%rsp` = (address of 0x100100)<br/>
+
+:::
+
+::: {.myoverbox .highright .fragment .fade-in-then-out fragment-index=6}
+
+before `mov %rdi, (%rax)` at 0x100100: <br/>
+`%rax` = `0x200000` <br/>
+`%rdi` = `"/bin/sh\0"` as integer <br/>
+`%rsp` = (address of 0x100300)<br/>
+
+:::
+
+::: {.myoverbox .highright .fragment .fade-in-then-out fragment-index=7}
+
+before `ret` after `mov`: <br/>
+`%rax` = `0x200000` <br/>
+`%rdi` = `"/bin/sh\0"` as integer <br/>
+`%rsp` = (address of 0x100300)<br/>
+
+:::
+
+::: {.myoverbox .highright .fragment .fade-in-then-out fragment-index=8}
+
+before `pop %rdi` (second time): <br/>
+`%rax` = `0x200000` <br/>
+`%rdi` = `"/bin/sh\0"` as integer <br/>
+`%rsp` = (address of 0x200000)<br/>
+
+:::
+
+::: {.myoverbox .highright .fragment .fade-in-then-out fragment-index=9}
+
+before `ret` after `pop %rdi`: <br/>
+`%rax` = `0x200000` <br/>
+`%rdi` = <em>`0x200000`</em> <br/>
+`%rsp` = (address of system)<br/>
+
+:::
+
+:::::

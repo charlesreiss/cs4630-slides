@@ -1,0 +1,43 @@
+\begin{tikzpicture}
+% FIXME:
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+    useLine/.style={very thick,blue,Latex-},
+    useLineRet/.style={red,very thick,-Latex,dashed},
+    gadgetBox/.style={blue,thick,text=black,draw,align=left,font=\small},
+}
+\begin{scope}[xscale=0.75]
+\draw[stackBox] (0, 3) rectangle (10, -3);
+\draw[thick,-Latex] (-.25,-1) -- (-.25, 1) node [midway, above, sloped] {increasing addresses};
+\draw[onStack,fill=green!20,opacity=0.9] (0, 3.00) rectangle (10, 1.75) node[midway,align=center,font=\small] (theString)
+     {string to print};
+\draw[onStack,red] (0, 1.75) rectangle (10, .75) node[midway,align=center,font=\small] (gadgetTwo)
+     {pointer to second gadget};
+\draw[onStack,fill=green!20] (0, .75) rectangle (10, -.25) node[midway,align=center,font=\small] (putsAddr)
+     {address of \texttt{puts} (popped from stack)};
+\draw[onStack,red] (0, -.25) rectangle (10, -1.25) node[midway,align=center,font=\small] (stackAddr)
+     {return address for {\tt vulnerable}: \\pointer to first gadget};
+\draw[onStack,fill=blue!20] (0, -1.25) rectangle (10, -2.25) node[midway,align=center,font=\small] {buffer (100 bytes)};
+\draw[onStack,fill=red!20,opacity=0.9] (0, -2.25) rectangle (10, -1.25) node[midway,align=center,font=\small,text=red!50!black] {unused junk};
+        \draw[-Latex,red,ultra thick,dashed] (stackAddr.east) -- ++(3cm,0cm) 
+        node[right,gadgetBox] (firstGad) { {\tt popq \%rax} \\ {\tt ret} };
+        \draw[-Latex,red,ultra thick,dashed] (gadgetTwo.east) -- ++(3cm,0cm)
+        node[right,gadgetBox] (secondGad) { {\tt mov \%rsp, \%rdi} \\ {\tt call *\%rax} };
+    \begin{visibleenv}<2->
+        \node[gadgetBox,dashed,below=1cm of firstGad] (realRet) {
+            \texttt{ret} (in vulnerable)
+        };
+        \draw[useLineRet] ([xshift=1ex]realRet.west) -- ([xshift=-1ex,yshift=2ex]stackAddr.south east);
+    \end{visibleenv}
+    \begin{visibleenv}<3->
+        \draw[useLine] ([yshift=.6em,xshift=1ex]firstGad.west) -- (putsAddr.east);
+    \end{visibleenv}
+    \begin{visibleenv}<4->
+        \draw[useLineRet] ([yshift=-.6em,xshift=1ex]firstGad.west) -- ([xshift=-1ex,yshift=2ex]gadgetTwo.south east);
+    \end{visibleenv}
+    \begin{visibleenv}<4->
+        \draw[useLine] ([yshift=.6em,xshift=1ex]secondGad.west) -- (theString.east);
+    \end{visibleenv}
+\end{scope}
+\end{tikzpicture}

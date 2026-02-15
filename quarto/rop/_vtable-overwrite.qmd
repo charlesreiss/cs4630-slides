@@ -1,0 +1,18 @@
+
+### VTable overwrite with gadget 
+
+<!-- \lstset{language=C++,style=small} -->
+  
+
+::: {.r-stack}
+![](/rop/texfig/vtable-overwrite.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/rop/texfig/vtable-overwrite.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+![](/rop/texfig/vtable-overwrite.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
+![](/rop/texfig/vtable-overwrite.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
+
+
+:::
+

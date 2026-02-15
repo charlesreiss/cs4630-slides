@@ -1,0 +1,17 @@
+
+### other defenses?  {.smaller}
+
+
+* mentioned shadow stacks 
+<hr class="vspace" />
+* some other ideas later:
+* pointer authentication 
+
+   * MACs in return/function/etc. addresses
+
+* control flow integrity 
+
+   * verify that rets go to just after call
+   * verify that calls/jumps/etc. go to intended function/label
+
+

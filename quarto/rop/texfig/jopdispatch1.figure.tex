@@ -1,0 +1,31 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{matrix,arrows.meta}
+\newsavebox{\jopGadgetDispatcher}
+\newsavebox{\jopGadgetOther}
+\begin{document}
+\begin{lrbox}{\jopGadgetDispatcher}
+\begin{lstlisting}[language=myasm]
+add $8, %rcx
+jmp *(%rcx)
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\jopGadgetOther}
+\begin{lstlisting}[language=myasm]
+...
+jmp *%rdx
+\end{lstlisting}
+---\textit{ OR }---
+\begin{lstlisting}[language=myasm]
+...
+jmp *(%rdi)
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{rop/texfig/jopdispatch1.inner.tex}
+\setSlide{2}
+\input{rop/texfig/jopdispatch1.inner.tex}
+\setSlide{3}
+\input{rop/texfig/jopdispatch1.inner.tex}
+\end{document}

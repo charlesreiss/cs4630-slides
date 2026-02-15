@@ -1,0 +1,131 @@
+
+### using function pointer overwrite (1)  {.smaller}
+
+
+```
+struct Example {
+    char input[1000];
+    void (*process_function)(Example *, long, char *);
+};
+void vulnerable(struct Example *e) {
+    long index; char name[1000];
+    gets(e->input); /* can overwrite process_function */
+    sscanf(e->input, "%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
+    (e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);
+}
+
+```
+ 
+
+* []{.my-small} if we overwrite process_function's address with the address of the gadget <code>mov %rsi, %rsp; ret</code>, then input (scanf) start with …? 
+
+   * A. the shellcode to run (assuming exec+writeable memory)
+   * B. an ROP chain to run
+   * C. the address of shellcode (or existing function) in decimal
+   * D. the address of the ROP chain to run written out in decimal
+   * E. the address of a RET instruction written out in decimal
+
+
+
+### explanation  {.smaller}
+
+
+```
+gets(e->input); /* can overwrite process_function */
+sscanf(e->input, "%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
+(e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);
+
+```
+ <code>"1234,FOO......."</code> + addr of <code>mov %rsi, %rsp, ret</code> 
+
+* arguments setup registers for gadget: 
+
+   * %rdi (irrelevant) is "1234,FOO..." (copy in e)
+   * %rsi is 1234 (from scanf)
+   * %rdx (irrelevant) is "FOO..." (pointer to name)
+
+* mov in gadget: %rsi (1234) becomes %rsp
+* ret in gadget: read pointer at 1234, set %rsp to 1234 + 8 
+
+   * jump to next gadget (whose address should be stored at 1234)
+   * if that gadget returns, will read new return address from 1238
+
+
+
+### using function pointer overwrite (2)  {.smaller}
+
+
+```
+struct Example {
+    char input[1000];
+    void (*process_function)(Example *, long, char *);
+};
+void vulnerable(struct Example *e) {
+    long index; char name[1000];
+    gets(e->input); /* can overwrite process_function */
+    scanf("%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
+    (e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);
+}
+
+```
+ 
+
+* []{.my-small} if we overwrite process_function's address with the address of the gadget <code>push %rdx; jmp *(%rdi)</code>, then the beginning of the input should contain… <br> 
+
+   * A. the shellcode to run (assuming exec+writeable memory)
+   * B. an ROP chain to run
+   * C. the address of shellcode (or existing function)
+   * D. the address of the ROP chain
+   * E. the address of a RET instruction
+
+
+
+### explanation (one option)  {.smaller}
+
+
+```
+gets(e->input); /* can overwrite process_function */
+sscanf(e->input, "%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
+(e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);
+
+```
+ <code>"FOOBARBAZ......."</code> + addr of <code>push %rdx; jmp *(%rdi)</code> 
+
+* arguments setup registers for gadget: 
+
+   * %rdi is "FOOBARBAZ...." (copy in e)
+   * %rsi (irrelevant) is uninitialized? (scanf failed)
+   * %rdx (irrelevant) is uninitialized? (scanf failed)
+
+* push in gadget: top of stack becomes copy of uninit. value
+* jmp in gadget 
+
+   * interpret ‘‘FOOBARBA’’ as 8-byte address
+   * jump to that address
+
+
+
+### explanation (unlikely alternative?)  {.smaller}
+
+
+```
+gets(e->input); /* can overwrite process_function */
+sscanf(e->input, "%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
+(e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);
+
+```
+ <code>"1234567890,FOO......."</code> + addr of <code>push %rdx; jmp *(%rdi)</code> 
+
+* arguments setup registers for gadget: 
+
+   * %rdi is address of string "12345678,FOO..." (copy in e)
+   * %rsi is 12345678
+   * %rdx is address of string "FOO..." (copy in name)
+
+* push in gadget: top of stack becomes address of "FOO..."
+* jmp in gadget 
+
+   * interpret <i>ASCII encoding of ‘‘12345678’’</i> (???) as 8-byte address
+   * jump to that address
+
+

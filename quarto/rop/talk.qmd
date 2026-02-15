@@ -1,0 +1,6 @@
+---
+title: "rop"
+
+---
+
+{{< include ../rop/_talk-inner.qmd >}}

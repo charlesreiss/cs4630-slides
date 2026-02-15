@@ -1,0 +1,176 @@
+
+### ROP case study 
+
+
+* simple stack buffer overflow with write XOR execute
+* stack canaries disabled
+* ASLR disabled 
+
+   * but if it wasn't --- use information leak
+
+
+
+### vulnerable application  {.smaller}
+
+<!-- \lstset{language=C,style=small} -->
+ 
+```
+#include <stdio.h>
+
+int vulnerable() {
+    char buffer[100];
+    gets(buffer);
+}
+
+int main(void) {
+    vulnerable();
+}
+
+```
+
+
+### vulnerable function  {.smaller}
+
+<!-- \lstset{language=myasm,style=small} -->
+ 
+```
+0000000000400536 <vulnerable>:
+  400536:       48 83 ec 78        sub    $0x78,%rsp
+  40053a:       31 c0              xor    %eax,%eax
+  40053c:       48 8d 7c 24 0c     lea    0xc(%rsp),%rdi
+  400541:       e8 ca fe ff ff     callq  400410 <gets@plt>
+  400546:       48 83 c4 78        add    $0x78,%rsp
+  40054a:       c3                 retq   
+
+```
+ 
+
+* buffer at <code>0xC</code> + stack pointer
+* return address at <code>0x78</code> + stack pointer 
+
+   * = <code>0x6c</code> + buffer
+
+
+
+### memory layout 
+
+<!-- \lstset{
+    language={},
+    style=small,
+    moredelim={**[is][\color{blue!70!black}]{~in~}{~end~}},
+} -->
+ 
+
+* going to look for interesting code to run in libc.so 
+
+   * implements gets, printf, etc.
+
+* loaded at address <code>0x2aaaaacd3000</code>
+
+
+### our task 
+
+
+* print out the message ‘‘You have been exploited.’’
+* ultimately calling <code>puts</code>
+* which will be at address <code>0x2aaaaad42690</code>
+
+
+### how about arc injection? 
+
+
+* can we just change return address to puts's address? 
+<hr class="vspace" />
+* no: %rdi (argument 1) has the wrong value
+
+
+### shellcode  {.smaller}
+
+<!-- \lstset{
+    language=myasm,
+    style=small,
+    moredelim={**[is][\color{blue!70!black}]{~in~}{~end~}},
+} -->
+ 
+<pre><code>        lea  string(%rip), %rdi
+        mov  $0x2aaaaad42690, %rax /* puts */
+        jmpq *(%rax)
+string: .ascii "You have been exploited.\\0"
+</code></pre>
+ 
+
+* but --- can't insert code
+* surely this code doesn't exist in libc already
+* solution: find code for pieces
+
+
+### loading string into RDI 
+
+<!-- \lstset{
+    language=myasm,
+    style=small,
+    moredelim={**[is][\color{blue!70!black}]{~in~}{~end~}},
+} -->
+ 
+
+* can we even load a pointer to the string into <code>%rdi</code>?
+* let's look carefully at code in <code>libc.so</code>
+ 
+<pre><code>2aaaaadfdc95:       48 89 e7              mov    %rsp,%rdi
+2aaaaadfdc98:       ff d0                 callq  *%rax
+</code></pre>
+ 
+
+* just need to get address of <code>puts</code> into <code>%rax</code> before this
+
+
+### load RDI 
+
+
+
+::: {.r-stack .my-full}
+![](/rop/texfig/loadRDI.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/rop/texfig/loadRDI.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+
+:::
+
+
+### loading puts addr. into RAX 
+
+<!-- \lstset{
+    language={},
+    style=smaller,
+    moredelim={**[is][\color{blue!70!black}]{~in~}{~end~}},
+    moredelim={**[is][\color{red}\bfseries]{~hi~}{~end~}},
+} -->
+ 
+<pre><code>2aaaaad06543:       e8 <span style="color: red"><em>58 c3</em></span> fe ff          callq  2aaaaaaf48a0
+</code></pre>
+ 
+
+* <code>58 c3</code> can be interpreted another way:  
+<pre><code>2aaaaad06544:       58          popq %rax
+2aaaaad06545:       c3          retq
+</code></pre>
+
+* ‘‘ret’’ lets us <em>chain</em> this to execute <code>call</code> snippet next
+
+
+### ROP chain 
+
+
+
+::: {.r-stack .my-full}
+![](/rop/texfig/loadChain.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/rop/texfig/loadChain.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+![](/rop/texfig/loadChain.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
+![](/rop/texfig/loadChain.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
+
+
+:::
+

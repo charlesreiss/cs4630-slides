@@ -1,0 +1,20 @@
+\begin{tikzpicture}
+\node (code) {
+    \usebox{\ropChainAlignExC}
+};
+\node[anchor=north west] (asm) at ([xshift=.2cm]code.north east) {
+\usebox{\ropChainAlignExAsm}
+};
+\node[anchor=north west,align=left,font=\small] at ([yshift=.1cm]code.south west) {
+Suppose we have 64-byte ROP chain \\
+w/o whitespace in it. How to write input? \\
+(Multiple might work) \\
+A. \textit{[80 As]}\textit{[ROP chain]} X \\
+B. \textit{[160 As]}\textit{[ROP chain]} X \\
+C. \textit{[168 As]}\textit{[ROP chain]} X \\
+D. \textit{[ROP chain]}\textit{[36 As]}\textit{[ROP chain addr]} X \\
+E. \textit{[ROP chain]} \textit{[80 As]}\textit{[ROP chain addr]} \\
+F. X \textit{[88 As]}\textit{[ROP chain]} \\
+G. X \textit{[96 As]}\textit{[ROP chain]} \\
+};
+\end{tikzpicture}

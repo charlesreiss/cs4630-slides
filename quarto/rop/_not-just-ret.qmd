@@ -1,0 +1,25 @@
+
+### ROP without a stack overflow (1) 
+
+
+* we can use ROP ideas for non-stack exploits 
+<hr class="vspace" />
+* look for gadget(s) that set <code>%rsp</code>
+* … based on function argument registers/etc.
+
+
+### ROP without stack overflow (2)  {.smaller}
+
+
+* example sequence: 
+
+   * gadget 1: <code>push %rdi; jmp *(%rdx)</code>
+   * gadget 2: <code>pop %rsp; ret</code>
+
+* set: 
+
+   * overwritten function pointer = pointer to gadget 1
+   * arg 1: <code>%rdi</code> = desired stack pointer (pointer to next gadgets)
+   * arg 3: <code>%rdx</code> = pointer to gadget 2
+
+

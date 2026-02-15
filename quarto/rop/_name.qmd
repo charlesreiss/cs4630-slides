@@ -1,0 +1,8 @@
+
+### next topic: ROP 
+
+
+* return-oriented programming 
+<hr class="vspace" />
+* find ‘‘chain’’ of machine code that does what you want
+

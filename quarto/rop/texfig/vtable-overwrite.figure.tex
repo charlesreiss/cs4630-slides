@@ -1,0 +1,32 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{arrows.meta,patterns,fit}
+\newsavebox{\VTblOverCode}
+\begin{document}
+\begin{lrbox}{\VTblOverCode}
+\begin{lstlisting}
+class Bar {
+  char buffer[100];
+  Foo *foo;
+  int x, y;
+  ...
+};
+
+void Bar::vulnerable() {
+  gets(buffer);
+  foo->some_method(x, y);
+  // (*foo->vtable[K])(foo, x, y)
+  // foo == rdi, x == rsi, y == rdx
+}
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{rop/texfig/vtable-overwrite.inner.tex}
+\setSlide{2}
+\input{rop/texfig/vtable-overwrite.inner.tex}
+\setSlide{3}
+\input{rop/texfig/vtable-overwrite.inner.tex}
+\setSlide{4}
+\input{rop/texfig/vtable-overwrite.inner.tex}
+\end{document}

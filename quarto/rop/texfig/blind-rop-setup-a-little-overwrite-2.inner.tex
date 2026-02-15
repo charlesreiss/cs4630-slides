@@ -1,0 +1,42 @@
+\begin{tikzpicture}
+\coordinate (stack tl) at (0, 0);
+\path[draw,thick,fill=yellow!20] (stack tl) ++(0cm, -1cm) coordinate (ra tl) rectangle ++(3.5, -.5)
+    coordinate (ra br)
+    node [midway] {return address};
+\coordinate (ra bl) at (ra tl |- ra br);
+\path[draw,thick,fill=violet!20,pattern=north east lines,pattern color=black!20] (ra bl) rectangle ++(3.5, -.5) coordinate (can br)
+    node [midway] {stack canary};
+\coordinate (can bl) at (ra tl |- can br);
+\path[draw,thick,fill=green!20,align=center] (can bl) rectangle ++(3.5, -2)  coordinate (buf br)
+    node [midway] {buffer};
+\begin{visibleenv}<1->
+    \draw[orange,very thick](ra bl) -| (can br) -- (buf br) -| cycle;
+\end{visibleenv}
+\begin{visibleenv}<2->
+    \draw[orange,very thick](ra tl) -- ++ (.5cm,0) |- (ra br) -- (buf br) -| cycle;
+\end{visibleenv}
+\begin{scope}[shift={([xshift=1cm,yshift=1cm]ra br)}]
+    \begin{visibleenv}<2->
+        \node[align=left,anchor=north west] (before-after) at (0, 0) {
+            \begin{tabular}{ll}%
+            original return address & \tt 49 43 2A AB 44 00 00 \\%
+            after overwrite & \tt ?? 43 2A AB 44 00 00
+            \end{tabular}
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<3->
+        \node[align=left,anchor=north west] (outcomes) at (before-after.south west) {
+            if {\tt ??}~is {\tt 49}: program works normally \\
+            \hspace{.5cm} $\rightarrow$ server gives normal response \\
+            if {\tt ??}~not {\tt 49}: program does something wierd \\
+            \hspace{.5cm} $\rightarrow$ probably weird response \\
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<4->
+        \node[align=left,anchor=north west] (repeat) at ([xshift=-2cm]outcomes.south west) {
+            can use this to `break' ASLR \\
+            find return address value with good confidence
+        };
+    \end{visibleenv}
+\end{scope}
+\end{tikzpicture}

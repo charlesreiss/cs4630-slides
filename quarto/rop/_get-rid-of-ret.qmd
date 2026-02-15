@@ -1,0 +1,37 @@
+
+### can we get rid of gadgets? (1)  {.smaller}
+
+
+* Onarlioglu et al, ‘‘G-Free: Defeating Return-Oriented Programming through Gadget-Less Binaries’’ (2010)
+* two parts: 
+
+   * get rid of unintended jmp, ret instructions
+   * add stack canary-like checks to jmp, ret instructions
+
+* hope: no <i>useful</i> gadgets b/c of canary-like checks 
+
+   * all gadgets should be useless without a secret value?
+   * still vulnerable to information leaks
+
+* overhead is not low: 
+
+   * 20--30% (!) space overhead
+   * 0--6% time overhead
+
+
+
+### no unintended jmp/ret (1)
+
+
+![](/rop/gfree1.png){}
+ 
+
+* <code>addl \$0xc2, %eax</code>: <code>05 [c2 00 00]{.fragment fragment-index=2 .custom .myem-only} 00</code>
+* problem: <code>[c2 00 00]{.fragment fragment-index=2 .custom .myem-only}</code>: variant of ret instruction
+* paper's proposed fix: change the constant
+
+
+### no unintended jmp/ret (2) 
+
+![](/rop/gfree2.png){}
+

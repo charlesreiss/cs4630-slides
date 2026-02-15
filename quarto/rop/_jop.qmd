@@ -1,0 +1,17 @@
+
+### jump-oriented programming  {.smaller}
+
+
+* seems like <code>ret</code> is the problem? 
+
+   * solve by protecting rets (e.g. hardware shadow stack)?
+
+* problem: don't actually need <code>ret</code> 
+<hr class="vspace" />
+* just look for gadgets that end in <code>call</code> or <code>jmp</code>
+* don't even need to set stack
+* harder to find than <code>ret</code>-based gadgets 
+
+   * but almost always as powerful as ret-based gadgets
+
+

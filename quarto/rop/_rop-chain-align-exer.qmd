@@ -1,0 +1,35 @@
+
+### exercise: ROP chain alignment 
+
+  ![](/rop/texfig/ropChainAlignEx.figure.svg)
+
+
+### solution preview  {.smaller}
+
+
+* want <i>stack pointer</i>, not <i>program counter</i> to point to ROP chain
+* program counter will point to gadgets 
+<hr class="vspace" />
+* will align ROP chain so it's top of stack as function returns
+* program counter (where returned to) will be in gadgets
+
+
+### solution  {.smaller}
+
+
+* [C. <i>[168 As] X </i><i>[ROP chain]</i> X or E. X <i>[88 As]</i><i>[ROP chain]</i>]{.my-small}
+* stack layout:  
+
+   * &nbsp;[first (80 bytes)][second (80 bytes)][saved RBX][return address]
+
+* <code>first</code> at return address - 168 bytes
+* <code>second</code> at return address - 88 bytes
+* ROP chain's first 8 bytes = address of first gadget to run 
+
+   * e.g. address of <code>pop %rdi, ret</code>
+
+* ROP chain's next bytes = things popped by first gadget 
+
+   * e.g. value for %rdi, followed by next gadget address
+
+

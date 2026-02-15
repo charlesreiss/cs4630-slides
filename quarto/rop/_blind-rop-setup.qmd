@@ -1,0 +1,82 @@
+
+### autorestarting servers  {.smaller}
+
+
+* common strategy for servers:
+* start server ‘workers’ with same randomization 
+
+   * fork()'d from common process or
+   * only re-randomized addresses on reboot
+
+* automatically restart server workers after crash
+
+
+### autorestarting servers [pseudocode]  {.smaller}
+
+
+```
+void vulnerable() {
+    char buffer[128];
+    read_from_network_into(buffer);
+    ...
+}
+
+int main() {
+    while (true) {
+        setup_new_connection();
+        run_in_new_process(vulnerable);
+    }
+}
+
+```
+
+
+### a little overwrite (1) 
+
+
+
+::: {.r-stack .my-full}
+![](/rop/texfig/blind-rop-setup-a-little-overwrite-1.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/rop/texfig/blind-rop-setup-a-little-overwrite-1.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+![](/rop/texfig/blind-rop-setup-a-little-overwrite-1.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
+![](/rop/texfig/blind-rop-setup-a-little-overwrite-1.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
+
+![](/rop/texfig/blind-rop-setup-a-little-overwrite-1.figure-5.svg){.fragment .fade-in-then-out fragment-index=5}
+
+
+:::
+
+
+### a little overwrite (2) 
+
+
+
+::: {.r-stack .my-full}
+![](/rop/texfig/blind-rop-setup-a-little-overwrite-2.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/rop/texfig/blind-rop-setup-a-little-overwrite-2.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+![](/rop/texfig/blind-rop-setup-a-little-overwrite-2.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
+![](/rop/texfig/blind-rop-setup-a-little-overwrite-2.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
+
+
+:::
+
+
+### blind ROP concept  {.smaller}
+
+
+* once we know stack canary + return address value
+* we can guess where program code is 
+
+   * it's around where the vulnerable is returning to normally
+ 
+<hr class="vspace" />
+* can try replacing return address with nearby addresses
+* … and see what it does
+* turns out --- can exploit program <em>without access to executable</em>
+

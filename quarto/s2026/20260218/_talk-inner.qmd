@@ -1,19 +1,6 @@
 ### last time {.smaller}
 
-*  taint tracking at assembly level
-   *  detect how input becomes output in program
-   *  can apply to whole system virtual machine --- detect movement between programs
-   *  option for complex malware analysis
-*  program transformations against taint tracking
-   *  `if (x & 1) y |= 1; ...`
-   *  `y = x + z; y = y - z;`
-*  buffer overflow
-   *  sensitive value after unchecked buffer write
-   *  examples with stack layout
-
 ### assignment Q+A
-
-### quiz?
 
 ### traveling this week
 

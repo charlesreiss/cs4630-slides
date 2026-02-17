@@ -1,0 +1,98 @@
+### multiple readers (1)
+
+```rust
+fn get_min_max(v: &Vec<i32>) -> (&i32, &i32) {
+    let (mut min, mut max) = (&v[0], &v[0]);
+    for i in 1..v.len() {
+        if v[i] < *min { min = &v[i]; }
+        if v[i] > *max { max = &v[i]; }
+    }
+    return (min, max);
+}
+
+fn main() {
+    let vector = vec![1,2,3];
+    let (min, max) = get_min_max(&vector);
+    // min, max, println! below all borrowing vector
+        // okay because both immutable references
+    println!("vector = {:?}", vector);
+    println!("min = {}; max = {}", *min, *max);
+}
+```
+
+### no multiple writers
+
+```rust
+fn get_mut_min_max(v: &mut Vec<i32>) -> (&mut i32, &mut i32) {
+    let (mut min, mut max) = (&mut v[0], &mut v[0]);  // ERROR
+    for i in 1..v.len() {
+        if v[i] < *min { min = &mut v[i]; }
+        if v[i] > *max { max = &mut v[i]; }
+    }
+    return (min, max);
+}
+```
+
+::: {.myoverbox .fragment .low}
+```
+error[E0499]: cannot borrow `*v` as mutable more than once at a time
+ --> src/main.rs:2:47
+  |
+1 | fn get_mut_min_max(v: &mut Vec<i32>) -> (&mut i32, &mut i32) {
+  |                       - let's call the lifetime of this reference `'1`
+2 |     let (mut min, mut max) = (&mut v[0], &mut v[0]);
+  |                                    -          ^ second mutable borrow occurs here
+  |                                    |
+  |                                    first mutable borrow occurs here
+...
+7 |     return (min, max);
+  |            ---------- returning this value requires that `*v` is borrowed for `'1`
+```
+
+:::
+
+### multiple readers (2) {.smaller}
+
+```rust
+fn get_min_max(v: &Vec<i32>) -> (&i32, &i32) {
+    let (mut min, mut max) = (&v[0], &v[0]);
+    for i in 1..v.len() {
+        if v[i] < *min { min = &v[i]; }
+        if v[i] > *max { max = &v[i]; }
+    }
+    return (min, max);
+}
+
+fn main() {
+    let (min, max);
+    {
+        let vector = vec![1,2,3];
+        (min, max) = get_min_max(&vector);
+        // OKAY:
+        println!("min = {}; max = {}", *min, *max);
+    }
+    // ERROR:
+    println!("min = {}; max = {}", *min, *max);
+}
+```
+
+::: {.myoverbox .vlow .fragment}
+
+```
+error[E0597]: `vector` does not live long enough
+  --> src/main.rs:14:34
+   |
+13 |         let vector = vec![1,2,3];
+   |             ------ binding `vector` declared here
+14 |         (min, max) = get_min_max(&vector);
+   |                                  ^^^^^^^ borrowed value does not live long enough
+15 |     }
+   |     - `vector` dropped here while still borrowed
+16 |     println!("min = {}; max = {}", *min, *max);
+   |                                    ---- borrow later used here
+```
+
+:::
+
+### multiple readers (3)
+

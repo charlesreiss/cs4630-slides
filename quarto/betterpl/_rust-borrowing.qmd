@@ -19,14 +19,14 @@ fn foo() {
     println!("Sum is {}", sum);
     println!("vector[0] is {}" , vector[0]);
 }
-
 ```
+
 
 
 ### dangling pointers? (1a)  {.smaller}
 
 
-```
+```c
 int *dangling_pointer() {
     int array[3] = {1,2,3};
     return &array[0]; // not an error
@@ -36,13 +36,25 @@ int *dangling_pointer() {
 <hr/>
 ```rust
 fn dangling_pointer() -> &mut i32 {
-    let array = vec![1,2,3];
+    let mut array = vec![1,2,3];
     return &mut array[0]; // ERROR
 }
+```
+
+::: {.myoverbox .fragment .low}
 
 ```
-  ![](/betterpl/texfig/dangling1a.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/betterpl/texfig/dangling1a.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+error[E0106]: missing lifetime specifier
+  --> src/main.rs:19:25
+   |
+19 | fn dangling_pointer() -> &mut i32 {
+   |                          ^ expected lifetime parameter
+   |
+   = help: this function's return type contains a borrowed value,
+           but there is no value for it to be borrowed from
+```
+
+:::
 
 
 ### dangling pointers? (1b)  {.smaller}
@@ -51,19 +63,34 @@ fn dangling_pointer() -> &mut i32 {
 ```rust
 /* 'static = "valid forever" */
 fn dangling_pointer() -> &'static mut i32 {
-    let array = vec![1,2,3];
+    let mut array = vec![1,2,3];
     return &mut array[0]; // ERROR
 }
 
 ```
-  ![](/betterpl/texfig/dangling1b.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/betterpl/texfig/dangling1b.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+
+::: {.myoverbox .fragment .low}
+
+```
+error[E0515]: cannot return value referencing local variable `array`
+ --> src/lib.rs:4:12
+  |
+4 |     return &mut array[0]; // ERROR
+  |            ^^^^^-----^^^
+  |            |    |
+  |            |    `array` is borrowed here
+  |            returns a value referencing data owned by the current function
+```
+
+:::
+
+
 
 
 ### dangling pointers? (2)  {.smaller}
 
 
-```
+```c
 int *ptr;
 int dangling_pointer(int *array) {
     ptr = &array[0];
@@ -80,9 +107,43 @@ fn dangling_pointer(v: Vec<i32>) -> i32 {
 }
 
 ```
-   ![](/betterpl/texfig/dangling2.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/betterpl/texfig/dangling2.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
-![](/betterpl/texfig/dangling2.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=3}
+
+::: {.myoverbox .fragment fragment-index=1 .vlow}
+
+```
+error[E0133]: use of mutable static is unsafe
+              and requires unsafe block
+ --> src/lib.rs:3:5
+  |
+3 |     ptr = &v[0];
+  |     ^^^ use of mutable static
+  |
+  = note: mutable statics can be mutated by
+          multiple threads: aliasing violations
+          or data races will cause undefined behavior
+```
+
+:::
+
+::: {.myoverbox .fragment fragment-index=2 .vlow}
+
+```
+error[E0597]: `v` does not live long enough
+ --> src/lib.rs:3:12
+  |
+2 | fn dangling_pointer(v: Vec<i32>) -> i32 {
+  |                     - binding `v` declared here
+3 |     ptr = &v[0];
+  |     -------^---
+  |     |      |
+  |     |      borrowed value does not live long enough
+  |     assignment requires that `v` is borrowed for `'static`
+4 |     return v[0];
+5 | }
+  | - `v` dropped here while still borrowed
+```
+
+:::
 
 
 ### borrowing (2a)  {.smaller}
@@ -125,7 +186,6 @@ fn foo() {
     }
     println!("vector[0] is {}" , vector[0]);
 }
-
 ```
 
 

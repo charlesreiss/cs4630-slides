@@ -19,6 +19,10 @@
 
 {{< include /betterpl/_rust-syntax-basic.qmd >}}
 
+## vectors in Rust {visibility="hidden"}
+
+{{< include /betterpl/_rust-syntax-vec.qmd >}}
+
 ## functions for types {visibility="hidden"}
 
 {{< include /betterpl/_rust-syntax-impl.qmd >}}
@@ -53,21 +57,65 @@
 
 # Rust: stopping dangling pointers {visibility="hidden"}
 
-{{< include /betterpl/_rust-no-dangle-rules.qmd >}}
+### rules to stop dangling pointers  {.smaller}
 
-## borrowing {visibility="hidden"}
+* [objects have an single <i>owner</i>]{.fragment .custom .myem-only fragment-index=1}
+* [owner can give away ownership permanently]{.fragment .custom .myem-only fragment-index=2}
+   * object is ‘‘moved’’
+* [owner can let someone borrow object temporarily]{.fragment .custom .myem-only fragment-index=3}
+   * allows us to give away reference to object
+   * track as if object temporarily moved
+   * need to know how long object is borrowed for
+* can borrow object for reading while others also reading
+   * don't need to force exclusive owner/borrower of object
+   * need to distinguish mutable and immutable borrowing
+* only modify object when exactly one user 
+   * owner or exclusive borrower
+
+## borrowing (simple) {visibility="hidden"}
 
 {{< include /betterpl/_rust-borrowing.qmd >}}
+
 
 ## exercise {visibility="hidden"}
 
 {{< include /betterpl/_rust-no-dangle-rules-apply.qmd >}}
 
-## lifetimes {visibility="hidden"}
+## borrowing (multiple readers) {visibility="hidden"}
 
-## motivation{visibility="hidden"}
+### rules to stop dangling pointers  {.smaller}
 
-### againframe(dangleRules)
+* objects have an single <i>owner</i>
+* owner can give away ownership permanently
+   * object is ‘‘moved’’
+* owner can let someone borrow object temporarily
+   * allows us to give away reference to object
+   * track as if object temporarily moved
+   * need to know how long object is borrowed for
+* <em>can borrow object for reading while others also reading</em>
+   * don't need to force exclusive owner/borrower of object
+   * need to distinguish mutable and immutable borrowing
+* only modify object when exactly one user 
+   * owner or exclusive borrower
+
+{{< include /betterpl/_rust-borrowing-2read.qmd >}}
+
+## Rust lifetimes {visibility="hidden"}
+
+### rules to stop dangling pointers  {.smaller}
+
+* objects have an single <i>owner</i>
+* owner can give away ownership permanently
+   * object is ‘‘moved’’
+* owner can let someone borrow object temporarily
+   * allows us to give away reference to object
+   * track as if object temporarily moved
+   * <em>need to know how long object is borrowed for</em>
+* can borrow object for reading while others also reading
+   * don't need to force exclusive owner/borrower of object
+   * need to distinguish mutable and immutable borrowing
+* only modify object when exactly one user 
+   * owner or exclusive borrower
 
 {{< include /betterpl/_why-lifetimes.qmd >}}
 
@@ -77,7 +125,20 @@
 
 ## one writer {visibility="hidden"}
 
-### againframe(dangleRules)
+### rules to stop dangling pointers (v 2)  {.smaller}
+
+* objects have an single <i>owner</i>
+* owner can give away ownership permanently
+   * object is ‘‘moved’’
+* owner can let someone borrow object temporarily
+   * allows us to give away reference to object
+   * track as if object temporarily moved
+   * need to know how long object is borrowed for
+* can borrow object for reading while others also reading
+   * don't need to force exclusive owner/borrower of object
+   * need to distinguish mutable and immutable borrowing
+* <em>only modify object when exactly one user</em>
+   * owner or exclusive borrower
 
 {{< include /betterpl/_rust-borrowing-mut.qmd >}}
 

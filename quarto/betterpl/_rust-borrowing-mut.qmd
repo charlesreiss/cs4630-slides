@@ -1,5 +1,34 @@
+### no multiple writers (1)
 
-### borrowing (3a)  {.smaller}
+```rust
+fn get_mut_min_max(v: &mut Vec<i32>) -> (&mut i32, &mut i32) {
+    let (mut min, mut max) = (&mut v[0], &mut v[0]);  // ERROR
+    for i in 1..v.len() {
+        if v[i] < *min { min = &mut v[i]; }
+        if v[i] > *max { max = &mut v[i]; }
+    }
+    return (min, max);
+}
+```
+
+::: {.myoverbox .fragment .low}
+```
+error[E0499]: cannot borrow `*v` as mutable more than once at a time
+ --> src/main.rs:2:47
+  |
+1 | fn get_mut_min_max(v: &mut Vec<i32>) -> (&mut i32, &mut i32) {
+  |                       - let's call the lifetime of this reference `'1`
+2 |     let (mut min, mut max) = (&mut v[0], &mut v[0]);
+  |                                    -          ^ second mutable borrow occurs here
+  |                                    |
+  |                                    first mutable borrow occurs here
+...
+7 |     return (min, max);
+  |            ---------- returning this value requires that `*v` is borrowed for `'1`
+```
+:::
+
+### no multiple writers (2) {.smaller}
 
 
 ```rust
@@ -17,9 +46,24 @@ fn foo() {
     println!("*first_elem is {}", *first_elem); // ERROR
 }
 
+::: {.myoverbox .fragment .low}
+
 ```
-  ![](/betterpl/texfig/rustBorrowing3a.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/betterpl/texfig/rustBorrowing3a.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+error[E0502]: cannot borrow `vector` as mutable because it is also borrowed as immutable
+  --> src/main.rs:11:10
+   |
+9  |     let first_elem: &u32 = &vector[0];
+   |                             ------ immutable borrow occurs here
+10 |     println!("*first_elem is {}", *first_elem);
+11 |     add1(&mut vector);
+   |          ^^^^^^^^^^^ mutable borrow occurs here
+12 |     println!("*first_elem is {}", *first_elem);
+   |                                   ----------- immutable borrow later used here
+```
+
+:::
+
+```
 
 
 ### borrowing (3b)  {.smaller}

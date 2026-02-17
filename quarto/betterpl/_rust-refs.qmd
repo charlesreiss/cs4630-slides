@@ -13,6 +13,7 @@ fn main() {
     let z: &u32 = &x;
 
     println!("x = {}; z = {}", x, z);
+    // x = 100; z = 100
 }
 ```
 

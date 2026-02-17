@@ -1,5 +1,5 @@
 
-### ownership exercise  {.smaller}
+### ownership exercise
 
 If called like <code>p = foo(p)</code>, which follow single-owner rule? 
 
@@ -7,7 +7,7 @@ If called like <code>p = foo(p)</code>, which follow single-owner rule?
 
 ::: {.column width="50%"}
  
-```
+```c
 // (A)
 char *foo(char *p) {
     free(p);
@@ -27,7 +27,7 @@ char *foo(char *p) {
 
 ::: {.column width="50%"}
  
-```
+```c
 // (C)
 char *global;
 char *foo(char *p) {

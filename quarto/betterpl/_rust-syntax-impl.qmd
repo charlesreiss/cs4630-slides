@@ -21,7 +21,7 @@ impl Rectangle {
 
 fn foo(rect: &mut Rectangle) {
     let size = rect.area();
-    rect.multiple_size(4);
+    rect.multiply_size(4);
 }
 
 ```
@@ -31,7 +31,9 @@ fn foo(rect: &mut Rectangle) {
 
 
 ```rust
-// import std.cmp.PartialEq; import std.cmp.Eq;
+import std::cmp::PartialEq;
+import std::cmp::Eq;
+
 pub struct Rectangle {
     width: u32,
     height: u32
@@ -45,11 +47,36 @@ impl PartialEq for Rectangle {
 }
 
 impl Eq for Rectangle {}
-
 ```
 
+### traits (1b)  {.smaller}
 
-### traits (1b) 
+```rust
+impl PartialEq for Rectangle {
+    fn eq(&self, other: &Rectangle) -> bool { ... }
+}
+```
+<hr/>
+can write function that uses that impl:
+```rust
+fn print_if_equal1(x: Rectangle, y: Rectangle) {
+    if x.eq(&y) { println!("EQUAL"); }
+}
+
+// special rule: == calls PartialEq::eq
+fn print_if_equal2(x: Rectangle, y: Rectangle) {
+    if x == y { println!("EQUAL"); }
+}
+```
+<hr/>
+or that works for anything with `impl PartialEq`:
+```rust
+fn print_if_equal_generic<T: PartialEq>(x: T, y: T) {
+    if x == y { println!("EQUAL"); }
+}
+```
+
+### traits (1c) 
 
 
 ```rust
@@ -58,7 +85,6 @@ pub struct Rectangle {
     width: u32,
     height: u32
 }
-
 ```
 
 
@@ -81,6 +107,17 @@ impl ShapeOps for Square {
         ...
     }
 }
-
 ```
 
+### traits (3)
+
+```rust
+trait ShapeOps {
+    fn draw(&self, canvas: &mut Canvas);
+}
+
+fn drawCentered<T: ShapeOps>(shape: &T, canvas: &mut Canvas) {
+    canvas.moveToCenter();
+    shape.draw(canvas);
+}
+```

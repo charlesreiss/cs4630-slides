@@ -31,10 +31,24 @@ fn foo() {
     // ERROR
     println!("vector[0] is {}" , vector[0]);
 }
+```
+
+::: {.myoverbox .fragment .high}
 
 ```
- ![](/betterpl/texfig/rustOwnership1.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/betterpl/texfig/rustOwnership1.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+Compiling lecture-demo v0.1.0 (file:///home/cr4bd/spring2017/cs4630/...
+error[E0382]: use of moved value: `vector`
+  --> src/main.rs:16:34
+   |
+13 |     let sum = mysum(vector);
+   |                     ------ value moved here
+...
+16 |     println!("vector[0] is {}" , vector[0]);
+   |                                  ^^^^^^ value used here after move
+```
+
+:::
+
 
 
 ### Rust objects and ownership (2)  {.smaller}
@@ -58,11 +72,7 @@ fn foo() {
     println!("Sum is {}", sum);
     println!("vector[0] is {}" , newVector[0]);
 }
-
 ```
- ![](/betterpl/texfig/rustOwnership2.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/betterpl/texfig/rustOwnership2.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
-
 
 ### moving?  {.smaller}
 
@@ -94,11 +104,14 @@ fn foo() {
     println!("Sum is {}", sum);
     println!("vector[0] is {}" , newVector[0]);
 }
-
 ```
- ![](/betterpl/texfig/rustOwnership3.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/betterpl/texfig/rustOwnership3.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
 
+::: {.myoverbox .fragment}
+
+mysum takes vector, then gives it back <br />
+internally doesn't make copy to move vector
+
+:::
 
 ### ownership rules 
 

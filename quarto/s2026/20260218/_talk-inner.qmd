@@ -1,10 +1,41 @@
 ### last time {.smaller}
 
+*  stack smashing pattern
+*  overflow into return address
+*  place address of part of buffer in return address
+*  place machine code ("shellcode") in that part of buffer
+
+*  identifying stack locations
+   *  counting from start (if no randomization)
+   *  in debugger
+*  "nop sled" --- repeated nops
+   *  avoid requiring precise location of shellcode
+
 ### assignment Q+A
 
 ### traveling this week
 
-{{< include /overflow-smash/_talk-inner.qmd >}}
+## nop sleds{visibility="hidden"}
+
+{{< include /overflow-smash/_nop-sled.qmd >}}
+
+{{< include /overflow-smash/_nop-sled-use.qmd >}}
+
+# example: Morris worm stack smashing {visibility="hidden"}
+
+{{< include /overflow-smash/_morris-worm-smash.qmd >}}
+
+# restricted characters in shell code {visibility="hidden"}
+
+{{< include /overflow-smash/_shell-code-restricted.qmd >}}
+
+# restricted characters in pointers {visibility="hidden"}
+
+{{< include /overflow-smash/_pointer-restricted.qmd >}}
+
+# review: tricky parts of stack smashing {visibility="hidden"}
+
+{{< include /overflow-smash/_stack-smash-tricky.qmd >}}
 
 {{< include /mitigate-stack/_talk-inner.qmd >}}
 

@@ -194,19 +194,24 @@ xor $0x41, %ax
 ```
 
 
-### falling through to written code 
+### falling through to written code on stack
 
 
 ```
-[start of shellcode]
-... set %rax to `syscall' machine code
-push %rax
+/* beginning of shellcode */
+/* ... set %rbx, %rax to contain machine code ... */
+popq %rcx 
+popq %rcx 
+pushq %rax
+pushq %rbx
+nop
+nop
+nop
 ...
-...
-[stack pointer starts here]
-...
-[return address was here]
-
+.long 0  /* <-- %rsp pointers here after first pop */
+.long 0  /* <-- %rsp points here when shellcode starts */
+/* overwritten return address: */
+.long pointer_to_shellcode
 ```
 
 

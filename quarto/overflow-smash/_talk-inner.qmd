@@ -71,6 +71,10 @@
 
 {{< include /overflow-smash/_stackloc-vary.qmd >}}
 
+## how the stack starts on Linux {visibility="hidden"}
+
+{{< include /overflow-smash/_linux-initial-stack.qmd >}}
+
 ## setting return address {visibility="hidden"}
 
 {{< include /overflow-smash/_smash-set-ret.qmd >}}
@@ -83,13 +87,6 @@
 
 {{< include /overflow-smash/_smash-set-ret-ex-alt.qmd >}}
 
-## still varies without ASLR? {visibility="hidden"}
-
-{{< include /overflow-smash/_stackloc-vary.qmd >}}
-
-## how the stack starts on Linux {visibility="hidden"}
-
-{{< include /overflow-smash/_linux-initial-stack.qmd >}}
 
 ## nop sleds{visibility="hidden"}
 

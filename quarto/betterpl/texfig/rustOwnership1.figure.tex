@@ -1,0 +1,24 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\newsavebox{\rustOwnershipError}
+\begin{document}
+\begin{lrbox}{\rustOwnershipError}
+\begin{lstlisting}[language={},style=script]
+Compiling lecture-demo v0.1.0 (file:///home/cr4bd/spring2017/cs4630/...
+error[E0382]: use of moved value: `vector`
+  --> src/main.rs:16:34
+   |
+13 |     let sum = mysum(vector);
+   |                     ------ value moved here
+...
+16 |     println!("vector[0] is {}" , vector[0]);
+   |                                  ^^^^^^ value used here after move
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{betterpl/texfig/rustOwnership1.inner.tex}
+\setSlide{2}
+\input{betterpl/texfig/rustOwnership1.inner.tex}
+\end{document}

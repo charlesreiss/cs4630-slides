@@ -1,0 +1,13 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+        \coordinate (box) at (current page.center);
+        \begin{visibleenv}<2>
+            \node[my callout=mut,anchor=center,align=left] at ([yshift=2cm]box) {
+                ``result'' is a mutable variable \\
+                type automatically inferred as i32 (32-bit int)
+            };
+        \end{visibleenv}
+    \end{scope}
+\end{tikzpicture}

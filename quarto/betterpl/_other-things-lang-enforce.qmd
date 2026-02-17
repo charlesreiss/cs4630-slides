@@ -1,0 +1,22 @@
+
+### other things languages can enforce?  {.smaller}
+
+
+* saw: enforcing no use-after-free
+* lots of coding conventions we might try to enforce: 
+<hr class="vspace" />
+* code's runtime does not depend on secret data 
+
+   * secret data has different type
+   * variable time operations prohibited with secret data
+
+* sensitive data not passed to wrong place 
+
+   * sensitive data has different type
+   * assignment to wrong places is a type error
+
+* code has bounded runtime 
+
+   * langauge prohibits not unbounded loops, recursion, etc.
+
+

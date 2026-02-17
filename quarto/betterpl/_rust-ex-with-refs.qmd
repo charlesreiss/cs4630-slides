@@ -1,0 +1,28 @@
+
+### Rust example with refs  {.smaller}
+
+
+```rust
+use std::io;
+
+fn main() {
+    println!("Enter a number: ");
+
+    let mut|\tikzmark{mut}| input = String::new();
+    // could have also written:
+    //   let mut input: String = String::new();
+    
+    io::stdin().read_line(&mut|\tikzmark{ref}| input);
+
+    // parse number or fail with an error message
+    let number: u32|\tikzmark{int}| = input.trim().parse()
+        .expect("That was not a number!");
+    println!("Twice that number is: {}", number * 2);
+}
+
+```
+ ![](/betterpl/texfig/rust-ex-with-refs.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/betterpl/texfig/rust-ex-with-refs.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+![](/betterpl/texfig/rust-ex-with-refs.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=3}
+![](/betterpl/texfig/rust-ex-with-refs.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=4}
+

@@ -1,0 +1,29 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\newsavebox{\refCountingError}
+\begin{document}
+\begin{lrbox}{\refCountingError}
+\begin{lstlisting}[language={},style=script]
+error[E0597]: `s2` does not live long enough
+  --> src/main.rs:9:19
+   |
+7  |         let s2: Rc<String> = Rc::new(String::from("example"));
+   |             -- binding `s2` declared here
+8  |         s1 = Rc::clone(&s2);
+9  |         s_ref = &*s2;
+   |                   ^^ borrowed value does not live long enough
+...
+14 |     }
+   |     - `s2` dropped here while still borrowed
+...
+17 |     println!("{}", s_ref);
+   |                    ----- borrow later used here
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{betterpl/texfig/refCountingEx0b.inner.tex}
+\setSlide{2}
+\input{betterpl/texfig/refCountingEx0b.inner.tex}
+\end{document}

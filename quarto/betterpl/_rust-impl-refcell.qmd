@@ -1,0 +1,186 @@
+
+### Rust escape hatch support  {.smaller}
+
+
+* escape hatch: make new reference-like types 
+
+   * (… implemented by returning temporary ‘real’ references)
+
+* RefCell: `borrow_mut()` method gives mutable-ref-like object 
+
+   * crashed if conflicting borrowing active
+
+* RefCell\<T> `x`: `x.borrow()` gives immutable-ref-like object 
+
+   * crashed if conflicting borrowing active
+
+* callbacks on ownership ending (normally deallocation) 
+
+   * Rust compiler enforces that ref-like object not in use when free call made
+   * RefCell\<T> --- deallocate normally
+
+* choice of what happens on move/copy 
+
+   * RefCell\<T> ---- no implicit copy of RefCell or ref-like objects
+
+
+
+### alternate rule: tracked usage (RefCell)  {.smaller}
+
+
+* runtime-enforced version of Rust borrowing rules
+* <code>borrow_mut()</code>: give `&mut T`-like object only if other active borrows 
+
+   * increment counter of active mutable borrows (instead of tracking statically)
+   * decrement counter when `&mut T` no longer in use
+
+* <code>borrow()</code>: give `&T`-like object only if no active mutable borrows 
+
+   * increment counter of active immutable borrows
+   * decrement counter when `&T` no longer in use
+
+
+
+### RefCell example (0)  {.smaller}
+
+
+```rust
+fn myadd(x: &RefCell<i32>, y: &RefCell<i32>, z: &RefCell<i32>) {
+    let mut x_value = x.borrow_mut();
+    let y_value = y.borrow();
+    let z_value = z.borrow();
+    *x_value += *y_value;
+    *x_value += *z_value;
+    println!("{}, {}, {}", x_value, y_value, z_value);
+}
+
+fn main() {
+    let x: RefCell<i32> = RefCell::new(1);
+    let y: RefCell<i32> = RefCell::new(2);
+    let z: RefCell<i32> = RefCell::new(3);
+    
+    myadd(&x, &y, &z); // 6, 2, 3
+    myadd(&x, &y, &y); // 10, 2, 2
+    myadd(&x, &x, &x); // RUNTIME ERROR
+}
+
+```
+
+
+### RefCell example (1)  {.smaller}
+
+
+```rust
+fn appendsum(x: &RefCell<Vec<i32>>, y: &RefCell<Vec<i32>>, z: &RefCell<Vec<i32>>) {
+    let mut x_value = x.borrow_mut();
+    let y_value = y.borrow();
+    let z_value = z.borrow();
+    let i = 0;
+    for (y_number, z_number) in y_value.iter().zip(z_value.iter()) {
+        x_value.push(y_number + z_number);
+    }
+    println!("{:?}", *x_value)
+}
+
+fn main() {
+    let x: RefCell<Vec<i32>> = RefCell::new(vec![1]);
+    let y: RefCell<Vec<i32>> = RefCell::new(vec![2]);
+    let z: RefCell<Vec<i32>> = RefCell::new(vec![3]);
+    
+    appendsum(&x, &y, &z);
+    appendsum(&x, &y, &y);
+    appendsum(&x, &x, &x);
+}
+
+```
+
+
+### againframe(escapeHatchSupportRefCell)
+
+### approx RefCell implementation (1)  {.smaller}
+
+
+```rust
+pub struct RefCell<T: ?Sized> {
+    // mutable integer
+        // set to -1 on mutable borrow
+        // incremented on immutable borrow
+    borrow: Cell<BorrowFlag>,
+    value: UnsafeCell<T>,
+}
+
+pub fn borrow_mut(&self) -> RefMut<'_, T> { ... }
+
+pub struct RefMut<'b, T: ?Sized + 'b> {
+    value: NonNull<T>,
+    borrow: BorrowRefMut<'b>,
+    ...
+}
+
+```
+ 
+
+* RefMut = type that acts like reference (<code>Deref</code>, <code>DerefMut</code>)
+* BorrowRefMut = contains pointer to Cell\<BorrowFlag>, handles updates
+
+
+### approx RefCell implementation (RefMut)  {.smaller}
+
+
+```rust
+pub struct RefMut<'b, T: ?Sized + 'b> {
+    value: NonNull<T>,
+    borrow: BorrowRefMut<'b>,
+    ...
+}
+
+impl<T: ?Sized> DerefMut for RefMut<'_, T> {
+    fn deref_mut(&mut self) -> &mut T {
+        unsafe { self.value.as_mut() }
+    }
+}
+
+```
+
+
+### RefMut idea  {.smaller}
+
+
+* RefMut acts like a mutable reference value 
+
+   * DerefMut implementation allows conversion to reference when needed
+   * done automatically when you try to use like reference
+   * (also similar non-mutable reference wrapper type)
+
+* compiler automatically <code>drop</code>s when it goes out of scope
+* compiler knows RefMut contains item with lifetime <code>'b</code>  
+
+   * compile-time error to use for too long
+
+
+
+### approx RefCell implementation (BorrowRefMut)  {.smaller}
+
+
+```rust
+struct BorrowRefMut<'b> {
+    borrow: &'b Cell<BorrowFlag>,
+}
+impl Drop for BorrowRefMut<'_> {
+    fn drop(&mut self) {
+        let borrow = self.borrow.get(); self.borrow.set(borrow + 1);
+    }
+}
+impl<'b> BorrowRefMut<'b> {
+    fn new(borrow: &'b Cell<BorrowFlag>) -> Option<BorrowRefMut<'b>> {
+        match borrow.get() {
+            UNUSED => {
+                borrow.set(UNUSED - 1); Some(BorrowRefMut { borrow })
+            }
+            _ => None,
+        }
+    }
+}
+
+```
+

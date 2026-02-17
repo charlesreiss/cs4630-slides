@@ -1,0 +1,133 @@
+
+### borrowing (3a)  {.smaller}
+
+
+```rust
+fn add1(vector: &mut Vec<u32>) {
+    for value in vector {
+        *value += 1
+    }
+}
+
+fn foo() {
+    let mut vector: Vec<u32> = vec![1, 2, 3];
+    let first_elem: &u32 = &vector[0];
+    println!("*first_elem is {}", *first_elem);
+    add1(&mut vector);
+    println!("*first_elem is {}", *first_elem); // ERROR
+}
+
+```
+  ![](/betterpl/texfig/rustBorrowing3a.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/betterpl/texfig/rustBorrowing3a.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+
+
+### borrowing (3b)  {.smaller}
+
+
+```rust
+fn append1(vector: &mut Vec<u32>) {
+    vector.push(1);
+}
+
+fn foo() {
+    let mut vector: Vec<u32> = vec![1, 2, 3];
+    let first_elem: &u32 = &vector[0];
+    println!("*first_elem is {}", *first_elem);
+    append1(&mut vector);
+    println!("*first_elem is {}", *first_elem); // ERROR
+}
+
+```
+  ![](/betterpl/texfig/rustBorrowing3b.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/betterpl/texfig/rustBorrowing3b.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+
+
+### aside: find the bug  {.smaller}
+
+
+```
+struct vec { int *data; int size; };
+void append1(struct vec *v) {
+    v.data = realloc(v.data, sizeof(int) * (v.size + 1));
+    v.data[v.size] = 1;
+    v.size += 1;
+}
+
+void foo() {
+    struct vec vector;
+    vector.data = malloc(sizeof(int) * 3);
+    vector.data[0] = 1; vector.data[1] = 2; vector.data[2] = 3;
+    vector.size = 3;
+    int *first_elem = &vector.data[0];
+    printf("*first_elem is %d\n", *first_elem);
+    append1(&vector);
+    printf("*first_elem is %d\n"", *first_elem);
+}
+
+```
+
+
+### borrowing (4a)  {.smaller}
+
+
+```rust
+fn add1(vector: &mut Vec<u32>) {
+    for value in vector {
+        *value += 1
+    }
+}
+
+fn foo() {
+    let mut vector: Vec<u32> = vec![1, 2, 3];
+    // (lifetime of first_elem starts here)
+    let first_elem: &mut u32 = &mut vector[0];
+    *first_elem += 1;
+    // (lifetime of first_elem ends here)
+    add1(&mut vector);
+    println!("vector is {:?}", vector);  // [3, 3, 4]
+}
+
+```
+
+
+### borrowing (4b)  {.smaller}
+
+
+```rust
+fn add1(vector: &mut Vec<u32>) {
+    for value in vector {
+        *value += 1
+    }
+}
+
+fn foo() {
+    let mut vector: Vec<u32> = vec![1, 2, 3];
+    // (lifetime of first_elem starts here)
+    let first_elem: &mut u32 = &mut vector[0];
+    add1(&mut vector); 
+    *first_elem += 1; // ERROR, two mutable borrowings of vector
+    // (lifetime of first_elem ends here)
+    println!("vector is {:?}", vector);  
+}
+
+```
+  ![](/betterpl/texfig/rustBorrowing4b.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/betterpl/texfig/rustBorrowing4b.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+
+
+### borrowing (4c)  {.smaller}
+
+
+```rust
+fn foo() {
+    let mut vector: Vec<u32> = vec![1, 2, 3];
+    let first_elem: &mut u32 = &mut vector[0];
+    vector[1] += 2;  // ERROR: two mutable borrowings
+    *first_elem += 1;
+}
+
+```
+  ![](/betterpl/texfig/rustBorrowing4c.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/betterpl/texfig/rustBorrowing4c.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+

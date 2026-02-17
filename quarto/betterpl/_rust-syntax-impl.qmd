@@ -1,0 +1,86 @@
+
+### methods in Rust (1)  {.smaller}
+
+
+```rust
+pub struct Rectangle {
+    width: u32,
+    height: u32
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+
+    fn multiply_size(&mut self, amount: u32) {
+        self.width *= amount;
+        self.height *= amount;
+    }
+}
+
+fn foo(rect: &mut Rectangle) {
+    let size = rect.area();
+    rect.multiple_size(4);
+}
+
+```
+
+
+### traits (1a)  {.smaller}
+
+
+```rust
+// import std.cmp.PartialEq; import std.cmp.Eq;
+pub struct Rectangle {
+    width: u32,
+    height: u32
+}
+
+impl PartialEq for Rectangle {
+    fn eq(&self, other: &Rectangle) -> bool {
+        self.width == other.width &&
+        self.height == other.height
+    }
+}
+
+impl Eq for Rectangle {}
+
+```
+
+
+### traits (1b) 
+
+
+```rust
+#[derive(PartialEq,Eq)]
+pub struct Rectangle {
+    width: u32,
+    height: u32
+}
+
+```
+
+
+### traits (2)  {.smaller}
+
+
+```rust
+trait ShapeOps {
+    fn draw(&self, canvas: &mut Canvas);
+}
+
+impl ShapeOps for Rectangle {
+    fn draw(&self, canvas: &mut Canvas) {
+        ...
+    }
+}
+
+impl ShapeOps for Square {
+    fn draw(&self, canvas: &mut Canvas) {
+        ...
+    }
+}
+
+```
+

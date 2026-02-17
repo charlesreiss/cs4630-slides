@@ -1,0 +1,19 @@
+
+### use-after-free easy cases  {.smaller}
+
+
+* common problem for JavaScript implementations
+* use-after-free'd object often some complex C++ object 
+
+   * example: representation of video stream
+
+* exploits can <em>choose type of object that replaces</em> 
+
+   * allocate that kind of object in JS
+
+* can often arrange to read/write vtable pointer 
+
+   * depends on layout of thing created
+   * easy examples: string, array of floating point numbers
+
+

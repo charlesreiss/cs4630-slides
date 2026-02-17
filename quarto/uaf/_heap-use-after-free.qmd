@@ -1,0 +1,48 @@
+
+### vulnerable code 
+
+<!-- \lstset{
+    language=C++,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+} -->
+ 
+
+::: {.r-stack}
+![](/uaf/texfig/vulnUAF.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/uaf/texfig/vulnUAF.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+
+:::
+
+
+### realistic use-after-free  {.smaller}
+
+
+* code shown above seems very contrived
+* though bugs that are this simple do happen 
+
+   * usually immediate reuse does not cause problems
+ 
+<hr class="vspace" />
+* one likely case: two pointers to value 
+
+   * example: object referenced from webpage + local variables in javascript
+   * example: object freed from one thread while another uses it
+   * example: ‘‘reference count’’ bookkeeping error
+
+* neglecting to handle case
+
+
+###   {.smaller}
+
+
+![](/uaf/uaf-causes-raid){}
+ [Chen, Liu, Xiao, and Wang, ‘‘All Use-After-Free Vulnerabilities are not Created Equal: An Empirical Study on Their Characteristics and Detectability’’ (2023)]{.mycredit}
+
+###   {.smaller}
+
+
+![](/uaf/uaf-distance){}
+ <br> (LOFTLOD = line of free to line of dereference; BB = basic block) [Chen, Liu, Xiao, and Wang, ‘‘All Use-After-Free Vulnerabilities are not Created Equal: An Empirical Study on Their Characteristics and Detectability’’ (2023)]{.mycredit}

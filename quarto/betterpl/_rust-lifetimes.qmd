@@ -1,0 +1,104 @@
+
+### lifetimes 
+
+
+* every reference in Rust has a <em>lifetime</em>
+* intuitively: how long reference is usable
+* Rust compiler infers and checks lifetimes
+
+
+### lifetime rules  {.smaller}
+
+
+* object is borrowed for duration of reference lifetime 
+
+   * can't modify object during lifetime
+   * can't let object go out of scope during lifetime
+
+* lifetime of function args must include whole function call
+* references returned from function must have lifetimes 
+
+   * based on arguments or static (valid for entire program)
+
+* references stored in structs must have lifetime longer than struct
+
+
+### lifetime inference 
+
+
+```rust
+fn get_first(values: &Vec<String>) -> &String {
+    return &values[0];
+}
+
+```
+ 
+
+* compiler infers lifetime of return value is same as input
+
+
+### lifetime hard cases  {.smaller}
+
+
+```rust
+// ERROR:
+fn get_first_matching(prefix: &str, values: &Vec<String>)
+                            -> &String {
+    for item in values {
+        if item.starts_with(prefix) {
+            return item
+        }
+    }
+    panic!()
+}
+
+```
+ 
+
+* this is a compile-error, because of the return value
+* compiler need to be told lifetime of return value
+
+
+### lifetime annotations  {.smaller}
+
+
+```rust
+fn get_first_matching<'a, 'b>(prefix: &'a str, values: &'b Vec<String>)
+                            -> &'b String {
+    for item in values {
+        if item.starts_with(prefix) {
+            return item
+        }
+    }
+    panic!()
+}
+
+```
+ 
+
+* prefix has lifetime $a$
+* values and returned string have lifetime $b$
+
+
+### lifetime annotations  {.smaller}
+
+
+```rust
+fn get_first_matching<'a, 'b>(prefix: &'a str, values: &'b Vec<String>)
+                            -> &'b String {
+    for item in values {
+        if item.starts_with(prefix) {
+            return item
+        }
+    }
+    panic!()
+}
+
+fn get_first(values: &Vec<String>) -> &String {
+    let prefix: String = compute_prefix();
+    return get_first_matching(&prefix, values)
+    // prefix deallocated here
+}
+
+```
+

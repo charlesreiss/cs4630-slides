@@ -1,0 +1,73 @@
+
+### exploiting use after-free  {.smaller}
+
+
+* trigger many ‘‘bogus’’ frees; then
+* allocate many things of same size with ‘‘right’’ pattern 
+
+   * pointers to shellcode?
+   * pointers to pointers to <code>system()</code>?
+   * objects with something useful in VTable entry?
+
+* trigger use-after-free thing
+
+
+### use-after-free type confusion  {.smaller}
+
+
+* <em>pointer to struct A used as struct B</em>
+* some applications:
+* [information leak]{.fragment fragment-index=2 .custom .myem-only} 
+
+   * pointer in A overlaps with integer/string/etc. in B
+   * make program set pointer in A, then print value from B
+
+* arbitrary read/write 
+
+   * pointer in A overlaps with integer/string/etc. in B
+   * modify value in B
+   * trigger program to read/write in A
+
+* code execution 
+
+   * VTable pointer in A overlaps integer/sting/etc. in B
+   * modify value in B
+   * trigger program to use VTable to call method in A
+
+
+
+### information leak?  {.smaller}
+
+
+<code>struct Cart {struct String {</code><br />
+<code>int date;char *buffer;</code><br />
+<code>int num_items;&nbsp;</code><br />
+<code>&nbsp;size_t size;</code><br />
+<code>……</code><br />
+<code>};</code>
+ 
+
+* allocate Cart + trigger use-after-Free
+* allocate String
+* read values from use-after-free'd Cart
+
+
+### arbitrary write  {.smaller}
+
+
+<code>struct Cart {struct String {</code><br />
+<code>int date;char *buffer;</code><br />
+<code>int num_items;&nbsp;</code><br />
+<code>…size_t size;</code><br />
+<code>……</code><br />
+<code>};</code>
+ 
+
+* allocate Cart + trigger use-after-free
+* allocate String
+* set date + item count to match pointer value 
+
+   * only date if modifying lower bits of pointer value
+
+* modify value in String
+

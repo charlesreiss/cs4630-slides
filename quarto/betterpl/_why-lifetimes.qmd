@@ -1,0 +1,46 @@
+
+### why lifetimes? (1)  {.smaller}
+
+
+```rust
+let x = vec![1, 2, 3, 4];
+let mut q = &x[1];
+{
+    let mut r = &x[1];
+    let y = vec![5, 6, 7, 8];
+    if random() == 0 {
+        r = &y[1]; // SHOULD BE FINE
+        q = &y[1]; // SHOULD BE ERROR
+    }
+    println!("{}", *r);
+}
+println!("{}", *q);
+
+```
+ 
+
+* need to prevent <code>q</code> referring to values that live too long
+
+
+### why lifetimes? (2)  {.smaller}
+
+
+```rust
+fn mystery(ptr: &i32, vec: &Vec<i32>) -> &i32 {...}
+
+fn example() {
+    ...
+    let mut x = vec![1, 2, 3, 4];
+    let mut q = &x[1];
+    {
+        let mut y = vec![5, 6, 7, 8];
+        q = mystery(q, &y);
+    }
+    println!("{}", *q);
+}
+
+```
+ 
+
+* question: should assignment to be q from mystery be allowed?
+

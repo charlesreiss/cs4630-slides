@@ -1,0 +1,54 @@
+
+### data races 
+
+
+* Rusts rules around modification built assuming concurrency
+* OSes and other ‘‘systems programming’’ applications use multiple cores/threads
+* particular problem: value being used from multiple threads at same time
+
+
+### data races from use-after-free  {.smaller}
+
+
+
+* given x: Rc\<Foo> variable calling x.clone() on two cores 
+
+   * some variable shared between two cores
+   * reference counting will prevent use-after-free, right?
+
+ 
+```
+x.clone on core A           x.clone on core B
+-------------------------------------------
+x.inc_strong():
+  temp <- self.count
+                            x.inc_strong():
+                              temp <- self.count
+                              self.count <- temp + 1
+  self.count <- temp + 1
+
+```
+ 
+
+* problem: reference count one too low!
+
+
+### Rust solution?  {.smaller}
+
+
+* one option: require Rc implementation to handle mutiple cores 
+
+   * problem: not zero overhead
+
+* Rust solution: different types for multithreaded/multicore code
+* two ‘‘traits’’ to mark custom types: 
+
+   * Sync: can be used from multiple cores/threads at once
+   * Send: can be moves from one thread to another
+
+* two implementations of referenc counting 
+
+   * Rc: not suitable for multicore, not marked Sync/Send
+   * Arc: is suitable for multicore, slower than Rc probably
+
+

@@ -1,0 +1,25 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\newsavebox{\rustBorrowingMutError}
+\begin{document}
+\begin{lrbox}{\rustBorrowingMutError}
+\begin{lstlisting}[language={},style=script]
+error[E0499]: cannot borrow `vector` as mutable more than once at a time
+  --> src/main.rs:11:10
+   |
+9  |     let first_elem: &mut u32 = &mut vector[0];
+   |                                     ------ first mutable borrow occurs here
+10 |     *first_elem += 1;
+11 |     add1(&mut vector);
+   |          ^^^^^^^^^^^ second mutable borrow occurs here
+12 |     println!("first_elem is {}", *first_elem);
+   |                                  ----------- first borrow later used here
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{betterpl/texfig/rustBorrowing4b.inner.tex}
+\setSlide{2}
+\input{betterpl/texfig/rustBorrowing4b.inner.tex}
+\end{document}

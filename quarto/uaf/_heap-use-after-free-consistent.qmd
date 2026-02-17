@@ -1,0 +1,20 @@
+
+### consistency?  {.smaller}
+
+
+* how to predict what gets reused? 
+<hr class="vspace" />
+* use debugger + print out all the addreses 
+
+   * look for duplicates
+   * probably fixed number of allocations before duplicate
+
+* allocators like reusing ‘perfectly size’ space 
+
+   * free something + immediately allocate same size
+
+* trigger use-after-free bug lots of times 
+
+   * one of them will match up by accident
+
+

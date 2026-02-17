@@ -1,0 +1,16 @@
+
+### Rust philosophy  {.smaller}
+
+
+* default rules that only allow ‘safe’ things 
+
+   * no dangling pointers
+   * no out-of-bounds accesses
+
+* escape hatch to use ‘‘raw’’ pointers or unchecked libraries
+* escape hatch can be used to write useful libraries 
+
+   * e.g. Vector/ArrayList equivalent
+   * <em>expose interface that is safe</em>
+
+

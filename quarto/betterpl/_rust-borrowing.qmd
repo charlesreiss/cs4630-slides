@@ -1,0 +1,141 @@
+
+### borrowing (1)  {.smaller}
+
+
+```rust
+fn mysum(vector: &Vec<u32>) -> u32 {
+    let mut total: u32 = 0
+    for value in vector {
+        total += value
+    }
+    return total
+}
+
+fn foo() {
+    let vector: Vec<u32> = vec![1, 2, 3];
+    let sum = mysum(&vector);
+    // automates (vector, sum) = mysum(vector) idea
+    
+    println!("Sum is {}", sum);
+    println!("vector[0] is {}" , vector[0]);
+}
+
+```
+
+
+### dangling pointers? (1a)  {.smaller}
+
+
+```
+int *dangling_pointer() {
+    int array[3] = {1,2,3};
+    return &array[0]; // not an error
+}
+
+```
+ \\hrulefill{} 
+```rust
+fn dangling_pointer() -> &mut i32 {
+    let array = vec![1,2,3];
+    return &mut array[0]; // ERROR
+}
+
+```
+  ![](/betterpl/texfig/dangling1a.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/betterpl/texfig/dangling1a.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+
+
+### dangling pointers? (1b)  {.smaller}
+
+
+```rust
+/* 'static = "valid forever" */
+fn dangling_pointer() -> &'static mut i32 {
+    let array = vec![1,2,3];
+    return &mut array[0]; // ERROR
+}
+
+```
+  ![](/betterpl/texfig/dangling1b.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/betterpl/texfig/dangling1b.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+
+
+### dangling pointers? (2)  {.smaller}
+
+
+```
+int *ptr;
+int dangling_pointer(int *array) {
+    ptr = &array[0];
+    return array[0];
+}
+
+```
+ \\hrulefill{} 
+```rust
+static mut ptr : &i32 = &0;
+fn dangling_pointer(v: Vec<i32>) -> i32 {
+    ptr = &v[0];
+    return v[0];
+}
+
+```
+   ![](/betterpl/texfig/dangling2.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/betterpl/texfig/dangling2.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+![](/betterpl/texfig/dangling2.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=3}
+
+
+### borrowing (2a)  {.smaller}
+
+
+```rust
+fn add1(vector: &mut Vec<u32>) {
+    for value in vector {
+        *value += 1
+    }
+}
+
+fn foo() {
+    let mut vector: Vec<u32> = vec![1, 2, 3];
+    add1(&mut vector);
+    println!("vector[0] is {}" , vector[0]);
+}
+
+```
+
+
+### borrowing (2b)  {.smaller}
+
+
+```rust
+fn add1(vector: &mut Vec<u32>) {
+    for value in vector {
+        *value += 1
+    }
+}
+
+fn foo() {
+    let mut vector: Vec<u32> = vec![1, 2, 3];
+    // what previous example was basically shorthand for
+    {
+        let borrowed = &mut vector;
+        // borrowing vector here...
+        add1(borrowed);
+        // until here
+    }
+    println!("vector[0] is {}" , vector[0]);
+}
+
+```
+
+
+### borrow tracking 
+
+
+* compiler finds <i>lifetime</i> of borrowing 
+
+   * when is new reference to object created
+   * when is last use of reference to object
+
+* compiler checks for overlap with all other borrowings of that object
+

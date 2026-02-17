@@ -1,0 +1,13 @@
+
+### better programming languages  {.smaller}
+
+
+* get better information from programmer
+* ideal: eliminate memory errors <em>without making program slower</em>
+* some overlap with static analysis 
+
+   * information used to prove no memory errors
+
+* example: ‘‘smart pointer’’ libraries for C++
+* example: Rust
+

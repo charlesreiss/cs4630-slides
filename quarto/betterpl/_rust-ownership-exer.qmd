@@ -1,0 +1,48 @@
+
+### ownership exercise  {.smaller}
+
+If called like <code>p = foo(p)</code>, which follow single-owner rule? <br> 
+:::: {.columns}
+
+::: {.column width="50%"}
+ 
+```
+// (A)
+char *foo(char *p) {
+    free(p);
+    return NULL;
+}
+
+// (B)
+char *foo(char *p) {
+    p = realloc(p, strlen(p) + 100);
+    strcat(p, "test");
+    return p;
+}
+
+```
+ 
+:::
+
+::: {.column width="50%"}
+ 
+```
+// (C)
+char *global;
+char *foo(char *p) {
+    if (p) free(p);
+    return global;
+}
+
+// (D)
+char *foo(char *p) {
+    p[0] = 'A';
+    return p;
+}
+
+```
+ 
+:::
+
+::::
+

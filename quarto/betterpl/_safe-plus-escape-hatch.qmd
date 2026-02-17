@@ -1,0 +1,13 @@
+
+### safety rules + escape hatch  {.smaller}
+
+
+* idea: can avoid out-of-bounds, etc. with safety rules
+* … but safety rules don't allow us to do some things fast 
+<hr class="vspace" />
+* so: have ‘‘escape hatch’’ to avoid safety checks in those cases
+* hope: code that uses escape hatch can be tightly checked 
+
+   * good target for expensive program analysis
+
+

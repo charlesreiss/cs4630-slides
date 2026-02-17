@@ -1,0 +1,41 @@
+
+### easy heap reuse 
+
+
+* strategy of keeping linked list of free items?
+* simplest way to write code: 
+
+   * free() = add to head of list
+   * malloc() = scan from head of list
+
+* if done, makes it easy to predict what will reuse allocation
+
+
+### complicating easy reuse  {.smaller}
+
+
+* usually can't precisely control what is allocated/free'd
+* some allocators mostly use different ordering than last in, first-out 
+
+   * example: lowest to highest address
+
+* often different lists for different size ranges/threads
+* freeing big object may make space for multiple future allocations
+
+
+### aside: heap feng shui/grooming  {.smaller}
+
+
+* [http://www.phreedom.org/research/heap-feng-shui/heap-feng-shui.html](http://www.phreedom.org/research/heap-feng-shui/heap-feng-shui.html)
+* one idea:
+* allocate lots of objects to fill up likely holes 
+
+   * choose sizes/etc. based on allocator
+   * allocators usually have separate ‘regions’ for different sizes
+
+* allocate three objects of appropriate size 
+
+   * probably three consecutive allocations
+
+* free ‘middle’ object + expect it to be reused
+

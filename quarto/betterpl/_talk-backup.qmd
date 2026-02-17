@@ -1,0 +1,4 @@
+
+## Rust linked list {visibility="hidden"}
+
+{{< include /betterpl/_rust-ll.qmd >}}

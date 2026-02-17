@@ -1,0 +1,10 @@
+---
+title: "betterpl"
+
+---
+
+{{< include ../betterpl/_talk-inner.qmd >}}
+
+# Backup slides
+
+{{< include ../betterpl/_talk-backup.qmd >}}

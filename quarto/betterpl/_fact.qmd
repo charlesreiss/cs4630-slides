@@ -1,0 +1,28 @@
+
+### some constant time ideas  {.smaller}
+
+
+![](/betterpl/fact-title){}
+ 
+![](/betterpl/ct-wasm-title){}
+ 
+
+* FaCT, PLDI 2019; CT-Wasm: POPL 2019
+
+
+### constant-time programming languages  {.smaller}
+
+
+* active research area, no consensus on what works best 
+<hr class="vspace" />
+* common approach: separate type for <em>secret</em> data
+* compiler or language virtual machine disallows variable-time operations using secret data
+* no secret-based array lookup (cache timing varies) 
+
+   * e.g. array[secret_value] $\rightarrow$ compile error (type mismatch)
+
+* no secret-based integer division (usually variable speed instruction)
+* … 
+<hr class="vspace" />
+* explicit operations for any secret-to-non-secret conversions
+

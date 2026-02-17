@@ -1,0 +1,24 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\newsavebox{\rustBorrowError}
+\newsavebox{\rustBorrowErrorB}
+\begin{document}
+\begin{lrbox}{\rustBorrowError}
+\begin{lstlisting}[language={},style=smaller]
+error[E0106]: missing lifetime specifier
+  --> src/main.rs:19:25
+   |
+19 | fn dangling_pointer() -> &mut i32 {
+   |                          ^ expected lifetime parameter
+   |
+   = help: this function's return type contains a borrowed value,
+           but there is no value for it to be borrowed from
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{betterpl/texfig/dangling1a.inner.tex}
+\setSlide{2}
+\input{betterpl/texfig/dangling1a.inner.tex}
+\end{document}

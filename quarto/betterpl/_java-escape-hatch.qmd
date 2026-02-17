@@ -1,0 +1,37 @@
+
+### Java: unofficial escape hatch  {.smaller}
+
+
+
+* Oracle JDK and OpenJDK come with a class called <code>com.sun.Unsafe</code>
+* Example methods:
+ 
+```
+public long allocateMemory(long size);
+                        // returns pointer value
+public void freeMemory(long address);
+public long getLong(long address);
+public void putLong(long address, long x);
+
+```
+ 
+
+* can be used to, e.g.,  write ‘‘fast’’ IntArray class
+
+
+### so, if Java has escape hatch\ldots  {.smaller}
+
+
+* why do people not want to write <br> their performance-sensitive programs in Java? 
+<hr class="vspace" />
+* hard to integrate code that uses escape hatch with normal Java code
+* hard to efficiently avoid dangling pointers when using escape hatch 
+
+   * Is it safe to freeMemory from my FastIntArray class?
+
+* slow to pass garbage collected references to/from C/assembly code
+* hard to avoid using garbage collector 
+
+   * garbage collector performance can be variable
+
+

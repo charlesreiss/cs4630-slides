@@ -1,0 +1,21 @@
+
+### Rust references (1)  {.smaller}
+
+
+ 
+```rust
+fn main() {
+    let mut x: u32 = 42;
+
+    {
+        let y: &mut u32 = &mut x;
+        *y = 100;
+    }
+
+    let z: &u32 = &x;
+
+    println!("x = {}; z = {}", x, z);
+}
+
+```
+

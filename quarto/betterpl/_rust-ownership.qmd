@@ -1,0 +1,112 @@
+
+### rules to stop dangling pointers (1)  {.smaller}
+
+
+* objects have an single <em>owner</em>
+* owner is the only one allowed to modify an object
+* owner can give away ownership
+* simplest version: only owner can access object
+* never have multiple references to object --- always move/copy
+
+
+### Rust objects and ownership (1a)  {.smaller}
+
+ 
+```rust
+fn mysum(vector: Vec<u32>) -> u32 {
+    let mut total: u32 = 0;
+    for value in &vector {
+        total += value
+    }
+    return total
+}
+
+fn foo() {
+    let vector: Vec<u32> = vec![1, 2, 3];
+    let sum = mysum(vector);
+    // **moves** vector into mysum()
+         // philosophy: no implicit expensive copies
+    
+    println!("Sum is {}", sum);
+    // ERROR
+    println!("vector[0] is {}" , vector[0]);
+}
+
+```
+ ![](/betterpl/texfig/rustOwnership1.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/betterpl/texfig/rustOwnership1.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+
+
+### Rust objects and ownership (2)  {.smaller}
+
+
+```rust
+fn mysum(vector: Vec<u32>) -> u32 {
+    let mut total: u32 = 0
+    for value in &vector {
+        total += value
+    }
+    return total
+}
+
+fn foo() {
+    let vector: Vec<u32> = vec![1, 2, 3];
+    let sum = mysum(vector.clone());
+    // give away a copy of vector instead
+        // mysum will dispose, since it owns it
+    
+    println!("Sum is {}", sum);
+    println!("vector[0] is {}" , newVector[0]);
+}
+
+```
+ ![](/betterpl/texfig/rustOwnership2.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/betterpl/texfig/rustOwnership2.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+
+
+### moving?  {.smaller}
+
+
+* moving a Vec --- really copying a pointer to an array and its size
+* cloning a Vec --- making a copy of the array itself, too 
+<hr class="vspace" />
+* Rust defaults to moving non-trivial types
+* some trivial types (u32, etc.) are copied by default
+
+
+### Rust objects and ownership (3)  {.smaller}
+
+
+```rust
+fn mysum(vector: Vec<u32>) -> (u32, Vec<u32>) {
+    let mut total: u32 = 0
+    for value in &vector {
+        total += value
+    }
+    return (total, vector)
+}
+
+fn foo() {
+    let vector: Vec<u32> = vec![1, 2, 3];
+    let (sum, newVector) = mysum(vector);
+    // give away vector, get it back
+    
+    println!("Sum is {}", sum);
+    println!("vector[0] is {}" , newVector[0]);
+}
+
+```
+ ![](/betterpl/texfig/rustOwnership3.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/betterpl/texfig/rustOwnership3.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+
+
+### ownership rules 
+
+
+* exactly one owner at a time
+* giving away ownership means you <em>can't use object</em> 
+
+   * common idiom --- temporarily give away object
+
+* either give object new owner or deallocate
+

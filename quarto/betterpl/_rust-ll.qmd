@@ -1,0 +1,64 @@
+
+### Rust linked list 
+
+
+* not actually a good idea
+* use `Box<...>` to represent object on the heap
+* no null, use `Option<Box<...>>` to represent pointer.
+
+
+### Rust linked list (not recommended)  {.smaller}
+
+
+```rust
+struct LinkedListNode {
+    value: u32,
+    next: Option<Box<LinkedListNode>>,
+}
+
+fn allocate_list() -> LinkedListNode {
+    return LinkedListNode {
+        value: 1,
+        next: Some(Box::new(LinkedListNode {
+            value: 2,
+            next: Some(Box::new(LinkedListNode {
+                value: 3,
+                next: None
+            }))
+        }))
+    }
+}
+
+```
+
+
+### why the box? (1) 
+
+
+```rust
+struct LinkedListNode { // ERROR
+    value: u32,
+    next: Option<LinkedListNode>,
+}
+
+// error[E0072]: recursive type `LinkedListNode` has infinite size
+
+```
+
+
+### why the box? (2)  {.smaller}
+
+
+```rust
+struct LinkedListNode { // ERROR
+    value: u32,
+    next: Option<&LinkedListNode>,
+}
+// error[E0106]: missing lifetime specifier
+//  --> src/main.rs:48:18
+//    |
+// 48 |     next: Option<&LinkedListNode>,
+//    |                  ^ expected lifetime parameter
+
+```
+

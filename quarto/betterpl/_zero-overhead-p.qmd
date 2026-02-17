@@ -1,0 +1,10 @@
+
+### zero-overhead  {.smaller}
+
+
+* normal case --- lifetimes --- have no overhead
+* compiler proves safety, generates code with no bookkeeping 
+<hr class="vspace" />
+* other policies (e.g. reference counting) do
+* … but can implement new ones if not good enough
+

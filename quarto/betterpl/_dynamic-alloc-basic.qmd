@@ -1,0 +1,83 @@
+
+### what about dynamic allocation?  {.smaller}
+
+
+* saw Rust's Vec class --- equivalent to C++ vector/Java ArrayList
+* idea: Vec wraps a heap allocation of an array
+* owner of Vec ‘‘owns’’ heap allocation 
+
+   * delete when no owner
+
+* also <code>Box</code> class --- wraps heap allocation of a single value 
+
+   * can be used like reference to object
+   * similar to C++ <code>unique_ptr</code>
+
+
+
+### Box  {.smaller}
+
+
+:::: {.columns}
+
+::: {.column width="48%"}
+
+```rust
+pub fn f1a() -> Box<u32> {
+    let mut value: Box<u32> =
+            Box::new(0);
+    *value += 1;
+    q(*value);
+    value
+}
+
+pub fn f1b() {
+    let mut value: Box<u32> =
+            Box::new(0);
+    *value += 1;
+    q(*value);
+}
+
+pub fn f2() -> u32 {
+    let mut value: u32 = 0;
+    value += 1;
+    q(value);
+    value
+}
+
+```
+
+:::
+
+::: {.column width="48%"}
+
+```
+unsigned *f1a() {
+    unsigned *value =
+            malloc(sizeof(unsigned));
+    *value += 1;
+    q(*value);
+    return value;
+}
+
+unsigned *f1b() {
+    unsigned *value =
+            malloc(sizeof(unsigned));
+    *value += 1;
+    q(*value);
+    free(value);
+}
+
+unsigned f2() {
+    unsigned value = 0;
+    value += 1;
+    q(value);
+    return value
+}
+
+```
+
+:::
+
+::::
+

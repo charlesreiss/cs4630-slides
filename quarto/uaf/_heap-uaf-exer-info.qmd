@@ -1,0 +1,31 @@
+
+### exercise  {.smaller}
+
+
+```
+struct Codec {
+    const char *name; void (*DecodeFrame)(...); void (*Seek)(...); ...
+};
+struct Codec H264 = { "H264", ... }, H265 = { "H265", ...}, MJPEG = { ... };
+struct Video {
+    struct Codec *codec; /* one of H264, ... */
+    const char *filename;
+    int framerate, width, height, frames; FILE *fh;
+    ...
+};
+struct BrowserWindow {
+    int num_tabs; int active_tab_index; struct BrowserTab *all_tabs; 
+    ...
+};
+struct BrowserTab {
+    struct BrowserWindow *window;
+    char current_url[1024];
+    ...
+};
+
+```
+ 
+
+* []{.my-small} Suppose UAF of BrowserTab being overwritten by new Video object…
+* []{.my-small} To break ASLR, what methods to get data from BrowserTab would be useful?
+

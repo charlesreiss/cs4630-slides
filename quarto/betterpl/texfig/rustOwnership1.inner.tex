@@ -1,0 +1,11 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+        \begin{visibleenv}<2>
+            \node[anchor=center,font=\small,draw=black,ultra thick,fill=white] at (current page.center){
+                \usebox{\rustOwnershipError}
+        };
+        \end{visibleenv}
+    \end{scope}
+\end{tikzpicture}

@@ -1,0 +1,38 @@
+
+### safety rules  {.smaller}
+
+
+* one set of (very restrictive) rules: 
+
+   * arrays are never accessed via pointers (only via array[X])
+   * always check bounds before array access
+ 
+<hr class="vspace" />
+* modify C compiler to enforce: 
+
+   * disallow making pointers to an array
+   * add bounds check assertion before every array use
+ 
+<hr class="vspace" />
+* now: no buffer overflows? 
+
+   * problem 1: way too restrictive
+   * problem 2: still other memory problems
+
+
+
+### more practical safety rules?  {.smaller}
+
+
+* rule for avoiding bounds errors in C 
+
+   * always pass around array buffers with size
+   * always check size
+
+* Java does this
+* but this is essentially a new language! 
+
+   * can't use existing pointer code
+
+* and this is likely slow?
+

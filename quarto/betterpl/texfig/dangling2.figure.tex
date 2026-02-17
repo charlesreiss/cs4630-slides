@@ -1,0 +1,45 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\newsavebox{\rustBorrowError}
+\newsavebox{\rustBorrowErrorB}
+\begin{document}
+\begin{lrbox}{\rustBorrowError}
+\begin{lstlisting}[language={},style=smaller]
+error[E0133]: use of mutable static is unsafe
+              and requires unsafe block
+ --> src/lib.rs:3:5
+  |
+3 |     ptr = &v[0];
+  |     ^^^ use of mutable static
+  |
+  = note: mutable statics can be mutated by
+          multiple threads: aliasing violations
+          or data races will cause undefined behavior
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\rustBorrowErrorB}
+\begin{lstlisting}[language={},style=smaller]
+error[E0597]: `v` does not live long enough
+ --> src/lib.rs:3:12
+  |
+2 | fn dangling_pointer(v: Vec<i32>) -> i32 {
+  |                     - binding `v` declared here
+3 |     ptr = &v[0];
+  |     -------^---
+  |     |      |
+  |     |      borrowed value does not live long enough
+  |     assignment requires that `v` is borrowed for `'static`
+4 |     return v[0];
+5 | }
+  | - `v` dropped here while still borrowed
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{betterpl/texfig/dangling2.inner.tex}
+\setSlide{2}
+\input{betterpl/texfig/dangling2.inner.tex}
+\setSlide{3}
+\input{betterpl/texfig/dangling2.inner.tex}
+\end{document}

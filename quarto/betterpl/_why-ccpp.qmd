@@ -1,0 +1,22 @@
+
+### why are people still using C/C++?  {.smaller}
+
+
+* Python, Java, … are great languages
+* why are people using C, C++, etc.? 
+
+   * which seem horrible for security?
+ 
+<hr class="vspace" />
+* history + good support 
+
+   * lots of libraries in C, C++, …
+
+* [‘‘zero overhead’’]{.fragment fragment-index=2 .custom .myem-only} 
+
+   * safe languages don't make it easy to get ‘‘close to the machine’’
+   * e.g. garbage collection overhead
+   * e.g. array checking overhead
+
+* no language VM --- easier to distribute
+

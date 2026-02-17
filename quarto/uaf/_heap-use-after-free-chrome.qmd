@@ -1,0 +1,68 @@
+
+### real UAF exploitable bug 
+
+
+* 2012 bug in Google Chrome
+* exploitable via JavaScript
+* discovered/proof of concept by PinkiePie
+* allowed arbitrary code execution via VTable manipulation
+
+
+### UAF triggering code 
+
+  
+
+::: {.r-stack}
+![](/uaf/texfig/UAFTriggering.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/uaf/texfig/UAFTriggering.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+![](/uaf/texfig/UAFTriggering.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
+![](/uaf/texfig/UAFTriggering.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
+
+
+:::
+ [via [https://bugs.chromium.org/p/chromium/issues/detail?id=162835](https://bugs.chromium.org/p/chromium/issues/detail?id=162835)]{.mycredit}
+
+### UAF exploit (approx. pseudocode)  {.smaller}
+
+
+```
+... /* use information leaks to find relevant addresses */ 
+buffer = ms.addSourceBuffer('video/webm; codecs="vorbis,vp8"');
+vid.parentNode.removeChild(vid);
+vid = null;
+gc();
+// allocate object to replace m_private
+var array = new Uint32Array(168/4);
+// allocate object to replace m_player
+// type chosen to keep m_private pointer unchanged
+rtc = new webkitRTCPeerConnection({'iceServers': []});
+array[0] = ... /* fill in array with chosen values */
+// trigger VTable Call that uses chosen address
+buffer.timestampOffset = 42;
+
+```
+
+
+### type confusion 
+
+![](/uaf/texfig/heap-use-after-free-chrome-type-confusion.figure.svg)
+
+
+### missing pieces: information disclosure  {.smaller}
+
+
+
+* need to learn address to set VTable pointer to 
+
+   * (and other addresses to use)
+
+* allocate types other than <code>Uint32Array</code>
+* rely on confusing between different types, e.g.
+ ![](/uaf/texfig/heap-use-after-free-chrome-missing-pieces-information-disclosure.figure.svg)
+ 
+
+* allows reading timestamp value to get a pointer's address
+

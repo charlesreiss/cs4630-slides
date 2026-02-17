@@ -1,0 +1,23 @@
+
+### Rust example with refs+struct  {.smaller}
+
+
+```rust
+struct Rectangle {
+    width: u32, height u32
+}
+fn double_rectangle(rect: &mut Rectangle) {
+    rect.width *= 2;
+    rect.height *= 2;
+}
+fn show_rectangle(rect: &Rectangle) {
+    println!("{}x{}", rect.width, rect.height);
+}
+fn main() {
+    let mut rectangle = Rectangle { width: 4, height: 7 };
+    double_rectangle(&mut rectangle);
+    show_rectangle(&rectangle);
+}
+
+```
+

@@ -1,0 +1,69 @@
+
+### escape hatch 
+
+
+* Rust lets you avoid compiler's mechanisms
+* implement your own
+* <em>unsafe</em> keyword
+* how Vec is implemented
+
+
+### deep inside Vec (1)  {.smaller}
+
+
+```rust
+pub struct Vec<T> {
+    buf: RawVec<T>, // interface to malloc
+    len: usize,
+}
+
+impl<T> Vec<T> {
+    ...
+    pub fn truncate(&mut self, len: usize) {
+        unsafe {
+            // drop any extra elements
+            while len < self.len {
+                // decrement len before the drop_in_place(), so a panic on Drop
+                // doesn't re-drop the just-failed value.
+                self.len -= 1;
+                let len = self.len;
+                ptr::drop_in_place(self.get_unchecked_mut(len));
+            }
+        }
+    }
+    ...
+}
+
+```
+
+
+### deep inside Vec (1)  {.smaller}
+
+
+```rust
+impl<T> Vec<T> {
+    ...
+    pub const fn as_mut_ptr(&mut self) -> *mut T {
+        ...
+        self.buf.ptr()
+    }
+    ...
+    pub fn push(&mut self, value: T) {
+        // Inform codegen that the length does not change across grow_one().
+        let len = self.len;
+        // This will panic or abort if we would allocate > isize::MAX bytes
+        // or if the length increment would overflow for zero-sized types.
+        if len == self.buf.capacity() {
+            self.buf.grow_one();
+        }
+        unsafe {
+            let end = self.as_mut_ptr().add(len);
+            ptr::write(end, value);
+            self.len = len + 1;
+        }
+    }
+    ...
+}
+
+```
+

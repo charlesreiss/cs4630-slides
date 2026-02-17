@@ -1,0 +1,23 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+        \coordinate (box) at (current page.center);
+        \begin{visibleenv}<2>
+            \node[my callout=mut,anchor=center,align=left] at ([yshift=2cm]box) {
+                ``input'' is a mutable variable \\
+                type is automatically inferred as String
+            };
+        \end{visibleenv}
+        \begin{visibleenv}<3>
+            \node[my callout=ref,anchor=center,align=left] at ([yshift=-2cm]box) {
+                pass mutable reference to input
+            };
+        \end{visibleenv}
+        \begin{visibleenv}<4>
+            \node[my callout=int,anchor=center,align=left] at (box) {
+                number is an immutable unsigned 32-bit integer
+            };
+        \end{visibleenv}
+    \end{scope}
+\end{tikzpicture}

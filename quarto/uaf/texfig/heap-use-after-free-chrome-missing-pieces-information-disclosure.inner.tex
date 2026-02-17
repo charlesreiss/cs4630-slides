@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+    \matrix[tight matrix,nodes={text width=6.8cm,text depth=.1ex,font=\small\tt},anchor=north west,
+            label={north:{\tt MediaPlayer} (deleted but used)}] (PlayerVT) at (0, 0) {
+        m\_private {\normalfont (pointer to PlayerImpl)} \\
+        m\_timestampOffset {\normalfont (double)} \\
+    };
+    \matrix[tight matrix,nodes={text width=6.8cm,text depth=.1ex,font=\small\tt},anchor=north west,
+            label={north:{\tt Something} (replacement)}] (SomethingVT) at (8, 0) {
+        \ldots \\
+        m\_buffer {\normalfont (pointer)} \\
+    };
+    \end{tikzpicture}

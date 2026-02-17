@@ -1,0 +1,11 @@
+
+### exercise: which smart pointer?  {.smaller}
+
+
+* Rc, Arc (reference counting, w/ or w/o threading support
+* RefCell (borrowing, check at runtime)
+* Weak (reference counting, but don't contribute to count --- works with Rc)
+* Mutex (with multicore, one-at-a-time by waiting) 
+<hr class="vspace" />
+* say I have flight reservation system with Flight objects that have references to Ticket objects and vice-versa, <br> and Customer objects that have references to Ticket objects and vice-versa?
+

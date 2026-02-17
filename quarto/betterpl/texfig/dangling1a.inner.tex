@@ -1,0 +1,11 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+    \begin{visibleenv}<2>
+    \node[fill=white,draw,very thick,font=\scriptsize,align=left] at (current page.center) {
+\usebox{\rustBorrowError}
+};
+    \end{visibleenv}
+\end{scope}
+\end{tikzpicture}

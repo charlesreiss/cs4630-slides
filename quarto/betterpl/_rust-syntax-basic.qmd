@@ -1,0 +1,77 @@
+
+### simple Rust syntax (1a) 
+
+
+```rust
+fn main() {
+    println!("Hello, World!\n");
+}
+
+```
+
+
+### simple Rust syntax (1b) 
+
+
+```rust
+fn main() {
+    let name = "World";
+    println!("Hello, {}!\n", name);
+}
+
+```
+
+
+### simple Rust syntax (2)  {.smaller}
+
+
+```rust
+fn timesTwo(number: i32) -> i32 {
+    return number * 2;
+}
+
+/* or last value automatically returned: */
+fn timesTwo(number: i32) -> i32 {
+    number * 2
+}
+
+```
+
+
+### simple Rust syntax (3)  {.smaller}
+
+
+```rust
+struct Student {
+    name: String,
+    id: i32,
+}
+
+fn get_example_student() -> Student {
+    Student {
+        name: String::from("Example Fakelastname"),
+        id: 42,
+    }
+}
+
+```
+
+
+### simple Rust syntax (4)  {.smaller}
+
+
+```rust
+fn factorial(number: i32) -> i32 {
+    let mut|\tikzmark{mut}| result = 1;
+    let mut index = 1;
+    while index <= number {
+        result *= index;
+        index = index + 1;
+    }
+    return result;
+}
+
+```
+ ![](/betterpl/texfig/rustHelloWorld4.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/betterpl/texfig/rustHelloWorld4.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+

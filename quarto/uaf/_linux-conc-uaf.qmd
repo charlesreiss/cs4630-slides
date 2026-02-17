@@ -1,0 +1,5 @@
+
+### example: concurreny UAF bug 
+
+![](/uaf/texfig/linux-conc-uaf.figure.svg)
+

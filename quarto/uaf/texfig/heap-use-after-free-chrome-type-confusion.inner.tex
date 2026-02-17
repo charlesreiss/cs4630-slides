@@ -1,0 +1,24 @@
+\begin{tikzpicture}
+    \matrix[tight matrix,nodes={text width=6.8cm,text depth=.1ex,font=\small\tt},anchor=north west,
+            label={north:{\tt MediaPlayer} (deleted but used)}] (PlayerVT) at (0, 0) {
+        m\_private {\normalfont (pointer to PlayerImpl)} \\
+        m\_timestampOffset {\normalfont (double)} \\
+    };
+    \matrix[tight matrix,nodes={text width=6.8cm,text depth=.1ex,font=\small\tt},anchor=north west,
+            label={north:{\tt webkitRTC\ldots} (replacement)}] (SomethingVT) at (8, 0) {
+        (something not changed) \\
+        m\_??? {\normalfont (pointer)} \\
+        \ldots \\
+    };
+    \matrix[tight matrix,nodes={text width=6.8cm,text depth=.1ex,font=\small\tt},anchor=north west,
+            label={north:{\tt PlayerImpl} (deleted but used)}] (PlayerImplVT) at (0, -2) {
+        VTable pointer \\
+        \ldots \\
+    };
+    \matrix[tight matrix,nodes={text width=6.8cm,text depth=.1ex,font=\small\tt},anchor=north west,
+            label={north:array of 32-bit ints (replacement)}] (ArrayVT) at (8, -2) {
+        array[0], array[1] \\
+        array[2], array[3] \\
+        \ldots \\
+    };
+    \end{tikzpicture}

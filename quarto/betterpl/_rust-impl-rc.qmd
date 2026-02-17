@@ -1,0 +1,251 @@
+
+### Rust escape hatch support  {.smaller}
+
+
+* escape hatch: make new reference-like object 
+
+   * (… implemented by returning temporary ‘real’ references)
+
+* Rc: `Rc<T>` acts like `&T`
+* callbacks on ownership ending (normally deallocation) 
+
+   * Rust compiler enforces that ref-like object not in use when free call made
+   * Rc: deallocating `Rc<T>` decrements shared count
+   * Rc: real object only decremented on count == 0
+
+* choice of what happens on copy 
+
+   * Rc: no implicit copy; explicit `clone` operation increments count
+
+
+
+### alternative rule: reference counting  {.smaller}
+
+
+* keep track of number of references
+* increment count when making new ‘clone’ of reference
+* decrement when reference goes away 
+
+   * Rust borrowing rules will enforce it is not used when this happens
+
+* delete when count goes to zero 
+
+   * Rust automatically calls destructor --- no programmer effort
+
+* explicit operation to make new reference
+* Rust implement with Rc type (‘‘counted reference’’)
+
+
+### Ref Counting Example (0a)  {.smaller}
+
+
+```rust
+use std::rc::Rc;
+
+fn main() {
+    let s_ref: &String;
+    let s1: Rc<String>;
+    {
+        let s2: Rc<String> = Rc::new(String::from("example"));
+        s1 = Rc::clone(&s2);
+        s_ref = &*s1;
+        println!("{s1} {s_ref} {s2}");
+            // example example example
+        println!("count={}", Rc::strong_count(&s1));
+            // count=2
+    }
+    println!("count={}", Rc::strong_count(&s1));
+        // count=1
+    println!("{s1} {s_ref}");
+        // example example
+}
+
+```
+
+
+### Ref Counting Example (0b)  {.smaller}
+
+
+```rust
+use std::rc::Rc;
+
+fn main() {
+    let s_ref: &String;
+    let s1: Rc<String>;
+    {
+        let s2: Rc<String> = Rc::new(String::from("example"));
+        s1 = Rc::clone(&s2);
+        s_ref = &*s2;
+        println!("{s1} {s_ref} {s2}");
+        println!("count={}", Rc::strong_count(&s0));
+    }
+    println!("count={}", Rc::strong_count(&s1));
+    println!("{s1} {s_ref}");  // ERROR
+}
+
+```
+  ![](/betterpl/texfig/refCountingEx0b.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/betterpl/texfig/refCountingEx0b.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+
+
+### Rc<> into real ref  {.smaller}
+
+
+* can turn Rc into real ref
+* borrowing rule enforces that Rc object stays around 
+<hr class="vspace" />
+* allows us to ensure it's not drop()d while still in use
+* … and use it with functions that expect ‘normal’ reference
+
+
+### Ref Counting Example (1)  {.smaller}
+
+
+```rust
+struct Grade {
+    score: i32, studentName: String, assignmentName: String,
+}
+struct Student {
+    name: String,
+    grades: Vec<Rc<Grade>>,
+}
+struct Assignment {
+    name: String,
+    grades: Vec<Rc<Grade>>
+}
+
+fn add_grade(student: &mut Student, assignment: &mut Assignment, score: i32) {
+    let grade = Rc::new(Grade {
+        score: score,
+        studentName: student.name.clone(),
+        assignmentName: assignment.name.clone(),
+    })
+    student.grades.push(Rc::clone(&grade));
+    assignment.grades.push(Rc::clone(&grade));
+    println!("Added grade with score={}", grade.score);
+}
+
+```
+
+
+### Rc limitations  {.smaller}
+
+
+* Rc: only gives references to <i>read-only</i> objects 
+
+   * cannot enforce ‘‘only one mutable reference’’ rule
+   * … we'll look at doing that next, but needs more bookkeeping
+
+* Rc: allows memory leaks via circular references 
+
+   * correct way to handle ciruclar references: Weak
+   * … but not enforcement that it is used when needed
+
+
+
+### aside: Weak  {.smaller}
+
+
+```rust
+struct Foo {
+    my_bar: Rc<Bar>,
+    ...
+}
+struct Bar {
+    my_foo: Weak<Foo>.
+    ...
+}
+...
+let bar: Bar = ...;
+...
+match bar.my_foo.upgrade() {
+    Some(foo_rc) => {
+        // foo_rc is an Rc<Foo>
+        ...
+    },
+    None => {
+        // the foo object was deleted
+    }
+}
+
+```
+
+
+### againframe(escapeHatchSupportRc)
+
+### Rc implementation (approx) (0)  {.smaller}
+
+
+```rust
+struct RcInner<T: ?Sized> {
+    strong: Cell<usize>,    // <-- count of Rc<T>s pointing to this
+    weak: Cell<usize>,      // <-- count of Weak<T>s pointing to this
+    value: T,               // <-- actual data
+}
+
+pub struct Rc<T: ?Sized> {
+    ptr: NonNull<RcInner<T>>,
+    phantom: PhantomData<RcInner<T>>, // <- so compiler infers what operations are safe better
+}
+
+```
+ 
+
+* NonNull = raw pointer wrapper
+* Cell = container for mutable object (have to copy in/out of)
+
+
+### Rc implementation (approx) (1)  {.smaller}
+
+
+```rust
+impl<T: ?Sized> Clone for Rc<T> {
+    ... 
+    fn clone(&self) -> Rc<T> {
+        self.inc_strong(); // <-- increment reference count
+        Rc { ptr: self.ptr }
+    }
+}
+
+```
+
+
+### Rc implementation (approx) (2)  {.smaller}
+
+
+```rust
+unsafe impl<#[may_dangle] T: ?Sized> Drop for Rc<T> {
+    ...
+    fn drop(&mut self) { // <-- compilers calls on deallocation
+        unsafe {
+            self.inner().dec_strong();
+            if self.inner().strong() == 0 {
+                self.drop_slow();
+            }
+        }
+    }
+    ...
+}
+
+```
+
+
+### Rc implementation (approx) (3)  {.smaller}
+
+
+```rust
+impl<T: ?Sized> Deref for Rc<T> {
+    type Target = T;
+
+    #[inline(always)]
+    fn deref(&self) -> &T {
+        &self.inner().value
+    }
+}
+
+```
+ 
+
+* observation: returned reference still has lifetime
+* compiler will enforce that extracted reference only used when Rc object valid
+

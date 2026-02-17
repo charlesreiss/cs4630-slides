@@ -1,0 +1,25 @@
+
+### rules to stop dangling pointers (2)  {.smaller}
+
+
+* objects have an single <em>owner</em>
+* owner can give away ownership permanently 
+
+   * object is ‘‘moved’’
+
+* [owner can let someone borrow object [<em>temporarily</em>]{.fragment fragment-index=2 .custom .myem-only}]{.fragment fragment-index=1 .custom .myem-only} 
+
+   * allows us to give away reference to object
+   * track as if object temporarily moved
+   * need to know [how long object is borrowed for]{.fragment fragment-index=2 .custom .myem-only}
+
+* can borrow object for [reading <em>while others</em> also <em>reading</em>]{.fragment fragment-index=3 .custom .myem-only} 
+
+   * don't need to force exclusive owner/borrower of object
+   * need to distinguish mutable and immutable borrowing
+
+* only [<em>modify</em>]{.fragment fragment-index=3 .custom .myem-only} object when exactly one user 
+
+   * owner or exclusive borrower
+
+

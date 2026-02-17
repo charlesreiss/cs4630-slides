@@ -1,0 +1,21 @@
+
+### restricting modification  {.smaller}
+
+
+```rust
+fn modifyVector(vector: &mut Vec<u32>) { ... }
+fn foo() {
+    let vector: Vec<u32> = vec![1, 2, 3];
+    for value in &vector {
+        if value == 2 {
+            modifyVector(&mut vector) // ERROR
+        }
+    }
+}
+    
+```
+ 
+
+* value is reference to vector element
+* can't give away vector
+

@@ -1,0 +1,10 @@
+
+### exercise  {.smaller}
+
+![](/uaf/texfig/heap-uaf-exer.figure.svg)
+ 
+
+* attacker goal: change what uflow() call does
+* Q1: [ assuming same size $\rightarrow$ likely to get same address]{.my-small}, what size for attacker to choose for <code>INPUT</code>?
+* Q2: where in INPUT to place pointer to code to run?
+

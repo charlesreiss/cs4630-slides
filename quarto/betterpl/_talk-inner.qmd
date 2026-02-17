@@ -1,0 +1,148 @@
+
+# Rust {visibility="hidden"}
+
+## aside: why do people like C/C++? {visibility="hidden"}
+
+{{< include /betterpl/_why-ccpp.qmd >}}
+
+## safety + escape hatch {visibility="hidden"}
+
+{{< include /betterpl/_safe-plus-escape-hatch.qmd >}}
+
+{{< include /betterpl/_java-escape-hatch.qmd >}}
+
+## general philosophy {visibility="hidden"}
+
+{{< include /betterpl/_rust-general.qmd >}}
+
+## general syntax (1) {visibility="hidden"}
+
+{{< include /betterpl/_rust-syntax-basic.qmd >}}
+
+## functions for types {visibility="hidden"}
+
+{{< include /betterpl/_rust-syntax-impl.qmd >}}
+
+## references {visibility="hidden"}
+
+## basic example{visibility="hidden"}
+
+{{< include /betterpl/_rust-refs.qmd >}}
+
+## in context{visibility="hidden"}
+
+{{< include /betterpl/_rust-ex-with-refs.qmd >}}
+
+## references in structs {visibility="hidden"}
+
+{{< include /betterpl/_rust-ex-with-refs-struct.qmd >}}
+
+## basic ownership {visibility="hidden"}
+
+{{< include /betterpl/_rust-ownership.qmd >}}
+
+## exercise {visibility="hidden"}
+
+{{< include /betterpl/_rust-ownership-exer.qmd >}}
+
+## single owner rule issue {visibility="hidden"}
+
+{{< include /betterpl/_rust-owner-rule-limit.qmd >}}
+
+# Rust: stopping dangling pointers {visibility="hidden"}
+
+{{< include /betterpl/_rust-no-dangle-rules.qmd >}}
+
+## borrowing {visibility="hidden"}
+
+{{< include /betterpl/_rust-borrowing.qmd >}}
+
+## exercise {visibility="hidden"}
+
+{{< include /betterpl/_rust-no-dangle-rules-apply.qmd >}}
+
+## lifetimes {visibility="hidden"}
+
+## motivation{visibility="hidden"}
+
+### againframe(dangleRules)
+
+{{< include /betterpl/_why-lifetimes.qmd >}}
+
+## lifetime tracking{visibility="hidden"}
+
+{{< include /betterpl/_rust-lifetimes.qmd >}}
+
+## one writer {visibility="hidden"}
+
+### againframe(dangleRules)
+
+{{< include /betterpl/_rust-borrowing-mut.qmd >}}
+
+{{< include /betterpl/_rust-borrowing-mut-loop.qmd >}}
+
+# destructors {visibility="hidden"}
+
+{{< include /betterpl/_rust-auto-drop.qmd >}}
+
+# Rust: escape hatches and supporting dynamic allocation {visibility="hidden"}
+
+{{< include /betterpl/_dynamic-alloc-basic.qmd >}}
+
+## escape hatches implementing Vec {visibility="hidden"}
+
+{{< include /betterpl/_rust-escape-inside-vec.qmd >}}
+
+## raw pointers {visibility="hidden"}
+
+{{< include /betterpl/_rust-raw-pointers.qmd >}}
+
+## implementing new sharing schemes {visibility="hidden"}
+
+## Rc{visibility="hidden"}
+
+{{< include /betterpl/_rust-impl-rc.qmd >}}
+
+## non-Rust smart pointers {visibility="hidden"}
+
+{{< include /betterpl/_cpp-smart-pointer.qmd >}}
+
+## RefCell{visibility="hidden"}
+
+{{< include /betterpl/_rust-impl-refcell.qmd >}}
+
+## aside: concurrency + UAF {visibility="hidden"}
+
+{{< include /uaf/_linux-conc-uaf.qmd >}}
+
+## concurrency {visibility="hidden"}
+
+{{< include /betterpl/_rust-concurrency.qmd >}}
+
+# aside: other language enforcement? {visibility="hidden"}
+
+{{< include /betterpl/_other-things-lang-enforce.qmd >}}
+
+## other Rust smart pointers {visibility="hidden"}
+
+{{< include /betterpl/_other-rust-smartptr.qmd >}}
+
+## exercise: smart pointer use case {visibility="hidden"}
+
+{{< include /betterpl/_which-smartptr-exer.qmd >}}
+
+## Rust linked list {visibility="hidden"}
+
+{{< include /betterpl/_rust-ll.qmd >}}
+
+# zero-overhead {visibility="hidden"}
+
+{{< include /betterpl/_zero-overhead-p.qmd >}}
+
+# aside: other language enforcement? {visibility="hidden"}
+
+{{< include /betterpl/_other-things-lang-enforce.qmd >}}
+
+## example: constant time languages {visibility="hidden"}
+
+{{< include /betterpl/_fact.qmd >}}

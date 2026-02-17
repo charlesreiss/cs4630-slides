@@ -1,0 +1,44 @@
+
+# use-after-free {visibility="hidden"}
+
+### use-after-free 
+
+
+
+{{< include /uaf/_heap-use-after-free.qmd >}}
+
+## reuse observation {visibility="hidden"}
+
+{{< include /uaf/_heap-reuse.qmd >}}
+
+## pattern {visibility="hidden"}
+
+{{< include /uaf/_heap-use-after-free-pattern.qmd >}}
+
+## concurrency and UAF {visibility="hidden"}
+
+{{< include /uaf/_linux-conc-uaf.qmd >}}
+
+## consistency? {visibility="hidden"}
+
+{{< include /uaf/_heap-use-after-free-consistent.qmd >}}
+
+## exercise: info leak {visibility="hidden"}
+
+{{< include /uaf/_heap-uaf-exer-info.qmd >}}
+
+## exercise: subterfuge {visibility="hidden"}
+
+{{< include /uaf/_heap-uaf-exer-subter.qmd >}}
+
+## exercise: vtable {visibility="hidden"}
+
+{{< include /uaf/_heap-uaf-exer.qmd >}}
+
+## example {visibility="hidden"}
+
+{{< include /uaf/_heap-use-after-free-chrome.qmd >}}
+
+## JS and similar interfaces v use-after-free {visibility="hidden"}
+
+{{< include /uaf/_heap-use-after-free-js.qmd >}}

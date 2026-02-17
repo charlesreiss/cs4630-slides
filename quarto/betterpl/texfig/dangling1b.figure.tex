@@ -1,0 +1,25 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\newsavebox{\rustBorrowError}
+\newsavebox{\rustBorrowErrorB}
+\begin{document}
+\begin{lrbox}{\rustBorrowError}
+\begin{lstlisting}[language={},style=smaller]
+error[E0515]: cannot return value referencing local variable `v`
+ --> src/lib.rs:3:12
+  |
+3 |     return &v[0];
+  |            ^-^^^
+  |            ||
+  |            |`v` is borrowed here
+  |            returns a value referencing data owned
+  |            by the current function
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{betterpl/texfig/dangling1b.inner.tex}
+\setSlide{2}
+\input{betterpl/texfig/dangling1b.inner.tex}
+\end{document}

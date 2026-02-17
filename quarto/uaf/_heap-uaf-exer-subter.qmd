@@ -1,0 +1,23 @@
+
+### exercise  {.smaller}
+
+
+```
+struct String {
+    size_t alloc_size;
+    size_t used_size;
+    char *data;
+    bool is_utf8;
+};
+struct FileInfo {
+    const char *name;
+    time_t creation_time;
+    time_t modification_time;
+    FILE *file_data;
+}
+
+```
+ 
+
+* If we have a String + FileInfo in same place from use-after-free <br> What sequence of String/FileInfo operations to modify memory at 0x12345678?
+

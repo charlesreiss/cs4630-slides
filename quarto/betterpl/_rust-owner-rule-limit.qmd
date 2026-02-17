@@ -1,0 +1,24 @@
+
+### single owner rule limit  {.smaller}
+
+
+
+* single owner prevents use-after-free, etc.
+* … but too limiting in practice
+* basically doesn't allow references:
+ 
+```
+let v = vec![1,2,3];
+let x = &v;
+// now both x, v reference same vector?
+// violates single owner rule!
+
+```
+ 
+
+* will extend rule to be more flexible with two changes: 
+
+   * borrowing
+   * multiple readers, one writer
+
+

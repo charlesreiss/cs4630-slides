@@ -1,0 +1,32 @@
+
+### interior mutability / Cell  {.smaller}
+
+
+* sometimes have object which is logically non-mutable
+* … but needs to change internally 
+<hr class="vspace" />
+* built-in tool for this <code>Cell</code>
+* safety assurance: getting value obtains copy, never reference 
+
+   * requires type within Cell is easy to copy
+
+
+
+### Cell exammple  {.smaller}
+
+
+```rust
+struct Example {
+    big_vec: Vec<u32>,
+    cached_computed: Cell<u16>
+}
+
+fn get_computed(example: &Example) {
+    if 0 == cached_computed.get() {
+        cached_computed.set(do_expensive_compute(example));
+    }
+    cached_computed.get()
+}
+
+```
+

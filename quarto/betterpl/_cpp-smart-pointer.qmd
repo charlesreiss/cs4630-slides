@@ -1,0 +1,29 @@
+
+### C++ has ‘smart pointers’  {.smaller}
+
+
+* probably what inspired Rust Box, Rc, etc. 
+<hr class="vspace" />
+* <code>std::shared_ptr</code> (like Rc), <code>std::unique_ptr</code> (like Box) 
+
+   * like Rust Deref/DerefMut, implement <code>operator*</code> and <code>operator-></code> to act like ‘normal’ pointers
+
+* like Rust, internally return temporary real references/pointers 
+<hr class="vspace" />
+* problem: no compiler enforcement of ownership rules
+* can accidentally use ‘temporary’ reference/pointer for too long
+
+
+### reference counting elsewhere  {.smaller}
+
+
+* a lot of programs do manual reference counting 
+
+   * example: lots of stuff in Linux kernel
+
+* Swift, Perl, Python implicitly do reference counting for ‘normal’ references 
+
+   * means normal references not ‘zero-overhead’
+   * more predictable object deallocation than ‘normal’ garbage collection
+
+

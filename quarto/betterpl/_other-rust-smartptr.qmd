@@ -1,0 +1,12 @@
+
+### other ‘smart pointers’ Rust supports  {.smaller}
+
+
+* saw: Rc (reference count), RefCell (track active borrows)
+* Box --- wrap heap-allocation, free when it goes out of scope
+* OnceCell --- allow setting value exactly once + unlimited reads after set
+* Arc --- atomic reference count --- multithread reference count
+* Mutex --- enforce one thread at a time by waiting
+* RwLock --- enforce one writer + any number of reads by waiting
+* …
+

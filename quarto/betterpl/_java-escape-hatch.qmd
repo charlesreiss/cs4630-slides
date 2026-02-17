@@ -1,14 +1,13 @@
 
-### Java: unofficial escape hatch  {.smaller}
+### Java: unofficial escape hatch
 
 
 
 * Oracle JDK and OpenJDK come with a class called <code>com.sun.Unsafe</code>
 * Example methods:
  
-```
-public long allocateMemory(long size);
-                        // returns pointer value
+```java
+public long allocateMemory(long size); // returns pointer value
 public void freeMemory(long address);
 public long getLong(long address);
 public void putLong(long address, long x);

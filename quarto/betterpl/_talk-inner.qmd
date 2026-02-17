@@ -39,6 +39,8 @@
 
 ## basic ownership {visibility="hidden"}
 
+<!-- FIXME: fixup overlay pictures for errors -->
+
 {{< include /betterpl/_rust-ownership.qmd >}}
 
 ## exercise {visibility="hidden"}

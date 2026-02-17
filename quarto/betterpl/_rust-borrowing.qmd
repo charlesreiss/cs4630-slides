@@ -33,7 +33,7 @@ int *dangling_pointer() {
 }
 
 ```
- \\hrulefill{} 
+<hr/>
 ```rust
 fn dangling_pointer() -> &mut i32 {
     let array = vec![1,2,3];
@@ -71,7 +71,7 @@ int dangling_pointer(int *array) {
 }
 
 ```
- \\hrulefill{} 
+<hr/>
 ```rust
 static mut ptr : &i32 = &0;
 fn dangling_pointer(v: Vec<i32>) -> i32 {

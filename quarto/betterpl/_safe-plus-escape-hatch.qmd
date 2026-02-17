@@ -1,5 +1,5 @@
 
-### safety rules + escape hatch  {.smaller}
+### safety rules + escape hatch 
 
 
 * idea: can avoid out-of-bounds, etc. with safety rules

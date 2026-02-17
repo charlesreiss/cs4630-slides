@@ -62,7 +62,7 @@ pub struct Rectangle {
 ```
 
 
-### traits (2)  {.smaller}
+### traits (2)
 
 
 ```rust

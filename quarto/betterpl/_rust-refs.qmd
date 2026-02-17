@@ -1,8 +1,6 @@
 
 ### Rust references (1)  {.smaller}
 
-
- 
 ```rust
 fn main() {
     let mut x: u32 = 42;
@@ -16,6 +14,5 @@ fn main() {
 
     println!("x = {}; z = {}", x, z);
 }
-
 ```
 

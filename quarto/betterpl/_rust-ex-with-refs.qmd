@@ -1,28 +1,83 @@
 
-### Rust example with refs  {.smaller}
+### Rust example with refs
 
-
-```rust
+```{.rust code-line-numbers=true}
 use std::io;
 
 fn main() {
     println!("Enter a number: ");
 
-    let mut|\tikzmark{mut}| input = String::new();
+    let mut input = String::new();
     // could have also written:
     //   let mut input: String = String::new();
     
-    io::stdin().read_line(&mut|\tikzmark{ref}| input);
+    io::stdin().read_line(&mut input);
 
     // parse number or fail with an error message
-    let number: u32|\tikzmark{int}| = input.trim().parse()
+    let number: u32 = input.trim().parse()
         .expect("That was not a number!");
     println!("Twice that number is: {}", number * 2);
 }
-
 ```
- ![](/betterpl/texfig/rust-ex-with-refs.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/betterpl/texfig/rust-ex-with-refs.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
-![](/betterpl/texfig/rust-ex-with-refs.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=3}
-![](/betterpl/texfig/rust-ex-with-refs.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=4}
 
+### Rust example with refs
+
+```{.rust code-line-numbers="6,10"}
+use std::io;
+
+fn main() {
+    println!("Enter a number: ");
+
+    let mut input = String::new();
+    // could have also written:
+    //   let mut input: String = String::new();
+    
+    io::stdin().read_line(&mut input);
+
+    // parse number or fail with an error message
+    let number: u32 = input.trim().parse()
+        .expect("That was not a number!");
+    println!("Twice that number is: {}", number * 2);
+}
+```
+
+::: {.myoverbox .highright}
+
+mutable string variable input <br />
+`&mut input` takes mutable reference to it <br />
+(`&input` would be immutable reference)
+
+:::
+
+### Rust example with refs
+
+```{.rust code-line-numbers="13,14"}
+use std::io;
+
+fn main() {
+    println!("Enter a number: ");
+
+    let mut input = String::new();
+    // could have also written:
+    //   let mut input: String = String::new();
+    
+    io::stdin().read_line(&mut input);
+
+    // parse number or fail with an error message
+    let number: u32 = input.trim().parse()
+        .expect("That was not a number!");
+    println!("Twice that number is: {}", number * 2);
+}
+```
+
+::: {.myoverbox .highright}
+
+* `u32` = 32-bit unsigned integer
+
+*  parse() method figures out what to do based on return type
+
+*  parse() returns `Result` object
+   *  contains error OR value
+   *  `result_object.expect("msg")` = extract value, crash with `"..."` on error
+
+:::

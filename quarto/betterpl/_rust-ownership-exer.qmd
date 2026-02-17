@@ -1,7 +1,8 @@
 
 ### ownership exercise  {.smaller}
 
-If called like <code>p = foo(p)</code>, which follow single-owner rule? <br> 
+If called like <code>p = foo(p)</code>, which follow single-owner rule? 
+
 :::: {.columns}
 
 ::: {.column width="50%"}
@@ -39,7 +40,6 @@ char *foo(char *p) {
     p[0] = 'A';
     return p;
 }
-
 ```
  
 :::

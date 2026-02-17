@@ -15,14 +15,26 @@ fn main() {
 
 ```rust
 fn main() {
-    let name = "World";
+    let name: &str = "World";
     println!("Hello, {}!\n", name);
 }
+```
 
+### simple Rust syntax (1c) 
+
+
+```rust
+fn main() {
+    let name = "World";
+        /* same as: let name: &str = "World"; */
+        /* compiler "infers" the type */
+
+    println!("Hello, {}!\n", name);
+}
 ```
 
 
-### simple Rust syntax (2)  {.smaller}
+### simple Rust syntax (2)
 
 
 ```rust
@@ -38,7 +50,7 @@ fn timesTwo(number: i32) -> i32 {
 ```
 
 
-### simple Rust syntax (3)  {.smaller}
+### simple Rust syntax (3)
 
 
 ```rust
@@ -57,12 +69,11 @@ fn get_example_student() -> Student {
 ```
 
 
-### simple Rust syntax (4)  {.smaller}
-
+### simple Rust syntax (4)
 
 ```rust
 fn factorial(number: i32) -> i32 {
-    let mut|\tikzmark{mut}| result = 1;
+    let mut result = 1;
     let mut index = 1;
     while index <= number {
         result *= index;
@@ -70,8 +81,4 @@ fn factorial(number: i32) -> i32 {
     }
     return result;
 }
-
 ```
- ![](/betterpl/texfig/rustHelloWorld4.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/betterpl/texfig/rustHelloWorld4.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
-

@@ -21,6 +21,10 @@
 
 {{< include /overflow-smash/_nop-sled-use.qmd >}}
 
+## "blind" stack smashing {visibility="hidden"}
+
+{{< include /overflow-smash/_blind-smash.qmd >}}
+
 # example: Morris worm stack smashing {visibility="hidden"}
 
 {{< include /overflow-smash/_morris-worm-smash.qmd >}}

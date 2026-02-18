@@ -20,7 +20,12 @@ fn main() {
 }
 
 ```
- output: A(newline)in Example's drop(newline)B
+output: 
+```
+A
+in Example's drop
+B
+```
 
 ### Rust dropping (2)  {.smaller}
 
@@ -45,7 +50,12 @@ fn main() {
 }
 
 ```
- output: A(newline)B(newline)in Example's drop
+output: 
+```
+A
+B
+in Example's drop
+```
 
 ### Rust dropping (3)  {.smaller}
 
@@ -68,9 +78,14 @@ fn main() {
     }
     println!("B");
 }
-
 ```
- output: A(newline)in drop(newline)B(newline)in drop
+output: 
+```
+A
+in drop
+B
+in drop
+```
 
 ### preview: wrapper objects as tool  {.smaller}
 

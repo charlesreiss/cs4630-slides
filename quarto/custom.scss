@@ -242,6 +242,14 @@ div.myoverbox.highright {
     transform: translate(0%, 0%);
 }
 
+div.myoverbox.high {
+    bottom: auto;
+    top: 5%;
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, 0%);
+}
+
 @media print {
     .slide-chalkboard-buttons {
         display: none ! important

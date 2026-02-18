@@ -61,7 +61,7 @@ y.push(5);
 ```
  
 
-* exercise: what compile errors? how to fix and get same result?
+* exercise: what compile errors? how to fix?
 
 
 ### applying rules (2)  {.smaller}

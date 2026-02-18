@@ -45,6 +45,7 @@ fn foo() {
     add1(&mut vector);
     println!("*first_elem is {}", *first_elem); // ERROR
 }
+```
 
 ::: {.myoverbox .fragment .low}
 
@@ -63,7 +64,6 @@ error[E0502]: cannot borrow `vector` as mutable because it is also borrowed as i
 
 :::
 
-```
 
 
 ### borrowing (3b)  {.smaller}
@@ -81,16 +81,30 @@ fn foo() {
     append1(&mut vector);
     println!("*first_elem is {}", *first_elem); // ERROR
 }
+```
+
+::: {.myoverbox .low .fragment}
 
 ```
-  ![](/betterpl/texfig/rustBorrowing3b.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/betterpl/texfig/rustBorrowing3b.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+error[E0502]: cannot borrow `vector` as mutable because it is also borrowed as immutable
+  --> src/main.rs:11:10
+   |
+9  |     let first_elem: &u32 = &vector[0];
+   |                             ------ immutable borrow occurs here
+10 |     println!("*first_elem is {}", *first_elem);
+11 |     add1(&mut vector);
+   |          ^^^^^^^^^^^ mutable borrow occurs here
+12 |     println!("*first_elem is {}", *first_elem);
+   |                                   ----------- immutable borrow later used here
+```
+
+:::
 
 
 ### aside: find the bug  {.smaller}
 
 
-```
+```c
 struct vec { int *data; int size; };
 void append1(struct vec *v) {
     v.data = realloc(v.data, sizeof(int) * (v.size + 1));
@@ -140,11 +154,8 @@ fn foo() {
 
 ```rust
 fn add1(vector: &mut Vec<u32>) {
-    for value in vector {
-        *value += 1
-    }
+    for value in vector { *value += 1 }
 }
-
 fn foo() {
     let mut vector: Vec<u32> = vec![1, 2, 3];
     // (lifetime of first_elem starts here)
@@ -156,8 +167,23 @@ fn foo() {
 }
 
 ```
-  ![](/betterpl/texfig/rustBorrowing4b.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/betterpl/texfig/rustBorrowing4b.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+
+::: {.myoverbox .vlow .fragment}
+
+```
+error[E0499]: cannot borrow `vector` as mutable more than once at a time
+  --> src/main.rs:11:10
+   |
+9  |     let first_elem: &mut u32 = &mut vector[0];
+   |                                     ------ first mutable borrow occurs here
+10 |     *first_elem += 1;
+11 |     add1(&mut vector);
+   |          ^^^^^^^^^^^ second mutable borrow occurs here
+12 |     println!("first_elem is {}", *first_elem);
+   |                                  ----------- first borrow later used here
+```
+
+:::
 
 
 ### borrowing (4c)  {.smaller}
@@ -170,8 +196,22 @@ fn foo() {
     vector[1] += 2;  // ERROR: two mutable borrowings
     *first_elem += 1;
 }
+```
+
+::: {.myoverbox .low .fragment}
 
 ```
-  ![](/betterpl/texfig/rustBorrowing4c.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/betterpl/texfig/rustBorrowing4c.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+error[E0499]: cannot borrow `vector` as mutable more than once at a time
+  --> src/main.rs:10:5
+   |
+9  |     let first_elem: &mut u32 = &mut vector[0];
+   |                                     ------ first mutable borrow occurs here
+10 |     vector[1] += 2;
+   |     ^^^^^^ second mutable borrow occurs here
+11 |     *first_elem += 1;
+   |     ---------------- first borrow later used here
+   |
+```
+
+:::
 

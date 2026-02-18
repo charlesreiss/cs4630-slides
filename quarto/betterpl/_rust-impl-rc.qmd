@@ -1,37 +1,30 @@
 
 ### Rust escape hatch support  {.smaller}
 
-
 * escape hatch: make new reference-like object 
-
    * (… implemented by returning temporary ‘real’ references)
+* new object can call `unsafe` internally
+   * allows policies that _violate borrowing rules_
+
+### Rust escape hatch support  {.smaller}
 
 * Rc: `Rc<T>` acts like `&T`
 * callbacks on ownership ending (normally deallocation) 
-
    * Rust compiler enforces that ref-like object not in use when free call made
    * Rc: deallocating `Rc<T>` decrements shared count
    * Rc: real object only decremented on count == 0
-
 * choice of what happens on copy 
-
    * Rc: no implicit copy; explicit `clone` operation increments count
-
 
 
 ### alternative rule: reference counting  {.smaller}
 
-
 * keep track of number of references
 * increment count when making new ‘clone’ of reference
 * decrement when reference goes away 
-
    * Rust borrowing rules will enforce it is not used when this happens
-
 * delete when count goes to zero 
-
    * Rust automatically calls destructor --- no programmer effort
-
 * explicit operation to make new reference
 * Rust implement with Rc type (‘‘counted reference’’)
 

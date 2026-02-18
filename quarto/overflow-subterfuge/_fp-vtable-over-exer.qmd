@@ -7,12 +7,26 @@
  
 
 * Assume `gets(objs[0].buffer)` is run and eventually `ptr->foo()` will be run where `ptr == &objs[1]`.
-<table>
-<tr><td>input start: `_____________`  </td><td>A. shellcode   B. address of objs[0].buffer[0]</td></tr>
-<tr><td>input+50 bytes: `_____________`  </td><td>C. address of objs[0].buffer[50]</td></tr>
-<tr><td>input+100 bytes: `_____________`  </td><td>D. address of original vtable</td></tr>
-<tr><td>&nbsp;</td><td>E. address of objs[0]'s vtable</td></tr>
-<tr><td>&nbsp;</td><td>F. address of objs[1]'s vtable pointer</td></tr>
-<tr><td></td></tr>
-</table>
 
+::::: {.columns}
+
+::: {.column width=30%}
+
+input start: `____________`
+input+50 bytes: `____________`
+input+100 bytes: `____________`
+
+:::
+
+::: {.column width=69%}
+
+A. shellcode <br/>
+B. address of objs[0].buffer[0]  <br/>
+C. address of objs[0].buffer[50] <br/>
+D. address of original vtable<br/>
+E. address of objs[0]'s vtable<br/>
+F. address of objs[1]'s vtable pointer<br />
+
+:::
+
+:::::

@@ -50,7 +50,7 @@ $ objdump --dynamic-syms /lib/x86_64-linux-gnu/libc.so.6 | grep system
 </code></pre>
  
 
-* if address randomization disabled: <br> address should be `0x00002aaaaab650 + 0x55410`
+* if address randomization disabled: <br> address should be `0x00002aaaaab65000 + 0x55410`
 <hr class="vspace" />
 * <code>ldd</code> --- ‘‘what libraries does this load and where?’’ 
    * similar tools for other OSes

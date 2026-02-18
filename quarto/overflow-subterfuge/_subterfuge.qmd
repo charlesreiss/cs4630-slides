@@ -5,7 +5,7 @@
     char buffer[100];
     long val = ...; /* assume on stack */
     long *ptr = ...; /* assume on stack */
-    memcpy(buff, arg, len); /* overwrite ptr? */
+    memcpy(buffer, arg, len); /* overwrite ptr? */
     <span data-fragment-index="2" class="fragment custom myem-only">*ptr = val</span>; /* arbitrary memory write! */
 }
 </code></pre>

@@ -132,7 +132,7 @@ struct B {
 ### so far overwrites 
 
 * once we found a way to overwrite function pointer<br> easiest solution seems to be: direct to our code
-* … but alterante places to direct it to
+* … but alternate places to direct it to
 
 
 <!-- FIXME: this really belongs with stacksmashing slide set -->

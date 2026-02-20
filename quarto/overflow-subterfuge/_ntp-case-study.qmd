@@ -31,34 +31,26 @@ ctl_putdata(
 
 ### the target 
 
-<!-- \lstset{
-    language=C,
-    style=small,
-    moredelim={**[is][\btHL<1|handout:0>]{~1~}{~end~}},
-    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
-} -->
- 
-<pre><code>    memmove((char *)<em>datapt</em>, dp, (unsigned)dlen);
-    ...
-    ...
-    ...
-    ...
-    ...
-</code></pre>
- 
+<pre><code>    memmove((char *)<em>datapt</em>, dp, (unsigned)dlen);</code></pre>
 
-![](/overflow-subterfuge/texfig/target.figure-1.svg){width=1000px}
+![](/overflow-subterfuge/texfig/target.figure-1.svg){.nostretch width=1000px}
 
+<ul style="position:relative; top: -100px">
+<li class="fragment" data-fragment-index=1>  attacker controls amount copied into datapt = buffer
+<li class="fragment" data-fragment-index=1>  overflow can overwrite datapt pointer...
+<li class="fragment" data-fragment-index=2>  attacker triggers memmove again to use datapt to write elsewhere
+</ul>
 
 ### more context 
 
-<pre><code>    memmove((char *)datapt, dp, (unsigned)dlen);
+```
+    memmove((char *)datapt, dp, (unsigned)dlen);
     ...
     ...
     strlen(some_user_supplied_string)
     /* calls strlen@plt
        looks up global offset table entry! */
-</code></pre>
+```
 
 ::: {.r-stack}
 
@@ -71,7 +63,7 @@ ctl_putdata(
 
 ### overall exploit 
 
-
+* run vulnerable code TWICE
 * overwrite <code>datapt</code> to point to strlen GOT entry
 * overwrite value of strlen GOT entry
 * example target: <code>system</code> function 

@@ -12,9 +12,9 @@
 
 ::: {.column width=30%}
 
-input start: `____________`
-input+50 bytes: `____________`
-input+100 bytes: `____________`
+input start: `____________` <br/>
+input+50 bytes: `____________` <br/>
+input+100 bytes: `____________` <br/>
 
 :::
 

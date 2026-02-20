@@ -2,7 +2,7 @@
 ### subterfuge exercise  {.smaller}
 
 
-```
+```c
 struct Student {
     char email[128];
     struct Assignment *assignments[16];
@@ -33,7 +33,7 @@ void vulnerable(char *STRING1, char *STRING2) {
 ### subterfuge exercise solution  {.smaller}
 
 
-```
+```c
 struct Student { char email[128]; struct Assignment *assignments[16]; ...  };
 struct Assignment { char submission_file[128]; char regrade_request[1024]; ...  };
 

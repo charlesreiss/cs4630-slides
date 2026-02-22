@@ -13,7 +13,60 @@
 * problem: no compiler enforcement of ownership rules
 * can accidentally use ‘temporary’ reference/pointer for too long
 
-### C++ unique_ptr example (1)
+### C++ unique_ptr example (1) {.smaller}
+
+:::: {.columns}
+
+::: {.column width="48%"}
+
+raw pointers:
+```cpp
+unsigned *f1a() {
+    unsigned *value = new unsigned(0);
+    *value += 1;
+    q(*value);
+    return value;
+}
+
+unsigned *f1b() {
+    unsigned *value = new unsigned(0);
+    *value += 1;
+    q(*value);
+    delete value;
+}
+```
+
+:::
+
+::: {.column width="48%"}
+
+unique_ptr:
+```cpp
+unique_ptr<unsigned> f1a() {
+    unique_ptr<unsigned> value{new unsigned(0)};
+    *value += 1;
+    q(*value);
+    return value;
+}
+
+unsigned *f1b() {
+    unique_ptr<unsigned> value{new unsigned(0)}
+    *value += 1;
+    q(*value);
+    // value implicitly deleted (freed) here
+}
+```
+
+:::
+
+::::
+
+
+### C++ unique_ptr example (2)
+
+::::: {.columns}
+
+::: {.column}
 
 C++
 ```cpp
@@ -23,7 +76,12 @@ unique_ptr<int> q(move(p)};
 *q = 20;
 // would be error: *p
 ```
-<hr />
+
+:::
+
+::: {column}
+
+Rust
 ```rust
 let temp: Box<i32>;
 let p: &mut i32 = &temp;
@@ -33,29 +91,8 @@ let q: &mut i32 = p;
 // would be error: *p
 ```
 
+:::
 
-### C++ unique_ptr example (2)
-
-C++:
-```cpp
-unique_ptr<array<int, 4>>
-add1(unique_ptr<array<int, 4>> v) {
-    for (int i = 0; i < 4; i += 1) {
-        v[i] += 1;
-    }
-    return v;
-}
-```
-<hr />
-Rust:
-```rust
-fn add1(v: [i32; 4]) -> [i32; 4] {
-    for i in 0..4 {
-        v[i] += 1;
-    }
-    return v;
-}
-```
 
 ### C++ shared_ptr example {.smaller}
 
@@ -66,7 +103,8 @@ values.push_back(make_shared<int>(10));
 values.push_back(make_shared<int>(20));
 shared_ptr<int> p{values[0]};
 shared_ptr<int> q{values[0]};
-cout << *p << " " << *q << *values[0] << endl; // 10 10 10
+*p += 1;
+cout << *p << " " << *q << " " << *values[0] << endl; // 11 11 11
 cout << values[0].use_count() << endl; // 3
 cout << values[1].use_count() << endl; // 1
 values.clear();
@@ -77,17 +115,18 @@ cout << q.use_count() << endl; // 1
 <hr/>
 Rust
 ```rust
-let values: Vec<Arc<i32>> = vec![];
-values.push(Arc::new(10));
-values.push(Arc::new(20));
-let mut p: Arc<i32> = Arc::clone(&values[0]);
-let q: Arc<i32> = Arc::clone(&values[0]);
-println!("{} {} {}", *p, *q, *values[0]); // 10 10 10
+let mut values: Vec<Arc<Cell<i32>>> = vec![];
+values.push(Arc::new(Cell::new(10)));
+values.push(Arc::new(Cell::new(20)));
+let mut p: Arc<Cell<i32>> = Arc::clone(&values[0]);
+let q: Arc<Cell<i32>> = Arc::clone(&values[0]);
+(*p).replace((*p).get() + 1);
+println!("{} {} {}", (*p).get(), (*q).get(), (*values[0]).get()); // 11 11 11
 println!("{}", Arc::strong_count(&values[0])); // 3
 println!("{}", Arc::strong_count(&values[1])); // 1
 values.clear();
 println!("{}", Arc::strong_count(&p)); // 2
-p = Arc::new(30);
+p = Arc::new(Cell::new(30));
 println!("{}", Arc::strong_count(&q)); // 1
 ```
 

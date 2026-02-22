@@ -15,7 +15,7 @@
 
 
 
-### Box  {.smaller}
+### Box  {.smaller .longcode}
 
 
 :::: {.columns}
@@ -24,16 +24,14 @@
 
 ```rust
 pub fn f1a() -> Box<u32> {
-    let mut value: Box<u32> =
-            Box::new(0);
+    let mut value: Box<u32> = Box::new(0);
     *value += 1;
     q(*value);
     value
 }
 
 pub fn f1b() {
-    let mut value: Box<u32> =
-            Box::new(0);
+    let mut value: Box<u32> = Box::new(0);
     *value += 1;
     q(*value);
 }
@@ -51,18 +49,16 @@ pub fn f2() -> u32 {
 
 ::: {.column width="48%"}
 
-```
+```c
 unsigned *f1a() {
-    unsigned *value =
-            malloc(sizeof(unsigned));
+    unsigned *value = calloc(1, sizeof(unsigned));
     *value += 1;
     q(*value);
     return value;
 }
 
 unsigned *f1b() {
-    unsigned *value =
-            malloc(sizeof(unsigned));
+    unsigned *value = calloc(1, sizeof(unsigned));
     *value += 1;
     q(*value);
     free(value);
@@ -72,7 +68,7 @@ unsigned f2() {
     unsigned value = 0;
     value += 1;
     q(value);
-    return value
+    return value;
 }
 
 ```

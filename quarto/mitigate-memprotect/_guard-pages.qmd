@@ -31,7 +31,7 @@
 ### guard pages and arrays/structs  {.smaller}
 
 
-```
+```c
 struct foo {
     char buffer[10000];
     /* can't really put guard page here */

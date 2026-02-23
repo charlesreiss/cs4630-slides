@@ -4,5 +4,6 @@
 
 
 * illuision of <em>dedicated memory</em>
- ![](/mitigate-memprotect/texfig/mem-protect.figure.svg)
+
+![](/mitigate-memprotect/texfig/mem-protect.figure.svg){width=1000px}
 

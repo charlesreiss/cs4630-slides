@@ -13,7 +13,7 @@
 * less obvious: usually gives arbitrary code execution
 * how? ...
 
-### using arbitrary write
+### targets for writes
 
 * overwrite existing machine code (insert jump?)
    * problem: usually not writable
@@ -24,7 +24,7 @@
 
 ## example: return address overwrite {visibility="hidden"}
 
-### using arbitrary write
+### targets for writes
 
 * overwrite existing machine code (insert jump?)
    * problem: usually not writable
@@ -56,7 +56,7 @@
 
 ## example: GOT overwrite {visibility="hidden"}
 
-### using arbitrary write
+### targets for writes
 
 * overwrite existing machine code (insert jump?)
    * problem: usually not writable
@@ -69,7 +69,7 @@
 
 ## C++ inheritence {visibility="hidden"}
 
-### using arbitrary write
+### targets for writes
 
 * overwrite existing machine code (insert jump?)
    * problem: usually not writable
@@ -88,13 +88,17 @@
 
 {{< include /overflow-subterfuge/_fp-table-attack.qmd >}}
 
-## vtable overwrite exercise {visibility="hidden"}
+## vtable overwrite exercise 1 {visibility="hidden"}
 
 {{< include /overflow-subterfuge/_fp-vtable-over-exer.qmd >}}
 
+## vtable overwrite exercise 2 {visibility="hidden"}
+
+{{< include /overflow-subterfuge/_fp-vtable-over-exer2.qmd >}}
+
 # one write into another {visibility="hidden"}
 
-### using arbitrary write
+### targets for writes
 
 * overwrite existing machine code (insert jump?)
    * problem: usually not writable

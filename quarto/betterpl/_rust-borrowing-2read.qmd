@@ -20,36 +20,6 @@ fn main() {
 }
 ```
 
-### no multiple writers
-
-```rust
-fn get_mut_min_max(v: &mut Vec<i32>) -> (&mut i32, &mut i32) {
-    let (mut min, mut max) = (&mut v[0], &mut v[0]);  // ERROR
-    for i in 1..v.len() {
-        if v[i] < *min { min = &mut v[i]; }
-        if v[i] > *max { max = &mut v[i]; }
-    }
-    return (min, max);
-}
-```
-
-::: {.myoverbox .fragment .low}
-```
-error[E0499]: cannot borrow `*v` as mutable more than once at a time
- --> src/main.rs:2:47
-  |
-1 | fn get_mut_min_max(v: &mut Vec<i32>) -> (&mut i32, &mut i32) {
-  |                       - let's call the lifetime of this reference `'1`
-2 |     let (mut min, mut max) = (&mut v[0], &mut v[0]);
-  |                                    -          ^ second mutable borrow occurs here
-  |                                    |
-  |                                    first mutable borrow occurs here
-...
-7 |     return (min, max);
-  |            ---------- returning this value requires that `*v` is borrowed for `'1`
-```
-
-:::
 
 ### multiple readers (2) {.smaller}
 
@@ -93,6 +63,4 @@ error[E0597]: `vector` does not live long enough
 ```
 
 :::
-
-### multiple readers (3)
 

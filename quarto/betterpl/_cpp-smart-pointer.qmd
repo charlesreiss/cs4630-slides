@@ -93,7 +93,6 @@ let q: &mut i32 = p;
 
 :::
 
-
 ### C++ shared_ptr example {.smaller}
 
 C++
@@ -130,17 +129,11 @@ p = Arc::new(Cell::new(30));
 println!("{}", Arc::strong_count(&q)); // 1
 ```
 
-
-
-
-
-
-
 ### reference counting elsewhere  {.smaller}
 
 * a lot of programs do manual reference counting 
    * example: lots of stuff in Linux kernel
-* Swift, Perl, Python implicitly do reference counting for ‘normal’ references 
+* Python, Swift, Perl implicitly do reference counting for ‘normal’ references 
    * means normal references not ‘zero-overhead’
    * more predictable object deallocation than ‘normal’ garbage collection
 

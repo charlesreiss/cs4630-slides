@@ -6,7 +6,7 @@ from pathlib import Path
 import re
 
 def write_qmds(base: Path, directory: Path, with_backup: bool = False):
-    base_path = directory.relative_to(base)
+    base_path = str(directory.relative_to(base))
     directory.mkdir()
     (directory / '_talk-inner.qmd').write_text('')
     if with_backup:

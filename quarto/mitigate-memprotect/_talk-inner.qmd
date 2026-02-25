@@ -21,14 +21,6 @@
 
 {{< include /mitigate-memprotect/_guard-page-elsewhere.qmd >}}
 
-## read-only pages {visibility="hidden"}
-
-{{< include /mitigate-memprotect/_ro-pages.qmd >}}
-
-## relocation read-only {visibility="hidden"}
-
-{{< include /mitigate-memprotect/_relro.qmd >}}
-
 ## non-executable pages {visibility="hidden"}
 
 {{< include /mitigate-memprotect/_write-xor-exec.qmd >}}
@@ -40,3 +32,13 @@
 ## if you can't write machine code{visibility="hidden"}
 
 {{< include /mitigate-memprotect/_wx-incomplete.qmd >}}
+
+
+## read-only pages {visibility="hidden"}
+
+{{< include /mitigate-memprotect/_ro-pages.qmd >}}
+
+## relocation read-only {visibility="hidden"}
+
+{{< include /mitigate-memprotect/_relro.qmd >}}
+

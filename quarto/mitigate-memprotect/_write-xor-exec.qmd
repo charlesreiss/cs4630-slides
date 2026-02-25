@@ -1,27 +1,22 @@
 
 ### a thought on permissions 
 
-
-* if we can set memory non-writeable
-* how about non-executable? 
-<hr class="vspace" />
-* we never want to execute things on the stack anyways, right?
-
+*  shellcode required executable memory
+   *  that was modified while progam running
+*  how about we set writeable memory non-executable?
+   *  we never want to execute stuff on the stack, in globals, etc., right?
 
 ### write XOR execute  {.smaller}
 
 
 * many names: 
-
    * `W^X` (write XOR execute)
    * DEP (Data Execution Prevention)
    * NX bit (No-eXecute) (hardware support)
    * XD bit (eXecute Disable) (hardware support)
-
-* mark writeable memory as executable
+* mark writeable memory as non-executable
 * how will users insert their machine code? 
-
-   * can only code in application + libraries
-   * a problem, right?
+   * can only use code in application + libraries
+   * less of a obstacle than it seems ("return to libc")
 
 

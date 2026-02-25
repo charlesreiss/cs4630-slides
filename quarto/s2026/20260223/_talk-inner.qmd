@@ -1,0 +1,147 @@
+###
+
+###
+
+### last time
+
+*  using overwrites into pointer
+*  arbitrary write pattern
+   *  replacing pointer causes write anywhere else
+   *  pointers in "nearby" variables, struct members, etc.
+   *  in "best" situation, attacker controls value being written
+*  overwrite targets other than return addresses
+   *  useful for arbitrary overwrite pattern
+   *  ... or if we get "lucky" where buffer overflows to
+
+### on the quiz
+
+*  Q3: 0x1234567890 $\rightarrow$ 0x34567890 [least sig 4 bytes] 0x12 [most sig 4 bytes]
+    *  Yes, I messed up when writing the quiz
+*  Q4: calculation should have been stack pointer - 400 (start of temp[]) + 50 * 4 (+ 50 ints)
+    *  Was not one of the options
+    *  Cannot use rdi (= values) + 50 * 4 (+ 50 ints) because this has been clobbered by function
+       *  If it originally contained machine code, that code was replaced by function's calculation
+
+### assignment Q+A
+
+### targets for writes
+
+* overwrite existing machine code (insert jump?)
+   * problem: usually not writable
+* overwrite return address directly
+   * observation: don't care about stack canaries --- skip them
+* [overwrite other function pointer?]{.custom .fragment .myem-only}
+* overwrite another data pointer --- copy more?
+
+## vtable overwrite exercise 2 {visibility="hidden"}
+{{< include /overflow-subterfuge/_fp-vtable-over-exer2.qmd >}}
+
+# one write into another {visibility="hidden"}
+
+### using arbitrary write
+
+* overwrite existing machine code (insert jump?)
+   * problem: usually not writable
+* overwrite return address directly
+   * observation: don't care about stack canaries --- skip them
+* overwrite other function pointer?
+* <em>overwrite another data pointer --- copy more?</em>
+
+### write to write 
+
+```c
+struct A {
+    char name[100];
+    long irrelevant;
+    ...
+    struct B* other_thing;
+    ...
+};
+struct B {
+    char name[100];
+    ...
+}
+...
+    gets(a_object->name); /* overwrites a_object->other_thing */
+    gets(a_object->other_thing->name);
+        /* accesses memory address based on previous overwrite */
+...
+
+```
+
+<!-- FIXME: diagram of this -->
+
+# arc injection {visibility="hidden"}
+
+### so far overwrites 
+
+* once we found a way to overwrite function pointer<br> easiest solution seems to be: direct to our code
+* … but alternate places to direct it to
+
+
+<!-- FIXME: this really belongs with stacksmashing slide set -->
+
+{{< include /overflow-subterfuge/_arc-injection.qmd >}}
+
+### preview: return/jump-oriented programming
+
+*  arc injection = using code already in program
+*  seems like this requires "getting lucky" to find right code
+<hr class="vspace"/>
+*  turns out: can chain bits of existing code together
+   *  bits of code much more likely to be present
+*  we'll discuss later: ``return-oriented programming''
+
+# case study: NTP exploit {visibility="hidden"}
+
+{{< include /overflow-subterfuge/_ntp-case-study.qmd >}}
+
+## subterfuge exercise {visibility="hidden"}
+
+{{< include /overflow-subterfuge/_subterfuge-exer.qmd >}}
+
+{{< include /mitigate-memprotect/_talk-inner.qmd >}}
+
+## information disclosure {visibility="hidden"}
+
+### stack canary hopes 
+
+* overwrite return address $\implies$ overwrite canary
+* <em>canary is secret</em>
+
+## examples{visibility="hidden"}
+
+{{< include /mitigate-stack/_some-info-disc-bugs.qmd >}}
+
+### recall: compiler register clearing
+
+*  compiler clearing out registers of stack canary
+    *  prevents leaks from reuse of register for variable
+    *  or register being pushed to stack or similar
+*  stack canary stored in separate memory regoin
+    *  won't find next to global variable or similar
+    *  ... but it's still next to stack arrays
+
+## exercise{visibility="hidden"}
+
+{{< include /mitigate-stack/_info-disc-stack-addr-exer.qmd >}}
+
+## more advanced info disclosure {visibility="hidden"}
+
+{{< include /mitigate-stack/_repeat-read.qmd >}}
+
+<!-- then ASLR stuff -->
+
+# backup slides
+
+{{< include /overflow-subterfuge/_fp-cpp.qmd >}}
+
+## in real assembly{visibility="hidden"}
+
+{{< include /overflow-subterfuge/_fp-cpp-asm.qmd >}}
+
+## options for attacking function pointer tables {visibility="hidden"}
+
+{{< include /overflow-subterfuge/_fp-table-attack.qmd >}}
+
+{{< include /overflow-subterfuge/_fp-vtable-over-exer.qmd >}}

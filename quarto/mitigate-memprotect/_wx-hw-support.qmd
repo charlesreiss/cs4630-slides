@@ -1,7 +1,6 @@
 
 ### hardware support for write XOR execute 
 
-
 * everywhere today
 * not historically common
 * early x86: execute implied by read
@@ -11,14 +10,13 @@
 ### deliberate use of writeable code  {.smaller}
 
 
-* ‘‘just-in-time’’ (JIT) compilers 
-
+* "just-in-time" (JIT) compilers 
    * fast virtual machine/language implementations
-
 * some weird GCC features
-* older ‘‘signals’’ on Linux 
-
+   *  (things similar to lambda functions)
+* older signals (asynchronous event handling) on Linux 
    * OS wrote machine code on stack for program to run
-
-* couldn't even disable executable stacks without breaking applications
-
+   * replaced with writing stack frame that returns to system-supplied function
+<hr class="vspace"/>
+* because of these features, can't always disable executable stacks
+   * "STACK" entry in ELF program headers to indicate if application allows non-executable stack

@@ -1,0 +1,48 @@
+### last time {.smaller}
+
+*  using pointer overwrites
+*  imitating the structure expected by code
+   *  structs with pointers to struct, VTables, etc.
+*  examples where we offset a pointer
+   *  example: ptr to object with VTable using 3rd entry $\rightarrow$ <br/>ptr to ptr to $8\cdot3$ bytes before shellcode address
+*  write-to-write pattern: "pivoting" to new location
+*  arc injection / return-to-libc pattern
+   *  use existing code instead of shellcode
+   *  example: run `system` function if `%rdi` can be set usefully
+
+### homework Q+A
+
+### quiz logistics
+
+## information disclosure {visibility="hidden"}
+
+### stack canary hopes 
+
+* overwrite return address $\implies$ overwrite canary
+* <em>canary is secret</em>
+
+## examples{visibility="hidden"}
+
+{{< include /mitigate-stack/_some-info-disc-bugs.qmd >}}
+
+### recall: compiler register clearing
+
+*  compiler clearing out registers of stack canary
+    *  prevents leaks from reuse of register for variable
+    *  or register being pushed to stack or similar
+*  stack canary stored in separate memory regoin
+    *  won't find next to global variable or similar
+    *  ... but it's still next to stack arrays
+
+## exercise{visibility="hidden"}
+
+{{< include /mitigate-stack/_info-disc-stack-addr-exer.qmd >}}
+
+## more advanced info disclosure {visibility="hidden"}
+
+{{< include /mitigate-stack/_repeat-read.qmd >}}
+
+{{< include /mitigate-memprotect/_talk-inner.qmd >}}
+
+{{< include /mitigate-aslr/_talk-inner.qmd >}}
+

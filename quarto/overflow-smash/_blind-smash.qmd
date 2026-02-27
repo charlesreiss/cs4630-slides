@@ -1,0 +1,11 @@
+### aside: "blind" stack smashing {.smaller}
+
+* suppose we have server that restarts after crash
+  *  and it has buffer overflow on stack
+* attacker can binary search size that triggers crash
+  *  likely close (tens of bytes??) to return address location
+* if no address randomization, attacker can guess likely range of stack addresses
+  *  with large nop sled, it's not a big deal if range is big
+  *  if 1000 byte nop sled and 10000 byte stack at standard location, one of about 10 addresses should work
+* probably practical to brute-force missing info
+  *  if it takes 1 s for server to restart (probably high), try 3600 combinations in an hour

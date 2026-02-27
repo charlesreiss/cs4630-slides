@@ -1,0 +1,54 @@
+### vtable overwrite exercise (2) {.smaller}
+
+:::: {.columns}
+
+::: {.column}
+
+```cpp
+class Video {
+public:
+    virtual void Play(Screen *screen);
+    virtual void Pause();
+    virtaul long GetTimestamp();
+    virtual void SeekTo(long timetsamp);
+};
+
+class MP4Video : public Video {
+    ...
+};
+
+struct LibraryEntry {
+    char url[1024];
+    char title[128];
+    long lastTimestamp;
+    Video *video;
+};
+
+LibraryEntry library[1000];
+```
+
+:::
+
+::: {.column}
+
+```cpp
+void vulnerable(LibraryEntry *entry) {
+    printf("Set title: ");
+    fgets(entry->title, 128*sizeof(char*), stdin);
+    printf("Set timestamp: ");
+    char timestampString[128];
+    fgets(timestamp_str, sizeof(timestampString), stdin);
+    long timestamp = strtol(timestampString, NULL, 10);
+    entry->lastTimestamp = timestamp;
+    entry->video->SeekTo(timestamp);
+}
+```
+
+:::
+
+::::
+
+*  Part 1: What is the normal memory layout of `entry`?
+
+*  Part 2: Plan for buffer overflow?
+

@@ -1,0 +1,28 @@
+### last time {.smaller}
+
+*  information disclosure
+   *  "left over" values might be secrets (example: stack canaries)
+   *  using pointer overwrites to read
+   *  reading pointers as other types
+*  memory protection
+   *  OS sets up memory in page (typically 4K) units
+*  guard pages to stop contiguous overflows
+*  cases where guard pages don't work
+*  write XOR execute
+
+### homework Q+A
+
+### quiz reminder
+
+## read-only pages {visibility="hidden"}
+
+{{< include /mitigate-memprotect/_ro-pages.qmd >}}
+
+## relocation read-only {visibility="hidden"}
+
+{{< include /mitigate-memprotect/_relro.qmd >}}
+
+
+{{< include /mitigate-aslr/_talk-inner.qmd >}}
+
+{{< include /rop/_talk-inner.qmd >}}

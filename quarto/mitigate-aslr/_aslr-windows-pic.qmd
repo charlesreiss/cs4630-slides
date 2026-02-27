@@ -2,19 +2,14 @@
 ### relocating: Windows  {.smaller}
 
 
-* Windows will <em>edit code</em> to relocate 
-
-   * not everything uses a GOT-like lookup table
-
+* Windows supports <em>editing code</em> for relocation at runtime
+   * not everything uses a GOT-like lookup table or relative addressing
+   * (though library "imports" still use GOT-like table)
 * typically one fixed location per program/library <em>per boot</em> 
-
    * same address used across all instances of program/library
-   * still allows sharing memory
-
+   * allows sharing more memory / avoids redoing relocation work
 * fixup once per program/library per boot 
-
    * before ASLR: code could [be pre-relocated]{.fragment fragment-index=2 .custom .myem-only} (lower runtime cost)
-
 * Windows + Visual Studio had ‘full’ ASLR by default since 2010
 
 

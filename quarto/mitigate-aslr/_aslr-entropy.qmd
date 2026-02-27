@@ -14,7 +14,7 @@
 
 
 
-![](/mitigate-aslr/texfig/aslr64.figure.svg){.fragment .fade-out fragment-index=2 fig-alt="diagram of program memory layout; OS region at 0xFFFF_8000_0000_0000 through 0xFFFF_FFFF_FFFF_FFFF; stack below that at an (unspecified) address +/- 0x4_0000_0000; mmap/non-fixed executables/libraries below that at an address +/- 0x100_0000_0000 (fillled from top with ASLR); heap below that with a +/- 0x200_0000 starting address; fixed executable writeable at 0x60_0000; fixed executable code/data at 0x40_0000"}
+![](/mitigate-aslr/texfig/aslr64.figure.svg){fig-alt="diagram of program memory layout; OS region at 0xFFFF_8000_0000_0000 through 0xFFFF_FFFF_FFFF_FFFF; stack below that at an (unspecified) address +/- 0x4_0000_0000; mmap/non-fixed executables/libraries below that at an address +/- 0x100_0000_0000 (fillled from top with ASLR); heap below that with a +/- 0x200_0000 starting address; fixed executable writeable at 0x60_0000; fixed executable code/data at 0x40_0000"}
 
 
 ### program memory (x86-32 Linux; ASLR) 
@@ -42,4 +42,5 @@
    * e.g. server that uses multiple processes
 * local programs we can repeatedly run
 * servers that are automatically restarted
+   * varies whether "re-randomized"
 

@@ -1,20 +1,23 @@
 
-### relocating: Windows  {.smaller}
+### relocating: Windows  (1) {.smaller}
 
 
 * Windows supports <em>editing code</em> for relocation at runtime
-   * not everything uses a GOT-like lookup table or relative addressing
-   * (though library "imports" still use GOT-like table)
+   * executable has "default" base address
+      *  code ready to use for that base address
+   * list of "relocations" in executable 
+   * loader adds (real base - default base) for each relocation
+      *  with adjustment for format of address
+   * library "imports" still use GOT-like table
+
+### relocating: Windows (2) {.smaller}
+
 * typically one fixed location per program/library <em>per boot</em> 
    * same address used across all instances of program/library
    * allows sharing more memory / avoids redoing relocation work
 * fixup once per program/library per boot 
-   * before ASLR: code could [be pre-relocated]{.fragment fragment-index=2 .custom .myem-only} (lower runtime cost)
+   * before ASLR: code was [be pre-relocated]{.fragment fragment-index=2 .custom .myem-only} (lower runtime cost)
+   * with ASLR: only pay relocation cost once per boot
 * Windows + Visual Studio had ‘full’ ASLR by default since 2010
-
-
-### Windows ASLR limitation 
-
-
 * same address in all programs --- not very useful against local exploits
 

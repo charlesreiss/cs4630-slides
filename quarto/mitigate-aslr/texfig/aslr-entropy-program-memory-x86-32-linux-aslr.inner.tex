@@ -11,11 +11,11 @@
 \end{pgfonlayer}
 \node[mybox, minimum height=.5cm, below=.5cm of kernel] (stack) {Stack};
 \begin{pgfonlayer}{bg}
-    \node[right=1mm of stack.north east,mylabel] {\myemph{$\pm$ 0x080 0000} (default)};
+    \node[right=1mm of stack.north east,mylabel] {\myemph{$\pm$ 0x08 0000} (default)};
 \end{pgfonlayer}
 \node[mybox, minimum height=.5cm, below=0.5cm of stack] (heapB) {Dynamic/Libraries (mmap)};
 \begin{pgfonlayer}{bg}
-    \node[right=1mm of heapB.north east,mylabel] (heapBLabel) {\myemph{$\pm$ 0x008 0000} (default)};
+    \node[right=1mm of heapB.north east,mylabel] (heapBLabel) {\myemph{$\pm$ 0x000 8000} (default)};
 \end{pgfonlayer}
 %\begin{pgfonlayer}{bg}
 %    \node[right=1mm of heapB.south east,mylabel] (heapBLabel) {0x0000 2baa aaaa b000 \\ $\pm$ 0x100 0000 0000\*};

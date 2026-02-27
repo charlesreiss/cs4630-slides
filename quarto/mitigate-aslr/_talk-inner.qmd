@@ -15,13 +15,13 @@
 
 {{< include /mitigate-aslr/_entropy-exer.qmd >}}
 
-## info leak {visibility="hidden"}
-
-{{< include /mitigate-aslr/_info-disc-stack-addr-exer.qmd >}}
-
 ## kept together: danger of leaks {visibility="hidden"}
 
 {{< include /mitigate-aslr/_aslr-entropy-together.qmd >}}
+
+## info leak {visibility="hidden"}
+
+{{< include /mitigate-aslr/_info-disc-stack-addr-exer.qmd >}}
 
 {{< include /mitigate-aslr/_aslr-leaks.qmd >}}
 

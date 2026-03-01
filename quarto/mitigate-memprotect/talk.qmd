@@ -3,4 +3,8 @@ title: "mitigate-memprotect"
 
 ---
 
+### changelog
+
+*  28 Feb 2026: correct several arithmetic errors in guard page overhead exercise slide 
+
 {{< include ../mitigate-memprotect/_talk-inner.qmd >}}

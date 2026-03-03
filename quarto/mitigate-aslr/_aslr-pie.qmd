@@ -1,18 +1,4 @@
 
-### GCC/Clang options  {.smaller}
-
-
-* -fPIC: generate position-independent code for library 
-
-   * -fpic --- possibly less flexible/faster version on some platforms
-
-* -fPIE, -fpie: generate position-independent code for executable
-* -pie: link position-independent executable 
-
-   * -no-pie: don't (where -pie is default)
-
-* -shared: link shared library
-
 
 ### -fPIC/-fPIE differences  {.smaller}
 

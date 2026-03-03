@@ -1,19 +1,15 @@
+### last time
 
-# ASLR {visibility="hidden"}
+*  relocation read-only idea
+   *  after dynamic linker fills things in, mark it read-only
+   *  conflicts with lazy binding
+*  read-only sections
+*  address space layout randomization
+   *  limits on how random
+*  getting multiple tries at guess random value
+   *  need for "enough" randomness
 
-{{< include /mitigate-aslr/_aslr-preview.qmd >}}
-
-## what it is {visibility="hidden"}
-
-{{< include /mitigate-aslr/_aslr.qmd >}}
-
-## how much entropy {visibility="hidden"}
-
-{{< include /mitigate-aslr/_aslr-entropy.qmd >}}
-
-## entropy exercise? {visibility="hidden"}
-
-{{< include /mitigate-aslr/_entropy-exer.qmd >}}
+### homework Q+A
 
 ## kept together: danger of leaks {visibility="hidden"}
 
@@ -37,15 +33,11 @@
 
 ### why not always ASLR? 
 
-
 * ASLR seems like no-brainer 
-
    * have to choose address anyway
    * why not choose at random?
-
 * big problem: performance/code size impacts
-* (smaller problem: inconsistent behavior when bugs)
-
+* smaller problem: inconsistent behavior when bugs
 
 ## Unix PIC history {visibility="hidden"}
 
@@ -55,15 +47,11 @@
 
 {{< include /mitigate-aslr/_aslr-windows-pic.qmd >}}
 
-## exercise: without absolute addresses? {visibility="hidden"}
-
-{{< include /mitigate-aslr/_aslr-without-abs-ex.qmd >}}
-
-## changes with position-independent code{visibility="hidden"}
+## changes with position-independent code {visibility="hidden"}
 
 {{< include /mitigate-aslr/_pic-cost-code.qmd >}}
 
-## recall: vtable pointers?{visibility="hidden"}
+## vtable pointers? {visibility="hidden"}
 
 {{< include /mitigate-aslr/_reloc-vtable.qmd >}}
 
@@ -71,8 +59,24 @@
 
 {{< include /mitigate-aslr/_pic-options.qmd >}}
 
-{{< include /mitigate-aslr/_aslr-pie.qmd >}}
+{{< include /rop/_talk-inner.qmd >}}
+
+# backup slides
+
+## exercise: without absolute addresses? {visibility="hidden"}
+
+{{< include /mitigate-aslr/_aslr-without-abs-ex.qmd >}}
 
 ## PIC cost measurements {visibility="hidden"}
 
 {{< include /mitigate-aslr/_pic-cost-measure.qmd >}}
+
+## PIE / PIC code example
+
+{{< include /mitigate-aslr/_aslr-pie.qmd >}}
+
+
+###
+
+###
+

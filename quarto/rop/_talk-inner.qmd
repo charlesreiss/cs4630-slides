@@ -39,6 +39,10 @@
 
 {{< include /rop/_generic-sequence.qmd >}}
 
+## applying ROPgadget output
+
+{{< include /rop/_apply-ropgadget.qmd >}}
+
 ## dealing without generic sequence {visibility="hidden"}
 
 {{< include /rop/_no-generic-sequence.qmd >}}

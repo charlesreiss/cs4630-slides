@@ -250,6 +250,49 @@ div.myoverbox.high {
     transform: translate(-50%, 0%);
 }
 
+table.stackdiag.stackdiag.stackdiag.stackdiag td {
+    border: 2px solid black;
+    background-color: lighten(blue, 30%);
+    text-align:center;
+    font-size: 90%;
+}
+
+table.stackdiag.stackdiag.stackdiag.stackdiag.smaller {
+    font-size: 80%;
+}
+
+table.stackdiag.stackdiag.stackdiag.stackdiag td.emptycol {
+    border: none;
+    background-color: inherit;
+    min-width: 1em;
+}
+
+
+table.stackdiag.stackdiag.stackdiag.stackdiag td.topdot {
+    border-top: 2px dotted black;
+}
+
+table.stackdiag.stackdiag.stackdiag.stackdiag td.bottomdot {
+    border-bottom: 2px dotted black;
+}
+
+table.stackdiag.stackdiag.stackdiag.stackdiag td.small {
+    font-size: 60%;
+}
+
+table.stackdiag.stackdiag.stackdiag.stackdiag td.attack {
+    background-color: lighten(violet, 30%);
+}
+
+table.stackdiag.stackdiag.stackdiag.stackdiag td.nobox {
+    border: none;
+    background-color: inherit;
+}
+
+table.stackdiag.stackdiag.stackdiag.stackdiag td.ra {
+    background-color: lighten(red, 30%);
+}
+
 @media print {
     .slide-chalkboard-buttons {
         display: none ! important

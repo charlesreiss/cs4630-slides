@@ -366,6 +366,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     </list>
 
     <list name="instructions">
+      <item>endbr64</item>
       <item>lock</item>
       <item>rep</item>
       <item>repe</item>

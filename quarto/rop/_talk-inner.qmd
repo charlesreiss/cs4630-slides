@@ -51,7 +51,8 @@
 
 {{< include /rop/_not-just-ret.qmd >}}
 
-{{< include /rop/_vtable-overwrite.qmd >}} <!-- FIXME: diagram needs conversion -->
+<!-- FIXME: diagram needs conversion -->
+{{< include /rop/_vtable-overwrite.qmd >}}
 
 ## definition: JOP {visibility="hidden"}
 

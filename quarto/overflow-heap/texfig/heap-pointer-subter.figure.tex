@@ -1,0 +1,34 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{decorations.pathreplacing,patterns,arrows.meta}
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+}
+\newsavebox{\heapSmashVulnCode}
+\begin{document}
+\begin{lrbox}{\heapSmashVulnCode}
+\begin{lstlisting}
+char *buffer = malloc(100);
+... 
+~2~strcpy(buffer, attacker_supplied);~end~
+... 
+~3~free(buffer);~end~
+~6~free(other_thing);~end~
+...
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{overflow-heap/texfig/heap-pointer-subter.inner.tex}
+\setSlide{2}
+\input{overflow-heap/texfig/heap-pointer-subter.inner.tex}
+\setSlide{3}
+\input{overflow-heap/texfig/heap-pointer-subter.inner.tex}
+\setSlide{4}
+\input{overflow-heap/texfig/heap-pointer-subter.inner.tex}
+\setSlide{5}
+\input{overflow-heap/texfig/heap-pointer-subter.inner.tex}
+\setSlide{6}
+\input{overflow-heap/texfig/heap-pointer-subter.inner.tex}
+\end{document}

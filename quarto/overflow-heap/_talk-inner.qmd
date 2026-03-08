@@ -1,0 +1,46 @@
+
+# overflows on the heap, first look {visibility="hidden"}
+
+## simple case {visibility="hidden"}
+
+{{< include /overflow-heap/_heap-simple.qmd >}}
+
+## adjacent on the heap {visibility="hidden"}
+
+{{< include /overflow-heap/_heap-adjacent.qmd >}}
+
+## preview: heap structure {visibility="hidden"}
+
+{{< include /overflow-heap/_heap-structure-preview.qmd >}}
+
+# sudo exploit example {visibility="hidden"}
+
+{{< include /overflow-heap/_sudo-ex.qmd >}}
+
+# heap smashing {visibility="hidden"}
+
+{{< include /overflow-heap/_heap-smash-intro.qmd >}}
+
+## heap bookkeeping {visibility="hidden"}
+
+{{< include /overflow-heap/_heap-bookkeeping.qmd >}}
+
+## bookkeeping to pointer subterfuge {visibility="hidden"}
+
+{{< include /overflow-heap/_heap-pointer-subter.qmd >}}
+
+## exericse {visibility="hidden"}
+
+{{< include /overflow-heap/_heap-subter-exer.qmd >}}
+
+# alternate malloc designs? {visibility="hidden"}
+
+{{< include /overflow-heap/_alt-malloc.qmd >}}
+
+# double-free {visibility="hidden"}
+
+{{< include /overflow-heap/_double-free.qmd >}}
+
+## exercise {visibility="hidden"}
+
+{{< include /overflow-heap/_double-free-exer.qmd >}}

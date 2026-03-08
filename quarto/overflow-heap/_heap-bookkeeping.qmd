@@ -1,0 +1,86 @@
+
+### Linux memory allocation calls  {.smaller}
+
+
+* <code>brk()</code> 
+
+   * set ‘break’ at end of heap region
+   * one big memory region for dynamic memory
+   * used to be only way to allocate memory
+   * minimum size of changes = 4KB (x86-64)
+   * want larger changes for speed
+
+* <code>mmap()</code>  
+
+   * allocate new memory region
+   * more complex OS bookkeeping than brk() 
+
+      * adding to list of memory regions, not changing a size
+
+   * minimum size = 4KB
+   * want much larger allocations for speed
+
+
+
+### malloc()/free()/etc. as memory partitioners  {.smaller}
+
+
+* for ‘‘small’’ objects (less than kilobytes)
+* malloc() allocates <i>big chunks of memory</i>
+* then subdivides them on the fly 
+<hr class="vspace" />
+* different strategies to do this
+* all need to track <i>metadata</i> about allocated objects!
+
+
+### malloc() metadata?  {.smaller}
+
+
+* need to: 
+<hr class="vspace" />
+* find unused chunks of memory 
+
+   * even after A=malloc(), B=malloc(), C=malloc(), free(B)
+
+* figure out how big allocation is when free() is called 
+<hr class="vspace" />
+* two common strategies for tracking metadata: 
+
+   * <em>before each allocation</em> (example: GNU libc malloc [Linux default])
+   * before ‘arenas’ of allocations (example: jemalloc [Firefox; *BSD default?]) 
+
+      * lookup by rounding memory address
+
+
+
+
+### heap object 
+
+![](/overflow-heap/texfig/heapLayout.figure.svg)
+
+
+### implementing free()  {.smaller}
+
+<!-- \lstset{
+    style=small,
+    language=C,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+} -->
+ 
+<pre><code>int free(void *object) {
+  ...
+  block_after = object + object_size;
+  if (block_after-&gt;free) {
+    /* unlink from list,
+       prepare to merge with previous block */
+    new_block-&gt;size += block_after-&gt;size;
+    <span data-fragment-index="2" class="fragment custom myem-only">block_after-&gt;prev-&gt;next = block_after-&gt;next;</span>
+    block_after-&gt;next-&gt;prev = block_after-&gt;prev;
+  }
+  ...
+}
+</code></pre>
+ 
+
+* \\large{} [arbitrary memory write]{.fragment fragment-index=2 .custom .myem-only}
+

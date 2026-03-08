@@ -1,0 +1,10 @@
+
+### heap smashing  {.smaller}
+
+
+* ‘‘lucky’’ adjancent objects
+* same things possible on stack
+* but stack overflows had nice generic ‘‘stack smashing’’
+* is there an equivalent for the heap?
+* yes (mostly)
+

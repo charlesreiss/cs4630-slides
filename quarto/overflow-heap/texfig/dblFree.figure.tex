@@ -1,0 +1,41 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{arrows.meta,patterns}
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+    frameOne/.style={fill=blue!15},
+    frameTwo/.style={fill=red!15},
+    markLine/.style={blue!50!black},
+    markLineB/.style={red!90!black},
+    hiLine/.style={red!90!black},
+}
+\newsavebox{\dblFreeCode}
+\begin{document}
+\begin{lrbox}{\dblFreeCode}
+\begin{lstlisting}
+~2~free(thing);~end~
+~3~free(thing);~end~
+char *~4~p = malloc(...);~end~
+// p points to next/prev
+//   on list of avail.
+//   blocks
+strcpy(p, attacker_controlled);
+malloc(...);
+char *q = malloc(...);
+// q points to attacker-
+//   chosen address
+strcpy(q, attacker_controlled2);
+...
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{overflow-heap/texfig/dblFree.inner.tex}
+\setSlide{2}
+\input{overflow-heap/texfig/dblFree.inner.tex}
+\setSlide{3}
+\input{overflow-heap/texfig/dblFree.inner.tex}
+\setSlide{4}
+\input{overflow-heap/texfig/dblFree.inner.tex}
+\end{document}

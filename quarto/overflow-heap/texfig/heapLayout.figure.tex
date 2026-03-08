@@ -1,0 +1,28 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+    frameOne/.style={fill=blue!15},
+    frameTwo/.style={fill=red!15},
+    markLine/.style={blue!50!black},
+    markLineB/.style={red!90!black},
+    hiLine/.style={red!90!black},
+}
+\newsavebox{\allocInfoDecl}
+\begin{document}
+\begin{lrbox}{\allocInfoDecl}
+\begin{lstlisting}
+struct AllocInfo {
+  bool free;
+  int size;
+  AllocInfo *prev;
+  AllocInfo *next;
+};
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{overflow-heap/texfig/heapLayout.inner.tex}
+\end{document}

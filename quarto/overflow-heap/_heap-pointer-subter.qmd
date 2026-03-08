@@ -1,0 +1,28 @@
+
+### vulnerable code 
+
+ <!-- \lstset{
+    style=small,
+    language=C,
+    moredelim={**[is][\btHL<4|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<2-3|handout:0>]{~3~}{~end~}},
+    moredelim={**[is][\btHL<6-|handout:0>]{~6~}{~end~}},
+} -->
+ 
+
+::: {.r-stack}
+![](/overflow-heap/texfig/heap-pointer-subter.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/overflow-heap/texfig/heap-pointer-subter.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+![](/overflow-heap/texfig/heap-pointer-subter.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
+![](/overflow-heap/texfig/heap-pointer-subter.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
+
+![](/overflow-heap/texfig/heap-pointer-subter.figure-5.svg){.fragment .fade-in-then-out fragment-index=5}
+
+![](/overflow-heap/texfig/heap-pointer-subter.figure-6.svg){.fragment .fade-in-then-out fragment-index=6}
+
+
+:::
+

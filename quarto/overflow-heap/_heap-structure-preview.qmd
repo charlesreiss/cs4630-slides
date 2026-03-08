@@ -1,0 +1,10 @@
+
+### heap structure  {.smaller}
+
+
+* where does malloc, free, new, delete, etc. keep info?
+* often in data structures next to objects on the heap 
+<hr class="vspace" />
+* special case of adjacent heap objects problem
+* topic for later
+

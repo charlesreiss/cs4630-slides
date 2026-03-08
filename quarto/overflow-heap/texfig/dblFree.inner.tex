@@ -1,0 +1,45 @@
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\usebox{\dblFreeCode}
+};
+
+\tikzset{xscale=0.9}
+\begin{scope}[overlay]
+    \draw[stackBox,fill=black!20] (0, 1) rectangle (3, -7);
+
+    \draw[onStack] (0, 1) rectangle (3, 0) node[midway,font=\small] {free space};
+    \draw[onStack,fill=white] (0, -0.0) rectangle (3, -0.5) node[midway,font=\small] (freeANext) {next};
+    \draw[onStack,fill=white] (0, -0.5) rectangle (3, -1.0) node[midway,font=\small] (freeAPrev) {prev};
+    \draw[onStack,fill=white] (0, -1.0) rectangle (3, -1.5) node[midway,font=\small] (freeASize) {size};
+
+    \draw[onStack,fill=blue!20] (0, -1.7) rectangle (3, -3.0) node[midway,font=\small,align=center] (freeBAlloc) {alloc'd object};
+    \draw[onStack,fill=white] (0, -3.0) rectangle (3, -3.5) node[midway,font=\small] (freeBSize) {size};
+
+    \draw[onStack,fill=yellow!20] (0, -3.5) rectangle (3, -6.0) node[midway,font=\small,align=center,yshift=.5cm] {alloc'd object\\
+                \tt thing\only<4->{/p}};
+    \begin{visibleenv}<2->
+    \draw[onStack,fill=yellow!10,dashed] (0, -5.5) rectangle (3, -6.0) node[midway,font=\small] (freeCPrev) {prev};
+    \draw[onStack,fill=yellow!10,dashed] (0, -5.0) rectangle (3, -5.5) node[midway,font=\small] (freeCNext) {next};
+    \end{visibleenv}
+    \begin{visibleenv}<2>
+    \draw[-Latex,blue,thick,opacity=0.5] (freeCPrev) -- ++(1.75cm,0cm) node[right] {NULL};
+    \draw[-Latex,blue,thick,opacity=0.5] (freeCNext) -- ++(2.25cm,0cm) -- ++(0cm,2cm);
+    \draw[Latex-,blue,thick,opacity=0.5] (freeCPrev.west) -- ++(-1cm,0cm) -- ++(0cm,-1cm) node[below,font=\small] {list head};
+    \end{visibleenv}
+    \begin{visibleenv}<3->
+    \draw[-Latex,blue,thick,opacity=0.5] (freeCPrev) -- ++(1.75cm,0cm) node[right] {NULL};
+    \draw[-Latex,blue,thick,opacity=0.5] (freeCNext) -- ++(2.25cm,0cm) -- ++(0cm,.35cm) -- ++(-4cm,0cm) |- (freeCPrev.west);
+    \draw[Latex-,blue,thick,opacity=0.5] (freeCPrev.west) -- ++(-1cm,0cm) -- ++(0cm,-1cm) node[below,font=\small] {list head};
+    \end{visibleenv}
+    \draw[onStack,fill=white] (0, -6.0) rectangle (3, -6.5) node[midway,font=\small] (freeCSize) {size};
+    
+    \draw[-Latex,blue,thick,opacity=0.5] (freeAPrev) -- ++(1.75cm,0cm) -- ++(0cm,-2cm);
+    \draw[-Latex,blue,thick,opacity=0.5] (freeANext) -- ++(2.25cm,0cm) -- ++(0cm,2cm);
+\end{scope}
+    \begin{visibleenv}<4>
+        \node[draw=red, ultra thick, anchor=east,align=left,fill=white] at (-.5, -4) {
+            malloc returns something \myemph{still on free list} \\
+            because double-free made \myemph{loop} in linked list
+        };
+    \end{visibleenv}
+\end{tikzpicture}

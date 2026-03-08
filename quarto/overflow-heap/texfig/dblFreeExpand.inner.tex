@@ -1,0 +1,38 @@
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\usebox{\dblFreeCodeExpand}
+};
+\draw[stackBox] (0,0) rectangle (5, -2);
+\draw[onStack,fill=blue!20] (0,0) rectangle (5, -1) node[midway,font=\small] {next / double free'd object};
+\draw[onStack] (0,-1) rectangle (5, -2) node[midway,font=\small] {size};
+\draw[stackBox] (0, -4) rectangle (5, -5) node[midway,font=\small,align=center] {first\_free \\ (global)};
+\draw[stackBox,dashed] (0.5, -2.5) rectangle (5.5, -3.5) node[midway,font=\small,align=center] {(original first free)};
+
+\begin{visibleenv}<1>
+\draw[-Latex,blue,thick] (0, -4.5) -- ++(-0.5cm,0cm) |- (0.5, -3);
+\end{visibleenv}
+\begin{visibleenv}<2-4>
+\draw[-Latex,blue,thick] (0, -4.5) -- ++(-0.5cm,0cm) |- (0, -1.5);
+\end{visibleenv}
+\begin{visibleenv}<2>
+\draw[-Latex,blue,thick] (5, -0.5) -- ++(1.5cm,0cm) |- (5.5, -3);
+\end{visibleenv}
+
+\begin{visibleenv}<3->
+\draw[-Latex,blue,thick] (5, -0.5) -- ++(0.5cm,0cm) |- (5, -1.5);
+\end{visibleenv}
+
+\begin{visibleenv}<4->
+\fill[pattern=north west lines,pattern color=red] (0, 0) rectangle (5, -1);
+\draw[red,dashed,ultra thick,-Latex] (5,-0.5) -- ++(1cm, 0cm) |- (3, -5.5);
+\draw[stackBox,fill=orange!30] (0, -5.25) rectangle (3, -6.25) node[midway,font=\small] {GOT entry: free};
+\end{visibleenv}
+\begin{visibleenv}<4->
+\node[overlay,text=black,draw=red!80,thick,font=\small\tt,anchor=south] at (3, 0) { first/second malloc };
+\end{visibleenv}
+
+\begin{visibleenv}<5->
+\draw[-Latex,blue,thick] (0, -4.5) -- ++(-1cm, 0cm) |- (0, -5.75);
+\node[text=black,draw=red!80,thick,font=\small\tt,anchor=north west] at (3, -6) { third malloc };
+\end{visibleenv}
+\end{tikzpicture}

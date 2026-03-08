@@ -1,0 +1,47 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{arrows.meta,patterns}
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+    frameOne/.style={fill=blue!15},
+    frameTwo/.style={fill=red!15},
+    markLine/.style={blue!50!black},
+    markLineB/.style={red!90!black},
+    hiLine/.style={red!90!black},
+}
+\newsavebox{\dblFreeCode}
+\newsavebox{\dblFreeCodeExpand}
+\begin{document}
+\begin{lrbox}{\dblFreeCodeExpand}
+\begin{lstlisting}
+// free/delete 1:
+~2~double_freed->next = first_free;~end~
+~2~first_free = chunk;~end~
+// free/delete 2:
+~3~double_freed->next = first_free;~end~
+~3~first_free = chunk~end~
+// malloc/new 1:
+~4~result1 = first_free;~end~
+~4~first_free = first_free->next;~end~
+// + overwrite:
+~4~strcpy(result1, ...);~end~
+// malloc/new 2:
+~5~first_free = first_free->next;~end~
+// malloc/new 3: 
+result3 = first_free;
+strcpy(result3, ...);
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{overflow-heap/texfig/dblFreeExpand.inner.tex}
+\setSlide{2}
+\input{overflow-heap/texfig/dblFreeExpand.inner.tex}
+\setSlide{3}
+\input{overflow-heap/texfig/dblFreeExpand.inner.tex}
+\setSlide{4}
+\input{overflow-heap/texfig/dblFreeExpand.inner.tex}
+\setSlide{5}
+\input{overflow-heap/texfig/dblFreeExpand.inner.tex}
+\end{document}

@@ -1,0 +1,9 @@
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\usebox{\heapOverflowInObjCode}
+};
+\draw[stackBox] (0, 0) rectangle (4, -6);
+\draw[thick,-Latex] (-.25,-5) -- (-.25, -1) node [midway, above, sloped] {increasing addresses};
+\draw[onStack] (0, -0.5) rectangle (4, -6) node[midway,font=\small] {\texttt{buffer}};
+\draw[onStack] (0, -0) rectangle (4, -0.5) node[midway,font=\small] {\texttt{func\_ptr}};
+\end{tikzpicture}

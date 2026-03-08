@@ -1,0 +1,36 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{patterns,arrows.meta}
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+    frameOne/.style={fill=blue!15},
+    frameTwo/.style={fill=red!15},
+    markLine/.style={blue!50!black},
+    markLineB/.style={red!90!black},
+    hiLine/.style={red!90!black},
+}
+\newsavebox{\heapAdjacentCode}
+\begin{document}
+\begin{lrbox}{\heapAdjacentCode}
+\lstset{language=C++,style=small}
+\begin{lstlisting}
+class V {
+  char buffer[100];
+public:
+  virtual void ...;
+  ...
+};
+...
+V *first = new V(...);
+V *second = new V(...);
+strcpy(first->buffer,
+       attacker_controlled);
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{overflow-heap/texfig/heap-adjacent.inner.tex}
+\setSlide{2}
+\input{overflow-heap/texfig/heap-adjacent.inner.tex}
+\end{document}

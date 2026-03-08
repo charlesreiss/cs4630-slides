@@ -1,0 +1,31 @@
+
+### heap overflow exercise  {.smaller}
+
+
+```
+void operator delete(void *p) {
+    ...
+    block_after->prev->next = block_after->next;
+    ...
+}
+...
+class MyBuffer : public GenericMyBuffer {
+public:
+    virtual void store(const char *p) override {
+        strcpy(buffer, p);
+    }
+private:
+    char buffer[64];
+};
+...
+    GenericMyBuffer *a = new MyBuffer;
+    ...
+    a->store(attacker_controlled);
+    ...
+    delete a;
+    ...
+
+```
+ ![](/overflow-heap/texfig/heap-subter-exer.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/overflow-heap/texfig/heap-subter-exer.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+

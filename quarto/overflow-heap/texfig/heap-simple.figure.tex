@@ -1,0 +1,26 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{patterns,arrows.meta}
+\newsavebox{\heapOverflowInObjCode}
+\tikzset{
+    stackBox/.style={very thick},
+    onStack/.style={thick},
+    frameOne/.style={fill=blue!15},
+    frameTwo/.style={fill=red!15},
+    markLine/.style={blue!50!black},
+    markLineB/.style={red!90!black},
+    hiLine/.style={red!90!black},
+}
+\begin{document}
+\begin{lrbox}{\heapOverflowInObjCode}
+\begin{lstlisting}
+struct foo {
+    char buffer[100];
+    void (*func_ptr)(void);
+};
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{overflow-heap/texfig/heap-simple.inner.tex}
+\end{document}

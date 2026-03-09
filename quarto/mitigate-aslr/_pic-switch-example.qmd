@@ -1,11 +1,6 @@
 
 ### hard-coded addresses? (64-bit) 
 
-<!-- \lstset{language=C,style=small} -->
- ![](/mitigate-aslr/texfig/hardCodedAsm.figure.svg)
-
-### hard-coded addresses? (64-bit) 
-
 :::: {.columns}
 
 ::: {.column style="font-size: 90%; width: 30%"}
@@ -92,22 +87,17 @@ b8 03 00 00 00    mov    $0x3,%eax
 77 <span class="fragment custom myem-only" data-fragment-index="1">12</span>             ja     0x40058d
         /* lookup table jump: */
 ff 24 fd
-<span class="fragment custom myem-only" data-fragment-index="1">18 06 40 00</span>       jmpq   *0x400618(,%rdi,8)
+<span class="fragment custom myem-only" data-fragment-index="2">18 06 40 00</span>       jmpq   *0x400618(,%rdi,8)
 ...
  /* lookupTable @ 0x400618 */
-@ 400618: <span class="fragment custom myem-only" data-fragment-index="2">0x400588</span> /* returnOne */
-@ 400620: <span class="fragment custom myem-only" data-fragment-index="2">0x400582</span> /* returnTwo */
-@ 400628: <span class="fragment custom myem-only" data-fragment-index="2">0x400588</span>
-@ 400630: <span class="fragment custom myem-only" data-fragment-index="2">0x400582</span>
+@ 400618: <span class="fragment custom myem-only" data-fragment-index="3">0x400588</span> /* returnOne */
+@ 400620: <span class="fragment custom myem-only" data-fragment-index="3">0x400582</span> /* returnTwo */
+@ 400628: <span class="fragment custom myem-only" data-fragment-index="3">0x400588</span>
+@ 400630: <span class="fragment custom myem-only" data-fragment-index="3">0x400582</span>
 </code></pre>
 
 :::
 
 ::::
 
-
-### hard-coded addresses? (64-bit) 
-
-
-![](/mitigate-aslr/texfig/hardCodedDisasm.figure.svg)
 

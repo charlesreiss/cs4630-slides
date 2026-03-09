@@ -3,7 +3,7 @@
 
 
 ```cpp
-class Foo {
+class Foo { public:
     virtual const char *bar() { ... }
 };
 ...
@@ -32,7 +32,7 @@ printf("%s\n", f);
 
 
 ```
-class Foo { virtual const char *bar() { ... } };
+class Foo { public: virtual const char *bar() { ... } };
 ...
 Foo *f = new Foo;
 char *p = new char[1024];
@@ -48,7 +48,7 @@ printf("%s\n", f);
    * f's address was 0x900000
    * f's Vtable's address was 0x403000
    * a ‘‘gadget’’ address from the main executable was 0x401034
-   * a ‘‘gadget’’ address from the C library was 0x2aaaa40034
+   * a ‘‘gadget’’ address from the C shared library was 0x2aaaa40034
    * p's address was 0x901000
 
 * which of the above can I compute based on the leak?
@@ -64,7 +64,7 @@ printf("%s\n", f);
    * Foo::bar definition
    * global variables (not listed)
 
-* can't use it to find things on heap, stack, in C library 
+* can't use it to find things on heap, stack, in C shared library 
 
    * those are separately randomized
 

@@ -49,6 +49,8 @@
 
 ## changes with position-independent code {visibility="hidden"}
 
+{{< include /mitigate-aslr/_pic-switch-example.qmd >}}
+
 {{< include /mitigate-aslr/_pic-cost-code.qmd >}}
 
 ## vtable pointers? {visibility="hidden"}

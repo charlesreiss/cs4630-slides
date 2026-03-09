@@ -4,8 +4,110 @@
 <!-- \lstset{language=C,style=small} -->
  ![](/mitigate-aslr/texfig/hardCodedAsm.figure.svg)
 
+### hard-coded addresses? (64-bit) 
+
+:::: {.columns}
+
+::: {.column style="font-size: 90%; width: 30%"}
+
+```c
+int foo(long n) {
+    switch (n) {
+    case 0: 
+    case 2:
+    case 4:
+    case 5:
+        return 1;
+    case 1:
+    case 3:
+        return 2;
+    default:
+        return 3;
+    }
+}
+```
+
+:::
+
+::: {.column style="width: 68%; border-left: 2px solid black"}
+
+```gnuassembler
+foo:
+	movl	$3, %eax
+	cmpq	$5, %rdi
+	ja	defaultCase
+	jmp	*lookupTable(,%rdi,8)
+        /* plus
+           code for defaultCase,
+           returnOne, returnTwo */
+        ...
+	.section	.rodata
+lookupTable: /* read-only pointers: */
+	.quad	returnOne
+	.quad	returnTwo
+	.quad	returnOne
+	.quad	returnTwo
+	.quad	returnOne
+	.quad	returnOne
+```
+
+:::
+
+::::
+
+
+
+### hard-coded addresses? (64-bit) {.longcode}
+
+
+:::: {.columns}
+
+::: {.column style="font-size: 90%; width: 30%"}
+
+```c
+int foo(long n) {
+    switch (n) {
+    case 0: 
+    case 2:
+    case 4:
+    case 5:
+        return 1;
+    case 1:
+    case 3:
+        return 2;
+    default:
+        return 3;
+    }
+}
+```
+
+:::
+
+::: {.column style="width: 68%; border-left: 2px solid black"}
+
+<pre><code>400570 &ltfoo&gt;:
+b8 03 00 00 00    mov    $0x3,%eax
+48 83 ff 05       cmp    $0x5,%rdi
+        /* jump to defaultCase: */
+77 <span class="fragment custom myem-only" data-fragment-index="1">12</span>             ja     0x40058d
+        /* lookup table jump: */
+ff 24 fd
+<span class="fragment custom myem-only" data-fragment-index="1">18 06 40 00</span>       jmpq   *0x400618(,%rdi,8)
+...
+ /* lookupTable @ 0x400618 */
+@ 400618: <span class="fragment custom myem-only" data-fragment-index="2">0x400588</span> /* returnOne */
+@ 400620: <span class="fragment custom myem-only" data-fragment-index="2">0x400582</span> /* returnTwo */
+@ 400628: <span class="fragment custom myem-only" data-fragment-index="2">0x400588</span>
+@ 400630: <span class="fragment custom myem-only" data-fragment-index="2">0x400582</span>
+</code></pre>
+
+:::
+
+::::
+
 
 ### hard-coded addresses? (64-bit) 
+
 
 ![](/mitigate-aslr/texfig/hardCodedDisasm.figure.svg)
 

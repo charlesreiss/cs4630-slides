@@ -1,0 +1,14 @@
+### last time
+
+*  groups of addresses stay together
+  *  all of stack
+  *  everything from an executable
+  *  everything from a dynamic library
+*  working from information leaks
+  *  compute random offset for ASLR
+*  cost to do ASLR
+  *  jump tables wanting hard-coded addresses in execs
+  *  32-bit x86 and not having %rip-relative addressing
+
+{{< include /rop/_talk-inner.qmd >}}
+

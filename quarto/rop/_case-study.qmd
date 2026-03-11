@@ -10,11 +10,11 @@
 
 
 
-### vulnerable application  {.smaller}
+### vulnerable application
 
 <!-- \lstset{language=C,style=small} -->
  
-```
+```c
 #include <stdio.h>
 
 int vulnerable() {
@@ -29,7 +29,7 @@ int main(void) {
 ```
 
 
-### vulnerable function  {.smaller}
+### vulnerable function
 
 <!-- \lstset{language=myasm,style=small} -->
  

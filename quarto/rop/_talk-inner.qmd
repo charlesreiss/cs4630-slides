@@ -54,15 +54,16 @@
 <!-- FIXME: diagram needs conversion -->
 {{< include /rop/_vtable-overwrite.qmd >}}
 
+## exercise: using function pointer overwrite {visibility="hidden"}
+
+{{< include /rop/_use-fptr-overwrite-exer.qmd >}}
+
 ## definition: JOP {visibility="hidden"}
 
 {{< include /rop/_jop.qmd >}}
 
 {{< include /rop/_jop-dispatcher-gadget.qmd >}}
 
-## exercise: using function pointer overwrite {visibility="hidden"}
-
-{{< include /rop/_use-fptr-overwrite-exer.qmd >}}
 
 ## just get rid of rets? {visibility="hidden"}
 

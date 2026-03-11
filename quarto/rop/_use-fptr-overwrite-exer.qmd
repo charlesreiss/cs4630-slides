@@ -2,7 +2,7 @@
 ### using function pointer overwrite (1)  {.smaller}
 
 
-```
+```c
 struct Example {
     char input[1000];
     void (*process_function)(Example *, long, char *);
@@ -30,7 +30,7 @@ void vulnerable(struct Example *e) {
 ### explanation  {.smaller}
 
 
-```
+```c
 gets(e->input); /* can overwrite process_function */
 sscanf(e->input, "%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
 (e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);
@@ -55,7 +55,7 @@ sscanf(e->input, "%ld,%s", &index, &name[0]); /* expects <decimal number>,<strin
 ### using function pointer overwrite (2)  {.smaller}
 
 
-```
+```c
 struct Example {
     char input[1000];
     void (*process_function)(Example *, long, char *);
@@ -83,7 +83,7 @@ void vulnerable(struct Example *e) {
 ### explanation (one option)  {.smaller}
 
 
-```
+```c
 gets(e->input); /* can overwrite process_function */
 sscanf(e->input, "%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
 (e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);
@@ -108,7 +108,7 @@ sscanf(e->input, "%ld,%s", &index, &name[0]); /* expects <decimal number>,<strin
 ### explanation (unlikely alternative?)  {.smaller}
 
 
-```
+```c
 gets(e->input); /* can overwrite process_function */
 sscanf(e->input, "%ld,%s", &index, &name[0]); /* expects <decimal number>,<string> */
 (e->process_function)(e /* rdi */, index /* rsi */, name /* rdx */);

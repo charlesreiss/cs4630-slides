@@ -1,7 +1,62 @@
+### exercise: ROP chain alignment
 
-### exercise: ROP chain alignment 
+:::: {.columns}
 
-  ![](/rop/texfig/ropChainAlignEx.figure.svg)
+
+
+::: {.column}
+
+```gnuasembler
+getInitials: push %rbx
+xor    %eax,%eax
+mov    %rdi,%rbx
+// lea "%s%s" -> %rdi
+lea    0xe6e(%rip),%rdi 
+sub    $0xa0,%rsp
+// &second[0] -> %rdx
+lea    0x50(%rsp),%rdx 
+// &first[0] -> %rsi
+mov    %rsp,%rsi
+call   __isoc99_scanf@plt
+mov    (%rsp),%al
+mov    %al,(%rbx)
+mov    0x50(%rsp),%al
+mov    %al,0x1(%rbx)
+add    $0xa0,%rsp
+pop    %rbx
+ret 
+```
+
+:::
+
+::: {.column}
+
+```c
+void getInitials(char *init) {
+    char first[50]; char second[50];
+    scanf("%s%s", first, second);
+    init[0] = first[0];
+    init[1] = second[0];
+}
+```
+
+::::: {style="font-size: 60%"}
+Suppose we have 64-byte ROP chain
+w/o whitespace in it. How to write input?<br/>
+(Multiple might work)<br/>
+
+A. <i>[80 As]</i><i>[ROP chain]</i> X <br/>
+B. <i>[160 As]</i><i>[ROP chain]</i> X <br/>
+C. <i>[168 As]</i><i>[ROP chain]</i> X <br/>
+D. <i>[ROP chain]</i><i>[36 As]</i><i>[ROP chain addr]</i> X <br/>
+E. <i>[ROP chain]</i> <i>[80 As]</i><i>[ROP chain addr]</i> <br/>
+F. X <i>[88 As]</i><i>[ROP chain]</i> <br/>
+G. X <i>[96 As]</i><i>[ROP chain]</i> <br/>
+:::::
+
+:::
+
+::::
 
 
 ### solution preview  {.smaller}

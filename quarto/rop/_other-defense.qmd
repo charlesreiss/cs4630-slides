@@ -1,10 +1,10 @@
 
 ### other defenses?  {.smaller}
 
+* shadow stacks
+   * separate or additional stack for return addresses only
+   * buffer overflow on normal stack can't change return address
 
-* mentioned shadow stacks 
-<hr class="vspace" />
-* some other ideas later:
 * pointer authentication 
 
    * MACs in return/function/etc. addresses

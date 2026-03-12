@@ -1,0 +1,59 @@
+###
+
+# last time
+
+*  "gadgets" of useful code
+*  chaining gadgets through `ret`
+*  
+
+### assignment Q+A
+
+###
+
+## reusable sequence {visibility="hidden"}
+
+{{< include /rop/_generic-sequence.qmd >}}
+
+## applying ROPgadget output
+
+{{< include /rop/_apply-ropgadget.qmd >}}
+
+## dealing without generic sequence {visibility="hidden"}
+
+{{< include /rop/_no-generic-sequence.qmd >}}
+
+## example: VTable overwrite {visibility="hidden"}
+
+{{< include /rop/_not-just-ret.qmd >}}
+
+<!-- FIXME: diagram needs conversion -->
+{{< include /rop/_vtable-overwrite.qmd >}}
+
+## exercise: using function pointer overwrite {visibility="hidden"}
+
+{{< include /rop/_use-fptr-overwrite-exer.qmd >}}
+
+## definition: JOP {visibility="hidden"}
+
+{{< include /rop/_jop.qmd >}}
+
+{{< include /rop/_jop-dispatcher-gadget.qmd >}}
+
+
+## just get rid of rets? {visibility="hidden"}
+
+{{< include /rop/_get-rid-of-ret.qmd >}}
+
+## other defenses? {visibility="hidden"}
+
+{{< include /rop/_other-defense.qmd >}}
+
+## blind ROP {visibility="hidden"}
+
+{{< include /rop/_blind-rop-setup.qmd >}}
+{{< include /rop/_blind-rop.qmd >}}
+
+
+
+{{< include /uaf/_talk-inner.qmd >}}
+

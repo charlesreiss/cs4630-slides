@@ -6,7 +6,7 @@
 
 ::: {.column}
 
-```gnuasembler
+```gnuassembler
 getInitials: push %rbx
 xor    %eax,%eax
 mov    %rdi,%rbx

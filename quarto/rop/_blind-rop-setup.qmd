@@ -14,7 +14,7 @@
 ### autorestarting servers [pseudocode]  {.smaller}
 
 
-```
+```c
 void vulnerable() {
     char buffer[128];
     read_from_network_into(buffer);

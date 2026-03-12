@@ -15,3 +15,48 @@
 
 :::
 
+### VTable overwrite with gadget
+
+::::: {.columns}
+
+:::: {.column width=35%}
+
+```cpp
+class Bar {
+  char buffer[100];
+  Foo *foo;
+  int x, y;
+  ...
+};
+
+void Bar::vulnerable() {
+  gets(buffer);
+  foo->some_method(x, y);
+  // (*foo->vtable[K])(
+  //     foo, x, y
+  // )
+  // foo == rdi
+  // x == rsi
+  // y == rdx
+}
+```
+
+::::
+
+:::: {.column}
+
+::: {.r-stack}
+
+![](/rop/texfig/vtable-overwrite-diag.figure-1.svg){.fragment .fade-out fragment-index=2 height=450px}
+
+![](/rop/texfig/vtable-overwrite-diag.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 height=400px}
+
+![](/rop/texfig/vtable-overwrite-diag.figure-3.svg){.fragment .fade-in-then-out fragment-index=3 height=400px}
+
+![](/rop/texfig/vtable-overwrite-diag.figure-4.svg){.fragment .fade-in-then-out fragment-index=4 height=400px}
+
+:::
+
+::::
+
+:::::

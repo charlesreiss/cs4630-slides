@@ -75,4 +75,5 @@
 
 ## blind ROP {visibility="hidden"}
 
+{{< include /rop/_blind-rop-setup.qmd >}}
 {{< include /rop/_blind-rop.qmd >}}

@@ -1,14 +1,42 @@
+### vulnerable code 
+
+::::: {.columns}
+
+:::: {.column}
+
+```cpp
+class Foo {
+    ...
+};
+Foo *the_foo;
+the_foo = new Foo;
+...
+delete the_foo;
+...
+something_else = new Bar(...);
+the_foo->something();
+```
+
+::::
+
+:::: {.column .fragment fragment-index=1}
+
+![](/uaf/texfig/vulnUAF-diag.figure.svg){width=100%}
+
+::::
+
+:::::
+
+::: {.myoverbox .vlow}
+
+`something_else` likely where `the_foo` was
+
+:::
+
 
 ### vulnerable code 
 
-<!-- \lstset{
-    language=C++,
-    style=smaller,
-    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
-} -->
- 
-
-::: {.r-stack}
+::: {.r-stack .my-full}
 ![](/uaf/texfig/vulnUAF.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
 ![](/uaf/texfig/vulnUAF.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}

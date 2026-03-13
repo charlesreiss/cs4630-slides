@@ -3,4 +3,8 @@ title: "uaf"
 
 ---
 
-{{< include ../uaf/_talk-inner.qmd >}}
+{{< include /uaf/_talk-inner.qmd >}}
+
+# backup slides
+
+{{< include /uaf/_talk-backup.qmd >}}

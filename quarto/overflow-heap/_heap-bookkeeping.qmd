@@ -56,10 +56,32 @@
 
 ### heap object 
 
-![](/overflow-heap/texfig/heapLayout.figure.svg)
+::::: {.columns}
+
+:::: {.column width=30%}
+
+```c
+struct AllocInfo {
+    bool free;
+    int size;
+    AllocInfo *prev;
+    AllocInfo *next;
+};
+```
+
+::::
+
+:::: {.column}
+
+![](/overflow-heap/texfig/heapLayout.figure.svg){style="height: 500px; position: relative; top: -50px; overflow-y: visible"}
+
+::::
+
+:::::
 
 
-### implementing free()  {.smaller}
+
+### implementing free()
 
 <!-- \lstset{
     style=small,
@@ -82,5 +104,5 @@
 </code></pre>
  
 
-* \\large{} [arbitrary memory write]{.fragment fragment-index=2 .custom .myem-only}
+* [<em>arbitrary memory write</em>]{.fragment fragment-index=2}
 

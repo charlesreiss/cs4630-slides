@@ -4,9 +4,20 @@
 
 *  "gadgets" of useful code
 *  chaining gadgets through `ret`
-*  
+*  finding gadgets automatically
+   *  look for ump/ret; disassemble backwards
+*  programming with chain
 
 ### assignment Q+A
+
+### logistics notes
+
+*  upcoming assignments:
+   *  use-after-free, RUST
+   *  change in order
+*  will skip or move back "blind ROP" coverage to later for UAF coverage
+*  next week: Campbell covering me
+   *  will cover Rust topics
 
 ###
 
@@ -48,12 +59,12 @@
 
 {{< include /rop/_other-defense.qmd >}}
 
+
+{{< include /uaf/_talk-inner.qmd >}}
+
 ## blind ROP {visibility="hidden"}
 
 {{< include /rop/_blind-rop-setup.qmd >}}
 {{< include /rop/_blind-rop.qmd >}}
 
-
-
-{{< include /uaf/_talk-inner.qmd >}}
 

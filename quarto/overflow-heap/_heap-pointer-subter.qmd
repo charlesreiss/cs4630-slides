@@ -1,28 +1,57 @@
 
-### vulnerable code 
 
- <!-- \lstset{
-    style=small,
-    language=C,
-    moredelim={**[is][\btHL<4|handout:0>]{~2~}{~end~}},
-    moredelim={**[is][\btHL<2-3|handout:0>]{~3~}{~end~}},
-    moredelim={**[is][\btHL<6-|handout:0>]{~6~}{~end~}},
-} -->
- 
+### vulnerable code {.smaller}
+
+```{.c code-line-numbers=1}
+{{< include /overflow-heap/pointer-subter-code.c >}}
+```
+
+![](/overflow-heap/texfig/heap-pointer-subter.figure-1.svg){.overlayfigtr height=600px fig-alt="diagram showing allocated object next to two free space regions. Each allocated object has a size/free, prev and next field at its beginning followed by some free space; and the allocated object is prefixed by a size/free field."}
+
+### vulnerable code
+
+```{.c code-line-numbers=3}
+{{< include /overflow-heap/pointer-subter-code.c >}}
+```
+
+![](/overflow-heap/texfig/heap-pointer-subter.figure-2.svg){.overlayfigtr height=600px fig-alt="the strcpy modifies the size/free, next, and prev fields of the followingfree space region to the allocated object"}
+
+### vulnerable code
+
+```{.c code-line-numbers=5}
+{{< include /overflow-heap/pointer-subter-code.c >}}
+```
 
 ::: {.r-stack}
-![](/overflow-heap/texfig/heap-pointer-subter.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](/overflow-heap/texfig/heap-pointer-subter.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/overflow-heap/texfig/heap-pointer-subter.figure-3.svg){.fragment .fade-out fragment-index=4 .overlayfigtr height=600px fig-alt="When freeing the allocated region, the malloc implementation will try to merge the free space before and after it into one new free space region."}
 
-![](/overflow-heap/texfig/heap-pointer-subter.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+![](/overflow-heap/texfig/heap-pointer-subter.figure-4.svg){.fragment .fade-in-then-out fragment-index=4 .overlayfigtr height=600px fig-alt="part of this process will be removing the free space region after it from the linked list."}
 
-![](/overflow-heap/texfig/heap-pointer-subter.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
+![](/overflow-heap/texfig/heap-pointer-subter.figure-5.svg){.fragment .fade-in-then-out fragment-index=5 .overlayfigtr height=600px fig-alt="In this example, the attacker sets the prev pointer to point before the GOT entry for free (in the middle of the GOT table) and the next pointer to point to some shellcode. The shellcode is prefixed by a jmp skipping 8 bytes, then 8 bytes of junk."}
 
-![](/overflow-heap/texfig/heap-pointer-subter.figure-5.svg){.fragment .fade-in-then-out fragment-index=5}
 
-![](/overflow-heap/texfig/heap-pointer-subter.figure-6.svg){.fragment .fade-in-then-out fragment-index=6}
+![](/overflow-heap/texfig/heap-pointer-subter.figure-6.svg){.fragment .fade-in-then-out fragment-index=6 .overlayfigtr height=600px fig-alt="when running block_after->prev->next = block_after->next in free(), block_after->prev is set by the attacker such that block_after->prev->next is the GOT entry for free. As a result the GOT entry for free ends up pointing to the jump before the shellcode."}
 
+![](/overflow-heap/texfig/heap-pointer-subter.figure-7.svg){.fragment .fade-in-then-out fragment-index=7 .overlayfigtr height=600px fig-alt="when running block_after->next->prev = block_after->prev in the free(), the jmp before the shellcode occupies is mapped to block_after->next->size/free, the junk is mapped to block_after->next->prev, and the shellcode starts at block_after->next->next. The free()'s asignment overwrites block_after->next->prev. Because of the jmp this doesn't disrupt the shellcode execution."}
 
 :::
+
+### vulnerable code
+
+```{.c code-line-numbers=6}
+{{< include /overflow-heap/pointer-subter-code.c >}}
+```
+
+![](/overflow-heap/texfig/heap-pointer-subter.figure-8.svg){.overlayfigtr height=600px fig-alt="the later call to free() now runs the shellcode."}
+
+### suitable write targets?
+
+*  tricky problem: need to make extra write okay
+   *  solution in example: construct shellcode so we can write over part of it
+*  probably cannot use to directly set pointer to existing code
+   *  likely crash due to memory being marked read-only
+*  but still plausible strategies:
+   *  change existing VTable pointer
+   *  change data values (filenames, other buffer sizes, ...)
 

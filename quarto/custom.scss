@@ -155,7 +155,13 @@ div.myoverbox.vlow {
 
 div.myoverbox.right {
     left: auto;
-    right: 10%;
+    right: 4%;
+    transform: none;
+}
+
+div.myoverbox.left {
+    left: 4%;
+    right: auto;
     transform: none;
 }
 
@@ -295,6 +301,12 @@ table.stackdiag.stackdiag.stackdiag.stackdiag td.nobox {
 
 table.stackdiag.stackdiag.stackdiag.stackdiag td.ra {
     background-color: lighten(red, 30%);
+}
+
+.reveal .slide img.overlayfigtr {
+    position: absolute;
+    top: 0pt;
+    right: 0pt;
 }
 
 @media print {

@@ -12,7 +12,7 @@
 
 * the bug:
  
-```
+```c
 for (size = 0, av = NewArgv + 1; *av; av++)
      size += strlen(*av) + 1;
 if (size == 0 || (user_args = malloc(size)) == NULL) { ... }
@@ -27,7 +27,7 @@ while (*from) {
 ```
  
 
-* can skip <code>\\textbackslash{} 0</code> if prefixed with backslash
+* can skip <code>\0</code> if prefixed with backslash
 * but <code>strlen</code> used to allocate buffer
 * disagreement about copied string length
 * heap overflow!
@@ -123,7 +123,7 @@ while (*from) {
 
 
 * make <code>SYSTEMD_BYPASS_USERDB</code> program in current directory
-* run sudo, triggering buffer overflow to change <br> <code>[]{.my-small} sudoers_hook_getenv("SYSTEMD_BYPASS_USERDB", ...)</code> <br> into <br> <code>[]{.my-small} execv(SYSTEMD_BYPASS_USERDB, ...)</code> 
+* run sudo, triggering buffer overflow to change <br>`sudoers_hook_getenv("SYSTEMD_BYPASS_USERDB", ...)`<br> into <br>`execv("SYSTEMD_BYPASS_USERDB", ...)` 
 
    * (well, try to change --- it won't always work)
 

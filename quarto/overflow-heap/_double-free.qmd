@@ -1,27 +1,79 @@
 
 ### double-frees 
 
-<!-- \lstset{
-    style=small,
-    language=C,
-    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
-    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
-    moredelim={**[is][\btHL<4|handout:0>]{~4~}{~end~}},
-} -->
-  
+```{.c code-line-numbers=true}
+{{< include /overflow-heap/double-free-code.c >}}
+```
 
 ::: {.r-stack}
-![](/overflow-heap/texfig/dblFree.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
-![](/overflow-heap/texfig/dblFree.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
-
-![](/overflow-heap/texfig/dblFree.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
-
-![](/overflow-heap/texfig/dblFree.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
-
+![](/overflow-heap/texfig/dblFree.figure-1.svg){.overlayfigtr height=600px}
 
 :::
 
+### double-frees 
+
+```{.c code-line-numbers="1"}
+{{< include /overflow-heap/double-free-code.c >}}
+```
+
+::: {.r-stack}
+
+
+![](/overflow-heap/texfig/dblFree.figure-2.svg){.overlayfigtr height=600px}
+
+:::
+
+### double-frees 
+
+```{.c code-line-numbers="2"}
+{{< include /overflow-heap/double-free-code.c >}}
+```
+
+::: {.r-stack}
+
+
+![](/overflow-heap/texfig/dblFree.figure-2.svg){.overlayfigtr height=600px}
+
+:::
+
+### double-frees 
+
+```{.c code-line-numbers="3"}
+{{< include /overflow-heap/double-free-code.c >}}
+```
+
+::: {.r-stack}
+
+![](/overflow-heap/texfig/dblFree.figure-3.svg){.overlayfigtr height=600px}
+
+:::
+
+::: {.myoverbox .vlow .left .fragment}
+
+malloc returns something _still on free list_ <br />
+because double-free made loop in the linked list
+
+:::
+
+
+### double-frees 
+
+```{.c code-line-numbers="4-12"}
+{{< include /overflow-heap/double-free-code.c >}}
+```
+
+::: {.r-stack}
+
+![](/overflow-heap/texfig/dblFree.figure-3.svg){.overlayfigtr height=600px}
+
+:::
+
+::: {.myoverbox .vlow .left .fragment}
+
+attacker can overwrite next pointer <br/> controls where future malloc() goes
+
+:::
 
 ### double-free expansion 
 

@@ -1,10 +1,6 @@
 \begin{tikzpicture}
-\node[anchor=north east] (code) at (-1,0) {
-\usebox{\allocInfoDecl}
-};
-
 \tikzset{xscale=0.9}
-\begin{scope}[overlay]
+\begin{scope}
     \draw[stackBox,fill=black!20] (0, 1) rectangle (3, -7);
 
     \draw[onStack] (0, 1) rectangle (3, 0) node[midway,font=\small,align=center] {free space};
@@ -32,7 +28,7 @@
     \draw[-Latex,blue,thick,opacity=0.5] (freeANext) -- ++(1.75cm,0cm) -- ++(0cm,2cm);
 \end{scope}
 \draw[-Latex,line width=3pt,black!50] (3.5,-2.25) -- (5.5,-2.25) node[black,midway,above,font=\small\tt] {free};
-\begin{scope}[overlay,xshift=6cm,name prefix=sec-]
+\begin{scope}[xshift=6cm,name prefix=sec-]
     \draw[stackBox,fill=black!20] (0, 1) rectangle (3, -7);
 
     \draw[onStack] (0, 1) rectangle (3, -5.0) node[midway,font=\small] {free space};

@@ -77,27 +77,20 @@ attacker can overwrite next pointer <br/> controls where future malloc() goes
 
 ### double-free expansion 
 
-<!-- \lstset{
-    style=smaller,
-    language=C,
-    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
-    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
-    moredelim={**[is][\btHL<4|handout:0>]{~4~}{~end~}},
-    moredelim={**[is][\btHL<5|handout:0>]{~5~}{~end~}},
-    moredelim={**[is][\btHL<6|handout:0>]{~6~}{~end~}},
-} -->
-  
+```{.c code-line-numbers=true}
+{{< include /overflow-heap/double-free-code-expand.c >}}
+```
 
 ::: {.r-stack}
-![](/overflow-heap/texfig/dblFreeExpand.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+![](/overflow-heap/texfig/dblFreeExpand.figure-1.svg){.fragment .fade-in-then-out fragment-index=1 .overlayfigtr height=400px}
 
-![](/overflow-heap/texfig/dblFreeExpand.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+![](/overflow-heap/texfig/dblFreeExpand.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 .overlayfigtr height=400px}
 
-![](/overflow-heap/texfig/dblFreeExpand.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+![](/overflow-heap/texfig/dblFreeExpand.figure-3.svg){.fragment .fade-in-then-out fragment-index=3 .overlayfigtr height=400px}
 
-![](/overflow-heap/texfig/dblFreeExpand.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
+![](/overflow-heap/texfig/dblFreeExpand.figure-4.svg){.fragment .fade-in-then-out fragment-index=4 .overlayfigtr height=400px}
 
-![](/overflow-heap/texfig/dblFreeExpand.figure-5.svg){.fragment .fade-in-then-out fragment-index=5}
+![](/overflow-heap/texfig/dblFreeExpand.figure-5.svg){.fragment .fade-in-then-out fragment-index=5 .overlayfigtr height=400px}
 
 
 :::
@@ -108,9 +101,7 @@ attacker can overwrite next pointer <br/> controls where future malloc() goes
 
 * this attack has apparently not been possible for a while
 * most malloc/new's <em>check for double-frees</em> explicitly 
-
    * (e.g., look for a bit in <code>size</code> data)
-
 * prevents this issue --- also catches programmer errors
 * pretty cheap
 

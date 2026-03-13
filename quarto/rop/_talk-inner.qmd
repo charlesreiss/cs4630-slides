@@ -51,7 +51,6 @@
 
 {{< include /rop/_not-just-ret.qmd >}}
 
-<!-- FIXME: diagram needs conversion -->
 {{< include /rop/_vtable-overwrite.qmd >}}
 
 ## exercise: using function pointer overwrite {visibility="hidden"}

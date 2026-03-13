@@ -1,7 +1,4 @@
 \begin{tikzpicture}
-\node[anchor=north east] (code) at (-1,0) {
-\usebox{\dblFreeCodeExpand}
-};
 \draw[stackBox] (0,0) rectangle (5, -2);
 \draw[onStack,fill=blue!20] (0,0) rectangle (5, -1) node[midway,font=\small] {next / double free'd object};
 \draw[onStack] (0,-1) rectangle (5, -2) node[midway,font=\small] {size};
@@ -28,7 +25,7 @@
 \draw[stackBox,fill=orange!30] (0, -5.25) rectangle (3, -6.25) node[midway,font=\small] {GOT entry: free};
 \end{visibleenv}
 \begin{visibleenv}<4->
-\node[overlay,text=black,draw=red!80,thick,font=\small\tt,anchor=south] at (3, 0) { first/second malloc };
+\node[text=black,draw=red!80,thick,font=\small\tt,anchor=south] at (3, 0) { first/second malloc };
 \end{visibleenv}
 
 \begin{visibleenv}<5->

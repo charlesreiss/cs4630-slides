@@ -1,0 +1,79 @@
+### arbitrary read/write pattern
+*  get A and B occupying same memory
+*  have pointer in A, non-pointer in B
+*  use B's API to set non-pointer values in B...
+   * ... to control pointer address in A
+*  use A's API to modify value through pointer
+  
+
+### arbitrary read/write example
+
+::::: {.columns}
+
+:::: {.column}
+
+```c
+struct PaperSize {
+    int width;
+    int height;
+    char label[32];
+};
+```
+::::
+
+:::: {.column}
+
+```c
+struct String {
+    char * buffer;
+
+    size_t size;
+};
+```
+
+::::
+
+:::::
+
+* allocate String + trigger use-after-fee
+* allocate PaperSize of very particular width + height that occupies same memory
+* exercise: what width + height to access 0x1234567890?
+* read or write beginning of string using dangling pointer
+
+### arbitrary read/write example
+
+::::: {.columns}
+
+:::: {.column}
+
+```c
+struct VideoPlayer {
+    Video* video;
+    Window *window;
+    double timestamp;
+    float playbackSpeed;
+};
+
+```
+::::
+
+:::: {.column}
+
+```c
+struct ContactInfo {
+    char *homePhoneNumber;
+    char *cellPhoneNumber;
+    char *mailingAddress;
+    ...
+};
+```
+
+::::
+
+:::::
+
+* allocate VideoPlayer + trigger use-after-free
+* allocate ContactInfo that occupies same memory
+* seek to very particular time in video player
+* read/write mailing address to edit that memory
+

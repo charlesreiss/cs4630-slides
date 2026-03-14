@@ -1,27 +1,42 @@
 
 # use-after-free {visibility="hidden"}
 
-### use-after-free 
-
-
-
 {{< include /uaf/_heap-use-after-free.qmd >}}
-
-## reuse observation {visibility="hidden"}
-
-{{< include /uaf/_heap-reuse.qmd >}}
 
 ## pattern {visibility="hidden"}
 
-{{< include /uaf/_heap-use-after-free-pattern.qmd >}}
+### use-after-free type confusion
 
-## concurrency and UAF {visibility="hidden"}
+* pointer to struct A used as struct B
+<hr class="vspace">
+* some applications:
+* [information leak]{.fragment .myem-only .custom}
+* arbitrary read/write 
+* code execution 
 
-{{< include /uaf/_linux-conc-uaf.qmd >}}
+{{< include /uaf/_example-info-leak.qmd >}}
 
-## consistency? {visibility="hidden"}
+### use-after-free type confusion
 
-{{< include /uaf/_heap-use-after-free-consistent.qmd >}}
+* pointer to struct A used as struct B
+<hr class="vspace">
+* some applications:
+* information leak
+* <em>arbitrary memory read/write</em>
+* code execution 
+
+{{< include /uaf/_example-arb-read-write.qmd >}}
+
+### use-after-free type confusion
+
+* pointer to struct A used as struct B
+<hr class="vspace">
+* some applications:
+* information leak
+* arbitrary memory read/write
+* <em>code execution</em>
+
+{{< include /uaf/_example-code-exec.qmd >}}
 
 ## exercise: info leak {visibility="hidden"}
 
@@ -34,6 +49,18 @@
 ## exercise: vtable {visibility="hidden"}
 
 {{< include /uaf/_heap-uaf-exer.qmd >}}
+
+## reuse observation {visibility="hidden"}
+
+{{< include /uaf/_heap-reuse.qmd >}}
+
+## concurrency and UAF {visibility="hidden"}
+
+{{< include /uaf/_linux-conc-uaf.qmd >}}
+
+## consistency? {visibility="hidden"}
+
+{{< include /uaf/_heap-use-after-free-consistent.qmd >}}
 
 ## example {visibility="hidden"}
 

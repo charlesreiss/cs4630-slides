@@ -1,0 +1,47 @@
+### code execution example{.smaller}
+
+::::: {.columns}
+
+:::: {.column}
+
+| String |
+|--------|
+| buffer |
+| size |
+
+```c
+struct String {
+    char *buffer;
+    size_t size;
+};
+```
+::::
+
+:::: {.column}
+
+| 
+
+| PNGImage|
+|--------|
+| vtable pointer |
+| ...  |
+
+```cpp
+class PNGImage : public Image {
+    ...
+public:
+    virtual Pixel getPixel(int x, int y);
+    ...
+};
+```
+
+::::
+
+:::::
+
+* setup:
+  * trick code into making dangling pointer to String
+  * trick code into allocating PNGImage in same space
+* modify string to replace VTable with own pointers
+* trigger call to getPixel() method
+  * actually calls pointer we specified

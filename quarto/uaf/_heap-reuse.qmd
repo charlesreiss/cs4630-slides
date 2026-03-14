@@ -1,21 +1,41 @@
+### getting reuse to happen?
+
+* seems like we have to get lucky to have new object occupy same space as other
+* turns out attacker can make this more consistent
+<hr class="vpsace">
+* requires some understanding of how malloc/etc. works
 
 ### easy heap reuse 
 
-* strategy of keeping linked list of free items?
+* simple way to implement malloc/free: linked list of free items
 * simplest way to write code: 
    * free() = add to head of list
    * malloc() = scan from head of list
 * if done, makes it easy to predict what will reuse allocation
+   * likely to reuse things allocated recently
+
+### heap reuse and sizes
+
+* allocators often use object size
+  * search for "hole" close to requeted size
+  * group similar objects together
+* goal: limit "fragmentation" --- wasted space from...
+  * rounding object sizes (internal fragmentation) <i>or</i>
+  * too-small spaces between allocated objects (external fragmentation)
+<hr class="vspace">
+* likely just freed $\not=$ reused next, even if linked list
+* but: we can increase reuse likelihood by allocating similar size
 
 ### complicating easy reuse  {.smaller}
 
 * usually can't precisely control what is allocated/free'd
+   * complex programs like web browsers do lots of allocations
 * some allocators mostly use different ordering than last in, first-out 
    * example: lowest to highest address
-* often different lists for different size ranges/threads
 * freeing big object may make space for multiple future allocations
+* often different lists for different threads/sizes
 
-### aside: heap feng shui/grooming  {.smaller}
+### heap feng shui/grooming  {.smaller}
 
 * [http://www.phreedom.org/research/heap-feng-shui/heap-feng-shui.html](http://www.phreedom.org/research/heap-feng-shui/heap-feng-shui.html)
 * one idea:

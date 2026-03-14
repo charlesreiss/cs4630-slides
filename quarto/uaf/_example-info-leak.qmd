@@ -1,0 +1,92 @@
+### pointer leak pattern
+
+*  suppose A and B overlapping
+*  if we choose the right A and B:
+   *  pointer in A located where data in B is
+   *  often can "legitimately" output non-pointer value from B
+
+### information leak example 1  {.smaller}
+
+::::: {.columns}
+
+:::: {.column}
+
+```c
+struct Cart {
+    int date;
+    int num_items;
+    ...
+    ...
+};
+```
+::::
+
+:::: {.column}
+
+```c
+struct String {
+    char * buffer;
+
+    size_t size;
+};
+```
+
+::::
+
+:::::
+
+* setup:
+  * trick code into making dangling pointer to Cart
+  * trick code into allocating String in same memory 
+* then: read `buffer` address by reading date, num_items from Cart
+* exercise if Cart date = 591751049 (0x23456789), num_items = 4:
+  * what is buffer address?
+
+
+### information leak example 2  {.smaller}
+
+::::: {.columns}
+
+:::: {.column}
+
+
+| String |
+|--------|
+| buffer |
+| size |
+
+```c
+struct String {
+    char *buffer;
+    size_t size;
+};
+```
+::::
+
+:::: {.column}
+
+| 
+
+| PNGImage|
+|--------|
+| vtable pointer |
+| ...  |
+
+```cpp
+class PNGImage : public Image { ...
+public:
+    virtual Pixel getPixel(int x, int y, int z);
+    ...
+};
+```
+
+::::
+
+:::::
+
+* setup:
+  * trick code into making dangling pointer to String
+  * trick code into allocating PNGImage in same space
+* then: read string to read VTable contents
+* reveals addresses of PNGImage's method
+  * something we could use for ROP

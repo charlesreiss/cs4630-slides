@@ -1,0 +1,23 @@
+### last time {.smaller}
+
+*  bootstrapping ROP chains
+   *  example: overwriting function pointer
+   *  looking for gadgets that set `%rsp` then return
+   *  find way to control where value used to set %rsp comes from
+   *  example: if `mov %rbx, %rsp`, figure out how to set `%rbx`
+* chaining gadgets without RET
+   *  gadgets ending with, for example, `jmp *%rdi`, `jmp *8(%rdx)`, `call *%rax`
+   *  need to arrange for jmp/call destination to be set correctly
+   *  look for "dispatcher gadget" like `add $8, %rcx; jmp *(%rcx)` 
+      *  point `%rcx` at array of gadget addresses
+      *  arrange for each such gadget to jump back to dispatcher
+
+### assignment Q+A
+
+### logistics note
+
+<!-- FIXME: addtl UAF exercise? -->
+
+{{< include /uaf/_talk-inner.qmd >}}
+
+{{< include /overflow-heap/_talk-inner.qmd ?}}

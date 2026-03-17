@@ -16,16 +16,19 @@ char c = in->get();
 \newsavebox{\uafExerciseCodeB}
 \begin{lrbox}{\uafExerciseCodeB}
 \begin{lstlisting}[language=C++,style=script]
-std::istream *in =
-    new std::ifstream("in.txt");
-...
-delete in;
-...
-char *other_buffer =
-    new char[strlen(INPUT) + 1];
-strcpy(other_buffer, INPUT);
-...
-char c = in->get();
+class istream {
+    ...
+    int get() { ... buf->uflow(); ... }
+    streambuf *buf;
+    ~istream() { delete buf; }
+};
+class streambuf {
+    ...
+protected:
+    virtual type_for_char uflow() = 0;
+        /* called to get next char*/
+};
+class _File_streambuf : public streambuf { ... }
 \end{lstlisting}
 \end{lrbox}
 

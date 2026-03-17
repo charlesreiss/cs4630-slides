@@ -8,23 +8,11 @@
 ### easy heap reuse 
 
 * simple way to implement malloc/free: linked list of free items
-* simplest way to write code: 
+* easiest way to write that code: 
    * free() = add to head of list
    * malloc() = scan from head of list
 * if done, makes it easy to predict what will reuse allocation
    * likely to reuse things allocated recently
-
-### heap reuse and sizes
-
-* allocators often use object size
-  * search for "hole" close to requeted size
-  * group similar objects together
-* goal: limit "fragmentation" --- wasted space from...
-  * rounding object sizes (internal fragmentation) <i>or</i>
-  * too-small spaces between allocated objects (external fragmentation)
-<hr class="vspace">
-* likely just freed $\not=$ reused next, even if linked list
-* but: we can increase reuse likelihood by allocating similar size
 
 ### complicating easy reuse  {.smaller}
 
@@ -34,6 +22,17 @@
    * example: lowest to highest address
 * freeing big object may make space for multiple future allocations
 * often different lists for different threads/sizes
+
+### heap reuse and sizes
+
+* allocators often use object size
+  * search for "hole" close to requeted size
+  * group similar objects together
+* goal: limit "fragmentation" --- wasted space from...
+  * rounding object sizes (internal fragmentation) <i>or</i>
+  * too-small spaces between allocated objects (external fragmentation)
+* can increase reuse likelihood by allocating similar size
+* can try to deliberately create "holes" to fill
 
 ### heap feng shui/grooming  {.smaller}
 

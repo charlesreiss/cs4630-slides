@@ -47,8 +47,12 @@ the_foo = new Foo;
 ...
 delete the_foo;
 ...
-something_else = new Bar(attacker_input1);
-something_else->some_method(attacker_input2);
+something_else = new Bar(
+    attacker_input1
+);
+something_else->some_method(
+    attacker_input2
+);
 ...
 the_foo->something();
 ```
@@ -65,7 +69,7 @@ the_foo->something();
 
 ::: {.myoverbox .vlow .fragment .fade-out fragment-id=2}
 
-attacker scenario: `something_else` allocated where `the_foo` is
+`something_else` allocated where `the_foo` is
 
 :::
 

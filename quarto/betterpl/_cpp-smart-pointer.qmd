@@ -93,6 +93,8 @@ let q: &mut i32 = p;
 
 :::
 
+:::::
+
 ### C++ shared_ptr example {.smaller}
 
 C++

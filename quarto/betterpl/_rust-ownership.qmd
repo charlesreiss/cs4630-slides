@@ -70,7 +70,7 @@ fn foo() {
         // mysum will dispose, since it owns it
     
     println!("Sum is {}", sum);
-    println!("vector[0] is {}" , newVector[0]);
+    println!("vector[0] is {}" , vector[0]);
 }
 ```
 

@@ -31,8 +31,8 @@ fn foo(rect: &mut Rectangle) {
 
 
 ```rust
-import std::cmp::PartialEq;
-import std::cmp::Eq;
+use std::cmp::PartialEq;
+use std::cmp::Eq;
 
 pub struct Rectangle {
     width: u32,

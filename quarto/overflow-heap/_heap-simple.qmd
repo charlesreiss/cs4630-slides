@@ -1,5 +1,26 @@
 
+
 ### easy heap overflows 
 
-![](/overflow-heap/texfig/heap-simple.figure.svg)
+:::: {.columns}
+
+::: {.column}
+
+```cpp
+struct foo {
+    char buffer[100];
+    void (*func_ptr)(void);
+};
+```
+
+:::
+
+::: {.column}
+
+![](/overflow-heap/texfig/heap-simple.figure.svg){height=450px}
+
+:::
+
+::::
+
 

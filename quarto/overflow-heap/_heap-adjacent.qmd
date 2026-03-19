@@ -1,13 +1,35 @@
 
 ### heap overflow: adjacent allocations 
 
+::::: {.columns}
 
+:::: {.column}
 
-::: {.r-stack .my-full}
-![](/overflow-heap/texfig/heap-adjacent.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+```cpp
+class V {
+  char buffer[100];
+public:
+  virtual void ...;
+  ...
+};
+...
+V *first = new V(...);
+V *second = new V(...);
+strcpy(first->buffer,
+       attacker_controlled);
+```
 
-![](/overflow-heap/texfig/heap-adjacent.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+::::
 
+:::: {.column}
+
+::: {.r-stack}
+![](/overflow-heap/texfig/heap-adjacent.figure-1.svg){.fragment .fade-out fragment-index=2 height=450px}
+
+![](/overflow-heap/texfig/heap-adjacent.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 height=450px}
 
 :::
 
+::::
+
+:::::

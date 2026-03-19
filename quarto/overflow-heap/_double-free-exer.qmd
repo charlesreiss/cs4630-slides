@@ -1,5 +1,5 @@
 
-### double-free exercise  {.smaller}
+### double-free exercise  {.smaller .longcode}
 
 
 :::: {.columns}

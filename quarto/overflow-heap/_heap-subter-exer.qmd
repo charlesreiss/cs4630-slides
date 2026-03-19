@@ -1,8 +1,11 @@
 
 ### heap overflow exercise  {.smaller}
 
+::::: {.columns}
 
-```
+:::: {.column}
+
+```cpp
 void operator delete(void *p) {
     ...
     block_after->prev->next = block_after->next;
@@ -24,8 +27,42 @@ private:
     ...
     delete a;
     ...
-
 ```
- ![](/overflow-heap/texfig/heap-subter-exer.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/overflow-heap/texfig/heap-subter-exer.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+
+::::
+
+:::: {.column}
+
+heap object layout
+<table class="stackdiag">
+<tr><td class="heapstruct">size + free (8B)</td></tr>
+<tr><td class="object object-top">vtable pointer (8B)</td></tr>
+<tr><td class="object object-bottom" style="height: 2em">buffer (64B)</td></tr>
+<tr><td class="heapstruct">size + free (8B)</td></tr>
+<tr><td class="heapstruct">next pointer (8B)</td></tr>
+<tr><td class="heapstruct">prev pointer (8B)</td></tr>
+</table>
+
+::: {.r-stack style="font-size: 75%"}
+
+<div class="fragment fade-in-then-out" data-fragment-index="1">
+exercise 1:<br/>
+to attack this buffer overflow by overwriting the _heap data structures_:
+does it matter if space after `a` is already free or not?
+</div>
+
+<div class="fragment fade-in-then-out" data-fragment-index="2">
+exercise 2:<br/>
+if `a` at address 0x10000,  and attacker wants to overwrite 
+value at address 0x20000 with 0x30000,
+where should attacker put 0x20000, 0x30000 in `attacker_controlled`?
+</div>
+
+:::
+
+::::
+
+:::::
+
+###
 

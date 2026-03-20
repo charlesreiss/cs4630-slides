@@ -303,10 +303,29 @@ table.stackdiag.stackdiag.stackdiag.stackdiag td.ra {
     background-color: lighten(red, 30%);
 }
 
+
+table.stackdiag.stackdiag.stackdiag.stackdiag td.object {
+    background-color: lighten(yellow, 20%);
+}
+
+table.stackdiag.stackdiag.stackdiag.stackdiag td.empty {
+    background-color: lighten(violet, 20%);
+}
+
+
+table.stackdiag.stackdiag.stackdiag.stackdiag td.heapstruct {
+    background-color: lighten(blue, 45%);
+}
+
 .reveal .slide img.overlayfigtr {
     position: absolute;
     top: 0pt;
     right: 10pt;
+}
+
+.reveal table th[scope=row] {
+    border-bottom: none;
+    border-right: 1px solid black;
 }
 
 @media print {

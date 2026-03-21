@@ -66,18 +66,21 @@ void foo(unsigned a, unsigned b, unsigned c) {
 
 ### using comparison logging: exercise (2) {.smaller}
 
+::: {style="font-size: 90%"}
+
 |input|comparisons|
-|-----|-----------|
-| "aaaaaaaa" | 0x6161 == 0xDEAD, 'a' == ' ', 'a' == '\t', 'a' == '{' |
-| "baaaaaaa" | 0x6162 == 0xDEAD, 'a' == ' ', 'a' == '\t', 'a' == '{' |
-| "caaaaaaa" | 0x6163 == 0xDEAD, 'a' == ' ', 'a' == '\t', 'a' == '{' |
-| "abaaaaaa" | 0x6261 == 0xDEAD, 'a' == ' ', 'a' == '\t', 'a' == '{' |
-| "acaaaaaa" | 0x6361 == 0xDEAD, 'a' == ' ', 'a' == '\t', 'a' == '{' |
-| "aabaaaaa" | 0x6161 == 0xDEAD, 'b' == ' ', 'b' == '\t', 'b' == '{' |
-| "aacaaaaa" | 0x6161 == 0xDEAD, 'c' == ' ', 'c' == '\t', 'c' == '{' |
-| "aaabaaaa" | 0x6161 == 0xDEAD, 'a' == ' ', 'a' == '\t', 'a' == '{' |
-| "aaacaaaa" | 0x6161 == 0xDEAD, 'a' == ' ', 'a' == '\t', 'a' == '{' |
-| ... | ... |
+|-|-----------|
+| `aaaaaaaa` | `0x61616161 == 0xDEADFF`, `0x61616161 == 0x12345678`, `'a' == '#'` |
+| `baaaaaaa` | `0x62616161 == 0xDEADFF`, `0x61616162 == 0x12345678`, `'b' == '#'` |
+| `caaaaaaa` | `0x63616161 == 0xDEADFF`, `0x61616163 == 0x12345678`, `'c' == '#'` |
+| `abaaaaaa` | `0x61626161 == 0xDEADFF`, `0x61616261 == 0x12345678`, `'a' == '#'` |
+| `acaaaaaa` | `0x61636161 == 0xDEADFF`, `0x61616361 == 0x12345678`, `'a' == '#'` |
+| `aabaaaaa` | `0x61616261 == 0xDEADFF`, `0x61626161 == 0x12345678`, `'a' == '#'` |
+| `aacaaaaa` | `0x61616361 == 0xDEADFF`, `0x61636161 == 0x12345678`, `'a' == '#'` |
+| `aaabaaaa` | `0x61616162 == 0xDEADFF`, `0x62616161 == 0x12345678`, `'a' == '#'` |
+| `aaacaaaa` | `0x61616163 == 0xDEADFF`, `0x63616161 == 0x12345678`, `'a' == '#'` |
+
+:::
 
 *  exercise: good new test cases?
 

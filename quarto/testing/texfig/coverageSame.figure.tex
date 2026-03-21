@@ -1,0 +1,39 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\lstset{language=C,style=script}
+\newsavebox{\coverageCode}
+\begin{document}
+\begin{lrbox}{\coverageCode}
+\begin{lstlisting}
+void foo(int a, int b) {
+    if (a != 0) {
+        // W
+        b -= 2;
+        a += b;
+    } else {
+        // X
+    }
+    if (b < 5) {
+        // Y
+        b += 4;
+        if (a + b > 50) {
+            // Q
+            ...
+        }
+    } else {
+        // Z
+    }
+}
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{testing/texfig/coverageSame.inner.tex}
+\setSlide{2}
+\input{testing/texfig/coverageSame.inner.tex}
+\setSlide{3}
+\input{testing/texfig/coverageSame.inner.tex}
+\setSlide{4}
+\input{testing/texfig/coverageSame.inner.tex}
+\end{document}

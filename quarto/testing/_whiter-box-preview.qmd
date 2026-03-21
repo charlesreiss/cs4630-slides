@@ -1,0 +1,11 @@
+
+### still guessing 
+
+* so far: guessing based on observed/coverage comparisons
+* experimental observations based on observing inputs
+* not taking full advantage of having program available
+<hr class="vspace" />
+* alternate idea: read code to find compute how to make comparison true
+  * closer to what humans testing would do
+  * but other trade-offs
+

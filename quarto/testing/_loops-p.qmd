@@ -1,0 +1,13 @@
+
+### way too many paths  {.smaller}
+
+
+* <em>loops</em> mean often really huge number of paths
+* dealing with array <em>accesses</em>? 
+
+   * easiest way --- new path for each index
+
+* need ways to quickly <em>eliminate impossible paths</em>
+* won't explore all paths; need to <em>prioritize</em>
+* can try to similar paths; <em>process together</em>
+

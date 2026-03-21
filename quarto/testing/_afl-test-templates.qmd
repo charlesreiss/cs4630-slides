@@ -1,0 +1,13 @@
+
+### AFL: manual keywords  {.smaller}
+
+
+* AFL supports a dictionary 
+
+   * list of things to add to create test cases
+   * example: all possible HTML tags
+ 
+<hr class="vspace" />
+* other strategy: test-case template
+* other strategy: test postprocessing (fix checksums, etc.)
+

@@ -1,0 +1,42 @@
+### ‘blackbox’ fuzzing  {.smaller}
+
+```rust
+fn fuzz_test_image_parser(original_image: Vec<u8>) {
+    let rng = rand::rng();
+    for _ in 0..NUM_TRIES {
+        let mut test_image = original_image.clone();
+        let number_of_changes = rng.random_range(0..MAX_CHANGES);
+        for _ in 0..number_of_changes {
+            test_image[rng.random_range(0..test_image.len())] ^= rng.random::<u8>();
+        }
+        let result = try_to_parse_image(&test_image);
+        if result == CRASH {
+            // report that test_image triggers a bug
+        }
+    }
+}
+```
+
+### blackbox fuzzing pros  {.smaller}
+
+
+* works with <em>unmodified software</em> 
+
+   * even with embedded assembly, etc.
+
+* works with many kinds of input 
+
+   * <em>don't need to understand input format</em>
+
+* easy to <em>parallelize</em> 
+<hr class="vspace" />
+* has actually found lots of bugs
+
+
+### ‘blackbox’? 
+
+
+* the program is a ‘‘black box'’ --- can’t look inside
+* we only run it, see if it works
+* for memory errors --- works $\approx$ doesn't crash
+

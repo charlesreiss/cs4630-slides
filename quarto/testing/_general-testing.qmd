@@ -1,0 +1,20 @@
+### crashes and exploits
+
+*  many of the exploits we've found are crashes/"obvious" errors when executed incorrectly
+   *  out-of-bounds overwriting return address (segfault when returning)
+   *  out-of-bounds overwriting pointer (segfault using pointer)
+   *  use-after-free bugs causing data corruption
+   *  SQL injection trigger SQL syntax errors
+   *  ...
+*  crashes $\sim$ incomplete/broken exploits
+
+### on testing  {.smaller}
+
+
+* challenges with testing for security: 
+<hr class="vspace" />
+* security bugs errors may not trigger error/crash
+  * tools tool help with this for some types of bugs: AddressSanitizer, -fsanitize=undefined, taint tracking, ...
+  * can enable expensive checks when testing that we would not do otherwise
+* security bugs use ‘‘unrealistic’’ inputs --- e.g. $>8000$ character name
+

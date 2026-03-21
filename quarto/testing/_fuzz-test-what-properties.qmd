@@ -1,0 +1,19 @@
+
+### what can fuzzing find  {.smaller}
+
+
+* easiest to find crashes 
+
+   * intuition: segfault could be security problem
+
+* otherwise: how do we know if test cases are useful? 
+<hr class="vspace" />
+* need some way to know if test result is correct
+* example: fuzz-testing of C compilers versus other C compilers 
+
+   * Yang et al, ‘‘Finding and Understanding Bugs in C compilers’’, 2011
+   * 79 GCC, 209 Clang bugs
+   * about one third ‘‘wrong generated code’’
+   * but using smarter fuzzing strategy (we'll talk about it later)
+
+

@@ -1,0 +1,22 @@
+
+### completeness problem  {.smaller}
+
+
+* let's say we're testing an HTML parser
+* what code is <em>usually</em> going to when we flip random bits? 
+
+   * (or remove/add random bytes)
+ 
+<hr class="vspace" />
+* how often are we going to generate tags not in starting document?
+* how often are we going to generate new almost-valid documents?
+
+
+### HTML with changes 
+
+
+<pre><code>&lt;html&gt;&lt;head&gt;&lt;title&gt;A&lt;/title&gt;&lt;/head&gt;&lt;body&gt;B&lt;/body&gt;&lt;/html&gt;
+&lt;html<span data-fragment-index="1" class="fragment custom myem-only">*</span>&lt;head&gt;&lt;title&gt;A&lt;/title&gt;&lt;/head&gt;&lt;body&gt;B&lt;/body&gt;&lt;/html&gt;
+&lt;html&gt;&lt;<span data-fragment-index="1" class="fragment custom myem-only">i</span>ead&gt;&lt;title&gt;<span data-fragment-index="1" class="fragment custom myem-only">C</span>&lt;/title&gt;&lt;/head&gt;&lt;body&gt;B&lt;/body&gt;&lt;/html&gt;
+</code></pre>
+

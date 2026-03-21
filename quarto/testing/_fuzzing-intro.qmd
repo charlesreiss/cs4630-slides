@@ -1,0 +1,17 @@
+
+### automatic testing tools  {.smaller}
+
+
+* basic idea: generate lots of random inputs --- ‘‘<em>fuzzing</em>’’ 
+
+   * easy to generate weird inputs
+
+* look for memory errors 
+
+   * segfaults, or
+   * use memory error detector, or
+   * add (slow) ‘assertions’ or other checks to code
+ 
+<hr class="vspace" />
+* one of the most common ways to find security bugs
+

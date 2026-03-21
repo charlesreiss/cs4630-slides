@@ -1,0 +1,14 @@
+
+### fuzzing challenges  {.smaller}
+
+* isolation: 
+   * need to <em>detect crashes</em>/etc. reliably
+   * want <em>reproducible test cases</em>
+   * need to distinguish <em>hangs</em> from ‘‘machine is randomly slow’’
+* speed: 
+   * need to run <em>many millions of tests</em>
+   * application startup times are a problem
+* completeness:
+   * might have to get <i>really</i> lucky to make interesting input
+
+

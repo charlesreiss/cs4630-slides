@@ -1,0 +1,36 @@
+
+### american fuzzy lop  {.smaller}
+
+
+* one example of a fuzzer that uses this strategy 
+
+   * ‘‘whitebox fuzzing’’
+ 
+<hr class="vspace" />
+* assembler wrapper to record computed/conditional jumps: 
+```
+CoverageArray[Hash(JumpSource, JumpDest)]++;
+
+```
+
+* use values from coverage array to distinguish cases
+* outputs only <em>unique</em> test cases
+* goal: test case for every possible jump source/dest
+
+
+### american fuzzy lop heuristics  {.smaller}
+
+
+* american fuzzy lop does some deterministic testing 
+
+   * try flipping every bit, every 2 bits, etc. of base input
+   * overwrite bytes with 0xFF, 0x00, etc.
+   * etc.
+
+* has many strategies for producing new inputs 
+
+   * bit-flipping
+   * duplicating important-looking keywords
+   * combining existing inputs
+
+

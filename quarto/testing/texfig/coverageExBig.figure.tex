@@ -1,0 +1,36 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\lstset{language=C,style=smaller}
+\newsavebox{\coverageCode}
+\begin{document}
+\begin{lrbox}{\coverageCode}
+\begin{lstlisting}
+void foo(unsigned a,
+         unsigned b,
+         unsigned c) {
+    if (a != 0) {
+        b -= c; // W
+    }
+    if (b < 5) {
+        if (a > c) {
+            a += b; // X
+        }
+        b += 4; // Y
+    } else {
+        a += 1; // Z
+    }
+    assert(a + b != 7); 
+}
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{testing/texfig/coverageExBig.inner.tex}
+\setSlide{2}
+\input{testing/texfig/coverageExBig.inner.tex}
+\setSlide{3}
+\input{testing/texfig/coverageExBig.inner.tex}
+\setSlide{4}
+\input{testing/texfig/coverageExBig.inner.tex}
+\end{document}

@@ -1,0 +1,43 @@
+
+### fuzzing from format knowledge (1)  {.smaller}
+
+
+
+* make a random document generator 
+
+   * before: small number of manually chosen examples (often 1)
+
+ 
+```
+String RandomHTML() {
+    if (random() > 0.2) {
+        String tag = GetRandomTag();
+        if (random() > 0.2) {
+            return "<" + tag + ">" + RandomHTML() +
+                  "</" + tag + ">";
+        } else {
+            return "<" + tag + ">";
+        }
+    } else
+        return RandomText();
+}
+
+```
+
+
+### fuzzing from format knowledge (2)  {.smaller}
+
+
+* other fuzzing strategies 
+<hr class="vspace" />
+* identify interesting <em>fields</em> to fuzz 
+
+   * description of grammar/protocol/etc.
+   * test different values seperately
+
+* (default to) filling in sizes, checksums, type information 
+
+   * avoid most inputs getting rejected from being malformed
+   * test specific parts of a larger program
+
+

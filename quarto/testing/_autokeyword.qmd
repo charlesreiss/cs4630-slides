@@ -1,0 +1,9 @@
+
+### simplification/keyword finding 
+
+
+* see if each character changes coverage
+* find group of characters which matter --- ‘‘keyword’’?
+* example: `<html>` versus `<xtml>` etc.
+* find characters that don't matter --- remove
+

@@ -1,0 +1,19 @@
+
+### want a more than coverage  {.smaller}
+
+
+```
+int array[16];
+for (int i = 0; i < 100; ++i) {
+    if (next_input() != 42)
+        break;
+    array[i] = next_input();
+}
+
+```
+ 
+
+* if just counting coverage…
+* hard to end up doing extra iterations of above loop
+* supplementing idea: count number of times blocks reached
+

@@ -1,0 +1,6 @@
+---
+title: "testing"
+
+---
+
+{{< include ../testing/_talk-inner.qmd >}}

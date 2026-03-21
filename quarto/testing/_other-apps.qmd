@@ -1,0 +1,23 @@
+
+### testing for non-memory flaws?  {.smaller}
+
+
+* fuzzing for cross-site scripting bugs? 
+
+   * run on web application
+   * assert that HTML is well-formed?
+
+* fuzzing for SQL injection? 
+
+   * assert that no malformed SQL gets executed?
+
+* operating system? 
+
+   * input = requests (system calls) to make to the OS
+ 
+<hr class="vspace" />
+* (less likely) fuzzing for permissions issues? 
+
+   * assert that admin. data doesn't change?
+
+

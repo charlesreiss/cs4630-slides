@@ -1,0 +1,47 @@
+
+### simplifying testing cases  {.smaller}
+
+
+```
+int array[10];
+void vulnerable(char *input) {
+    char *p;
+    int count = 0;
+    p = input;
+    if (*p == 'A') { 
+        p += 1;
+        while (*p == '0') {p += 1; count -= 1;}
+        while (*p >= 'A' && *p < 'E') p += 1;
+        while (*p == '0') {p += 1; count += 1;}
+    }
+    if (*p == 'B')
+        array[count] += 1;
+}
+
+```
+ 
+
+* example crash: [<code>A00ABDBBBDEEDDDCCCBBBDDDAAAA00000000000000000000000B</code>]{.my-small} 
+
+   * might be what coverage-guided fuzzing finds
+
+* would really prefer minimal example: <code>A00000000000B</code>
+
+
+### automatically simplifying test cases  {.smaller}
+
+
+* but look for <em>same result and/or coverage</em>
+* systematic simplifications: 
+
+   * try removing every character (one-by-one)
+   * try decrementing every byte
+   * …
+
+* keep simplifications that don't change result
+* AFL uses some of this strategy to help get better ‘base’ tests 
+
+   * also has tool to do this on a found test
+   * prefers simpler ‘base’ tests
+
+

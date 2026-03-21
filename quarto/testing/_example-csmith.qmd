@@ -1,0 +1,38 @@
+
+### CSmith  {.smaller}
+
+
+* Yang et al wrote a random C program generator 
+
+   * ‘‘Finding and Understanding Ubgs in C compilers’’ (PLDI 2011)
+ 
+<hr class="vspace" />
+* carefully avoided code with unspecified effects 
+
+   * most of the work was about doing this
+
+* don't need to know what program does: comparing two compilers 
+
+   * or one compiler with different settings
+ 
+<hr class="vspace" />
+* random selection of types, operators, etc.
+* … instead of just random bytes
+
+
+### CReduce  {.smaller}
+
+
+* Regher et al (including Yang)'s follow-up work 
+
+   * ‘‘Test-Case Reduction for C Compiler Bugs’’ (PLDI 2012)
+
+* take a C program that triggers bug…
+* try removing things to make it smaller
+* needed: automated way of checking ‘‘is bug still there’’ 
+<hr class="vspace" />
+* same idea applies to security bugs 
+
+   * remove as much as possible and get it to still segfault
+
+

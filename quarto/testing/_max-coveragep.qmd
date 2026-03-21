@@ -1,0 +1,23 @@
+
+### coverage  {.smaller}
+
+
+* ‘‘coverage’’: metric for how good tests are 
+<hr class="vspace" />
+* <em>% of code reached</em>
+* easy to measure
+* correlates with bugs found 
+
+   * but not the same thing as finding all bugs
+
+
+
+### automated test generation 
+
+
+* conceptual idea: look at code, go down <em>all paths</em>
+* seems automatable? 
+
+   * just need to identify conditions for each path
+
+

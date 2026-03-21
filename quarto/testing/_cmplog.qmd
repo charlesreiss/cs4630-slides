@@ -1,0 +1,93 @@
+### efficiency of finding new coverage {.smaller}
+
+*  PNG files have chunks with 4-byte type labels
+*  parser code something like:
+
+```c
+uint32_t image_chunk_type;
+fread(&image_chunk_type, 4, 1, image_file);
+...
+if (image_chunk_type == CHUNK_TYPE_PALETTE) {
+    ...
+}
+```
+
+*  if we make random changes to 512-byte PNG image, how long
+   till we enter that if statement?
+   *  need to randomly chnage 4 bytes containing "chunk type"
+   *  need to randomly choose CHUNK_TYPE_PALETTE
+
+### comparison logging idea
+
+*  instead of just looking at coverage, 
+   look at what comparisons run
+*  figure out which input matters for comparison this way
+
+### comparison log examples {.smaller}
+
+```c
+void foo(unsigned a, unsigned b, unsigned c) {
+    if (a != 0) { // (1)
+        b -= c; // W
+    }
+    if (b < 5) { // (2)
+        if (a > c) { // (3)
+            a += b; // X
+        }
+        b += 4; // Y
+    } else {
+        a += 1; // Z
+    }
+    assert(a + b != 7);  // (4)
+}
+```
+
+|input|comparisons|
+|-----|-----------|
+| a=0, b=0, c=0 | 0 != 0, 0 < 5, 0 > 0, 4 != 7 |
+| a=1, b=0, c=0 | 1 != 0, 0 < 5, 1 > 0, 5 != 0 |
+| a=0, b=1, c=0 | 0 != 0, 1 < 5, 0 > 0, 5 != 0 |
+| a=0, b=0, c=1 | 0 != 0, 0 < 5, 0 > 1, 4 != 0 |
+
+### using comparison logging: exercise (1) {.smaller}
+
+|input|comparisons|
+|-----|-----------|
+| a=0, b=0, c=0 | 0 < 100, 0 == 0x1234 |
+| a=1, b=0, c=0 | 1 < 100, 0 == 0x1235 |
+| a=2, b=0, c=0 | 2 < 100, 0 == 0x1236 |
+| a=0, b=1, c=0 | 0 < 100, 0 == 0x1244 |
+| a=0, b=2, c=0 | 0 < 100, 0 == 0x1254 |
+| a=0, b=0, c=1 | 0 < 100, 1 == 0x1334 |
+| a=0, b=0, c=2 | 0 < 100, 2 == 0x1334 |
+
+*  exercise 1: If I want to make the first comparison true, what should I change from a=0,b=0,c=0?
+*  exercise 2: If I want to make the second comparison true, what should I change from a=0,b=0,c=0?
+
+### using comparison logging: exercise (2) {.smaller}
+
+|input|comparisons|
+|-----|-----------|
+| "aaaaaaaa" | 0x6161 == 0xDEAD, 'a' == ' ', 'a' == '\t', 'a' == '{' |
+| "baaaaaaa" | 0x6162 == 0xDEAD, 'a' == ' ', 'a' == '\t', 'a' == '{' |
+| "caaaaaaa" | 0x6163 == 0xDEAD, 'a' == ' ', 'a' == '\t', 'a' == '{' |
+| "abaaaaaa" | 0x6261 == 0xDEAD, 'a' == ' ', 'a' == '\t', 'a' == '{' |
+| "acaaaaaa" | 0x6361 == 0xDEAD, 'a' == ' ', 'a' == '\t', 'a' == '{' |
+| "aabaaaaa" | 0x6161 == 0xDEAD, 'b' == ' ', 'b' == '\t', 'b' == '{' |
+| "aacaaaaa" | 0x6161 == 0xDEAD, 'c' == ' ', 'c' == '\t', 'c' == '{' |
+| "aaabaaaa" | 0x6161 == 0xDEAD, 'a' == ' ', 'a' == '\t', 'a' == '{' |
+| "aaacaaaa" | 0x6161 == 0xDEAD, 'a' == ' ', 'a' == '\t', 'a' == '{' |
+| ... | ... |
+
+*  exercise: good new test cases?
+
+
+### "colorization"
+
+*  try changing all parts of input
+*  identify which parts affect which comparisons
+   *  called "colorization"
+   *  color bytes of input based on which comparisoins they correspond tog
+*  more sophisticated ideas:
+   *  figure out where number in comparison comes from
+   *  figure out likely encoding of number in input

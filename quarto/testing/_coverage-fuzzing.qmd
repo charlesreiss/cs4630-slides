@@ -1,0 +1,6 @@
+### coverage-guided fuzzing  {.smaller}
+
+* observation: easy to measure which paths a test case uses 
+* can make random tests <em>biased towards finding new paths</em>
+* keep trying things until particular path is reached
+

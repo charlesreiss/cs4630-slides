@@ -1,0 +1,73 @@
+\begin{tikzpicture}
+        \tikzset{
+            every node/.style={font=\scriptsize,align=left},
+            condition/.style={draw=red,thick,ellipse},
+            question/.style={fill=red!20,draw=black,thick,align=left},
+            dashedQuestion/.style={fill=red!20,draw=black,dashed,thick,align=left},
+            state/.style={draw=blue,thick,rectangle,align=center},
+            invisible/.style={opacity=0,text opacity=0},
+        }
+        \begin{scope}[tree layout,grow=down]
+            \node[state,desired at={([xshift=-5cm,yshift=-2cm]current page.north east)}] (top) {at (0): \\ a: $\alpha$, b: $\beta$}
+                child { node[condition,visible on=<2->] { a != 0 }
+                    child { node[state,visible on=<3->] {at (1): \\ $\alpha=0$\\a: $\alpha$, b: $\beta$} edge from parent[visible on=<3->] node {false}
+                        child { node[condition,visible on=<4->] { b < 5 } 
+                            edge from parent[visible on=<4->]
+                            child { node[state,visible on=<5->] {at (2): \\ $a=0\text{; }\beta\ge5$ \\ a: $\alpha$, b: $\beta$} edge from parent[visible on=<5->] node {false}
+                                child { node[visible on=<6->,dashedQuestion] {
+                                    to fail assertion: \\
+                                    $\alpha=0$, \\
+                                    $\beta \ge 5$, $a+b=5$ \\ $\implies$ $\alpha+\beta+4=5$ \\
+                                    \hrulefill \\
+                                    no solution
+                                } edge from parent[visible on=<6->] }
+                            }
+                            child { node[state,visible on=<7->] {at (2): \\ $a=0\text{; }\beta<5$ \\ a: $\alpha$, b: $\beta+4$} edge from parent[visible on=<7->] node {true}
+                                child { node[visible on=<7->,question] {
+                                    to fail assertion: \\
+                                    $\alpha=0$, \\
+                                    $\beta < 5$, \\
+                                    $a+b=5$ \\ $\implies$ $\alpha+\beta+4=5$ \\
+                                    \hrulefill
+                                    \\
+                                    unique solution:\\ ($\alpha=0$, $\beta=1$)
+                                } edge from parent[visible on=<7->] }
+                            }
+                        }
+                    }
+                    child { node[state,visible on=<8->] {at (1): \\ $\alpha\not=0$\\a: $\alpha+\beta - 2$, b: $\beta - 2$} edge from parent[visible on=<8->] node {true}
+                        child { node[condition,visible on=<8->] { b < 5 } edge from parent[visible on=<4->]
+                            child {
+                                node[state,visible on=<8->] {
+                                    at (2): \\ $\alpha\not=0\text{; }\beta-2<5$ \\ a: $\alpha+\beta-2$, b: $\beta + 2$
+                                } edge from parent[visible on=<8->] node {true}
+                                child {
+                                    node[question,visible on=<8->] {
+                                        to fail assertion: \\
+                                        $\alpha\not=0$, \\ 
+                                        $\beta-2<5$, \\
+                                        $a+b = 5$ \\ $\implies$
+                                        $\alpha + 2\beta = 5$,  \\
+                                        \hrulefill \\
+                                        example solution:\\ ($\alpha=5$, $\beta=0$)
+                                    } edge from parent[visible on=<8->]
+                                }
+                            }
+                            child { node[state,visible on=<8->] {at (2): \\ $\alpha\not=0\text{; }\beta-2\ge5$ \\ a: $\alpha+\beta-2$, b: $\beta - 2$}
+                                edge from parent[visible on=<8->] node {false}
+                                child { node[visible on=<8->,question] {
+                                    to fail assertion: \\
+                                    $\alpha\not=0$, \\
+                                    $\beta-2 \ge 5$, \\
+                                    $a+b=5$ \\ $\implies$
+                                    $\alpha+2\beta-4=5$, \\
+                                    \hrulefill \\
+                                    example solution: \\($\alpha=-9$, $\beta=7$)
+                                } edge from parent[visible on=<8->] }
+                            }
+                        }
+                    }
+                }
+                ;
+        \end{scope}
+\end{tikzpicture}

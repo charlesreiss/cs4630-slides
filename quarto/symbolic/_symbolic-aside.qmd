@@ -1,0 +1,9 @@
+
+### aside: concolic 
+
+
+* mixing symbolic and ‘concrete’ execution
+* use symbolic execution, but then produce concrete inputs 
+<hr class="vspace" />
+* systems that combine both sometimes called ‘concolic execution’
+

@@ -1,0 +1,10 @@
+---
+title: "symbolic"
+
+---
+
+{{< include ../symbolic/_talk-inner.qmd >}}
+
+# Backup slides
+
+{{< include ../symbolic/_talk-backup.qmd >}}

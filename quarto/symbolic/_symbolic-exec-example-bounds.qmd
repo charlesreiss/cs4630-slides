@@ -1,0 +1,22 @@
+
+### using for bounds checking  {.smaller}
+
+<!-- \lstset{language=C,style=smaller} -->
+ 
+```
+void foo() {
+    char array[100];
+    ...
+    /* check inserted automatically: */
+        assert(i >= 0 && i < 100);
+    array[i] = ...;
+    ...
+}
+
+```
+ 
+
+* using symbolic execution to find memory bugs?
+* add assertions for bounds checks
+* need to track array sizes to do symbolic execution anyways
+

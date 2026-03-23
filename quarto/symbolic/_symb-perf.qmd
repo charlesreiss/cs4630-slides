@@ -1,0 +1,36 @@
+
+### performance issue with symbolic exec (1)  {.smaller}
+
+
+* for angr: I've been running with pypy (JIT'ing Python) 
+
+   * (because easier for me to install)
+   * probably means I'm missing a bunch of performance
+
+* for bugfinding: something like KLEE probably better 
+
+   * working from higher-level representation than assembly/machine code
+   * (of course, less useful for reverse engineering)
+
+* but more fundamental issues…
+
+
+### performance issues with symbolic exec (2)  {.smaller}
+
+
+* some more fundamental issues: 
+
+   * loops with variable iteration count explode number of states
+   * memory accesses explode number of states/condition complexity
+   * conditions sometimes intractable to solve
+
+* some heuristics to mitigate 
+
+   * prune likely less-useful paths
+   * merge identical states reached in different ways
+   * keep symbolic inputs as small as possible
+   * replace uninteresting functions with approximations
+   * only symbolically execute ‘interesting’ functions
+   * …
+
+

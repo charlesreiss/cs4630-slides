@@ -1,0 +1,104 @@
+
+### example 0  {.smaller}
+
+::::: {.columns}
+
+:::: {.column width=65%}
+```
+int foo(int a, int b) {
+    // (0)
+    a += b * 2;
+    // (1)
+    b *= 4;
+    // (2)
+    return a + b;
+}
+```
+
+* can express return value of function
+  in terms of arguments
+  then can solve for possible value of arguments
+* example: if return == 10, then can enumerate: 
+
+   * ($\alpha,\beta$) = (10,0)
+   * ($\alpha,\beta$) = (4,1)
+   * ($\alpha,\beta$) = (-2,2)
+   * …
+
+::::
+
+:::: {.column width=34%}
+
+::: {.r-stack}
+
+![](/symbolic/texfig/choosePath0.figure-1.svg){.fragment .fade-in-then-out fragment-index=1 width=300px}
+
+![](/symbolic/texfig/choosePath0.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 width=300px}
+
+![](/symbolic/texfig/choosePath0.figure-3.svg){.fragment .fade-in-then-out fragment-index=3 width=300px}
+
+![](/symbolic/texfig/choosePath0.figure-4.svg){.fragment .fade-in-then-out fragment-index=4 width=300px}
+
+:::
+
+::::
+
+:::::
+ 
+
+### actually doing this 
+
+
+* angr is a binary analysis toolkit written in Python 
+
+   * has Ghidra-like GUI, but not very stable/maintained as far as I can tell
+
+* among other things, converts assembly into intermediate form
+* supports symbolic execution
+
+
+### angr setup  {.smaller}
+
+```python
+import angr
+import claripy
+
+p = angr.Project("./example0",
+                 load_options={'auto_load_libs': False})
+
+foo_addr = p.loader.main_object.get_symbol('foo').rebased_addr
+input_a = claripy.BVS('initial_a', 32) # 32-bit bit vector
+input_b = claripy.BVS('initial_b', 32) # 32-bit bit vector
+init_state = p.factory.call_state(foo_addr, input_a, input_b)
+simgr = p.factory.simulation_manager(init_state)
+# <SimulationManager with 1 active>
+```
+
+
+
+### angr running  {.smaller}
+
+
+```python
+print(f"RIP={simgr.active[0].regs.rip} versus {foo_addr:#x}")
+    # RIP=<BV64 0x4011f9> versus 0x4011f9
+print(f"EAX={simgr.active[0].regs.eax}")
+    # RAX=<BV reg_eax_3_32> (unknown value)
+simgr.step()
+    # simgr = <SimulationManager with 1 active>
+simgr.step()
+    # simgr = <SimulationManager with 1 deadended>
+state = simgr.deadended[0]
+print(f"EAX={state.regs.eax}")
+    # EAX=initial_a_0_32 + 
+    #      (initial_b_1_32[30:0] .. 0) +
+    #      (initial_b_1_32[29:0] .. 0)
+state.solver.add(state.regs.eax == 10)
+print(state.solver.eval(input_a), state.solver.eval(input_b))
+    # 10 0
+state.solver.add(input_b != 0)
+print(state.solver.eval(input_a), state.solver.eval(input_b))
+    # 4294901754 715838808
+
+```
+

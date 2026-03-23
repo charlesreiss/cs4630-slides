@@ -1,0 +1,54 @@
+
+# symbolic execution {visibility="hidden"}
+
+{{< include /symbolic/_symbolic-exec.qmd >}}
+
+## examples {visibility="hidden"}
+
+{{< include /symbolic/_symbolic-exec-example0.qmd >}}
+
+{{< include /symbolic/_symbolic-exec-example1.qmd >}}
+
+{{< include /symbolic/_symbolic-exec-example2.qmd >}}
+
+## aside: symbolic exec abstraction {visibility="hidden"}
+
+{{< include /symbolic/_symbolic-exec-abstract.qmd >}}
+
+## concolic {visibility="hidden"}
+
+{{< include /symbolic/_symbolic-aside.qmd >}}
+
+## with pointers {visibility="hidden"}
+
+{{< include /symbolic/_symbolic-exec-example-ptr.qmd >}}
+
+## exercise {visibility="hidden"}
+
+{{< include /symbolic/_symbolic-exec-exer.qmd >}}
+
+## solving equations?? {visibility="hidden"}
+
+{{< include /symbolic/_solving-equation-p.qmd >}}
+
+## summary: tricky problems with symbolic execution {visibility="hidden"}
+
+{{< include /symbolic/_symbolic-exec-tricky-sum.qmd >}}
+
+# dealing with pointers {visibility="hidden"}
+
+{{< include /symbolic/_symbolic-readwritep.qmd >}}
+
+{{< include /symbolic/_symbolic-varmem-example.qmd >}}
+
+# libc optimization {visibility="hidden"}
+
+{{< include /symbolic/_angr-libc.qmd >}}
+
+# finding overflows examples {visibility="hidden"}
+
+{{< include /symbolic/_angr-find-oflow.qmd >}}
+
+# performance problems {visibility="hidden"}
+
+{{< include /symbolic/_symb-perf.qmd >}}

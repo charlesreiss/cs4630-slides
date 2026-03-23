@@ -1,0 +1,29 @@
+\begin{tikzpicture}
+        \tikzset{
+            every node/.style={font=\scriptsize},
+            condition/.style={draw=red,thick,ellipse},
+            question/.style={fill=red!20,draw=black,thick,align=left},
+            dashedQuestion/.style={fill=red!20,draw=black,dashed,thick,align=left},
+            state/.style={draw=blue,thick,rectangle,align=center},
+            invisible/.style={opacity=0,text opacity=0},
+        }
+        \begin{scope}[tree layout,grow=down]
+            \node[state,desired at={([xshift=-5cm,yshift=-1.5cm]current page.north east)}] (top) {at (0): \\
+                a: $\alpha$, b: $\beta$}
+                child {
+                    node[state,visible on=<2->] {at (1): \\
+                        a: $\alpha + 2\beta$, b: $\beta$
+                    } edge from parent[visible on=<2->]
+                    child {
+                        node[state,visible on=<3->] {at (2): \\
+                            a: $\alpha + 2\beta$, b: $4\beta$
+                        } edge from parent[visible on=<3->]
+                        child {
+                            node[state,visible on=<4->] {after func: \\
+                            return: $\alpha + 2\beta + 4\beta = \alpha+6\beta$
+                            }edge from parent[visible on=<4->]
+                        } 
+                    } 
+                } ;
+        \end{scope}
+\end{tikzpicture}

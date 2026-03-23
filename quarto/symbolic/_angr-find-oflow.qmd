@@ -1,0 +1,86 @@
+
+### angr and ‘solving’ overflows/etc. (1)  {.smaller}
+
+
+```
+...
+p = angr.Project('./over.exe', load_options={'auto_load_libs': False})
+input_chars = [claripy.BVS('in_{}'.format(i), 8) for i in range(5000)]
+the_input = claripy.Concat(*input_chars)
+st = p.factory.full_init_state(...,
+    stdin=angr.SimFileStream(name='stdin', content=the_input, has_end=True),
+)
+st.libc.max_gets_size = 4500
+sm = p.factory.simulation_manager(st, save_unconstrained=True)
+
+```
+
+
+### angr and ‘solving’ overflows/etc. (2)  {.smaller}
+
+
+```
+...
+sm = p.factory.simulation_manager(st, save_unconstrained=True)
+while True:
+    sm.step()
+    for un_st in sm.unconstrained:
+        if un_st.solver.symbolic(un_st.regs_pc):
+            un_st.add_constraints(un_st.regs.pc == 0x12345678)
+            print(un_st.posix.dumps(0)) # compute stdin value
+            break
+
+```
+ 
+
+* my desktop w/ slow angr install: produces input that overwrites return address 0x12345678 for OVER in about 2 minutes
+
+
+### semi-automatic exploits?  {.smaller}
+
+
+* finding what part of input sets PC to particular value is good start 
+<hr class="vspace" />
+* can extend further:
+* scan emulated environment for executable memory with symbolic contents 
+
+   * angr: enable lookup table (input byte $\rightarrow$ where in simulated memory)
+
+* check how value of registers/stack pointer relates to input 
+
+   * see which registers/etc. are symbolic
+   * ask equation solver to set to particular value
+
+
+
+### symbolic execution as RE tool  {.smaller}
+
+
+* angr --- primarily designed for program analysis 
+
+   * can tie to getting function call graph/etc. information
+   * (like displayed in Ghidra, but programmatically)
+
+* can filter symbolic execution down particular path 
+
+   * identify path + solve for how to go that way
+   * examine registers/memory after each step
+   * manually identify good/bad paths
+
+* can record history of calls/memory accesses in path
+* for practicality: need to prune irrelevant paths 
+
+   * can specify functions to avoid
+   * can set custom ‘exploration’ strategy to filter
+
+
+
+### other things we can do 
+
+
+* intercept address concretization to ‘solve’ SUBTERFUGE, probably
+* reverse engineering 
+
+   * find input to reach certain part of code
+
+

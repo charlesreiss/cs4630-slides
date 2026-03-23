@@ -1,0 +1,17 @@
+
+### exercise  {.smaller}
+
+
+```
+void example(unsigned x, unsigned y) {
+    if (x > y) return;
+    x = x + y;
+    assert(x + y + 1 > y);
+}
+
+```
+ 
+
+* 1: to see if the assertion is meant, the equation we should solve (if initial values of x, y, are X, Y)?
+* 2: what is an input that fails the assertion? (hint: integer overflow)
+

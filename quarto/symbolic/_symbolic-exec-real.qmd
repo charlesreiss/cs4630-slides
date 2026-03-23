@@ -1,0 +1,39 @@
+
+### real symbolic execution  {.smaller}
+
+
+* not yet used much outside of research
+* old technique (1970s), but recent resurgence  
+
+   * equation solving (‘SAT solvers’/‘SMT solvers’) is now much better
+ 
+<hr class="vspace" />
+* example usable tools: KLEE, symcc (test case generating)
+
+
+### KLEE optimizations  {.smaller}
+
+
+* lots of optimizations to make search time pratical 
+<hr class="vspace" />
+* prioritize paths that produce good tests 
+
+   * try to execute <i>new code</i>
+   * try to find new paths new root of tree
+
+* reuse equation solving results: 
+
+   * remove irrelevant variables from equation solving queries 
+
+      * e.g. if (x == 10) doesn't need variables unrelated to x's value
+
+   * cache of prior queries with ‘‘no solution’’
+ 
+<hr class="vspace" />
+* results from 1 hour of compute time (from 2008 paper): 
+
+   * avg. 91% coverage on Linux coreutils (basic command line tools)
+   * versus developer tests: 68% covergae
+   * (where coverage = % lines of code run $\not=$ % possible paths run)
+
+

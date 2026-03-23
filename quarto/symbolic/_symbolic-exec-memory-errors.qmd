@@ -1,0 +1,20 @@
+
+### paths for memory errors  {.smaller}
+
+
+```
+void foo(int a, int b) {
+  char buffer[10];
+  if (a <= 10) {
+    // added bounds-checking:
+    assert(inBounds(buffer+a+b));
+    buffer[a + b] = b;
+  }
+}
+
+```
+ ![](/symbolic/texfig/symbolic-exec-memory-errors.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+ 
+
+* add bounds checking assertions --- try to solve to satisfy
+

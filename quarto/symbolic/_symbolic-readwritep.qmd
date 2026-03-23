@@ -1,0 +1,78 @@
+
+### symbolic memory?  {.smaller}
+
+
+```
+int array[10];
+void example(int a, int b) {
+    assert(a >= 0 && b >= 0 && a < 10 && b < 10);
+    int *p = &array[a]; int *q = &array[b];
+    *p += 1;
+    *q -= 1;
+    if (*p == *q) {
+        ...
+    }
+}
+
+```
+ 
+
+* question: how to deal with <code>*p</code>, <code>*q</code> accesses?
+
+
+### lots of branches?  {.smaller}
+
+
+```
+int array[10];
+void example(int a, int b) {
+    assert(a >= 0 && b >= 0 && a < 10 && b < 10);
+    int *p = &array[a]; int *q = &array[b];
+    *p += 1;
+    *q -= 1;
+    if (*p == *q) {
+        ...
+    }
+}
+
+```
+ 
+
+* separate branch for all 10 possible values of x, y
+* gets correct answer --- but 100x extra branches to explore?
+
+
+### angr ‘concretization’ strategies  {.smaller}
+
+
+* angr's design: choose specific set of real addresses for reads and writes
+* problem: really common to have thousands/millions of possibilities 
+<hr class="vspace" />
+* default policy: 
+
+   * choose any of range of 1024 possibilities for read
+   * only choose maximum address for write, except for annotated values
+
+
+
+### higher-level strategies  {.smaller}
+
+
+* KLEE (2008; OSDI): symbolic execution for bugfinding
+* works from LLVM bytecode, not assembly 
+<hr class="vspace" />
+* track <i>memory objects</i> that pointers point to 
+
+   * angr can't really do this --- info not available in assembly
+   * really want to have ‘pointers' that aren’t integers
+
+* if pointer goes outside intended memory object: found a bug! 
+
+   * deliberate caveat: find overflow bugs, not <i>exploits</i>
+
+* if pointer can have multiple objects: fork execution for each one 
+
+   * like it was an if statement
+
+* solve equation for all possible indices in memory object
+

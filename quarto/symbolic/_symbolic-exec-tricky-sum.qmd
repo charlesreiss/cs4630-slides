@@ -1,0 +1,20 @@
+
+### tricky parts in symbolic execution  {.smaller}
+
+
+* dealing with pointers? 
+
+   * one method: one path for each valid value of pointer
+
+* solving equations? 
+
+   * NP-hard (boolean satisfiablity) --- not practical in general
+   * ‘‘good enough’’ for small enough programs/inputs
+   * … after lots of tricks
+
+* how many paths? 
+
+   * $<100\%$ coverage in practice
+   * small input sizes (limited number of variables)
+
+

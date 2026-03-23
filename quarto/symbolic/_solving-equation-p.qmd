@@ -1,0 +1,12 @@
+
+### equation solving  {.smaller}
+
+
+* can generate formula with bounded inputs
+* can always be solved by trying all possibilities 
+<hr class="vspace" />
+* but actually solving is <em>NP-hard (i.e. not generally possible)</em>
+* luck: there exists solvers that are <i>often</i> good enough
+* … for small programs
+* … with lots of additional heuristics to make it work
+

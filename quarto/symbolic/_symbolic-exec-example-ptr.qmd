@@ -1,0 +1,21 @@
+
+### example 3  {.smaller}
+
+<!-- \lstset{language=C,style=smaller} -->
+ 
+```
+unsigned a, b;
+void foo(unsigned c) {
+    int *p;
+    if (a > 100) {
+        p = &a;
+    } else {
+        p = &b;
+    }
+    *p += c;
+    assert(a + b == c);
+}
+
+```
+ ![](/symbolic/texfig/symbolic-exec-example-ptr.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+

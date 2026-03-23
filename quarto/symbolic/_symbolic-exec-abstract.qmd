@@ -1,0 +1,19 @@
+
+### executing what\ldots  {.smaller}
+
+
+* angr: executing machine code 
+
+   * works on any existing application
+   * handles programs with mix of many programming languages
+   * allows mixing with ‘‘fast’’(ish) emulation
+   * can find issues resulting from reused uninitialized values/etc.
+   * more convenient for reverse engineering/exploits
+
+* other systems (exmaple: KLEE): work on ‘intermediate representation’ 
+
+   * simplifies equations dramatically
+   * idenitfies out-of-bounds/etc. accesses as error typically <br> (even if it never triggers something exploitable now)
+   * tractable without approximation for much larger programs
+
+

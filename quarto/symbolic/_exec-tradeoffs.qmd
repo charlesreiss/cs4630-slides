@@ -1,0 +1,18 @@
+
+### things symbolic exec good/bad at  {.smaller}
+
+
+* good:
+* <i>if know where input comes from</i>, exploring most code paths input code trigger
+* if particular code path targetted,
+* bad:
+* handling large inputs/codebases/functions 
+
+   * lots of memory + compute usage for modestly sized code
+   * need to keep drive away from ‘useless’ paths
+
+* handling variable-sized data (symbolic write issue) 
+
+   * better for variants using higher-level representation with machine code
+
+

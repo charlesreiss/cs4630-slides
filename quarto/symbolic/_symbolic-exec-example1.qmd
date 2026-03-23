@@ -8,6 +8,9 @@
    *  checking if return address/function pointer can be set to be arbitrary value
    *  ...
 
+*  one way: start with code with bounds check/etc.
+   *  check if bounds-check reached
+
 
 ### example 1  {.smaller}
 

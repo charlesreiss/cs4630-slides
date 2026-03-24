@@ -1,0 +1,15 @@
+### last time
+
+*  Rust stuff
+
+### assignment Q+A
+
+## example {visibility="hidden"}
+
+{{< include /uaf/_heap-use-after-free-chrome.qmd >}}
+
+## JS and similar interfaces v use-after-free {visibility="hidden"}
+
+{{< include /uaf/_heap-use-after-free-js.qmd >}}
+
+{{< include /heap-overflow/_talk-inner.qmd >}}

@@ -1,6 +1,47 @@
-### last time
+### last times {.smaller}
 
-*  Rust stuff
+*  Rust-style ownership rules
+   *  single owner
+   *  tracking "borrowing"
+   *  one mutable borrow or many immutable
+*  unsafe "escape hatch"
+*  alternate rules
+   *  reference counting (Rust Rc, Arc)
+   *  count borrowings (Rust RefCell)
+
+### quiz Q1 (1) {.smaller}
+
+*  to start ROP chain, need to set %rsp to point to its beginning
+
+*  `add %rcx, %rsp; call *%rdi`
+    *  can set `%rsp` if we could set `%rcx` (but not clear we can)
+*  `pop %rdi; pop %rsp; ret`
+    *  can set `%rsp` to second value on stack when function starts
+    *  first value on stack will be normal return address
+    *  not clear we can set second value
+
+### quiz Q1 (2) {.smaller}
+
+*  to start ROP chain, need to set %rsp to point to its beginning
+
+*  `push %rsi; sub %rdi, %rsp; pop %rsp; ret`
+    *  can set `%rsp` by choosing correct `%rdi` 
+    *  `%rdi` = attacker_long, so we can set this anywhere
+    *  simple case: know where some buffer stored on stack
+    *  less simple case: compute %rsp - string address, place in attacker_long
+*  `add $128, %rsp; ret`
+    *  useful in specific case
+
+### quiz Q2 {.smaller}
+
+*  `push %rdi; mov %rsi, %rsp; ret`
+   *  `mov %rsi, %rsp` is the interesting part
+*  `f(0, "foo")`:
+   *  `%rsi` (2nd arg) is the address of the `f` in `"foo"`
+*  so the string _becomes_ the stack
+   *  (not a pointer to the stack)
+*  if we can set the string, we want it to be a list of ROP gadget addresses
+   *  AKA ROP chain
 
 ### assignment Q+A
 
@@ -12,4 +53,4 @@
 
 {{< include /uaf/_heap-use-after-free-js.qmd >}}
 
-{{< include /heap-overflow/_talk-inner.qmd >}}
+{{< include /overflow-heap/_talk-inner.qmd >}}

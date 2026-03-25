@@ -33,30 +33,84 @@ private:
 
 :::: {.column}
 
-heap object layout
+
+:::::: {.columns}
+
+::::::: {.column width=45%}
+
+heap object layout (allocated)
 <table class="stackdiag">
 <tr><td class="heapstruct">size + free (8B)</td></tr>
 <tr><td class="object object-top">vtable pointer (8B)</td></tr>
 <tr><td class="object object-bottom" style="height: 2em">buffer (64B)</td></tr>
+</table>
+
+:::::::
+
+::::::: {.column width=45%}
+
+heap object layout (free)
+<table class="stackdiag">
 <tr><td class="heapstruct">size + free (8B)</td></tr>
 <tr><td class="heapstruct">next pointer (8B)</td></tr>
 <tr><td class="heapstruct">prev pointer (8B)</td></tr>
 </table>
 
+:::::::
+
+::::::
+
 ::: {.r-stack style="font-size: 75%"}
 
 <div class="fragment fade-in-then-out" data-fragment-index="1">
-exercise 1:<br/>
-to attack this buffer overflow by overwriting the _heap data structures_:
-does it matter if space after `a` is already free or not?
+exercise 1a:<br/>
+assume space after `a` is free;
+if `a` at address 0x10000,  and attacker wants to overwrite 
+value at address 0x21210,
+where should attacker put encoding of 0x21210 in `attacker_controlled`?<br/>
+<table>
+<tr><td>A. 64 bytes in </td><td>B. 72 bytes in</td><td>C. 80 bytes in</td></tr>
+<tr><td>D. 88 bytes in </td><td rowspan="2">E. something else</td></tr>
+</table>
 </div>
 
 <div class="fragment fade-in-then-out" data-fragment-index="2">
-exercise 2:<br/>
+exercise 1b:<br/>
 if `a` at address 0x10000,  and attacker wants to overwrite 
-value at address 0x20000 with 0x30000,
-where should attacker put 0x20000, 0x30000 in `attacker_controlled`?
+value at address 0x21210,
+how should attacker encode if placing 80 bytes in? 
+<table>
+<tr><td>A. 0x21210 (as 64-bit int)</td><td>B. 0x21210-8</td><td>C. 0x21210+8</td></tr>
+<tr><td>D. 0x21210+16</td><td>E. 0x21210-16</td><td>F. something else</td></tr>
+</table>
 </div>
+
+<div class="fragment fade-in-then-out" data-fragment-index="3">
+exercise 1c:<br/>
+assume space after `a` is free;
+value at address 0x21210 with 0x31310, and they put
+0x21210-8 80 bytes in, where should they put 0x31310?
+<table>
+<tr><td>A. 64 bytes in </td><td>B. 72 bytes in</td><td>C. 80 bytes in</td></tr>
+<tr><td>D. 88 bytes in </td><td rowspan="2">E. something else</td></tr>
+</table>
+</div>
+
+<div class="fragment fade-in-then-out" data-fragment-index="4">
+exercise 1d:<br/>
+if `b` at address 0x10000,  and attacker wants to overwrite 
+value at address 0x21210 with 0x31310, how should they encode 0x31310?
+<table>
+<tr><td>A. 0x31310 (as 64-bit int)</td><td>B. 0x31310-8</td><td>C. 0x31310+8</td></tr>
+<tr><td>D. 0x31310+16</td><td>E. 0x31310-16</td><td>F. something else</td></tr>
+</table>
+</div>
+
+<div class="fragment fade-in-then-out" data-fragment-index="5">
+exercise 2:<br/>
+Suppose space after `a` is not free. Can we still exploit?
+</div>
+
 
 :::
 

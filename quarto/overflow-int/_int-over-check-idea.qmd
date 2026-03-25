@@ -1,0 +1,11 @@
+
+### bounds-checking?  {.smaller}
+
+
+* so far: mistake is no bounds checking
+* run input function without telling it how much space 
+<hr class="vspace" />
+* so, we avoid this by checking sizes, right?
+* common problem: bugs in size checking code
+* integer overflow (or underflow)
+

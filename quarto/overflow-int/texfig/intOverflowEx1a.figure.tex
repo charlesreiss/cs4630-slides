@@ -1,0 +1,34 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\lstset{
+    language=C,
+    morekeywords=item,
+    style=smaller,
+    moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+}
+\newsavebox{\overExampleACode}
+\begin{document}
+\begin{lrbox}{\overExampleACode}
+\begin{lstlisting}
+item *load_items(int len) {
+  int total_size = ~2~len * sizeof(item);~end~
+  if (total_size >= LIMIT) {
+    return NULL;
+  }
+  item *items = malloc(total_size);
+  for (int i = 0; i < len; ++i) {
+    int failed = read_item(&items[i]);
+    if (failed) {
+      free(items);
+      return NULL;
+    }
+  }
+  return items;
+}
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{overflow-int/texfig/intOverflowEx1a.inner.tex}
+\end{document}

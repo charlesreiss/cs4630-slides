@@ -1,0 +1,28 @@
+
+### exercise
+
+```c
+void vulnerable() {
+  int items[100];
+  int count;
+  bool success =
+    try_read_input(&count);
+  if (!success) { ... }
+  if (count * sizeof() >= sizeof(items)) {
+    printf("cannot handle that many\n"); return;
+  }
+  for (int i = 0; i < count; i += 1) {
+    if (!try_read_input(&items[i])) { 
+      printf("preature end of input\n"); return;
+    }
+  }
+  process_items(items);
+}
+```
+
+::: {.myoverbox .highright}
+
+Q: what first input number?<br/>
+Q: how to encode return address replacement?
+
+:::

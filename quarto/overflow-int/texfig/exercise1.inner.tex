@@ -1,0 +1,11 @@
+\begin{tikzpicture}
+\node[anchor=north east] (code) at (-1,0) {
+\usebox{\intOverflowExCode}
+};
+\node [overlay,draw,very thick,align=left,anchor=north west,font=\fontsize{12}{13}\selectfont] at ([yshift=.5cm,xshift=-6.25cm]code.north east) {
+assume return address immediately after items array: \\
+Q: what first input number to provide? \\
+Q: how to encode return address \\
+replacement \texttt{0x12345678}?
+};
+\end{tikzpicture}

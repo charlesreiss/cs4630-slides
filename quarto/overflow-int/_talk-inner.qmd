@@ -1,0 +1,16 @@
+
+# integer overflow {visibility="hidden"}
+
+{{< include /overflow-int/_int-over-check-idea.qmd >}}
+
+{{< include /overflow-int/_int-over-ex1.qmd >}}
+
+{{< include /overflow-int/_int-over-ex2.qmd >}}
+
+## exercise {visibility="hidden"}
+
+{{< include /overflow-int/_exercise1.qmd >}}
+
+## trapping on overflow {visibility="hidden"}
+
+{{< include /overflow-int/_trap.qmd >}}

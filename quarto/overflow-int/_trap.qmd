@@ -1,0 +1,114 @@
+
+### overflow and undefined behavior 
+
+
+* C standard: some things are <i>undefined behavior</i>
+* C compiler can do anything in those cases 
+<hr class="vspace" />
+* <i>signed integer overflow</i> is undefined
+* <i>unsigned integer overflow</i> must wrap around
+
+### undefined behavior surprise {.smaller}
+
+:::: {.columns}
+
+::: {.column}
+
+```c
+void found_overflow() __attribute__((noreturn));
+void found_negative_xy() __attribute__((noreturn));
+int broken_check_add(int x, int y) {
+    if (x > 0 && y > 0) {
+        int result = x + y;
+        if (result < x || result < y) {
+            found_overflow();
+        }
+        return result;
+    } else {
+        found_negative_xy();
+    }
+}
+```
+
+:::
+
+::: {.column}
+
+clang 22.1 -O assembly:
+```gnuassembler
+broken_check_add:
+    testl   %edi, %edi
+    setle   %cl  // cl <- x <= 0?
+    testl   %esi, %esi
+    setle   %dl  // dl <- y <= 0?
+    orb     %cl, %dl 
+    jne     .LBB0_2
+        // goto .LBB0_2 if x <= 0 || y <= 0
+    movl    %esi, %eax
+    addl    %edi, %eax
+        // return x + y
+    retq
+.LBB0_2:
+    pushq   %rax
+    xorl    %eax, %eax
+    callq   found_negative_xy@PLT
+```
+
+<em>missing `found_overflow()` call!</em>
+
+:::
+
+::::
+
+### -fsanitize=undefined  {.smaller}
+
+
+```
+int x = INT_MAX -1; int y = 5; printf("%d\n", x * y);
+
+```
+ 
+
+* compile with <code>-fsanitize=undefined</code>: 
+
+   * <code>test.c:...: runtime error: signed integer overflow: 2147483646 * 5 cannot be represented in type 'int</code>
+
+* compile with <code>-ftrapv</code>: <code>Aborted (core dumped)</code>
+ 
+```
+unsigned x = INT_MAX -1; unsigned y = 5; printf("%u\n", x * y);
+
+```
+ 
+
+* compile with <code>-fsanitize=undefined</code> or <code>-ftrapv</code>: NO ERROR
+
+
+### in Rust (1) 
+
+
+![](/overflow-int/rust-oflow-trap){}
+
+
+### in Rust (2) 
+
+
+![](/overflow-int/rust-oflow-notrap){}
+
+
+### in Rust (3)  {.smaller}
+
+
+```
+let x = usize::MAX - 10; let y = 10usize;
+println!("{} {}", x.saturating_mul(2), y.saturating_mul(2));
+// 18446744073709551615 20
+    // 18446744073709551615==usize::MAX
+println!("{:?} {:?}", x.checked_mul(2), y.checked_mul(2));
+// None Some(30)
+println!("{} {}", x.wrapping_mul(2), y.wrapping_mul(2));
+// 18446744073709551594 20
+    // 18446744073709551594==usize::MAX-21
+
+```
+

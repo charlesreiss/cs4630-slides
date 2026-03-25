@@ -1,0 +1,81 @@
+
+### integer overflow example (1)  {.smaller}
+
+::::: {.columns}
+
+:::: {.column width=50%}
+
+```{.c code-line-numbers="|2"}
+item *load_items(int len) {
+  int total_size = len * sizeof(item);
+  if (total_size >= LIMIT) {
+    return NULL;
+  }
+  item *items = malloc(total_size);
+  for (int i = 0; i < len; ++i) {
+    int failed = read_item(&items[i]);
+    if (failed) {
+      free(items);
+      return NULL;
+    }
+  }
+  return items;
+}
+```
+
+::::
+
+:::: {.column width=49%}
+
+<table>
+<tr><th scope="row">`len`</th><td>`0x4000 0001`</td></tr>
+<tr><th scope="row">`sizeof(item)`</th><td>`0x10`</td></tr>
+<tr><th scope="row">`total_size`</th><td><code><em>0x4</em> 0000 0000</code></td></tr>
+</table>
+
+::::
+
+:::::
+
+### integer overflow example (2)  {.smaller}
+
+<!-- \lstset{
+    language=C,
+    morekeywords=item,
+    style=smaller,
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+} -->
+ ![](/overflow-int/texfig/intOverflowEx1b.figure.svg)
+
+::::: {.columns}
+
+:::: {.column}
+
+```c
+/* adapted from https://project-zero.issues.chromium.org/issues/42451651 
+   Windows Kernel bug! */
+char *FormatNumber(char *source, short source_len) {
+    unsigned short dest_size = source_len * 6;
+    char *dest = malloc(dest_size);
+    char *p = dest;
+    for (unsigned short i = 0; < source_len; i += 1) {
+        *p++ = "0123456789ABCDEF"[*source >> 4];
+        *p++ = "0123456789ABCDEF"[*source & 0xF];
+        *p++ = ' ';
+        source++;
+    }
+}
+```
+
+::::
+
+:::: {.column}
+
+<table>
+<tr><th scope="row">`source_len`</th><td>`0x2AAB`</td></tr>
+<tr><th scope="row">`dest_size`</th><td><code>0x<em>1</em> 0002</code></td></tr>
+</table>
+
+::::
+
+:::::

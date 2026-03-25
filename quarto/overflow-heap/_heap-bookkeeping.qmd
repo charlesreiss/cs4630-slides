@@ -39,17 +39,15 @@
 * need to: 
 <hr class="vspace" />
 * find unused chunks of memory 
-
    * even after A=malloc(), B=malloc(), C=malloc(), free(B)
-
-* figure out how big allocation is when free() is called 
+* [figure out how big allocation is when free() is called]{.fragment .custom .myem-only}
+* [figure out if nearby blocks of memory are free when free() is called]{.fragment .custom .myem-only}
 <hr class="vspace" />
 * two common strategies for tracking metadata: 
-
-   * <em>before each allocation</em> (example: GNU libc malloc [Linux default])
-   * before ‘arenas’ of allocations (example: jemalloc [Firefox; *BSD default?]) 
-
-      * lookup by rounding memory address
+   * <em>before each allocation/beginning of free blocks</em> (example: GNU libc malloc [Linux default; Windows default?])
+      * lookup for free() by subtracting from pointer
+   * before 'arenas’ of allocations (example: jemalloc [Firefox; *BSD default?]) 
+      * lookup for free() by rounding memory address
 
 
 

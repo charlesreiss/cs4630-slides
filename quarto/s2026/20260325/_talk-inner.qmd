@@ -1,4 +1,6 @@
-### last times {.smaller}
+###
+
+### last time {.smaller}
 
 *  Rust-style ownership rules
    *  single owner
@@ -45,6 +47,14 @@
 
 ### assignment Q+A
 
+### recall: use-after-free {.smaller}
+
+*  trick program into having dangling pointer
+*  get two objects A, B to occupy same memory
+*  use operations on A to read/change things in B
+   *  most common: read/change pointer values
+   *  if VTable pointer, or object with VTable, can execute code
+
 ## example {visibility="hidden"}
 
 {{< include /uaf/_heap-use-after-free-chrome.qmd >}}
@@ -54,3 +64,5 @@
 {{< include /uaf/_heap-use-after-free-js.qmd >}}
 
 {{< include /overflow-heap/_talk-inner.qmd >}}
+
+{{< include /overflow-int/_talk-inner.qmd >}}

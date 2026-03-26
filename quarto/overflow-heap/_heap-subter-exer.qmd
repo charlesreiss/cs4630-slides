@@ -36,7 +36,7 @@ private:
 
 :::::: {.columns}
 
-::::::: {.column width=45%}
+::::::: {.column width=54%}
 
 heap object layout (allocated)
 <table class="stackdiag">
@@ -47,7 +47,7 @@ heap object layout (allocated)
 
 :::::::
 
-::::::: {.column width=45%}
+::::::: {.column width=44%}
 
 heap object layout (free)
 <table class="stackdiag">

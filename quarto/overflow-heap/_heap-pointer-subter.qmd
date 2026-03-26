@@ -1,6 +1,6 @@
 
 
-### vulnerable code {.smaller}
+### vulnerable code
 
 ```{.c code-line-numbers=1}
 {{< include /overflow-heap/pointer-subter-code.c >}}

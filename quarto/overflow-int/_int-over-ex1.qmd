@@ -39,14 +39,6 @@ item *load_items(int len) {
 
 ### integer overflow example (2)  {.smaller}
 
-<!-- \lstset{
-    language=C,
-    morekeywords=item,
-    style=smaller,
-    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
-} -->
- ![](/overflow-int/texfig/intOverflowEx1b.figure.svg)
-
 ::::: {.columns}
 
 :::: {.column}

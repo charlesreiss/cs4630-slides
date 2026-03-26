@@ -159,6 +159,13 @@ div.myoverbox.right {
     transform: none;
 }
 
+div.myoverbox.right.high {
+    left: auto;
+    right: 4%;
+    top: 4%;
+    transform: none;
+}
+
 div.myoverbox.left {
     left: 4%;
     right: auto;
@@ -240,7 +247,11 @@ i {
     height: min-content;
 }
 
-.tightbox > p {
+.tightboxh {
+    height: min-content;
+}
+
+.tightbox > p, .tightboxh > p {
     margin: .5rem;
 }
 

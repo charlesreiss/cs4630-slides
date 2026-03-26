@@ -7,7 +7,7 @@ format:
     navigation-mode: linear
     scrollable: true
     progress: false
-    margin: 0.03
+    margin: 0.05
     width: 1050
     height: 600
     code-line-numbers: false

@@ -2,7 +2,7 @@
 ### exercise: coverage guidance good for?  {.smaller}
 
 
-```
+```c
 void example1(int a, int b) {
     if (a < 4 && b < 4 && a == b) {
         assert(a + b != 6);

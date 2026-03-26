@@ -1,6 +1,9 @@
-### coverage-guided fuzzing  {.smaller}
+### coverage-guided fuzzing 
 
 * observation: easy to measure which paths a test case uses 
-* can make random tests <em>biased towards finding new paths</em>
-* keep trying things until particular path is reached
-
+* try to choose random tests <em>biased towards finding new paths</em>
+* generate new random tests by varying "seed" tests
+* check if new random test explores new path
+  * if so, add to seed test
+<hr class="vspace"/>
+* should gradually make our way down a new path

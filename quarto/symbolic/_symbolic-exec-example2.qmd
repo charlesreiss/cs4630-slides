@@ -2,8 +2,12 @@
 ### example 2  {.smaller}
 
 <!-- \lstset{language=C,style=smaller} -->
+
+:::: {.columns}
+
+::: {.column width=30%}
  
-```
+```c
 void foo(unsigned a,
          unsigned b,
          unsigned c) {
@@ -18,18 +22,38 @@ void foo(unsigned a,
   } else {
     a += 1; // Z
   }
-  if (a + b != 7)
-    INTERESTING();
+  assert(a + b == 7);
 }
-
 ```
- ![](/symbolic/texfig/symbolic-exec-example2.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
-![](/symbolic/texfig/symbolic-exec-example2.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
-![](/symbolic/texfig/symbolic-exec-example2.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=3}
-![](/symbolic/texfig/symbolic-exec-example2.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=4}
-![](/symbolic/texfig/symbolic-exec-example2.figure-5.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=5}
-![](/symbolic/texfig/symbolic-exec-example2.figure-6.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=6}
-![](/symbolic/texfig/symbolic-exec-example2.figure-7.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=7}
-![](/symbolic/texfig/symbolic-exec-example2.figure-8.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=8}
-![](/symbolic/texfig/symbolic-exec-example2.figure-9.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=9}
+
+:::
+
+::: {.column width=69%}
+
+
+::::: {.r-stack width=600px}
+
+![](/symbolic/texfig/symbolic-exec-example2.figure-1.svg){ width=600px .fragment .fade-in-then-out fragment-index=1}
+
+![](/symbolic/texfig/symbolic-exec-example2.figure-2.svg){ width=600px .fragment .fade-in-then-out fragment-index=2}
+
+![](/symbolic/texfig/symbolic-exec-example2.figure-3.svg){ width=600px .fragment .fade-in-then-out fragment-index=3}
+
+![](/symbolic/texfig/symbolic-exec-example2.figure-4.svg){ width=600px .fragment .fade-in-then-out fragment-index=4}
+
+![](/symbolic/texfig/symbolic-exec-example2.figure-5.svg){ width=600px .fragment .fade-in-then-out fragment-index=5}
+
+![](/symbolic/texfig/symbolic-exec-example2.figure-6.svg){ width=600px .fragment .fade-in-then-out fragment-index=6}
+
+![](/symbolic/texfig/symbolic-exec-example2.figure-7.svg){ width=600px .fragment .fade-in-then-out fragment-index=7}
+
+![](/symbolic/texfig/symbolic-exec-example2.figure-8.svg){ width=600px .fragment .fade-in-then-out fragment-index=8}
+
+![](/symbolic/texfig/symbolic-exec-example2.figure-9.svg){ width=600px .fragment .fade-in-then-out fragment-index=9}
+
+:::::
+
+:::
+
+::::
  [Adapted from Hicks, ‘‘Symbolic Execution for Finding Bugs’’]{.mycredit}

@@ -125,7 +125,7 @@ generate random test cases based on A and B and C and D:
 ::::::
 
 
-### coverage-guided example (2a)
+### coverage-guided example (2a) {.smaller}
 
 :::::: {.columns}
 
@@ -164,7 +164,7 @@ a = 0x17, b = 0x00, c = 0x01; covers: <em>WXY</em>
 
 ::::::
 
-### coverage-guided example (2a)
+### coverage-guided example (2a) {.smaller}
 
 :::::: {.columns}
 
@@ -205,41 +205,4 @@ a = `0x17`, b = `0x00`, c = `0x81`; covers: <em>WY</em>
 :::::
 
 ::::::
-
-
-
-### coverage-guided example 
-
-<!-- \lstset{language=C,style=script} -->
-  
-
-::: {.r-stack .my-full}
-![](/testing/texfig/coverageSame.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
-
-![](/testing/texfig/coverageSame.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
-
-![](/testing/texfig/coverageSame.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
-
-![](/testing/texfig/coverageSame.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
-
-
-:::
-
-
-### coverage-guided example 
-
-<!-- \lstset{language=C,style=smaller} -->
-  
-
-::: {.r-stack .my-full}
-![](/testing/texfig/coverageExBig.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
-
-![](/testing/texfig/coverageExBig.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
-
-![](/testing/texfig/coverageExBig.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
-
-![](/testing/texfig/coverageExBig.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
-
-
-:::
 

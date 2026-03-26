@@ -2,7 +2,7 @@
 ### simplifying testing cases  {.smaller}
 
 
-```
+```c
 int array[10];
 void vulnerable(char *input) {
     char *p;

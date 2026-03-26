@@ -1,18 +1,18 @@
 
-### thinking about testing  {.smaller}
+### thinking about testing
 
-<!-- \lstset{language=C,style=smaller} -->
- 
-```
+```{.c code-line-numbers=true}
+// expand("[a-d]q[ef][x-z]") --> "[abcd]q[ef][xyz]"
 void expand(char *arg) {
     if (arg[0] == '[') {
+        putchar('[');
         if (arg[2] != '-' || arg[4] != ']') {
-            putchar('[');
             expand(&arg[1]);
         } else {
             for (int i = arg[1]; i <= arg[3]; ++i) {
                 putchar(i);
             }
+            putchar(']')
             expand(&arg[5]);
         }
     } else if (arg[0] != '\0') {

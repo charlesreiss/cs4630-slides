@@ -1,4 +1,213 @@
 
+### coverage-guided example (1a) {.smaller}
+
+:::::: {.columns}
+
+::::: {.column width=30%}
+
+```c
+{{< include /testing/_coverage-example1.c >}}
+```
+
+:::::
+
+
+::::: {.column .fragment fragment-index=1 style="font-size:90%"}
+
+initial test case A: <br/>
+a = `0x17`, b = `0x08`; covers: WZ
+
+::: {.fragment fragment-index=2}
+
+generate random test cases based on A:
+
+<div style="border: 3px dashed black; width: fit-content; padding-left: .5rem; padding-right: .5rem; font-size: 90%">
+a = `0x37`, b = `0x08`; covers: WZ <br />
+a = `0x15`, b = `0x08`; covers: WZ <br />
+a = `0x17`, b = `0x0c`; covers: WZ <br />
+a = `0x13`, b = `0x08`; covers: WZ <br />
+a = `0x17`, b = `0x08`; covers: WZ <br />
+...<br/>
+a = `0x17`, b = `0x00`; covers: <em>WY</em>
+</div>
+
+:::
+
+::: {.fragment fragment-index=3}
+
+found new test case with different coverage
+
+:::
+
+:::::
+
+::::::
+
+### coverage-guided example (1b) {.smaller}
+
+:::::: {.columns}
+
+::::: {.column width=30%}
+
+```c
+{{< include /testing/_coverage-example1.c >}}
+```
+
+:::::
+
+
+::::: {.column style="font-size: 90%"}
+
+initial test case A: <br/>
+a = `0x17`, b = `0x08`; covers: WZ
+
+found test case B (derived from A): <br/>
+a = `0x17`, b = `0x00`; covers: WY
+
+::: {.fragment fragment-index=2}
+
+generate random test cases based on <em>A and B</em>:
+
+<div style="border: 3px dashed black; width: fit-content; padding-left: .5rem; padding-right: .5rem; font-size: 90%">
+a = `0x37`, b = `0x08`; covers: WZ <br/>
+a = `0x04`, b = `0x00`; covers: WY <br/>
+a = `0x17`, b = `0x01`; covers: WZ <br/>
+a = `0x16`, b = `0x00`; covers: WY <br/>
+... <br/>
+a = `0x97`, b = `0x00`; covers: <em>WYQ</em> <br/>
+... <br/>
+a = `0x00`, b = `0x08`; covers: <em>XY</em> <br/>
+</div>
+
+:::
+
+
+:::::
+
+::::::
+
+
+### coverage-guided example (1c) {.smaller}
+
+:::::: {.columns}
+
+::::: {.column width=30%}
+
+```c
+{{< include /testing/_coverage-example1.c >}}
+```
+
+:::::
+
+
+::::: {.column style="font-size: 90%"}
+
+initial test case A: <br/>
+a = `0x17`, b = `0x08`; covers: WZ
+
+found test case B (derived from A): <br/>
+a = `0x17`, b = `0x00`; covers: WY
+
+found test case C (derived from B): <br/>
+a = `0x97`, b = `0x00`; covers: WYQ
+
+found test case D (derived from A): <br/>
+a = `0x00`, b = `0x08`; covers: XY
+
+generate random test cases based on A and B and C and D:
+
+...
+
+
+
+:::::
+
+::::::
+
+
+### coverage-guided example (2a)
+
+:::::: {.columns}
+
+::::: {.column width=30%}
+
+```c
+{{< include /testing/_coverage-example2.c >}}
+```
+
+:::::
+
+
+::::: {.column .fragment fragment-index=1 style="font-size:90%"}
+
+initial test case A:<br/>
+a = 0x17, b = 0x08, c = 0x00; covers: WZ
+
+
+::: {.fragment fragment-index=2}
+
+generate random test cases based on A:
+
+<div style="border: 3px dashed black; width: fit-content; padding-left: .5rem; padding-right: .5rem; font-size: 90%">
+a = `0x37`, b = `0x08`, c = `0x00`; covers: WZ <br/>
+a = `0x15`, b = `0x08`, c = `0x02`; covers: WZ <br/>
+a = `0x17`, b = `0x0c`, c = `0x00`; covers: WZ <br/>
+a = `0x13`, b = `0x08`, c = `0x40`; covers: WZ <br/>
+a = `0x17`, b = `0x08`, c = `0x10`; covers: WZ <br/>
+... <br/>
+a = 0x17, b = 0x00, c = 0x01; covers: <em>WXY</em>
+</div>
+
+:::
+
+:::::
+
+::::::
+
+### coverage-guided example (2a)
+
+:::::: {.columns}
+
+::::: {.column width=30%}
+
+```c
+{{< include /testing/_coverage-example2.c >}}
+```
+
+:::::
+
+
+::::: {.column .fragment fragment-index=1 style="font-size:90%"}
+
+initial test case A:<br/>
+a = 0x17, b = 0x08, c = 0x00; covers: WZ
+
+found test case B (based on A):<br/>
+a = 0x17, b = 0x00, c = 0x01; covers: WXY
+
+
+::: {.fragment fragment-index=2}
+
+generate random test cases based on A and B:
+
+<div style="border: 3px dashed black; width: fit-content; padding-left: .5rem; padding-right: .5rem; font-size: 90%">
+a = `0x37`, b = `0x08`, c = `0x00`; covers: WZ <br/>
+a = `0x17`, b = `0x00`, c = `0x03`; covers: WXY<br/>
+a = `0x17`, b = `0x0c`, c = `0x00`; covers: WZ <br/>
+a = `0x37`, b = `0x00`, c = `0x03`; covers: WXY<br/>
+a = `0x17`, b = `0x08`, c = `0x10`; covers: WZ <br/>
+... <br/>
+a = `0x17`, b = `0x00`, c = `0x81`; covers: <em>WY</em>
+</div>
+
+:::
+
+:::::
+
+::::::
+
+
+
 ### coverage-guided example 
 
 <!-- \lstset{language=C,style=script} -->

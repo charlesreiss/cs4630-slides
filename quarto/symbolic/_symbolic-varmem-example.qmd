@@ -2,7 +2,7 @@
 ### running example  {.smaller}
 
 
-```
+```c
 int array[2];
 int foo(int x, int y){
     array[x] = 0x10;
@@ -19,7 +19,7 @@ int foo(int x, int y){
 ### in angr (0)  {.smaller}
 
 
-```
+```python
 p = angr.Project('mem-demo.so', load_options={'auto_load_libs': False})
 x = claripy.BVS('x', 31).zero_extend(1) # 0 sign bit + [31 unknown bits]
 y = claripy.BVS('y', 31).zero_extend(1) # 0 sign bit + [31 unknown bits]
@@ -36,7 +36,6 @@ print(sm)
     # <SimulationManager with 1 deadended>
 print(sm.deadended[0].regs.eax)
     # <BV32 0x40>
-
 ```
 
 
@@ -93,7 +92,7 @@ print(sm.deadended[0].regs.eax)
 ### what's angr doing?  {.smaller}
 
 
-```
+```python
 ...
 print(sm.deadended[0].solver.min(x))
     # 1
@@ -108,13 +107,16 @@ print(sm.deadended[0].solver.max(y))
  
 
 * problem: angr's default memory write strategy: use maximum possible value for address
-* compromise: <br> often close enough <br> simplifies work for equation solver dramatically <br> often allows avoiding symbolic execution for much faster emulation
+* compromise:
+  * often close enough
+  * simplifies work for equation solver dramatically
+  * often allows avoiding symbolic execution for much faster emulation
 
 
 ### requesting symbolic addressing (1)  {.smaller}
 
 
-```
+```pytohn3
 st = p.factory.call_state(foo_func, x, y, prototype=foo_prototype,
     add_options=[
         angr.options.SYMBOL_FILL_UNCONSTRAINED_MEMORY,
@@ -126,7 +128,8 @@ st = p.factory.call_state(foo_func, x, y, prototype=foo_prototype,
 print(sm.deadended[0].regs.eax)
 
 ```
- \\hrulefill{} 
+<hr>
+
 ```
 <BV32 0x20 + (if x_0_31 == 0x1 then (if y_1_31 == 0x1 then 0x20 else
 (if x_0_31 == 0x1 then 0x10 else 0x2)) else (if x_0_31 == 0x0 then

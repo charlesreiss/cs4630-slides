@@ -1,0 +1,28 @@
+### last time
+
+*  heap structure
+   *  metadata to track available objects
+   *  often kept within free regions of memory
+   *  commonly contains pointers
+*  pointer subterfuge using linked list of free objects
+*  double-free vulnerabilities
+
+### assignment Q+A
+
+### quiz
+
+# double-free {visibility="hidden"}
+
+{{< include /overflow-heap/_double-free.qmd >}}
+
+## exercise {visibility="hidden"}
+
+{{< include /overflow-heap/_double-free-exer.qmd >}}
+
+{{< include /overflow-int/_talk-inner.qmd >}}
+
+### finding exploits
+
+{{< include /testing/_talk-inner.qmd >}}
+
+{{< include /symbolic/_talk-inner.qmd >}}

@@ -16,7 +16,7 @@
 
 ```c
 void found_overflow() __attribute__((noreturn));
-void found_negative_xy() __attribute__((noreturn));
+void found_nonpositive_xy() __attribute__((noreturn));
 int broken_check_add(int x, int y) {
     if (x > 0 && y > 0) {
         int result = x + y;
@@ -25,10 +25,12 @@ int broken_check_add(int x, int y) {
         }
         return result;
     } else {
-        found_negative_xy();
+        found_nonpositive_xy();
     }
 }
 ```
+
+looks like it should detect overflow?
 
 :::
 
@@ -51,7 +53,7 @@ broken_check_add:
 .LBB0_2:
     pushq   %rax
     xorl    %eax, %eax
-    callq   found_negative_xy@PLT
+    callq   found_nonpositive_xy@PLT
 ```
 
 <em>missing `found_overflow()` call!</em>
@@ -60,37 +62,52 @@ broken_check_add:
 
 ::::
 
-### -fsanitize=undefined  {.smaller}
+### -fsanitize=undefined / -ftrapv {.smaller}
 
+::: {style="font-size: 150%; border: 3px dotted black;"}
 
 ```c
-int x = INT_MAX -1; int y = 5; printf("%d\n", x * y);
-
+int x = INT_MAX - 1; int y = 5; printf("%d\n", x * y);
 ```
+
+:::
  
 
 * compile with <code>-fsanitize=undefined</code>: 
 
-   * <code>test.c:...: runtime error: signed integer overflow: 2147483646 * 5 cannot be represented in type 'int</code>
+::: {style="border-left: darkred 5px solid; padding-left: 1ex; margin-top: -1em;"}
+
+<code>test.c:...: runtime error: signed integer overflow: 2147483646 * 5 cannot be represented in type 'int'</code>
+
+:::
 
 * compile with <code>-ftrapv</code>:
-   * <code>Aborted (core dumped)</code>
+
+::: {style="border-left: darkred 5px solid; padding-left: 1ex; margin-top: -1em;"}
+
+<code>Aborted (core dumped)</code>
+
+::::
 
 <hr>
 
+::: {style="font-size: 150%; border: 3px dotted black;"}
+
 ```c
-unsigned x = INT_MAX -1; unsigned y = 5; printf("%u\n", x * y);
+unsigned x = INT_MAX - 1; unsigned y = 5; printf("%u\n", x * y);
 ```
 
-* compile with <code>-fsanitize=undefined</code> or <code>-ftrapv</code>: NO ERROR
-  * defined by C standard to wrap
+:::
+
+* compile with <code>-fsanitize=undefined</code> or <code>-ftrapv</code>: <em>NO ERROR</em>
+  * defined by C standard to wrap around
 
 
 
 ### in Rust (1) 
 
 ```rust
-fn foo(x: usize) -> usize { x 8 2}
+fn foo(x: usize) -> usize { x * 2 }
 fn main() {
     let x = usize::MAX - 10;
     println!("{}", foo(x));
@@ -98,12 +115,14 @@ fn main() {
 ```
 <hr>
 in debug mode:
-```
+
+```{style="border-left: darkred 5px solid; padding-left: 1ex;"}
 thread 'main' panicked at src/main.rs:1:29:
+attempt to multiply with overflow
 ```
 <hr>
 in release mode:
-```
+```{style="border-left: darkred 5px solid; padding-left: 1ex;"}
 18446744073709551594
 ```
 
@@ -113,13 +132,31 @@ in release mode:
 ```rust
 let x = usize::MAX - 10; let y = 10usize;
 println!("{} {}", x.saturating_mul(2), y.saturating_mul(2));
-// 18446744073709551615 20
-    // 18446744073709551615==usize::MAX
-println!("{:?} {:?}", x.checked_mul(2), y.checked_mul(2));
-// None Some(30)
-println!("{} {}", x.wrapping_mul(2), y.wrapping_mul(2));
-// 18446744073709551594 20
-    // 18446744073709551594==usize::MAX-21
-
 ```
+
+```{style="border-left: darkred 5px solid; padding-left: 1ex;"}
+18446744073709551615 20
+```
+[18446744073709551615==usize::MAX]{style="font-size: 60%"}
+
+<hr>
+
+```rust
+println!("{:?} {:?}", x.checked_mul(2), y.checked_mul(2));
+```
+
+```{style="border-left: darkred 5px solid; padding-left: 1ex;"}
+None Some(30)
+```
+
+<hr>
+
+```rust
+println!("{} {}", x.wrapping_mul(2), y.wrapping_mul(2));
+```
+
+```{style="border-left: darkred 5px solid; padding-left: 1ex;"}
+18446744073709551594 20
+```
+[18446744073709551594==usize::MAX-21]{style="font-size: 60%"}
 

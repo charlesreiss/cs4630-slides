@@ -641,6 +641,10 @@ with this program; if not, write to the Free Software Foundation, Inc.,
       <item>nop</item>
       <item>not</item>
       <item>or</item>
+      <item>orb</item>
+      <item>orw</item>
+      <item>orl</item>
+      <item>orq</item>
       <item>out</item>
       <item>outsb</item>
       <item>outsd</item>

@@ -6,7 +6,7 @@
 
 ::: {.column width="50%"}
 
-```
+```c
 free(...) {
     freed->next = first_free
     first_free = freed;
@@ -35,7 +35,7 @@ vulnerable() {
 :::
 
 ::: {.column width="50%"}
-To do memory[0x123456] $\leftarrow$ 0x789abc <br> what should input1/input2/input3 be?
+goal: memory[0x123456] $\leftarrow$ 0x789abc <br> what should input1/input2/input3 be?
 :::
 
 ::::

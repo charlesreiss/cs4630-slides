@@ -2,7 +2,7 @@
 ### symbolic memory?  {.smaller}
 
 
-```
+```c
 int array[10];
 void example(int a, int b) {
     assert(a >= 0 && b >= 0 && a < 10 && b < 10);
@@ -17,29 +17,44 @@ void example(int a, int b) {
 ```
  
 
-* question: how to deal with <code>*p</code>, <code>*q</code> accesses?
+* question: how to deal with `*p`, `*q` accesses?
 
+### state getting complex
 
-### lots of branches?  {.smaller}
+*  state before:
+   * a = $\alpha$, b = $\beta$, 
+   * `array[0]` = $x_0$, `array[1]` = $x_1$, ...
 
-
-```
-int array[10];
-void example(int a, int b) {
-    assert(a >= 0 && b >= 0 && a < 10 && b < 10);
-    int *p = &array[a]; int *q = &array[b];
+```c
+    int *p = &array[a];
     *p += 1;
-    *q -= 1;
-    if (*p == *q) {
-        ...
-    }
-}
-
 ```
- 
 
-* separate branch for all 10 possible values of x, y
-* gets correct answer --- but 100x extra branches to explore?
+*  state after:
+   * a = $\alpha$, b = $\beta$,
+   * `array[0]` = $\begin{cases} x_0 + 1& \text{if } \alpha = 0 \\ x_0 & \text{otherwise} \end{cases}$,  ...
+
+
+### splitting the state
+
+
+*  state:
+   * a = $\alpha$, b = $\beta$, 
+   * `array[0]` = $x_0$, `array[1]` = $x_1$, ...
+
+```c
+    int *p = &array[a];
+    *p += 1;
+```
+
+*  $\alpha = 0$ state:
+   * a = $\alpha$, b = $\beta$,
+   * `array[0]` = $x_0 + 1& \text{if } \alpha = 0 \\ x_0 & \text{otherwise} \end{cases}$, `array[1] =  $x_1$, ...
+*  $\alpha = 1$ state:
+   * a = $\alpha$, b = $\beta$,
+   * `array[1]` = $x_0$, `array[1]` = $x_1 + 1& \text{if } \alpha = 0 \\ x_1 & \text{otherwise} \end{cases}$,  ...
+*  ...
+
 
 
 ### angr ‘concretization’ strategies  {.smaller}

@@ -63,7 +63,7 @@ broken_check_add:
 ### -fsanitize=undefined  {.smaller}
 
 
-```
+```c
 int x = INT_MAX -1; int y = 5; printf("%d\n", x * y);
 
 ```
@@ -73,33 +73,44 @@ int x = INT_MAX -1; int y = 5; printf("%d\n", x * y);
 
    * <code>test.c:...: runtime error: signed integer overflow: 2147483646 * 5 cannot be represented in type 'int</code>
 
-* compile with <code>-ftrapv</code>: <code>Aborted (core dumped)</code>
- 
-```
-unsigned x = INT_MAX -1; unsigned y = 5; printf("%u\n", x * y);
+* compile with <code>-ftrapv</code>:
+   * <code>Aborted (core dumped)</code>
 
+<hr>
+
+```c
+unsigned x = INT_MAX -1; unsigned y = 5; printf("%u\n", x * y);
 ```
- 
 
 * compile with <code>-fsanitize=undefined</code> or <code>-ftrapv</code>: NO ERROR
+  * defined by C standard to wrap
+
 
 
 ### in Rust (1) 
 
-
-![](/overflow-int/rust-oflow-trap){}
-
-
-### in Rust (2) 
-
-
-![](/overflow-int/rust-oflow-notrap){}
-
-
-### in Rust (3)  {.smaller}
-
-
+```rust
+fn foo(x: usize) -> usize { x 8 2}
+fn main() {
+    let x = usize::MAX - 10;
+    println!("{}", foo(x));
+}
 ```
+<hr>
+in debug mode:
+```
+thread 'main' panicked at src/main.rs:1:29:
+```
+<hr>
+in release mode:
+```
+18446744073709551594
+```
+
+### in Rust (2)
+
+
+```rust
 let x = usize::MAX - 10; let y = 10usize;
 println!("{} {}", x.saturating_mul(2), y.saturating_mul(2));
 // 18446744073709551615 20

@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+\node[anchor=north east] (main) at ([xshift=-.25cm,yshift=-1cm]current page.north east) {
+\includegraphics[width=0.3\mypaperwidth]{../static/info-flow-graph2}
+};
+\node[anchor=north east] (second) at (main.north west) {
+\includegraphics[width=0.3\mypaperwidth]{../static/info-flow-graph2b}
+};
+\end{scope}
+\end{tikzpicture}

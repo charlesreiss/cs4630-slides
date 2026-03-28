@@ -1,0 +1,17 @@
+
+### sources and sinks  {.smaller}
+
+
+* needed choose <i>sources</i> (so far: function arguments) <br> and <i>sinks</i> (so far: print, return)
+* choice depends on application
+* SQL injection:  
+
+   * sources: input from network
+   * sinks: SQL query functions
+
+* private info leak: 
+
+   * sources: private data: phone number, message history, email, …
+   * sinks: network output
+
+

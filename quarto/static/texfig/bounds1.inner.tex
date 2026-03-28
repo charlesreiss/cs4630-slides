@@ -1,0 +1,22 @@
+\begin{tikzpicture}
+\node[anchor=north east] at (-.2, 0) {
+\usebox{\boundsModelCode}
+};
+
+    \tikzset{
+        flow/.style={draw,thick,font=\fontsize{9}{10}\selectfont,anchor=north west},
+        flowLine/.style={thick,-Latex},
+    }
+    \begin{scope}[y=1.2cm]
+        \node[flow] (A) at (0, 0) { A: foo: $[-\inf, +\inf]$; array: indices [0, 99] };
+        \node[flow] (B) at (0, -1) { B: foo: $[-\inf, +100]$; array: indices [0, 99] };
+        \draw[flowLine] (A) -- (B);
+    
+    \begin{visibleenv}<2->
+        \node[draw=red,very thick,fill=white,align=center] at (0, -4) {
+            give warning about \texttt{foo == 100}? probably bug! \\
+            give warning about \texttt{foo < 0}? maybe??
+        };
+    \end{visibleenv}
+    \end{scope}
+\end{tikzpicture}

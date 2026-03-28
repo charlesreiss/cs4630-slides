@@ -1,0 +1,52 @@
+
+### checking for array bounds  {.smaller}
+
+
+* can <i>try</i> to apply same technique to array bounds
+* but much more complicated/more likely to have false positives/negatives 
+<hr class="vspace" />
+* for each array or pointer track: 
+
+   * minimum number of elements before/after what it points to
+
+* for each integer track:  
+
+   * minimum bound
+   * maximum bound
+
+* similar analysis looking at paths?
+
+
+### checking array bounds (1) 
+
+<!-- \lstset{
+    language=C,style=script,
+    moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+} -->
+  
+
+::: {.r-stack}
+![](/static/texfig/bounds1.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/static/texfig/bounds1.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+
+:::
+
+
+### checking array bounds (2) 
+
+<!-- \lstset{
+    language=C,style=script,
+    moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+} -->
+  
+
+::: {.r-stack}
+![](/static/texfig/bounds2.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/static/texfig/bounds2.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+
+:::
+

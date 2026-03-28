@@ -1,0 +1,16 @@
+
+### static analysis limits {.smaller}
+
+
+* need to avoid exploring way too many paths 
+   * clang-analyzer: only a procedure at a time
+   * in general: some way(s) of pruning paths
+
+* need to avoid false positives 
+   * probably can't always assume every if can be true/false
+   * one idea: apply symbolic-execution like techniques to prune
+   * clang-analyzer: limited by being procedure-at-a-time
+
+* likely to end up with false positives + false negatives
+
+

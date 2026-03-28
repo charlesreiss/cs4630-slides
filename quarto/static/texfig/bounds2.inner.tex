@@ -1,0 +1,25 @@
+\begin{tikzpicture}
+\node[anchor=north east] at (-.2, 0) {
+\usebox{\boundsModelCode}
+};
+
+    \tikzset{flow/.style={draw,thick,font=\fontsize{9}{10}\selectfont,anchor=north west},
+    flowLine/.style={thick,-Latex}}
+    \begin{scope}[y=1.2cm]
+        \node[flow] (A) at (0, 0) { A: p: indices [0, 99]; foo: $[-\inf, +\inf]$ };
+        \node[flow] (B) at (0, -1) { B: p: indices [-50, 49]; foo: $[-\inf, +\inf]$ };
+        \node[flow] (C) at (0, -2) { C: p: indices [-50, 49]; foo: [0, 50] };
+        \node[flow] (D1) at (-4, -3) { D (bar true): p: indices: [-50, 49]; foo: [-50, 0] } ;
+        \node[flow,alt=<2>{draw=red}] (D2) at (1, -4) { D (bar false): p: indices: [-50, 49]; foo: [0, 50] };
+        \draw[flowLine] (A) -- (B);
+        \draw[flowLine] (B) -- (C);
+        \draw[flowLine] (C) -- (D1);
+        \draw[flowLine] (C) -- (D2);
+    
+    \begin{visibleenv}<2->
+        \node[draw=red,very thick,fill=white,align=center] at (0, -6) {
+            warn about possible out-of-bounds? 
+        };
+    \end{visibleenv}
+    \end{scope}
+\end{tikzpicture}

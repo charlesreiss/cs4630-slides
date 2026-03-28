@@ -1,0 +1,79 @@
+
+### analysis building blocks 
+
+
+* needed to track that <code>p</code> and <code>q</code> could point to same thing 
+<hr class="vspace" />
+* common prerequisite for all sorts of program analysis
+
+
+### overly simple algorithm for points-to analysis 
+
+
+* for each pointer/reference track which objects it can refer to
+* if multiple paths: take union of all possible
+
+
+### simple points-to analysis  {.smaller}
+
+::::: {.columns}
+
+:::: {.column width=30%}
+
+```c
+void example(int a) {
+    int *p;
+    int *q;
+    q = malloc(...); // ID=1
+    p = malloc(...); // ID=2
+    // (A)
+    if (a > 0) {
+        p = q;
+        // (B)
+    }
+    // (C)
+    ...
+}
+
+```
+
+::::
+
+:::: {.column}
+
+::: {.r-stack}
+
+![](/static/texfig/simplePointsTo.figure-1.svg){.fragment .fade-in-then-out fragment-index=1 width=600px}
+
+![](/static/texfig/simplePointsTo.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 width=600px}
+
+![](/static/texfig/simplePointsTo.figure-3.svg){.fragment .fade-in-then-out fragment-index=3 width=600px}
+
+![](/static/texfig/simplePointsTo.figure-4.svg){.fragment .fade-in-then-out fragment-index=4 width=600px}
+
+:::
+
+::::
+
+:::::
+
+::: {.myoverbox .fragment .vlow fragment-index=2 .fade-in-then-out}
+
+mark different versions of of p, q<br/>
+track as if separate varaibles
+
+:::
+
+
+::: {.myoverbox .fragment .vlow fragment-index=3 .fade-in-then-out}
+
+shown above: track each path separately <br/>
+but means we'll have too many nodes in big program
+
+:::
+
+::: {.myoverbox .fragment .vlow fragment-index=4 .fade-in-then-out}
+
+alternate idea: avoid path explosion by merging possible sets
+
+:::

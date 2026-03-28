@@ -1,0 +1,53 @@
+
+### fuzzing/symbolic exec imprecision  {.smaller}
+
+
+* symbolic execution had some nice properties: 
+
+   * could reliably enumerate possible paths
+   * could figure out inputs
+   * could prove paths are impossible
+
+* but had huge practical problems: 
+
+   * not enough time/space to explore all those paths
+   * too complicated to actually solve equations to find inputs
+
+
+
+### complete versus sound  {.smaller}
+
+
+* complete (all true positives found) 
+
+   * if way to find problem, analysis finds it
+
+* sound (no false positives found) 
+
+   * if analysis finds way problem, it's a real problem
+ 
+<hr class="vspace" />
+* greybox fuzzing, symbolic exec <i>without approximations</i>: always sound 
+
+   * because they actually run the program
+
+* symbolic execution without approximations: complete <em>if all paths are solved</em>  
+
+   * but that isn't practical for a large program
+
+
+
+### other program analysis designs  {.smaller}
+
+
+* other design points than symbolic execution: 
+<hr class="vspace" />
+* not tracking <em>all the variable values</em>
+* alternative: <em>just track properties of interest</em> 
+<hr class="vspace" />
+* compute precisely <em>what paths through code are possible</em>
+* alternative: <em>track sub/superset of possible paths</em>  
+
+   * superset = find false positives; subset = false negatives
+
+

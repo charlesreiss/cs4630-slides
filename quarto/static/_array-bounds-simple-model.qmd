@@ -1,0 +1,7 @@
+
+### model for simple array out-of-bounds 
+
+
+* for each integer, track its apparent minimum/maximum value
+* then flag any case where maximum of X is too big in array[X]
+

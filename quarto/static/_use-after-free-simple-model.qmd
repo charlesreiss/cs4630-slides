@@ -1,0 +1,128 @@
+
+### model for use-after-free  {.smaller}
+
+
+* model for use-after-free, pointer is: 
+
+   * allocated
+   * freed
+   * (other states?)
+
+* just track this logical state for each pointer
+* ignore everything else
+* assume all if statements/loop conditions can be true or false
+
+
+### checking use-after-free (1)
+
+::::: {.columns}
+
+:::: {.column width=64%}
+
+```{.c style="font-size: 90%"}
+void someFunction(int foo, int bar) {
+    int *quux = malloc(sizeof(int));
+    // A
+    ... /* omitted code that doesn't use quux */
+    free(quux);
+    // B
+    ... /* omitted code that doesn't use quux */
+    // C
+    *quux = bar;
+    ...
+}
+```
+
+::::
+
+:::: {.column width=35%}
+
+
+![](/static/texfig/useAfterFree1.figure.svg){width=400px}
+
+::::
+
+:::::
+
+*  can give warning --- probably bad
+*  exercise: how could this be a false positive?
+
+### result from clang's scan-build 
+
+
+![](/static/scan-build-uaf-example1){fig-alt="Screenshot of scan-build report showing 'Use of memory after it is freed'. An exercept of the source code indicates memory is allocated in the malloc() in someFunction(), released by the free, then used by the line '*quux = bar;'"}
+
+
+### checking use-after-free (2) 
+
+
+::::: {.columns}
+
+:::: {.column width=64%}
+
+```{.c style="font-size: 90%"}
+int *someFunction(int foo, int bar) {
+    int *quux = malloc(sizeof(int));
+    // A
+    if (Complex(foo)) {
+        free(quux);
+        // B
+    }
+    ... /* omitted code that doesn't use quux */
+    if (Complex(bar)) {
+        // C
+        *quux = bar;
+    }
+    ... /* omitted code that doesn't use quux */
+    // D
+}
+```
+
+::::
+
+:::: {.column width=35%}
+
+::: {.r-stack}
+![](/static/texfig/useAfterFree2.figure-1.svg){.fragment .fade-in-then-out fragment-index=1 width=400px}
+
+![](/static/texfig/useAfterFree2.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 width=400px}
+
+![](/static/texfig/useAfterFree2.figure-3.svg){.fragment .fade-in-then-out fragment-index=3 width=400px}
+
+![](/static/texfig/useAfterFree2.figure-4.svg){.fragment .fade-in-then-out fragment-index=4 width=400px}
+
+:::
+
+::::
+
+
+:::::
+
+::: {.myoverbox .low fragment-index=2 .fragment .fade-in-then-out}
+
+similar to symbolic execution <br />
+form graph of states of quux
+
+:::
+
+::: {.myoverbox .low fragment-index=4 .fragment .fade-in-then-out}
+
+three ways to reach D (ABD, ACD, AD) <br />
+but only care if quux freed/allocated <br />
+so only two cases to consider
+
+:::
+
+::: {.fragment .novertical fragment-index=5}
+
+*  can find possible use-after-free path, but whether it's possible depends on what Complex() does
+
+:::
+
+<!-- FIXME: version of diagram pointing out combining D states -->
+
+### result from clang's scan-build 
+
+
+![](/static/scan-build-uaf-example2){fig-alt="Screenshot of scan-build output showing annoytated source code. 7 steps in the code are annotated: 1. memory is allocated (at malloc()); 2. Assuming the Complex(foo) condition is true; 3. Taking true branch of  the if statement; 4. Memory is released (at free()); 5. Assuming the Complex(bar) condition is true; 6. Taking true branch of if statement; 7. Use of memory after it is freed (at *quux)."}
+

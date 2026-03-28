@@ -1,0 +1,28 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{arrows.meta}
+\lstset{
+    language=C,style=script,
+    moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+}
+\newsavebox{\boundsModelCode}
+\begin{document}
+\begin{lrbox}{\boundsModelCode}
+\begin{lstlisting}
+int array[100];
+void someFunction(int foo) {
+    // A
+    if (foo > 100) {
+        return;
+    }
+    // B
+    array[foo] += 1;
+}
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{static/texfig/bounds1.inner.tex}
+\setSlide{2}
+\input{static/texfig/bounds1.inner.tex}
+\end{document}

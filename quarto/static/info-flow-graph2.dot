@@ -1,0 +1,8 @@
+digraph flowExample {
+    a -> y;
+    c -> y;
+    y -> return;
+    { rank=same; return }
+    { rank=same; a;b;c }
+}
+

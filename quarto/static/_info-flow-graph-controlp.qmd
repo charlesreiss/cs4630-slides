@@ -1,0 +1,22 @@
+
+### information flow and control flow  {.smaller}
+
+
+```
+def f(a, b, c):
+    if b > 10:
+        y = a
+    else:
+        y = c
+    return y
+
+```
+ 
+
+* Q: which is better …  
+
+   * if we're trying to see if user input makes it to SQL query?
+   * if we're trying to determine if private info goes out over network?
+
+ ![](/static/texfig/info-flow-graph-controlp.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+

@@ -1,0 +1,6 @@
+
+### exercise: other static analysis ideas 
+
+
+* let's say we want to identify SQL injection with static analysis
+

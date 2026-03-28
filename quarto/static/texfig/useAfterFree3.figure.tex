@@ -1,0 +1,46 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{arrows.meta}
+\lstset{
+        language=C,style=script,
+        moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+    }
+\newsavebox{\uafCheckLoopCode}
+\begin{document}
+\begin{lrbox}{\uafCheckLoopCode}
+\begin{lstlisting}
+void someFunction() {
+    int *quux = malloc(sizeof(int));
+    ...
+    // A
+    do {
+        // B
+        ...
+        if (anotherFunction()) {
+            free(quux);
+            // C
+        }
+        ...
+        // D
+    } while (complexFunction());
+    ...
+    // E
+    *quux++;
+    ...
+}
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{static/texfig/useAfterFree3.inner.tex}
+\setSlide{2}
+\input{static/texfig/useAfterFree3.inner.tex}
+\setSlide{3}
+\input{static/texfig/useAfterFree3.inner.tex}
+\setSlide{4}
+\input{static/texfig/useAfterFree3.inner.tex}
+\setSlide{5}
+\input{static/texfig/useAfterFree3.inner.tex}
+\setSlide{6}
+\input{static/texfig/useAfterFree3.inner.tex}
+\end{document}

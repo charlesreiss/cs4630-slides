@@ -1,0 +1,25 @@
+
+## example: model for use-after-free {visibility="hidden"}
+
+{{< include /static/_use-after-free-simple-model.qmd >}}
+
+## exercise: aliasing and model {visibility="hidden"}
+
+{{< include /static/_use-after-free-model-exer.qmd >}}
+
+## points-to analysis {visibility="hidden"}
+
+{{< include /static/_points-to.qmd >}}
+
+## complicating points-to analysis {visibility="hidden"}
+
+{{< include /static/_points-to-complex.qmd >}}
+
+### loops
+
+*  real code has loops
+*  seems like a problem if we have to go through all the paths?
+
+## example: model for use-after-free, with loop {visibility="hidden"}
+
+{{< include /static/_use-after-free-simple-model-loop.qmd >}}

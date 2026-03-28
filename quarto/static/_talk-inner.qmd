@@ -1,0 +1,14 @@
+
+# Static Analysis, briefly {visibility="hidden"}
+
+{{< include /static/_talk-intro.qmd >}}
+
+{{< include /static/_talk-uaf-example.qmd >}}
+
+## static analysis limits? {visibility="hidden"}
+
+{{< include /static/_static-limits.qmd >}}
+
+## analysis for common insecure patterns {visibility="hidden"}
+
+{{< include /static/_clang-static-patterns.qmd >}}

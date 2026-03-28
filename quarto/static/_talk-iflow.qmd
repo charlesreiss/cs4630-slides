@@ -1,0 +1,31 @@
+
+### preview: information flow 
+
+
+* really common pattern we want to find: <br> data from somewhere gets to dangerous place 
+
+   * pointer to stack escapes function
+   * input makes it to SQL query, file name
+
+* we'll talk about it specially next
+
+
+# information flow {visibility="hidden"}
+
+{{< include /static/_info-flow-intro.qmd >}}
+
+## data flow graph {visibility="hidden"}
+
+{{< include /static/_info-flow-graph.qmd >}}
+
+## control flow versus information flow {visibility="hidden"}
+
+{{< include /static/_info-flow-graph-controlp.qmd >}}
+
+## challenges for data flow {visibility="hidden"}
+
+{{< include /static/_data-flow-challenges.qmd >}}
+
+## sources and sinks {visibility="hidden"}
+
+{{< include /static/_sources-and-sinks.qmd >}}

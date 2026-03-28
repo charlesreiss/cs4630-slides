@@ -1,0 +1,21 @@
+
+### complicating points-to analysis  {.smaller}
+
+
+* would like to analyze program function-at-a-time, but… 
+
+   * functions can change values shared by other functions
+
+* what about computed array indices?
+* what about pointers to pointers?
+* … 
+<hr class="vspace" />
+* high false-positive solution: 
+
+   * when incomplete info: assume value points to anything of right type
+
+* high false-negative solution: 
+
+   * when incomplete info: assume value points to nothing
+
+

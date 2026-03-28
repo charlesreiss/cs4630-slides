@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+    \tikzset{flow/.style={draw,thick,font=\fontsize{9}{10}\selectfont,anchor=north west},
+    flowLine/.style={thick,-Latex}}
+    \begin{scope}[y=0.8cm]
+        \node[flow,dashed] (A) at (0, 0) { A: quux: \textit{allocated} };
+        \node[flow] (B) at (1, -1) { B: quux: \textit{freed} };
+        \node[flow] (C) at (1, -2) { C (from \textit{freed}): USE-AFTER-FREE };
+        \draw[flowLine] ([xshift=.5cm]A.south west) |- ([yshift=.1cm]B.west);
+        \draw[flowLine] ([yshift=-.1cm]B.west) -- ++(-.2cm, 0cm) |- ([yshift=.1cm]C.west);
+    \end{scope}
+    
+\end{tikzpicture}

@@ -1,0 +1,30 @@
+digraph flowExample {
+    a -> format1;
+    format1[label="'a={},b={}'.format(a,b)"];
+    b -> format1;
+    format1 -> desc1;
+    desc1[label="desc (v1)"];
+    a -> y;
+    c -> y;
+    a -> yPa;
+    y -> yPa;
+    yPa[label="y+a"]
+    yPa -> w;
+    w -> pair;
+    c -> pair;
+    pair -> format2;
+    format2[label="',pair={}'.format(pair)"];
+    format2 -> combineDesc;
+    combineDesc[label="desc + ..."];
+    desc1 -> combineDesc;
+    combineDesc -> desc2;
+    desc2[label="desc (v2)"];
+    pair -> desc2;
+    desc2 -> print;
+    print[label="printed",shape=box]
+    return[label="returned",shape=box]
+    y -> return;
+    { rank=same; print; return }
+    { rank=same; a;b;c }
+}
+

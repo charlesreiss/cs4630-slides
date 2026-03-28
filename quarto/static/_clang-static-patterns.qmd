@@ -1,0 +1,63 @@
+
+
+
+### common bug patterns  {.smaller}
+* effectively detecting things like "values aren't used after being freed" is not very reliable for large programs
+  * (but analysis tools are getting better)
+<hr class="vspace" />
+* but static analysis tools shine for <em>common bug patterns</em>
+  * ... that don't need a lot of context from surrounding code
+
+
+### patterns clang's analyzer knows
+
+
+```c
+struct foo *p = malloc(sizeof(struct foo*)); // meant struct foo?
+long *p = malloc(16 * sizeof(int)); // meant sizeof(long)?
+
+```
+ <hr />
+ 
+```c
+strncat(foo, bar, sizeof(foo));
+
+```
+ <hr />
+ 
+```c
+int *global;
+int *foo() {
+    int x;
+    int *p = &x;
+    ...
+    global = p; // putting pointer to stack in global
+    return p;    // returning pointer to stack
+}
+
+```
+
+
+### more suspect patterns   {.smaller}
+
+
+
+* SpotBugs: Java static analysis tool
+ 
+```
+// pattern: connecting to database with empty password:
+connection = DriverManager.getConnection(
+    "jdbc:hsqldb:hsql://db.example.com/xdb" /* database ID */, 
+    "sa" /* username */, "" /* password */);
+
+// pattern: Sql.hasResult()'s second argument isn't a constant
+Sql.hasResult(c, "SELECT 1 FROM myTable WHERE code='"+code+"'");
+
+// pattern: new FileReader's argument comes from request
+HttpRequest request = ...;
+String path = request.getParameter("path");
+BufferedReader r = new BufferedReader(
+    new FileReader("data/" + path));
+
+```
+

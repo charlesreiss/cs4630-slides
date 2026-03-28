@@ -1,0 +1,4 @@
+
+## analysis for common insecure patterns {visibility="hidden"}
+
+{{< include /static/_clang-static-patterns.qmd >}}

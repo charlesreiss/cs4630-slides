@@ -1,0 +1,36 @@
+
+### static analysis practicality  {.smaller}
+
+
+* good at finding some kinds of bugs 
+
+   * array out-of-bounds probably not one --- complicated tracking needed
+
+* excellent for ‘‘bug patterns’’ like: 
+```
+struct Foo* foo;
+...
+foo = malloc(sizeof(struct Bar));
+
+```
+
+* false positive rates are often 20+% or more
+* some tools assume lots of annotations
+* not limited to C-like languages
+
+
+### static analysis tools  {.smaller}
+
+
+* Coverity, Fortify --- commerical static analysis tools
+* Splint --- unmaintained? 
+
+   * written by David Evans and his research group in the late 90s/early 00s
+
+* FindBugs (Java)
+* clang-analyzer --- part of Clang compiler
+* Microsoft's Static Driver Verifier  --- required for Windows drivers: 
+
+   * mostly checks correct usage of Windows APIs
+
+

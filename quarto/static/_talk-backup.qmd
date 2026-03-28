@@ -1,0 +1,10 @@
+
+## summary / actual tools {visibility="hidden"}
+
+{{< include /static/_actual-tools.qmd >}}
+
+## example: model for array bounds {visibility="hidden"}
+
+{{< include /static/_bounds-modelp.qmd >}}
+
+{{< include /static/_talk-iflow.qmd >}}

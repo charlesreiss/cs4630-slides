@@ -1,0 +1,33 @@
+
+### information flow graph (1a)  {.smaller}
+
+
+```
+def f(a, b, c):
+    desc = 'a={},b={}'.format(a, b)
+    if b > 10:
+        y = a
+    else:
+        y = c
+    w = y + a
+    pair = (w, c)
+    desc = desc + \
+         ',pair={}'.format(pair)
+    print(desc)
+    return y
+
+```
+ 
+![](/static/info-flow-graph1.svg){}
+
+
+### information flow graph (1b)  {.smaller}
+
+
+
+* ex: does returned value depend on a, b, c?
+* ex: does value of pair depend on a, b, c?
+* ex: does printed value depend on a, b, c?
+ 
+![](/static/info-flow-graph1.svg){}
+

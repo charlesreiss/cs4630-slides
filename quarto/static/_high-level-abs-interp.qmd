@@ -1,0 +1,13 @@
+
+### high-level abstract interpretation  {.smaller}
+
+
+* going to show a very high-level view of abstract interpretation 
+<hr class="vspace" />
+* idea: summarize some values of interest in the program: 
+
+   * example: pointer to allocated object or pointer to freed object or unknown pointer or both
+
+* step through program seeing what values change
+* for loops, etc.: keep going until values stop changing
+

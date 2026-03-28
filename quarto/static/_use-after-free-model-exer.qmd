@@ -1,0 +1,47 @@
+
+### exercise: holes in the model? 
+
+::::: {.columns}
+
+:::: {.column}
+
+```c
+void example(int a) {
+    int *p;
+    int *q;
+    q = malloc(...);
+    p = malloc(...);
+    // (A)
+    if (a > 0) {
+        // (A1)
+        p = q;
+    }
+    // (B)
+    free(p);
+    // (C)
+    ...
+}
+```
+
+::::
+
+:::: {.column style="font-size:50%"}
+
+exercise: what should state of pointer q be at C?
+
+<table class="answer-twocol">
+<tr><td>A. allocated</td><td>B. freed</td></tr>
+<tr><td colspan="2">C. allocated if+only if reached via path with A1</td></tr>
+<tr><td colspan="2">D. freed if+only if reached via path with A1</td></tr>
+<tr><td colspan="2">E. something else?</td></tr>
+</table>
+
+::::
+
+:::::
+
+### clang-analyzer output 
+
+
+![](/static/clang-analyze-example4){fig-alt="clang-analyzer screenshot finding an error when '*q = 1;' is placed at (C). The sequence of events identified is: memory is allocated at 'q = malloc(...)'; assuming a > 0, the true branch of the if is taken; memory is released at 'free(p)'; then memory is used after freed at '*q = 1'"}
+

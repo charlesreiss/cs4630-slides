@@ -1,0 +1,17 @@
+
+### information flow  {.smaller}
+
+
+* so far: static analysis concerned with control flow
+* often, we're really worried about how <i>data</i> moves 
+<hr class="vspace" />
+* many applications: 
+
+   * does an array index depend on user input?
+   * does an SQL query depend on user input?
+   * does data sent over network depend on phone number?
+
+* … 
+<hr class="vspace" />
+* can do this <i>statically</i> (potential dependencies) <br> or <i>dynamically</i> (actual dependencies as program runs)
+

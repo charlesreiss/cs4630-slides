@@ -1,0 +1,14 @@
+### upcoming examples: assertion failure
+
+*  will show trying to figure out how to fail assertion
+
+
+*  aren't limited to that --- but common security use is similar
+   *  checking if memory address can be out-of-bounds
+   *  checking if stack canary can be overwritten
+   *  checking if return address/function pointer can be set to be arbitrary value
+   *  ...
+
+*  one way: start with code with bounds check/etc.
+   *  check if bounds-check reached
+

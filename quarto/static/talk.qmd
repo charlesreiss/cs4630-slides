@@ -1,0 +1,12 @@
+---
+title: "static"
+
+---
+
+{{< include ../static/_talk-inner.qmd >}}
+
+# Backup slides
+
+<!-- FIXME: consider information flow slides -->
+
+{{< include ../static/_talk-backup.qmd >}}

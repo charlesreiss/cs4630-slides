@@ -1,16 +1,17 @@
-### upcoming examples: assertion failure
+### handling if statements {.smaller}
 
-*  will show examples where we try to figure out how to reach function `INTERESTING`
+```
+if (a > 0) {
+    ...
+}
+```
 
-*  aren't limited to that --- but common security use is similar
-   *  checking if memory address can be out-of-bounds
-   *  checking if stack canary can be overwritten
-   *  checking if return address/function pointer can be set to be arbitrary value
-   *  ...
+<hr>
 
-*  one way: start with code with bounds check/etc.
-   *  check if bounds-check reached
-
+*  solve $a > 0$ and $a \le 0$ cases separately
+*  form tree of possible paths
+   *  (issue for later: how many???)
+*  track constraints, use when finding solutions
 
 ### example 1  {.smaller}
 
@@ -30,36 +31,33 @@ void foo(int a, int b) {
     b += 4;
   }
   /* (2) */
-  if (a + b == 5)
-    INTERESTING();
+  assert(a + b != 5);
 }
 ```
-
-* every variable represented as an <em>equation</em>
-* final step: generate solution for each path 
-   * 100% test coverage
 
 ::::
 
 :::: {.column width=650px}
 
+<!-- FIXME: copy of the text on the figure some where -->
+
 ::: {.r-stack}
 
-![](/symbolic/texfig/choosePath1.figure-1.svg){width=800px .fragment .fade-in-then-out fragment-index=1}
+![](/symbolic/texfig/choosePath1.figure-1.svg){width=800px .fragment .fade-in-then-out fragment-index=1 fig-alt="at (0), a = alpha, b = beta; alpha and beta will represent, as before, our initial arguments."}
 
-![](/symbolic/texfig/choosePath1.figure-2.svg){width=800px .fragment .fade-in-then-out fragment-index=2}
+![](/symbolic/texfig/choosePath1.figure-2.svg){width=800px .fragment .fade-in-then-out fragment-index=2 fig-alt="from (0) we branch into multiple states based on a not equal 0, forming a tree. For now, we'll just consider one path down to a leaf of the tree."}
 
-![](/symbolic/texfig/choosePath1.figure-3.svg){width=800px .fragment .fade-in-then-out fragment-index=3}
+![](/symbolic/texfig/choosePath1.figure-3.svg){width=800px .fragment .fade-in-then-out fragment-index=3 fig-alt="if a not equal 0 is false, then at (1) we have a state alpha = 0, a = alpha, b = beta"}
 
-![](/symbolic/texfig/choosePath1.figure-4.svg){width=800px .fragment .fade-in-then-out fragment-index=4}
+![](/symbolic/texfig/choosePath1.figure-4.svg){width=800px .fragment .fade-in-then-out fragment-index=4 fig-alt="from that state we further have to branch on b < 5"}
 
-![](/symbolic/texfig/choosePath1.figure-5.svg){width=800px .fragment .fade-in-then-out fragment-index=5}
+![](/symbolic/texfig/choosePath1.figure-5.svg){width=800px .fragment .fade-in-then-out fragment-index=5 fig-alt="when b < 5 is false, then at (2) we have a state alpha = 0, beta >= 5; where a = alpha, b = beta"}
 
-![](/symbolic/texfig/choosePath1.figure-6.svg){width=800px .fragment .fade-in-then-out fragment-index=6}
+![](/symbolic/texfig/choosePath1.figure-6.svg){width=800px .fragment .fade-in-then-out fragment-index=6 fig-alt="we can take that last state and figure out how to fail the assertion. We need the conditions from the state (alpha = 0, beta >= 5) plus a + b = 5, which translates to alpha + beta = 5. This has no solution."}
 
-![](/symbolic/texfig/choosePath1.figure-7.svg){width=800px .fragment .fade-in-then-out fragment-index=7}
+![](/symbolic/texfig/choosePath1.figure-7.svg){width=800px .fragment .fade-in-then-out fragment-index=7 fig-alt="we also need to consider the other cases for the if statements. So if we b < 5 was true (but a != 0 false) we have an additional state at  (2) with beta < 5 (instead of (beta >= 5) and b = beta + 4 (instead of beta). Solve those equations (alpha=0, beta<5, a+b=5 or (after substitution) alpha + beta + 4 = 5) we get for that yield a solution of alpha = 0, beta = 1."}
 
-![](/symbolic/texfig/choosePath1.figure-8.svg){width=800px .fragment .fade-in-then-out fragment-index=8}
+![](/symbolic/texfig/choosePath1.figure-8.svg){width=800px .fragment .fade-in-then-out fragment-index=8 fig-alt="doing the same for the other side, we find more solutions, for the states resulkting from assuming a != 0 is true instead of false."}
 
 :::
  

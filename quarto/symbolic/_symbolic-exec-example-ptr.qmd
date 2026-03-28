@@ -23,7 +23,7 @@ void foo(unsigned c) {
 
 ::: {.column width=69%}
 
-![](/symbolic/texfig/symbolic-exec-example-ptr.figure.svg){width=600px}
+![](/symbolic/texfig/symbolic-exec-example-ptr.figure.svg){width=550px}
 
 :::
 

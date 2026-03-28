@@ -2,7 +2,7 @@
 ### exercise  {.smaller}
 
 
-```
+```c
 void example(unsigned x, unsigned y) {
     if (x > y) return;
     x = x + y;

@@ -4,7 +4,10 @@
 ::::: {.columns}
 
 :::: {.column width=65%}
-```
+
+```c
+    assert(foo(a, b) != 10);
+...
 int foo(int a, int b) {
     // (0)
     a += b * 2;
@@ -13,31 +16,36 @@ int foo(int a, int b) {
     // (2)
     return a + b;
 }
+
 ```
 
-* can express return value of function
-  in terms of arguments
-  then can solve for possible value of arguments
-* example: if return == 10, then can enumerate: 
+* expression return value in terms of arguments 
+    * [$\alpha + 6\beta$]{.fragment fragment-index=4}
 
-   * ($\alpha,\beta$) = (10,0)
-   * ($\alpha,\beta$) = (4,1)
-   * ($\alpha,\beta$) = (-2,2)
+::: {.novertical .fragment fragment-index=5}
+
+* solve for return value = 10, example solutions:
+   * $(\alpha,\beta) = (10,0)$
+   * $(\alpha,\beta) = (4,1)$
+   * $(\alpha,\beta) = (-2,2)$
    * …
+
+:::
 
 ::::
 
 :::: {.column width=34%}
 
+
 ::: {.r-stack}
 
-![](/symbolic/texfig/choosePath0.figure-1.svg){.fragment .fade-in-then-out fragment-index=1 width=300px}
+![](/symbolic/texfig/choosePath0.figure-1.svg){.fragment .fade-in-then-out fragment-index=1 width=300px fig-alt="at (0): a = alpha, b = beta"}
 
-![](/symbolic/texfig/choosePath0.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 width=300px}
+![](/symbolic/texfig/choosePath0.figure-2.svg){.fragment .fade-in-then-out fragment-index=2 width=300px fig-alt="at (1): a = alpha + 2 beta, b = beta"}
 
-![](/symbolic/texfig/choosePath0.figure-3.svg){.fragment .fade-in-then-out fragment-index=3 width=300px}
+![](/symbolic/texfig/choosePath0.figure-3.svg){.fragment .fade-in-then-out fragment-index=3 width=300px fig-alt="at (2): a = alpha + 2 beta, b = 4 beta"}
 
-![](/symbolic/texfig/choosePath0.figure-4.svg){.fragment .fade-in-then-out fragment-index=4 width=300px}
+![](/symbolic/texfig/choosePath0.figure-4.svg){.fragment .fade-in-then-out fragment-index=4 width=300px fig-alt="after the function, the return is alpha + 2 timnes beta + 4 times beta or alpha + 6 times beta"}
 
 :::
 

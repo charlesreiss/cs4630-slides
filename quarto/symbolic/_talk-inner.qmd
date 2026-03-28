@@ -1,11 +1,40 @@
 
-# symbolic execution {visibility="hidden"}
+### symbolic execution  {.smaller}
 
-{{< include /symbolic/_symbolic-exec.qmd >}}
+* have an emulator/virtual machine
+* but represent input values as <i>symbolic variables</i>
+   * like in algebra
+
+* choose a path through the program, track <i>constraints</i>
+   * create tree of possible paths
+* then solve constraints based on variables to create real test case 
+
+{{< include /symbolic/_symbolic-exec-setup.qmd >}}
+
 
 ## examples {visibility="hidden"}
 
+### symbolic execution  {.smaller}
+
+* have an emulator/virtual machine
+* <em>but represent input values as <i>symbolic variables</i></em>
+   * like in algebra
+
+* choose a path through the program, track <i>constraints</i>
+   * create tree of possible paths
+* then solve constraints based on variables to create real test case 
+
 {{< include /symbolic/_symbolic-exec-example0.qmd >}}
+
+### symbolic execution  {.smaller}
+
+* have an emulator/virtual machine
+* but represent input values as <i>symbolic variables</i>
+   * like in algebra
+
+* <em>choose paths through the program, track <i>constraints</i></em>
+   * create tree of possible paths
+* then solve constraints based on variables to create real test case 
 
 {{< include /symbolic/_symbolic-exec-example1.qmd >}}
 
@@ -21,9 +50,16 @@
 
 ## with pointers {visibility="hidden"}
 
+### handling pointers {.smaller}
+
+*  pointers/references are a challenge
+*  simple case: keep track of what each pointer points to in each path...
+
 {{< include /symbolic/_symbolic-exec-example-ptr.qmd >}}
 
 ## exercise {visibility="hidden"}
+
+<!-- FIXME: earlier exercise? -->
 
 {{< include /symbolic/_symbolic-exec-exer.qmd >}}
 

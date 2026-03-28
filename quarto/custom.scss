@@ -339,6 +339,11 @@ table.stackdiag.stackdiag.stackdiag.stackdiag td.heapstruct {
     border-right: 1px solid black;
 }
 
+.novertical {
+    margin-top: -0.5em;
+    margin-bottom: -0.5em;
+}
+
 @media print {
     .slide-chalkboard-buttons {
         display: none ! important

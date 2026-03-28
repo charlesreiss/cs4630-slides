@@ -17,7 +17,7 @@
                                 child { node[visible on=<6->,dashedQuestion] {
                                     to fail assertion: \\
                                     $\alpha=0$, \\
-                                    $\beta \ge 5$, $a+b=5$ \\ $\implies$ $\alpha+\beta+4=5$ \\
+                                    $\beta \ge 5$, $a+b=5$ \\ $\implies$ $\alpha+\beta=5$ \\
                                     \hrulefill \\
                                     no solution
                                 } edge from parent[visible on=<6->] }
@@ -36,7 +36,7 @@
                         }
                     }
                     child { node[state,visible on=<8->] {at (1): \\ $\alpha\not=0$\\a: $\alpha+\beta - 2$, b: $\beta - 2$} edge from parent[visible on=<8->] node {true}
-                        child { node[condition,visible on=<8->] { b < 5 } edge from parent[visible on=<4->]
+                        child { node[condition,visible on=<8->] { b < 5 } edge from parent[visible on=<8->]
                             child {
                                 node[state,visible on=<8->] {
                                     at (2): \\ $\alpha\not=0\text{; }\beta-2<5$ \\ a: $\alpha+\beta-2$, b: $\beta + 2$

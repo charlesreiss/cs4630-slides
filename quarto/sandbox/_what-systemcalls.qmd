@@ -1,0 +1,18 @@
+
+### program to OS interface  {.smaller}
+
+
+* primary way application talks to OS: system calls 
+<hr class="vspace" />
+* function calls that request OS do something
+* typically: how program can interact with rest of system 
+
+   * files
+   * other programs
+   * the network
+   * devices
+   * …
+ 
+<hr class="vspace" />
+* controlling program behavior: control what system calls
+

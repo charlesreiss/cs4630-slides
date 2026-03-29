@@ -1,0 +1,28 @@
+
+### Chrome sandbox escapes (1)  {.smaller}
+
+
+* recall: renderer communicates with ‘browser kernel’
+* ‘browser kernel’ might have bugs in this interface 
+
+   * example: [ [https://project-zero.issues.chromium.org/issues/42451090](https://project-zero.issues.chromium.org/issues/42451090)]{.my-small} --- missing access check for ‘wrong’ website
+   * example: [ [https://chromereleases.googleblog.com/2021/09/stable-channel-update-for-desktop.html](https://chromereleases.googleblog.com/2021/09/stable-channel-update-for-desktop.html) [https://starlabs.sg/blog/2022/01-the-cat-escaped-from-the-chrome-sandbox/](https://starlabs.sg/blog/2022/01-the-cat-escaped-from-the-chrome-sandbox/)]{.my-small} --- use after free in API available from renderer
+
+
+
+### Chrome sandbox escapes (2)  {.smaller}
+
+
+* Chrome Windows sandbox
+* based on ‘‘restricted access tokens’’ 
+
+   * on Windows, programs have ‘access tokens’ representing their permissions
+   * can create ‘restricted’ version to limit access
+
+* [[https://googleprojectzero.blogspot.com/2020/04/you-wont-believe-what-this-one-line.html](https://googleprojectzero.blogspot.com/2020/04/you-wont-believe-what-this-one-line.html):]{.my-small}
+* problem: Windows erronously allowed starting new processes with a more unrestricted token 
+
+   * supposed to have check where the token being used came from, but incomplete
+
+* tricky to get unrestricted token --- but could duplicate another process's (oops!)
+

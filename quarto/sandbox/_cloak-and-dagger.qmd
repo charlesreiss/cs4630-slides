@@ -1,0 +1,28 @@
+
+### Cloak and Dagger 
+
+
+![](/sandbox/cloak-and-dagger){}
+
+
+### cloak and dagger permissions  {.smaller}
+
+
+* the two permissions: 
+
+   * SYSTEM_ALERT_WINDOW: <br> draw windows on top of screen <br> (at time: enabled by default)
+   * BIND_ACCESSIBILITY_SERVICE: <br> ‘‘Observe your actions’’ <br> ‘‘Retrieve window content’’
+
+* can hide window content while user interacts with it
+* … and stealthy get user to do more things
+
+
+### also, a clickjacking attack  {.smaller}
+
+
+* at the time, could draw overlay window over permissions dialog
+* … convince user to press where ‘‘OK’’ button is
+* countermeasure: permissions dialog would detect this, ignore clicks 
+<hr class="vspace" />
+* problem: wouldn't detect if overlay didn't cover enough of button
+

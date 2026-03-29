@@ -1,0 +1,45 @@
+
+### privacy and permissions  {.smaller}
+
+
+![](/sandbox/priv-and-perm){}
+ 
+
+* 2019 paper
+* many mobile application permissions related to privacy
+* getting phone ID, email address, location, …
+* but applications (especially ad libraries) find workarounds
+
+
+### permissions being insufficient  {.smaller}
+
+
+* permissions check limited API calls for getting private info,…
+* … but there were alternative, unfiltered system calls for 
+<hr class="vspace" />
+* getting MAC address (effectively phone ID) 
+
+   * Linux <code>ioctl</code> system call on socket
+
+* WiFi base station address 
+
+   * ARP cache (recently seen machines on network, to know where to send packets)
+
+* location 
+
+   * geolocation tag on recent photos
+
+
+
+### covert channels 
+
+
+* advertising libraries would store phone ID/account info in a file 
+
+   * … when they had permissions to retrieve it
+
+* and would read phone ID/account info from a file 
+
+   * … when they did not
+
+

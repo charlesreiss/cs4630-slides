@@ -1,0 +1,10 @@
+
+### UI problems with application permissions  {.smaller}
+
+
+* [do applications request sensible permissions?]{.fragment fragment-index=2 .custom .myem-only}
+* [do users pay attention to permission requests?]{.fragment fragment-index=3 .custom .myem-only}
+* [do users understand what permissions mean?]{.fragment fragment-index=3 .custom .myem-only}
+* are permissions fine-grained enough?
+* are permissions coarse-grained enough?
+

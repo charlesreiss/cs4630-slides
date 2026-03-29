@@ -1,0 +1,13 @@
+
+### the privilege separation idea 
+
+
+* can't make whole browser run as ‘‘different user’’ 
+
+   * still need to save files, read password, etc.
+
+* how about just the parts that are ‘‘dangerous’’? 
+
+   * part that runs scripts, parses HTML
+
+

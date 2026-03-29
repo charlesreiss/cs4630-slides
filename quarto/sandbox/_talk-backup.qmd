@@ -1,0 +1,24 @@
+
+## SELinux {visibility="hidden"}
+
+{{< include /sandbox/_selinux.qmd >}}
+
+# normal application confinement? {visibility="hidden"}
+
+{{< include /sandbox/_app-confine-intro.qmd >}}
+
+## applied to VLC? {visibility="hidden"}
+
+{{< include /sandbox/_app-confine-vlc-example.qmd >}}
+
+## pro/con shared services {visibility="hidden"}
+
+{{< include /sandbox/_app-confine-levels.qmd >}}
+
+## SELinux sandbox escape {visibility="hidden"}
+
+{{< include /sandbox/_selinux-escape.qmd >}}
+
+# sandboxing API: RLBox {visibility="hidden"}
+
+{{< include /sandbox/_rlbox.qmd >}}

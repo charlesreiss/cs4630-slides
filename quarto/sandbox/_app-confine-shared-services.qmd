@@ -1,0 +1,21 @@
+
+### shared services?  {.smaller}
+
+
+* often programs do operations by talking to ‘‘server’’ program 
+
+   * example: GUI management on Linux (X11 or Wayland), OS X (WindowServer)
+   * example: mixing sound from multiple applications
+   * …
+
+* whole extra set of calls to sanitize 
+
+   * when to allow ‘‘get keyboard input’’ for GUI
+   * when to allow ‘‘get microphone input’’ for sound manager
+   * making sure one isn't manipulating wrong program's windows?
+
+* also, server programs might have security problems 
+
+   * common ‘‘sandbox escape’’
+
+

@@ -1,0 +1,15 @@
+
+### which sandboxing?  {.smaller}
+
+
+* which whole-application sandboxing technique seems better for  
+
+   * security, performance, usability, handling unchanged applications
+
+* (full answer: could mix techniques + probably depends on details of app) 
+<hr class="vspace" />
+* A. chroot + system call filtering
+* B. chroot + mount and user namespaces
+* C. virtual machine dedicated to application
+* D. SELinux-like mandatory access control
+

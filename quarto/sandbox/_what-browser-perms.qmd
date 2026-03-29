@@ -1,0 +1,18 @@
+
+### things applications need? 
+
+
+* what things should browser be able to do?
+* what things should word processor be able to do?
+
+
+### things broswers need  {.smaller}
+
+
+![](/sandbox/savelinkas){}
+ 
+
+* save files
+* have your webmail password
+* …
+

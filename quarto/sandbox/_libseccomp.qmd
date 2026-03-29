@@ -1,0 +1,19 @@
+
+### libseccomp  {.smaller}
+
+
+
+* wrapper for writing BPF programs
+* specify list of rules re: system call identifiers/arguments
+* it generates BPF program with LDs, JMPs, etc.
+ 
+```
+#define CHECK(x) if (!(x)) handle_error();
+...
+scmp_filter_ctx filter = seccomp_init(SCMP_ACT_KILL_PROCESS);
+CHECK(seccomp_rule_add(filter, SCMP_ACT_ALLOW, SCMP_SYS(read), 0) == 0);
+CHECK(seccomp_rule_add(filter, SCMP_ACT_ALLOW, SCMP_SYS(write), 0) == 0);
+CHECK(seccomp_load(filter) == 0);
+
+```
+

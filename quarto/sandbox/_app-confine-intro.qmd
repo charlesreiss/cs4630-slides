@@ -1,0 +1,15 @@
+
+### application confinement  {.smaller}
+
+
+* confining whole browsers was hard 
+
+   * we trust them to do a lot of things --- e.g. write arbitrary files
+
+* but maybe we can do this for simpler applications?
+* idea 1: applications send system calls to OS  
+
+   * <em>limit syscalls</em> like we limited browser kernel commands
+   * constructing command language ‘‘in reverse’’
+
+

@@ -1,0 +1,15 @@
+
+### issues with privilege separation (1)  {.smaller}
+
+
+* ‘‘other user’’ can still do too much 
+<hr class="vspace" />
+* read unprotected files 
+
+   * most of them?
+
+* write temporary files?
+* open network connections
+* use all your memory
+* …
+

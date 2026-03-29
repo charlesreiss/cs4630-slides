@@ -1,0 +1,9 @@
+
+### Android sandbox 
+
+
+* Android --- Linux based OS for phones/tablets 
+<hr class="vspace" />
+* [https://source.android.com/security/app-sandbox](https://source.android.com/security/app-sandbox)
+* current version: SELinux + seccomp (system call filter)
+

@@ -1,0 +1,12 @@
+
+### exercise  {.smaller}
+
+
+* what scenarios does chroot make most/least sense for? 
+
+   * A. the rendering part of web browser
+   * B. a web server
+   * C. a media player
+   * D. a network time server (for other machines to set their clocks)
+
+

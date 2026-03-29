@@ -1,0 +1,13 @@
+
+### least privilege  {.smaller}
+
+
+* a typical program I run on my desktop is allowed to…
+* make network connections to anywhere
+* upload all my files to the Internet
+* delete all my files
+* record all my keystrokes
+* …
+* but it probably doesn't need to…
+* ideally: if typical program was compromised/malicious, <br> it still wouldn't be able to do most of these things
+

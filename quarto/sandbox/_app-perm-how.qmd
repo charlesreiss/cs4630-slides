@@ -1,0 +1,21 @@
+
+###  
+
+
+![](/sandbox/app-perm-how){}
+ []{.my-small} from Felt et al, ‘‘How To Ask For Permission'’ (HotSec’12)
+
+### principles  {.smaller}
+
+
+* Felt et al list ‘‘principles’’: 
+<hr class="vspace" />
+* ‘‘Conserve user attention, utilizaing it for only permissions that have severe consquences’’ 
+
+   * too many security warnings means users won't pay attention
+
+* ‘‘When possible, avoid interrupting the user's primary task with explicit security decisions’’ 
+
+   * users will dismiss warnings because they get in the way of work
+
+

@@ -1,0 +1,12 @@
+
+### issues with privilege separation (2)  {.smaller}
+
+
+* awkward to do
+* switching users requires special permissions
+* seperate user for <em>each</em> video decoder, audio decoder, web page renderer? 
+
+   * users can debug processes from same user
+
+* slowdown --- extra copying
+

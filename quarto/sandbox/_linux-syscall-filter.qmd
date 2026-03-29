@@ -1,0 +1,12 @@
+
+### Linux system call filtering API  {.smaller}
+
+
+* privilege seperation support: system call filtering
+* simple API: `prctl(SECCOMP_SET_MODE_STRICT, 0, 0)`
+<hr class="vspace" />
+* ‘‘The only system calls the calling thread is permitted to make are <code>read</code>, <code>write</code>, <code>_exit</code>, and <code>sigreturn</code>. Other system calls [kill the program].’’
+* read/write only work on <em>already open files</em> 
+<hr class="vspace" />
+* later: what if we want to be finer-grained?
+

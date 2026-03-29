@@ -1,0 +1,21 @@
+
+### another sandboxing OS: Qubes  {.smaller}
+
+
+* Qubes: heavily sandboxed OS
+* runs <em>seperate VMs</em> instead of filtering syscalls
+* UI that clearly shows what VM each window is from 
+<hr class="vspace" />
+* advantage: easier to gaurentee isolation 
+
+   * many, many more bugs in system call filtering than VMs
+
+* disadvantage: harder to share between VMs
+* disadvantage: much more runtime overhead
+
+
+### Qubes screenshot 
+
+
+![](/sandbox/qubes-desktop1){}
+

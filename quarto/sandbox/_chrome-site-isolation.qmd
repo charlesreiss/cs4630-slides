@@ -1,0 +1,13 @@
+
+### Site Isolation  {.smaller}
+
+
+* Chrome since version 67 (desktop)/77 (Mobile) has process per site
+* site $\approx$ registered domain name (example.com, example.co.uk, etc.) 
+* complicated to implement: 
+   * single web page can embed content from multiple other sites 
+      * and those other sites can embed content from yet more sites
+   * web page can call services on other websites with ‘‘permission’’ of other website
+   * clicking link may or may not requiring switching to new process
+* same separation now present in Firefox
+

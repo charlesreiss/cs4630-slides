@@ -1,0 +1,30 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+        \coordinate (middle) at ([yshift=-1cm]current page.center);
+        \begin{visibleenv}<2>
+            \node[my callout=request,anchor=center,align=center]  at (middle) {
+                needs filtering --- at least no \texttt{file:} (local file) URLs
+            };
+        \end{visibleenv}
+        \begin{visibleenv}<3>
+            \node[my callout=request,anchor=center,align=center] at (middle) {
+                can still read any website! \\
+                still sends normal cookies!
+            };
+        \end{visibleenv}
+        \begin{visibleenv}<4>
+            \node[my callout=download,anchor=center,align=center] at (middle) {
+                files go to download directory only \\
+                can't choose arbitrary filenames
+            };
+        \end{visibleenv}
+        \begin{visibleenv}<5>
+            \node[my callout=upload,anchor=center,align=center] at ([yshift=-1cm]middle) {
+                browser kernel displays file choser \\
+                only permits files selected by user
+            };
+        \end{visibleenv}
+    \end{scope}
+\end{tikzpicture}

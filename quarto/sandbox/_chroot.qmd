@@ -1,0 +1,139 @@
+
+### Unix filesystems and mounting 
+
+
+* my Linux desktop has two disks: 
+
+   * <code>/</code> --- an SSD
+   * <code>/mnt/extradisk</code> --- a hard drive
+
+* hard drive appears as <i>subdirectory</i> of SSD
+* subdirectory called a <i>mount point</i>
+
+
+### per-process root
+
+
+* on Unix: each process tracks its own root directory (/)
+* can be changed with chroot() system call 
+
+   * command-line tool to access: <code>chroot</code>
+ 
+<hr class="vspace" />
+* usage: can isolate program from other files on system 
+
+   * example: limit what public file server can access?
+
+
+
+### chroot ls  
+
+
+```
+# mkdir /tmp/example
+# cp /bin/ls /tmp/example/ls
+# chroot /tmp/example /ls
+chroot: failed to run command ‘/ls’: No such file or directory
+# cp -r /lib64 /tmp/example/lib64
+# mkdir -p /tmp/example/lib
+# cp -r /lib/x86_64-linux-gnu /tmp/example/lib/x86_64-linux-gnu
+# chroot /tmp/example /ls
+/ls: error while loading shared libraries: libpcre2-8.so.0: cannot open shared object file: No such file or directory
+# cp /usr/lib/x86_64-linux-gnu/libpcre2-8* /tmp/example/lib/x86_64-linux-gnu
+# chroot /tmp/example /ls /
+lib  lib64  ls
+# chroot /tmp/example /ls /..
+lib  lib64  ls
+# 
+
+```
+
+
+### duplicating OS? 
+
+
+* seems like we need second copy of system files 
+<hr class="vspace" />
+* modern Linux has better solution (more detail later):
+* ‘‘bind mounts’’ 
+   * make alias to part of normal filesystem in temporary directory
+
+
+### accessing outside the root (1) 
+
+
+* can still have open files outside the root
+   * chroot doesn't close them...
+* example: <code>chroot /tmp/example /ls >tmp.txt</code>  
+   * `/ls` runnning in `/tmp/example` (only open `/tmp/example`)
+   * but writes to "tmp.txt" outside chroot (opened before chroot runs)
+
+
+
+### accessing outside the root (2)  {.smaller}
+
+
+
+* can still have open directories outside the root
+
+```c
+int dir_fd = open("/tmp/other", O_PATH);
+// change root to /tmp/example, cd to /
+if (0 != chroot("/tmp/example")) handle_error();
+if (0 != chdir("/")) handle_error();
+// access /tmp/other/other.txt through old open directory
+int other_txt_fd = openat(dir_fd, "other.txt", O_RDONLY);
+read(other_txt_fd, ...);
+// access /tmp/outside.txt through old open directory
+int outside_fd = openat(dir_fd, "../outside.txt", O_RDONLY);
+read(other_fd, ...);
+```
+
+
+
+### chroot escapes  {.smaller}
+
+* chroot doesn't programs running as sysadmin user from accessing devices
+  * like storage devices ...
+* Linux psuedocode:
+
+```c
+/* mount special "sysfs" (system info) filesystem */
+mount("none", "/sys", "sysfs", 0, 0);
+
+/* retrieve device number of first SSD */
+int fd = open("/sys/class/nvme/nvme0/nvme0n1/dev", O_RDONLY);
+char device_node[10] = {0};
+read(fd, device_node, sizeof(device_node));
+close(fd);
+int major, minor;
+sscanf(device_node, "%d:%d", &major, &minor);
+
+/* create "device file for first SSD" */
+mknod("/first_ssd", 0777 | S_IFBLK, makedev(major, minor));
+
+/* access SSD data */
+fd = open("/first_ssd", O_RDWR);
+read(fd, ...);
+```
+
+### chroot in practice
+
+* chroot often _combined_ with...
+  * separate users and/or
+  * system call filtering and/or
+  * namespaces (Linux feature we'll discuss later) and/or
+  * other namespace-like OS features
+
+### chroot impracticality  {.smaller}
+
+
+* some things make chroot impractical in general: 
+<hr class="vspace" />
+* seems like one needs extra copies of most of the system
+* hard to communicate between separate roots
+* requires administrator permissions to configure 
+
+   * dangerous to let normal users configure b/c they could confuse priviliged (set-user-ID) programs like <code>sudo</code>
+
+

@@ -1,0 +1,106 @@
+
+### Linux system call: open  {.smaller}
+
+
+* `open("foo.txt", O_RDONLY);`
+ 
+
+* parameters: 
+
+   * system call number: 2 (‘‘open’’)
+   * argument 1: 0x7fffe983 (address of string ‘‘foo.txt’’)
+   * argument 2: 0 (value of ‘‘<code>O_RDONLY</code>’’)
+
+* very problematic to filter using BPF interface 
+<hr class="vspace" />
+* can deal with using ‘ptrace’ --- Linux debugging interface 
+
+   * BPF can trigger something like a debugger breakpoint
+   * breakpoint wakes up monitor program (attached like debugger)
+   * ‘monitor' program can perform system call on program’s behalf
+
+
+
+### lots of ways to open (1)
+
+
+
+* let's say we want to allow/disallow (but not ‘normal’ files):
+
+```c
+open("/dev/keyboard", O_RDONLY);
+```
+ 
+
+* problem 1: some other ways of doing that?
+ 
+```c
+chdir("/dev");
+open("keyboard", O_RDONLY);
+
+open("../../../../../../dev/keyboard", O_RDONLY);
+
+symlink("/dev", "/tmp/foo");
+open("/tmp/foo/keyboard", O_RDONLY);
+
+```
+
+
+### lots of ways to open (2)
+
+
+
+* let's say we want to allow/disallow:
+
+```c 
+open("/dev/keyboard", O_RDONLY);
+```
+ 
+
+* problem 2: filter language doesn't allow reading pointers 
+
+   * string is passed via pointer
+
+* problem 3: string can be changed from another core 
+
+   * between when filter runs and when syscall runs
+
+
+
+### lots of ways to open (3)
+
+
+
+* let's say we want to disallow:
+
+```c
+open("/dev/keyboard", O_RDONLY);
+```
+
+
+* problem 4: several other syscalls (that might be used innocently) 
+
+   * openat, open_by_handle_at
+   * would need to write additional filter rules
+   * … or break programs that aren't trying to violate rule
+
+
+
+### Linux system calls  {.smaller .tightul}
+
+* x86-64 linux: <em>313 system calls</em>
+* opening a file: 
+   * open (number 2)
+   * openat (number 257)
+   * open_by_handle_at (number 304)
+* coordinating between threads (for using multiple cores): 
+   * rt_sigaction (number 13)
+   * rt_sigprocmask (number 14)
+   * rt_sigreturn (number 15)
+   * tkill (number 200)
+   * futex (number 202)
+   * set_robust_list (number 273)
+   * get_robust_list (number 274)
+   * more?
+
+

@@ -1,0 +1,83 @@
+
+### Chrome architecture 
+
+
+![](/sandbox/chrome-arch){}
+
+
+### talking to the sandbox 
+
+
+* browser kernel sends commands to sandbox
+* sandbox sends commands to browser kernel
+* idea: commands only allow necessary things
+
+
+### original Chrome sandbox interface  {.smaller}
+
+
+
+* sandbox to browser ‘‘kernel’’ 
+   * show this image on screen 
+      * (using shared memory for speed)
+   * [make request for this URL]{.fragment fragment-index=2 .custom .myem-only}
+   * [download files to local FS]{.fragment fragment-index=4 .custom .myem-only}
+   * [upload user requested files]{.fragment fragment-index=5 .custom .myem-only}
+
+* browser ‘‘kernel’’ to sandbox 
+   * send user input
+
+::: {.myoverbox .fragment fragment-index=2 .fade-in-then-out .vlow}
+
+requests need filtering:
+
+*  limit requests for file: (local file) URLs
+
+
+problem:
+
+*  one website accessing other website's (logged-in-only) stuff?
+
+:::
+
+
+::: {.myoverbox .fragment fragment-index=4 .fade-in-then-out .vlow}
+
+files go to Download directory only <br />
+can't choose arbitary filenames
+
+:::
+
+::: {.myoverbox .fragment fragment-index=5 .fade-in-then-out .vlow}
+
+browser "kernel" displays file chooser<br />
+only permits files selected by user
+
+:::
+
+<!--
+        \begin{visibleenv}<2>
+            \node[my callout=request,anchor=center,align=center]  at (middle) {
+                needs filtering --- at least no \texttt{file:} (local file) URLs
+            };
+        \end{visibleenv}
+        \begin{visibleenv}<3>
+            \node[my callout=request,anchor=center,align=center] at (middle) {
+                can still read any website! \\
+                still sends normal cookies!
+            };
+        \end{visibleenv}
+        \begin{visibleenv}<4>
+            \node[my callout=download,anchor=center,align=center] at (middle) {
+                files go to download directory only \\
+                can't choose arbitrary filenames
+            };
+        \end{visibleenv}
+        \begin{visibleenv}<5>
+            \node[my callout=upload,anchor=center,align=center] at ([yshift=-1cm]middle) {
+                browser kernel displays file choser \\
+                only permits files selected by user
+            };
+        \end{visibleenv}
+-->
+

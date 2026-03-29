@@ -1,0 +1,51 @@
+
+### simple privilege separation  {.smaller}
+
+
+* simple example: want to show videos
+* video decoding library is tens of thousands of lines of code 
+
+   * often buggy, includes hard-to-check hand-written assembly
+
+* what does video decoding library do? 
+
+   * read video file as input
+   * output images as output
+
+
+
+### simple privilege seperation 
+
+
+* setup: create new user
+* start video decoder as new user
+* communicate via ‘‘pipes’’ 
+
+   * like terminal to be used by program
+
+
+
+### simple privilege seperation  {.smaller}
+
+
+```c
+/* dangerous video decoder to isolate */
+int main() {
+    /* switch to right user */
+    SetUserTo("user-without-privileges"));
+    while (fread(videoData, sizeof(videoData), 1, stdin) > 0) {
+        doDangerousVideoDecoding(videoData, imageData);
+        fwrite(imageData, sizeof(imageData), 1, stdout);
+    }
+}
+
+/* code that uses it */
+    FILE *fh = RunProgramAndGetFileHandle("./video-decoder");
+    for (;;) {
+        fwrite(getNextVideoData(), SIZE, 1, fh);
+        fread(image, sizeof(image), 1, fh);
+        displayImage(image);
+    }
+
+```
+

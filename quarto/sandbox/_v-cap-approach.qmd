@@ -1,0 +1,38 @@
+
+### changing what programs can name 
+
+
+* seccomp, separate users: program tries to access X, checks if allowed 
+<hr class="vspace" />
+* alternate idea: changing what Xs program can name
+
+
+### aside: capabilities/ambient authority (1)  {.smaller}
+
+
+* user permissions --- authority tied to each running program
+* ‘‘access control lists’’ for resources
+* sometimes called ‘‘ambient authority’’ 
+<hr class="vspace" />
+* alternate model: ‘‘capabilities’’
+* running program has list of things it can access/how
+
+
+### aside: capabilities/ambient authority (2)  {.smaller}
+
+
+* capabilities = program has list of things it can access
+* most common thing with design: open files 
+<hr class="vspace" />
+* used as basis of some operating system designs 
+
+   * not desktop OSes, but…
+   * Unix/Linux has many things with ‘flavor’ of capabilities
+
+* in ‘‘fully’’ capability-based OSes also… 
+
+   * capabilities for accessing non-regular-file resources (processes, directories, network ports, …)
+   * way of transferring capabilities between programs (instead of, e.g., filenames/PIDs/etc.)
+   * OS doesn't track user IDs/etc. (though maybe system services do)
+
+

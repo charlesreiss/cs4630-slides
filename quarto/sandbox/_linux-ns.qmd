@@ -1,0 +1,149 @@
+
+### Linux namespaces (1)  {.smaller}
+
+
+* Linux: alternate sandboxing features
+* "namespaces" for other resources
+* chroot: each process has own idea of root directory 
+   * change to OS: look up root directory in process, not global variable
+* can apply this to other resources: 
+   * what filesystems (disks) are available
+   * what network devices are available
+   * what user identifier numbers are
+   * …
+
+### Linux namespaces (2)  {.smaller}
+
+
+* user namespace: 
+<hr class="vspace" />
+* can run programs with new view of users: 
+<hr class="vspace" />
+* inside namespace: running as root
+* outside namespace: root translated to innocent user ID
+* allows running programs that expect different users 
+   * … without changes, but without giving special permissions
+<hr class="vspace" />
+* mechanism: reassign user ID numbers in kernel 
+   * figuring out what user ID means --- always apply current process mapping
+
+
+### aside: Linux clone(), unshare() syscalls  {.smaller}
+
+
+
+* Linux clone system call: start new process (or thread)
+  * (fork(), pthread_create() [covered in CSO2] essentially implemented using this)
+* flags to specify environment of new process
+* these flags can include ‘‘make a new namespace of a type’’
+  * `int id = clone(start_function, ..., CLONE_NEWUSER | other-flags);`
+ 
+
+* above option: new user namespace for new process 
+<hr class="vspace" />
+* alternative: for changing current process's namespace:
+  * `unshare(CLONE_NEWUSER);`
+
+
+### user namespaces API  {.smaller}
+
+
+* Linux: users identified by numerical <i>user IDs</i> (UIDs) 
+<hr class="vspace" />
+* with user namespaces:
+* control file <code>/proc/PROCESS-ID/UID_MAP</code> contains lines like: 
+
+   * <code>0 1000 2</code> --- UID 0--1 maps to UID 1000--1001
+   * <code>1000 2000 100</code> --- UID 1000-1100 maps to UID 2000--2100
+
+* can write to that file to reconfigure (if enough permissions)
+
+
+### Linux namesapces (3)  {.smaller}
+
+
+* mount namespaces: 
+
+   * Unix: mounting disk = making the contents of the disk available as directories+files
+ 
+<hr class="vspace" />
+* different idea of what filesystems are available
+* can be setup with <i>bind mounts</i> to ‘‘real FS’’ 
+
+   * but otherwise: no access to directories outside mount namespace
+   * normally requires root --- but special case with user namespaces
+
+
+
+### mount namespaces API  {.smaller}
+
+from command line: 
+```
+    # runs shell (/bin/sh) in new mount namesapce
+shell1$ unshare --mount /bin/sh
+
+    # setup directories in /tmp/workdir and make them aliases of things on normal FS 
+    # these aliases will only exist for processes in mount namespace
+shell2$ mkdir -p /tmp/workdir/bin
+shell2$ mkdir -p /tmp/workdir/lib
+shell2$ mkdir -p /tmp/workdir/usr
+shell2$ mkdir -p /tmp/workdir/current
+shell2$ mount -o bind,ro /bin /tmp/workdir/bin
+shell2$ mount -o bind,ro /lib /tmp/workdir/lib
+shell2$ mount -o bind,ro /usr /tmp/workdir/usr
+shell2$ mount -o bind /home/someuser /tmp/workdir/current
+
+    # start new shell with the root directory being /tmp/workdir
+shell2$ chroot /tmp/workdir /bin/sh
+shell3$ cd /
+shell3$ /bin/ls
+bin     current     lib     usr
+
+```
+
+
+### Linux namespaces (3)  {.smaller}
+
+
+* user namespace and mount namespace together: 
+<hr class="vspace" />
+* run program in new user namespace
+* map regular root (in namespace) to regular user 
+
+   * ‘‘opts out’’ of programs like sudo
+
+* move to new mount namespace
+* setup bind mounts + chroot 
+
+   * special case: allowed because root in user namespce
+   * can't get ‘‘real’’ root (administrator) privileges ever
+
+* run program with subset of available files
+
+
+### Linux namespaces (4)  {.smaller}
+
+
+* other resources with namespaces
+* network --- common usage: virtual network device for set processes 
+
+   * different ‘‘what is my IP address?’’ answer for different processes
+
+* hostname (‘‘UTS’’)
+* process identifiers
+* control groups (resource limits for memory, CPU usage, disk I/O, etc.)
+
+
+### Linux control groups  {.smaller}
+
+
+* control groups --- tied to namespaces
+* primarily: CPU/memory/IO performance restrictions 
+
+   * primarily intended for ‘friendly sharing’ (containers, etc.)
+   * important for preventing denial-of-service/etc.
+   * not as big a security conern as file/user/etc. access
+
+* also mechanism for adding IO device restrictions
+* also mechanism to start/stop a bunch of processes together
+

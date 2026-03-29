@@ -1,0 +1,42 @@
+
+### multi-user OSs
+
+<!-- \lstset{
+    language={},style=small,
+    moredelim={**[is][\color{red!70!black}]{~in~}{~end~}},
+} -->
+ 
+<pre><code>cr4bd@labunix01:~$ <span style="color: red">cp myprogram.exe /bin/ls</span>
+cp: cannot create regular file ‘/bin/ls’: Permission denied
+</code></pre>
+ 
+
+* programs have <em>limited privileges</em>
+* OS tracks ‘‘user’’ of running every program
+* result: malware I installed shouldn't be able to effect other users
+* idea 1: reuse this support for web browsers 
+
+   * webpage should run as ‘‘different user’’
+   * malware should only affect web browser?
+
+
+
+### permission enforcement  {.smaller}
+
+
+```c
+struct Process {
+    int user_id;
+    ...
+};
+int handle_open_system_call(char *filename, ...) {
+    Process* currentProcess = GetCurrentProcess();
+    File* file = GetFileByFilename(filename);
+    if (!file->UserCanAccess(currentProcess->user_id)) {
+        return ERROR_PERMISSION_DENIED;
+    }
+    ...
+}
+
+```
+

@@ -1,0 +1,12 @@
+
+### browsers and exploit mitigations  {.smaller}
+
+
+* modern browsers employ many of the mitigations we talked about 
+
+   * full ASLR
+   * write XOR execute (with exceptions for runtime-compiled code)
+   * stack canaries
+
+* also some <em>other mitigations</em>
+

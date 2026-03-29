@@ -1,0 +1,114 @@
+
+### strace hello_world (1)  {.smaller}
+
+
+```c
+#include <stdio.h>
+int main() { puts("Hello, World!"); }
+```
+ <hr />
+when statically linked: 
+```
+execve("./hello_world", ["./hello_world"], 0x7ffeb4127f70 /* 28 vars */) = 0
+brk(NULL)                               = 0x22f8000
+brk(0x22f91c0)                          = 0x22f91c0
+arch_prctl(ARCH_SET_FS, 0x22f8880)      = 0
+uname({sysname="Linux", nodename="reiss-t3620", ...}) = 0
+readlink("/proc/self/exe", "/u/cr4bd/spring2023/cs3130/slide"..., 4096) = 57
+brk(0x231a1c0)                          = 0x231a1c0
+brk(0x231b000)                          = 0x231b000
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+fstat(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 4), ...}) = 0
+write(1, "Hello, World!\n", 14)         = 14
+exit_group(0)                           = ?
++++ exited with 0 +++
+```
+
+
+### aside: what are those syscalls?  {.smaller}
+
+
+* execve: run program
+* brk: allocate heap space
+* arch_prctl(ARCH_SET_FS, ...): thread local storage pointer 
+
+   * may make more sense when we cover concurrency/parallelism later
+
+* uname: get system information
+* readlink of /proc/self/exe: get name of this program
+* access: can we access this file [in this case, a config file]?
+* fstat: get information about open file
+* exit_group: variant of exit
+
+
+### only after starting? (1) 
+
+
+* okay, but that's only after starting up, right…?
+* surely simpler if we limit system calls after startup
+* yes, but…
+
+
+### only after starting? (2)  {.smaller}
+
+
+```c
+#include <stdio.h>
+int main() {
+    FILE *fh = fopen("output.txt", "w");
+    fprintf(fh, "example");
+    fclose(fh);
+}
+
+```
+<hr>
+```
+$ strace ...
+... [startup stuff, not shown] ...
+openat(AT_FDCWD, "output.txt", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 3
+newfstatat(3, "", {st_mode=S_IFREG|0664, st_size=0, ...}, AT_EMPTY_PATH) = 0
+write(3, "example", 7)                  = 7
+close(3)                                = 0
+
+```
+
+
+### only after starting? (2)  {.smaller}
+
+
+```c
+#include <curl/curl.h>
+int main() {
+    CURL *handle = curl_easy_init();
+    curl_easy_setopt(handle, CURLOPT_URL, "https://www.cs.virginia.edu/~cr4bd/test.txt");
+    curl_easy_perform(handle);
+    ...
+}
+
+```
+<hr>
+```
+$ strace ...
+... [startup stuff, not shown] ...
+futex(0x73f0bd640ba4, FUTEX_WAKE_PRIVATE, 2147483647) = 0                                               
+...
+openat(AT_FDCWD, "/usr/lib/ssl/openssl.cnf", O_RDONLY) = 3
+...
+sysinfo({...}) = 0
+...
+socket(AF_INET6, SOCK_DGRAM, IPPROTO_IP) = 3
+close(3)                                = 0                                                             
+socketpair(AF_UNIX, SOCK_STREAM, 0, [3, 4]) = 0                                                         
+fcntl(3, F_GETFL)                       = 0x2 (flags O_RDWR)                                            
+fcntl(3, F_SETFL, O_RDWR|O_NONBLOCK)    = 0                                                             
+...
+rt_sigaction(SIGPIPE, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0                        
+...
+socket(AF_INET, SOCK_STREAM, IPPROTO_TCP) = 5
+setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = 0
+...
+getrandom("\xd6\x8c\xc3\x42\x07\x92"..., 48, 0) = 48 
+...
+
+```
+

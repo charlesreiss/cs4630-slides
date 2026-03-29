@@ -1,0 +1,34 @@
+
+### sandboxing without OS support  {.smaller}
+
+
+* so far: relying on OS features for sandboxing
+* good reasons: 
+
+   * primarily want to filter system calls
+   * hardware-assisted, strong protection
+ 
+<hr class="vspace" />
+* but problems with relying on OS: 
+
+   * sending information in/out of sandbox relatively slow
+   * requires heavily OS-specific code
+
+
+
+### sandboxing without OS ideas  {.smaller}
+
+
+* ‘dynamic’ language virtual machine, like Java VM, .Net CLR 
+
+   * hard to use with code intended to compile to native machine code
+ 
+<hr class="vspace" />
+* virtual machine targetted for C/C++-like code, like WebAssembly 
+<hr class="vspace" />
+* assembly-to-assembly conversion 
+
+   * example: Wahbe, Lucco, Anderson, and Graham, ‘‘Efficient Software-Based Fault Isolation’’ (1993)
+   * example: Ford and Cox, ‘‘Vx32: Lightweight User-level Sandboxing on the x86’’ (2008)
+
+

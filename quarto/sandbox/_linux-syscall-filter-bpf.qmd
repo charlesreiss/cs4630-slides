@@ -1,0 +1,59 @@
+
+### BPF filter example (1)  {.smaller}
+
+
+
+* showing syntax for producing machine code from C macros / non-extended BPF
+ 
+```
+// memory[offset of "nr"] --> accumulator
+BPF_STMT(BPF_LD | BPF_W | BPF_ABS, (offsetof(struct seccomp_data, nr))),
+// if (accumulator == SYS_write) PC += 1
+BPF_STMT(BPF_JMP | BPF_JEQ, BPF_K, SYS_write, 1, 0),
+// return "kill process"
+BPF_STMT(BPF_RET | BPF_K, SECCOMP_RET_KILL_PROCESS),
+// return "allow"
+BPF_STMT(BPF_RET | BPF_K, SECCOMP_RET_ALLOW),
+
+```
+
+
+### BPF filter example (2)  {.smaller}
+
+
+```
+// memory[offset of "nr"] --> accumulator
+BPF_STMT(BPF_LD | BPF_W | BPF_ABS, (offsetof(struct seccomp_data, nr))),
+// if (accumulator == SYS_write) PC += 1 else PC += 0
+BPF_STMT(BPF_JMP | BPF_JEQ, BPF_K, SYS_write, 1, 0),
+// return "kill process"
+BPF_STMT(BPF_RET | BPF_K, SECCOMP_RET_KILL_PROCESS),
+// memory[offset of args[0]] --> accumulator
+BPF_STMT(BPF_LD | BPF_W | BPF_ABS, (offsetof(struct seccomp_data, args[0]))),
+// if (accumulator == 2) PC += 1 else PC += 0
+BPF_STMT(BPF_JMP | BPF_JEQ, BPF_K, 2, 1, 0),
+BPF_STMT(BPF_RET | BPF_K, SECCOMP_RET_KILL_PROCESS),
+BPF_STMT(BPF_RET | BPF_K, SECCOMP_RET_ALLOW),
+
+```
+
+
+### other BPF operations 
+
+
+* arithmetic (add, or, xor, …)
+* in eBPF (extended BPF): 10 additional registers 
+
+   * not just accumulator
+
+
+
+### running BPF fast/safely 
+
+
+* idea: can verify in advance that…
+* there are no loops
+* there are no out-of-bounds accesses 
+<hr class="vspace" />
+* convert to assembly function to run very fast
+

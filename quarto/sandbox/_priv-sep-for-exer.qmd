@@ -1,0 +1,9 @@
+
+### privilege separation for  {.smaller}
+
+
+* let's say we wanted to add sandboxing/privilege separation to an (standalone) mail program 
+<hr class="vspace" />
+* exercise 1: where would be concerned about security problems?
+* exercise 2: propose a way of dividing up the program
+

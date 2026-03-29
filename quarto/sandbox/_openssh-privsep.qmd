@@ -1,0 +1,51 @@
+
+### OpenSSH privilege seperation  {.smaller}
+
+* OpenSSH uses privilege seperation for its SSH server
+  * probably first major piece of software to use this design?
+* what you log into on portal
+<hr class="vspace" />
+* separate network processing code from authentication code
+* seperate process per connection --- users don't share 
+<hr class="vspace" />
+* developed before system call filtering was widely available 
+
+   * uses separate user + chroot (we'll talk later) to isolate
+
+
+
+### OpenSSH privsep protocol  {.smaller}
+
+
+* sandboxed process tells ‘‘monitor’’ to: 
+<hr class="vspace" />
+* perform <em>cryptographic operations</em> 
+
+   * long-term keys never in sandboxed process
+   * commands to ask for cryptographic messages they need
+
+* ask to switch to user --- if given user password, etc. 
+
+   * <em>monitor process verifies</em> login information
+
+* after authentication: new process running as logged-in user  
+
+   * (normally) no issues with special privileges
+
+
+
+### privilege seperation overall  {.smaller}
+
+
+* large application changes 
+
+   * OpenSSH: 3k lines of code for communication/etc. added
+   * OpenSSH: 2% of existing code (950 of 44k lines) changed
+   * (but most changes simple)
+
+* lots of application knowledge 
+
+   * what is a meaningful separation of ‘privileged’ and ‘unprivileged’?
+
+* better application design anyways?
+

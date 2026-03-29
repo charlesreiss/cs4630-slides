@@ -1,0 +1,15 @@
+
+### containers  {.smaller}
+
+
+* Linux's seccomp + namespaces + SELinux commonly used to implement containers 
+
+   * (plus cgroups (control groups) for performance isolation)
+ 
+<hr class="vspace" />
+* usual goal: looks like virtual machine, but much lower overhead
+* examples: Docker, Kubernetes 
+
+   * (note: these may also support other ways of creating ‘lightweight VMs’)
+
+

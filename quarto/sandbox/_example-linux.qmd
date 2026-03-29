@@ -1,0 +1,22 @@
+
+### Linux sandboxing programs, generally  {.smaller}
+
+
+* docker, lxc, lxd, containerd 
+
+   * use namespaces to create ‘‘container’’ with own copy of OS libraries, services
+   * but containers share OS ‘kernel’ and potentially files with host unlike VM
+   * (might also have options to use other ways of getting this functionality --- VM's, etc.)
+
+* bubblewrap, firejail 
+
+   * use Linux namespace tools + ‘‘bind mounts’’ to give programs only subset of files, etc.
+   * firejail has option of running a ‘‘proxy’’ windowing system server
+
+* SELinux's sandbox 
+
+   * uses Security Enhanced Linux's mandatory access controls instead of Linux namespaces
+   * different operating system mechanism than namespaces
+   * includes option for ‘‘proxy’’ for windoing system server
+
+

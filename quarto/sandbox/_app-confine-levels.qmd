@@ -1,0 +1,13 @@
+
+### exercise: app confinement options  {.smaller}
+
+
+* sandboxed applications want to access display server
+* which option seems best for security/performance? 
+
+   * A. proxy for protocol display server supports natively that filters display calls
+   * B. custom protocol that sends bitmaps + receives inputs, plus copy of display server runs with application
+   * C. divide application into UI and non-UI part, sandbox just the non-UI part
+   * D. have application take over screen when running, give its own display server
+
+

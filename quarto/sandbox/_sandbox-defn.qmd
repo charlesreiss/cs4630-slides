@@ -1,0 +1,13 @@
+
+### ‘‘sandboxing’’  {.smaller}
+
+
+* result of filtering operations called a ‘‘sandbox’’
+* idea: attacker can play in sandbox as much as they want
+* can't do anything ‘‘harmful’’ 
+<hr class="vspace" />
+* other possible implementations: 
+
+   * e.g. virtual machine
+
+

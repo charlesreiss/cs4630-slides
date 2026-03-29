@@ -1,0 +1,35 @@
+
+### right permissions?  {.smaller}
+
+
+* Felt, Chin, Hanna, Song and Wagner, ‘‘Android Permissions Demystified’’ (CCS 2011)
+* used static analysis to compare requested permissions to what applications did 
+
+   * at the time: permissions requested at installation
+
+* sample of 900 applications
+* estimate approx 200 over-privileged 
+
+   * (estimate because using false positive rate from manual checking)
+
+
+
+### why extra permissions?  {.smaller}
+
+
+* selected from Felt et al's analysis:
+* developers confused similar permissions 
+
+   * <code>ACCESS_NETWORK_STATE</code> versus <code>ACCESS_WIFI_STATE</code>
+
+* developers thought permissions were needed for delegated tasks 
+
+   * <code>CALL_PHONE</code> not needed to invoke phone app
+   * <code>INSTALL_APPLICATION</code> not needed to open app store install dialog
+
+* developers thought permissions needed for all methods of class 
+
+   * <code>WRITE_SETTINGS</code> when using (no-permission) read-settings operations
+
+* copy-and-paste
+

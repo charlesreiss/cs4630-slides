@@ -1,0 +1,17 @@
+
+### Linux system call filtering: detailed  {.smaller}
+
+
+* Linux supports more fine-grained system call filtering
+* using BPF (Berkeley Packet Filter) programming language 
+
+   * compiled in the kernel to assembly to check system calls
+ 
+<hr class="vspace" />
+* can check system call argument values, but…  
+
+   * problems with pointer arguments
+   * too many system calls
+
+
+

@@ -1,0 +1,47 @@
+
+### RLBox  {.smaller}
+
+
+* saw interfaces for using sandboxes from user perspective?
+* what about for privilege separation? 
+
+   * recall: like Chrome separate renderer process idea
+   * need to navigate OS sandboxing API + create interface for sandboxed part?
+ 
+<hr class="vspace" />
+* some reusable tools have appeared for this (but no clear winner)
+* one example: RLBox (published in Usenix Security 2020) 
+
+   * Shravan Narayan and Craig Disselkoen, UC San Diego; Tal Garfinkel, Stanford University; Nathan Froyd and Eric Rahm, Mozilla; Sorin Lerner, UC San Diego; Hovav Shacham, UT Austin; Deian Stefan, UC San Diego
+
+
+
+### RLBox usage  {.smaller}
+
+
+
+* part of example from author's presentation: 
+
+   * goal: invoke JPEG parser in sandbox
+
+ 
+```
+autosandbox = rlbox::create_sandbox<wasm>();
+tainted<jpeg_decompress_struct*> p_jpeg_img = sandbox.malloc_in_sandbox<jpeg_decompress_struct>();
+tainted<jpeg_source_mgr*> p_jpeg_input_source_mgr = sandbox.malloc_in_sandbox<jpeg_source_mgr>();
+sandbox.invoke(jpeg_create_decompress, p_jpeg_img);
+p_jpeg_img->src = p_jpeg_input_source_mgr;
+p_jpeg_img->src->fill_input_buffer = ...;
+sandbox.invoke(jpeg_read_header,p_jpeg_img/*...*/);
+
+```
+ 
+
+* tool handles running ‘jpeg_create_decompress’, ‘jpeg_read_header’ in sandbox
+* values shared with sandbox marked as ‘‘tainted’’ 
+
+   * C++ (template) class
+
+* this example: using WebAssembly-based sandbox
+* used in firefox
+

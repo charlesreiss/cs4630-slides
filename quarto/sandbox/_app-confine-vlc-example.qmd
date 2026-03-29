@@ -1,0 +1,17 @@
+
+### filtering system calls?  {.smaller}
+
+
+* example: video player VLC playing a local file on my laptop
+* uses <em>73 unique kinds of system calls</em>
+* opens many files that <em>are not the video file</em> 
+
+   * libraries
+   * fonts
+   * configuration files
+   * translations of messages
+ 
+<hr class="vspace" />
+* can I limit the files my video player can read?
+* how do I come up with a useful filter?
+

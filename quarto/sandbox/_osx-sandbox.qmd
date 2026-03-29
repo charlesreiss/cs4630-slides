@@ -1,0 +1,19 @@
+
+### OS X sandboxing  {.smaller}
+
+
+* OS X (tries to) implement system call filtering
+* main challenge: what about files? 
+
+   * user can open a file anywhere --- we expect that to work
+
+* OS X solution: OS service displays file-open dialog 
+
+   * OS knows user really choose a file
+
+* application can ask to remember file was chosen previously
+* not chosen/remembered --- can't access 
+
+   * requires changes to how applications open files
+
+

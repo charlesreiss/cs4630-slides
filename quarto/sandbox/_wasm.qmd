@@ -1,0 +1,74 @@
+
+### WebAssembly  {.smaller}
+
+
+* WebAssembly: language virtual machine specification intended… 
+
+   * similar idea to Java VM
+ 
+<hr class="vspace" />
+* to be compiled to from C/C++ 
+
+   * support by Clang/LLVM
+
+* to be easy to just-in-time compile to native machine code
+* to be run in web browsers (fast web apps)
+
+
+### WebAssembly memory management  {.smaller}
+
+
+* WebAssembly ‘modules’ have a single ‘‘linear memory’’
+* starts at index 0, goes to some maximum
+* load/store instructions take index into current memory 
+<hr class="vspace" />
+* observation 1: close to memory model ‘‘normal’’ C/C++ code expects 
+<hr class="vspace" />
+* observation 2: only goal is to prevent sandbox (WebAssembly) code from interfering with outside code
+* … so no need to check array bound or similar 
+<hr class="vspace" />
+* observation 3: no need to worry about garbage collection
+
+
+### WebAssembly validation  {.smaller}
+
+
+* WebAssembly virtual machine code designed to be <i>validated</i> before running 
+<hr class="vspace" />
+* allows for efficient interpreters or conversion to assembly 
+
+   * validation ensures that you can safely skip certain type checks, etc.
+
+* language specification very explicit about what needs to be checked at runtime
+
+
+### example WebAssembly validation  {.smaller}
+
+
+* check that instructions have right number of operands available 
+
+   * WebAssembly instructions use stack (compile <code>2 + 2</code> into <code>2 2 +</code>)
+
+* check operands that can be checked (constants)
+* check the calls go to only functions listed in table 
+
+   * should make it easier to do just-in-time compilation to machine code?
+
+* check the branches go to only locations listed in table, and only within one function 
+
+   * should make it easier to do just-in-time compilation to machine code?
+
+
+
+### example WebAssembly instruction specification 
+
+
+![](/sandbox/wasm-return-spec){}
+
+
+### WebAssembly as sandboxing 
+
+
+* can compile existing C/C++ library using WebAssembly…
+* then call using language virtual machine
+

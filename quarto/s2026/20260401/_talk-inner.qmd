@@ -1,0 +1,76 @@
+### last time
+
+*  integer overflow/underflow bugs
+   *  issues with "wrap around"
+   *  attacker can choose `big` so `(int)(x * big)` is small
+   *  compilers stripping some integer overflow checks
+*  randomized testing idea
+   *  security bugs $\sim$ crashes
+   *  (or we can make them usually crashes)
+   *  try lots of things, look for crash
+
+### assignment Q+A
+
+###
+
+## what can we test {visibility="hidden"}
+
+{{< include /testing/_fuzz-test-what-properties.qmd >}}
+
+## other applications {visibility="hidden"}
+
+{{< include /testing/_other-apps.qmd >}}
+
+## some practical issues {visibility="hidden"}
+
+{{< include /testing/_fuzzing-practical.qmd >}}
+
+## lots of bad tests?{visibility="hidden"}
+
+{{< include /testing/_lots-of-bad-tests.qmd >}}
+
+## example: Yang et al{visibility="hidden"}
+
+{{< include /testing/_example-csmith.qmd >}}
+
+## what makes good tests? {visibility="hidden"}
+
+{{< include /testing/_brainstorm-what-tests.qmd >}}
+
+# metric: coverage {visibility="hidden"}
+
+{{< include /testing/_max-coveragep.qmd >}}
+
+# coverage-guided fuzzing {visibility="hidden"}
+
+{{< include /testing/_coverage-fuzzing.qmd >}}
+
+## examples {visibility="hidden"}
+
+{{< include /testing/_coverage-fuzzing-example.qmd >}}
+
+## exercise {visibility="hidden"}
+
+{{< include /testing/_coverage-fuzzing-exer.qmd >}}
+
+## AFL as running example {visibility="hidden"}
+
+{{< include /testing/_afl.qmd >}}
+
+## automatic test case simplification {visibility="hidden"}
+
+{{< include /testing/_autosimplify.qmd >}}
+
+## AFL: test template support {visibility="hidden"}
+
+{{< include /testing/_afl-test-templates.qmd >}}
+
+## cmplog
+
+{{< include /testing/_cmplog.qmd >}}
+
+## whiter boxes {visibility="hidden"}
+
+{{< include /testing/_whiter-box-preview.qmd >}}
+
+{{< include /symbolic/_talk-inner.qmd >}}

@@ -30,8 +30,8 @@ item *load_items(int len) {
 <table>
 <tr><th scope="row">`len`</th><td>`0x4000 0001`</td></tr>
 <tr><th scope="row">`sizeof(item)`</th><td>`0x10`</td></tr>
-<tr><th scope="row">`total_size`</th><td><code><em>0x4</em> 0000 0000</code></td></tr>
-<tr><th scope="row">`total_size`</th><td><code>0x0000 0000</code></td></tr>
+<tr><th scope="row">`total_size`</th><td><code><em>0x4</em> 0000 0010</code></td></tr>
+<tr><th scope="row">`total_size`</th><td><code>0x0000 0010</code></td></tr>
 </table>
 
 ::::

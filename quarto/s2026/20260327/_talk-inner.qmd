@@ -5,6 +5,7 @@
 *  buffer overflow into adjacent objects
    *  sudo example: try many variations, see what crashes look like
    *  discover function pointer overwrite, search for arc injection targets
+   *  trick of only changing low-order bits of pointer to evade ASLR
 
 # heap smashing {visibility="hidden"}
 
@@ -31,3 +32,7 @@
 {{< include /overflow-heap/_double-free-exer.qmd >}}
 
 {{< include /overflow-int/_talk-inner.qmd >}}
+
+### finding exploits
+
+{{< include /testing/_talk-inner.qmd >}}

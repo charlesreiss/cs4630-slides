@@ -1,0 +1,38 @@
+
+### why binary translation?: POPF  {.smaller}
+
+
+* x86 has an instruction called POPF
+* pop flags from stack 
+
+   * condition codes --- <code>CF</code>, <code>ZF</code>, <code>PF</code>, <code>SF</code>, <code>OF</code>, etc.
+   * direction flag (<code>DF</code>) --- used by string instructions
+   * \textbf{[I/O privilege level]{.fragment fragment-index=2 .custom .myem-only}} (<code>IOPL</code>)
+   * \textbf{[interrupt enable flag]{.fragment fragment-index=2 .custom .myem-only}} (<code>IF</code>)
+   * …
+
+* some flags are <em>privileged!</em>
+* popf <em><em>silently</em></em> doesn't change them in user mode
+
+
+### more binary translation problems  {.smaller}
+
+
+* PUSHF also bad --- want to pretend interrupts are disabled, e.g.
+* several more x86 instructions 
+<hr class="vspace" />
+* processor extensions to change these to be virtualizable
+* mechanism: flag to make them trigger interrupt to virtual machine monitor
+
+
+### other binary translation utility  {.smaller}
+
+
+* enables other software analysis on unmodified binaries
+* example: valgrind, debugging tools:  
+
+   * memory errors
+   * synchronization bugs
+   * …
+
+

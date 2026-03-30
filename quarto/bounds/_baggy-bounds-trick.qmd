@@ -1,0 +1,16 @@
+
+### baggy bounds trick
+
+* table of pointers to starting locations would be huge
+* restrictions: 
+   * all object sizes are powers of two 
+   * all object starting addresses are a multiple of their size
+* then, table contains size info: table[x] = $i$, size is $2^i$
+
+```c
+char *GetStartOfObject(char *pointer) {
+    return pointer & ~(1 << TABLE[pointer / 16] - 1);
+    /* pointer bitwise-and 2^(table entry) - 1 */
+    /* clear lower (table entry) bits  of pointer */
+}
+```

@@ -1,0 +1,27 @@
+\begin{tikzpicture}
+\tikzset{
+    code/.style={inner sep=0mm,align=left},
+    hiOn/.style={alt=#1{rounded corners,fill=green,fill opacity=0.3,text opacity=1.0}{}},
+    markOn/.style={alt=#1{rounded corners,draw,thick}{}},
+}
+\node[code,markOn=<2>,hiOn=<3>] (bb1) {
+\usebox{\binTranslateOrig}
+};
+\node[right=.25cm of bb1,visible on=<2>,align=left] {
+    divide machine code \\
+    into \textit{basic blocks} \\
+    (= ``straight-line'' code) \\
+    (= code till \\ 
+    jump/call/etc.)
+};
+\node[code,right=.25cm of bb1,visible on=<3>] (bb1New) {
+generated code: \\
+\usebox{\binTranslateBBa}
+};
+\node[code,markOn=<2>,anchor=north west] (bb2) at (bb1.south west){
+\usebox{\binTranslateBBb}
+};
+\node[code,markOn=<2>,anchor=north west] (bb3) at (bb2.south west){
+\usebox{\binTranslateBBc}
+};
+\end{tikzpicture}

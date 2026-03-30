@@ -1,0 +1,67 @@
+
+### allocations and lookup table 
+
+
+
+::: {.r-stack .my-full}
+![](/bounds/texfig/lkpTble.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/bounds/texfig/lkpTble.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+![](/bounds/texfig/lkpTble.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
+![](/bounds/texfig/lkpTble.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
+
+![](/bounds/texfig/lkpTble.figure-5.svg){.fragment .fade-in-then-out fragment-index=5}
+
+
+:::
+
+
+### managing the table
+
+
+::::: {.columns}
+
+:::: {.column}
+
+* not just done <code>malloc()/new</code>
+* also for stack allocations:
+
+```c
+void vulnerable() {
+    char buffer[100];
+    gets(vulnerable);
+}
+```
+
+::::
+
+:::: {.column}
+
+```gnuassembler
+vulnerable:
+  // make %rsp a multiple
+  // of 128 (2^7) 
+  andq $0xFFFFFFFFFFFFFF80, %rsp
+  // allocate 128 bytes
+  subq $0x80, %rsp
+  // rax <- rsp / 16
+  movq $rsp, %rax
+  shrq $4, %rax
+  movb $7, TABLE(%rax)
+  movb $7, TABLE+1(%rax)
+  ...
+  movq %rsp, %rdi
+  call gets
+  ret
+```
+
+::::
+
+:::::
+
+### sparse lookup table 
+
+![](/bounds/texfig/sparseLookup.figure.svg)
+

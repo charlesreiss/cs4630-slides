@@ -1,0 +1,38 @@
+
+### adding bounds-checking --- fat pointers  {.smaller}
+
+<!-- \lstset{
+    language=C,
+    style=small
+} -->
+ 
+```
+struct MyPtr {
+    char *pointer; /* "raw" pointer value */
+    char *minimum; /* first byte of buffer pointed to */
+    char *maximum; /* last byte of buffer pointed to */
+};
+
+```
+ 
+<div class="fragment fade-in" data-fragment-index=2 >
+ <hr />
+ 
+```
+char buffer[100];
+char *p = &buffer[10];
+
+```
+ becomes 
+```
+char buffer[100];
+MyPtr p = {
+    .pointer = &buffer[10],
+    .minimum = &buffer[0],
+    .maximum = &buffer[99]
+};
+
+```
+ 
+</div>
+

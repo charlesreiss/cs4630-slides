@@ -1,0 +1,11 @@
+
+### so far 
+
+
+* many vulnerabilities we looked at due to poor bounds checking 
+
+   * one exception: use-after-free and related
+ 
+<hr class="vspace" />
+* can we just fix this?
+

@@ -1,0 +1,7 @@
+
+### language-level solutions 
+
+
+* languages like Python don't have this problem
+* couldn't we do the same thing in C?
+

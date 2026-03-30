@@ -1,0 +1,13 @@
+
+### Valgrind Memcheck  {.smaller}
+
+
+* similar to AddressSanitizer --- but no compiler modificaitons
+* instead: is an emulator (plus alternate malloc/new implementation) 
+
+   * implemented using binary translation (just-in-time compilation)
+ 
+<hr class="vspace" />
+* only (reliably) detects errors on heap
+* but works on <em>unmodified</em> binariesk
+

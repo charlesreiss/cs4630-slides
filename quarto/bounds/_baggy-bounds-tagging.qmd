@@ -1,0 +1,10 @@
+
+### alternate approach: pointer tagging  {.smaller}
+
+* some bits of <em>address</em> are size  
+   * replaces table entry/lookup
+* change code to allocate objects this way
+* works well on 64-bit --- plenty of addresses to use
+ 
+![](/bounds/baggy-bounds-tagging){}
+

@@ -1,0 +1,37 @@
+
+### baggy bounds check: added code 
+
+
+![](/bounds/bb-bounds-check){}
+
+
+### baggy bounds check: added code
+
+<!-- \lstset{language=myasm,style=small} -->
+ 
+```gnuaseembler
+/* bounds lookup */
+    mov buf, %rax
+    shr %rax, 4
+    mov LOOKUP_TABLE(%rax), %al
+/* array element address computation */
+    ...    // char * p = buf[i];
+/* bound check */
+    mov buf, %rbx
+    xor p, %rbx
+    shr %al, %rbx
+    jz  ok
+    ...    // handle possible violation
+ok:
+```
+
+[adapted from paper figure]{.mycredit}
+
+### avoiding checks 
+
+
+* code not added if not array/pointer accesses to object
+* code not added when pointer accesses ‘‘obviously’’ safe 
+   * author's implementation: only checked within function
+
+

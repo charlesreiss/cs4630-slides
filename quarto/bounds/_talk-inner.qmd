@@ -1,0 +1,119 @@
+
+# adding bounds checking {visibility="hidden"}
+
+{{< include /bounds/_intro.qmd >}}
+
+## compiler-added? {visibility="hidden"}
+
+{{< include /bounds/_compiler-added.qmd >}}
+
+## and library functions {visibility="hidden"}
+
+{{< include /bounds/_bounds-lib-functions.qmd >}}
+
+## language support? {visibility="hidden"}
+
+{{< include /bounds/_bounds-lang-support-intro.qmd >}}
+
+## simple case for bounds checking in C {visibility="hidden"}
+
+{{< include /bounds/_simple-c.qmd >}}
+
+## the problematic case {visibility="hidden"}
+
+{{< include /bounds/_harder.qmd >}}
+
+## fat pointer idea {visibility="hidden"}
+
+{{< include /bounds/_fat-pointers.qmd >}}
+
+## strcpy example{visibility="hidden"}
+
+{{< include /bounds/_fat-pointers-strcpy.qmd >}}
+
+## overhead?{visibility="hidden"}
+
+{{< include /bounds/_fat-pointers-overheadp.qmd >}}
+
+## unfortunate things C programmers do {visibility="hidden"}
+
+{{< include /bounds/_bad-things-c-prog.qmd >}}
+
+## fat pointers in reality? {visibility="hidden"}
+
+{{< include /bounds/_fat-pointer-ccured.qmd >}}
+
+# baggy bounds checking {visibility="hidden"}
+
+{{< include /bounds/_baggy-bounds-intro.qmd >}}
+
+## trick for good performance {visibility="hidden"}
+
+
+{{< include /bounds/_baggy-bounds-trick.qmd >}}
+
+## the lookup table {visibility="hidden"}
+
+<!-- FIXME: convert table to less latex -->
+
+{{< include /bounds/_baggy-bounds-table.qmd >}}
+
+## checks using table {visibility="hidden"}
+
+{{< include /bounds/_baggy-bounds-checks.qmd >}}
+
+## exercise: overhead estimating? {visibility="hidden"}
+
+{{< include /bounds/_baggy-bounds-overhead-exer.qmd >}}
+
+## alternative: pointer tagging {visibility="hidden"}
+
+{{< include /bounds/_baggy-bounds-tagging.qmd >}}
+
+## performance? {visibility="hidden"}
+
+{{< include /bounds/_baggy-bounds-perf.qmd >}}
+
+## problem: pointers within objects {visibility="hidden"}
+
+{{< include /bounds/_within-object.qmd >}}
+
+## corner cases {visibility="hidden"}
+
+{{< include /bounds/_bad-things-fortran-index.qmd >}}
+
+# AddressSanitizer {visibility="hidden"}
+
+{{< include /bounds/_asan-v-baggy.qmd >}}
+
+## ASan's added check {visibility="hidden"}
+
+{{< include /bounds/_asan-check.qmd >}}
+
+## stack layout {visibility="hidden"}
+
+{{< include /bounds/_asan-stack-layout.qmd >}}
+
+## can't change object layout? {visibility="hidden"}
+
+{{< include /bounds/_asan-within-object-example.qmd >}}
+
+{{< include /bounds/_asan-within-object.qmd >}}
+
+## pro/con {visibility="hidden"}
+
+{{< include /bounds/_asan-procon.qmd >}}
+
+# valgrind memcheck, briefly {visibility="hidden"}
+
+{{< include /bounds/_memcheck.qmd >}}
+
+## aside: binary translation {visibility="hidden"}
+
+{{< include /vm/_binaryTrans.qmd >}}
+
+## aside: other binary translation applications {visibility="hidden"}
+
+# exericse: which prevents {visibility="hidden"}
+
+{{< include /bounds/_which-prevents.qmd >}}

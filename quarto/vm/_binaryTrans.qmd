@@ -1,0 +1,66 @@
+
+### binary translation  {.smaller}
+
+
+* compile assembly to new assembly 
+<hr class="vspace" />
+* works without instruction set support
+* early versions of VMWare on x86 (before x86 added virtualisation support)
+* can be used to run one platform on another
+
+
+### binary translation idea 
+
+::: {.r-stack .my-full}
+
+![](/vm/texfig/binTransIdea.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/vm/texfig/binTransIdea.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+![](/vm/texfig/binTransIdea.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
+:::
+
+
+### a binary translation idea 
+
+
+* convert whole <i>basic blocks</i> 
+
+   * code upto branch/jump/call
+
+* end with call to <code>translate_and_run</code>  
+
+   * compute new <em>simulated PC</em> address to pass to call
+
+
+
+### making binary translation fast  {.smaller}
+
+<!-- \lstset{style=small,language=myasm,morekeywords={movq}} -->
+ 
+
+* cache converted code 
+
+   * <code>translate_and_run</code> checks cache first
+
+* patch calls to <code>translate_and_run</code> to refer directly to cached code
+* do something more clever than `movq rax_location, ...` 
+
+   * map (some) registers to registers, not memory
+
+* ends up being ‘‘just-in-time’’ compiler
+
+
+### binary translation? really?  {.smaller}
+
+
+* early VMWare: for instructions without hardware virtualization support 
+
+   * only needed for little bits of OS code
+
+* used by Apple to handle changing CPU designs
+* Rosetta 2: run Intel on ARM (current)
+* Rosetta: run Power PC on Intel (2005--2011)
+* Mac 68k emulator: Run Motorola 680x0 on Power PC (1994--2005)
+

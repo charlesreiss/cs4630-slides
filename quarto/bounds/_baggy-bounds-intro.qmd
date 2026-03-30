@@ -1,0 +1,21 @@
+
+### research example (2009) 
+
+
+![](/bounds/baggy-bounds-title){fig-alt="Baggy Bounds Checking: AN Efficient and Backwards-Compatible Defense against Out-of-Bounds Errors"}
+
+
+### baggy bounds checking idea
+
+
+* giant lookup table --- one entry for every 16 bytes of memory
+* table indicates start of object allocated here
+* check pointer arithmetic:
+ 
+```c
+char p = str[i];
+/* becomes: */
+CHECK(START_OF[str / 16] == START_OF[&str[i] / 16]);
+char p = str[i];
+```
+

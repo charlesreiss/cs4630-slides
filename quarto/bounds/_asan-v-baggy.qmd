@@ -1,0 +1,18 @@
+
+### AddressSanitizer  {.smaller}
+
+
+* like baggy bounds: 
+
+   * big lookup table
+   * lookup table set by memory allocations
+   * compiler modification: change stack allocations
+
+* unlike baggy bounds: 
+
+   * check reads/writes (instead of pointer computations)
+   * only detect errors that read/write <em>between objects</em>
+   * object sizes not padded to power of two
+   * table has info for every single byte (more precise)
+
+

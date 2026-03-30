@@ -1,0 +1,34 @@
+
+### bounds-checking C 
+
+
+* there have been many proposals to add bounds-checking to C
+* including implementations
+* brainstorm: <em>why hasn't this happened?</em>
+
+
+### easy bounds-checking  {.smaller}
+
+<!-- \lstset{language=C,style=smaller} -->
+ 
+```
+void vulnerable() {
+    char buffer[100];
+    int c;
+    int i = 0;
+    while ((c = getchar()) != EOF && c != '\n') {
+        buffer[i] = c;
+    }
+}
+void vulnerable_checked() {
+    char buffer[100];
+    int c;
+    int i = 0;
+    while ((c = getchar()) != EOF && c != '\n') {
+        FAIL_IF(i >= 100 || i < 0);
+        buffer[i] = c;
+    }
+}
+
+```
+

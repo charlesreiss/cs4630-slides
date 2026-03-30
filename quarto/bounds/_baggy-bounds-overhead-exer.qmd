@@ -1,0 +1,53 @@
+
+### exercise: overhead of baggy bounds (1)
+
+
+* suppose program allocates: 
+   * 1000 100 byte objects
+   * 1 10000 byte object
+
+* using baggy bounds, estimate: 
+
+   * space required for padding 
+
+   * space required for table 
+
+
+### exercise: overhead of baggy bounds (1, solution)
+
+
+* suppose program allocates: 
+   * 1000 100 byte objects
+   * 1 10000 byte object
+
+* using baggy bounds, estimate: 
+
+   * space required for padding 
+      * $(128-100)\cdot 1000 + (16384 - 10000)) = 34384$
+   * space required for table 
+      * $(128\cdot 1000 + 16384) \div 16 = 9024$
+
+
+### exercise: overhead of baggy bounds (2)  
+
+
+```c
+char *strcat(char *d, char *s) {
+    int i;
+    for (i = 0; s[i] != '\0'; i += 1) {
+        d[i] = s[i]; 
+    }
+    d[i] = '\0';
+    return d;
+}
+
+```
+ 
+
+* estimate: 
+
+   * number of bounds checks needed
+   * very rough number of instructions run w/o bounds check
+
+* thought question: <br> with bounds checking, what's fastest possible code?
+

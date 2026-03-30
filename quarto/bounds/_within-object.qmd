@@ -1,0 +1,18 @@
+
+### problem: within object
+
+
+```c
+struct foo {
+    char buffer[1024];
+    int *pointer;
+};
+struct foo array_of_foos[1024];
+...
+char *p = &array_of_foos[4].buffer[4]
+
+```
+ 
+
+* exercise: what are the bounds for p?
+

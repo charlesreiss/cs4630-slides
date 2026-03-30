@@ -1,0 +1,7 @@
+
+### speed of bounds checking 
+
+
+* two comparisons for every pointer access?
+* three times as much space for every pointer?
+

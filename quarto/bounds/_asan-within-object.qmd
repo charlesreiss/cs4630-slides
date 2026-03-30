@@ -1,0 +1,18 @@
+
+### changing object layout? 
+
+```c
+struct string_list {
+    char data[100];
+    struct string_list *prev;
+    struct string_list *next;
+};
+```
+
+::: {.r-stack}
+
+![](/bounds/texfig/asan-within-object.figure-1.svg){width=1000px}
+
+![](/bounds/texfig/asan-within-object.figure-2.svg){width=1000px}
+
+:::

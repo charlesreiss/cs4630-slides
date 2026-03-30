@@ -1,0 +1,153 @@
+
+### adding bounds checking 
+
+<!-- \lstset{language=C,style=small} -->
+ 
+```
+char buffer[42];
+memcpy(buffer, attacker_controlled, len);
+
+```
+ 
+
+* couldn't compiler add check for <code>len</code>
+* modern Linux: it does
+
+
+### added bounds checking
+
+```c
+char buffer[42];
+memcpy(buffer, attacker_controlled, len);
+
+```
+<hr>
+
+```gnuassembler
+    subq   $72, %rsp
+    leaq   4(%rsp), %rdi
+    movslq len, %rdx
+    movq   attacker_controlled, %rsi
+    movl   $42, %ecx
+    call   __memcpy_chk
+```
+ 
+
+* length <code>42</code> passed to <code>__memcpy_chk</code>
+
+
+### `_FORTIFY_SOURCE`  {.smaller}
+
+
+* Linux C standard library + GCC features
+* adds automatic checking to a bunch of string/array functions
+* also printf (disable <code>%n</code> unless format string is a constant) 
+<hr class="vspace" />
+* often enabled by default
+* GCC options: 
+
+   * <code>-D_FORTIFY_SOURCE=1</code> --- enable (backwards-compatible only)
+   * <code>-D_FORTIFY_SOURCE=2</code> --- enable (constant sizes only)
+   * <code>-D_FORTIFY_SOURCE=3</code> --- enable (computed sizes, sometimes)
+   * <code>-U_FORTIFY_SOURCE</code> --- disable
+
+
+
+### bounds checking will happen...
+
+will add checks (gcc 9.3 <em>-O2</em>, FORTIFY_SOURCE=1/2) 
+```c
+void example1() {
+    char dest1[1024]; memcpy(dest1, ...); ...
+}
+char dest2[1024];
+void example2() {
+    memcpy(dest2, ...); ...
+}
+void example3() {
+    char *p = &dest2[4]; memcpy(p, ...); ...
+}
+
+```
+
+
+### bounds checking will happen...
+
+will add checks (gcc 14.2 or clang 20 <em>-Os</em>, FORTIFY_SOURCE=3) 
+```c
+char dest2[1024];
+void example4() {
+    char *p = &dest2[mystery()]; memcpy(p, ...); ...
+}
+
+```
+ 
+
+* no checking with FORTIFY_SOURCE=2
+* extra overhead: computing min(50, 1024-mystery())
+
+
+### bounds checking will happen...
+
+will add check (gcc 14.2 or clang 20 <em>-Os</em>, FORTIFY_SOURCE=3) 
+```c
+char dest2[1024];
+void example5() {
+    char dest3[128];
+    char *p = dest2;
+    if (mystery()) p = dest3;
+    memcpy(p, ...); ...
+}
+
+```
+ 
+
+* checks for maximum possible with FORTIFY_SOURCE=2
+
+
+### bounds checking won't happen... 
+
+
+```c
+char dest2[1024];
+struct Foo {
+    char buffer1[128];
+    int *pointer;
+    ...
+};
+void example6(struct Foo *f, int size) {
+    memcpy(f->buffer1, dest2, size);
+}
+
+```
+
+
+### bounds checking won't quite happen...
+
+
+```c
+char dest2[1024];
+struct Foo {
+    char buffer1[128];
+    int *pointer;
+    ...
+};
+struct Foo f;
+void example6(int size) {
+    memcpy(f.buffer1, dest2, size);
+}
+
+```
+ 
+
+* checks that size is less than sizeof(struct Foo) (not 128)
+
+
+### implementation
+
+
+* GCC/clang expose ‘object size` and `dynamic object size’ function
+* relies on compiler analysis to know size from see declaration or malloc/etc. assignemnt 
+<hr class="vspace" />
+* limited
+

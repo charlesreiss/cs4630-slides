@@ -1,0 +1,22 @@
+
+### adding bounds-checking example
+
+<!-- \lstset{
+    language=C++,
+    style=small,
+    moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+} -->
+ 
+```{.c code-line-numbers="|3-4"}
+void vulnerable(long value, int offset) {
+    long array[10] = {1,2,3,4,5,6,7,8,9,10};
+    // generated code: (added by AddressSanitizer)
+    if (!lookup_table[&array[offset]] == VALID) FAIL();
+    array[offset] = value;
+    do_something_with(array);
+}
+```
+
+* AddressSanitizer: crashes only if `array[offset]` isn't part of any object 
+   * no extra space --- single-byte precision
+

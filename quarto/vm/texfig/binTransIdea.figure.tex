@@ -1,0 +1,60 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{positioning}
+\lstset{
+    language=myasm,
+    style=small,
+    morekeywords={movq,addss,subss}
+}
+\newsavebox{\binTranslateOrig}
+\newsavebox{\binTranslateBBa}
+\newsavebox{\binTranslateBBb}
+\newsavebox{\binTranslateBBc}
+\begin{document}
+\begin{lrbox}{\binTranslateOrig}
+\begin{lstlisting}
+0x40FE00: addq %rax, %rbx
+movq 14(%r14,4), %rdx
+addss %xmm0, (%rdx)
+...
+0x40FE3A: jne 0x40F404
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\binTranslateBBa}
+\begin{lstlisting}
+// addq %rax, %rbx
+movq rax_location, %rdi
+movq rbx_location, %rsi
+call checked_addq
+movq %rax, rax_location
+...
+// jne 0x40F404
+... // get CCs 
+je do_jne
+movq $0x40FE3F, %rdi
+jmp translate_and_run
+do_jne:
+movq $0x40F404, %rdi
+jmp translate_and_run
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\binTranslateBBb}
+\begin{lstlisting}
+subss %xmm0, 4(%rdx)
+...
+je 0x40F543
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\binTranslateBBc}
+\begin{lstlisting}
+ret
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{vm/texfig/binTransIdea.inner.tex}
+\setSlide{2}
+\input{vm/texfig/binTransIdea.inner.tex}
+\setSlide{3}
+\input{vm/texfig/binTransIdea.inner.tex}
+\end{document}

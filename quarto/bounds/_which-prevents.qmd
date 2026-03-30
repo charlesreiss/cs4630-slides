@@ -1,0 +1,78 @@
+
+### which scheme prevents\ldots?  {.smaller}
+
+
+* which schemes detect or prevent from being harmful…? 
+
+   * 1. call to assembly code that goes beyond buffer?
+   * 2. allowing attacker to insert 150 bytes in 100 byte buffer on heap?
+   * 3. allowing attacker to insert 120 bytes in 100 byte buffer on stack?
+   * 4. attecker exploiting code that does array[attacker_index] to overwrite something outside heap array?
+
+* of: 
+
+   * A. ‘‘fat pointers’’ approach
+   * B. Baggy Bounds checking
+   * C. AddressSanitizer
+   * D. Valgrind Memcheck
+
+
+
+### answer (1) 
+
+
+* which schemes detect or prevent from being harmful…? 
+
+   * 1. call to assembly code that goes beyond buffer?
+
+* only Valgrind Memcheck handles assembly code
+* other techniques require C compiler to produce different assembly
+
+
+### answer (2)  {.smaller}
+
+
+* which schemes detect or prevent from being harmful…? 
+
+   * 2. allowing attacker to insert 150 bytes in 100 byte buffer on heap?
+
+* schemes: 
+
+   * A. ‘‘fat pointers’’ approach --- yes
+   * B. Baggy Bounds checking ---yes, detect + crash
+   * C. AddressSanitizer --- yes, detect + crash
+   * D. Valgrind Memcheck --- yes, detect + rash
+
+
+
+### answer (3)  {.smaller}
+
+
+* which schemes detect or prevent from being harmful…? 
+
+   * 3. allowing attacker to insert 120 bytes in 100 byte buffer on stack?
+
+* schemes: 
+
+   * A. ‘‘fat pointers’’ approach --- yes
+   * B. Baggy Bounds checking ---prevent from being harmful / no crash
+   * C. AddressSanitizer --- yes, detect + crash (red zone)
+   * D. Valgrind Memcheck --- no --- no memory to mark invalid
+
+
+
+### answer (3)  {.smaller}
+
+
+* which schemes detect or prevent from being harmful…? 
+
+   * 4. attecker exploiting code that does array[attacker_index] to overwrite something outside heap array?
+
+* schemes: 
+
+   * A. ‘‘fat pointers’’ approach --- yes
+   * B. Baggy Bounds checking --- yes
+   * C. AddressSanitizer --- no --- attacher index can find valid memory
+   * D. Valgrind Memcheck --- no --- (same as AddressSanitizer)
+
+

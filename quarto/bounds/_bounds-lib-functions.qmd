@@ -1,0 +1,112 @@
+
+### non-checking library functions
+
+<!-- \lstset{language=C,style=small} -->
+ 
+
+* some C library functions make bounds checking hard:  
+```c
+strcpy(dest, source);
+strcat(dest, source);
+sprintf(dest, format, ...);
+
+```
+
+* bounds-checking versions (<em>added to library later</em>): 
+```c
+/* might not add \0 (!) */
+strncpy(dest, source, size);
+strncat(dest, source, size);
+snprintf(dest, size, format, ...);
+
+```
+
+
+
+### poor bounds-checking APIs
+
+
+```c
+char dest[100];
+/* THIS CODE IS BROKEN */
+strncpy(dest, source1, sizeof dest);
+strncat(dest, source2, sizeof dest);
+printf("result was %s\n", dest)
+```
+ 
+
+* the above can access memory of out of bounds
+* … in a bunch of ways
+
+
+### Linux's strncpy manual 
+
+
+```c
+strncpy(dest, source1, sizeof dest);
+```
+ 
+
+* ‘‘Warning: If there is no  null byte among the first n bytes of src, the string placed in dest will not be null-terminated.’’
+ 
+
+* exercise: what should the call have been?
+
+
+### Linux's strncat manual 
+
+
+```c
+strncat(dest, source2, sizeof dest);
+```
+ 
+
+* ‘‘If src contains n or more bytes, strncat() writes n+1 bytes to  dest  (n from  src  plus the terminating null byte).  Therefore, the size of dest must be at least strlen(dest)+n+1.’’
+ 
+
+* exercise: what should the call have been?
+
+
+### better versions?  
+
+
+
+* FreeBSD (and Linux via libbsd): strlcpy, strlcat
+* ‘‘Unlike [strncat and strncpy], strlcpy() and strlcat() take the full size of the buffer and gaurenteeto NUL-terminate the result...’’
+ 
+```c
+strlcpy(dest, source1, sizeof dest);
+strlcat(dest, source2, sizeof dest);
+```
+ 
+<hr class="vspace" /> 
+
+* Windows: <code>strcpy_s</code>, <code>strcat_s</code> (same idea, differentname)
+
+
+### C++/Rust bounds checking
+
+<!-- \lstset{language=C,style=small} -->
+ 
+```cpp
+#include <vector>
+...
+std::vector<int> data;
+data.resize(50);
+// undefined behavior:
+data[60] = 0;
+// throws std::out_of_range exception
+data.at(60) = 0;
+```
+<hr>
+ 
+```rust
+let data: Vec<i32> = ...;
+data.resize(50, 0);
+// undefined behavior:
+unsafe { *data.get_unchecked_mut(60) = 1; }
+// panics at runtime:
+data[60] = 0;  
+
+```
+

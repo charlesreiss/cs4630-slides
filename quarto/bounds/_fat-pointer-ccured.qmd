@@ -1,0 +1,19 @@
+
+### example: CCured  {.smaller}
+
+
+* Necula et al, ‘‘CCured:  Type-Safe Retrofitting of Legacy Code’’ (2002) 
+<hr class="vspace" />
+* extension to C to add fat pointers
+* actually three different types of pointers:  
+
+   * SAFE: point to single object (not array) or NULL
+   * SEQUENCE: pointer to array with known bounds (like ‘‘fat’’ pointers)
+   * DYNAMIC: extra to handles type-casting
+
+* <i>needs source changes</i> to annotate some pointer usage 
+
+   * especially to allow library function calls
+
+* 1-<em>2.5x</em> time overhead
+

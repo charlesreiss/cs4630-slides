@@ -1,0 +1,6 @@
+---
+title: "bounds"
+
+---
+
+{{< include ../bounds/_talk-inner.qmd >}}

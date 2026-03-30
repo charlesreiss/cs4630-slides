@@ -1,0 +1,17 @@
+
+### AddressSanitizer versus Baggy Bounds  {.smaller}
+
+
+* pros vs baggy bounds: 
+
+   * you can actually use it (comes with GCC/Clang)
+   * byte-level precision --- no ‘‘padding’’ on objects
+   * detects use-after-free a lot of the time
+
+* cons vs baggy bounds: 
+
+   * doesn't prevent out-of-bounds ‘‘targetted’’ accesses
+   * requires extra space between objects
+   * usually slower
+
+

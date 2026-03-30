@@ -1,11 +1,11 @@
 
-### integer under/overflow: real example  {.smaller}
+### integer under/overflow: real example
 
 
 
 * part of another Google Chrome exploit by Pinkie Pie:
  
-```
+```cpp
 // In graphics command processing code:
 uint32 ComputeMaxResults(size_t size_of_buffer) {
     return (size_of_buffer - sizeof(uint32)) / sizeof(T);

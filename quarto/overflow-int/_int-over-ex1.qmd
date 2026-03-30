@@ -42,7 +42,7 @@ item *load_items(int len) {
 
 ::::: {.columns}
 
-:::: {.column}
+:::: {.column width=65%}
 
 ```c
 /* adapted from https://project-zero.issues.chromium.org/issues/42451651 
@@ -62,7 +62,7 @@ char *FormatNumber(char *source, short source_len) {
 
 ::::
 
-:::: {.column}
+:::: {.column width=34%}
 
 <table>
 <tr><th scope="row">`source_len`</th><td>`0x2AAB`</td></tr>

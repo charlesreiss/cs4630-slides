@@ -62,7 +62,7 @@ broken_check_add:
 
 ::::
 
-### -fsanitize=undefined / -ftrapv {.smaller}
+### -fsanitize=undefined / -ftrapv (1) {.smaller}
 
 ::: {style="font-size: 150%; border: 3px dotted black;"}
 
@@ -89,7 +89,8 @@ int x = INT_MAX - 1; int y = 5; printf("%d\n", x * y);
 
 ::::
 
-<hr>
+
+### -fsanitize=unefined / -ftrapv (2) {.smaller}
 
 ::: {style="font-size: 150%; border: 3px dotted black;"}
 

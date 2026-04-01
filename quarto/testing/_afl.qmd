@@ -1,36 +1,31 @@
 
-### american fuzzy lop  {.smaller}
+### american fuzzy lop / AFL++ {.smaller}
 
-
-* one example of a fuzzer that uses this strategy 
-
-   * ‘‘whitebox fuzzing’’
- 
+* most well-known fuzzer using this strategy
+    * american fuzzy lop (2013-2016; Michal "lcamtuf" Zalewski)
+    * AFL++ (later; community-maintained updated version)
 <hr class="vspace" />
-* assembler wrapper to record computed/conditional jumps: 
-```
-CoverageArray[Hash(JumpSource, JumpDest)]++;
+* compiler "plugins" to record computed/conditional jumps: 
+* `CoverageMap[EdgeID]++;`
+    * EdgeID = Hash(Source, Dest) or (more recently) unique conditional jump ID
+    * "coverage map" = big array of bytes
+    * counter so we can handle loops that run different amounts
+    * usually saturating add (so once it gets to 256, it stays there)
+* use values from coverage map to distinguish cases
+* outputs only <em>unique</em> (coverage map) test cases
 
-```
+### american fuzzy lop / AFL++ heuristics  {.smaller}
 
-* use values from coverage array to distinguish cases
-* outputs only <em>unique</em> test cases
-* goal: test case for every possible jump source/dest
-
-
-### american fuzzy lop heuristics  {.smaller}
-
-
-* american fuzzy lop does some deterministic testing 
-
+* deterministic tests based on base inputs
    * try flipping every bit, every 2 bits, etc. of base input
    * overwrite bytes with 0xFF, 0x00, etc.
+   * removing each byte/blocks of bytes of input
    * etc.
-
-* has many strategies for producing new inputs 
-
+* multiple strategies for producing new inputs 
    * bit-flipping
    * duplicating important-looking keywords
    * combining existing inputs
-
-
+* base case selection
+   * prefer cases that run faster/are shorter
+   * see if removing/zeroing bytes/etc. can simplify an input without changing coverage
+   * select set of "favored" cases covering each edge (source+dest of branch)

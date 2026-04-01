@@ -348,6 +348,18 @@ table.stackdiag.stackdiag.stackdiag.stackdiag td.heapstruct {
     margin-bottom: -0.5em;
 }
 
+.reveal .slide .nogap {
+    margin: 0;
+}
+
+.reveal .slide .nogap > ul {
+    margin-top: 0;
+}
+
+.reveal .slide .nogap > ul > li:first-child {
+    margin-top: 0;
+}
+
 @media print {
     .slide-chalkboard-buttons {
         display: none ! important

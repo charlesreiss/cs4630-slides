@@ -6,7 +6,7 @@
    * "Finding and Understanding Bugs in C compilers" (PLDI 2011)
  
 <hr class="vspace" />
-* carefully avoided code with unspecified effects 
+* <em>carefully avoided code with unspecified effects </em>
    * most of the work was about doing this
 * don't need to know what program does: comparing two compilers 
    * or one compiler with different settings

@@ -13,13 +13,6 @@
 
 ###
 
-## what can we test {visibility="hidden"}
-
-{{< include /testing/_fuzz-test-what-properties.qmd >}}
-
-## other applications {visibility="hidden"}
-
-{{< include /testing/_other-apps.qmd >}}
 
 ## some practical issues {visibility="hidden"}
 
@@ -101,6 +94,17 @@
 {{< include /testing/_autosimplify.qmd >}}
 
 {{< include /testing/_example-creduce.qmd >}}
+
+### upcoming assignment
+
+*  `indent` utility
+   *  takes C program, reformats it
+   *  original version used sandboxing, so anything you find probably not exploitable
+*  run under AFL++
+   *  enable AddressSanitizer to make crashes more consistent
+   *  find some crashes
+*  diagnose those crashes
+   *  figure out what the bugs actually are
 
 ## AFL: test template support {visibility="hidden"}
 

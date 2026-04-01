@@ -1,9 +1,10 @@
 ### determinism
 
 *  results only useful if they _consistently_ trigger bug
+   *  fuzzer will run enough tests to trigger "rare" events
+<hr class="vspace"/>
 *  fully reset all state between each test case
 *  avoid use of randomness, current time, etc.
-*  fuzzer will run enough tests to trigger "rare" events
 *  debugging tools like AddressSanitizer may help
 
 ### weird things the tested program does {.smaller}

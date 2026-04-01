@@ -19,10 +19,14 @@ int foo(int a, int b) {
 
 ```
 
-* expression return value in terms of arguments 
-    * [$\alpha + 6\beta$]{.fragment fragment-index=4}
+::: {.nogap .fragment fragment-index=4}
 
-::: {.novertical .fragment fragment-index=5}
+* expression return value in terms of arguments 
+    * $\alpha + 6\beta$
+
+:::
+
+::: {.nogap .fragment fragment-index=5}
 
 * solve for return value = 10, example solutions:
    * $(\alpha,\beta) = (10,0)$

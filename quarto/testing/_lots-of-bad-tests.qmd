@@ -18,11 +18,11 @@
 
 ### grammar-based generation
 
-*  is useful to test thing like `<html*<head` and `<head><iead>`, etc...
-*  but probably not where we should spend a majority of our effort
+*  `<html*<head` and `<head><iead>` worth testing...
+*  ...but not that important
    *  want more than "syntax error" handling bugs
 <hr class="vspace" />
-*  alternate idea: have a "grammar" of what the input should look like
+*  alternate: "grammar" of what the input should look like
    *  use that grammar to generate random examples
 
 ### example: Google Project Zero's domato

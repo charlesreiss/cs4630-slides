@@ -1,0 +1,18 @@
+### determinism
+
+*  results only useful if they _consistently_ trigger bug
+*  fully reset all state between each test case
+*  avoid use of randomness, current time, etc.
+*  fuzzer will run enough tests to trigger "rare" events
+*  debugging tools like AddressSanitizer may help
+
+### weird things the tested program does {.smaller}
+
+*  need to detect crashes, ideally automatically
+   *  likely to find _multiple_ crashes
+*  need to detect hangs
+   *  usually: set threshold amount of time, but...
+   *  ... only useful if program consistent/fast enough
+   *  won't find many bugs if we spend our time running hanging test cases
+*  need to handle resource exhaustion
+   *  stop tested program before it uses all the system's memory/etc.

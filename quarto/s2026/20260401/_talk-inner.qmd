@@ -23,9 +23,40 @@
 
 ## some practical issues {visibility="hidden"}
 
-{{< include /testing/_fuzzing-practical.qmd >}}
+### fuzzing challenges 
+
+* isolation --- reproducibility, handling crashes/etc.
+* speed
+* finding useful tests
+
+
+## isolation {visibility="hidden"}
+
+### fuzzing challenges 
+
+* <em>isolation --- reproducibility, handling crashes/etc.</em>
+* speed
+* finding useful tests
+
+{{< include /testing/_fuzzing-isolation.qmd >}}
+
+## speed {visibility="hidden"} 
+
+### fuzzing challenges 
+
+* isolation --- reproducibility, handling crashes/etc.
+* <em>speed</em>
+* finding useful tests
+
+{{< include /testing/_fuzzing-speed.qmd >}}
 
 ## lots of bad tests?{visibility="hidden"}
+
+### fuzzing challenges 
+
+* isolation --- reproducibility, handling crashes/etc.
+* speed
+* <em>finding useful tests</em>
 
 {{< include /testing/_lots-of-bad-tests.qmd >}}
 
@@ -68,6 +99,8 @@
 ## automatic test case simplification {visibility="hidden"}
 
 {{< include /testing/_autosimplify.qmd >}}
+
+{{< include /testing/_example-creduce.qmd >}}
 
 ## AFL: test template support {visibility="hidden"}
 

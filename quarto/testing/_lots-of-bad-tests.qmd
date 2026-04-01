@@ -1,6 +1,4 @@
-
 ### completeness problem  {.smaller}
-
 
 * let's say we're testing an HTML parser
 * what code is <em>usually</em> going to run when we flip random bits? 

@@ -1,0 +1,34 @@
+### how many tests do we want? {.smaller}
+
+*  let's say we're making random changes to 512 byte image to find bugs
+   *  or even systematic changes (like trying every bit/byte/etc.)
+<hr class="vspace"/>
+*  if our bug involves changing a particular byte
+   *  need 100s of tests to find that
+*  if it also needs changing to a particular value
+   *  need 100s of tests with the right byte to find that
+   *  or 10000s of tests
+*  if it needs changing another byte too
+   *  need 10000000s of tests?
+
+### preview: improving test cases
+
+*  we'll talk later about choosing _better_ tests
+*  this will make these numbers smaller
+   *  avoid testing bytes that don't do anything in image
+<hr class="vspace" />
+*  but even with better ways of choosing tests...
+*  often want to run many millions+ of tests
+
+### some speeding up fuzzing ideas {.smaller}
+
+*  prefer shorter/lower-resource test cases
+*  test components separately more
+   *  custom "harness" that just runs one part of program at a time
+*  avoid restarting program for each test (needs way to reset state)
+   *  make version of program that reads many test cases per run
+   *  (forward reference: AFL++'s "persistent" mode)
+*  run test in way that avoids I/O
+   *  produce output, but don't write it anywhere
+   *  preload/hardcode any configuration files
+*  do lots of tests in parallel

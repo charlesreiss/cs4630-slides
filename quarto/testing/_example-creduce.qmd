@@ -1,0 +1,15 @@
+
+### CReduce  {.smaller}
+
+
+* Regher et al, "Test-Case Reduction for C Compiler Bugs" (PLDI 2012)
+
+* take a C program that triggers bug…
+* try removing things to make it smaller
+* needed: automated way of checking "is bug still there"
+  * compilers: took advantage of multiple implementations
+<hr class="vspace" />
+* same idea applies to security bugs 
+   * remove as much as possible and get it to still segfault, etc.
+
+

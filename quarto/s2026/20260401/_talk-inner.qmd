@@ -35,6 +35,14 @@
 
 ## what makes good tests? {visibility="hidden"}
 
+### fuzzing so far
+
+*  "black box" approaches 
+   *  "blind" changes to input
+   *  using documentaiton of input format
+   *  don't require us to understand anything about how program works
+*  alternate idea: take advantage of having the code
+
 {{< include /testing/_brainstorm-what-tests.qmd >}}
 
 # metric: coverage {visibility="hidden"}

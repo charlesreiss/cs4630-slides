@@ -2,7 +2,6 @@
 ### thinking about testing
 
 ```{.c code-line-numbers=true}
-// expand("[a-d]q[ef][x-z]") --> "[abcd]q[ef][xyz]"
 void expand(char *arg) {
     if (arg[0] == '[') {
         putchar('[');

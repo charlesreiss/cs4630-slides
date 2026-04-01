@@ -3,10 +3,8 @@
 
 
 * let's say we're testing an HTML parser
-* what code is <em>usually</em> going to when we flip random bits? 
-
+* what code is <em>usually</em> going to run when we flip random bits? 
    * (or remove/add random bytes)
- 
 <hr class="vspace" />
 * how often are we going to generate tags not in starting document?
 * how often are we going to generate new almost-valid documents?
@@ -19,4 +17,42 @@
 &lt;html<span data-fragment-index="1" class="fragment custom myem-only">*</span>&lt;head&gt;&lt;title&gt;A&lt;/title&gt;&lt;/head&gt;&lt;body&gt;B&lt;/body&gt;&lt;/html&gt;
 &lt;html&gt;&lt;<span data-fragment-index="1" class="fragment custom myem-only">i</span>ead&gt;&lt;title&gt;<span data-fragment-index="1" class="fragment custom myem-only">C</span>&lt;/title&gt;&lt;/head&gt;&lt;body&gt;B&lt;/body&gt;&lt;/html&gt;
 </code></pre>
+
+### grammar-based generation
+
+*  is useful to test thing like `<html*<head` and `<head><iead>`, etc...
+*  but probably not where we should spend a majority of our effort
+   *  want more than "syntax error" handling bugs
+<hr class="vspace" />
+*  alternate idea: have a "grammar" of what the input should look like
+   *  use that grammar to generate random examples
+
+### example: Google Project Zero's domato
+
+![](/testing/_domato-header.png){height=200px}
+
+"... Like most DOM fuzzers, Domato is generative, meaning that the fuzzer generates a sample from scratch given a set of grammars that describes HTML/CSS structure as well as various JavaScript objects, properties and functions..."
+
+### example: domato grammar excerpt {.smaller .longcode}
+
+```
+<html root=true> = <lt>!-- saved from url=(0014)about:internet --<gt><lf><lt>html<gt><head><body><newline><lt>/html<gt>
+...
+<body> = <newline><lt>body onload=jsfuzzer()<gt><newline><lt>!--beginhtml--<gt><bodyelements><lt>!--endhtml--<gt><newline><lt>/body<gt>
+...
+<bodyelements> = <newline><element><newline><element><newline><element><newline><element><newline><element><newline><element><newline><element><newline><element><newline><element><newline><element><newline>
+...
+<element> = <HTMLAnchorElement>
+<element> = <HTMLBaseElement>
+<element> = <HTMLBaseFontElement>
+...
+<element> = <HTMLHeadingElement>
+...
+<HTMLAnchorElement> = <lt>a <a_attributes> <attributes><gt><innerelements><lt>/a<gt>
+...
+<HTMLHeadingElement> = <lt>h1 <h1_attributes> <attributes><gt><innerelements><lt>/h1<gt>
+<HTMLHeadingElement> = <lt>h2 <h2_attributes> <attributes><gt><innerelements><lt>/h2<gt>
+<HTMLHeadingElement> = <lt>h3 <h3_attributes> <attributes><gt><innerelements><lt>/h3<gt>
+...
+```
 

@@ -22,43 +22,38 @@ void example(int a, int b) {
 ### state getting complex
 
 *  state before:
-   * a = $\alpha$, b = $\beta$, 
-   * `array[0]` = $x_0$, `array[1]` = $x_1$, ...
+   * a = $\alpha$
+   * `array[0]` = $x_0$; `array[1]` = $x_1$; ...
 
-```c
-    int *p = &array[a];
-    *p += 1;
+```{.c style="font-size: 120%; border: 2px solid black"}
+int *p = &array[a];
+*p += 1;
 ```
 
 *  state after:
    * a = $\alpha$, b = $\beta$,
-   * `array[0]` = $\begin{cases} x_0 + 1& \text{if } \alpha = 0 \\ x_0 & \text{otherwise} \end{cases}$,  ...
+   * `array[0]` = $\begin{cases} x_0 + 1& \text{if } \alpha = 0 \\ x_0 & \text{otherwise} \end{cases}$; ...
 
 
-### splitting the state
+### splitting the state {.smaller}
 
 
-*  state:
-   * a = $\alpha$, b = $\beta$, 
-   * `array[0]` = $x_0$, `array[1]` = $x_1$, ...
-
-```c
-    int *p = &array[a];
-    *p += 1;
+```{.c style="font-size: 120%; border 2px solid black"}
+int *p = &array[a];
+*p += 1;
 ```
 
 *  $\alpha = 0$ state:
    * a = $\alpha$, b = $\beta$,
-   * `array[0]` = $x_0 + 1& \text{if } \alpha = 0 \\ x_0 & \text{otherwise} \end{cases}$, `array[1] =  $x_1$, ...
+   * `array[0]` = $\begin{cases} x_0 + 1& \text{if } \alpha = 0 \\ x_0 & \text{otherwise} \end{cases}$, `array[1] =  $x_1$, ...
 *  $\alpha = 1$ state:
    * a = $\alpha$, b = $\beta$,
-   * `array[1]` = $x_0$, `array[1]` = $x_1 + 1& \text{if } \alpha = 0 \\ x_1 & \text{otherwise} \end{cases}$,  ...
+   * `array[1]` = $x_0$, `array[1]` = $\begin{cases} x_1 + 1& \text{if } \alpha = 0 \\ x_1 & \text{otherwise} \end{cases}$,  ...
 *  ...
 
 
 
 ### angr ‘concretization’ strategies  {.smaller}
-
 
 * angr's design: choose specific set of real addresses for reads and writes
 * problem: really common to have thousands/millions of possibilities 
@@ -74,20 +69,14 @@ void example(int a, int b) {
 
 
 * KLEE (2008; OSDI): symbolic execution for bugfinding
-* works from LLVM bytecode, not assembly 
+* works from LLVM iintermediate representation, not assembly 
 <hr class="vspace" />
 * track <i>memory objects</i> that pointers point to 
-
-   * angr can't really do this --- info not available in assembly
+   * angr can't do this --- info not available in assembly
    * really want to have ‘pointers' that aren’t integers
-
 * if pointer goes outside intended memory object: found a bug! 
-
    * deliberate caveat: find overflow bugs, not <i>exploits</i>
-
 * if pointer can have multiple objects: fork execution for each one 
-
    * like it was an if statement
-
 * solve equation for all possible indices in memory object
 

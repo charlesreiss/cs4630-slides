@@ -2,7 +2,7 @@
 ### angr and ‘solving’ overflows/etc. (1)  {.smaller}
 
 
-```
+```python3
 ...
 p = angr.Project('./over.exe', load_options={'auto_load_libs': False})
 input_chars = [claripy.BVS('in_{}'.format(i), 8) for i in range(5000)]
@@ -19,7 +19,7 @@ sm = p.factory.simulation_manager(st, save_unconstrained=True)
 ### angr and ‘solving’ overflows/etc. (2)  {.smaller}
 
 
-```
+``` python3
 ...
 sm = p.factory.simulation_manager(st, save_unconstrained=True)
 while True:

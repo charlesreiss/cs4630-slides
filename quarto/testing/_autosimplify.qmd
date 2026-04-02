@@ -25,7 +25,7 @@ void vulnerable(char *input) {
 
    * might be what coverage-guided fuzzing finds
 
-* would really prefer minimal example: <code>A00000000000B</code>
+* would really prefer minimal example: <code>AA00000000000B</code>
 
 
 ### automatically simplifying test cases  {.smaller}

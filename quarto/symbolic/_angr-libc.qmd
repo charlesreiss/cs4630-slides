@@ -19,7 +19,7 @@
 ### angr: symbolic input  {.smaller}
 
 
-```
+```python
 # array of 5000 symbolic bytes named in_0, in_1, ...
 input_chars = [claripy.BVS('in_{}'.format(i), 8) for i in range(5000)]
 the_input = claripy.Concat(*input_chars)
@@ -39,7 +39,7 @@ st = p.factory.full_init_state(...,
    * (0 = Linux ‘file descriptor’ for stdin; 1 = stdout)
 
  
-```
+```python
 print("stdin", some_state.posix.dumps(0))
 print("stdout", some_state.posix.dumps(1))
 
@@ -67,7 +67,7 @@ print("stdout", some_state.posix.dumps(1))
 ### example: other libc interception  {.smaller}
 
 
-```
+```python
 class memcpy(angr.SimProcedure):
   def run(self, dst_addr, src_addr, limit):
     if not self.state.solver.symbolic(limit):

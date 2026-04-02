@@ -3,9 +3,11 @@
 
 
 * AFL supports a dictionary 
-
    * list of things to add to create test cases
    * example: all possible HTML tags
+* compiler plugin to generate automatic dictionary
+   * outputs constants/strings compared with
+* AFL's random mutations try inserting values from dictionary
  
 <hr class="vspace" />
 * other strategy: test-case template

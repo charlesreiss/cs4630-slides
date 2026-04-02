@@ -360,6 +360,12 @@ table.stackdiag.stackdiag.stackdiag.stackdiag td.heapstruct {
     margin-top: 0;
 }
 
+.reveal .slide table.collines td:not(:last-child) {border-right: 2px solid black;}
+.reveal .slide table.collines th {border-bottom: 2px solid black;}
+.reveal .slide .collines > table td:not(:last-child) {border-right: 2px solid black;}
+.reveal .slide .rowlines > table td {border-top: 2px solid black; border-bottom: 2px solid black;}
+.reveal .slide table.rowlines td {border-top: 2px solid black; border-bottom: 2px solid black;}
+
 @media print {
     .slide-chalkboard-buttons {
         display: none ! important

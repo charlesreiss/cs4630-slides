@@ -16,7 +16,7 @@ int foo(int x, int y){
 * exercise: possible return values?
 
 
-### in angr (0)  {.smaller}
+### in angr (0)  {.smaller .longcode}
 
 
 ```python
@@ -60,7 +60,7 @@ WARNING  | Filling register 68 with 4 unconstrained bytes referenced from 0x4011
 ```
 
 
-### in angr (0b)  {.smaller}
+### in angr (0b)  {.smaller .longcode}
 
 
 ```
@@ -149,7 +149,8 @@ else 0xc0deb4be))>
 else 0xc0deb4be))>
 
 ```
- \\hrulefill{} 
+
+<hr>
 
 * 0x20 +  
 

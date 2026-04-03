@@ -1,0 +1,45 @@
+### last time {.smaller}
+
+*  random testing and speed/consistency
+   *  crashes/hangs
+   *  small, fast tests
+*  trap of overtesting "syntax error"-type cases
+*  grammar-best random test generators
+*  measuring coverage
+*  AFL-style coverage-based tests
+   *  vary base set of tests that include all branch decisions
+
+## AFL as running example {visibility="hidden"}
+
+{{< include /testing/_afl.qmd >}}
+
+## automatic test case simplification {visibility="hidden"}
+
+{{< include /testing/_autosimplify.qmd >}}
+
+{{< include /testing/_example-creduce.qmd >}}
+
+### upcoming assignment
+
+*  `indent` utility
+   *  takes C program, reformats it
+   *  original version used sandboxing, so anything you find probably not exploitable
+*  run under AFL++
+   *  enable AddressSanitizer to make crashes more consistent
+   *  find some crashes
+*  diagnose those crashes
+   *  figure out what the bugs actually are
+
+## AFL: test template support {visibility="hidden"}
+
+{{< include /testing/_afl-test-templates.qmd >}}
+
+## cmplog
+
+{{< include /testing/_cmplog.qmd >}}
+
+## whiter boxes {visibility="hidden"}
+
+{{< include /testing/_whiter-box-preview.qmd >}}
+
+{{< include /symbolic/_talk-inner.qmd >}}

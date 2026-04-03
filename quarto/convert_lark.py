@@ -98,6 +98,7 @@ fontsize_group: _BRACE fontsize any_text _END_BRACE
     | NEWCOMMAND -> tikz_context
     | LRBOX -> tikz_context_begin_document
     | INCLUDE_GRAPHICS -> include_graphics
+    | _BEGIN_FRAMED any_text _END_FRAMED -> framed
     | any_text_raw
 
 columns: (column whitespace?)+
@@ -143,6 +144,8 @@ VERBATIM.10: /\\begin\{(?:Verbatim|lstlisting|minted)\}\s*(?:\[[^]]+\])?
               (?s:.*?)\n
               \\end\{(?:Verbatim|lstlisting|minted)\}/x
 INLINE_VERBATIM.10: /
+        \\PHPinline\|[^|]+\|
+        |
         \\lstinline\|[^|]+\|
         |
         \\verb\*?\|[^|]+\|
@@ -182,6 +185,8 @@ _BEGIN_MINIPAGE.10: /\\begin\{minipage\}/
 _END_MINIPAGE.10: /\\end\{minipage\}/
 _BEGIN_DOCUMENT.10: /\\begin\{document\}/
 _END_DOCUMENT.10: /\\end\{document\}/
+_BEGIN_FRAMED.10: /\\begin\{framed\}/
+_END_FRAMED.10: /\\end\{framed\}/
 BEGIN_GENERIC.0: /\\begin\{(?!isheldback|lrbox|comment|onlyenv|minipage|tabular|itemize|Verbatim|visibleenv|frame|FragileFrame|document|tikzpicture)\w+\}/
 END_GENERIC.0: /\\end\{(?!lrbox|comment|onlyenv|minipage|tabular|itemize|Verbatim|visibleenv|frame|FragileFrame|document|tikzpicture)\w+\}/
 _BRACE.-10: /\{/
@@ -1029,6 +1034,7 @@ class AnyText(_MyAstItem):
             return self.parts[start].render(context)
         else:
             with context.inner(strip_ends=False) as inner_context:
+                logging.debug('parts = %s', self.parts[start:end+1])
                 result = ''.join(map(
                     methodcaller('render', inner_context),
                     self.parts[start:end+1]
@@ -1054,6 +1060,17 @@ class FontsizeGroup(_MyAstItem):
     def inner_text(self) -> str:
         return self.text.inner_text
 
+
+@dataclass
+class Framed(_MyAstItem):
+    contents: AnyText
+
+    def render(self, context: RenderContext) -> result:
+        result = '\n\n::: {style="border: 2px solid black"}\n'
+        with context.inner() as inner_context:
+            result += self.contents.render(inner_context)
+        result += '\n:::\n\n'
+        return result
 
 @dataclass
 class Column(_MyAstItem):
@@ -1153,7 +1170,7 @@ class InlineVerbatim(_MyAstItem):
 
     def __init__(self, token):
         value = token.value
-        for prefix in (r'\lstinline', r'\verb*', r'\verb'):
+        for prefix in (r'\lstinline', r'\PHPinline', r'\verb*', r'\verb'):
             if value.startswith(prefix):
                 value = value[len(prefix):]
                 break 

@@ -1,12 +1,18 @@
 
-\begin{frame}<0>[fragile,label=storedXSS]{stored cross-site scripting}
-\begin{tikzpicture}
-    \node[draw,thick,inner sep=5mm,align=left,text=red!70!black,align=left] (commentBox) {
+
+\newsavebox{\storedXssComment}
+\begin{lrbox}{\storedXssComment}
 \begin{lstlisting}[language={}]
 <script>
     document.location = 'http://attacker.com';
 </script>
 \end{lstlisting}
+\end{lrbox}
+
+\begin{frame}<0>[fragile,label=storedXSS]{stored cross-site scripting}
+\begin{tikzpicture}
+    \node[draw,thick,inner sep=5mm,align=left,text=red!70!black,align=left] (commentBox) {
+\usebox{\storedXssComment}
     };
     \node[anchor=south west] at (commentBox.north west) { Your comment: };
     \node[align=left,anchor=north west] (nameLabel) at (commentBox.south west) {

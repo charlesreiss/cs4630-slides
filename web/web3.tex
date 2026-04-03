@@ -136,8 +136,6 @@
     moredelim={**[is][\btHL<3-4|handout:0>]{~3~}{~end~}},
     moredelim={**[is][\btHL<4|handout:0>]{~4~}{~end~}},
 }
-\begin{tikzpicture}
-\node[anchor=north east] (code) at (0, 0) {
 \begin{lstlisting}
 // in HTML near this JavaScript:
 // <video id="vid"> (video player element)
@@ -154,8 +152,6 @@ ms = new WebKitMediaSource();
 ms.addEventListener('webkitsourceopen', source_opened);
 vid.src = window.URL.createObjectURL(ms);
 \end{lstlisting}
-};
-\end{tikzpicture}
 \end{frame}
 
 \begin{frame}{browsers and exploits}

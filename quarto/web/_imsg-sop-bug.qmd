@@ -1,0 +1,39 @@
+
+## not working: iMessage flaw {visibility="hidden"}
+
+### iMessage bug  {.smaller}
+
+
+
+* iMessage (Apple IM client): embedded browser to display messages 
+
+   * a common (easy?) way to write user interfaces
+
+* old bug: click on <em>malicious link, send message logs to attacker</em> 
+
+   * CVE-2016-1764
+ 
+<hr class="vspace" />
+* message links could [include javascript]{.fragment fragment-index=2 .custom .myem-only}
+* same-origin policy [not enforced]{.fragment fragment-index=2 .custom .myem-only}
+     [https://www.bishopfox.com/blog/2016/04/if-you-cant-break-crypto-break-the-client-recovery-of-plaintext-imessage-data/]{.mycredit}
+
+### againframe(iMsgBug)
+
+### JavaScript URL  {.smaller}
+
+
+* \\fbox{<code>javascript:some java script code</code>} is a kind of URL
+* runs JavaScript when clicked (<em>permissions of current web page</em>)
+* iMessages allowed <code><i>ANYTHING</i>://<i>ANYTHING</i></code> as a link 
+
+   * <code>https://www.google.com/</code>
+   * <code>invalidnamethatdoesnotdoanything://otherStuff</code>
+   * <code>javascript://%0a\\fbox{JavaScriptCodeHere}</code> (%0a = newline)
+
+* JS can request <code>file:///Users/somename/Library/Messages/chat.db</code>  
+
+   * <em>no same origin policy just for the UI</em>
+   * should have prohibited this
+
+

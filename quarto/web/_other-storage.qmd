@@ -1,0 +1,6 @@
+
+### other storage 
+
+[[developer.mozilla.org/en-US/docs/Web/Privacy/Guides/Redirect_tracking_protection](developer.mozilla.org/en-US/docs/Web/Privacy/Guides/Redirect_tracking_protection)]{.my-small} 
+![](/web/ff-redirect-clears){}
+

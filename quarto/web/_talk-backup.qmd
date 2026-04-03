@@ -1,0 +1,18 @@
+
+## HTML form {visibility="hidden"}
+
+{{< include /web/_html-form.qmd >}}
+
+## aside: CSRF {visibility="hidden"}
+
+{{< include /web/_csrf.qmd >}}
+
+{{< include /web/_trust-client.qmd >}}
+
+### againframe(noSameOrigin)
+
+{{< include /web/_web-sop-visited.qmd >}}
+
+{{< include /web/_samesite.qmd >}}
+
+{{< include /web/_web3.qmd >}}

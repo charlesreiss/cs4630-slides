@@ -1,0 +1,106 @@
+
+# the web overall {visibility="hidden"}
+
+{{< include /web/_multisite-browser-os.qmd >}}
+
+# HTTP request/response {visibility="hidden"}
+
+{{< include /web/_http-req-resp.qmd >}}
+
+# HTTP logins with cookies {visibility="hidden"}
+
+{{< include /web/_http-login.qmd >}}
+
+## cookie fields {visibility="hidden"}
+
+{{< include /web/_cookie-fields.qmd >}}
+
+## HTML form {visibility="hidden"}
+
+{{< include /web/_html-form.qmd >}}
+
+## aside: CSRF {visibility="hidden"}
+
+{{< include /web/_csrf.qmd >}}
+
+## XSS cookie extraction {visibility="hidden"}
+
+{{< include /web/_reflect-xss.qmd >}}
+
+{{< include /web/_stored-xss.qmd >}}
+
+{{< include /web/_xss-example.qmd >}}
+
+## XSS detection {visibility="hidden"}
+
+{{< include /web/_xss-detect.qmd >}}
+
+## XSS mitiations {visibility="hidden"}
+
+{{< include /web/_xss-mit.qmd >}}
+
+## CSP {visibility="hidden"}
+
+{{< include /web/_csp.qmd >}}
+
+## on user-content {visibility="hidden"}
+
+{{< include /web/_xss-user-content.qmd >}}
+
+## clickjacking {visibility="hidden"}
+
+{{< include /web/_clickjack.qmd >}}
+
+## embedded/SOP {visibility="hidden"}
+
+{{< include /web/_sop.qmd >}}
+
+## iMessage SOP bug {visibility="hidden"}
+
+{{< include /web/_imsg-sop-bug.qmd >}}
+
+## SOP details/leak {visibility="hidden"}
+
+{{< include /web/_sop-detail-leak.qmd >}}
+
+# information leaks despite SOP {visibility="hidden"}
+
+## facebook login: embedding {visibility="hidden"}
+
+### againframe(noSameOrigin)
+
+{{< include /web/_web-sop-fb-login.qmd >}}
+
+## timing leak {visibility="hidden"}
+
+{{< include /web/_web-sop-timing.qmd >}}
+
+## deliberate sharing {visibility="hidden"}
+
+{{< include /web/_delib-share.qmd >}}
+
+## CORS {visibility="hidden"}
+
+{{< include /web/_cors.qmd >}}
+
+## SRI {visibility="hidden"}
+
+{{< include /web/_sri.qmd >}}
+
+# user tracking {visibility="hidden"}
+
+{{< include /web/_user-track.qmd >}}
+
+## third-party cookies {visibility="hidden"}
+
+{{< include /web/_third-party-cookie.qmd >}}
+
+{{< include /web/_track-wo-cookie.qmd >}}
+
+## other storage {visibility="hidden"}
+
+{{< include /web/_other-storage.qmd >}}
+
+## browser fingerprinting {visibility="hidden"}
+
+{{< include /web/_browser-finger.qmd >}}

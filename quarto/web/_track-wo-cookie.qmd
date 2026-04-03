@@ -1,0 +1,48 @@
+
+### tracking without cookies  {.smaller}
+
+
+* websites can do tracking even with no cookies 
+
+   * information in URLs --- add <code>?sessionID</code> to all links
+   * web page caches
+
+* websites can ‘‘fingerprint’’ browser and machine 
+
+   * version, fonts, screen resolution, plugins, graphics features, …
+   * [caching]{.fragment fragment-index=2 .custom .myem-only} of previously downloaded resources
+   * almost unique a surprising amount of the time
+
+* have IP addresses, too --- very good hints
+
+
+### tracking without cookies: redirect 
+
+![](/web/texfig/track-wo-cookie-tracking-without-cookies-redirect.figure.svg)
+
+
+### no redirect? 
+
+
+* can achieve similar effect by embedding iframe, other resources
+
+
+### tracking without cookies  {.smaller}
+
+
+* problem: this looks exactly like a normal single-sign-on flow 
+<hr class="vspace" />
+* Firefox, Safari use heuristics to distinguish:
+* in Firefox ([ [developer.mozilla.org/en-US/docs/Web/Privacy/Guides/Redirect_tracking_protection](developer.mozilla.org/en-US/docs/Web/Privacy/Guides/Redirect_tracking_protection)]{.my-small}) 
+
+   * periodically clear cookies/other storage from redirect/etc.-like trackers
+   * if on list of known trackers, no user interaction
+   * …
+
+* in Safari ([ [https://webkit.org/tracking-prevention/](https://webkit.org/tracking-prevention/)]{.my-small}) 
+
+   * look for redirect/embed like patterns
+   * periodically clear cookies/etc. if no user interaction
+   * …
+
+

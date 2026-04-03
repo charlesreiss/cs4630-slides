@@ -1,0 +1,27 @@
+
+## SOP details {visibility="hidden"}
+
+### operations requiring same origin 
+
+
+* accessing webpage you loaded in iframe, pop-up window, etc.
+* accessing webpage loading you in iframe, pop-up window, etc.
+* sending <i>certain kinds of</i> requests 
+
+   * most notably XMLHTTPRequest --- ‘‘AJAX’’
+
+
+
+### operations not requiring same origin  {.smaller}
+
+
+* [loading images, stylesheets (CSS), video, audio]{.fragment fragment-index=2 .custom .myem-only}
+* [linking to websites]{.fragment fragment-index=3 .custom .myem-only}
+* [loading scripts]{.fragment fragment-index=7 .custom .myem-only} 
+
+   * but not getting syntax errors
+
+* [accessing with ‘‘permission’’ of other website]{.fragment fragment-index=4 .custom .myem-only}
+* [submitting forms to other webpages]{.fragment fragment-index=5 .custom .myem-only}
+* [requesting/displaying other webpages \sout{(but not reading contents)}]{.fragment fragment-index=6 .custom .myem-only}
+

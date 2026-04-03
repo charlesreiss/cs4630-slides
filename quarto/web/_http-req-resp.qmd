@@ -1,0 +1,49 @@
+
+### HTTP requests 
+
+<code>https://server.com/dir/file?query=string#anchor</code> <br> browser connects to server.com; <em>browser</em> sends: 
+
+::: {style="border: 2px solid black; font-face: 'Source Code Pro', monospace;"}
+[GET]{.fragment fragment-index=2 .custom .myem-only} /dir/file?query=string HTTP/1.1<br/>
+[Host: [server.com]{.fragment fragment-index=4 .custom .myem-only}{.fragment fragment-index=3 .custom .myem-only}<br/>
+[<i>Other-Key</i>: <i>Other-Value</i>]{.fragment fragment-index=3 .custom .myem-only}
+<br>
+…
+:::
+
+::: {.myoverbox .vlow .fragment .fade-in-then-out fragment-index=2}
+
+method: GET or POST most common<br/>
+GET -- read web page<br/>
+POST -- submit form
+
+:::
+
+::: {.myoverbox .vlow .fragment .fade-in-then-out fragment-index=2}
+
+headers: extra information with request
+
+:::
+
+::: {.myoverbox .vlow .fragment .fade-in-then-out fragment-index=2}
+
+example extra info: domain name from URL <br/>
+servers can host multiple domains
+
+:::
+
+
+### HTTP responses 
+
+<code>https://server.com/path/to/file?query=string#anchor</code> <br> after browser sends request; <em>server</em> sends: 
+
+::: {style="border: 2px solid black; font-face: 'Source Code Pro', monospace;"}
+
+HTTP/1.1 200 OK<br />
+Content-Type: text/html<br />
+<i>Other-Key</i>: <i>Other-Value</i><br />
+&nbsp;<br />
+&lt;html&gt;… 
+
+:::
+

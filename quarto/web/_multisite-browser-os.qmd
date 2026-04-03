@@ -1,0 +1,26 @@
+
+### the web  {.smaller}
+
+![](/web/texfig/multisite-browser-os-the-web.figure.svg)
+ 
+
+* one web browser talks to multiple websites
+* how does it (or does it) keep each websites seperate?
+* even though websites can link to each other/etc.?
+
+
+### the browser is basically an OS  {.smaller}
+
+
+* websites are JavaScript programs
+* websites can communicate with each other 
+
+   * one website can embed another
+   * cause browser to send requests to another
+
+* websites can store data on the browser 
+
+   * cookies
+   * local storage
+
+

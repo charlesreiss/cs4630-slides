@@ -1,0 +1,63 @@
+
+### trusting the client (1)  {.smaller}
+
+
+```html
+<form action="https://example.com/formmail.pl" method="POST">
+<input type="hidden" name="recipient"
+       value="webmaster@example.com">
+Your email: <input name="from" value=""><br>
+Your message: <textarea name="message"></textarea>
+...
+<input type="submit">
+</form>
+
+```
+ 
+
+* if this my form, can I get a recipient of <code>spamtarget@foo.com</code>? 
+
+   * Am I <em>enabling spammers</em>??
+
+* Yes, because attacker could <em>make own version of form</em>
+
+
+### Referer header 
+
+Submitting form at <code>https://example.com/feedback.html</code>: 
+
+::: {style="border: 2px solid black"}
+ <code></code>[]{.my-small} POST /formmail.pl HTTP/1.1 <br> Host: example.com <br> Content-Type: application/x-www-form-urlencoded <br> <em>Referer: https://example.com/feedback.html</em> <br> &nbsp; <br> recipient=webmaster@example.com&amp;from=… <br> 
+:::
+
+ 
+
+* <em>sometimes</em> sent by web browser
+* if browser always sends, <em>does this help?</em>
+
+
+### trusting the client (2)  {.smaller}
+
+
+```html
+<form action="https://example.com/formmail.pl" method="POST">
+<input type="hidden" name="recipient"
+       value="webmaster@example.com">
+...
+<input type="submit">
+</form>
+
+```
+ 
+
+* can I get a recipient of <code>spamtarget@example.com</code> <em>and the right referer header</em>? 
+
+   * attacker can't modify the form on example.com!
+   * browser sends header with URL of form
+
+* Yes, because attacker can <em>customize their browser</em>
+
+
+### trusting the client (3)  {.smaller}
+
+\\setlength{\\parskip{}0em} <code></code> ISS E-Security Alert  <br> February 1, 2000  Form Tampering Vulnerabilities in Several Web-Based Shopping Cart Applications … Many web-based shopping cart applications <em>use hidden fields in HTML forms</em> to hold parameters for items in an online store. These parameters can include the item's name, weight, quantity, product ID, and <em>price</em>.… … Several of these applications use a security method based on <em>the HTTP header</em> to verify the request is coming from an appropriate site.… The ISS X-Force has identified <em>eleven shopping cart applications</em> that are vulnerable to form tampering. … &nbsp;

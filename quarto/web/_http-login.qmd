@@ -1,0 +1,20 @@
+
+### implementing logins on HTTP  {.smaller}
+
+
+* typical mechanism: <em>cookies</em>
+* information for <em>client to send</em> with future requests to server 
+
+   * limited to <em>particular domain</em> (or domain+path)
+
+* Server sets cookie set via header in HTTP response 
+
+   * <code> Set-Cookie: key=theInfo; domain=example.com; expires=Wed, Apr …</code>
+
+* Client sends back cookie with <em>every HTTP request</em>* 
+
+   * &nbsp;* --- with some exceptions
+   * <code> Cookie: key=theInfo</code>
+
+* JavaScript can also read or set Cookie
+

@@ -1,0 +1,25 @@
+
+### changing the cookie policy (1) 
+
+
+* idea: no ‘‘third-party’’ cookies
+* only send cookies for URL in address bar
+
+
+### via ArsTechnica 
+
+
+![](/web/arstech-3rd-party-cookie){}
+
+
+### third-party cookie restrictions  {.smaller}
+
+
+* Firefox: 
+<hr class="vspace" />
+* separate ‘cookie jar’ for each top-level domain
+* tracker.com loaded from foo.com != tracker.com loaded from bar.com 
+<hr class="vspace" />
+* Safari:
+* third-party cookies just blocked
+

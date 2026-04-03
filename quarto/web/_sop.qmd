@@ -1,0 +1,113 @@
+
+### web pages in web pages (1)  {.smaller}
+
+
+ 
+```html
+<iframe id="localFrame" src="./localsecret.html"
+    onload="readLocalSecret()"></iframe>
+<script>
+function readLocalSecret() {
+    alert(document.getElementById('localFrame').
+          contentDocument.innerHTML);
+}
+</script>
+
+```
+ 
+ 
+
+* displays localsecret.html's <em>contents</em> in an alert box
+* can also extract specific parts of page
+* same idea works for sending it to remote server
+
+
+### web pages in web pages (2)  {.smaller}
+
+
+  \\setlength{\\parskip{}-0.5\\baselineskip{}} 
+```html
+<iframe id="remoteFrame"
+    src="https://collab.virginia.edu/..."
+    onload="readRemoteSecret()></iframe>
+<script>
+function doIt() {
+    alert(document.getElementById('remoteFrame').
+          contentDocument.innerHTML);
+}
+</script>
+
+```
+ 
+
+* will this work?
+
+
+### what happened? 
+
+
+* ‘‘TypeError: document.getElementById(...).contentDocument is null’’
+* web browser denied access 
+<hr class="vspace" />
+* <em>Same Origin Policy</em>
+
+
+# same-origin policy {visibility="hidden"}
+
+### browser protection  {.smaller}
+
+
+* websites want to <em>load content dynamically</em> 
+
+   * Google docs --- send what others are typing
+   * webmail clients autoloading new emails, etc.
+   * …
+
+* but shouldn't be able to do so from any other website 
+
+   * e.g. read grades of Canvas if I'm logged in
+
+
+
+### same-origin policy  {.smaller}
+
+
+* two pages from same <em><em>origin</em></em>: scripts can do anything
+* two pages from different <em><em>origins</em></em>: almost no information 
+<hr class="vspace" />
+* idea: different websites can't interfere with each other 
+
+   * facebook can't learn what you do on Google --- unless Google allows it
+
+* <em>enforced by browser</em>
+
+
+### origins  {.smaller}
+
+
+* origin: part of URL up to server name: 
+
+   * <code><em>https://example.com</em>/foo/bar</code>
+   * <code><em>http://localhost</em>\\tikzmark{local1}/foo/bar</code>
+   * <code><em>http://localhost:8000</em>\\tikzmark{local2}/foo/bar</code>
+   * <code><em>https://www.example.com</em>/foo/bar</code>
+   * <code><em>http://example.com</em>/foo/bar</code>
+   * <code><em>https://other.com</em>/foo/bar</code>
+   * <code><em>file:///</em>home/cr4bd</code>
+
+
+
+### againframe(cookieFields)
+
+### origins and shared servers  {.smaller}
+
+
+* very hard to safely share a <em>domain name</em>
+* can never let attacker write scripts on same domain 
+
+   * even if cookies don't matter
+
+* similar issues with plugins (e.g. Flash) 
+<hr class="vspace" />
+* can share server --- one server can host <em>multiple names</em>
+

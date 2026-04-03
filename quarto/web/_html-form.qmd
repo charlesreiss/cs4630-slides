@@ -1,0 +1,45 @@
+
+### HTML forms (1)  {.smaller}
+
+
+```html
+<form action="https://example.com/search/" method="GET">
+<input type="hidden" name="recipient"
+       value="webmaster@example.com">
+Search for: <input name="q" value=""><br>
+<input type="submit" value="Search">
+</form>
+
+```
+ 
+
+::: {style="border: 2px solid black; font-face: 'Source Code Pro', monospace;"}
+GET /search/?q=What%20I%20searched%20for HTTP/1.1 <br> Host: example.com 
+:::
+
+ 
+
+* q is ‘‘[What I searched for]{style="border: 2px solid black"}’’
+* %20 --- character hexadecimal 20 (space)
+
+
+### HTML forms (2)  {.smaller}
+
+
+```html
+<form action="https://example.com/formmail.pl" method="POST">
+<input type="hidden" name="recipient"
+       value="webmaster@example.com">
+Your email: <input name="from" value=""><br>
+Your message:<textarea name="message"></textarea>
+<input type="submit">
+</form>
+
+```
+ 
+
+::: {style="border: 2px solid black"}
+ <code></code>[]{.my-small} POST /formmail.pl HTTP/1.1 <br> Host: example.com <br> Content-Type: application/x-www-form-urlencoded <br> &nbsp; <br> recipient=webmaster@example.com&amp;from=<i>what%20I%20Entered</i><br>&amp;message=<i>Some%20message%0a…</i> <br> 
+:::
+
+

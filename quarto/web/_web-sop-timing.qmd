@@ -1,0 +1,6 @@
+
+### timing leak  {.smaller}
+
+[ Goethem, et al ‘‘SoK: Exploring Current and Future Research Directions on XS-Leaks through an Extended Formal Model'’ (ASIA CSS ’22)]{.my-small} (assuming icon loaded on results page:) <br> 
+![](/web/goethem-ex-leak){}
+

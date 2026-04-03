@@ -1,0 +1,108 @@
+
+### deliberate sharing: retrieving information  {.smaller}
+
+
+* what about retrieving information from JavaScript?
+* example: Google Translator API
+* example: Token to Username API 
+<hr class="vspace" />
+* explicit mechanism for server opt-in to cross-origin requests (where webpage can read result) 
+
+   * Cross-Origin Resource Sharing
+
+* <em>no opt-in? JS fails</em> like before
+* always sends Origin --- no pretending to be innocent user
+
+
+### cross-origin resource sharing  {.smaller}
+
+
+* sometimes want exceptions to usual origin policy: 
+<hr class="vspace" />
+* let scripts on foo.com load data from bar.com 
+
+   * example: bar.com running maps API
+
+* need mechanism for bar.com to give permission 
+
+   * don't accidentally leak logged-in only info
+
+* historically didn't worry about this: 
+
+   * no restrictions on loading images/scripts from elsewhere
+   * … even though they may be based on cookies/etc.
+
+
+
+### Fetch standard 
+
+
+* modern browsers: Fetch standard 
+
+   * [[https://fetch.spec.whatwg.org/](https://fetch.spec.whatwg.org/)]{.my-small}
+
+* defines procedures for fetching resources in general 
+
+   * loading imgs, scripts
+   * requests from JavaScript
+
+
+
+### Fetch request types  {.smaller}
+
+
+* standard defines request types with different rules:
+* navigate --- go to whole new web page
+* no-cors --- ‘old’ default 
+
+   * limit to ‘normal’ methods
+   * very limited setting of HTTP headers by scripts
+   * [response contents not directly visible to scripts]{.fragment fragment-index=2 .custom .myem-only} (but could, e.g., be displayed as image, set image size, etc.)
+
+* cors 
+
+   * remote server needs to specify what's allowed
+
+* same-origin 
+
+   * remote server needs to have same origin
+
+
+
+### crossorigin attribute 
+
+
+* `<img src=...>` --- no-cors
+* `<img src=... crossorigin="anonymous">` --- cors, don't send cookies
+* `<img src=... crossorigin="use-credentials">` --- cors, do send cookies 
+<hr class="vspace" />
+* also exists for script and several other tags…
+
+
+### preflighting  {.smaller}
+
+
+
+* want server to tell us whether request is allowed
+* problem: normally server only responds after making request anyways 
+<hr class="vspace" />
+* solution: make ‘preflight’ request to ask
+ 
+![](/web/cors-preflight-ex){}
+
+
+### Access-Control-Allow\ldots  {.smaller}
+
+
+* Origin --- who can make requests
+* Headers --- what headers scripts can read
+* Credentials --- should request include cookies/other auth. info 
+
+   * NOTE: not even checked on no-CORS request!
+   * NOTE: client may not include cookies for privacy reasons, still
+   * NOTE: script making request can ask to not include cookie
+
+* Request-Headers --- request headers scripts can set
+* Request-Method
+* Max-Age --- how long to remember these settings before asking again
+

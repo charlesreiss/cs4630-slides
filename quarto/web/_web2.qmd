@@ -1,0 +1,43 @@
+
+## Cookies and logins {visibility="hidden"}
+
+### last time: web security  {.smaller}
+
+
+* <em>stateless</em> requests (single URL)
+* added <em>cookies</em> to tie requests together 
+
+   * ‘‘session ID’’ --- identifies, e.g., login
+
+* client versus server trust 
+
+   * don't trust <em>the attacker's browser</em>
+
+* XSS --- command injection in HTML 
+
+   * power of scripting --- get cookies
+   * doesn't need to be stored --- embed in other web page
+   * extract info to external site --- e.g., fetch image
+
+
+
+### evil client/innocent website 
+
+![](/web/texfig/web2-evil-clientinnocent-website.figure.svg)
+
+
+### XSS demo 
+
+
+
+# web pages in web pages {visibility="hidden"}
+
+# Clickjacking {visibility="hidden"}
+
+# Deliberate Sharing {visibility="hidden"}
+
+### againframe(noSameOrigin)
+
+### demo 
+
+

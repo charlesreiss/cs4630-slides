@@ -1,0 +1,14 @@
+
+### on user tracking  {.smaller}
+
+
+* embedding one web page in another enables tracking users across website
+* example: multiple webpages include <code>iframe</code> with a google ad 
+
+   * your browser sends request <em>to Google with same cookie</em>
+   * Google reliably gets excerpt of web history
+
+* reason: websites cooperated with Google
+* users often don't like this
+* what can browsers do about this?
+

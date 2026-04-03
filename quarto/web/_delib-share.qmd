@@ -1,0 +1,29 @@
+
+### deliberate sharing  {.smaller}
+
+
+
+* websites often want to access other websites
+* embedded frame often not enough 
+<hr class="vspace" />
+* example: Facebook login API
+ 
+![](/web/fb-login-api){}
+
+
+### deliberate sharing: single-sign-on API 
+
+
+
+::: {.r-stack .my-full}
+![](/web/texfig/ssoLogin.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/web/texfig/ssoLogin.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+![](/web/texfig/ssoLogin.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
+![](/web/texfig/ssoLogin.figure-4.svg){.fragment .fade-in-then-out fragment-index=4}
+
+
+:::
+

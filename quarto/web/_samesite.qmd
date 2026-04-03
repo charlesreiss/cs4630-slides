@@ -1,0 +1,13 @@
+
+### cross-site cookie policy changes  {.smaller}
+
+
+* new cookie attribute <code>SameSite=…</code>:
+* <code>Strict</code>: only if same top-level origin making request
+* <code>Lax</code> (essentially new default): not on embedded (image/iframe/etc.) requests from different origin 
+
+   * and not POST/etc. requests
+   * … but can create popup/etc. window
+
+* <code>None</code>: on all requests
+

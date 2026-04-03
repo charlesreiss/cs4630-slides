@@ -1,0 +1,20 @@
+
+### stored cross-site scripting 
+
+![](/web/texfig/storedXSS.figure.svg)
+
+
+### stored cross-site scripting 
+
+
+![](/web/stores-xss){}
+
+
+### scripts on webpages 
+
+
+* this example: redirect someone reading comment to other website
+* common proof of concept: make alert box 
+<hr class="vspace" />
+* not especially useful for most attacker goals
+

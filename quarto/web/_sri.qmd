@@ -1,0 +1,17 @@
+
+### subresource integrity  {.smaller}
+
+
+
+* common to want someone else to host files
+* big risk for scripts 
+<hr class="vspace" />
+* subresource integrity: check that file does not changej
+ 
+```
+<script
+  src="https://cdn.com/bigfile.js"
+  integrity="sha384-oqVuAfXRKap7fdgcCY5uykM6+R9GqQ8K/uxy9rx7HNQlGYl1kPzQho1wx4JwY8wC"></script>
+
+```
+

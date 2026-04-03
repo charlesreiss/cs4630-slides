@@ -1,0 +1,27 @@
+
+### logged into facebook? (1) 
+
+
+* <code>https://www.facebook.com/login.php?next=<i>URL</i></code>
+* login page if <em>you are not logged in</em>
+* otherwise redirects to <i>URL</i>
+
+
+### logged into facebook? (2)  {.smaller}
+
+
+
+* <code>https://www.facebook.com/favicon.ico</code> is an image
+* load via conditional redirect:
+ 
+```html
+<img src="http://www.facebook.com/login.php?next= https%3A//www.facebook.com/favicon.ico"
+    onload="doLoggedInStuff()"
+    onerror="doNotLoggedInStuff()">
+
+```
+ 
+
+* with third-party cookies enabled… (more later)
+* would work/not work depending on if logged into facebook
+ [via <code>https://robinlinus.github.io/socialmedia-leak/</code>]{.mycredit}

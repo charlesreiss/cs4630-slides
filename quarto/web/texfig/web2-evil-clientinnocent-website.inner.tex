@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+        \node[fill=red!30,minimum height=5cm,minimum width=2cm,align=center] (attacker) at (0, 0) {
+            attacker's \\ web browser
+        };
+        \node[fill=blue!30,minimum height=5cm,minimum width=2cm,align=center] (server) at (12, 0) {
+            vulnerable \\ website
+        };
+
+        \draw[thick,-Latex] ([yshift=-1cm] attacker.east) -- ([yshift=-1cm]server.west)
+                node[midway,above,align=center] {
+            command injection? \\ \texttt{email=\fbox{"; dangerousCommand}}
+        };
+
+        \draw[thick,-Latex] ([yshift=1cm] attacker.east) -- ([yshift=1cm]server.west) node[midway,above,align=center] {
+            improperly trusted input? \\ \texttt{price=\fbox{\$0}}
+        };
+    \end{tikzpicture}

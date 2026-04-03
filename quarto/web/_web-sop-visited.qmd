@@ -1,0 +1,41 @@
+
+### old problem: visited links  {.smaller}
+
+
+
+* browsers can display visited versus unvisited links different: 
+![](/web/visitedunvisited){}
+
+* javascript can query the ‘‘computed style’’ of a link
+ 
+```html
+<style>:visited{color:red}</style>
+<a id="lnk" href="https://facebook.com/secretgroup/">link</a>
+<script>
+var link = document.getElementById("lnk");
+if (window.getComputedStyle(link, null).getProperty('color')
+    == ...) {
+    ...
+}
+</script>
+
+```
+
+
+### visited link: fix  {.smaller}
+
+
+* most browsers have fixed visited link ‘‘leaks’’ --- not trivial
+* getComputedStyle <em>lies about visited links</em> 
+
+   * as if unvisited
+
+* many types of <em>formatting disallowed</em> for visited links 
+
+   * e.g. different font size --- could detect from sizes of other things
+
+* probably <em>incomplete solution?</em>  
+
+   * still tricks involving page appearance
+
+

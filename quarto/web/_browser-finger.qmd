@@ -1,0 +1,12 @@
+
+### browser fingerprinting (1) 
+
+
+![](/web/browser-fp-survey-tbl3){}
+ [P. Laperdrix et al, ‘‘Browser Fingerprinting: A Survey’’ (2020; ACM TotW)]{.mycredit}
+
+### browser fingerprinting (2) 
+
+
+![](/web/browser-fp-survey-tbl4){}
+ [P. Laperdrix et al, ‘‘Browser Fingerprinting: A Survey’’ (2020; ACM TotW)]{.mycredit}

@@ -1,0 +1,13 @@
+
+### evil website/innoncent website 
+
+
+
+::: {.r-stack .my-full}
+![](/web/texfig/xss-example.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/web/texfig/xss-example.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+
+:::
+

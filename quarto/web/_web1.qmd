@@ -1,0 +1,180 @@
+
+### stored cross-site scripting 
+
+![](/web/texfig/storedXSS.figure.svg)
+
+
+### stored cross-site scripting 
+
+
+![](/web/stores-xss){}
+
+
+# Web overall {visibility="hidden"}
+
+### the web  {.smaller}
+
+![](/web/texfig/web1-the-web.figure.svg)
+ 
+
+* one web browser talks to multiple websites
+* how does it (or does it) keep each websites seperate?
+* even though websites can link to each other/etc.?
+
+
+### the browser is basically an OS  {.smaller}
+
+
+* websites are JavaScript programs
+* websites can communicate with each other 
+
+   * one website can embed another
+   * cause browser to send requests to another
+
+* websites can store data on the browser 
+
+   * cookies
+   * local storage
+
+
+
+## HTTP {visibility="hidden"}
+
+### HTTP requests 
+
+<code>https://server.com/dir/file?query=string#anchor</code> <br> browser connects to server.com; <em>browser</em> sends: 
+
+::: {style="border: 2px solid black"}
+ <code></code> [GET]{.fragment fragment-index=2 .custom .myem-only}\\tikzmark{method} /dir/file?query=string HTTP/1.1 <br> [Host: [server.com]{.fragment fragment-index=4 .custom .myem-only}\\tikzmark{host}]{.fragment fragment-index=3 .custom .myem-only} <br> [<i>Other-Key</i>: <i>Other-Value</i>]{.fragment fragment-index=3 .custom .myem-only} <br> … <br> &nbsp; <br> 
+:::
+
+ ![](/web/texfig/HTTPReq.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/web/texfig/HTTPReq.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+![](/web/texfig/HTTPReq.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=3}
+![](/web/texfig/HTTPReq.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=4}
+
+
+### HTTP responses 
+
+<code>https://server.com/path/to/file?query=string#anchor</code> <br> after browser sends request; <em>server</em> sends: 
+
+::: {style="border: 2px solid black"}
+ <code></code> HTTP/1.1 200 OK <br> Content-Type: text/html\\tikzmark{contentType} <br> <i>Other-Key</i>: <i>Other-Value</i> <br> &nbsp; <br> \<html>… 
+:::
+
+ ![](/web/texfig/HTTPResp.figure.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center }
+
+
+### demo 
+
+
+
+### HTML forms (1)  {.smaller}
+
+
+```html
+<form action="https://example.com/search/" method="GET">
+<input type="hidden" name="recipient"
+       value="webmaster@example.com">
+Search for: <input name="q" value=""><br>
+<input type="submit" value="Search">
+</form>
+
+```
+ 
+
+::: {style="border: 2px solid black"}
+ <code></code>[]{.my-small} GET /search/?q=What%20I%20searched%20for HTTP/1.1 <br> Host: example.com 
+:::
+
+ 
+
+* q is ‘‘\\fbox{What I searched for}’’
+* %20 --- character hexadecimal 20 (space)
+
+
+### HTML forms (2)  {.smaller}
+
+
+```html
+<form action="https://example.com/formmail.pl" method="POST">
+<input type="hidden" name="recipient"
+       value="webmaster@example.com">
+Your email: <input name="from" value=""><br>
+Your message:<textarea name="message"></textarea>
+<input type="submit">
+</form>
+
+```
+ 
+
+::: {style="border: 2px solid black"}
+ <code></code>[]{.my-small} POST /formmail.pl HTTP/1.1 <br> Host: example.com <br> Content-Type: application/x-www-form-urlencoded <br> &nbsp; <br> recipient=webmaster@example.com&amp;from=<i>what%20I%20Entered</i><br>&amp;message=<i>Some%20message%0a…</i> <br> 
+:::
+
+
+
+# Trusting the client {visibility="hidden"}
+
+### trusting the client (1)  {.smaller}
+
+
+```html
+<form action="https://example.com/formmail.pl" method="POST">
+<input type="hidden" name="recipient"
+       value="webmaster@example.com">
+Your email: <input name="from" value=""><br>
+Your message: <textarea name="message"></textarea>
+...
+<input type="submit">
+</form>
+
+```
+ 
+
+* if this my form, can I get a recipient of <code>spamtarget@foo.com</code>? 
+
+   * Am I <em>enabling spammers</em>??
+
+* Yes, because attacker could <em>make own version of form</em>
+
+
+### Referer header 
+
+Submitting form at <code>https://example.com/feedback.html</code>: 
+
+::: {style="border: 2px solid black"}
+ <code></code>[]{.my-small} POST /formmail.pl HTTP/1.1 <br> Host: example.com <br> Content-Type: application/x-www-form-urlencoded <br> <em>Referer: https://example.com/feedback.html</em> <br> &nbsp; <br> recipient=webmaster@example.com&amp;from=… <br> 
+:::
+
+ 
+
+* <em>sometimes</em> sent by web browser
+* if browser always sends, <em>does this help?</em>
+
+
+### trusting the client (2)  {.smaller}
+
+
+```html
+<form action="https://example.com/formmail.pl" method="POST">
+<input type="hidden" name="recipient"
+       value="webmaster@example.com">
+...
+<input type="submit">
+</form>
+
+```
+ 
+
+* can I get a recipient of <code>spamtarget@example.com</code> <em>and the right referer header</em>? 
+
+   * attacker can't modify the form on example.com!
+   * browser sends header with URL of form
+
+* Yes, because attacker can <em>customize their browser</em>
+
+
+### trusting the client (3)  {.smaller}
+
+\\setlength{\\parskip{}0em} <code></code> ISS E-Security Alert  <br> February 1, 2000  Form Tampering Vulnerabilities in Several Web-Based Shopping Cart Applications … Many web-based shopping cart applications <em>use hidden fields in HTML forms</em> to hold parameters for items in an online store. These parameters can include the item's name, weight, quantity, product ID, and <em>price</em>.… … Several of these applications use a security method based on <em>the HTTP header</em> to verify the request is coming from an appropriate site.… The ISS X-Force has identified <em>eleven shopping cart applications</em> that are vulnerable to form tampering. … &nbsp;

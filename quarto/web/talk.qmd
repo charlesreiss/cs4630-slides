@@ -1,0 +1,10 @@
+---
+title: "web"
+
+---
+
+{{< include ../web/_talk-inner.qmd >}}
+
+# Backup slides
+
+{{< include ../web/_talk-backup.qmd >}}

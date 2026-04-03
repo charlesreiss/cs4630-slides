@@ -1,0 +1,29 @@
+
+### embedding webpages maliciously  {.smaller}
+
+
+* can have little ‘frame’ of other webpage within webpage
+* can't read contents of webpage
+* can't press buttons in webpage 
+<hr class="vspace" />
+* but can: 
+
+   * make other webpage transparent
+   * show/hide other webpage in response to mouse movement
+
+
+
+### clickjacking defenses  {.smaller}
+
+
+* tell browser ‘‘no embedding’’ with HTTP header
+* example: <code>[]{.my-small} Content-Security-Policy: frame-ancestors 'self'</code> 
+
+   * only embed from same origin
+ 
+<hr class="vspace" />
+* JavaScript on page can detect if in iframe, etc. 
+
+   * make form buttons not work if so
+
+

@@ -1,0 +1,61 @@
+### last time
+
+*  comparsion logging
+   *  working backwards from comparisons to changing inputs
+*  symbolic execution
+   *  representing values as algebraic variables
+   *  write expression of value at end
+   *  add constraints for each code path
+   *  solve for inputs that satisfy constraints
+
+### quiz
+
+{{< include /symbolic/_symbolic-exec-example1.qmd >}}
+
+{{< include /symbolic/_symbolic-exec-example1-angr.qmd >}}
+
+## concolic {visibility="hidden"}
+
+{{< include /symbolic/_symbolic-aside.qmd >}}
+
+## with pointers {visibility="hidden"}
+
+### handling pointers {.smaller}
+
+*  pointers/references are a challenge
+*  simple case: keep track of what each pointer points to in each path...
+
+{{< include /symbolic/_symbolic-exec-example-ptr.qmd >}}
+
+## exercise {visibility="hidden"}
+
+{{< include /symbolic/_symbolic-exec-exer.qmd >}}
+
+# dealing with pointers {visibility="hidden"}
+
+{{< include /symbolic/_symbolic-readwritep.qmd >}}
+
+{{< include /symbolic/_symbolic-varmem-example.qmd >}}
+
+# finding overflows examples {visibility="hidden"}
+
+{{< include /symbolic/_angr-find-oflow.qmd >}}
+
+# performance problems {visibility="hidden"}
+
+{{< include /symbolic/_symb-perf.qmd >}}
+
+### backup slides
+
+{{< include /symbolic/_symbolic-exec-example1-klee.qmd >}}
+
+{{< include /symbolic/_symbolic-exec-example2.qmd >}}
+
+
+## summary: tricky problems with symbolic execution {visibility="hidden"}
+
+{{< include /symbolic/_symbolic-exec-tricky-sum.qmd >}}
+
+## solving equations?? {visibility="hidden"}
+
+{{< include /symbolic/_solving-equation-p.qmd >}}

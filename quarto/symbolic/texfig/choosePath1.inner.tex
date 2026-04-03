@@ -14,12 +14,12 @@
                         child { node[condition,visible on=<4->] { b < 5 } 
                             edge from parent[visible on=<4->]
                             child { node[state,visible on=<5->] {at (2): \\ $a=0\text{; }\beta\ge5$ \\ a: $\alpha$, b: $\beta$} edge from parent[visible on=<5->] node {false}
-                                child { node[visible on=<6->,dashedQuestion] {
+                                child { node[visible on=<6->,question] {
                                     to fail assertion: \\
                                     $\alpha=0$, \\
                                     $\beta \ge 5$, $a+b=5$ \\ $\implies$ $\alpha+\beta=5$ \\
                                     \hrulefill \\
-                                    no solution
+                                    $\alpha = 0, $\beta = 5$
                                 } edge from parent[visible on=<6->] }
                             }
                             child { node[state,visible on=<7->] {at (2): \\ $a=0\text{; }\beta<5$ \\ a: $\alpha$, b: $\beta+4$} edge from parent[visible on=<7->] node {true}

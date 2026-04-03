@@ -1,0 +1,61 @@
+### example in KLEE (1) {.smaller}
+
+```c
+#include <klee/klee.h>
+
+int foo(int a, int b) {
+    a += b * 2;
+    b *= 4;
+    return a + b;
+}
+
+int main() {
+    int a, b;
+    klee_make_symbolic(&a, sizeof(a), "a");
+    klee_make_symbolic(&b, sizeof(a), "b");
+    klee_assert(foo(a, b) == 10);
+}
+```
+
+### example in KLEE (2) {.smaller}
+```
+$ clang -Iklee_build/include -emit-llvm  -c -g -O0 -Xclang -disable-O0-optnone ./example0.c
+$ klee example0.bc
+KLEE: output directory is "/home/klee/klee-out-3"
+KLEE: Using STP solver backend
+KLEE: SAT solver: MiniSat
+KLEE: ERROR: ./example0.c:14: ASSERTION FAIL: foo(a, b) == 10
+KLEE: NOTE: now ignoring this error at this location
+
+KLEE: done: total instructions = 33
+KLEE: done: completed paths = 1
+KLEE: done: partially completed paths = 1
+KLEE: done: generated tests = 2
+```
+
+### example in KLEE (3) {.smaller}
+
+```
+$ ls klee-out-0
+assembly.ll  messages.txt  run.stats              test000001.kquery  test000002.ktest
+info         run.istats    test000001.assert.err  test000001.ktest   warnings.txt
+$ klee-test klee-out-0/test000001.ktest
+...
+object 0: name: 'a'
+...
+object 0: int : 0
+...
+object 1: name: 'b'
+...
+object 1: int : 0
+...
+$ klee-test klee-out-0/test000002.ktest
+...
+object 0: name: 'a'
+...
+object 0: int : 10
+...
+object 1: name: 'b'
+...
+object 1: int : 0
+```

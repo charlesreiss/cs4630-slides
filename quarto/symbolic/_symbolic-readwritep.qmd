@@ -59,9 +59,9 @@ int *p = &array[a];
 * problem: really common to have thousands/millions of possibilities 
 <hr class="vspace" />
 * default policy: 
-
    * choose any of range of 1024 possibilities for read
    * only choose maximum address for write, except for annotated values
+* means by default, angr won't explore all paths!
 
 
 

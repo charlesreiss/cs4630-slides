@@ -22,7 +22,7 @@
 
    * loops with variable iteration count explode number of states
    * memory accesses explode number of states/condition complexity
-   * conditions sometimes intractable to solve
+   * conditions sometimes intractable to solve (NP-hard in general)
 
 * some heuristics to mitigate 
 

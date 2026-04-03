@@ -26,6 +26,22 @@
 
 {{< include /symbolic/_symbolic-exec-example0.qmd >}}
 
+### actually doing this 
+
+* multiple tools out there, will look at two
+<hr class="vspace">
+* <em>angr</em> is a binary analysis toolkit written in Python 
+   * has Ghidra-like GUI, but not very stable/maintained as far as I can tell
+   * among other things, converts assembly into intermediate form
+   * supports interactive simulation of program
+* <em>KLEE</em> works on LLVM (clang) bytecode
+   * generates set of test cases covering all paths
+   * cannot analyze code not specially compiled
+
+{{< include /symbolic/_symbolic-exec-example0-angr.qmd >}}
+
+{{< include /symbolic/_symbolic-exec-example0-klee.qmd >}}
+
 ### symbolic execution  {.smaller}
 
 * have an emulator/virtual machine
@@ -37,6 +53,10 @@
 * then solve constraints based on variables to create real test case 
 
 {{< include /symbolic/_symbolic-exec-example1.qmd >}}
+
+{{< include /symbolic/_symbolic-exec-example1-angr.qmd >}}
+
+{{< include /symbolic/_symbolic-exec-example1-klee.qmd >}}
 
 {{< include /symbolic/_symbolic-exec-example2.qmd >}}
 

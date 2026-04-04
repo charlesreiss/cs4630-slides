@@ -45,6 +45,8 @@
 
 {{< include /symbolic/_symb-perf.qmd >}}
 
+{{< include /sandbox/_talk-inner.qmd >}}
+
 ### backup slides
 
 {{< include /symbolic/_symbolic-exec-example1-klee.qmd >}}

@@ -8,7 +8,34 @@
    *  add constraints for each code path
    *  solve for inputs that satisfy constraints
 
-### quiz
+### quiz Q1 {.smaller}
+
+```c
+struct AllocInfo {
+    long size_and_free;
+    AllocInfo *next_free;
+    AllocInfo *prev_free;
+}
+
+```
+<hr>
+```c
+region->prev_free->next_free = region->next_free;
+region->next_free->prev_free = region->prev_free;
+```
+
+*  500 bytes from beginning of string: `size_and_free` (of unalloc'd region)
+*  508 bytes from beginning of string: `next_free` (X)
+   *  will write to `next_free->prev_free` AKA X + 16
+*  516 bytes from beginning of string: `prev_free` (Y)
+   *  will write to `prev_free->next_free` AKA Y + 8
+
+
+### quiz Q2
+
+*  remove-from-linked-list operation edits both PREV and NEXT
+*  means we can't point to read-only memory
+*  means we can't use '10' as a pointer
 
 {{< include /symbolic/_symbolic-exec-example1.qmd >}}
 

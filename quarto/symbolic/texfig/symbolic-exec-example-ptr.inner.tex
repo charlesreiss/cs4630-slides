@@ -16,12 +16,12 @@
                         child { node[condition,] { *p += c } edge from parent[]
                             child {
                                 node[state,] {
-                                    $\delta > 100$; $\alpha\ge 0$, $\beta \ge 0$\, $\delta \ge 0$
+                                    $\alpha > 100$; $\beta \ge 0$\, $\delta \ge 0$
                                     \\ *p: same as a, a: $\alpha+\delta$, b: $\beta$
                                 } edge from parent[] node {}
                                 child {
                                     node[question,] {
-                                        $\alpha > 100$;
+                                        $\alpha > 100$, $\beta \ge 0$\, $\delta \ge 0$ \\
                                         $\alpha+\delta+\beta=\delta$ \\
                                         \hrulefill \\
                                         \text{cannot} happen
@@ -44,13 +44,12 @@
                                     $\alpha \le 100$; $\alpha\ge 0$, $\beta \ge 0$\, $\delta \ge 0$; \\
                                     $\alpha+\delta+\beta=\delta$ \\
                                     \hrulefill \\
-                                    (\alpha,\beta)=0 \\
+                                    \alpha=\beta=0 \\
                                     \delta{} is anything less than 100
                                     } edge from parent[] }
                             }
                         }
                     }
-                }
-                ;
+                };
         \end{scope}
 \end{tikzpicture}

@@ -33,7 +33,7 @@ region->next_free->prev_free = region->prev_free;
 
 ### quiz Q2
 
-*  remove-from-linked-list operation edits both PREV and NEXT
+*  remove-from-linked-list operation edits both *PREV and *NEXT
 *  means we can't point to read-only memory
 *  means we can't use '10' as a pointer
 

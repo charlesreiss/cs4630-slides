@@ -1,0 +1,149 @@
+### last time {.smaller}
+
+*  sandboxing by filtering system calls
+*  privilege separation idea
+   *  run "dangerous" part in sandbox
+   *  have it communicate to rest
+*  seccomp system call filter
+*  challenges of system call filtering
+   *  so many syscalls
+   *  hard to examine strings, etc.
+   *  local services (like window servers)
+*  Chrome architecture
+   *  separate process/sandbox per website
+
+### assignment Q+A
+
+### sandbox assignment {.smaller}
+
+*  we give you text subsitution library and program that uses it
+*  your job: run text substitution library in sandbox
+   *  separate process from main program
+*  we provide library to help with inter-process communication
+
+# OpenSSH architecture {visibility="hidden"}
+
+{{< include /sandbox/_openssh-privsep.qmd >}}
+
+## exercise: priv sep for {visibility="hidden"}
+
+{{< include /sandbox/_priv-sep-for-exer.qmd >}}
+
+## versus capability-type approach {visibility="hidden"}
+
+{{< include /sandbox/_v-cap-approach.qmd >}}
+
+<!-- FIXME: more capability OS slides? -->
+
+## chroot {visibility="hidden"}
+
+{{< include /sandbox/_chroot.qmd >}}
+
+## exercise{visibility="hidden"}
+
+{{< include /sandbox/_chroot-exer.qmd >}}
+
+## Linux namespaces {visibility="hidden"}
+
+{{< include /sandbox/_linux-ns.qmd >}}
+
+## Linux programs that attempt confinement {visibility="hidden"}
+
+{{< include /sandbox/_example-linux.qmd >}}
+
+## containers {visibility="hidden"}
+
+{{< include /sandbox/_containers.qmd >}}
+
+### sandbox escapes generally 
+
+* bug in sandbox interface 
+   * example: memory/injection error in handling inputs
+* unintended functionality of sandboxed operations
+
+
+## runC bug{visibility="hidden"}
+
+{{< include /sandbox/_runc-bug.qmd >}}
+
+## Chrome sandbox escapes{visibility="hidden"}
+
+{{< include /sandbox/_chrome-sandbox-escape.qmd >}}
+
+# the Android sandbox {visibility="hidden"}
+
+{{< include /sandbox/_android-sandbox.qmd >}}
+
+## OSX sandboxing {visibility="hidden"}
+
+{{< include /sandbox/_osx-sandbox.qmd >}}
+
+## Qubes {visibility="hidden"}
+
+{{< include /sandbox/_qubes.qmd >}}
+
+# Which sandboxing? {visibility="hidden"}
+
+{{< include /sandbox/_which-sandbox-exer.qmd >}}
+
+# sandboxing without OS support {visibility="hidden"}
+
+{{< include /sandbox/_no-os-support.qmd >}}
+
+## Wasm {visibility="hidden"}
+
+{{< include /sandbox/_wasm.qmd >}}
+
+# sandboxing API: RLBox {visibility="hidden"}
+
+{{< include /sandbox/_rlbox.qmd >}}
+
+# application permissions {visibility="hidden"}
+
+{{< include /sandbox/_app-perms.qmd >}}
+
+### UI problems with application permissions
+
+* do applications request sensible permissions?
+* do users pay attention to permission requests?
+* do users understand what permissions mean?
+* are permissions fine-grained enough?
+* are permissions coarse-grained enough?
+
+### UI problems with application permissions
+
+* <em>do applications request sensible permissions?</em>
+* do users pay attention to permission requests?
+* do users understand what permissions mean?
+* are permissions fine-grained enough?
+* are permissions coarse-grained enough?
+
+## do request right permissions? {visibility="hidden"}
+
+{{< include /sandbox/_app-perm-right.qmd >}}
+
+### UI problems with application permissions
+
+* do applications request sensible permissions?
+* <em>do users pay attention to permission requests?</em>
+* <em>do users understand what permissions mean?</em>
+* are permissions fine-grained enough?
+* are permissions coarse-grained enough?
+
+## do users understand permissions? {visibility="hidden"}
+
+{{< include /sandbox/_app-perm-users.qmd >}}
+
+## how to ask for permission? {visibility="hidden"}
+
+{{< include /sandbox/_app-perm-how.qmd >}}
+
+## permissions abuse: Cloak and Dagger {visibility="hidden"}
+
+{{< include /sandbox/_cloak-and-dagger.qmd >}}
+
+## permissions abuse: information leak {visibility="hidden"}
+
+{{< include /sandbox/_info-leak-reardon.qmd >}}
+
+

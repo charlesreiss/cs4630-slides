@@ -1,0 +1,70 @@
+### last time
+
+*  review: when privilege separation is useful
+*  Linux namespaces
+   *  user, mount namespaces
+*  sandbox escape via debugging API for accessing executable files
+
+
+# sandboxing without OS support {visibility="hidden"}
+
+{{< include /sandbox/_no-os-support.qmd >}}
+
+# application permissions {visibility="hidden"}
+
+{{< include /sandbox/_app-perms.qmd >}}
+
+### UI problems with application permissions
+
+* do applications request sensible permissions?
+* do users pay attention to permission requests?
+* do users understand what permissions mean?
+* are permissions fine-grained enough?
+* are permissions coarse-grained enough?
+
+### UI problems with application permissions
+
+* <em>do applications request sensible permissions?</em>
+* do users pay attention to permission requests?
+* do users understand what permissions mean?
+* are permissions fine-grained enough?
+* are permissions coarse-grained enough?
+
+## do request right permissions? {visibility="hidden"}
+
+{{< include /sandbox/_app-perm-right.qmd >}}
+
+### UI problems with application permissions
+
+* do applications request sensible permissions?
+* <em>do users pay attention to permission requests?</em>
+* <em>do users understand what permissions mean?</em>
+* are permissions fine-grained enough?
+* are permissions coarse-grained enough?
+
+## how to ask for permission? {visibility="hidden"}
+
+{{< include /sandbox/_app-perm-how.qmd >}}
+
+## permissions abuse: Cloak and Dagger {visibility="hidden"}
+
+{{< include /sandbox/_cloak-and-dagger.qmd >}}
+
+
+{{< include /static/_talk-inner.qmd >}}
+
+{{< include /bounds/_talk-inner.qmd >}}
+
+### backup slides
+
+## Wasm {visibility="hidden"}
+
+{{< include /sandbox/_wasm.qmd >}}
+
+## do users understand permissions? {visibility="hidden"}
+
+{{< include /sandbox/_app-perm-users.qmd >}}
+
+## permissions abuse: information leak {visibility="hidden"}
+
+{{< include /sandbox/_info-leak-reardon.qmd >}}

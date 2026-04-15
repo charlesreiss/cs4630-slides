@@ -10,8 +10,29 @@
 
 ### assignment Q+A
 
-###
+### quiz Q2, option B
 
+* if (a < b * 3) --- alpha < beta * 3
+  * a += b --- a = alpha + beta
+* if (a < b * 3) --- alpha + beta < beta * 2
+
+### quiz Q5 (1) {.smaller}
+ 
+* privilege separation limits possible effect of exploit
+* SQL injection --- primary concern is accessing things in database at wrong time
+  * when injection happens, will still read/change database unless we've limited access to part of the database
+    * web application probably wouldn't work if we did that
+    * e.g. can probably access _all_ hashed passwords
+  * yes, might stop if database has a way of running programs/etc. (but is that really what the attacker wants to do)
+
+### quiz Q5 (2) {.smaller}
+
+* failing to verify access
+  * if it could show the information, privilege separation won't change whether it can
+  * best privilege separation might do is move/formalize verifying step (e.g. to monitor of sandboxed process)
+* integer overflow
+  * likely result is buffer oveflow --- probably arbitrary code exection
+  * privilege separation will limit impact of that
 
 ## Linux namespaces {visibility="hidden"}
 

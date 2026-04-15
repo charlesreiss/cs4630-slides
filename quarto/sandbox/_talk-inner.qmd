@@ -124,17 +124,6 @@
 
 {{< include /sandbox/_chrome-sandbox-escape.qmd >}}
 
-# the Android sandbox {visibility="hidden"}
-
-{{< include /sandbox/_android-sandbox.qmd >}}
-
-## OSX sandboxing {visibility="hidden"}
-
-{{< include /sandbox/_osx-sandbox.qmd >}}
-
-## Qubes {visibility="hidden"}
-
-{{< include /sandbox/_qubes.qmd >}}
 
 # Which sandboxing? {visibility="hidden"}
 
@@ -151,6 +140,27 @@
 # sandboxing API: RLBox {visibility="hidden"}
 
 {{< include /sandbox/_rlbox.qmd >}}
+
+### sandboxing whole applications, revisited
+
+*  couldn't usefully sandbox whole web browswer
+   *  needed too much legitimate access to files/network
+   *  doesn't protect webpage X from malicious webpage Y if browser is vulnerable
+*  but we do actually do whole-application sandboxing
+   *  most prominant example: mobile phones
+
+# the Android sandbox {visibility="hidden"}
+
+{{< include /sandbox/_android-sandbox.qmd >}}
+
+## OSX sandboxing {visibility="hidden"}
+
+{{< include /sandbox/_osx-sandbox.qmd >}}
+
+## Qubes {visibility="hidden"}
+
+{{< include /sandbox/_qubes.qmd >}}
+
 
 # application permissions {visibility="hidden"}
 

@@ -5,10 +5,22 @@
    *  user, mount namespaces
 *  sandbox escape via debugging API for accessing executable files
 
-
 # sandboxing without OS support {visibility="hidden"}
 
 {{< include /sandbox/_no-os-support.qmd >}}
+
+## Wasm {visibility="hidden"}
+
+{{< include /sandbox/_wasm.qmd >}}
+
+### sandboxing whole applications, revisited
+
+*  couldn't usefully sandbox whole web browser
+   *  needed too much legitimate access to files/network
+   *  doesn't protect webpage X from malicious webpage Y if browser is vulnerable
+*  but we do actually do whole-application sandboxing
+   *  most prominant example: mobile phones
+*  big issue: choosing what applications can do
 
 # application permissions {visibility="hidden"}
 
@@ -34,6 +46,7 @@
 
 {{< include /sandbox/_app-perm-right.qmd >}}
 
+
 ### UI problems with application permissions
 
 * do applications request sensible permissions?
@@ -41,6 +54,10 @@
 * <em>do users understand what permissions mean?</em>
 * are permissions fine-grained enough?
 * are permissions coarse-grained enough?
+
+## do users understand permissions? {visibility="hidden"}
+
+{{< include /sandbox/_app-perm-users.qmd >}}
 
 ## how to ask for permission? {visibility="hidden"}
 
@@ -57,13 +74,6 @@
 
 ### backup slides
 
-## Wasm {visibility="hidden"}
-
-{{< include /sandbox/_wasm.qmd >}}
-
-## do users understand permissions? {visibility="hidden"}
-
-{{< include /sandbox/_app-perm-users.qmd >}}
 
 ## permissions abuse: information leak {visibility="hidden"}
 

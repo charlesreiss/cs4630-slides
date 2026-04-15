@@ -33,3 +33,7 @@
 
 * copy-and-paste
 
+### more recently? {.smaller}
+
+*  Tahaei, Abu-Salma, Rashid, "Stuck in the Permissions With You: Developer & End-User Perspectives on App Permissions & Their Privacy Ramifications" (CHI 2023)
+* "We also found that developer participants sometimes requested multiple permissions due to confusion about the scope of certain permissions or third-party library requirements."

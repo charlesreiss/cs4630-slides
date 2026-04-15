@@ -20,9 +20,7 @@
 
 
 * ‘dynamic’ language virtual machine, like Java VM, .Net CLR 
-
    * hard to use with code intended to compile to native machine code
- 
 <hr class="vspace" />
 * virtual machine targetted for C/C++-like code, like WebAssembly 
 <hr class="vspace" />

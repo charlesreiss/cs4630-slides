@@ -6,7 +6,7 @@
     style=small
 } -->
  
-```
+```c
 struct MyPtr {
     char *pointer; /* "raw" pointer value */
     char *minimum; /* first byte of buffer pointed to */
@@ -18,13 +18,13 @@ struct MyPtr {
 <div class="fragment fade-in" data-fragment-index=2 >
  <hr />
  
-```
+```c
 char buffer[100];
 char *p = &buffer[10];
 
 ```
  becomes 
-```
+```c
 char buffer[100];
 MyPtr p = {
     .pointer = &buffer[10],

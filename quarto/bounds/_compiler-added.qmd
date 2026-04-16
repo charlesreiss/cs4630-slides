@@ -146,7 +146,7 @@ void example6(int size) {
 ### implementation
 
 
-* GCC/clang expose ‘object size` and `dynamic object size’ function
+* GCC/clang expose 'object size' and 'dynamic object size' function
 * relies on compiler analysis to know size from see declaration or malloc/etc. assignemnt 
 <hr class="vspace" />
 * limited

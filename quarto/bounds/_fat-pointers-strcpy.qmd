@@ -1,12 +1,12 @@
 
-### adding bounds checking --- strcpy  {.smaller}
+### adding bounds checking --- strcpy
 
 <!-- \lstset{
     language=C,
     style=small
 } -->
  
-```
+```c
 MyPtr strcpy(MyPtr dest, const MyPtr src) {
     int i;
     do {

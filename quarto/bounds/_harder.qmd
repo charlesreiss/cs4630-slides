@@ -3,7 +3,7 @@
 
 <!-- \lstset{language=C,style=smaller} -->
  
-```
+```c
 void vulnerable(char *buffer) {
     char buffer[100];
     int c;

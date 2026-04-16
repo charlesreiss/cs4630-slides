@@ -11,7 +11,7 @@
 * unlike baggy bounds: 
 
    * check reads/writes (instead of pointer computations)
-   * only detect errors that read/write <em>between objects</em>
+   * only detects when <em>out-of-bounds access lands between objects</em>
    * object sizes not padded to power of two
    * table has info for every single byte (more precise)
 

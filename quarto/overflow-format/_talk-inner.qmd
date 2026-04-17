@@ -1,0 +1,26 @@
+
+# format string exploit {visibility="hidden"}
+
+## format strings and the stack {visibility="hidden"}
+
+{{< include /overflow-format/_format-view-stack.qmd >}}
+
+## printf writes! {visibility="hidden"}
+
+{{< include /overflow-format/_format-printf-writes.qmd >}}
+
+## vulnerable code {visibility="hidden"}
+
+{{< include /overflow-format/_format-exploit-example.qmd >}}
+
+## exploit with RA {visibility="hidden"}
+
+{{< include /overflow-format/_format-exploit-ra.qmd >}}
+
+## splitting the write {visibility="hidden"}
+
+{{< include /overflow-format/_format-exploit-ra-parts.qmd >}}
+
+## format exploit defense: FORTIFY_SOURCE {visibility="hidden"}
+
+{{< include /overflow-format/_format-exploit-fortify.qmd >}}

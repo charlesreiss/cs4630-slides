@@ -1,0 +1,49 @@
+
+### format string exploits 
+
+<!-- \lstset{language=C} -->
+ 
+```
+printf("The command you entered ");
+printf(command);
+printf("was not recognized.\n");
+
+```
+ 
+
+* what if <code>command</code> is <code>%s</code>?
+
+
+### viewing the stack  {.smaller}
+
+<!-- \lstset{
+    language={},
+    style=smaller,
+    moredelim={**[is][\color{blue!70!black}]{~in~}{~end~}},
+    moredelim={**[is][\btHL<2|handout:0>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3|handout:0>]{~3~}{~end~}},
+    moredelim={**[is][\btHL<4|handout:0>]{~4~}{~end~}},
+    moredelim={**[is][\btHL<5|handout:0>]{~5~}{~end~}},
+} -->
+ 
+ 
+<pre><code>$ <span style="color: blue!70!black">cat test-format.c</span>
+#include &lt;stdio.h&gt;
+
+int main(void) {
+    char buffer\[100];
+    while(fgets(buffer, sizeof buffer, stdin)) {
+        printf(buffer);
+    }
+}
+$ <span style="color: blue!70!black">./test-format.exe</span>
+<span style="color: blue!70!black">%016lx %016lx %016lx %016lx %016lx %016lx %016lx %016lx</span>
+<span data-fragment-index="3" class="fragment custom myem-only">00007fb54d0c6790</span> <span data-fragment-index="4" class="fragment custom myem-only">786c363130252078</span> <span data-fragment-index="4" class="fragment custom myem-only">0000000000ac6048</span> <span data-fragment-index="4" class="fragment custom myem-only">3631302520786c36</span>
+<span data-fragment-index="4" class="fragment custom myem-only">3631302500000000</span> <span data-fragment-index="5" class="fragment custom myem-only">6c3631302520786c</span> 786c363130252078 <span data-fragment-index="2" class="fragment custom myem-only">20786c36313025</span>20
+</code></pre>
+ ![](/overflow-format/texfig/viewingTheStack.figure-1.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=1}
+![](/overflow-format/texfig/viewingTheStack.figure-2.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=2}
+![](/overflow-format/texfig/viewingTheStack.figure-3.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=3}
+![](/overflow-format/texfig/viewingTheStack.figure-4.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=4}
+![](/overflow-format/texfig/viewingTheStack.figure-5.svg){.absolute top="0%" left="0%" width=1050 height=600 .my-center  .fragment .fade-in-then-out fragment-index=5}
+

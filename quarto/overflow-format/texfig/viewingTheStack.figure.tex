@@ -1,0 +1,25 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\lstset{
+    language={},
+    style=smaller,
+    moredelim={**[is][\color{blue!70!black}]{~in~}{~end~}},
+    moredelim={**[is][\btHL<2>]{~2~}{~end~}},
+    moredelim={**[is][\btHL<3>]{~3~}{~end~}},
+    moredelim={**[is][\btHL<4>]{~4~}{~end~}},
+    moredelim={**[is][\btHL<5>]{~5~}{~end~}},
+}
+\begin{document}
+
+\setSlide{1}
+\input{overflow-format/texfig/viewingTheStack.inner.tex}
+\setSlide{2}
+\input{overflow-format/texfig/viewingTheStack.inner.tex}
+\setSlide{3}
+\input{overflow-format/texfig/viewingTheStack.inner.tex}
+\setSlide{4}
+\input{overflow-format/texfig/viewingTheStack.inner.tex}
+\setSlide{5}
+\input{overflow-format/texfig/viewingTheStack.inner.tex}
+\end{document}

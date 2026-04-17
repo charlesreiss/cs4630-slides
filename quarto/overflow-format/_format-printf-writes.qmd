@@ -1,0 +1,10 @@
+
+### printf manpage  {.smaller}
+
+
+* For <code>%n</code>: 
+
+   * The  number  of  characters  written so far is <em>stored into the integer pointed to by the corresponding argument</em>. That argument shall be an <code>int *</code>, or variant whose size  matches the  (optionally)  supplied  integer  length  modifier.
+
+* <code>%hn</code> --- expect <code>short *</code> instead of <code>int *</code>
+

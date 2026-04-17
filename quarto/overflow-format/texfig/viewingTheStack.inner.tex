@@ -1,0 +1,32 @@
+\begin{tikzpicture}
+\node[minimum width=15cm,minimum height=9cm] (current page) {};
+\begin{scope}[overlay]
+
+    \tikzset{every node/.style={draw,thick,fill=white}}
+    \begin{visibleenv}<2>
+        \node at (current page.center) {
+            {\tt 25 30 31 36 6c 78 20} is ASCII for {\tt \%016lx\textvisiblespace}
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<3>
+        \node at (current page.center) {
+            second argument to {\tt printf}: \%rsi
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<4>
+        \node at (current page.center) {
+            third through fifth argument to {\tt printf}: \%rdx, \%rcx, \%r8, \%r9
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<4>
+        \node at (current page.center) {
+            third through fifth argument to {\tt printf}: \%rdx, \%rcx, \%r8, \%r9
+        };
+    \end{visibleenv}
+    \begin{visibleenv}<5>
+        \node at (current page.center) {
+            16 bytes of stack after return address
+        };
+    \end{visibleenv}
+\end{scope}
+\end{tikzpicture}

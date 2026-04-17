@@ -1,4 +1,15 @@
-### last time
+### last time {.smaller}
+
+*  sandboxing without operating system support
+   *  example of WebAssembly
+*  full app sandboxing and permission dialogs
+   *  avoiding user fatique
+   *  having developers understand what permissions to request
+   *  unintended consequences of permissions
+*  static analysis
+   *  compromising by allowing false-positives
+   *  approximating possible execution
+   *  only tracking information relevant to property being tested
 
 ###
 

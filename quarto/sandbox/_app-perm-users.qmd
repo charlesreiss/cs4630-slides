@@ -59,3 +59,8 @@
 
 ![](/sandbox/android-perm-survey4){}
 
+### more recently?
+
+*  Tahaei, Abu-Salma, Rashid, "Stuck in the Permissions With You: Developer & End-User Perspectives on App Permissions & Their Privacy Ramifications" (CHI 2023)
+
+![](/sandbox/tahaei-perm-fig2){width=900px}

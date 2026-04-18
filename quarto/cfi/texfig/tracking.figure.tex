@@ -1,0 +1,34 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{arrows.meta}
+\newsavebox{\libCrossCode}
+\begin{document}
+\begin{lrbox}{\libCrossCode}
+\begin{lstlisting}[language=C++,style=script]
+#include <png.h>
+void ReadImageFromNetwork(
+    png_structp libpng_handle,
+    unsigned char *bytes,
+    size_t size
+) { ...  }
+
+int main() {
+    /* init libpng */
+    png_structp libpng_handle = ...;
+    /* tell libpng how to read image data */
+    png_set_read_fn(
+        libpng_handle, ...,
+        ReadImageFromNetwork
+    )
+    ...
+    /* extract "header" 
+       information from image */
+    png_get_IHDR(libpng_handle, ...)
+    ...
+}
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{cfi/texfig/tracking.inner.tex}
+\end{document}

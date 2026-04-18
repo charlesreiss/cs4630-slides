@@ -1,0 +1,14 @@
+
+### concept: labels and control flow graph  {.smaller}
+
+
+![](/cfi/abadi-fig1){}
+ 
+
+* control flow graph 
+
+   * nodes = blocks of code
+   * edges = potential jump/call
+
+* assigning labels: every in-edge needs to check same label at source
+ figure from Abadi et al, ‘‘Control-Flow Integrity: Principles, Implementations and Applications’’ (CCS 2005)

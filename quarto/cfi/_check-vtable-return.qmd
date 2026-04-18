@@ -1,0 +1,45 @@
+
+### checking a VTable return  {.smaller}
+
+
+:::: {.columns}
+
+::: {.column width="50%"}
+ 
+<pre><code>example:
+  movq (%rdi), %rax
+  movq (%rax), %rax
+  cmpq $0xe0c5df0b, 2(%rax)
+  jne CRASH
+  call *%rax
+  label $0x64a0cfe3
+  ret
+</code></pre>
+ 
+:::
+
+::: {.column width="50%"}
+ 
+<pre><code>A::bar():
+  label $0xe0c5df0b
+  ...
+  pop %rdx // RDX &lt;- return address
+  cmp $0x64a0cfe3, 2(%rdx)
+  jne CRASH
+  jmp *%rdx
+B::bar():
+  label $0xe0c5df0b
+  ...
+  pop %rdx // RDX &lt;- return address
+  cmp $0x64a0cfe3, 2(%rdx)
+  jne CRASH
+  jmp *%rdx
+</code></pre>
+ 
+:::
+
+::::
+
+
+* if we want to use this label-checking on the return <br> need to choose the same label for A::bar and B::bar return, too
+

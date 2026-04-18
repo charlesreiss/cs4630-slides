@@ -1,0 +1,62 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\newsavebox{\checkVTableACode}
+\newsavebox{\checkVTableAAsmA}
+\newsavebox{\checkVTableAAsmB}
+\newsavebox{\checkVTableAAsmC}
+\begin{document}
+\begin{lrbox}{\checkVTableACode}
+\begin{lstlisting}[language=C++,style=smaller]
+class A { public:
+  virtual void bar() { ... }
+};
+class B : public A { public:
+  void bar() { ... }
+};
+void example(A *obj) {
+  obj->bar();
+}
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\checkVTableAAsmA}
+\begin{lstlisting}[language=myasm,style=smaller]
+example:
+  // rax <- vtable address
+  movq (%rdi), %rax
+  // rdx <- first vtable entry
+  movq (%rax), %rax
+  // call using vtable entry
+  call *%rax
+  ...
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\checkVTableAAsmB}
+\begin{lstlisting}[language=myasm,style=smaller]
+example:
+  movq (%rdi), %rax
+  movq (%rax), %rax
+  cmpq $0xe0c5df0b, 2(%rax)
+  jne CRASH
+  call *%rax
+  ...
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\checkVTableAAsmC}
+\begin{lstlisting}[language=myasm,style=smaller]
+A::bar():
+  label $0xe0c5df0b
+  ...
+B::bar():
+  label $0xe0c5df0b
+  ...
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{cfi/texfig/check-vtable.inner.tex}
+\setSlide{2}
+\input{cfi/texfig/check-vtable.inner.tex}
+\setSlide{3}
+\input{cfi/texfig/check-vtable.inner.tex}
+\end{document}

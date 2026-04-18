@@ -1,0 +1,24 @@
+\begin{tikzpicture}
+\node[draw,very thick,align=left] (base c code) {
+\usebox{\checkVTableACode}
+};
+\node[draw,very thick,anchor=north west,align=left] (base asm code) at ([yshift=-.25cm] base c code.south west) {
+\usebox{\checkVTableAAsmA}
+};
+\begin{visibleenv}<2>
+\node[draw=red,very thick,anchor=north west,align=left,font=\fontsize{12}{13}\selectfont] (warning) at ([xshift= .5cm]base asm code.north east) {
+example uses VTable to call method \\
+target for memory corruption attacks \\
+just like return addresses \\
+so, apply same strategy
+};
+\end{visibleenv}
+\begin{visibleenv}<3->
+\node[draw=red,very thick,anchor=north west,align=left] (new asm code) at ([xshift= .5cm]base asm code.north east) {
+\usebox{\checkVTableAAsmB}
+};
+\node[draw=red,very thick,anchor=south west,align=left] (new method code) at ([yshift=.5cm]new asm code.north west) {
+\usebox{\checkVTableAAsmC}
+};
+\end{visibleenv}
+\end{tikzpicture}

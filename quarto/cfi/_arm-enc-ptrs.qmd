@@ -1,0 +1,18 @@
+
+### ARM authenticated pointers  {.smaller}
+
+
+* ARM64 implements this idea with: .5cm
+* secret key kept in a special register (hard to leak to attacker)
+* authentication code placed in upper pointer bits 
+
+   * makes pointer temporarily invalid
+   * can't ‘‘accidentally’’ use authenticated pointer without verifying authentication code first
+
+
+
+### authenticated pointer layout 
+
+
+![](/cfi/arm-enc-ptr-fig){}
+ Liljestrand et al, ‘‘PAC it up: Towards Pointer Integrity using ARM Pointer Authentication’’

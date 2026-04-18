@@ -1,0 +1,41 @@
+
+### clang's CFI implementation  {.smaller}
+
+
+* https://clang.llvm.org/docs/ControlFlowIntegrity.html 
+
+   * \scriptsize also https://www.usenix.org/conference/usenixsecurity14/technical-sessions/presentation/tice
+
+* only checks calls via VTables or function pointers
+* stable implementation requires libraries compiled with support
+* label information is placed in separate data structure 
+
+   * looked up using function or VTable addresses
+
+* trick: keep functions in one region of memory
+
+
+### clang idea for CFI indirect calls 
+
+ 
+
+::: {.r-stack}
+![](/cfi/texfig/indirectDiag.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/cfi/texfig/indirectDiag.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+
+:::
+
+
+### clang idea for VTables 
+
+
+* check VTable element address instead of function address
+* otherwise 
+
+   * place all VTables for related classes together
+   * check start/end address for VTables
+   * bit mask indicating which VTable entries are okay for call
+
+

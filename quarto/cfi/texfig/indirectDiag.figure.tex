@@ -1,0 +1,32 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\newsavebox{\indirectCfiCode}
+\begin{document}
+\begin{lrbox}{\indirectCfiCode}
+\begin{lstlisting}[language=myasm,style=smaller]
+start_funcs_with_two_string_args:
+.align 8
+compare_alpha:
+  jmp real_compare_alpha
+.align 8
+run_command_with_arg:
+  jmp real_run_command_with_arg
+.align 8
+print_two_strings:
+  jmp real_print_two_strings
+.align 8
+move_file:
+  jmp real_move_file
+.align 8
+compare_reverse_alpha:
+  jmp real_compare_reverse_alpha
+end_funcs_with_two_sting_args:
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{cfi/texfig/indirectDiag.inner.tex}
+\setSlide{2}
+\input{cfi/texfig/indirectDiag.inner.tex}
+\end{document}

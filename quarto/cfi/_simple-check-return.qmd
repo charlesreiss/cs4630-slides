@@ -1,0 +1,25 @@
+
+### a simple way to check returns?  {.smaller}
+
+
+
+* observation: places we return to usually after call instructions 
+
+   * exception: ‘tail calls' --- we’ll ignore this for now
+ .5cm
+* we could check for one\ldots
+* replace return with:
+ ![](/cfi/texfig/simple-check-return-a-simple-way-to-check-returns.figure.svg)
+
+
+### a simple way to check returns?  {.smaller}
+
+
+
+* more practical: label $ID instruction with encoding: 
+
+   * TWO-BYTE-OPCODE FOUR-BYTE-CONSTANT
+   * (real version: can reuse some sufficiently nop-like instruction)
+
+   ![](/cfi/texfig/simCheckRetLabel.figure.svg)
+

@@ -1,0 +1,37 @@
+
+### library-crossing CFGs 
+
+ ![](/cfi/texfig/tracking.figure.svg)
+
+
+### CFGs will be imprecise  {.smaller}
+
+
+```
+FunctionPtr p = functionA;
+Example() {
+  while (true) {
+    ...
+    if (SomethingComplicated()) {
+      (*p)();
+    } else if (SomethngElseComplicated()) {
+      foo();
+    }
+    ...
+  }
+}
+foo() {
+  ...
+  if (AnotherComplexThing()) {
+    p = functionB;
+  }
+}
+
+```
+ 
+
+* can Example() call functionB()? probably not practical to tell 
+
+   * need to make conservative ‘yes’ guess
+
+

@@ -1,0 +1,21 @@
+
+### finding possible function pointer values?  {.smaller}
+
+
+
+* given call using function pointers <br> how do we find the legitimate possible values?
+* one idea:
+ 
+<pre><code>for each fptr constant X: PossibleValues\[X] = {X}
+for each fptr variable X:
+    PossibleValues\[X] = empty set
+until PossibleValues stops changing:
+    for each fptr assignment LHS=RHS:
+        for each fptr variable/constant Y
+                that RHS could evaluate to:
+            PossibleValues\[LHS] = Union(
+                PossibleValues\[LHS],
+                PossibleValues\[Y]
+            )
+</code></pre>
+

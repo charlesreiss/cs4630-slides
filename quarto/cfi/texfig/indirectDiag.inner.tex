@@ -1,0 +1,28 @@
+\begin{tikzpicture}
+\node[draw, very thick, align=left] (dispatcher) {
+\usebox{\indirectCfiCode}
+};
+\begin{visibleenv}<1>
+\node[align=left,draw=red,very thick,anchor=north west] at ([xshift=1cm]dispatcher.north east) {
+functions of same type \\
+placed together \\
+~ \\
+every func's address \\
+is multiple of 8
+};
+\end{visibleenv}
+\begin{visibleenv}<2>
+\node[align=left,draw=red,very thick,anchor=north west] at ([xshift=0.5cm]dispatcher.north east) {
+check pseudocode: \\
+round fptr to multiple of 8 \\
+\textbf{if} fptr < start or fptr > end: \\
+\hspace{1cm} CRASH \\
+allowed $\leftarrow$ [1,0,0,0,1] \\
+\hspace{0.5cm} \textit{`mask' for compare funcs} \\
+offset $\leftarrow$ fptr - start \\
+\textbf{if} bit (offset/8) of allowed \\
+\hspace{2.5cm}is not set: \\
+\hspace{1cm} CRASH
+};
+\end{visibleenv}
+\end{tikzpicture}

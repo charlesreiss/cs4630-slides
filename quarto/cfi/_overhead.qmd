@@ -1,0 +1,22 @@
+
+### CFI overhead  {.smaller}
+
+
+* Abadi et al's 2004 paper: 
+
+   * used label-based approach
+   * 0-45% time overhead on SPECcpu2000 benchmarks
+   * best: compression program
+   * worst: chess engine
+
+* Tice et al's 2014 paper (clang-style impl, sometimes in GCC, sometimes in Clang) 
+
+   * could seperately enable different parts
+   * in tests on SPECcpu 2006 benchmarks:
+   * 0--10% slowdown for VTable dereference checks  
+
+      * but 20% without tuning
+
+   * 0-6% for other indirect call checking
+
+

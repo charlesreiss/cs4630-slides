@@ -1,0 +1,92 @@
+
+# simple control flow integrity {visibility="hidden"}
+
+### motivation: beyond stack canaries  {.smaller}
+
+
+* stack canaries: try to make sure we return to genuine place
+* should make return-oriented programming hard
+* problem: defeated with information leak .5cm
+* alternate idea: make sure we aren't returning to gadget
+* \ldots by checking that it actually called our function
+
+
+## idea: checking returns? {visibility="hidden"}
+
+{{< include /cfi/_simple-check-return.qmd >}}
+
+## versus canaries?{visibility="hidden"}
+
+{{< include /cfi/_check-return-v-canary.qmd >}}
+
+## checking VTable calls? {visibility="hidden"}
+
+{{< include /cfi/_check-vtable.qmd >}}
+
+## checking VTable call returns? {visibility="hidden"}
+
+{{< include /cfi/_check-vtable-return.qmd >}}
+
+## checking indirect function calls {visibility="hidden"}
+
+{{< include /cfi/_checking-indirect.qmd >}}
+
+# CFI overhead {visibility="hidden"}
+
+{{< include /cfi/_overhead.qmd >}}
+
+# what does CFI actually prevent {visibility="hidden"}
+
+### againframe(cfiLikeCanariesP2)
+
+# more general control flow integrity {visibility="hidden"}
+
+## concept: control flow graph {visibility="hidden"}
+
+{{< include /cfi/_control-flow-graph.qmd >}}
+
+## and function pointers {visibility="hidden"}
+
+{{< include /cfi/_cfg-fptrs.qmd >}}
+
+## finding function pointer values? {visibility="hidden"}
+
+{{< include /cfi/_cfg-algo.qmd >}}
+
+## imprecision: unions, etc. {visibility="hidden"}
+
+{{< include /cfi/_cfg-unions.qmd >}}
+
+# Clang's CFI implementation {visibility="hidden"}
+
+{{< include /cfi/_clang-cfi.qmd >}}
+
+# Clang's CFI prevents? {visibility="hidden"}
+
+{{< include /cfi/_prevent-exer.qmd >}}
+
+## problems with dynamically loaded code {visibility="hidden"}
+
+{{< include /cfi/_dynamic-p.qmd >}}
+
+# Intel's ‘CFI’ {visibility="hidden"}
+
+{{< include /cfi/_intel-cfi.qmd >}}
+
+# authenticated pointers {visibility="hidden"}
+
+## motivation {visibility="hidden"}
+
+{{< include /cfi/_enc-ptr-motivation.qmd >}}
+
+## ARM support {visibility="hidden"}
+
+{{< include /cfi/_arm-enc-ptrs.qmd >}}
+
+## relating to CFI {visibility="hidden"}
+
+{{< include /cfi/_enc-ptr-cfi.qmd >}}
+
+## in iOS/OS X {visibility="hidden"}
+
+{{< include /cfi/_osx-enc-ptrs.qmd >}}

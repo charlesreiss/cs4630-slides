@@ -1,0 +1,9 @@
+\begin{tikzpicture}
+\node[align=left,draw,very thick] {
+return address $\leftarrow$ PopFromStack() \\
+\textbf{if} DecodeInstruction(return address - 5) == "call thisFunction": \\
+\hspace{1cm} goto return address \\
+\textbf{else:} \\
+\hspace{1cm} CRASH
+};
+\end{tikzpicture}

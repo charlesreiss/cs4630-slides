@@ -1,0 +1,61 @@
+
+### looks like canaries? (1)  {.smaller}
+
+
+* what attacks does this stop that canaries don't? .5cm
+* ID does not need to be secret! 
+
+   * assuming non-executable writeable memory, no!
+   * attacker can't write new places for return to go
+
+* avoids ‘‘stack pivoting’’ attacks 
+
+   * attacker can't make stack pointer point to wrong part of stack\ldots
+   * and expect it to return differently
+
+
+
+### looks like canaries? (2)  {.smaller}
+
+
+
+* what attacks does this NOT stop that canaries do?
+* example: SortList can be called from Innocent, <br> then return from Dangerous  
+
+   * assumption: attacker can overwrite return address at right time (running on another core? problem with sortFunc1?)
+
+ 
+:::: {.columns}
+
+::: {.column width="50%"}
+ 
+```
+void Innocent() {
+  ...
+  SortList(someList1,
+           sortFunc1);
+  Use(someList1);
+  ...
+}
+
+```
+ 
+:::
+
+::: {.column width="50%"}
+ 
+```
+void Dangerous() {
+  ...
+  SortList(someList2,
+           sortFunc2);
+  UseDangerously(someList2);
+  ...
+}
+
+```
+ 
+:::
+
+::::
+

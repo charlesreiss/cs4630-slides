@@ -1,0 +1,54 @@
+
+### pointer authentication use  {.smaller}
+
+
+* commonly enabled on ARM64 for return addreses .25cm
+* otherwise:
+* on ARM64 OS X --- used by OS X 
+
+   * two different compiler ‘architectures’: arm64, arm64e
+   * can't use arm64e libraries in arm64 program or vice-versa
+
+* proposals to use on Linux in global offset table, etc. 
+
+   * GNU Linux linker option -z pac-plt; unclear if used ‘for real’
+
+
+
+### macOS PAC for apple code 
+
+
+![](/cfi/apple-pac-usage){}
+ https://support.apple.com/en-il/guide/security/sec8b776536b/1/web/1
+
+### macOS PAC 
+
+
+* ‘new’ ‘preview’ architecture in compiter
+* seems to be used internally by Apple
+* doesn't appear easily available/supported for others
+* incompatible with ‘old’ libraries
+
+
+### PAC bypasses  {.smaller}
+
+
+* have been exploits in spite of PAC in iOS kernel .5cm
+* only certain code pointers authenticated 
+
+   * too expensive to authenticate all pointers
+
+* changing unsigned pointer values just before signed  
+
+   * get context switch to occur at just the right time
+   * modify pointer value in saved context
+
+* code that signs pointers they shouldn't 
+
+   * changing pointer without crashing if old pointer invalid
+
+* ‘gadgets’ that allow brute-forcing MAC tag 
+
+   * not enough space in pointers for non-brute-forceable tag
+
+

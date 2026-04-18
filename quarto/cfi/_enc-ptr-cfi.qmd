@@ -1,0 +1,29 @@
+
+### authentication keys  {.smaller}
+
+
+* processes can have multiple authentication keys active
+* easy to use separate keys for 
+
+   * return address pointers
+   * function pointers (in VTables, for example)
+   * any pointers to data
+
+* authentication keys are in special registers --- need OS to read/set .5cm
+* also can ‘‘mix’’ in extra info like stack pointer 
+
+   * similar to separate key for each stack address
+
+
+
+### different limits  {.smaller}
+
+
+* CFI and pointer authentication both limit use of address
+* \ldots but don't eliminate potential for abuse: 
+
+   * can still call wrong function in CFI
+   * can still use wrong signed pointer
+
+* scope of labels/authenticatoin keys+extra info important
+

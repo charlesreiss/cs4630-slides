@@ -1,0 +1,13 @@
+
+### labels aren't enough? 
+
+
+
+::: {.r-stack .my-full}
+![](/cfi/texfig/cfg-unions.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/cfi/texfig/cfg-unions.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+
+:::
+

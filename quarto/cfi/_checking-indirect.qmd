@@ -1,0 +1,23 @@
+
+### calls through function pointers  {.smaller}
+
+
+```
+typedef int (*CompareFnType)(const char*, const char*)
+void SortFunction(const char **items, CompareFnType compare) {
+    ...
+    (*compare)(a, b);
+    ...
+}
+
+```
+ 
+
+* here: call through explicitly passed function pointer
+* want to do the same thing we did for VTable calls 
+
+   * all the compare functions have the same label
+   * all the returns form compare functions have the same label
+ .5cm
+* yes, if we can somehow label all the compare functions
+

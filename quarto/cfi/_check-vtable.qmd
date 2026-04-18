@@ -1,0 +1,15 @@
+
+### checking a VTable call 
+
+    
+
+::: {.r-stack}
+![](/cfi/texfig/check-vtable.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+
+![](/cfi/texfig/check-vtable.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+
+![](/cfi/texfig/check-vtable.figure-3.svg){.fragment .fade-in-then-out fragment-index=3}
+
+
+:::
+

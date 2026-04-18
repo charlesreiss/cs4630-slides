@@ -1,0 +1,28 @@
+\documentclass[tikz]{standalone}
+\input{common/tikzBase}
+\usetikzlibrary{}
+\newsavebox{\simpleRetCheckA}
+\newsavebox{\simpleRetCheckB}
+\begin{document}
+\begin{lrbox}{\simpleRetCheckA}
+\begin{lstlisting}[language=myasm,style=smaller]
+...
+    call foo
+    label $0xf19279bb // random ID for function foo
+...
+\end{lstlisting}
+\end{lrbox}
+\begin{lrbox}{\simpleRetCheckB}
+\begin{lstlisting}[language=myasm,style=smaller]
+foo: 
+...
+    pop %rdx          // RDX <- return address
+    cmp $0xf19279bb, 2(%rdx) 
+    jne CRASH
+    jmp *%rdx
+\end{lstlisting}
+\end{lrbox}
+
+\setSlide{1}
+\input{cfi/texfig/simCheckRetLabel.inner.tex}
+\end{document}

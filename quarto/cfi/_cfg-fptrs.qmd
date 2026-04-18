@@ -7,7 +7,7 @@
 ### CFGs will be imprecise  {.smaller}
 
 
-```
+```c
 FunctionPtr p = functionA;
 Example() {
   while (true) {
@@ -26,12 +26,8 @@ foo() {
     p = functionB;
   }
 }
-
 ```
  
 
 * can Example() call functionB()? probably not practical to tell 
-
    * need to make conservative ‘yes’ guess
-
-

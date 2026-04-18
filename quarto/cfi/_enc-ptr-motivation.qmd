@@ -1,5 +1,5 @@
 
-### authenticated pointers (1)  {.smaller}
+### authenticated pointers (1)
 
 
 ```
@@ -10,14 +10,23 @@ some_function:
     )
     ... dangerous function code ...
     assert(authenication_code ==
-        MAC(secret key, return addres))
+        MAC(secret key, return address))
     jump to return address
-
 ```
 
+*  compute MAC (message authentication code) for return address
+*  verify MAC before using it
 
-### authenticated pointers (2)  {.smaller}
+### authenticated return addresses (1)
 
+*  instead of return address<br/>
+   store {return address, MAC(secret key, return address)}
+*  check MAC before every return
+<hr class="vspace"/>
+*  preview: will have hardware help for keeping secret key secret
+*  exercise: what can attacker still do with stack overflow?
+
+### authenticated pointers (2)
 
 ```
 some_function:
@@ -30,12 +39,30 @@ some_function:
     assert(authenication_code ==
         MAC(secret key, stack pointer, return address))
     jump to return address
-
 ```
 
+### authenticated return addresses (2)
+
+
+*  instead of return address<br/>
+   store {return address, MAC(secret key, <em>stack address</em> return address)}
+*  check MAC before every return
+<hr class="vspace"/>
+*  prevented returning to wrong function...
+*  exercise: what can attacker still do?
+
+### storing MACs
+
+*  scheme so far: store extra information alongside address
+*  inconvenient: need to allocate extra space for address
+   *  pretty easy to do for return addresses...
+   *  ... but we'd like to apply this to other things
+*  alternate idea:
+   *  encode MAC + pointer together in pointer-sized thing
+   *  decode to get out original pointer
+   *  (probably something that looks more like symmetric encryption)
 
 ### authenticated pointers (3)  {.smaller}
-
 
 ```
 some_function:
@@ -53,7 +80,6 @@ some_function:
     jump to return address
 
 ```
-
 
 ### authenticated pointers (4)  {.smaller}
 

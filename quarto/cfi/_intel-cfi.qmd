@@ -5,9 +5,8 @@
 * Intel adds ‘endbr64’ instruction
 * special NOP instruction that acts as a label
 * means: only one label for everything 
-
    * prevents gadgets from existing
- .5cm
-* ‘‘Control Flow Enforcement’’: if enabled <br> computed jump to non-endbr64 triggers segfault-like error .5cm
+<hr class="vspace"/>
+* "Control Flow Enforcement": if enabled <br> computed jump to non-endbr64 triggers segfault-like error .5cm
 * ARM has similar feature called Branch Target Identification
 

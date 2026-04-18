@@ -2,20 +2,16 @@
 ### looks like canaries? (1)  {.smaller}
 
 
-* what attacks does this stop that canaries don't? .5cm
+* what attacks does this stop that canaries don't?
+<hr class="vspace"/>
 * ID does not need to be secret! 
-
-   * assuming non-executable writeable memory, no!
+   * (assuming non-executable writeable memory)
    * attacker can't write new places for return to go
-
-* avoids ‘‘stack pivoting’’ attacks 
-
-   * attacker can't make stack pointer point to wrong part of stack\ldots
+* avoids "stack pivoting" attacks 
+   * attacker can't make stack pointer point to wrong part of stack
    * and expect it to return differently
 
-
-
-### looks like canaries? (2)  {.smaller}
+### looks like canaries? (2)
 
 
 
@@ -27,9 +23,9 @@
  
 :::: {.columns}
 
-::: {.column width="50%"}
+::: {.column width="49%"}
  
-```
+```c
 void Innocent() {
   ...
   SortList(someList1,
@@ -42,9 +38,9 @@ void Innocent() {
  
 :::
 
-::: {.column width="50%"}
+::: {.column width="49%"}
  
-```
+```c
 void Dangerous() {
   ...
   SortList(someList2,

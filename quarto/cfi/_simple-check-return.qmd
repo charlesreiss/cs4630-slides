@@ -4,22 +4,42 @@
 
 
 * observation: places we return to usually after call instructions 
-
    * exception: ‘tail calls' --- we’ll ignore this for now
- .5cm
+<hr class="vspace" />
+
 * we could check for one\ldots
 * replace return with:
- ![](/cfi/texfig/simple-check-return-a-simple-way-to-check-returns.figure.svg)
 
+```{.borderedcodebox}
+return address <- PopFromStack()
+if DecodeInstruction(return address - call instruction size) = "call thisFunction":
+    goto return address
+else:
+    CRASH
+```
 
 ### a simple way to check returns?  {.smaller}
 
 
-
 * more practical: label $ID instruction with encoding: 
-
    * TWO-BYTE-OPCODE FOUR-BYTE-CONSTANT
    * (real version: can reuse some sufficiently nop-like instruction)
 
-   ![](/cfi/texfig/simCheckRetLabel.figure.svg)
+```{.gnuassembler .borderedcodebox}
+...
+    call foo
+    label $0xf19279bb // random ID for function foo
+...
+```
+
+
+```{.gnuassembler .borderedcodebox}
+...
+foo:
+    pop %rdx    // %rdx <- return address
+    cmpl $0xf19279bb, 2(%rdx)
+    jne CRASH
+    jmp *%rdx
+...
+```
 

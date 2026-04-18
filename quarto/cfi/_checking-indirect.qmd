@@ -1,8 +1,8 @@
 
-### calls through function pointers  {.smaller}
+### calls through function pointers 
 
 
-```
+```c
 typedef int (*CompareFnType)(const char*, const char*)
 void SortFunction(const char **items, CompareFnType compare) {
     ...
@@ -15,9 +15,11 @@ void SortFunction(const char **items, CompareFnType compare) {
 
 * here: call through explicitly passed function pointer
 * want to do the same thing we did for VTable calls 
-
    * all the compare functions have the same label
    * all the returns form compare functions have the same label
- .5cm
-* yes, if we can somehow label all the compare functions
+* requires somehow finding all compare functions?
 
+### finding compare functions? {.smaller}
+
+*  seems really tricky to track all compare functions
+*  practically speaking: going to be a place where we make approximations

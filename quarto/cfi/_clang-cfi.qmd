@@ -2,11 +2,12 @@
 ### clang's CFI implementation  {.smaller}
 
 
-* https://clang.llvm.org/docs/ControlFlowIntegrity.html 
+* [https://clang.llvm.org/docs/ControlFlowIntegrity.html](https://clang.llvm.org/docs/ControlFlowIntegrity.html)
 
-   * \scriptsize also https://www.usenix.org/conference/usenixsecurity14/technical-sessions/presentation/tice
+   * also [https://www.usenix.org/conference/usenixsecurity14/technical-sessions/presentation/tice](https://www.usenix.org/conference/usenixsecurity14/technical-sessions/presentation/tice)
 
 * only checks calls via VTables or function pointers
+  *  (assumption that stack canaries good enough elsewhere?)
 * stable implementation requires libraries compiled with support
 * label information is placed in separate data structure 
 
@@ -15,17 +16,57 @@
 * trick: keep functions in one region of memory
 
 
-### clang idea for CFI indirect calls 
-
- 
-
-::: {.r-stack}
-![](/cfi/texfig/indirectDiag.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
-
-![](/cfi/texfig/indirectDiag.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+### clang idea for CFI indirect calls  {.smaller}
 
 
-:::
+::::: {.columns}
+
+:::: {.column}
+
+```{.gnuassembler .borderedcodebox}
+start_funcs_with_two_string_args:
+.align 8
+compare_alpha:
+  jmp real_compare_alpha
+.align 8
+run_command_with_arg:
+  jmp real_run_command_with_arg
+.align 8
+print_two_strings:
+  jmp real_print_two_strings
+.align 8
+move_file:
+  jmp real_move_file
+.align 8
+compare_reverse_alpha:
+  jmp real_compare_reverse_alpha
+end_funcs_with_two_string_args:
+```
+
+::::
+
+:::: {.column .fragment fragment-index=1 .fade-in}
+
+check psuedocode for compare:
+
+```python
+# which functions are valid for compare
+COMPARE_BITMASK = [True, False, False, False, True]
+...
+if fptr % 8 != 0:
+    CRASH
+if fptr < start_funcs_with_two_string_args:
+    CRASH
+if fptr >= end_funcs_with_two_string_args:
+    CRASH
+index = (fptr - start_funcs_with_two_string_args)/8
+if not COMAPRE_BITMASK[index]:
+    CRASH
+```
+
+::::
+
+:::::
 
 
 ### clang idea for VTables 

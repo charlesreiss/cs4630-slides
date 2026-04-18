@@ -6,9 +6,12 @@
 
 * stack canaries: try to make sure we return to genuine place
 * should make return-oriented programming hard
-* problem: defeated with information leak .5cm
+* problem: defeated with information leak
+
+<hr class="vspace" />
+
 * alternate idea: make sure we aren't returning to gadget
-* \ldots by checking that it actually called our function
+* ...by checking that it actually called our function
 
 
 ## idea: checking returns? {visibility="hidden"}
@@ -30,14 +33,6 @@
 ## checking indirect function calls {visibility="hidden"}
 
 {{< include /cfi/_checking-indirect.qmd >}}
-
-# CFI overhead {visibility="hidden"}
-
-{{< include /cfi/_overhead.qmd >}}
-
-# what does CFI actually prevent {visibility="hidden"}
-
-### againframe(cfiLikeCanariesP2)
 
 # more general control flow integrity {visibility="hidden"}
 
@@ -72,6 +67,13 @@
 # Intel's ‘CFI’ {visibility="hidden"}
 
 {{< include /cfi/_intel-cfi.qmd >}}
+
+# CFI overhead {visibility="hidden"}
+
+{{< include /cfi/_overhead.qmd >}}
+
+# what does CFI actually prevent {visibility="hidden"}
+
 
 # authenticated pointers {visibility="hidden"}
 

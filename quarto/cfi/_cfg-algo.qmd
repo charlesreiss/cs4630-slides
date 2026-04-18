@@ -1,21 +1,26 @@
 
-### finding possible function pointer values?  {.smaller}
 
-
+### finding possible function pointer values? (1) {.smaller}
 
 * given call using function pointers <br> how do we find the legitimate possible values?
-* one idea:
+* simple approximation:
+  * every function a pointer is taken to with same type
+* but maybe situations like...
+  * `bool StringLessThan(char *a, char *b)`
+  * `bool UploadFileSCP(char *local_file, char *remote_file)`
+
+### finding possible function pointer values? (2) {.smaller}
+
+* given call using function pointers <br> how do we find the legitimate possible values?
+* more precise idea:
  
-<pre><code>for each fptr constant X: PossibleValues\[X] = {X}
+```
+for each fptr constant X:
+    PossibleValues[X] = {X}
 for each fptr variable X:
-    PossibleValues\[X] = empty set
+    PossibleValues[X] = empty set
 until PossibleValues stops changing:
     for each fptr assignment LHS=RHS:
-        for each fptr variable/constant Y
-                that RHS could evaluate to:
-            PossibleValues\[LHS] = Union(
-                PossibleValues\[LHS],
-                PossibleValues\[Y]
-            )
-</code></pre>
-
+        for each fptr variable/constant Y that RHS could evaluate to:
+            PossibleValues[LHS] = Union(PossibleValues[LHS], PossibleValues[Y])
+```

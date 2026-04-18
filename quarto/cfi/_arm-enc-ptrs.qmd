@@ -2,7 +2,10 @@
 ### ARM authenticated pointers  {.smaller}
 
 
-* ARM64 implements this idea with: .5cm
+* ARM64 implements this idea with:
+
+<hr class="vspace"/>
+
 * secret key kept in a special register (hard to leak to attacker)
 * authentication code placed in upper pointer bits 
 
@@ -15,4 +18,5 @@
 
 
 ![](/cfi/arm-enc-ptr-fig){}
- Liljestrand et al, ‘‘PAC it up: Towards Pointer Integrity using ARM Pointer Authentication’’
+
+[Liljestrand et al, "PAC it up: Towards Pointer Integrity using ARM Pointer Authentication"]{.mycredit}

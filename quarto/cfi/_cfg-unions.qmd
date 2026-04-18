@@ -1,13 +1,16 @@
 
 ### labels aren't enough? 
 
+![](/cfi/texfig/cfg-unions.figure.svg)
 
+::: {.myoverbox .fragment fragment-index=1 .fade-in .right}
 
-::: {.r-stack .my-full}
-![](/cfi/texfig/cfg-unions.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
+two possible fixes:
 
-![](/cfi/texfig/cfg-unions.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
+*  allow foo to call B<br/>
+   (easier to attack)
 
+*  scan for multiple labels<br/>
+   (more overhead)
 
 :::
-

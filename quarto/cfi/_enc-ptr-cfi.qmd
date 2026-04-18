@@ -20,10 +20,10 @@
 
 
 * CFI and pointer authentication both limit use of address
-* \ldots but don't eliminate potential for abuse: 
+* ... but don't eliminate potential for abuse: 
 
    * can still call wrong function in CFI
    * can still use wrong signed pointer
 
-* scope of labels/authenticatoin keys+extra info important
+* scope of labels/authentication keys+extra info important
 

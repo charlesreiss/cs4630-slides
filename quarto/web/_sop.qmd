@@ -1,5 +1,5 @@
 
-### web pages in web pages (1)  {.smaller}
+### web pages in web pages (1)
 
 
  
@@ -22,10 +22,9 @@ function readLocalSecret() {
 * same idea works for sending it to remote server
 
 
-### web pages in web pages (2)  {.smaller}
+### web pages in web pages (2)
 
 
-  \\setlength{\\parskip{}-0.5\\baselineskip{}} 
 ```html
 <iframe id="remoteFrame"
     src="https://collab.virginia.edu/..."
@@ -88,16 +87,13 @@ function doIt() {
 * origin: part of URL up to server name: 
 
    * <code><em>https://example.com</em>/foo/bar</code>
-   * <code><em>http://localhost</em>\\tikzmark{local1}/foo/bar</code>
-   * <code><em>http://localhost:8000</em>\\tikzmark{local2}/foo/bar</code>
+   * <code><em>http://localhost</em>/foo/bar</code>
+   * <code><em>http://localhost:8000</em>/foo/bar</code>
    * <code><em>https://www.example.com</em>/foo/bar</code>
    * <code><em>http://example.com</em>/foo/bar</code>
    * <code><em>https://other.com</em>/foo/bar</code>
    * <code><em>file:///</em>home/cr4bd</code>
 
-
-
-### againframe(cookieFields)
 
 ### origins and shared servers  {.smaller}
 
@@ -107,7 +103,6 @@ function doIt() {
 
    * even if cookies don't matter
 
-* similar issues with plugins (e.g. Flash) 
 <hr class="vspace" />
 * can share server --- one server can host <em>multiple names</em>
 

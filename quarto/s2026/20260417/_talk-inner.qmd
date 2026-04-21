@@ -42,4 +42,12 @@
 
 {{< include /static/_clang-static-patterns.qmd >}}
 
+## summary / actual tools {visibility="hidden"}
+
+{{< include /static/_actual-tools.qmd >}}
+
 {{< include /bounds/_talk-inner.qmd >}}
+
+### backup slides
+
+{{< include /static/_talk-backup.qmd >}}

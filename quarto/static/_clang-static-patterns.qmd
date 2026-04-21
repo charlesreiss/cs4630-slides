@@ -15,13 +15,11 @@
 ```c
 struct foo *p = malloc(sizeof(struct foo*)); // meant struct foo?
 long *p = malloc(16 * sizeof(int)); // meant sizeof(long)?
-
 ```
  <hr />
  
 ```c
 strncat(foo, bar, sizeof(foo));
-
 ```
  <hr />
  
@@ -38,13 +36,13 @@ int *foo() {
 ```
 
 
-### more suspect patterns   {.smaller}
+### more suspect patterns
 
 
 
-* SpotBugs: Java static analysis tool
+* SpotBugs: Java static analysis tool; example patterns:
  
-```
+```java
 // pattern: connecting to database with empty password:
 connection = DriverManager.getConnection(
     "jdbc:hsqldb:hsql://db.example.com/xdb" /* database ID */, 

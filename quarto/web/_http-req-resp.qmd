@@ -5,7 +5,7 @@
 
 ::: {style="border: 2px solid black; font-face: 'Source Code Pro', monospace;"}
 [GET]{.fragment fragment-index=2 .custom .myem-only} /dir/file?query=string HTTP/1.1<br/>
-[Host: [server.com]{.fragment fragment-index=4 .custom .myem-only}{.fragment fragment-index=3 .custom .myem-only}<br/>
+[Host: [server.com]{.fragment fragment-index=4 .custom .myem-only}]{.fragment fragment-index=3 .custom .myem-only}<br/>
 [<i>Other-Key</i>: <i>Other-Value</i>]{.fragment fragment-index=3 .custom .myem-only}
 <br>
 …

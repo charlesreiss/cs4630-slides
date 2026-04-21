@@ -17,7 +17,7 @@
 
 
 * tell browser ‘‘no embedding’’ with HTTP header
-* example: <code>[]{.my-small} Content-Security-Policy: frame-ancestors 'self'</code> 
+* example: <code>Content-Security-Policy: frame-ancestors 'self'</code> 
 
    * only embed from same origin
  

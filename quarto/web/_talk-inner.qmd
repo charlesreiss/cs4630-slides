@@ -67,8 +67,6 @@
 
 ## facebook login: embedding {visibility="hidden"}
 
-### againframe(noSameOrigin)
-
 {{< include /web/_web-sop-fb-login.qmd >}}
 
 ## timing leak {visibility="hidden"}

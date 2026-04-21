@@ -8,6 +8,37 @@
    *  `_FORITFY_SOURCE`
    *  strncpy, strncat (are bad)
 
+###
+
+###
+
+### challenge format note
+
+*  CHALLENGE assignment solutions
+   *  need to be Python, C, or C++ programs
+   *  just an output text/data file not acceptable
+   *  need to produce output to send to challenge executable
+   *  don't run (e.g. Python's subprocess.Popen) the challenge executable yourself
+
+### remaining topics {.smaller}
+
+*  bounds-checking (probably most/all of today)
+
+*  then I have prepared:
+   *  control flow integrity
+      *  kinda extension of stack canary idea
+      *  authenticated pointers
+   *  some web security stuff
+      *  tools for detecting/mitigating XSS
+      *  same-origin policy
+*  I don't have prepared, but might put together:
+   *  supply chain security
+      *  regulatory efforts and software bills of materials
+      *  reproducible builds
+
+*  preferences?
+
+
 ## language support? {visibility="hidden"}
 
 {{< include /bounds/_bounds-lang-support-intro.qmd >}}

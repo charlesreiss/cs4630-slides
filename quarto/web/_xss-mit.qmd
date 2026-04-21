@@ -8,11 +8,11 @@
 
    * has different cookies
 
-* [filter/escape inputs]{.fragment fragment-index=2 .custom .myem-only} (same as normal command injection) 
+* filter/escape inputs (same as normal command injection) 
 
    * some libraries to help --- very easy to get this wrong
 
-* [web application firewalls]{.fragment fragment-index=3 .custom .myem-only} 
+* web application firewalls
 
    * module on web server that look for ‘bad-looking’ requests
 
@@ -20,13 +20,13 @@
 
    * server says ‘‘browser, don't run scripts here’’
 
-* [HttpOnly cookies]{.fragment fragment-index=4 .custom .myem-only}  
+* HttpOnly cookies
 
    * server says ‘‘browser, don't share this with code on the page’’
 
 
 
-### HTML filtering/escaping nits  {.smaller}
+### HTML filtering/escaping nits 
 
 
 
@@ -51,9 +51,7 @@
 
  [via [https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet](https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet)]{.mycredit}
 
-### againframe(XSSmits)
-
-### web application firewall rule  {.smaller}
+### web application firewall rule
 
 
 ```
@@ -69,10 +67,7 @@ SecRule REQUEST_COOKIES|...|REQUEST_FILENAME|\
 * look for `<script>` tags in request
 * problem: maybe not use
 
-
-### againframe(XSSmits)
-
-### HTTP-only cookies  {.smaller}
+### HTTP-only cookies 
 
 
 
@@ -89,7 +84,7 @@ SecRule REQUEST_COOKIES|...|REQUEST_FILENAME|\
 ```
 
 
-### HTTP-only cookies  {.smaller}
+### HTTP-only cookies 
 
 
 

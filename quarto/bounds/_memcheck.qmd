@@ -9,5 +9,5 @@
  
 <hr class="vspace" />
 * only (reliably) detects errors on heap
-* but works on <em>unmodified</em> binariesk
+* but works on <em>unmodified</em> binaries
 

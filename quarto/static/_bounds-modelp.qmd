@@ -19,13 +19,7 @@
 
 ### checking array bounds (1) 
 
-<!-- \lstset{
-    language=C,style=script,
-    moredelim={**[is][\btHL<2>]{~2~}{~end~}},
-} -->
-  
-
-::: {.r-stack}
+::: {.r-stack .my-full}
 ![](/static/texfig/bounds1.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
 ![](/static/texfig/bounds1.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}
@@ -35,14 +29,7 @@
 
 
 ### checking array bounds (2) 
-
-<!-- \lstset{
-    language=C,style=script,
-    moredelim={**[is][\btHL<2>]{~2~}{~end~}},
-} -->
-  
-
-::: {.r-stack}
+::: {.r-stack .my-full}
 ![](/static/texfig/bounds2.figure-1.svg){.fragment .fade-in-then-out fragment-index=1}
 
 ![](/static/texfig/bounds2.figure-2.svg){.fragment .fade-in-then-out fragment-index=2}

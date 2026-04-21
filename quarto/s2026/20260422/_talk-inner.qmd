@@ -1,0 +1,55 @@
+### last time {.smaller}
+
+*  "fat" pointers
+   *  keep (min, max) with pointers to object
+   *  check before accesses
+   *  sometimes very big slowdown
+*  weird things C programmers do
+*  baggy bounds
+   *  rounding to powers of two
+   *  table of starting locations
+   *  not handling overflows between struct members, array elements
+*  AddressSanitizer
+
+###
+
+###
+
+
+# AddressSanitizer {visibility="hidden"}
+
+{{< include /bounds/_asan-v-baggy.qmd >}}
+
+## ASan's added check {visibility="hidden"}
+
+{{< include /bounds/_asan-check.qmd >}}
+
+## stack layout {visibility="hidden"}
+
+{{< include /bounds/_asan-stack-layout.qmd >}}
+
+## can't change object layout? {visibility="hidden"}
+
+{{< include /bounds/_asan-within-object-example.qmd >}}
+
+{{< include /bounds/_asan-within-object.qmd >}}
+
+## pro/con {visibility="hidden"}
+
+{{< include /bounds/_asan-procon.qmd >}}
+
+# valgrind memcheck, briefly {visibility="hidden"}
+
+{{< include /bounds/_memcheck.qmd >}}
+
+## aside: binary translation {visibility="hidden"}
+
+{{< include /vm/_binaryTrans.qmd >}}
+
+## aside: other binary translation applications {visibility="hidden"}
+
+# exericse: which prevents {visibility="hidden"}
+
+{{< include /bounds/_which-prevents.qmd >}}
+
+{{< include /cfi/_talk-inner.qmd >}}

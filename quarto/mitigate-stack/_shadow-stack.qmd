@@ -71,7 +71,7 @@ function:
 
 
 
-* \\tiny{via [https://clang.llvm.org/docs/ShadowCallStack.html](https://clang.llvm.org/docs/ShadowCallStack.html) (see also [https://security.googleblog.com/2019/10/protecting-against-code-reuse-in-linux_30.html](https://security.googleblog.com/2019/10/protecting-against-code-reuse-in-linux_30.html))}
+* via [https://clang.llvm.org/docs/ShadowCallStack.html](https://clang.llvm.org/docs/ShadowCallStack.html) (see also [https://security.googleblog.com/2019/10/protecting-against-code-reuse-in-linux_30.html](https://security.googleblog.com/2019/10/protecting-against-code-reuse-in-linux_30.html))
 * dedicate register <code>x18</code> to shadow stack pointer 
 
    * x30 = return address (after ARM's call instruction (bl))

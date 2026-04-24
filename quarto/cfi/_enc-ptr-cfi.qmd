@@ -9,7 +9,7 @@
    * function pointers (in VTables, for example)
    * any pointers to data
 
-* authentication keys are in special registers --- need OS to read/set .5cm
+* authentication keys are in special registers --- need OS to read/set
 * also can ‘‘mix’’ in extra info like stack pointer 
 
    * similar to separate key for each stack address

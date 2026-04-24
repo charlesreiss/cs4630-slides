@@ -10,9 +10,7 @@
   *  (assumption that stack canaries good enough elsewhere?)
 * stable implementation requires libraries compiled with support
 * label information is placed in separate data structure 
-
    * looked up using function or VTable addresses
-
 * trick: keep functions in one region of memory
 
 
@@ -73,10 +71,11 @@ if not COMAPRE_BITMASK[index]:
 
 
 * check VTable element address instead of function address
-* otherwise 
-
-   * place all VTables for related classes together
-   * check start/end address for VTables
-   * bit mask indicating which VTable entries are okay for call
+   *  VTables at small number of fixed locations, anyways
+* otherwise
+   *  place all VTables for related classes together
+   *  check start/end address for VTables
+   *  bit mask indicating which VTable entries are okay for call
+      *  need to handle unusual case of pointers to member functions
 
 

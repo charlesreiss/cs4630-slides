@@ -1,7 +1,44 @@
 
-### library-crossing CFGs 
+### library-crossing CFGs {.smaller}
 
- ![](/cfi/texfig/tracking.figure.svg)
+::::: {.columns}
+
+:::: {.column}
+
+```c
+#include <png.h>
+void ReadImageFromNetwork(
+    png_structp libpng_handle,
+    unsigned char *bytes,
+    size_t size
+) { ...  }
+
+int main() {
+    /* init libpng */
+    png_structp libpng_handle = ...;
+    /* tell libpng how to read image data */
+    png_set_read_fn(
+        libpng_handle, ...,
+        ReadImageFromNetwork
+    )
+    ...
+    /* extract "header" 
+       information from image */
+    png_get_IHDR(libpng_handle, ...)
+    ...
+}
+```
+
+::::
+
+:::: {.column}
+
+
+![](/cfi/texfig/tracking.figure.svg){width=400px fig-alt="control flow graph, showing flow from main to png_set_read_fn, then back to main, then to png_get_IHDR, then to ReadImageFromNetwork. All of these control flow transfers are shown to cross the boundary between executable and library."}
+
+::::
+
+:::::
 
 
 ### CFGs will be imprecise  {.smaller}

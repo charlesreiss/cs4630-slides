@@ -1,8 +1,5 @@
 \begin{tikzpicture}
-\node[draw,very thick,label={north:main.c}] (mainc) {
-\usebox{\libCrossCode}
-};
-\coordinate (base) at ([xshift=.5cm]mainc.north east);
+\coordinate (base) at (0,0);
 \begin{scope}[shift=(base)]
     \tikzset{
         every node/.style={draw,align=left,font=\fontsize{10}{11}\tt\selectfont},

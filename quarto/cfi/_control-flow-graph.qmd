@@ -2,7 +2,7 @@
 ### concept: labels and control flow graph  {.smaller}
 
 
-![](/cfi/abadi-fig1){}
+![](/cfi/abadi-fig1){fig-alt="Figure of Abadi paper showing two comparison functions 'lt' and 'gt', and a function 'sort2(int a[], int b[], int len) { sort(a, len, lt); sort (b, len, gt ); }' and figure representing the assembly code for sort2(), sort(), lt(), and gt(), showing lines with arrowheads representing function calls and dotted lines with arorowheads representing returns. The call instruction in sort is represented 'call 17,R' and points to instructions 'label 17' at the beginning of 'lt' and 'gt'. The return instructions from lt and gt is 'ret 23', and goes do a line in sort() that starts 'label 23'. The return instruction from sort is 'ret 55' and points to instructions 'label 55' in sort2()."}
  
 
 * control flow graph 
@@ -11,4 +11,5 @@
    * edges = potential jump/call
 
 * assigning labels: every in-edge needs to check same label at source
- figure from Abadi et al, ‘‘Control-Flow Integrity: Principles, Implementations and Applications’’ (CCS 2005)
+
+[figure from Abadi et al, ‘‘Control-Flow Integrity: Principles, Implementations and Applications’’ (CCS 2005)]{.mycredit}

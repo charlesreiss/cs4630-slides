@@ -1,7 +1,7 @@
 
 ### labels aren't enough? 
 
-![](/cfi/texfig/cfg-unions.figure.svg)
+![](/cfi/texfig/cfg-unions.figure.svg){fig-alt="control-flow-graph diagram showing calls from foo and bar through function pointers. foo can call A and B; bar can call B and C. A check for a label is listed before each call and a label is listed at the beginning of A, B, C, but the label is left as question marks."}
 
 ::: {.myoverbox .fragment fragment-index=1 .fade-in .right}
 

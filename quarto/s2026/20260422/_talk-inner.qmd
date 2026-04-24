@@ -53,3 +53,19 @@
 {{< include /bounds/_which-prevents.qmd >}}
 
 {{< include /cfi/_talk-inner.qmd >}}
+
+# shadow stacks {visibility="hidden"}
+
+{{< include /mitigate-stack/_shadow-stack.qmd >}}
+
+## Intel's hardware support? {visibility="hidden"}
+
+{{< include /mitigate-stack/_shadow-stack-cet.qmd >}}
+
+## exceptions, setjmp, etc. {visibility="hidden"}
+
+{{< include /mitigate-stack/_shadow-stack-except.qmd >}}
+
+## exceptions and CET {visibility="hidden"}
+
+{{< include /mitigate-stack/_shadow-stack-except-cet.qmd >}}

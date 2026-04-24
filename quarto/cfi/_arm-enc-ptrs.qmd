@@ -17,6 +17,6 @@
 ### authenticated pointer layout 
 
 
-![](/cfi/arm-enc-ptr-fig){}
+![](/cfi/arm-enc-ptr-fig){fig-alt="Figure from a research paper labeleds 'Figure 1: The PAC is created using key-specific PA instructions (pacia) and is a keyed MAC calculated over the pointer address and a modifier. The figure shows a pointer pointer represented as an empty upper part and an address. THe pacia instruction transforms it using a keyed MAC taking in that address, a modifier, and the PA-key, to produce a PAC (pointer authentication code) that is stored in the ('reserved') upper bits of the pointer, except for one bit which is used as the upper bit of the address."}
 
 [Liljestrand et al, "PAC it up: Towards Pointer Integrity using ARM Pointer Authentication"]{.mycredit}

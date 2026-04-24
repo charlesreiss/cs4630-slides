@@ -17,7 +17,7 @@ some_function:
 *  compute MAC (message authentication code) for return address
 *  verify MAC before using it
 
-### authenticated return addresses (1)
+### authenticated return addresses (1) {.smaller}
 
 *  instead of return address<br/>
    store {return address, MAC(secret key, return address)}
@@ -41,11 +41,11 @@ some_function:
     jump to return address
 ```
 
-### authenticated return addresses (2)
+### authenticated return addresses (2) {.smaller}
 
 
 *  instead of return address<br/>
-   store {return address, MAC(secret key, <em>stack address</em> return address)}
+   store {return address, MAC(secret key, <em>stack address</em>, return address)}
 *  check MAC before every return
 <hr class="vspace"/>
 *  prevented returning to wrong function...

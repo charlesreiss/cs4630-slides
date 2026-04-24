@@ -366,6 +366,16 @@ table.stackdiag.stackdiag.stackdiag.stackdiag td.heapstruct {
 .reveal .slide .rowlines > table td {border-top: 2px solid black; border-bottom: 2px solid black;}
 .reveal .slide table.rowlines td {border-top: 2px solid black; border-bottom: 2px solid black;}
 
+.reveal .slide .borderedcodebox {
+    font-size: 65%;
+    border: 3px solid black;
+    width: auto;
+}
+
+.reveal .slide .borderedcodebox.red {
+    border: 3px solid red;
+}
+
 @media print {
     .slide-chalkboard-buttons {
         display: none ! important

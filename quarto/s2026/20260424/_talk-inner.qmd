@@ -1,0 +1,90 @@
+### last time
+
+*  control flow graphs
+   *  possible paths between pieces of code
+*  control flow integrity
+   *  make jumps follow some path on control graph
+   *  idea of inserting, checking labels
+*  imprecision in control flow graph
+   *  lists of function pointer values
+   *  challenges with crossing through libraries with callbacks
+
+# Clang's CFI implementation {visibility="hidden"}
+
+{{< include /cfi/_clang-cfi.qmd >}}
+
+# Clang's CFI prevents? {visibility="hidden"}
+
+{{< include /cfi/_prevent-exer.qmd >}}
+
+## problems with dynamically loaded code {visibility="hidden"}
+
+{{< include /cfi/_dynamic-p.qmd >}}
+
+# Intel's ‘CFI’ {visibility="hidden"}
+
+{{< include /cfi/_intel-cfi.qmd >}}
+
+# CFI overhead {visibility="hidden"}
+
+{{< include /cfi/_overhead.qmd >}}
+
+# what does CFI actually prevent {visibility="hidden"}
+
+
+# authenticated pointers {visibility="hidden"}
+
+## motivation {visibility="hidden"}
+
+{{< include /cfi/_enc-ptr-motivation.qmd >}}
+
+## ARM support {visibility="hidden"}
+
+{{< include /cfi/_arm-enc-ptrs.qmd >}}
+
+## relating to CFI {visibility="hidden"}
+
+{{< include /cfi/_enc-ptr-cfi.qmd >}}
+
+## in iOS/OS X {visibility="hidden"}
+
+{{< include /cfi/_osx-enc-ptrs.qmd >}}
+
+# shadow stacks {visibility="hidden"}
+
+{{< include /mitigate-stack/_shadow-stack.qmd >}}
+
+## Intel's hardware support? {visibility="hidden"}
+
+{{< include /mitigate-stack/_shadow-stack-cet.qmd >}}
+
+## exceptions, setjmp, etc. {visibility="hidden"}
+
+{{< include /mitigate-stack/_shadow-stack-except.qmd >}}
+
+## exceptions and CET {visibility="hidden"}
+
+{{< include /mitigate-stack/_shadow-stack-except-cet.qmd >}}
+
+### reminder about CHALLENGE
+
+### exam review note
+
+# web stuff? (if time)
+
+## XSS cookie extraction {visibility="hidden"}
+
+{{< include /web/_reflect-xss.qmd >}}
+
+{{< include /web/_stored-xss.qmd >}}
+
+{{< include /web/_xss-example.qmd >}}
+
+## XSS detection {visibility="hidden"}
+
+{{< include /web/_xss-detect.qmd >}}
+
+## XSS mitiations {visibility="hidden"}
+
+{{< include /web/_xss-mit.qmd >}}
+

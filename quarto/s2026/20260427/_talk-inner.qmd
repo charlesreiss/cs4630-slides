@@ -1,0 +1,22 @@
+### last time {.smaller}
+
+*  Clang's CFI implementation
+   *  trick of keeping function stubs together for checking
+   *  checking VTable addresses
+*  Intel Control-Flow Enforcement / AMD Branch Target Identification
+   *  CFI for indirect jumps with one label for everything
+*  authenticated pointers
+   *  add a message authentication code to pointers
+   *  secret key + optional salt based on purpose
+   *  protects pointers against modification, hopefully
+*  shadow stacks
+   *  second stack for just return addresses
+   *  Intel CET --- with special hardware protection
+
+
+### aside: Linux Intel CET deployment
+
+*  indirect branch tracking (endbr64) part --- only for kernel
+  *  also option for more precise CFI in Linux kernel
+*  shadow stack part --- only for userspace part
+  *  executable needs to be marked to use
